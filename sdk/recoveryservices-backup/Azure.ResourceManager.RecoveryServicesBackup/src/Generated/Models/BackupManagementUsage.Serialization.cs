@@ -15,30 +15,34 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         internal static BackupManagementUsage DeserializeBackupManagementUsage(JsonElement element)
         {
-            Optional<UsagesUnit> unit = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<BackupUsagesUnit> unit = default;
             Optional<string> quotaPeriod = default;
             Optional<DateTimeOffset> nextResetTime = default;
             Optional<long> currentValue = default;
             Optional<long> limit = default;
-            Optional<NameInfo> name = default;
+            Optional<BackupNameInfo> name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    unit = new UsagesUnit(property.Value.GetString());
+                    unit = new BackupUsagesUnit(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("quotaPeriod"))
+                if (property.NameEquals("quotaPeriod"u8))
                 {
                     quotaPeriod = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nextResetTime"))
+                if (property.NameEquals("nextResetTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     nextResetTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("currentValue"))
+                if (property.NameEquals("currentValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     currentValue = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,14 +72,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     limit = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = NameInfo.DeserializeNameInfo(property.Value);
+                    name = BackupNameInfo.DeserializeBackupNameInfo(property.Value);
                     continue;
                 }
             }

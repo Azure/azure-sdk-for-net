@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ThresholdValue))
             {
-                writer.WritePropertyName("thresholdValue");
+                writer.WritePropertyName("thresholdValue"u8);
                 writer.WriteNumberValue(ThresholdValue.Value);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static PercentageCostThresholdProperties DeserializePercentageCostThresholdProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> thresholdValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("thresholdValue"))
+                if (property.NameEquals("thresholdValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

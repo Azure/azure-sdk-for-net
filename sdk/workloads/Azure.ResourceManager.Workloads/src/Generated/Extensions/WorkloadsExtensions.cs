@@ -29,35 +29,17 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Lists PHP workload resources for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/phpWorkloads
-        /// Operation Id: PhpWorkloads_ListBySubscription
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PhpWorkloadResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PhpWorkloadResource> GetPhpWorkloadResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPhpWorkloadResourcesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists PHP workload resources for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/phpWorkloads
-        /// Operation Id: PhpWorkloads_ListBySubscription
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PhpWorkloadResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PhpWorkloadResource> GetPhpWorkloadResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPhpWorkloadResources(cancellationToken);
-        }
-
-        /// <summary>
-        /// Get SAP sizing recommendations.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations
-        /// Operation Id: SAPSizingRecommendations
+        /// Get SAP sizing recommendations by providing input SAPS for application tier and memory required for database tier
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPSizingRecommendations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -69,9 +51,17 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP sizing recommendations.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations
-        /// Operation Id: SAPSizingRecommendations
+        /// Get SAP sizing recommendations by providing input SAPS for application tier and memory required for database tier
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPSizingRecommendations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -83,9 +73,17 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP supported SKUs.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku
-        /// Operation Id: SAPSupportedSku
+        /// Get a list of SAP supported SKUs for ASCS, Application and Database tier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPSupportedSku</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -97,9 +95,17 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP supported SKUs.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku
-        /// Operation Id: SAPSupportedSku
+        /// Get a list of SAP supported SKUs for ASCS, Application and Database tier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPSupportedSku</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -111,9 +117,17 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP Disk Configurations.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations
-        /// Operation Id: SAPDiskConfigurations
+        /// Get the SAP Disk Configuration Layout prod/non-prod SAP System.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPDiskConfigurations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -125,9 +139,17 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP Disk Configurations.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations
-        /// Operation Id: SAPDiskConfigurations
+        /// Get the SAP Disk Configuration Layout prod/non-prod SAP System.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPDiskConfigurations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -139,9 +161,17 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP Availability Zone Details.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails
-        /// Operation Id: SAPAvailabilityZoneDetails
+        /// Get the recommended SAP Availability Zone Pair Details for your region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPAvailabilityZoneDetails</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -153,9 +183,17 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP Availability Zone Details.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails
-        /// Operation Id: SAPAvailabilityZoneDetails
+        /// Get the recommended SAP Availability Zone Pair Details for your region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPAvailabilityZoneDetails</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -167,9 +205,17 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets all Virtual Instances for SAP in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapVirtualInstances
-        /// Operation Id: SAPVirtualInstances_ListBySubscription
+        /// Gets all Virtual Instances for SAP solutions resources in a Subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapVirtualInstances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPVirtualInstances_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -180,9 +226,17 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets all Virtual Instances for SAP in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapVirtualInstances
-        /// Operation Id: SAPVirtualInstances_ListBySubscription
+        /// Gets all Virtual Instances for SAP solutions resources in a Subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapVirtualInstances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPVirtualInstances_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -194,8 +248,16 @@ namespace Azure.ResourceManager.Workloads
 
         /// <summary>
         /// Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/monitors
-        /// Operation Id: monitors_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/monitors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>monitors_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -207,8 +269,16 @@ namespace Azure.ResourceManager.Workloads
 
         /// <summary>
         /// Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/monitors
-        /// Operation Id: monitors_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/monitors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>monitors_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -216,32 +286,6 @@ namespace Azure.ResourceManager.Workloads
         public static Pageable<SapMonitorResource> GetSapMonitors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetSapMonitors(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the available SKUs under this PR
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/skus
-        /// Operation Id: Skus_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SkuDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SkuDefinition> GetSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSkusAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the available SKUs under this PR
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/skus
-        /// Operation Id: Skus_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SkuDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SkuDefinition> GetSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSkus(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -253,46 +297,6 @@ namespace Azure.ResourceManager.Workloads
             );
         }
 
-        /// <summary> Gets a collection of PhpWorkloadResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of PhpWorkloadResources and their operations over a PhpWorkloadResource. </returns>
-        public static PhpWorkloadResourceCollection GetPhpWorkloadResources(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetPhpWorkloadResources();
-        }
-
-        /// <summary>
-        /// Gets the PHP workload resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/phpWorkloads/{phpWorkloadName}
-        /// Operation Id: PhpWorkloads_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="phpWorkloadName"> Php workload name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="phpWorkloadName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="phpWorkloadName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<PhpWorkloadResource>> GetPhpWorkloadResourceAsync(this ResourceGroupResource resourceGroupResource, string phpWorkloadName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetPhpWorkloadResources().GetAsync(phpWorkloadName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the PHP workload resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/phpWorkloads/{phpWorkloadName}
-        /// Operation Id: PhpWorkloads_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="phpWorkloadName"> Php workload name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="phpWorkloadName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="phpWorkloadName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<PhpWorkloadResource> GetPhpWorkloadResource(this ResourceGroupResource resourceGroupResource, string phpWorkloadName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetPhpWorkloadResources().Get(phpWorkloadName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of SapVirtualInstanceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SapVirtualInstanceResources and their operations over a SapVirtualInstanceResource. </returns>
@@ -302,12 +306,20 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets an Virtual Instance for SAP.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}
-        /// Operation Id: SAPVirtualInstances_Get
+        /// Gets a Virtual Instance for SAP solutions resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPVirtualInstances_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> is null. </exception>
@@ -318,12 +330,20 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets an Virtual Instance for SAP.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}
-        /// Operation Id: SAPVirtualInstances_Get
+        /// Gets a Virtual Instance for SAP solutions resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPVirtualInstances_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> is null. </exception>
@@ -343,8 +363,16 @@ namespace Azure.ResourceManager.Workloads
 
         /// <summary>
         /// Gets properties of a SAP monitor for the specified subscription, resource group, and resource name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}
-        /// Operation Id: monitors_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>monitors_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="monitorName"> Name of the SAP monitor resource. </param>
@@ -359,8 +387,16 @@ namespace Azure.ResourceManager.Workloads
 
         /// <summary>
         /// Gets properties of a SAP monitor for the specified subscription, resource group, and resource name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}
-        /// Operation Id: monitors_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>monitors_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="monitorName"> Name of the SAP monitor resource. </param>
@@ -372,44 +408,6 @@ namespace Azure.ResourceManager.Workloads
         {
             return resourceGroupResource.GetSapMonitors().Get(monitorName, cancellationToken);
         }
-
-        #region PhpWorkloadResource
-        /// <summary>
-        /// Gets an object representing a <see cref="PhpWorkloadResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PhpWorkloadResource.CreateResourceIdentifier" /> to create a <see cref="PhpWorkloadResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PhpWorkloadResource" /> object. </returns>
-        public static PhpWorkloadResource GetPhpWorkloadResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                PhpWorkloadResource.ValidateResourceId(id);
-                return new PhpWorkloadResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region WordPressInstanceResource
-        /// <summary>
-        /// Gets an object representing a <see cref="WordPressInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WordPressInstanceResource.CreateResourceIdentifier" /> to create a <see cref="WordPressInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WordPressInstanceResource" /> object. </returns>
-        public static WordPressInstanceResource GetWordPressInstanceResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                WordPressInstanceResource.ValidateResourceId(id);
-                return new WordPressInstanceResource(client, id);
-            }
-            );
-        }
-        #endregion
 
         #region SapVirtualInstanceResource
         /// <summary>
@@ -520,6 +518,25 @@ namespace Azure.ResourceManager.Workloads
             {
                 SapProviderInstanceResource.ValidateResourceId(id);
                 return new SapProviderInstanceResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SapLandscapeMonitorResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SapLandscapeMonitorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SapLandscapeMonitorResource.CreateResourceIdentifier" /> to create a <see cref="SapLandscapeMonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SapLandscapeMonitorResource" /> object. </returns>
+        public static SapLandscapeMonitorResource GetSapLandscapeMonitorResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SapLandscapeMonitorResource.ValidateResourceId(id);
+                return new SapLandscapeMonitorResource(client, id);
             }
             );
         }

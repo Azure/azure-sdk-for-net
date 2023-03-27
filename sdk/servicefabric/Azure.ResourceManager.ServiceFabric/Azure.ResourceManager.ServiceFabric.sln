@@ -7,6 +7,8 @@ Project("{1464163A-D9B8-4150-BBA6-88BB4E7F30A9}") = "Azure.ResourceManager.Servi
 EndProject
 Project("{1464163A-D9B8-4150-BBA6-88BB4E7F30A9}") = "Azure.ResourceManager.ServiceFabric.Tests", "tests\Azure.ResourceManager.ServiceFabric.Tests.csproj", "{1A791976-9BAF-44D3-8674-C8A63D5B8804}"
 EndProject
+Project("{1464163A-D9B8-4150-BBA6-88BB4E7F30A9}") = "Azure.ResourceManager.ServiceFabric.Samples", "samples\Azure.ResourceManager.ServiceFabric.Samples.csproj", "{D0C67C28-9951-4869-ADF1-3503779E73EA}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

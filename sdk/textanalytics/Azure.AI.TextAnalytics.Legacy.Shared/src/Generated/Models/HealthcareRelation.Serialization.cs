@@ -16,16 +16,20 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static HealthcareRelation DeserializeHealthcareRelation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RelationType relationType = default;
             IReadOnlyList<HealthcareRelationEntity> entities = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("relationType"))
+                if (property.NameEquals("relationType"u8))
                 {
                     relationType = new RelationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("entities"))
+                if (property.NameEquals("entities"u8))
                 {
                     List<HealthcareRelationEntity> array = new List<HealthcareRelationEntity>();
                     foreach (var item in property.Value.EnumerateArray())

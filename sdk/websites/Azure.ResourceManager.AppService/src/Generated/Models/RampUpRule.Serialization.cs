@@ -18,42 +18,42 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ActionHostName))
             {
-                writer.WritePropertyName("actionHostName");
+                writer.WritePropertyName("actionHostName"u8);
                 writer.WriteStringValue(ActionHostName);
             }
             if (Optional.IsDefined(ReroutePercentage))
             {
-                writer.WritePropertyName("reroutePercentage");
+                writer.WritePropertyName("reroutePercentage"u8);
                 writer.WriteNumberValue(ReroutePercentage.Value);
             }
             if (Optional.IsDefined(ChangeStep))
             {
-                writer.WritePropertyName("changeStep");
+                writer.WritePropertyName("changeStep"u8);
                 writer.WriteNumberValue(ChangeStep.Value);
             }
             if (Optional.IsDefined(ChangeIntervalInMinutes))
             {
-                writer.WritePropertyName("changeIntervalInMinutes");
+                writer.WritePropertyName("changeIntervalInMinutes"u8);
                 writer.WriteNumberValue(ChangeIntervalInMinutes.Value);
             }
             if (Optional.IsDefined(MinReroutePercentage))
             {
-                writer.WritePropertyName("minReroutePercentage");
+                writer.WritePropertyName("minReroutePercentage"u8);
                 writer.WriteNumberValue(MinReroutePercentage.Value);
             }
             if (Optional.IsDefined(MaxReroutePercentage))
             {
-                writer.WritePropertyName("maxReroutePercentage");
+                writer.WritePropertyName("maxReroutePercentage"u8);
                 writer.WriteNumberValue(MaxReroutePercentage.Value);
             }
             if (Optional.IsDefined(ChangeDecisionCallbackUri))
             {
-                writer.WritePropertyName("changeDecisionCallbackUrl");
+                writer.WritePropertyName("changeDecisionCallbackUrl"u8);
                 writer.WriteStringValue(ChangeDecisionCallbackUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WriteEndObject();
@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static RampUpRule DeserializeRampUpRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> actionHostName = default;
             Optional<double> reroutePercentage = default;
             Optional<double> changeStep = default;
@@ -71,12 +75,12 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("actionHostName"))
+                if (property.NameEquals("actionHostName"u8))
                 {
                     actionHostName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reroutePercentage"))
+                if (property.NameEquals("reroutePercentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                     reroutePercentage = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("changeStep"))
+                if (property.NameEquals("changeStep"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                     changeStep = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("changeIntervalInMinutes"))
+                if (property.NameEquals("changeIntervalInMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,7 +110,7 @@ namespace Azure.ResourceManager.AppService.Models
                     changeIntervalInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minReroutePercentage"))
+                if (property.NameEquals("minReroutePercentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,7 +120,7 @@ namespace Azure.ResourceManager.AppService.Models
                     minReroutePercentage = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("maxReroutePercentage"))
+                if (property.NameEquals("maxReroutePercentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,7 +130,7 @@ namespace Azure.ResourceManager.AppService.Models
                     maxReroutePercentage = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("changeDecisionCallbackUrl"))
+                if (property.NameEquals("changeDecisionCallbackUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,7 +140,7 @@ namespace Azure.ResourceManager.AppService.Models
                     changeDecisionCallbackUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;

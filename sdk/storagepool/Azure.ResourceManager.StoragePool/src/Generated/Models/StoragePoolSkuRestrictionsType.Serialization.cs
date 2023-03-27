@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.StoragePool.Models
 
         public static StoragePoolSkuRestrictionsType ToStoragePoolSkuRestrictionsType(this string value)
         {
-            if (string.Equals(value, "Location", StringComparison.InvariantCultureIgnoreCase)) return StoragePoolSkuRestrictionsType.Location;
-            if (string.Equals(value, "Zone", StringComparison.InvariantCultureIgnoreCase)) return StoragePoolSkuRestrictionsType.Zone;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Location")) return StoragePoolSkuRestrictionsType.Location;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Zone")) return StoragePoolSkuRestrictionsType.Zone;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StoragePoolSkuRestrictionsType value.");
         }
     }

@@ -15,22 +15,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static CurrentScenarioDetails DeserializeCurrentScenarioDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> scenarioName = default;
             Optional<string> jobId = default;
             Optional<DateTimeOffset> startTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scenarioName"))
+                if (property.NameEquals("scenarioName"u8))
                 {
                     scenarioName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobId"))
+                if (property.NameEquals("jobId"u8))
                 {
                     jobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

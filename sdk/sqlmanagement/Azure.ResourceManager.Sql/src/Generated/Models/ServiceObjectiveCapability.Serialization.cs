@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ServiceObjectiveCapability DeserializeServiceObjectiveCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> id = default;
             Optional<string> name = default;
             Optional<IReadOnlyList<MaxSizeRangeCapability>> supportedMaxSizes = default;
@@ -32,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,12 +46,12 @@ namespace Azure.ResourceManager.Sql.Models
                     id = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportedMaxSizes"))
+                if (property.NameEquals("supportedMaxSizes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +66,7 @@ namespace Azure.ResourceManager.Sql.Models
                     supportedMaxSizes = array;
                     continue;
                 }
-                if (property.NameEquals("performanceLevel"))
+                if (property.NameEquals("performanceLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.Sql.Models
                     performanceLevel = PerformanceLevelCapability.DeserializePerformanceLevelCapability(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +86,7 @@ namespace Azure.ResourceManager.Sql.Models
                     sku = SqlSku.DeserializeSqlSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("supportedLicenseTypes"))
+                if (property.NameEquals("supportedLicenseTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +101,7 @@ namespace Azure.ResourceManager.Sql.Models
                     supportedLicenseTypes = array;
                     continue;
                 }
-                if (property.NameEquals("includedMaxSize"))
+                if (property.NameEquals("includedMaxSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                     includedMaxSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
                     continue;
                 }
-                if (property.NameEquals("zoneRedundant"))
+                if (property.NameEquals("zoneRedundant"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -117,7 +121,7 @@ namespace Azure.ResourceManager.Sql.Models
                     zoneRedundant = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("supportedAutoPauseDelay"))
+                if (property.NameEquals("supportedAutoPauseDelay"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -127,7 +131,7 @@ namespace Azure.ResourceManager.Sql.Models
                     supportedAutoPauseDelay = AutoPauseDelayTimeRange.DeserializeAutoPauseDelayTimeRange(property.Value);
                     continue;
                 }
-                if (property.NameEquals("supportedMinCapacities"))
+                if (property.NameEquals("supportedMinCapacities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -142,12 +146,12 @@ namespace Azure.ResourceManager.Sql.Models
                     supportedMinCapacities = array;
                     continue;
                 }
-                if (property.NameEquals("computeModel"))
+                if (property.NameEquals("computeModel"u8))
                 {
                     computeModel = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportedMaintenanceConfigurations"))
+                if (property.NameEquals("supportedMaintenanceConfigurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -162,7 +166,7 @@ namespace Azure.ResourceManager.Sql.Models
                     supportedMaintenanceConfigurations = array;
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -172,7 +176,7 @@ namespace Azure.ResourceManager.Sql.Models
                     status = property.Value.GetString().ToSqlCapabilityStatus();
                     continue;
                 }
-                if (property.NameEquals("reason"))
+                if (property.NameEquals("reason"u8))
                 {
                     reason = property.Value.GetString();
                     continue;

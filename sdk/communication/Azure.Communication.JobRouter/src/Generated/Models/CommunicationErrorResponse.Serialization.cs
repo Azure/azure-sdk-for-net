@@ -15,10 +15,14 @@ namespace Azure.Communication.JobRouter
     {
         internal static CommunicationErrorResponse DeserializeCommunicationErrorResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             JobRouterError error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     error = JobRouterError.DeserializeJobRouterError(property.Value);
                     continue;

@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Instance))
             {
-                writer.WritePropertyName("instance");
+                writer.WritePropertyName("instance"u8);
                 writer.WriteStringValue(Instance);
             }
             if (Optional.IsCollectionDefined(DimensionFilter))
             {
-                writer.WritePropertyName("dimensionFilter");
+                writer.WritePropertyName("dimensionFilter"u8);
                 writer.WriteStartArray();
                 foreach (var item in DimensionFilter)
                 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             if (Optional.IsCollectionDefined(AdditionalDimensions))
             {
-                writer.WritePropertyName("additionalDimensions");
+                writer.WritePropertyName("additionalDimensions"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdditionalDimensions)
                 {
@@ -48,23 +48,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataBoxEdgeMetricCounter DeserializeDataBoxEdgeMetricCounter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> instance = default;
             Optional<IList<DataBoxEdgeMetricDimension>> dimensionFilter = default;
             Optional<IList<DataBoxEdgeMetricDimension>> additionalDimensions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instance"))
+                if (property.NameEquals("instance"u8))
                 {
                     instance = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dimensionFilter"))
+                if (property.NameEquals("dimensionFilter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +83,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     dimensionFilter = array;
                     continue;
                 }
-                if (property.NameEquals("additionalDimensions"))
+                if (property.NameEquals("additionalDimensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

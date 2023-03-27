@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.MixedReality
 
         /// <summary>
         /// Check Name Availability for local uniqueness
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/locations/{location}/checkNameAvailability
-        /// Operation Id: CheckNameAvailabilityLocal
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailabilityLocal</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location in which uniqueness will be verified. </param>
@@ -47,8 +55,16 @@ namespace Azure.ResourceManager.MixedReality
 
         /// <summary>
         /// Check Name Availability for local uniqueness
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/locations/{location}/checkNameAvailability
-        /// Operation Id: CheckNameAvailabilityLocal
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailabilityLocal</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location in which uniqueness will be verified. </param>
@@ -64,8 +80,16 @@ namespace Azure.ResourceManager.MixedReality
 
         /// <summary>
         /// List Spatial Anchors Accounts by Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/spatialAnchorsAccounts
-        /// Operation Id: SpatialAnchorsAccounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/spatialAnchorsAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SpatialAnchorsAccounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -77,8 +101,16 @@ namespace Azure.ResourceManager.MixedReality
 
         /// <summary>
         /// List Spatial Anchors Accounts by Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/spatialAnchorsAccounts
-        /// Operation Id: SpatialAnchorsAccounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/spatialAnchorsAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SpatialAnchorsAccounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -90,8 +122,16 @@ namespace Azure.ResourceManager.MixedReality
 
         /// <summary>
         /// List Remote Rendering Accounts by Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/remoteRenderingAccounts
-        /// Operation Id: RemoteRenderingAccounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/remoteRenderingAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RemoteRenderingAccounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,8 +143,16 @@ namespace Azure.ResourceManager.MixedReality
 
         /// <summary>
         /// List Remote Rendering Accounts by Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/remoteRenderingAccounts
-        /// Operation Id: RemoteRenderingAccounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/remoteRenderingAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RemoteRenderingAccounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,8 +181,16 @@ namespace Azure.ResourceManager.MixedReality
 
         /// <summary>
         /// Retrieve a Spatial Anchors Account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/spatialAnchorsAccounts/{accountName}
-        /// Operation Id: SpatialAnchorsAccounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/spatialAnchorsAccounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SpatialAnchorsAccounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> Name of an Mixed Reality Account. </param>
@@ -149,8 +205,16 @@ namespace Azure.ResourceManager.MixedReality
 
         /// <summary>
         /// Retrieve a Spatial Anchors Account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/spatialAnchorsAccounts/{accountName}
-        /// Operation Id: SpatialAnchorsAccounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/spatialAnchorsAccounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SpatialAnchorsAccounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> Name of an Mixed Reality Account. </param>
@@ -173,8 +237,16 @@ namespace Azure.ResourceManager.MixedReality
 
         /// <summary>
         /// Retrieve a Remote Rendering Account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/remoteRenderingAccounts/{accountName}
-        /// Operation Id: RemoteRenderingAccounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/remoteRenderingAccounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RemoteRenderingAccounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> Name of an Mixed Reality Account. </param>
@@ -189,8 +261,16 @@ namespace Azure.ResourceManager.MixedReality
 
         /// <summary>
         /// Retrieve a Remote Rendering Account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/remoteRenderingAccounts/{accountName}
-        /// Operation Id: RemoteRenderingAccounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/remoteRenderingAccounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RemoteRenderingAccounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> Name of an Mixed Reality Account. </param>

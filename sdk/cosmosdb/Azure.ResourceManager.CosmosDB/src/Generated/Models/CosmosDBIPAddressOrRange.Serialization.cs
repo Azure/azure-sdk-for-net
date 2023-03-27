@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IPAddressOrRange))
             {
-                writer.WritePropertyName("ipAddressOrRange");
+                writer.WritePropertyName("ipAddressOrRange"u8);
                 writer.WriteStringValue(IPAddressOrRange);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBIPAddressOrRange DeserializeCosmosDBIPAddressOrRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ipAddressOrRange = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ipAddressOrRange"))
+                if (property.NameEquals("ipAddressOrRange"u8))
                 {
                     ipAddressOrRange = property.Value.GetString();
                     continue;

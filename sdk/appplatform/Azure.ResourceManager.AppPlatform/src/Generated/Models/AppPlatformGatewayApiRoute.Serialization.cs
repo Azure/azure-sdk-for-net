@@ -19,32 +19,32 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Title))
             {
-                writer.WritePropertyName("title");
+                writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("uri");
+                writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(IsSsoEnabled))
             {
-                writer.WritePropertyName("ssoEnabled");
+                writer.WritePropertyName("ssoEnabled"u8);
                 writer.WriteBooleanValue(IsSsoEnabled.Value);
             }
             if (Optional.IsDefined(IsTokenRelayed))
             {
-                writer.WritePropertyName("tokenRelay");
+                writer.WritePropertyName("tokenRelay"u8);
                 writer.WriteBooleanValue(IsTokenRelayed.Value);
             }
             if (Optional.IsCollectionDefined(Predicates))
             {
-                writer.WritePropertyName("predicates");
+                writer.WritePropertyName("predicates"u8);
                 writer.WriteStartArray();
                 foreach (var item in Predicates)
                 {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             if (Optional.IsCollectionDefined(Filters))
             {
-                writer.WritePropertyName("filters");
+                writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             if (Optional.IsDefined(Order))
             {
-                writer.WritePropertyName("order");
+                writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
                 foreach (var item in Tags)
                 {
@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformGatewayApiRoute DeserializeAppPlatformGatewayApiRoute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> title = default;
             Optional<string> description = default;
             Optional<Uri> uri = default;
@@ -93,17 +97,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<IList<string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("title"))
+                if (property.NameEquals("title"u8))
                 {
                     title = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("uri"))
+                if (property.NameEquals("uri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +117,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ssoEnabled"))
+                if (property.NameEquals("ssoEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +127,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     ssoEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("tokenRelay"))
+                if (property.NameEquals("tokenRelay"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,7 +137,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     tokenRelay = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("predicates"))
+                if (property.NameEquals("predicates"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -148,7 +152,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     predicates = array;
                     continue;
                 }
-                if (property.NameEquals("filters"))
+                if (property.NameEquals("filters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -163,7 +167,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     filters = array;
                     continue;
                 }
-                if (property.NameEquals("order"))
+                if (property.NameEquals("order"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -173,7 +177,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     order = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

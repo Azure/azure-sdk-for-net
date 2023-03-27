@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Benchmark))
             {
-                writer.WritePropertyName("benchmark");
+                writer.WritePropertyName("benchmark"u8);
                 writer.WriteStringValue(Benchmark);
             }
             if (Optional.IsDefined(Reference))
             {
-                writer.WritePropertyName("reference");
+                writer.WritePropertyName("reference"u8);
                 writer.WriteStringValue(Reference);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static BenchmarkReference DeserializeBenchmarkReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> benchmark = default;
             Optional<string> reference = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("benchmark"))
+                if (property.NameEquals("benchmark"u8))
                 {
                     benchmark = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reference"))
+                if (property.NameEquals("reference"u8))
                 {
                     reference = property.Value.GetString();
                     continue;

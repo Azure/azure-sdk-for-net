@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.StorageSync
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ServerCertificate))
             {
-                writer.WritePropertyName("serverCertificate");
+                writer.WritePropertyName("serverCertificate"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ServerCertificate);
 #else
@@ -31,97 +31,97 @@ namespace Azure.ResourceManager.StorageSync
             }
             if (Optional.IsDefined(AgentVersion))
             {
-                writer.WritePropertyName("agentVersion");
+                writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
             if (Optional.IsDefined(ServerOSVersion))
             {
-                writer.WritePropertyName("serverOSVersion");
+                writer.WritePropertyName("serverOSVersion"u8);
                 writer.WriteStringValue(ServerOSVersion);
             }
             if (Optional.IsDefined(ServerManagementErrorCode))
             {
-                writer.WritePropertyName("serverManagementErrorCode");
+                writer.WritePropertyName("serverManagementErrorCode"u8);
                 writer.WriteNumberValue(ServerManagementErrorCode.Value);
             }
             if (Optional.IsDefined(LastHeartbeat))
             {
-                writer.WritePropertyName("lastHeartBeat");
+                writer.WritePropertyName("lastHeartBeat"u8);
                 writer.WriteStringValue(LastHeartbeat);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
             if (Optional.IsDefined(ServerRole))
             {
-                writer.WritePropertyName("serverRole");
+                writer.WritePropertyName("serverRole"u8);
                 writer.WriteStringValue(ServerRole);
             }
             if (Optional.IsDefined(ClusterId))
             {
-                writer.WritePropertyName("clusterId");
+                writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId.Value);
             }
             if (Optional.IsDefined(ClusterName))
             {
-                writer.WritePropertyName("clusterName");
+                writer.WritePropertyName("clusterName"u8);
                 writer.WriteStringValue(ClusterName);
             }
             if (Optional.IsDefined(ServerId))
             {
-                writer.WritePropertyName("serverId");
+                writer.WritePropertyName("serverId"u8);
                 writer.WriteStringValue(ServerId.Value);
             }
             if (Optional.IsDefined(StorageSyncServiceUid))
             {
-                writer.WritePropertyName("storageSyncServiceUid");
+                writer.WritePropertyName("storageSyncServiceUid"u8);
                 writer.WriteStringValue(StorageSyncServiceUid.Value);
             }
             if (Optional.IsDefined(LastWorkflowId))
             {
-                writer.WritePropertyName("lastWorkflowId");
+                writer.WritePropertyName("lastWorkflowId"u8);
                 writer.WriteStringValue(LastWorkflowId);
             }
             if (Optional.IsDefined(LastOperationName))
             {
-                writer.WritePropertyName("lastOperationName");
+                writer.WritePropertyName("lastOperationName"u8);
                 writer.WriteStringValue(LastOperationName);
             }
             if (Optional.IsDefined(DiscoveryEndpointUri))
             {
-                writer.WritePropertyName("discoveryEndpointUri");
+                writer.WritePropertyName("discoveryEndpointUri"u8);
                 writer.WriteStringValue(DiscoveryEndpointUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ResourceLocation))
             {
-                writer.WritePropertyName("resourceLocation");
+                writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation.Value);
             }
             if (Optional.IsDefined(ServiceLocation))
             {
-                writer.WritePropertyName("serviceLocation");
+                writer.WritePropertyName("serviceLocation"u8);
                 writer.WriteStringValue(ServiceLocation.Value);
             }
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(ManagementEndpointUri))
             {
-                writer.WritePropertyName("managementEndpointUri");
+                writer.WritePropertyName("managementEndpointUri"u8);
                 writer.WriteStringValue(ManagementEndpointUri.AbsoluteUri);
             }
             if (Optional.IsDefined(MonitoringEndpointUri))
             {
-                writer.WritePropertyName("monitoringEndpointUri");
+                writer.WritePropertyName("monitoringEndpointUri"u8);
                 writer.WriteStringValue(MonitoringEndpointUri.AbsoluteUri);
             }
             if (Optional.IsDefined(MonitoringConfiguration))
             {
-                writer.WritePropertyName("monitoringConfiguration");
+                writer.WritePropertyName("monitoringConfiguration"u8);
                 writer.WriteStringValue(MonitoringConfiguration);
             }
             writer.WriteEndObject();
@@ -130,6 +130,10 @@ namespace Azure.ResourceManager.StorageSync
 
         internal static StorageSyncRegisteredServerData DeserializeStorageSyncRegisteredServerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -159,22 +163,22 @@ namespace Azure.ResourceManager.StorageSync
             Optional<string> serverName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -184,7 +188,7 @@ namespace Azure.ResourceManager.StorageSync
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -193,7 +197,7 @@ namespace Azure.ResourceManager.StorageSync
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("serverCertificate"))
+                        if (property0.NameEquals("serverCertificate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -203,12 +207,12 @@ namespace Azure.ResourceManager.StorageSync
                             serverCertificate = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("agentVersion"))
+                        if (property0.NameEquals("agentVersion"u8))
                         {
                             agentVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("agentVersionStatus"))
+                        if (property0.NameEquals("agentVersionStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -218,7 +222,7 @@ namespace Azure.ResourceManager.StorageSync
                             agentVersionStatus = new RegisteredServerAgentVersionStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("agentVersionExpirationDate"))
+                        if (property0.NameEquals("agentVersionExpirationDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -228,12 +232,12 @@ namespace Azure.ResourceManager.StorageSync
                             agentVersionExpirationDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("serverOSVersion"))
+                        if (property0.NameEquals("serverOSVersion"u8))
                         {
                             serverOSVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("serverManagementErrorCode"))
+                        if (property0.NameEquals("serverManagementErrorCode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -243,22 +247,22 @@ namespace Azure.ResourceManager.StorageSync
                             serverManagementErrorCode = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("lastHeartBeat"))
+                        if (property0.NameEquals("lastHeartBeat"u8))
                         {
                             lastHeartbeat = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("serverRole"))
+                        if (property0.NameEquals("serverRole"u8))
                         {
                             serverRole = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("clusterId"))
+                        if (property0.NameEquals("clusterId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -268,12 +272,12 @@ namespace Azure.ResourceManager.StorageSync
                             clusterId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("clusterName"))
+                        if (property0.NameEquals("clusterName"u8))
                         {
                             clusterName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("serverId"))
+                        if (property0.NameEquals("serverId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -283,7 +287,7 @@ namespace Azure.ResourceManager.StorageSync
                             serverId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("storageSyncServiceUid"))
+                        if (property0.NameEquals("storageSyncServiceUid"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -293,17 +297,17 @@ namespace Azure.ResourceManager.StorageSync
                             storageSyncServiceUid = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("lastWorkflowId"))
+                        if (property0.NameEquals("lastWorkflowId"u8))
                         {
                             lastWorkflowId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastOperationName"))
+                        if (property0.NameEquals("lastOperationName"u8))
                         {
                             lastOperationName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("discoveryEndpointUri"))
+                        if (property0.NameEquals("discoveryEndpointUri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -313,7 +317,7 @@ namespace Azure.ResourceManager.StorageSync
                             discoveryEndpointUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("resourceLocation"))
+                        if (property0.NameEquals("resourceLocation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -323,7 +327,7 @@ namespace Azure.ResourceManager.StorageSync
                             resourceLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("serviceLocation"))
+                        if (property0.NameEquals("serviceLocation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -333,12 +337,12 @@ namespace Azure.ResourceManager.StorageSync
                             serviceLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("friendlyName"))
+                        if (property0.NameEquals("friendlyName"u8))
                         {
                             friendlyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("managementEndpointUri"))
+                        if (property0.NameEquals("managementEndpointUri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -348,7 +352,7 @@ namespace Azure.ResourceManager.StorageSync
                             managementEndpointUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("monitoringEndpointUri"))
+                        if (property0.NameEquals("monitoringEndpointUri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -358,12 +362,12 @@ namespace Azure.ResourceManager.StorageSync
                             monitoringEndpointUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("monitoringConfiguration"))
+                        if (property0.NameEquals("monitoringConfiguration"u8))
                         {
                             monitoringConfiguration = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("serverName"))
+                        if (property0.NameEquals("serverName"u8))
                         {
                             serverName = property0.Value.GetString();
                             continue;

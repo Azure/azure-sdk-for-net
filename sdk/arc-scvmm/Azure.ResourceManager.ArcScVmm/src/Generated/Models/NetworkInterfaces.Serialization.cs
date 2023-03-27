@@ -18,37 +18,37 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(MacAddress))
             {
-                writer.WritePropertyName("macAddress");
+                writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
             if (Optional.IsDefined(VirtualNetworkId))
             {
-                writer.WritePropertyName("virtualNetworkId");
+                writer.WritePropertyName("virtualNetworkId"u8);
                 writer.WriteStringValue(VirtualNetworkId);
             }
             if (Optional.IsDefined(IPv4AddressType))
             {
-                writer.WritePropertyName("ipv4AddressType");
+                writer.WritePropertyName("ipv4AddressType"u8);
                 writer.WriteStringValue(IPv4AddressType.Value.ToString());
             }
             if (Optional.IsDefined(IPv6AddressType))
             {
-                writer.WritePropertyName("ipv6AddressType");
+                writer.WritePropertyName("ipv6AddressType"u8);
                 writer.WriteStringValue(IPv6AddressType.Value.ToString());
             }
             if (Optional.IsDefined(MacAddressType))
             {
-                writer.WritePropertyName("macAddressType");
+                writer.WritePropertyName("macAddressType"u8);
                 writer.WriteStringValue(MacAddressType.Value.ToString());
             }
             if (Optional.IsDefined(NicId))
             {
-                writer.WritePropertyName("nicId");
+                writer.WritePropertyName("nicId"u8);
                 writer.WriteStringValue(NicId);
             }
             writer.WriteEndObject();
@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
 
         internal static NetworkInterfaces DeserializeNetworkInterfaces(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> displayName = default;
             Optional<IReadOnlyList<string>> ipv4Addresses = default;
@@ -69,17 +73,17 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             Optional<string> nicId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipv4Addresses"))
+                if (property.NameEquals("ipv4Addresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +98,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     ipv4Addresses = array;
                     continue;
                 }
-                if (property.NameEquals("ipv6Addresses"))
+                if (property.NameEquals("ipv6Addresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,22 +113,22 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     ipv6Addresses = array;
                     continue;
                 }
-                if (property.NameEquals("macAddress"))
+                if (property.NameEquals("macAddress"u8))
                 {
                     macAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("virtualNetworkId"))
+                if (property.NameEquals("virtualNetworkId"u8))
                 {
                     virtualNetworkId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkName"))
+                if (property.NameEquals("networkName"u8))
                 {
                     networkName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipv4AddressType"))
+                if (property.NameEquals("ipv4AddressType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -134,7 +138,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     ipv4AddressType = new AllocationMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ipv6AddressType"))
+                if (property.NameEquals("ipv6AddressType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -144,7 +148,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     ipv6AddressType = new AllocationMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("macAddressType"))
+                if (property.NameEquals("macAddressType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,7 +158,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     macAddressType = new AllocationMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("nicId"))
+                if (property.NameEquals("nicId"u8))
                 {
                     nicId = property.Value.GetString();
                     continue;

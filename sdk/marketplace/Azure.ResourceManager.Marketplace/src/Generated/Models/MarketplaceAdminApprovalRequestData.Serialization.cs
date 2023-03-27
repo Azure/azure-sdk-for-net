@@ -19,26 +19,26 @@ namespace Azure.ResourceManager.Marketplace
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(OfferId))
             {
-                writer.WritePropertyName("offerId");
+                writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
             if (Optional.IsDefined(PublisherId))
             {
-                writer.WritePropertyName("publisherId");
+                writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
             if (Optional.IsDefined(AdminAction))
             {
-                writer.WritePropertyName("adminAction");
+                writer.WritePropertyName("adminAction"u8);
                 writer.WriteStringValue(AdminAction.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ApprovedPlans))
             {
-                writer.WritePropertyName("approvedPlans");
+                writer.WritePropertyName("approvedPlans"u8);
                 writer.WriteStartArray();
                 foreach (var item in ApprovedPlans)
                 {
@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.Marketplace
             }
             if (Optional.IsDefined(Comment))
             {
-                writer.WritePropertyName("comment");
+                writer.WritePropertyName("comment"u8);
                 writer.WriteStringValue(Comment);
             }
             if (Optional.IsDefined(Administrator))
             {
-                writer.WritePropertyName("administrator");
+                writer.WritePropertyName("administrator"u8);
                 writer.WriteStringValue(Administrator);
             }
             if (Optional.IsCollectionDefined(CollectionIds))
             {
-                writer.WritePropertyName("collectionIds");
+                writer.WritePropertyName("collectionIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in CollectionIds)
                 {
@@ -72,6 +72,10 @@ namespace Azure.ResourceManager.Marketplace
 
         internal static MarketplaceAdminApprovalRequestData DeserializeMarketplaceAdminApprovalRequestData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -88,22 +92,22 @@ namespace Azure.ResourceManager.Marketplace
             Optional<Uri> icon = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +117,7 @@ namespace Azure.ResourceManager.Marketplace
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,22 +126,22 @@ namespace Azure.ResourceManager.Marketplace
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("offerId"))
+                        if (property0.NameEquals("offerId"u8))
                         {
                             offerId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("publisherId"))
+                        if (property0.NameEquals("publisherId"u8))
                         {
                             publisherId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("adminAction"))
+                        if (property0.NameEquals("adminAction"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -147,7 +151,7 @@ namespace Azure.ResourceManager.Marketplace
                             adminAction = new MarketplaceAdminAction(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("approvedPlans"))
+                        if (property0.NameEquals("approvedPlans"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -162,17 +166,17 @@ namespace Azure.ResourceManager.Marketplace
                             approvedPlans = array;
                             continue;
                         }
-                        if (property0.NameEquals("comment"))
+                        if (property0.NameEquals("comment"u8))
                         {
                             comment = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("administrator"))
+                        if (property0.NameEquals("administrator"u8))
                         {
                             administrator = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("plans"))
+                        if (property0.NameEquals("plans"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -187,7 +191,7 @@ namespace Azure.ResourceManager.Marketplace
                             plans = array;
                             continue;
                         }
-                        if (property0.NameEquals("collectionIds"))
+                        if (property0.NameEquals("collectionIds"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -202,7 +206,7 @@ namespace Azure.ResourceManager.Marketplace
                             collectionIds = array;
                             continue;
                         }
-                        if (property0.NameEquals("icon"))
+                        if (property0.NameEquals("icon"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

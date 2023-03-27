@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("roleId");
+            writer.WritePropertyName("roleId"u8);
             writer.WriteStringValue(RoleId);
             writer.WriteEndObject();
         }
 
         internal static DataBoxEdgeRoleSinkInfo DeserializeDataBoxEdgeRoleSinkInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier roleId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("roleId"))
+                if (property.NameEquals("roleId"u8))
                 {
                     roleId = new ResourceIdentifier(property.Value.GetString());
                     continue;

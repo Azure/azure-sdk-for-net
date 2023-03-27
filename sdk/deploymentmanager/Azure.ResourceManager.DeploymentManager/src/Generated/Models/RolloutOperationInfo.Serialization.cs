@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     {
         internal static RolloutOperationInfo DeserializeRolloutOperationInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> retryAttempt = default;
             Optional<bool> skipSucceededOnRetry = default;
             Optional<DateTimeOffset> startTime = default;
@@ -23,7 +27,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("retryAttempt"))
+                if (property.NameEquals("retryAttempt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,7 +37,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     retryAttempt = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("skipSucceededOnRetry"))
+                if (property.NameEquals("skipSucceededOnRetry"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +47,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     skipSucceededOnRetry = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +67,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

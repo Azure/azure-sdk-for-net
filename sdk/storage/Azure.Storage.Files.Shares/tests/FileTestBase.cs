@@ -45,8 +45,9 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task<DisposingShare> GetTestShareAsync(
             ShareServiceClient service = default,
             string shareName = default,
-            IDictionary<string, string> metadata = default)
-            => await SharesClientBuilder.GetTestShareAsync(service, shareName, metadata);
+            IDictionary<string, string> metadata = default,
+            ShareClientOptions options = default)
+            => await SharesClientBuilder.GetTestShareAsync(service, shareName, metadata, options);
 
         public ShareClientOptions GetOptions()
         {
@@ -115,7 +116,10 @@ namespace Azure.Storage.Files.Shares.Tests
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials());
         }
 
-        public SasQueryParameters GetNewFileServiceSasCredentialsShare(string shareName, StorageSharedKeyCredential sharedKeyCredentials = default)
+        public SasQueryParameters GetNewFileServiceSasCredentialsShare(
+            string shareName,
+            StorageSharedKeyCredential sharedKeyCredentials = default,
+            ShareSasPermissions permissions = ShareSasPermissions.All)
         {
             var builder = new ShareSasBuilder
             {
@@ -125,7 +129,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             };
-            builder.SetPermissions(ShareSasPermissions.All);
+            builder.SetPermissions(permissions);
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials());
         }
 

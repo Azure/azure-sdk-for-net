@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Target))
             {
-                writer.WritePropertyName("target");
+                writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
             if (Optional.IsDefined(UsageModel))
             {
-                writer.WritePropertyName("usageModel");
+                writer.WritePropertyName("usageModel"u8);
                 writer.WriteStringValue(UsageModel);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static Nfs3Target DeserializeNfs3Target(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> target = default;
             Optional<string> usageModel = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
                     target = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("usageModel"))
+                if (property.NameEquals("usageModel"u8))
                 {
                     usageModel = property.Value.GetString();
                     continue;

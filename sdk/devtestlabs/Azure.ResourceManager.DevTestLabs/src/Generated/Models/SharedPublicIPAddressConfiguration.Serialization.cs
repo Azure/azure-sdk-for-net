@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(InboundNatRules))
             {
-                writer.WritePropertyName("inboundNatRules");
+                writer.WritePropertyName("inboundNatRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in InboundNatRules)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static SharedPublicIPAddressConfiguration DeserializeSharedPublicIPAddressConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<DevTestLabInboundNatRule>> inboundNatRules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("inboundNatRules"))
+                if (property.NameEquals("inboundNatRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

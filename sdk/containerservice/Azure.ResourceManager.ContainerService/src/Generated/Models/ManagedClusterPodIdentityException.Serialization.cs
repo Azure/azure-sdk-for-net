@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("namespace");
+            writer.WritePropertyName("namespace"u8);
             writer.WriteStringValue(Namespace);
-            writer.WritePropertyName("podLabels");
+            writer.WritePropertyName("podLabels"u8);
             writer.WriteStartObject();
             foreach (var item in PodLabels)
             {
@@ -33,22 +33,26 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterPodIdentityException DeserializeManagedClusterPodIdentityException(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string @namespace = default;
             IDictionary<string, string> podLabels = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("namespace"))
+                if (property.NameEquals("namespace"u8))
                 {
                     @namespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("podLabels"))
+                if (property.NameEquals("podLabels"u8))
                 {
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())

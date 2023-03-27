@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="bigDataPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="bigDataPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BigDataPoolResourceInfoData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string bigDataPoolName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseBigDataPoolInfoData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string bigDataPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        BigDataPoolResourceInfoData value = default;
+                        SynapseBigDataPoolInfoData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BigDataPoolResourceInfoData.DeserializeBigDataPoolResourceInfoData(document.RootElement);
+                        value = SynapseBigDataPoolInfoData.DeserializeSynapseBigDataPoolInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BigDataPoolResourceInfoData)null, message.Response);
+                    return Response.FromValue((SynapseBigDataPoolInfoData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="bigDataPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="bigDataPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BigDataPoolResourceInfoData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string bigDataPoolName, CancellationToken cancellationToken = default)
+        public Response<SynapseBigDataPoolInfoData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string bigDataPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -113,19 +113,19 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        BigDataPoolResourceInfoData value = default;
+                        SynapseBigDataPoolInfoData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BigDataPoolResourceInfoData.DeserializeBigDataPoolResourceInfoData(document.RootElement);
+                        value = SynapseBigDataPoolInfoData.DeserializeSynapseBigDataPoolInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BigDataPoolResourceInfoData)null, message.Response);
+                    return Response.FromValue((SynapseBigDataPoolInfoData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string bigDataPoolName, BigDataPoolResourceInfoPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string bigDataPoolName, SynapseBigDataPoolInfoPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="bigDataPoolName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="bigDataPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BigDataPoolResourceInfoData>> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string bigDataPoolName, BigDataPoolResourceInfoPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseBigDataPoolInfoData>> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string bigDataPoolName, SynapseBigDataPoolInfoPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -174,9 +174,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        BigDataPoolResourceInfoData value = default;
+                        SynapseBigDataPoolInfoData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BigDataPoolResourceInfoData.DeserializeBigDataPoolResourceInfoData(document.RootElement);
+                        value = SynapseBigDataPoolInfoData.DeserializeSynapseBigDataPoolInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="bigDataPoolName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="bigDataPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BigDataPoolResourceInfoData> Update(string subscriptionId, string resourceGroupName, string workspaceName, string bigDataPoolName, BigDataPoolResourceInfoPatch patch, CancellationToken cancellationToken = default)
+        public Response<SynapseBigDataPoolInfoData> Update(string subscriptionId, string resourceGroupName, string workspaceName, string bigDataPoolName, SynapseBigDataPoolInfoPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -207,9 +207,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        BigDataPoolResourceInfoData value = default;
+                        SynapseBigDataPoolInfoData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BigDataPoolResourceInfoData.DeserializeBigDataPoolResourceInfoData(document.RootElement);
+                        value = SynapseBigDataPoolInfoData.DeserializeSynapseBigDataPoolInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string bigDataPoolName, BigDataPoolResourceInfoData info, bool? force)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string bigDataPoolName, SynapseBigDataPoolInfoData info, bool? force)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="bigDataPoolName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="bigDataPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string bigDataPoolName, BigDataPoolResourceInfoData info, bool? force = null, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string bigDataPoolName, SynapseBigDataPoolInfoData info, bool? force = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="bigDataPoolName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="bigDataPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string bigDataPoolName, BigDataPoolResourceInfoData info, bool? force = null, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string bigDataPoolName, SynapseBigDataPoolInfoData info, bool? force = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Delete a Big Data pool from the workspace. </summary>
+        /// <summary> Delete a Big Data pool from the workspace. You can call ToObjectFromJson&lt;SynapseBigDataPoolInfoData&gt;() against the Value property of the result to get specified type. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Delete a Big Data pool from the workspace. </summary>
+        /// <summary> Delete a Big Data pool from the workspace. You can call ToObjectFromJson&lt;SynapseBigDataPoolInfoData&gt;() against the Value property of the result to get specified type. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BigDataPoolResourceInfoListResult>> ListByWorkspaceAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseBigDataPoolInfoListResult>> ListByWorkspaceAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -425,9 +425,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        BigDataPoolResourceInfoListResult value = default;
+                        SynapseBigDataPoolInfoListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BigDataPoolResourceInfoListResult.DeserializeBigDataPoolResourceInfoListResult(document.RootElement);
+                        value = SynapseBigDataPoolInfoListResult.DeserializeSynapseBigDataPoolInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BigDataPoolResourceInfoListResult> ListByWorkspace(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<SynapseBigDataPoolInfoListResult> ListByWorkspace(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -454,9 +454,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        BigDataPoolResourceInfoListResult value = default;
+                        SynapseBigDataPoolInfoListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BigDataPoolResourceInfoListResult.DeserializeBigDataPoolResourceInfoListResult(document.RootElement);
+                        value = SynapseBigDataPoolInfoListResult.DeserializeSynapseBigDataPoolInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BigDataPoolResourceInfoListResult>> ListByWorkspaceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseBigDataPoolInfoListResult>> ListByWorkspaceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -499,9 +499,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        BigDataPoolResourceInfoListResult value = default;
+                        SynapseBigDataPoolInfoListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BigDataPoolResourceInfoListResult.DeserializeBigDataPoolResourceInfoListResult(document.RootElement);
+                        value = SynapseBigDataPoolInfoListResult.DeserializeSynapseBigDataPoolInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BigDataPoolResourceInfoListResult> ListByWorkspaceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<SynapseBigDataPoolInfoListResult> ListByWorkspaceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -530,9 +530,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        BigDataPoolResourceInfoListResult value = default;
+                        SynapseBigDataPoolInfoListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BigDataPoolResourceInfoListResult.DeserializeBigDataPoolResourceInfoListResult(document.RootElement);
+                        value = SynapseBigDataPoolInfoListResult.DeserializeSynapseBigDataPoolInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

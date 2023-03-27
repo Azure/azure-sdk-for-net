@@ -14,23 +14,27 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static UpsertManagedServerOperationParameters DeserializeUpsertManagedServerOperationParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> family = default;
             Optional<string> tier = default;
             Optional<int> vCores = default;
             Optional<int> storageSizeInGB = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("family"))
+                if (property.NameEquals("family"u8))
                 {
                     family = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     tier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vCores"))
+                if (property.NameEquals("vCores"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
                     vCores = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("storageSizeInGB"))
+                if (property.NameEquals("storageSizeInGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

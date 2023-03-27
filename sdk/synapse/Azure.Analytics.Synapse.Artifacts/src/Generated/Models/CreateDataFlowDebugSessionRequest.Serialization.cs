@@ -20,22 +20,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ComputeType))
             {
-                writer.WritePropertyName("computeType");
+                writer.WritePropertyName("computeType"u8);
                 writer.WriteStringValue(ComputeType);
             }
             if (Optional.IsDefined(CoreCount))
             {
-                writer.WritePropertyName("coreCount");
+                writer.WritePropertyName("coreCount"u8);
                 writer.WriteNumberValue(CoreCount.Value);
             }
             if (Optional.IsDefined(TimeToLive))
             {
-                writer.WritePropertyName("timeToLive");
+                writer.WritePropertyName("timeToLive"u8);
                 writer.WriteNumberValue(TimeToLive.Value);
             }
             if (Optional.IsDefined(IntegrationRuntime))
             {
-                writer.WritePropertyName("integrationRuntime");
+                writer.WritePropertyName("integrationRuntime"u8);
                 writer.WriteObjectValue(IntegrationRuntime);
             }
             writer.WriteEndObject();
@@ -43,18 +43,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static CreateDataFlowDebugSessionRequest DeserializeCreateDataFlowDebugSessionRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> computeType = default;
             Optional<int> coreCount = default;
             Optional<int> timeToLive = default;
             Optional<IntegrationRuntimeDebugResource> integrationRuntime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("computeType"))
+                if (property.NameEquals("computeType"u8))
                 {
                     computeType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("coreCount"))
+                if (property.NameEquals("coreCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +68,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     coreCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("timeToLive"))
+                if (property.NameEquals("timeToLive"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +78,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     timeToLive = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("integrationRuntime"))
+                if (property.NameEquals("integrationRuntime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

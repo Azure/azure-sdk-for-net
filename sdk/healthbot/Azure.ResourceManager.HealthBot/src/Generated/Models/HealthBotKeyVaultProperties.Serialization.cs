@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.HealthBot.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyName");
+            writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName);
             if (Optional.IsDefined(KeyVersion))
             {
-                writer.WritePropertyName("keyVersion");
+                writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
-            writer.WritePropertyName("keyVaultUri");
+            writer.WritePropertyName("keyVaultUri"u8);
             writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             if (Optional.IsDefined(UserIdentity))
             {
-                writer.WritePropertyName("userIdentity");
+                writer.WritePropertyName("userIdentity"u8);
                 writer.WriteStringValue(UserIdentity);
             }
             writer.WriteEndObject();
@@ -35,28 +35,32 @@ namespace Azure.ResourceManager.HealthBot.Models
 
         internal static HealthBotKeyVaultProperties DeserializeHealthBotKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string keyName = default;
             Optional<string> keyVersion = default;
             Uri keyVaultUri = default;
             Optional<string> userIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyName"))
+                if (property.NameEquals("keyName"u8))
                 {
                     keyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVersion"))
+                if (property.NameEquals("keyVersion"u8))
                 {
                     keyVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVaultUri"))
+                if (property.NameEquals("keyVaultUri"u8))
                 {
                     keyVaultUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("userIdentity"))
+                if (property.NameEquals("userIdentity"u8))
                 {
                     userIdentity = property.Value.GetString();
                     continue;

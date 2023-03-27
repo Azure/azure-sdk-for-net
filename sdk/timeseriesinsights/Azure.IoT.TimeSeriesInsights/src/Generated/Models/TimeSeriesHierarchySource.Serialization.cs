@@ -18,7 +18,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(InstanceFieldNames))
             {
-                writer.WritePropertyName("instanceFieldNames");
+                writer.WritePropertyName("instanceFieldNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in InstanceFieldNames)
                 {
@@ -31,10 +31,14 @@ namespace Azure.IoT.TimeSeriesInsights
 
         internal static TimeSeriesHierarchySource DeserializeTimeSeriesHierarchySource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> instanceFieldNames = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("instanceFieldNames"))
+                if (property.NameEquals("instanceFieldNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

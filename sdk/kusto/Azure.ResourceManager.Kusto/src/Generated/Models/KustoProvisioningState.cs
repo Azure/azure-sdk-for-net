@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Kusto.Models
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
         private const string MovingValue = "Moving";
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Running. </summary>
         public static KustoProvisioningState Running { get; } = new KustoProvisioningState(RunningValue);
@@ -41,6 +42,8 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoProvisioningState Failed { get; } = new KustoProvisioningState(FailedValue);
         /// <summary> Moving. </summary>
         public static KustoProvisioningState Moving { get; } = new KustoProvisioningState(MovingValue);
+        /// <summary> Canceled. </summary>
+        public static KustoProvisioningState Canceled { get; } = new KustoProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="KustoProvisioningState"/> values are the same. </summary>
         public static bool operator ==(KustoProvisioningState left, KustoProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoProvisioningState"/> values are not the same. </summary>

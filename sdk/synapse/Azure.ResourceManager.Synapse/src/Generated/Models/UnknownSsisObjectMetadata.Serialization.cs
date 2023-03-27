@@ -14,18 +14,22 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static UnknownSsisObjectMetadata DeserializeUnknownSsisObjectMetadata(JsonElement element)
         {
-            SsisObjectMetadataType type = "Unknown";
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            SynapseSsisObjectMetadataType type = "Unknown";
             Optional<long> id = default;
             Optional<string> name = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = new SsisObjectMetadataType(property.Value.GetString());
+                    type = new SynapseSsisObjectMetadataType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,12 +39,12 @@ namespace Azure.ResourceManager.Synapse.Models
                     id = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;

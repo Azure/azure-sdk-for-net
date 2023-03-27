@@ -111,8 +111,16 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Gets a Kusto cluster database principalAssignment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/principalAssignments/{principalAssignmentName}
-        /// Operation Id: DatabasePrincipalAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/principalAssignments/{principalAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabasePrincipalAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -126,8 +134,16 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Gets a Kusto cluster database principalAssignment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/principalAssignments/{principalAssignmentName}
-        /// Operation Id: DatabasePrincipalAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/principalAssignments/{principalAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabasePrincipalAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -148,8 +164,16 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Gets a Kusto cluster database script.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts/{scriptName}
-        /// Operation Id: Scripts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts/{scriptName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Scripts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="scriptName"> The name of the Kusto database script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,8 +187,16 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Gets a Kusto cluster database script.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts/{scriptName}
-        /// Operation Id: Scripts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts/{scriptName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Scripts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="scriptName"> The name of the Kusto database script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -185,8 +217,16 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Returns a data connection.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}
-        /// Operation Id: DataConnections_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataConnections_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataConnectionName"> The name of the data connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -200,8 +240,16 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Returns a data connection.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}
-        /// Operation Id: DataConnections_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataConnections_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataConnectionName"> The name of the data connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -215,8 +263,16 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Returns a database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}
-        /// Operation Id: Databases_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Databases_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<KustoDatabaseResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -239,8 +295,16 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Returns a database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}
-        /// Operation Id: Databases_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Databases_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<KustoDatabaseResource> Get(CancellationToken cancellationToken = default)
@@ -263,8 +327,16 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Deletes the database with the given name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}
-        /// Operation Id: Databases_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Databases_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -289,8 +361,16 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Deletes the database with the given name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}
-        /// Operation Id: Databases_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Databases_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -315,8 +395,16 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Updates a database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}
-        /// Operation Id: Databases_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Databases_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The database parameters supplied to the Update operation. </param>
@@ -346,8 +434,16 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Updates a database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}
-        /// Operation Id: Databases_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Databases_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The database parameters supplied to the Update operation. </param>
@@ -377,62 +473,58 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Returns a list of database principals of the given Kusto cluster and database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/listPrincipals
-        /// Operation Id: Databases_ListPrincipals
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/listPrincipals</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Databases_ListPrincipals</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="KustoDatabasePrincipal" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoDatabasePrincipal> GetPrincipalsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<KustoDatabasePrincipal>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseResource.GetPrincipals");
-                scope.Start();
-                try
-                {
-                    var response = await _kustoDatabaseDatabasesRestClient.ListPrincipalsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabaseDatabasesRestClient.CreateListPrincipalsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KustoDatabasePrincipal.DeserializeKustoDatabasePrincipal, _kustoDatabaseDatabasesClientDiagnostics, Pipeline, "KustoDatabaseResource.GetPrincipals", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Returns a list of database principals of the given Kusto cluster and database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/listPrincipals
-        /// Operation Id: Databases_ListPrincipals
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/listPrincipals</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Databases_ListPrincipals</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="KustoDatabasePrincipal" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoDatabasePrincipal> GetPrincipals(CancellationToken cancellationToken = default)
         {
-            Page<KustoDatabasePrincipal> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseResource.GetPrincipals");
-                scope.Start();
-                try
-                {
-                    var response = _kustoDatabaseDatabasesRestClient.ListPrincipals(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabaseDatabasesRestClient.CreateListPrincipalsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, KustoDatabasePrincipal.DeserializeKustoDatabasePrincipal, _kustoDatabaseDatabasesClientDiagnostics, Pipeline, "KustoDatabaseResource.GetPrincipals", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Add Database principals permissions.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/addPrincipals
-        /// Operation Id: Databases_AddPrincipals
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/addPrincipals</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Databases_AddPrincipals</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="databasePrincipalsToAdd"> List of database principals to add. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -442,28 +534,22 @@ namespace Azure.ResourceManager.Kusto
         {
             Argument.AssertNotNull(databasePrincipalsToAdd, nameof(databasePrincipalsToAdd));
 
-            async Task<Page<KustoDatabasePrincipal>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseResource.AddPrincipals");
-                scope.Start();
-                try
-                {
-                    var response = await _kustoDatabaseDatabasesRestClient.AddPrincipalsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databasePrincipalsToAdd, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabaseDatabasesRestClient.CreateAddPrincipalsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databasePrincipalsToAdd);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KustoDatabasePrincipal.DeserializeKustoDatabasePrincipal, _kustoDatabaseDatabasesClientDiagnostics, Pipeline, "KustoDatabaseResource.AddPrincipals", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Add Database principals permissions.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/addPrincipals
-        /// Operation Id: Databases_AddPrincipals
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/addPrincipals</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Databases_AddPrincipals</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="databasePrincipalsToAdd"> List of database principals to add. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -473,28 +559,22 @@ namespace Azure.ResourceManager.Kusto
         {
             Argument.AssertNotNull(databasePrincipalsToAdd, nameof(databasePrincipalsToAdd));
 
-            Page<KustoDatabasePrincipal> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseResource.AddPrincipals");
-                scope.Start();
-                try
-                {
-                    var response = _kustoDatabaseDatabasesRestClient.AddPrincipals(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databasePrincipalsToAdd, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabaseDatabasesRestClient.CreateAddPrincipalsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databasePrincipalsToAdd);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, KustoDatabasePrincipal.DeserializeKustoDatabasePrincipal, _kustoDatabaseDatabasesClientDiagnostics, Pipeline, "KustoDatabaseResource.AddPrincipals", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Remove Database principals permissions.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/removePrincipals
-        /// Operation Id: Databases_RemovePrincipals
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/removePrincipals</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Databases_RemovePrincipals</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="databasePrincipalsToRemove"> List of database principals to remove. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -504,28 +584,22 @@ namespace Azure.ResourceManager.Kusto
         {
             Argument.AssertNotNull(databasePrincipalsToRemove, nameof(databasePrincipalsToRemove));
 
-            async Task<Page<KustoDatabasePrincipal>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseResource.RemovePrincipals");
-                scope.Start();
-                try
-                {
-                    var response = await _kustoDatabaseDatabasesRestClient.RemovePrincipalsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databasePrincipalsToRemove, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabaseDatabasesRestClient.CreateRemovePrincipalsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databasePrincipalsToRemove);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KustoDatabasePrincipal.DeserializeKustoDatabasePrincipal, _kustoDatabaseDatabasesClientDiagnostics, Pipeline, "KustoDatabaseResource.RemovePrincipals", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Remove Database principals permissions.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/removePrincipals
-        /// Operation Id: Databases_RemovePrincipals
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/removePrincipals</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Databases_RemovePrincipals</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="databasePrincipalsToRemove"> List of database principals to remove. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -535,28 +609,22 @@ namespace Azure.ResourceManager.Kusto
         {
             Argument.AssertNotNull(databasePrincipalsToRemove, nameof(databasePrincipalsToRemove));
 
-            Page<KustoDatabasePrincipal> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseResource.RemovePrincipals");
-                scope.Start();
-                try
-                {
-                    var response = _kustoDatabaseDatabasesRestClient.RemovePrincipals(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databasePrincipalsToRemove, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabaseDatabasesRestClient.CreateRemovePrincipalsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databasePrincipalsToRemove);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, KustoDatabasePrincipal.DeserializeKustoDatabasePrincipal, _kustoDatabaseDatabasesClientDiagnostics, Pipeline, "KustoDatabaseResource.RemovePrincipals", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Checks that the database principal assignment is valid and is not already in use.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/checkPrincipalAssignmentNameAvailability
-        /// Operation Id: DatabasePrincipalAssignments_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/checkPrincipalAssignmentNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabasePrincipalAssignments_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -581,8 +649,16 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Checks that the database principal assignment is valid and is not already in use.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/checkPrincipalAssignmentNameAvailability
-        /// Operation Id: DatabasePrincipalAssignments_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/checkPrincipalAssignmentNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabasePrincipalAssignments_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -607,8 +683,16 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Checks that the script name is valid and is not already in use.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scriptsCheckNameAvailability
-        /// Operation Id: Scripts_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scriptsCheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Scripts_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The name of the script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -633,8 +717,16 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Checks that the script name is valid and is not already in use.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scriptsCheckNameAvailability
-        /// Operation Id: Scripts_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scriptsCheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Scripts_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The name of the script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -659,8 +751,16 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Checks that the data connection parameters are valid.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnectionValidation
-        /// Operation Id: DataConnections_dataConnectionValidation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnectionValidation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataConnections_dataConnectionValidation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The data connection parameters supplied to the CreateOrUpdate operation. </param>
@@ -689,8 +789,16 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Checks that the data connection parameters are valid.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnectionValidation
-        /// Operation Id: DataConnections_dataConnectionValidation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnectionValidation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataConnections_dataConnectionValidation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The data connection parameters supplied to the CreateOrUpdate operation. </param>
@@ -719,8 +827,16 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Checks that the data connection name is valid and is not already in use.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/checkNameAvailability
-        /// Operation Id: DataConnections_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataConnections_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The name of the data connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -745,8 +861,16 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Checks that the data connection name is valid and is not already in use.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/checkNameAvailability
-        /// Operation Id: DataConnections_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataConnections_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The name of the data connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

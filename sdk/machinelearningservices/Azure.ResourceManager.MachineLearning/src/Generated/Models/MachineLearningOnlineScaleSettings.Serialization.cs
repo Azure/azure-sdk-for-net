@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("scaleType");
+            writer.WritePropertyName("scaleType"u8);
             writer.WriteStringValue(ScaleType.ToString());
             writer.WriteEndObject();
         }
 
         internal static MachineLearningOnlineScaleSettings DeserializeMachineLearningOnlineScaleSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("scaleType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

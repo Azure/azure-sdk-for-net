@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyExpirationPeriodInDays");
+            writer.WritePropertyName("keyExpirationPeriodInDays"u8);
             writer.WriteNumberValue(KeyExpirationPeriodInDays);
             writer.WriteEndObject();
         }
 
         internal static StorageAccountKeyPolicy DeserializeStorageAccountKeyPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int keyExpirationPeriodInDays = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyExpirationPeriodInDays"))
+                if (property.NameEquals("keyExpirationPeriodInDays"u8))
                 {
                     keyExpirationPeriodInDays = property.Value.GetInt32();
                     continue;

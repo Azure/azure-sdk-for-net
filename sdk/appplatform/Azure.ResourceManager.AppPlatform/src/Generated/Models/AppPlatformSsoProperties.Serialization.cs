@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Scope))
             {
-                writer.WritePropertyName("scope");
+                writer.WritePropertyName("scope"u8);
                 writer.WriteStartArray();
                 foreach (var item in Scope)
                 {
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("clientId");
+                writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
             if (Optional.IsDefined(ClientSecret))
             {
-                writer.WritePropertyName("clientSecret");
+                writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
             if (Optional.IsDefined(IssuerUri))
             {
-                writer.WritePropertyName("issuerUri");
+                writer.WritePropertyName("issuerUri"u8);
                 writer.WriteStringValue(IssuerUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -47,13 +47,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformSsoProperties DeserializeAppPlatformSsoProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> scope = default;
             Optional<string> clientId = default;
             Optional<string> clientSecret = default;
             Optional<Uri> issuerUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scope"))
+                if (property.NameEquals("scope"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,17 +72,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     scope = array;
                     continue;
                 }
-                if (property.NameEquals("clientId"))
+                if (property.NameEquals("clientId"u8))
                 {
                     clientId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientSecret"))
+                if (property.NameEquals("clientSecret"u8))
                 {
                     clientSecret = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("issuerUri"))
+                if (property.NameEquals("issuerUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

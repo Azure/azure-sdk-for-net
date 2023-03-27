@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsCollectionDefined(PlacementProperties))
             {
-                writer.WritePropertyName("placementProperties");
+                writer.WritePropertyName("placementProperties"u8);
                 writer.WriteStartObject();
                 foreach (var item in PlacementProperties)
                 {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
             if (Optional.IsCollectionDefined(Capacities))
             {
-                writer.WritePropertyName("capacities");
+                writer.WritePropertyName("capacities"u8);
                 writer.WriteStartObject();
                 foreach (var item in Capacities)
                 {
@@ -40,42 +40,42 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("clientConnectionEndpointPort");
+            writer.WritePropertyName("clientConnectionEndpointPort"u8);
             writer.WriteNumberValue(ClientConnectionEndpointPort);
-            writer.WritePropertyName("httpGatewayEndpointPort");
+            writer.WritePropertyName("httpGatewayEndpointPort"u8);
             writer.WriteNumberValue(HttpGatewayEndpointPort);
             if (Optional.IsDefined(DurabilityLevel))
             {
-                writer.WritePropertyName("durabilityLevel");
+                writer.WritePropertyName("durabilityLevel"u8);
                 writer.WriteStringValue(DurabilityLevel.Value.ToString());
             }
             if (Optional.IsDefined(ApplicationPorts))
             {
-                writer.WritePropertyName("applicationPorts");
+                writer.WritePropertyName("applicationPorts"u8);
                 writer.WriteObjectValue(ApplicationPorts);
             }
             if (Optional.IsDefined(EphemeralPorts))
             {
-                writer.WritePropertyName("ephemeralPorts");
+                writer.WritePropertyName("ephemeralPorts"u8);
                 writer.WriteObjectValue(EphemeralPorts);
             }
-            writer.WritePropertyName("isPrimary");
+            writer.WritePropertyName("isPrimary"u8);
             writer.WriteBooleanValue(IsPrimary);
-            writer.WritePropertyName("vmInstanceCount");
+            writer.WritePropertyName("vmInstanceCount"u8);
             writer.WriteNumberValue(VmInstanceCount);
             if (Optional.IsDefined(ReverseProxyEndpointPort))
             {
-                writer.WritePropertyName("reverseProxyEndpointPort");
+                writer.WritePropertyName("reverseProxyEndpointPort"u8);
                 writer.WriteNumberValue(ReverseProxyEndpointPort.Value);
             }
             if (Optional.IsDefined(IsStateless))
             {
-                writer.WritePropertyName("isStateless");
+                writer.WritePropertyName("isStateless"u8);
                 writer.WriteBooleanValue(IsStateless.Value);
             }
             if (Optional.IsDefined(IsMultipleAvailabilityZonesSupported))
             {
-                writer.WritePropertyName("multipleAvailabilityZones");
+                writer.WritePropertyName("multipleAvailabilityZones"u8);
                 writer.WriteBooleanValue(IsMultipleAvailabilityZonesSupported.Value);
             }
             writer.WriteEndObject();
@@ -83,6 +83,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ClusterNodeTypeDescription DeserializeClusterNodeTypeDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<IDictionary<string, string>> placementProperties = default;
             Optional<IDictionary<string, string>> capacities = default;
@@ -98,12 +102,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Optional<bool> multipleAvailabilityZones = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("placementProperties"))
+                if (property.NameEquals("placementProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +122,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     placementProperties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("capacities"))
+                if (property.NameEquals("capacities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,17 +137,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     capacities = dictionary;
                     continue;
                 }
-                if (property.NameEquals("clientConnectionEndpointPort"))
+                if (property.NameEquals("clientConnectionEndpointPort"u8))
                 {
                     clientConnectionEndpointPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("httpGatewayEndpointPort"))
+                if (property.NameEquals("httpGatewayEndpointPort"u8))
                 {
                     httpGatewayEndpointPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("durabilityLevel"))
+                if (property.NameEquals("durabilityLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -153,7 +157,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     durabilityLevel = new ClusterDurabilityLevel(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("applicationPorts"))
+                if (property.NameEquals("applicationPorts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -163,7 +167,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     applicationPorts = ClusterEndpointRangeDescription.DeserializeClusterEndpointRangeDescription(property.Value);
                     continue;
                 }
-                if (property.NameEquals("ephemeralPorts"))
+                if (property.NameEquals("ephemeralPorts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -173,17 +177,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     ephemeralPorts = ClusterEndpointRangeDescription.DeserializeClusterEndpointRangeDescription(property.Value);
                     continue;
                 }
-                if (property.NameEquals("isPrimary"))
+                if (property.NameEquals("isPrimary"u8))
                 {
                     isPrimary = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("vmInstanceCount"))
+                if (property.NameEquals("vmInstanceCount"u8))
                 {
                     vmInstanceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("reverseProxyEndpointPort"))
+                if (property.NameEquals("reverseProxyEndpointPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -193,7 +197,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     reverseProxyEndpointPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("isStateless"))
+                if (property.NameEquals("isStateless"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -203,7 +207,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     isStateless = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("multipleAvailabilityZones"))
+                if (property.NameEquals("multipleAvailabilityZones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

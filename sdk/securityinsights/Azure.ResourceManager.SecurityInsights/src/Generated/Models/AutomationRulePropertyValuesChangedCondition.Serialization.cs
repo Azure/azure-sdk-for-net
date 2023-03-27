@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PropertyName))
             {
-                writer.WritePropertyName("propertyName");
+                writer.WritePropertyName("propertyName"u8);
                 writer.WriteStringValue(PropertyName.Value.ToString());
             }
             if (Optional.IsDefined(ChangeType))
             {
-                writer.WritePropertyName("changeType");
+                writer.WritePropertyName("changeType"u8);
                 writer.WriteStringValue(ChangeType.Value.ToString());
             }
             if (Optional.IsDefined(Operator))
             {
-                writer.WritePropertyName("operator");
+                writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToString());
             }
             if (Optional.IsCollectionDefined(PropertyValues))
             {
-                writer.WritePropertyName("propertyValues");
+                writer.WritePropertyName("propertyValues"u8);
                 writer.WriteStartArray();
                 foreach (var item in PropertyValues)
                 {
@@ -46,13 +46,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static AutomationRulePropertyValuesChangedCondition DeserializeAutomationRulePropertyValuesChangedCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AutomationRulePropertyChangedConditionSupportedPropertyType> propertyName = default;
             Optional<AutomationRulePropertyChangedConditionSupportedChangedType> changeType = default;
             Optional<AutomationRulePropertyConditionSupportedOperator> @operator = default;
             Optional<IList<string>> propertyValues = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("propertyName"))
+                if (property.NameEquals("propertyName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +66,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     propertyName = new AutomationRulePropertyChangedConditionSupportedPropertyType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("changeType"))
+                if (property.NameEquals("changeType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     changeType = new AutomationRulePropertyChangedConditionSupportedChangedType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("operator"))
+                if (property.NameEquals("operator"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +86,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     @operator = new AutomationRulePropertyConditionSupportedOperator(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("propertyValues"))
+                if (property.NameEquals("propertyValues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

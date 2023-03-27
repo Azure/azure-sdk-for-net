@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.Json;
 using System.Text.RegularExpressions;
-using System.Xml.Linq;
 using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
@@ -349,6 +349,14 @@ namespace Azure.AI.TextAnalytics
 
         #region Healthcare
 
+        internal static BinaryData ConvertToFhirBundle(JsonElement fhirBundle) =>
+            fhirBundle.ValueKind switch
+            {
+                JsonValueKind.Undefined => null, // A FHIR bundle was not included in the response.
+                JsonValueKind.Object => new BinaryData(fhirBundle),
+                _ => throw new InvalidOperationException($"This value's ValueKind is not Object.")
+            };
+
         internal static List<HealthcareEntity> ConvertToHealthcareEntityCollection(IEnumerable<HealthcareEntityInternal> healthcareEntities)
         {
             return healthcareEntities.Select((entity) => new HealthcareEntity(entity)).ToList();
@@ -372,7 +380,7 @@ namespace Azure.AI.TextAnalytics
                     document.Statistics ?? default,
                     ConvertToHealthcareEntityCollection(document.Entities),
                     ConvertToHealthcareEntityRelationsCollection(document.Entities, document.Relations),
-                    document.FhirBundle,
+                    ConvertToFhirBundle(document.FhirBundle),
                     document.DetectedLanguage,
                     ConvertToWarnings(document.Warnings)));
             }
@@ -775,7 +783,7 @@ namespace Azure.AI.TextAnalytics
                 ModelVersion = action.ModelVersion,
                 StringIndexType = Constants.DefaultStringIndexType,
                 LoggingOptOut = action.DisableServiceLogs,
-                SentenceCount = action.MaxSentenceCount,
+                SentenceCount = action.SentenceCount,
             };
 
             return new AbstractiveSummarizationLROTask(parameters)

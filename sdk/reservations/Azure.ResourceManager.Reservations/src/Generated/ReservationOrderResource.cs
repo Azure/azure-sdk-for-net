@@ -111,10 +111,18 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Get specific `Reservation` details.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}
-        /// Operation Id: Reservation_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="reservationId"> Id of the reservation item. </param>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
@@ -125,10 +133,18 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Get specific `Reservation` details.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}
-        /// Operation Id: Reservation_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="reservationId"> Id of the reservation item. </param>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
@@ -139,8 +155,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Get the details of the `ReservationOrder`.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}
-        /// Operation Id: ReservationOrder_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrder_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> May be used to expand the planInformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -164,8 +188,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Get the details of the `ReservationOrder`.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}
-        /// Operation Id: ReservationOrder_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrder_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> May be used to expand the planInformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -189,8 +221,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Purchase `ReservationOrder` and create resource under the specified URI.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}
-        /// Operation Id: ReservationOrder_Purchase
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrder_Purchase</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
@@ -219,8 +259,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Purchase `ReservationOrder` and create resource under the specified URI.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}
-        /// Operation Id: ReservationOrder_Purchase
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrder_Purchase</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
@@ -249,8 +297,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Split a `Reservation` into two `Reservation`s with specified quantity distribution.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/split
-        /// Operation Id: Reservation_Split
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/split</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_Split</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Information needed to Split a reservation item. </param>
@@ -279,8 +335,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Split a `Reservation` into two `Reservation`s with specified quantity distribution.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/split
-        /// Operation Id: Reservation_Split
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/split</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_Split</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Information needed to Split a reservation item. </param>
@@ -309,8 +373,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Merge the specified `Reservation`s into a new `Reservation`. The two `Reservation`s being merged must have same properties.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/merge
-        /// Operation Id: Reservation_Merge
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/merge</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_Merge</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Information needed for commercial request for a reservation. </param>
@@ -339,8 +411,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Merge the specified `Reservation`s into a new `Reservation`. The two `Reservation`s being merged must have same properties.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/merge
-        /// Operation Id: Reservation_Merge
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/merge</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_Merge</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Information needed for commercial request for a reservation. </param>
@@ -369,8 +449,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Change directory (tenant) of `ReservationOrder` and all `Reservation` under it to specified tenant id
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/changeDirectory
-        /// Operation Id: ReservationOrder_ChangeDirectory
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/changeDirectory</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrder_ChangeDirectory</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Information needed to change directory of reservation order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -395,8 +483,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Change directory (tenant) of `ReservationOrder` and all `Reservation` under it to specified tenant id
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/changeDirectory
-        /// Operation Id: ReservationOrder_ChangeDirectory
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/changeDirectory</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrder_ChangeDirectory</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Information needed to change directory of reservation order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -422,8 +518,16 @@ namespace Azure.ResourceManager.Reservations
         /// <summary>
         /// Calculate price for returning `Reservations` if there are no policy errors.
         /// 
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/calculateRefund
-        /// Operation Id: CalculateRefund_Post
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/calculateRefund</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CalculateRefund_Post</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Information needed for calculating refund of a reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -449,8 +553,16 @@ namespace Azure.ResourceManager.Reservations
         /// <summary>
         /// Calculate price for returning `Reservations` if there are no policy errors.
         /// 
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/calculateRefund
-        /// Operation Id: CalculateRefund_Post
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/calculateRefund</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CalculateRefund_Post</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Information needed for calculating refund of a reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -474,14 +586,23 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Return a reservation.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/return
-        /// Operation Id: Return_Post
+        /// Return a reservation and get refund information.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/return</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Return_Post</description>
+        /// </item>
+        /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Information needed for returning reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ReservationRefundResult>> ReturnAsync(ReservationRefundContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ReservationOrderResource>> ReturnAsync(WaitUntil waitUntil, ReservationRefundContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -490,7 +611,10 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = await _returnRestClient.PostAsync(Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
-                return response;
+                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _returnClientDiagnostics, Pipeline, _returnRestClient.CreatePostRequest(Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -500,14 +624,23 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Return a reservation.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/return
-        /// Operation Id: Return_Post
+        /// Return a reservation and get refund information.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/return</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Return_Post</description>
+        /// </item>
+        /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Information needed for returning reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ReservationRefundResult> Return(ReservationRefundContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ReservationOrderResource> Return(WaitUntil waitUntil, ReservationRefundContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -516,7 +649,10 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = _returnRestClient.Post(Guid.Parse(Id.Name), content, cancellationToken);
-                return response;
+                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _returnClientDiagnostics, Pipeline, _returnRestClient.CreatePostRequest(Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {

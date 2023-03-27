@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(BlobPrefixList))
             {
-                writer.WritePropertyName("blobPrefixList");
+                writer.WritePropertyName("blobPrefixList"u8);
                 writer.WriteStartArray();
                 foreach (var item in BlobPrefixList)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             if (Optional.IsCollectionDefined(BlobPathList))
             {
-                writer.WritePropertyName("blobPathList");
+                writer.WritePropertyName("blobPathList"u8);
                 writer.WriteStartArray();
                 foreach (var item in BlobPathList)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             if (Optional.IsCollectionDefined(ContainerList))
             {
-                writer.WritePropertyName("containerList");
+                writer.WritePropertyName("containerList"u8);
                 writer.WriteStartArray();
                 foreach (var item in ContainerList)
                 {
@@ -51,12 +51,16 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static BlobFilterDetails DeserializeBlobFilterDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> blobPrefixList = default;
             Optional<IList<string>> blobPathList = default;
             Optional<IList<string>> containerList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("blobPrefixList"))
+                if (property.NameEquals("blobPrefixList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     blobPrefixList = array;
                     continue;
                 }
-                if (property.NameEquals("blobPathList"))
+                if (property.NameEquals("blobPathList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +90,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     blobPathList = array;
                     continue;
                 }
-                if (property.NameEquals("containerList"))
+                if (property.NameEquals("containerList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

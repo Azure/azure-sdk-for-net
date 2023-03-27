@@ -21,12 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
             if (Optional.IsCollectionDefined(Activities))
             {
-                writer.WritePropertyName("activities");
+                writer.WritePropertyName("activities"u8);
                 writer.WriteStartArray();
                 foreach (var item in Activities)
                 {
@@ -39,16 +39,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SwitchCase DeserializeSwitchCase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> value = default;
             Optional<IList<Activity>> activities = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("activities"))
+                if (property.NameEquals("activities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

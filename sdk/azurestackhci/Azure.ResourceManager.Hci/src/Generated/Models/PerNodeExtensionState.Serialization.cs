@@ -14,22 +14,26 @@ namespace Azure.ResourceManager.Hci.Models
     {
         internal static PerNodeExtensionState DeserializePerNodeExtensionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> extension = default;
             Optional<NodeExtensionState> state = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("extension"))
+                if (property.NameEquals("extension"u8))
                 {
                     extension = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

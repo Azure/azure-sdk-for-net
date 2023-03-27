@@ -19,18 +19,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Container))
             {
-                writer.WritePropertyName("container");
+                writer.WritePropertyName("container"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Container);
 #else
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Container.ToString()).RootElement);
 #endif
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetLocationType);
             if (Optional.IsDefined(FolderPath))
             {
-                writer.WritePropertyName("folderPath");
+                writer.WritePropertyName("folderPath"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(FolderPath);
 #else
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(FileName))
             {
-                writer.WritePropertyName("fileName");
+                writer.WritePropertyName("fileName"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(FileName);
 #else
@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureBlobStorageLocation DeserializeAzureBlobStorageLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> container = default;
             string type = default;
             Optional<BinaryData> folderPath = default;
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("container"))
+                if (property.NameEquals("container"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,12 +82,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     container = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("folderPath"))
+                if (property.NameEquals("folderPath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +97,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     folderPath = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("fileName"))
+                if (property.NameEquals("fileName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

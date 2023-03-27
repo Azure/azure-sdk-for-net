@@ -15,22 +15,26 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static ManagedRuleGroupDefinition DeserializeManagedRuleGroupDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ruleGroupName = default;
             Optional<string> description = default;
             Optional<IReadOnlyList<ManagedRuleDefinition>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ruleGroupName"))
+                if (property.NameEquals("ruleGroupName"u8))
                 {
                     ruleGroupName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rules"))
+                if (property.NameEquals("rules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

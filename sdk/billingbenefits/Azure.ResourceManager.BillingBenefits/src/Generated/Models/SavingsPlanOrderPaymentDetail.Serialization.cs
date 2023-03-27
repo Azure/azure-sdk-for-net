@@ -18,32 +18,32 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DueOn))
             {
-                writer.WritePropertyName("dueDate");
+                writer.WritePropertyName("dueDate"u8);
                 writer.WriteStringValue(DueOn.Value, "D");
             }
             if (Optional.IsDefined(PayOn))
             {
-                writer.WritePropertyName("paymentDate");
+                writer.WritePropertyName("paymentDate"u8);
                 writer.WriteStringValue(PayOn.Value, "D");
             }
             if (Optional.IsDefined(PricingCurrencyTotal))
             {
-                writer.WritePropertyName("pricingCurrencyTotal");
+                writer.WritePropertyName("pricingCurrencyTotal"u8);
                 writer.WriteObjectValue(PricingCurrencyTotal);
             }
             if (Optional.IsDefined(BillingCurrencyTotal))
             {
-                writer.WritePropertyName("billingCurrencyTotal");
+                writer.WritePropertyName("billingCurrencyTotal"u8);
                 writer.WriteObjectValue(BillingCurrencyTotal);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(BillingAccount))
             {
-                writer.WritePropertyName("billingAccount");
+                writer.WritePropertyName("billingAccount"u8);
                 writer.WriteStringValue(BillingAccount);
             }
             writer.WriteEndObject();
@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         internal static SavingsPlanOrderPaymentDetail DeserializeSavingsPlanOrderPaymentDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> dueDate = default;
             Optional<DateTimeOffset> paymentDate = default;
             Optional<BillingBenefitsPrice> pricingCurrencyTotal = default;
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             Optional<string> billingAccount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dueDate"))
+                if (property.NameEquals("dueDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +74,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     dueDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
-                if (property.NameEquals("paymentDate"))
+                if (property.NameEquals("paymentDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +84,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     paymentDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
-                if (property.NameEquals("pricingCurrencyTotal"))
+                if (property.NameEquals("pricingCurrencyTotal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     pricingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value);
                     continue;
                 }
-                if (property.NameEquals("billingCurrencyTotal"))
+                if (property.NameEquals("billingCurrencyTotal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +104,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     billingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value);
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +114,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     status = new BillingBenefitsPaymentStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("extendedStatusInfo"))
+                if (property.NameEquals("extendedStatusInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +124,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     extendedStatusInfo = BillingBenefitsExtendedStatusInfo.DeserializeBillingBenefitsExtendedStatusInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("billingAccount"))
+                if (property.NameEquals("billingAccount"u8))
                 {
                     billingAccount = property.Value.GetString();
                     continue;

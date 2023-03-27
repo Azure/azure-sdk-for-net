@@ -17,23 +17,23 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("daysOfMonth");
+            writer.WritePropertyName("daysOfMonth"u8);
             writer.WriteStartArray();
             foreach (var item in DaysOfMonth)
             {
                 writer.WriteNumberValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("recurrenceType");
+            writer.WritePropertyName("recurrenceType"u8);
             writer.WriteStringValue(RecurrenceType.ToString());
             if (Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("startTime");
+                writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "T");
             }
             if (Optional.IsDefined(EndOn))
             {
-                writer.WritePropertyName("endTime");
+                writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "T");
             }
             writer.WriteEndObject();
@@ -41,13 +41,17 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static AlertProcessingRuleMonthlyRecurrence DeserializeAlertProcessingRuleMonthlyRecurrence(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<int> daysOfMonth = default;
             RecurrenceType recurrenceType = default;
             Optional<TimeSpan> startTime = default;
             Optional<TimeSpan> endTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("daysOfMonth"))
+                if (property.NameEquals("daysOfMonth"u8))
                 {
                     List<int> array = new List<int>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -57,12 +61,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     daysOfMonth = array;
                     continue;
                 }
-                if (property.NameEquals("recurrenceType"))
+                if (property.NameEquals("recurrenceType"u8))
                 {
                     recurrenceType = new RecurrenceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     startTime = property.Value.GetTimeSpan("T");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

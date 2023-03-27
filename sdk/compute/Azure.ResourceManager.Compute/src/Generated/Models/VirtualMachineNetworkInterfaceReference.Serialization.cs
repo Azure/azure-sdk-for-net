@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Primary))
             {
-                writer.WritePropertyName("primary");
+                writer.WritePropertyName("primary"u8);
                 writer.WriteBooleanValue(Primary.Value);
             }
             if (Optional.IsDefined(DeleteOption))
             {
-                writer.WritePropertyName("deleteOption");
+                writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());
             }
             writer.WriteEndObject();
@@ -38,12 +38,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineNetworkInterfaceReference DeserializeVirtualMachineNetworkInterfaceReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<bool> primary = default;
             Optional<ComputeDeleteOption> deleteOption = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("primary"))
+                        if (property0.NameEquals("primary"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Models
                             primary = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("deleteOption"))
+                        if (property0.NameEquals("deleteOption"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

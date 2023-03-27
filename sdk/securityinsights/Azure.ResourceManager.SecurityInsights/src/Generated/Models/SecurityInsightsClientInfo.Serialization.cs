@@ -15,23 +15,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static SecurityInsightsClientInfo DeserializeSecurityInsightsClientInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> email = default;
             Optional<string> name = default;
             Optional<Guid> objectId = default;
             Optional<string> userPrincipalName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("email"))
+                if (property.NameEquals("email"u8))
                 {
                     email = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectId"))
+                if (property.NameEquals("objectId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     objectId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("userPrincipalName"))
+                if (property.NameEquals("userPrincipalName"u8))
                 {
                     userPrincipalName = property.Value.GetString();
                     continue;

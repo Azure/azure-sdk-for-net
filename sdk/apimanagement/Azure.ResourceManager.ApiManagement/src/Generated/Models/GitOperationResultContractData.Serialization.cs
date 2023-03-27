@@ -18,36 +18,36 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(OperationResultIdentifier))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(OperationResultIdentifier);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
             if (Optional.IsDefined(StartedOn))
             {
-                writer.WritePropertyName("started");
+                writer.WritePropertyName("started"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
             if (Optional.IsDefined(UpdatedOn))
             {
-                writer.WritePropertyName("updated");
+                writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(ResultInfo))
             {
-                writer.WritePropertyName("resultInfo");
+                writer.WritePropertyName("resultInfo"u8);
                 writer.WriteStringValue(ResultInfo);
             }
             if (Optional.IsDefined(Error))
             {
-                writer.WritePropertyName("error");
+                writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
             writer.WriteEndObject();
@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static GitOperationResultContractData DeserializeGitOperationResultContractData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -69,22 +73,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<IReadOnlyList<OperationResultLogItemContract>> actionLog = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +98,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,12 +107,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("id"))
+                        if (property0.NameEquals("id"u8))
                         {
                             id0 = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -118,7 +122,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             status = property0.Value.GetString().ToAsyncOperationStatus();
                             continue;
                         }
-                        if (property0.NameEquals("started"))
+                        if (property0.NameEquals("started"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -128,7 +132,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             started = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("updated"))
+                        if (property0.NameEquals("updated"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -138,12 +142,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             updated = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("resultInfo"))
+                        if (property0.NameEquals("resultInfo"u8))
                         {
                             resultInfo = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("error"))
+                        if (property0.NameEquals("error"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -153,7 +157,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             error = ErrorResponseBody.DeserializeErrorResponseBody(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("actionLog"))
+                        if (property0.NameEquals("actionLog"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

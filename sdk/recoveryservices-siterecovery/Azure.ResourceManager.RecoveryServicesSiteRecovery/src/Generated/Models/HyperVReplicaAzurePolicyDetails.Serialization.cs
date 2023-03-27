@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static HyperVReplicaAzurePolicyDetails DeserializeHyperVReplicaAzurePolicyDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> recoveryPointHistoryDurationInHours = default;
             Optional<int> applicationConsistentSnapshotFrequencyInHours = default;
             Optional<int> replicationInterval = default;
@@ -23,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryPointHistoryDurationInHours"))
+                if (property.NameEquals("recoveryPointHistoryDurationInHours"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     recoveryPointHistoryDurationInHours = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("applicationConsistentSnapshotFrequencyInHours"))
+                if (property.NameEquals("applicationConsistentSnapshotFrequencyInHours"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     applicationConsistentSnapshotFrequencyInHours = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("replicationInterval"))
+                if (property.NameEquals("replicationInterval"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,22 +57,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     replicationInterval = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("onlineReplicationStartTime"))
+                if (property.NameEquals("onlineReplicationStartTime"u8))
                 {
                     onlineReplicationStartTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryption"))
+                if (property.NameEquals("encryption"u8))
                 {
                     encryption = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("activeStorageAccountId"))
+                if (property.NameEquals("activeStorageAccountId"u8))
                 {
                     activeStorageAccountId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

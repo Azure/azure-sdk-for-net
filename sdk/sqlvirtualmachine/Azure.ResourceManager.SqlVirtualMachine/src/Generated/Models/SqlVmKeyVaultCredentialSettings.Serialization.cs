@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enable");
+                writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(CredentialName))
             {
-                writer.WritePropertyName("credentialName");
+                writer.WritePropertyName("credentialName"u8);
                 writer.WriteStringValue(CredentialName);
             }
             if (Optional.IsDefined(AzureKeyVaultUri))
             {
-                writer.WritePropertyName("azureKeyVaultUrl");
+                writer.WritePropertyName("azureKeyVaultUrl"u8);
                 writer.WriteStringValue(AzureKeyVaultUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ServicePrincipalName))
             {
-                writer.WritePropertyName("servicePrincipalName");
+                writer.WritePropertyName("servicePrincipalName"u8);
                 writer.WriteStringValue(ServicePrincipalName);
             }
             if (Optional.IsDefined(ServicePrincipalSecret))
             {
-                writer.WritePropertyName("servicePrincipalSecret");
+                writer.WritePropertyName("servicePrincipalSecret"u8);
                 writer.WriteStringValue(ServicePrincipalSecret);
             }
             writer.WriteEndObject();
@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlVmKeyVaultCredentialSettings DeserializeSqlVmKeyVaultCredentialSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enable = default;
             Optional<string> credentialName = default;
             Optional<Uri> azureKeyVaultUrl = default;
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<string> servicePrincipalSecret = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enable"))
+                if (property.NameEquals("enable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,12 +67,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     enable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("credentialName"))
+                if (property.NameEquals("credentialName"u8))
                 {
                     credentialName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("azureKeyVaultUrl"))
+                if (property.NameEquals("azureKeyVaultUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,12 +82,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     azureKeyVaultUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("servicePrincipalName"))
+                if (property.NameEquals("servicePrincipalName"u8))
                 {
                     servicePrincipalName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("servicePrincipalSecret"))
+                if (property.NameEquals("servicePrincipalSecret"u8))
                 {
                     servicePrincipalSecret = property.Value.GetString();
                     continue;

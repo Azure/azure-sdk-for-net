@@ -15,12 +15,16 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightBillingResources DeserializeHDInsightBillingResources(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> region = default;
             Optional<IReadOnlyList<HDInsightBillingMeters>> billingMeters = default;
             Optional<IReadOnlyList<HDInsightDiskBillingMeters>> diskBillingMeters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("region"))
+                if (property.NameEquals("region"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     region = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("billingMeters"))
+                if (property.NameEquals("billingMeters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     billingMeters = array;
                     continue;
                 }
-                if (property.NameEquals("diskBillingMeters"))
+                if (property.NameEquals("diskBillingMeters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

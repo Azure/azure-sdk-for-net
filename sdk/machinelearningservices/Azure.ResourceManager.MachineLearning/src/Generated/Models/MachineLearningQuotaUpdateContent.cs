@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Quota update parameters.
-    /// Serialized Name: QuotaUpdateParameters
-    /// </summary>
+    /// <summary> Quota update parameters. </summary>
     public partial class MachineLearningQuotaUpdateContent
     {
         /// <summary> Initializes a new instance of MachineLearningQuotaUpdateContent. </summary>
@@ -22,15 +19,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Value = new ChangeTrackingList<MachineLearningQuotaProperties>();
         }
 
-        /// <summary>
-        /// The list for update quota.
-        /// Serialized Name: QuotaUpdateParameters.value
-        /// </summary>
+        /// <summary> The list for update quota. </summary>
         public IList<MachineLearningQuotaProperties> Value { get; }
-        /// <summary>
-        /// Region of workspace quota to be updated.
-        /// Serialized Name: QuotaUpdateParameters.location
-        /// </summary>
+        /// <summary> Region of workspace quota to be updated. </summary>
         public AzureLocation? Location { get; set; }
     }
 }

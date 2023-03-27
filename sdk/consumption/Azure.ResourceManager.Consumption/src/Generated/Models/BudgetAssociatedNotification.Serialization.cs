@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Consumption.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("enabled");
+            writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            writer.WritePropertyName("operator");
+            writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(Operator.ToString());
-            writer.WritePropertyName("threshold");
+            writer.WritePropertyName("threshold"u8);
             writer.WriteNumberValue(Threshold);
-            writer.WritePropertyName("contactEmails");
+            writer.WritePropertyName("contactEmails"u8);
             writer.WriteStartArray();
             foreach (var item in ContactEmails)
             {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Consumption.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(ContactRoles))
             {
-                writer.WritePropertyName("contactRoles");
+                writer.WritePropertyName("contactRoles"u8);
                 writer.WriteStartArray();
                 foreach (var item in ContactRoles)
                 {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
             if (Optional.IsCollectionDefined(ContactGroups))
             {
-                writer.WritePropertyName("contactGroups");
+                writer.WritePropertyName("contactGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in ContactGroups)
                 {
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Consumption.Models
             }
             if (Optional.IsDefined(ThresholdType))
             {
-                writer.WritePropertyName("thresholdType");
+                writer.WritePropertyName("thresholdType"u8);
                 writer.WriteStringValue(ThresholdType.Value.ToString());
             }
             if (Optional.IsDefined(Locale))
             {
-                writer.WritePropertyName("locale");
+                writer.WritePropertyName("locale"u8);
                 writer.WriteStringValue(Locale.Value.ToString());
             }
             writer.WriteEndObject();
@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static BudgetAssociatedNotification DeserializeBudgetAssociatedNotification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enabled = default;
             NotificationAlertTriggerType @operator = default;
             decimal threshold = default;
@@ -74,22 +78,22 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<RecipientNotificationLanguageCode> locale = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("operator"))
+                if (property.NameEquals("operator"u8))
                 {
                     @operator = new NotificationAlertTriggerType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("threshold"))
+                if (property.NameEquals("threshold"u8))
                 {
                     threshold = property.Value.GetDecimal();
                     continue;
                 }
-                if (property.NameEquals("contactEmails"))
+                if (property.NameEquals("contactEmails"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     contactEmails = array;
                     continue;
                 }
-                if (property.NameEquals("contactRoles"))
+                if (property.NameEquals("contactRoles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +118,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     contactRoles = array;
                     continue;
                 }
-                if (property.NameEquals("contactGroups"))
+                if (property.NameEquals("contactGroups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,7 +133,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     contactGroups = array;
                     continue;
                 }
-                if (property.NameEquals("thresholdType"))
+                if (property.NameEquals("thresholdType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,7 +143,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     thresholdType = new NotificationThresholdType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("locale"))
+                if (property.NameEquals("locale"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

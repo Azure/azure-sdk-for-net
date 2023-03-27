@@ -15,12 +15,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static VirtualMachinePatchStatus DeserializeVirtualMachinePatchStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AvailablePatchSummary> availablePatchSummary = default;
             Optional<LastPatchInstallationSummary> lastPatchInstallationSummary = default;
             Optional<IReadOnlyList<InstanceViewStatus>> configurationStatuses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("availablePatchSummary"))
+                if (property.NameEquals("availablePatchSummary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
                     availablePatchSummary = AvailablePatchSummary.DeserializeAvailablePatchSummary(property.Value);
                     continue;
                 }
-                if (property.NameEquals("lastPatchInstallationSummary"))
+                if (property.NameEquals("lastPatchInstallationSummary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
                     lastPatchInstallationSummary = LastPatchInstallationSummary.DeserializeLastPatchInstallationSummary(property.Value);
                     continue;
                 }
-                if (property.NameEquals("configurationStatuses"))
+                if (property.NameEquals("configurationStatuses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(CorsRules))
             {
-                writer.WritePropertyName("corsRules");
+                writer.WritePropertyName("corsRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in CorsRules)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageCorsRules DeserializeStorageCorsRules(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<StorageCorsRule>> corsRules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("corsRules"))
+                if (property.NameEquals("corsRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

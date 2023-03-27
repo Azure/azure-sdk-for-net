@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(RampUpRules))
             {
-                writer.WritePropertyName("rampUpRules");
+                writer.WritePropertyName("rampUpRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in RampUpRules)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static RoutingRuleExperiments DeserializeRoutingRuleExperiments(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<RampUpRule>> rampUpRules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rampUpRules"))
+                if (property.NameEquals("rampUpRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

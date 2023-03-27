@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static DevTestLabResourceCost DeserializeDevTestLabResourceCost(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourcename = default;
             Optional<string> resourceUId = default;
             Optional<double> resourceCost = default;
@@ -25,17 +29,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<string> externalResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourcename"))
+                if (property.NameEquals("resourcename"u8))
                 {
                     resourcename = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceUId"))
+                if (property.NameEquals("resourceUId"u8))
                 {
                     resourceUId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceCost"))
+                if (property.NameEquals("resourceCost"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,32 +49,32 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     resourceCost = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceOwner"))
+                if (property.NameEquals("resourceOwner"u8))
                 {
                     resourceOwner = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourcePricingTier"))
+                if (property.NameEquals("resourcePricingTier"u8))
                 {
                     resourcePricingTier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceStatus"))
+                if (property.NameEquals("resourceStatus"u8))
                 {
                     resourceStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("externalResourceId"))
+                if (property.NameEquals("externalResourceId"u8))
                 {
                     externalResourceId = property.Value.GetString();
                     continue;

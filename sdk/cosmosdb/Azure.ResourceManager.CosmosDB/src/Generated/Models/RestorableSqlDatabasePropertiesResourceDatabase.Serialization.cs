@@ -16,13 +16,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
+            writer.WritePropertyName("id"u8);
             writer.WriteStringValue(DatabaseName);
             writer.WriteEndObject();
         }
 
         internal static RestorableSqlDatabasePropertiesResourceDatabase DeserializeRestorableSqlDatabasePropertiesResourceDatabase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> colls = default;
             Optional<string> users = default;
             Optional<string> self = default;
@@ -32,27 +36,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("_colls"))
+                if (property.NameEquals("_colls"u8))
                 {
                     colls = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("_users"))
+                if (property.NameEquals("_users"u8))
                 {
                     users = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("_self"))
+                if (property.NameEquals("_self"u8))
                 {
                     self = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("_rid"))
+                if (property.NameEquals("_rid"u8))
                 {
                     rid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("_ts"))
+                if (property.NameEquals("_ts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +66,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     ts = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("_etag"))
+                if (property.NameEquals("_etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;

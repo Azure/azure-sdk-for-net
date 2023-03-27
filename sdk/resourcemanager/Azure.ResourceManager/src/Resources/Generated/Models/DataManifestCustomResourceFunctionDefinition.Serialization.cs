@@ -15,18 +15,22 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static DataManifestCustomResourceFunctionDefinition DeserializeDataManifestCustomResourceFunctionDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<ResourceType> fullyQualifiedResourceType = default;
             Optional<IReadOnlyList<string>> defaultProperties = default;
             Optional<bool> allowCustomProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fullyQualifiedResourceType"))
+                if (property.NameEquals("fullyQualifiedResourceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
                     fullyQualifiedResourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("defaultProperties"))
+                if (property.NameEquals("defaultProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.Resources.Models
                     defaultProperties = array;
                     continue;
                 }
-                if (property.NameEquals("allowCustomProperties"))
+                if (property.NameEquals("allowCustomProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

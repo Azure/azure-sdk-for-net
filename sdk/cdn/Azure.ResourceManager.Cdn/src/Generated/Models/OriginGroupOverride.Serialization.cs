@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(OriginGroup))
             {
-                writer.WritePropertyName("originGroup");
+                writer.WritePropertyName("originGroup"u8);
                 JsonSerializer.Serialize(writer, OriginGroup);
             }
             if (Optional.IsDefined(ForwardingProtocol))
             {
-                writer.WritePropertyName("forwardingProtocol");
+                writer.WritePropertyName("forwardingProtocol"u8);
                 writer.WriteStringValue(ForwardingProtocol.Value.ToString());
             }
             writer.WriteEndObject();
@@ -31,11 +31,15 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static OriginGroupOverride DeserializeOriginGroupOverride(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> originGroup = default;
             Optional<ForwardingProtocol> forwardingProtocol = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("originGroup"))
+                if (property.NameEquals("originGroup"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     originGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("forwardingProtocol"))
+                if (property.NameEquals("forwardingProtocol"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

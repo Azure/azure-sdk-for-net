@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static SearchMetadata DeserializeSearchMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> requestId = default;
             Optional<string> resultType = default;
             Optional<long> total = default;
@@ -36,17 +40,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<SearchMetadataSchema> schema = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("requestId"))
+                if (property.NameEquals("requestId"u8))
                 {
                     requestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultType"))
+                if (property.NameEquals("resultType"u8))
                 {
                     resultType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("total"))
+                if (property.NameEquals("total"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     total = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("top"))
+                if (property.NameEquals("top"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,12 +70,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     top = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("coreSummaries"))
+                if (property.NameEquals("coreSummaries"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,12 +90,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     coreSummaries = array;
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +105,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdated"))
+                if (property.NameEquals("lastUpdated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,7 +115,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     lastUpdated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("eTag"))
+                if (property.NameEquals("eTag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -121,7 +125,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     eTag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sort"))
+                if (property.NameEquals("sort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,7 +140,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     sort = array;
                     continue;
                 }
-                if (property.NameEquals("requestTime"))
+                if (property.NameEquals("requestTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -146,17 +150,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     requestTime = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("aggregatedValueField"))
+                if (property.NameEquals("aggregatedValueField"u8))
                 {
                     aggregatedValueField = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("aggregatedGroupingFields"))
+                if (property.NameEquals("aggregatedGroupingFields"u8))
                 {
                     aggregatedGroupingFields = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sum"))
+                if (property.NameEquals("sum"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -166,7 +170,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     sum = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("max"))
+                if (property.NameEquals("max"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -176,7 +180,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     max = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("schema"))
+                if (property.NameEquals("schema"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

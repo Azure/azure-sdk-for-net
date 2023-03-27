@@ -15,16 +15,20 @@ namespace Azure.IoT.Hub.Service.Models
     {
         internal static ConfigurationQueriesTestResponse DeserializeConfigurationQueriesTestResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> targetConditionError = default;
             Optional<IReadOnlyDictionary<string, string>> customMetricQueryErrors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetConditionError"))
+                if (property.NameEquals("targetConditionError"u8))
                 {
                     targetConditionError = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customMetricQueryErrors"))
+                if (property.NameEquals("customMetricQueryErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

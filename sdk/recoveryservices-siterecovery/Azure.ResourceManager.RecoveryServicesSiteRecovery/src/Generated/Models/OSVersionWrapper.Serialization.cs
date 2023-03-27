@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static OSVersionWrapper DeserializeOSVersionWrapper(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> version = default;
             Optional<string> servicePack = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("servicePack"))
+                if (property.NameEquals("servicePack"u8))
                 {
                     servicePack = property.Value.GetString();
                     continue;

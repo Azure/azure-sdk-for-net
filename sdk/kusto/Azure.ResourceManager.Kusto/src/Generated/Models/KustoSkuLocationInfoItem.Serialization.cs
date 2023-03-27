@@ -15,16 +15,21 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static KustoSkuLocationInfoItem DeserializeKustoSkuLocationInfoItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AzureLocation location = default;
             Optional<IReadOnlyList<string>> zones = default;
+            Optional<IReadOnlyList<KustoResourceSkuZoneDetails>> zoneDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("zones"))
+                if (property.NameEquals("zones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,8 +44,23 @@ namespace Azure.ResourceManager.Kusto.Models
                     zones = array;
                     continue;
                 }
+                if (property.NameEquals("zoneDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<KustoResourceSkuZoneDetails> array = new List<KustoResourceSkuZoneDetails>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(KustoResourceSkuZoneDetails.DeserializeKustoResourceSkuZoneDetails(item));
+                    }
+                    zoneDetails = array;
+                    continue;
+                }
             }
-            return new KustoSkuLocationInfoItem(location, Optional.ToList(zones));
+            return new KustoSkuLocationInfoItem(location, Optional.ToList(zones), Optional.ToList(zoneDetails));
         }
     }
 }

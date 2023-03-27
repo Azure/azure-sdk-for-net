@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Criteria))
             {
-                writer.WritePropertyName("criteria");
+                writer.WritePropertyName("criteria"u8);
                 writer.WriteStartArray();
                 foreach (var item in Criteria)
                 {
@@ -26,24 +26,28 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("isDefault");
+            writer.WritePropertyName("isDefault"u8);
             writer.WriteBooleanValue(IsDefault);
-            writer.WritePropertyName("taggingPriority");
+            writer.WritePropertyName("taggingPriority"u8);
             writer.WriteNumberValue(TaggingPriority);
-            writer.WritePropertyName("tagInfo");
+            writer.WritePropertyName("tagInfo"u8);
             writer.WriteObjectValue(TagInfo);
             writer.WriteEndObject();
         }
 
         internal static DataProtectionBackupTaggingCriteria DeserializeDataProtectionBackupTaggingCriteria(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<DataProtectionBackupCriteria>> criteria = default;
             bool isDefault = default;
             long taggingPriority = default;
             DataProtectionBackupRetentionTag tagInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("criteria"))
+                if (property.NameEquals("criteria"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,17 +62,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     criteria = array;
                     continue;
                 }
-                if (property.NameEquals("isDefault"))
+                if (property.NameEquals("isDefault"u8))
                 {
                     isDefault = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("taggingPriority"))
+                if (property.NameEquals("taggingPriority"u8))
                 {
                     taggingPriority = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("tagInfo"))
+                if (property.NameEquals("tagInfo"u8))
                 {
                     tagInfo = DataProtectionBackupRetentionTag.DeserializeDataProtectionBackupRetentionTag(property.Value);
                     continue;

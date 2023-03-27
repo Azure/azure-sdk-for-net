@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -10,18 +8,16 @@ using System.Globalization;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
-using OpenTelemetry.Trace;
-
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class RemoteDependencyData
     {
         // https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/semantic_conventions/database.md#connection-level-attributes
-        internal static readonly HashSet<string> s_sqlDbs = new HashSet<string>() { "mssql" };
+        internal static readonly HashSet<string?> s_sqlDbs = new HashSet<string?>() { "mssql" };
 
         public RemoteDependencyData(int version, Activity activity, ref TagEnumerationState monitorTags) : base(version)
         {
-            string httpUrl = null;
+            string? httpUrl = null;
             string dependencyName;
 
             if (monitorTags.activityType == OperationType.Http)
@@ -45,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             {
                 case OperationType.Http:
                     Data = httpUrl.Truncate(SchemaConstants.RemoteDependencyData_Data_MaxLength);
-                    Target = monitorTags.MappedTags.GetDependencyTarget(OperationType.Http).Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
+                    Target = monitorTags.MappedTags.GetHttpDependencyTarget().Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
                     Type = "Http";
                     ResultCode = AzMonList.GetTagValue(ref monitorTags.MappedTags, SemanticConventions.AttributeHttpStatusCode)
                         ?.ToString().Truncate(SchemaConstants.RemoteDependencyData_ResultCode_MaxLength)
@@ -78,7 +74,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
 
-            TraceHelper.AddActivityLinksToProperties(activity.Links, ref monitorTags.UnMappedTags);
+            TraceHelper.AddActivityLinksToProperties(activity, ref monitorTags.UnMappedTags);
             TraceHelper.AddPropertiesToTelemetry(Properties, ref monitorTags.UnMappedTags);
         }
     }

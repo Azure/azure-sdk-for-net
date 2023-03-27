@@ -16,21 +16,25 @@ namespace Azure.ResourceManager.Orbital.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("centerFrequencyMHz");
+            writer.WritePropertyName("centerFrequencyMHz"u8);
             writer.WriteNumberValue(CenterFrequencyMHz);
-            writer.WritePropertyName("bandwidthMHz");
+            writer.WritePropertyName("bandwidthMHz"u8);
             writer.WriteNumberValue(BandwidthMHz);
-            writer.WritePropertyName("direction");
+            writer.WritePropertyName("direction"u8);
             writer.WriteStringValue(Direction.ToString());
-            writer.WritePropertyName("polarization");
+            writer.WritePropertyName("polarization"u8);
             writer.WriteStringValue(Polarization.ToString());
             writer.WriteEndObject();
         }
 
         internal static OrbitalSpacecraftLink DeserializeOrbitalSpacecraftLink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             float centerFrequencyMHz = default;
             float bandwidthMHz = default;
@@ -39,32 +43,32 @@ namespace Azure.ResourceManager.Orbital.Models
             Optional<IReadOnlyList<AuthorizedGroundStation>> authorizations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("centerFrequencyMHz"))
+                if (property.NameEquals("centerFrequencyMHz"u8))
                 {
                     centerFrequencyMHz = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("bandwidthMHz"))
+                if (property.NameEquals("bandwidthMHz"u8))
                 {
                     bandwidthMHz = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("direction"))
+                if (property.NameEquals("direction"u8))
                 {
                     direction = new OrbitalLinkDirection(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("polarization"))
+                if (property.NameEquals("polarization"u8))
                 {
                     polarization = new OrbitalLinkPolarization(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("authorizations"))
+                if (property.NameEquals("authorizations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

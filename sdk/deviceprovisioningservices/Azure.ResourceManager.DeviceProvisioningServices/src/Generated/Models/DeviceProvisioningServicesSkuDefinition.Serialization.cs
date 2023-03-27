@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     {
         internal static DeviceProvisioningServicesSkuDefinition DeserializeDeviceProvisioningServicesSkuDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DeviceProvisioningServicesSku> name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -19,42 +19,47 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DirectoryType))
             {
-                writer.WritePropertyName("directoryType");
+                writer.WritePropertyName("directoryType"u8);
                 writer.WriteStringValue(DirectoryType.Value.ToString());
             }
             if (Optional.IsDefined(Domain))
             {
-                writer.WritePropertyName("domain");
+                writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
             if (Optional.IsDefined(OrganizationalUnitDN))
             {
-                writer.WritePropertyName("organizationalUnitDN");
+                writer.WritePropertyName("organizationalUnitDN"u8);
                 writer.WriteStringValue(OrganizationalUnitDN);
             }
             if (Optional.IsCollectionDefined(LdapUris))
             {
-                writer.WritePropertyName("ldapsUrls");
+                writer.WritePropertyName("ldapsUrls"u8);
                 writer.WriteStartArray();
                 foreach (var item in LdapUris)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.AbsoluteUri);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DomainUsername))
             {
-                writer.WritePropertyName("domainUsername");
+                writer.WritePropertyName("domainUsername"u8);
                 writer.WriteStringValue(DomainUsername);
             }
             if (Optional.IsDefined(DomainUserPassword))
             {
-                writer.WritePropertyName("domainUserPassword");
+                writer.WritePropertyName("domainUserPassword"u8);
                 writer.WriteStringValue(DomainUserPassword);
             }
             if (Optional.IsCollectionDefined(ClusterUsersGroupDNs))
             {
-                writer.WritePropertyName("clusterUsersGroupDNs");
+                writer.WritePropertyName("clusterUsersGroupDNs"u8);
                 writer.WriteStartArray();
                 foreach (var item in ClusterUsersGroupDNs)
                 {
@@ -64,12 +69,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             if (Optional.IsDefined(AaddsResourceId))
             {
-                writer.WritePropertyName("aaddsResourceId");
+                writer.WritePropertyName("aaddsResourceId"u8);
                 writer.WriteStringValue(AaddsResourceId);
             }
             if (Optional.IsDefined(MsiResourceId))
             {
-                writer.WritePropertyName("msiResourceId");
+                writer.WritePropertyName("msiResourceId"u8);
                 writer.WriteStringValue(MsiResourceId);
             }
             writer.WriteEndObject();
@@ -77,6 +82,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightSecurityProfile DeserializeHDInsightSecurityProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AuthenticationDirectoryType> directoryType = default;
             Optional<string> domain = default;
             Optional<string> organizationalUnitDN = default;
@@ -88,7 +97,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<ResourceIdentifier> msiResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("directoryType"))
+                if (property.NameEquals("directoryType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,17 +107,17 @@ namespace Azure.ResourceManager.HDInsight.Models
                     directoryType = new AuthenticationDirectoryType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("domain"))
+                if (property.NameEquals("domain"u8))
                 {
                     domain = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("organizationalUnitDN"))
+                if (property.NameEquals("organizationalUnitDN"u8))
                 {
                     organizationalUnitDN = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ldapsUrls"))
+                if (property.NameEquals("ldapsUrls"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,22 +127,29 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<Uri> array = new List<Uri>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Uri(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new Uri(item.GetString()));
+                        }
                     }
                     ldapsUrls = array;
                     continue;
                 }
-                if (property.NameEquals("domainUsername"))
+                if (property.NameEquals("domainUsername"u8))
                 {
                     domainUsername = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("domainUserPassword"))
+                if (property.NameEquals("domainUserPassword"u8))
                 {
                     domainUserPassword = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clusterUsersGroupDNs"))
+                if (property.NameEquals("clusterUsersGroupDNs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -148,7 +164,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     clusterUsersGroupDNs = array;
                     continue;
                 }
-                if (property.NameEquals("aaddsResourceId"))
+                if (property.NameEquals("aaddsResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -158,7 +174,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     aaddsResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("msiResourceId"))
+                if (property.NameEquals("msiResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

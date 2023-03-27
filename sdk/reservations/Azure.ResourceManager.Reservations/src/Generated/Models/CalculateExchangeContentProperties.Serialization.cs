@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Reservations.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ReservationsToPurchase))
             {
-                writer.WritePropertyName("reservationsToPurchase");
+                writer.WritePropertyName("reservationsToPurchase"u8);
                 writer.WriteStartArray();
                 foreach (var item in ReservationsToPurchase)
                 {
@@ -25,9 +25,19 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(SavingsPlansToPurchase))
+            {
+                writer.WritePropertyName("savingsPlansToPurchase"u8);
+                writer.WriteStartArray();
+                foreach (var item in SavingsPlansToPurchase)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(ReservationsToExchange))
             {
-                writer.WritePropertyName("reservationsToExchange");
+                writer.WritePropertyName("reservationsToExchange"u8);
                 writer.WriteStartArray();
                 foreach (var item in ReservationsToExchange)
                 {

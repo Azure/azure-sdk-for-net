@@ -14,6 +14,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static SearchIndexerWarning DeserializeSearchIndexerWarning(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> key = default;
             string message = default;
             Optional<string> name = default;
@@ -21,27 +25,27 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<string> documentationLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("details"))
+                if (property.NameEquals("details"u8))
                 {
                     details = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("documentationLink"))
+                if (property.NameEquals("documentationLink"u8))
                 {
                     documentationLink = property.Value.GetString();
                     continue;

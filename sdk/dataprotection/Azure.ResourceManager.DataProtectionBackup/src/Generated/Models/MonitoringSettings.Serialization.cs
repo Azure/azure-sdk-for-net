@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AzureMonitorAlertSettings))
             {
-                writer.WritePropertyName("azureMonitorAlertSettings");
+                writer.WritePropertyName("azureMonitorAlertSettings"u8);
                 writer.WriteObjectValue(AzureMonitorAlertSettings);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static MonitoringSettings DeserializeMonitoringSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureMonitorAlertSettings> azureMonitorAlertSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("azureMonitorAlertSettings"))
+                if (property.NameEquals("azureMonitorAlertSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

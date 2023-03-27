@@ -15,23 +15,27 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("forwardAddress");
+            writer.WritePropertyName("forwardAddress"u8);
             writer.WriteObjectValue(ForwardAddress);
             writer.WriteEndObject();
         }
 
         internal static EdgeOrderItemAddressDetails DeserializeEdgeOrderItemAddressDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EdgeOrderItemAddressProperties forwardAddress = default;
             Optional<EdgeOrderItemAddressProperties> returnAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("forwardAddress"))
+                if (property.NameEquals("forwardAddress"u8))
                 {
                     forwardAddress = EdgeOrderItemAddressProperties.DeserializeEdgeOrderItemAddressProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("returnAddress"))
+                if (property.NameEquals("returnAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

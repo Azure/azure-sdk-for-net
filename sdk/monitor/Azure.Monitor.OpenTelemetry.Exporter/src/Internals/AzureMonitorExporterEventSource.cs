@@ -36,6 +36,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         [Event(4, Message = "{0} - {1}", Level = EventLevel.Informational)]
         public void WriteInformational(string name, string message) => this.Write(EventLevel.Informational, 4, name, message);
 
+        [NonEvent]
+        public void WriteInformational(string name, Exception exception) => this.WriteException(EventLevel.Warning, 4, name, exception);
+
         [Event(5, Message = "{0} - {1}", Level = EventLevel.Verbose)]
         public void WriteVerbose(string name, string message) => this.Write(EventLevel.Verbose, 5, name, message);
 

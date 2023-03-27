@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static AppPlatformServiceRequiredTraffic DeserializeAppPlatformServiceRequiredTraffic(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> protocol = default;
             Optional<int> port = default;
             Optional<IReadOnlyList<IPAddress>> ips = default;
@@ -23,12 +27,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<AppPlatformServiceTrafficDirection> direction = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("protocol"))
+                if (property.NameEquals("protocol"u8))
                 {
                     protocol = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,7 +42,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     port = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("ips"))
+                if (property.NameEquals("ips"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,12 +52,19 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddress.Parse(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IPAddress.Parse(item.GetString()));
+                        }
                     }
                     ips = array;
                     continue;
                 }
-                if (property.NameEquals("fqdns"))
+                if (property.NameEquals("fqdns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +79,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     fqdns = array;
                     continue;
                 }
-                if (property.NameEquals("direction"))
+                if (property.NameEquals("direction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

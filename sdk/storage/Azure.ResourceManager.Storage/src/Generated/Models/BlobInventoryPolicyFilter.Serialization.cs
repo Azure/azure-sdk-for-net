@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(IncludePrefix))
             {
-                writer.WritePropertyName("prefixMatch");
+                writer.WritePropertyName("prefixMatch"u8);
                 writer.WriteStartArray();
                 foreach (var item in IncludePrefix)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             if (Optional.IsCollectionDefined(ExcludePrefix))
             {
-                writer.WritePropertyName("excludePrefix");
+                writer.WritePropertyName("excludePrefix"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExcludePrefix)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             if (Optional.IsCollectionDefined(BlobTypes))
             {
-                writer.WritePropertyName("blobTypes");
+                writer.WritePropertyName("blobTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in BlobTypes)
                 {
@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.Storage.Models
             }
             if (Optional.IsDefined(IncludeBlobVersions))
             {
-                writer.WritePropertyName("includeBlobVersions");
+                writer.WritePropertyName("includeBlobVersions"u8);
                 writer.WriteBooleanValue(IncludeBlobVersions.Value);
             }
             if (Optional.IsDefined(IncludeSnapshots))
             {
-                writer.WritePropertyName("includeSnapshots");
+                writer.WritePropertyName("includeSnapshots"u8);
                 writer.WriteBooleanValue(IncludeSnapshots.Value);
             }
             if (Optional.IsDefined(IncludeDeleted))
             {
-                writer.WritePropertyName("includeDeleted");
+                writer.WritePropertyName("includeDeleted"u8);
                 writer.WriteBooleanValue(IncludeDeleted.Value);
             }
             writer.WriteEndObject();
@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static BlobInventoryPolicyFilter DeserializeBlobInventoryPolicyFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> prefixMatch = default;
             Optional<IList<string>> excludePrefix = default;
             Optional<IList<string>> blobTypes = default;
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<bool> includeDeleted = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("prefixMatch"))
+                if (property.NameEquals("prefixMatch"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +93,7 @@ namespace Azure.ResourceManager.Storage.Models
                     prefixMatch = array;
                     continue;
                 }
-                if (property.NameEquals("excludePrefix"))
+                if (property.NameEquals("excludePrefix"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.Storage.Models
                     excludePrefix = array;
                     continue;
                 }
-                if (property.NameEquals("blobTypes"))
+                if (property.NameEquals("blobTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,7 +123,7 @@ namespace Azure.ResourceManager.Storage.Models
                     blobTypes = array;
                     continue;
                 }
-                if (property.NameEquals("includeBlobVersions"))
+                if (property.NameEquals("includeBlobVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,7 +133,7 @@ namespace Azure.ResourceManager.Storage.Models
                     includeBlobVersions = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("includeSnapshots"))
+                if (property.NameEquals("includeSnapshots"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,7 +143,7 @@ namespace Azure.ResourceManager.Storage.Models
                     includeSnapshots = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("includeDeleted"))
+                if (property.NameEquals("includeDeleted"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

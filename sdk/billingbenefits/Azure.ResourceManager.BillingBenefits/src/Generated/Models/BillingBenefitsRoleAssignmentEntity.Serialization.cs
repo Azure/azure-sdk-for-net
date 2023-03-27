@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     {
         internal static BillingBenefitsRoleAssignmentEntity DeserializeBillingBenefitsRoleAssignmentEntity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<string> principalId = default;
@@ -21,7 +25,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             Optional<ResourceIdentifier> scope = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,12 +35,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,12 +49,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("principalId"))
+                        if (property0.NameEquals("principalId"u8))
                         {
                             principalId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("roleDefinitionId"))
+                        if (property0.NameEquals("roleDefinitionId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                             roleDefinitionId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("scope"))
+                        if (property0.NameEquals("scope"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

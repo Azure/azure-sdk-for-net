@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("organizationMembershipType");
+            writer.WritePropertyName("organizationMembershipType"u8);
             writer.WriteStringValue(OrganizationMembershipType.ToString());
             writer.WriteEndObject();
         }
 
         internal static GcpOrganizationalInfo DeserializeGcpOrganizationalInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("organizationMembershipType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

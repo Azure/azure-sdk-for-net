@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
@@ -72,7 +73,17 @@ namespace Azure.Messaging.ServiceBus
         /// The option to auto complete messages is specified when creating the receiver
         /// using <see cref="ServiceBusReceiverOptions.PrefetchCount"/> and has a default value of 0.
         /// </value>
-        public virtual int PrefetchCount { get; }
+        public virtual int PrefetchCount
+        {
+            get
+            {
+                return InnerReceiver.PrefetchCount;
+            }
+            internal set
+            {
+                InnerReceiver.PrefetchCount = value;
+            }
+        }
 
         /// <summary>
         /// A name used to identify the receiver client.  If <c>null</c> or empty, a random unique value will be will be used.
@@ -123,8 +134,8 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Responsible for creating entity scopes.
         /// </summary>
-        internal EntityScopeFactory ScopeFactory => _scopeFactory;
-        private readonly EntityScopeFactory _scopeFactory;
+        internal MessagingClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+        private readonly MessagingClientDiagnostics _clientDiagnostics;
 
         /// <summary>
         ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
@@ -171,7 +182,6 @@ namespace Azure.Messaging.ServiceBus
                 _connection = connection;
                 _retryPolicy = connection.RetryOptions.ToRetryPolicy();
                 ReceiveMode = options.ReceiveMode;
-                PrefetchCount = options.PrefetchCount;
 
                 EntityPath = EntityNameFormatter.FormatEntityPath(entityPath, options.SubQueue);
 
@@ -180,13 +190,18 @@ namespace Azure.Messaging.ServiceBus
                     entityPath: EntityPath,
                     retryPolicy: _retryPolicy,
                     receiveMode: ReceiveMode,
-                    prefetchCount: (uint)PrefetchCount,
+                    prefetchCount: (uint)options.PrefetchCount,
                     identifier: Identifier,
                     sessionId: sessionId,
                     isSessionReceiver: IsSessionReceiver,
                     isProcessor: isProcessor,
                     cancellationToken: cancellationToken);
-                _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
+                _clientDiagnostics = new MessagingClientDiagnostics(
+                    DiagnosticProperty.DiagnosticNamespace,
+                    DiagnosticProperty.ResourceProviderNamespace,
+                    DiagnosticProperty.ServiceBusServiceContext,
+                    FullyQualifiedNamespace,
+                    EntityPath);
                 if (!isSessionEntity)
                 {
                     // don't log client completion for session receiver here as it is not complete until
@@ -303,9 +318,10 @@ namespace Azure.Messaging.ServiceBus
 
             Logger.ReceiveMessageStart(Identifier, maxMessages);
 
-            using DiagnosticScope scope = ScopeFactory.CreateScope(
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope(
                 DiagnosticProperty.ReceiveActivityName,
-                DiagnosticScope.ActivityKind.Client);
+                DiagnosticScope.ActivityKind.Client,
+                MessagingDiagnosticOperation.Receive);
 
             IReadOnlyList<ServiceBusReceivedMessage> messages = null;
             var startTime = DateTime.UtcNow;
@@ -317,10 +333,13 @@ namespace Azure.Messaging.ServiceBus
                     cancellationToken).ConfigureAwait(false);
             }
             catch (OperationCanceledException ex)
-                when (isProcessor && cancellationToken.IsCancellationRequested)
+                when (cancellationToken.IsCancellationRequested)
             {
                 scope.BackdateStart(startTime);
-                Logger.ProcessorStoppingReceiveCanceled(Identifier, ex.ToString());
+                if (isProcessor)
+                    Logger.ProcessorStoppingReceiveCanceled(Identifier, ex.ToString());
+                else
+                    Logger.ReceiveMessageCanceled(Identifier, ex.ToString());
                 scope.Failed(ex);
                 throw;
             }
@@ -410,6 +429,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>The <see cref="ServiceBusReceivedMessage" /> that represents the next message to be read. Returns null when nothing to peek.</returns>
+        /// <seealso href="https://aka.ms/azsdk/servicebus/message-browsing">Service Bus message browsing</seealso>
         public virtual async Task<ServiceBusReceivedMessage> PeekMessageAsync(
             long? fromSequenceNumber = default,
             CancellationToken cancellationToken = default)
@@ -442,6 +462,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>An <see cref="IReadOnlyList{ServiceBusReceivedMessage}" /> of messages that were peeked.</returns>
+        /// <seealso href="https://aka.ms/azsdk/servicebus/message-browsing">Service Bus message browsing</seealso>
         public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> PeekMessagesAsync(
             int maxMessages,
             long? fromSequenceNumber = default,
@@ -469,9 +490,10 @@ namespace Azure.Messaging.ServiceBus
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             Logger.PeekMessageStart(Identifier, sequenceNumber, maxMessages);
-            using DiagnosticScope scope = ScopeFactory.CreateScope(
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope(
                 DiagnosticProperty.PeekActivityName,
-                DiagnosticScope.ActivityKind.Client);
+                DiagnosticScope.ActivityKind.Client,
+                MessagingDiagnosticOperation.Receive);
 
             IReadOnlyList<ServiceBusReceivedMessage> messages;
             var startTime = DateTime.UtcNow;
@@ -550,9 +572,10 @@ namespace Azure.Messaging.ServiceBus
                 Identifier,
                 1,
                 message.LockTokenGuid);
-            using DiagnosticScope scope = ScopeFactory.CreateScope(
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope(
                 DiagnosticProperty.CompleteActivityName,
-                DiagnosticScope.ActivityKind.Client);
+                DiagnosticScope.ActivityKind.Client,
+                MessagingDiagnosticOperation.Settle);
             scope.SetMessageData(message);
             scope.Start();
 
@@ -618,9 +641,10 @@ namespace Azure.Messaging.ServiceBus
 
             Logger.AbandonMessageStart(Identifier, 1, lockToken);
 
-            using DiagnosticScope scope = ScopeFactory.CreateScope(
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope(
                 DiagnosticProperty.AbandonActivityName,
-                DiagnosticScope.ActivityKind.Client);
+                DiagnosticScope.ActivityKind.Client,
+                MessagingDiagnosticOperation.Settle);
 
             scope.SetMessageData(message);
             scope.Start();
@@ -864,9 +888,10 @@ namespace Azure.Messaging.ServiceBus
 
             Logger.DeadLetterMessageStart(Identifier, 1, lockToken);
 
-            using DiagnosticScope scope = ScopeFactory.CreateScope(
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope(
                 DiagnosticProperty.DeadLetterActivityName,
-                DiagnosticScope.ActivityKind.Client);
+                DiagnosticScope.ActivityKind.Client,
+                MessagingDiagnosticOperation.Settle);
 
             scope.SetMessageData(message);
             scope.Start();
@@ -936,9 +961,10 @@ namespace Azure.Messaging.ServiceBus
 
             Logger.DeferMessageStart(Identifier, 1, lockToken);
 
-            using DiagnosticScope scope = ScopeFactory.CreateScope(
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope(
                 DiagnosticProperty.DeferActivityName,
-                DiagnosticScope.ActivityKind.Client);
+                DiagnosticScope.ActivityKind.Client,
+                MessagingDiagnosticOperation.Settle);
 
             scope.SetMessageData(message);
             scope.Start();
@@ -1039,9 +1065,10 @@ namespace Azure.Messaging.ServiceBus
 
             Logger.ReceiveDeferredMessageStart(Identifier, sequenceArray);
 
-            using DiagnosticScope scope = ScopeFactory.CreateScope(
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope(
                 DiagnosticProperty.ReceiveDeferredActivityName,
-                DiagnosticScope.ActivityKind.Client);
+                DiagnosticScope.ActivityKind.Client,
+                MessagingDiagnosticOperation.Receive);
 
             scope.Start();
 
@@ -1118,7 +1145,7 @@ namespace Azure.Messaging.ServiceBus
 
             Logger.RenewMessageLockStart(Identifier, 1, lockToken);
 
-            using DiagnosticScope scope = ScopeFactory.CreateScope(
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope(
                 DiagnosticProperty.RenewMessageLockActivityName,
                 DiagnosticScope.ActivityKind.Client);
             scope.Start();

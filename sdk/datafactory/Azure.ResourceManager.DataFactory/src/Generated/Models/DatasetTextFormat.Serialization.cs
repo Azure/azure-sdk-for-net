@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ColumnDelimiter))
             {
-                writer.WritePropertyName("columnDelimiter");
+                writer.WritePropertyName("columnDelimiter"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ColumnDelimiter);
 #else
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(RowDelimiter))
             {
-                writer.WritePropertyName("rowDelimiter");
+                writer.WritePropertyName("rowDelimiter"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(RowDelimiter);
 #else
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(EscapeChar))
             {
-                writer.WritePropertyName("escapeChar");
+                writer.WritePropertyName("escapeChar"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(EscapeChar);
 #else
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(QuoteChar))
             {
-                writer.WritePropertyName("quoteChar");
+                writer.WritePropertyName("quoteChar"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(QuoteChar);
 #else
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(NullValue))
             {
-                writer.WritePropertyName("nullValue");
+                writer.WritePropertyName("nullValue"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(NullValue);
 #else
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(EncodingName))
             {
-                writer.WritePropertyName("encodingName");
+                writer.WritePropertyName("encodingName"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(EncodingName);
 #else
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(TreatEmptyAsNull))
             {
-                writer.WritePropertyName("treatEmptyAsNull");
+                writer.WritePropertyName("treatEmptyAsNull"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(TreatEmptyAsNull);
 #else
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(SkipLineCount))
             {
-                writer.WritePropertyName("skipLineCount");
+                writer.WritePropertyName("skipLineCount"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SkipLineCount);
 #else
@@ -91,18 +91,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(FirstRowAsHeader))
             {
-                writer.WritePropertyName("firstRowAsHeader");
+                writer.WritePropertyName("firstRowAsHeader"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(FirstRowAsHeader);
 #else
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(FirstRowAsHeader.ToString()).RootElement);
 #endif
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetStorageFormatType);
             if (Optional.IsDefined(Serializer))
             {
-                writer.WritePropertyName("serializer");
+                writer.WritePropertyName("serializer"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Serializer);
 #else
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(Deserializer))
             {
-                writer.WritePropertyName("deserializer");
+                writer.WritePropertyName("deserializer"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Deserializer);
 #else
@@ -132,6 +132,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DatasetTextFormat DeserializeDatasetTextFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> columnDelimiter = default;
             Optional<BinaryData> rowDelimiter = default;
             Optional<BinaryData> escapeChar = default;
@@ -148,7 +152,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("columnDelimiter"))
+                if (property.NameEquals("columnDelimiter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -158,7 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     columnDelimiter = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("rowDelimiter"))
+                if (property.NameEquals("rowDelimiter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -168,7 +172,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     rowDelimiter = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("escapeChar"))
+                if (property.NameEquals("escapeChar"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -178,7 +182,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     escapeChar = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("quoteChar"))
+                if (property.NameEquals("quoteChar"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -188,7 +192,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     quoteChar = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("nullValue"))
+                if (property.NameEquals("nullValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -198,7 +202,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     nullValue = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("encodingName"))
+                if (property.NameEquals("encodingName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -208,7 +212,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     encodingName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("treatEmptyAsNull"))
+                if (property.NameEquals("treatEmptyAsNull"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -218,7 +222,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     treatEmptyAsNull = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("skipLineCount"))
+                if (property.NameEquals("skipLineCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -228,7 +232,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     skipLineCount = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("firstRowAsHeader"))
+                if (property.NameEquals("firstRowAsHeader"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -238,12 +242,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     firstRowAsHeader = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serializer"))
+                if (property.NameEquals("serializer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -253,7 +257,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     serializer = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("deserializer"))
+                if (property.NameEquals("deserializer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

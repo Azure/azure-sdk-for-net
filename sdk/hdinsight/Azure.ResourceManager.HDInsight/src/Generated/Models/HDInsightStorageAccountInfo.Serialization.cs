@@ -17,34 +17,34 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(IsDefault))
             {
-                writer.WritePropertyName("isDefault");
+                writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
             if (Optional.IsDefined(Container))
             {
-                writer.WritePropertyName("container");
+                writer.WritePropertyName("container"u8);
                 writer.WriteStringValue(Container);
             }
             if (Optional.IsDefined(FileSystem))
             {
-                writer.WritePropertyName("fileSystem");
+                writer.WritePropertyName("fileSystem"u8);
                 writer.WriteStringValue(FileSystem);
             }
             if (Optional.IsDefined(Key))
             {
-                writer.WritePropertyName("key");
+                writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
             if (Optional.IsDefined(ResourceId))
             {
                 if (ResourceId != null)
                 {
-                    writer.WritePropertyName("resourceId");
+                    writer.WritePropertyName("resourceId"u8);
                     writer.WriteStringValue(ResourceId);
                 }
                 else
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 if (MsiResourceId != null)
                 {
-                    writer.WritePropertyName("msiResourceId");
+                    writer.WritePropertyName("msiResourceId"u8);
                     writer.WriteStringValue(MsiResourceId);
                 }
                 else
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             if (Optional.IsDefined(SasKey))
             {
-                writer.WritePropertyName("saskey");
+                writer.WritePropertyName("saskey"u8);
                 writer.WriteStringValue(SasKey);
             }
             if (Optional.IsDefined(Fileshare))
             {
-                writer.WritePropertyName("fileshare");
+                writer.WritePropertyName("fileshare"u8);
                 writer.WriteStringValue(Fileshare);
             }
             writer.WriteEndObject();
@@ -79,6 +79,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightStorageAccountInfo DeserializeHDInsightStorageAccountInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<bool> isDefault = default;
             Optional<string> container = default;
@@ -90,12 +94,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<string> fileshare = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isDefault"))
+                if (property.NameEquals("isDefault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,22 +109,22 @@ namespace Azure.ResourceManager.HDInsight.Models
                     isDefault = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("container"))
+                if (property.NameEquals("container"u8))
                 {
                     container = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fileSystem"))
+                if (property.NameEquals("fileSystem"u8))
                 {
                     fileSystem = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,7 +134,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("msiResourceId"))
+                if (property.NameEquals("msiResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -140,12 +144,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                     msiResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("saskey"))
+                if (property.NameEquals("saskey"u8))
                 {
                     saskey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fileshare"))
+                if (property.NameEquals("fileshare"u8))
                 {
                     fileshare = property.Value.GetString();
                     continue;

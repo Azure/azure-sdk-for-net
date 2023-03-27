@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.HybridContainerService
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceUid))
             {
-                writer.WritePropertyName("resourceUid");
+                writer.WritePropertyName("resourceUid"u8);
                 writer.WriteStringValue(ResourceUid);
             }
             if (Optional.IsDefined(PublicKey))
             {
-                writer.WritePropertyName("publicKey");
+                writer.WritePropertyName("publicKey"u8);
                 writer.WriteStringValue(PublicKey);
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WriteEndObject();
@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.HybridContainerService
 
         internal static HybridIdentityMetadataData DeserializeHybridIdentityMetadataData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -49,22 +53,22 @@ namespace Azure.ResourceManager.HybridContainerService
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,17 +87,17 @@ namespace Azure.ResourceManager.HybridContainerService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("resourceUid"))
+                        if (property0.NameEquals("resourceUid"u8))
                         {
                             resourceUid = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("publicKey"))
+                        if (property0.NameEquals("publicKey"u8))
                         {
                             publicKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("identity"))
+                        if (property0.NameEquals("identity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -103,7 +107,7 @@ namespace Azure.ResourceManager.HybridContainerService
                             identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;

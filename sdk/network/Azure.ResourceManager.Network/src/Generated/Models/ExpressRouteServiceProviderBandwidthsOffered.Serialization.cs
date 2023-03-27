@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(OfferName))
             {
-                writer.WritePropertyName("offerName");
+                writer.WritePropertyName("offerName"u8);
                 writer.WriteStringValue(OfferName);
             }
             if (Optional.IsDefined(ValueInMbps))
             {
-                writer.WritePropertyName("valueInMbps");
+                writer.WritePropertyName("valueInMbps"u8);
                 writer.WriteNumberValue(ValueInMbps.Value);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ExpressRouteServiceProviderBandwidthsOffered DeserializeExpressRouteServiceProviderBandwidthsOffered(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> offerName = default;
             Optional<int> valueInMbps = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("offerName"))
+                if (property.NameEquals("offerName"u8))
                 {
                     offerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("valueInMbps"))
+                if (property.NameEquals("valueInMbps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

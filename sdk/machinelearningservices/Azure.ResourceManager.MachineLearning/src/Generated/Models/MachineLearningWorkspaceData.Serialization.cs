@@ -21,18 +21,18 @@ namespace Azure.ResourceManager.MachineLearning
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -41,35 +41,35 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(KeyVault))
             {
-                writer.WritePropertyName("keyVault");
+                writer.WritePropertyName("keyVault"u8);
                 writer.WriteStringValue(KeyVault);
             }
             if (Optional.IsDefined(ApplicationInsights))
             {
-                writer.WritePropertyName("applicationInsights");
+                writer.WritePropertyName("applicationInsights"u8);
                 writer.WriteStringValue(ApplicationInsights);
             }
             if (Optional.IsDefined(ContainerRegistry))
             {
                 if (ContainerRegistry != null)
                 {
-                    writer.WritePropertyName("containerRegistry");
+                    writer.WritePropertyName("containerRegistry"u8);
                     writer.WriteStringValue(ContainerRegistry);
                 }
                 else
@@ -79,42 +79,42 @@ namespace Azure.ResourceManager.MachineLearning
             }
             if (Optional.IsDefined(StorageAccount))
             {
-                writer.WritePropertyName("storageAccount");
+                writer.WritePropertyName("storageAccount"u8);
                 writer.WriteStringValue(StorageAccount);
             }
             if (Optional.IsDefined(DiscoveryUri))
             {
-                writer.WritePropertyName("discoveryUrl");
+                writer.WritePropertyName("discoveryUrl"u8);
                 writer.WriteStringValue(DiscoveryUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Encryption))
             {
-                writer.WritePropertyName("encryption");
+                writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(HbiWorkspace))
+            if (Optional.IsDefined(IsHbiWorkspace))
             {
-                writer.WritePropertyName("hbiWorkspace");
-                writer.WriteBooleanValue(HbiWorkspace.Value);
+                writer.WritePropertyName("hbiWorkspace"u8);
+                writer.WriteBooleanValue(IsHbiWorkspace.Value);
             }
             if (Optional.IsDefined(ImageBuildCompute))
             {
-                writer.WritePropertyName("imageBuildCompute");
+                writer.WritePropertyName("imageBuildCompute"u8);
                 writer.WriteStringValue(ImageBuildCompute);
             }
             if (Optional.IsDefined(AllowPublicAccessWhenBehindVnet))
             {
-                writer.WritePropertyName("allowPublicAccessWhenBehindVnet");
+                writer.WritePropertyName("allowPublicAccessWhenBehindVnet"u8);
                 writer.WriteBooleanValue(AllowPublicAccessWhenBehindVnet.Value);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             if (Optional.IsCollectionDefined(SharedPrivateLinkResources))
             {
-                writer.WritePropertyName("sharedPrivateLinkResources");
+                writer.WritePropertyName("sharedPrivateLinkResources"u8);
                 writer.WriteStartArray();
                 foreach (var item in SharedPrivateLinkResources)
                 {
@@ -124,17 +124,17 @@ namespace Azure.ResourceManager.MachineLearning
             }
             if (Optional.IsDefined(ServiceManagedResourcesSettings))
             {
-                writer.WritePropertyName("serviceManagedResourcesSettings");
+                writer.WritePropertyName("serviceManagedResourcesSettings"u8);
                 writer.WriteObjectValue(ServiceManagedResourcesSettings);
             }
             if (Optional.IsDefined(PrimaryUserAssignedIdentity))
             {
-                writer.WritePropertyName("primaryUserAssignedIdentity");
+                writer.WritePropertyName("primaryUserAssignedIdentity"u8);
                 writer.WriteStringValue(PrimaryUserAssignedIdentity);
             }
             if (Optional.IsDefined(IsV1LegacyMode))
             {
-                writer.WritePropertyName("v1LegacyMode");
+                writer.WritePropertyName("v1LegacyMode"u8);
                 writer.WriteBooleanValue(IsV1LegacyMode.Value);
             }
             writer.WriteEndObject();
@@ -143,6 +143,10 @@ namespace Azure.ResourceManager.MachineLearning
 
         internal static MachineLearningWorkspaceData DeserializeMachineLearningWorkspaceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<MachineLearningSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -178,7 +182,7 @@ namespace Azure.ResourceManager.MachineLearning
             Optional<bool> v1LegacyMode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -189,7 +193,7 @@ namespace Azure.ResourceManager.MachineLearning
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -199,7 +203,7 @@ namespace Azure.ResourceManager.MachineLearning
                     sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -214,27 +218,27 @@ namespace Azure.ResourceManager.MachineLearning
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -244,7 +248,7 @@ namespace Azure.ResourceManager.MachineLearning
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -253,32 +257,32 @@ namespace Azure.ResourceManager.MachineLearning
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("workspaceId"))
+                        if (property0.NameEquals("workspaceId"u8))
                         {
                             workspaceId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("friendlyName"))
+                        if (property0.NameEquals("friendlyName"u8))
                         {
                             friendlyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("keyVault"))
+                        if (property0.NameEquals("keyVault"u8))
                         {
                             keyVault = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("applicationInsights"))
+                        if (property0.NameEquals("applicationInsights"u8))
                         {
                             applicationInsights = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("containerRegistry"))
+                        if (property0.NameEquals("containerRegistry"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -288,12 +292,12 @@ namespace Azure.ResourceManager.MachineLearning
                             containerRegistry = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("storageAccount"))
+                        if (property0.NameEquals("storageAccount"u8))
                         {
                             storageAccount = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("discoveryUrl"))
+                        if (property0.NameEquals("discoveryUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -303,7 +307,7 @@ namespace Azure.ResourceManager.MachineLearning
                             discoveryUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -313,7 +317,7 @@ namespace Azure.ResourceManager.MachineLearning
                             provisioningState = new MachineLearningProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("encryption"))
+                        if (property0.NameEquals("encryption"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -323,7 +327,7 @@ namespace Azure.ResourceManager.MachineLearning
                             encryption = MachineLearningEncryptionSetting.DeserializeMachineLearningEncryptionSetting(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("hbiWorkspace"))
+                        if (property0.NameEquals("hbiWorkspace"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -333,12 +337,12 @@ namespace Azure.ResourceManager.MachineLearning
                             hbiWorkspace = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("serviceProvisionedResourceGroup"))
+                        if (property0.NameEquals("serviceProvisionedResourceGroup"u8))
                         {
                             serviceProvisionedResourceGroup = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("privateLinkCount"))
+                        if (property0.NameEquals("privateLinkCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -348,12 +352,12 @@ namespace Azure.ResourceManager.MachineLearning
                             privateLinkCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("imageBuildCompute"))
+                        if (property0.NameEquals("imageBuildCompute"u8))
                         {
                             imageBuildCompute = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("allowPublicAccessWhenBehindVnet"))
+                        if (property0.NameEquals("allowPublicAccessWhenBehindVnet"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -363,7 +367,7 @@ namespace Azure.ResourceManager.MachineLearning
                             allowPublicAccessWhenBehindVnet = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("publicNetworkAccess"))
+                        if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -373,7 +377,7 @@ namespace Azure.ResourceManager.MachineLearning
                             publicNetworkAccess = new MachineLearningPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("privateEndpointConnections"))
+                        if (property0.NameEquals("privateEndpointConnections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -388,7 +392,7 @@ namespace Azure.ResourceManager.MachineLearning
                             privateEndpointConnections = array;
                             continue;
                         }
-                        if (property0.NameEquals("sharedPrivateLinkResources"))
+                        if (property0.NameEquals("sharedPrivateLinkResources"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -403,7 +407,7 @@ namespace Azure.ResourceManager.MachineLearning
                             sharedPrivateLinkResources = array;
                             continue;
                         }
-                        if (property0.NameEquals("notebookInfo"))
+                        if (property0.NameEquals("notebookInfo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -413,7 +417,7 @@ namespace Azure.ResourceManager.MachineLearning
                             notebookInfo = MachineLearningNotebookResourceInfo.DeserializeMachineLearningNotebookResourceInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("serviceManagedResourcesSettings"))
+                        if (property0.NameEquals("serviceManagedResourcesSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -423,12 +427,12 @@ namespace Azure.ResourceManager.MachineLearning
                             serviceManagedResourcesSettings = ServiceManagedResourcesSettings.DeserializeServiceManagedResourcesSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("primaryUserAssignedIdentity"))
+                        if (property0.NameEquals("primaryUserAssignedIdentity"u8))
                         {
                             primaryUserAssignedIdentity = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("tenantId"))
+                        if (property0.NameEquals("tenantId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -438,7 +442,7 @@ namespace Azure.ResourceManager.MachineLearning
                             tenantId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("storageHnsEnabled"))
+                        if (property0.NameEquals("storageHnsEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -448,7 +452,7 @@ namespace Azure.ResourceManager.MachineLearning
                             storageHnsEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("mlFlowTrackingUri"))
+                        if (property0.NameEquals("mlFlowTrackingUri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -458,7 +462,7 @@ namespace Azure.ResourceManager.MachineLearning
                             mlFlowTrackingUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("v1LegacyMode"))
+                        if (property0.NameEquals("v1LegacyMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

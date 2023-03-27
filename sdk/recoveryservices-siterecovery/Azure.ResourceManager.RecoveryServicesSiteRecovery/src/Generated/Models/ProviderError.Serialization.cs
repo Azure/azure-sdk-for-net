@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static ProviderError DeserializeProviderError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> errorCode = default;
             Optional<string> errorMessage = default;
             Optional<string> errorId = default;
@@ -21,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> recommendedAction = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errorCode"))
+                if (property.NameEquals("errorCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,22 +35,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     errorCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     errorMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorId"))
+                if (property.NameEquals("errorId"u8))
                 {
                     errorId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("possibleCauses"))
+                if (property.NameEquals("possibleCauses"u8))
                 {
                     possibleCauses = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recommendedAction"))
+                if (property.NameEquals("recommendedAction"u8))
                 {
                     recommendedAction = property.Value.GetString();
                     continue;

@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(Registration))
             {
-                writer.WritePropertyName("registration");
+                writer.WritePropertyName("registration"u8);
                 writer.WriteObjectValue(Registration);
             }
             if (Optional.IsDefined(GraphApiVersion))
             {
-                writer.WritePropertyName("graphApiVersion");
+                writer.WritePropertyName("graphApiVersion"u8);
                 writer.WriteStringValue(GraphApiVersion);
             }
             if (Optional.IsDefined(Login))
             {
-                writer.WritePropertyName("login");
+                writer.WritePropertyName("login"u8);
                 writer.WriteObjectValue(Login);
             }
             writer.WriteEndObject();
@@ -40,13 +40,17 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppFacebookConfiguration DeserializeContainerAppFacebookConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<ContainerAppRegistration> registration = default;
             Optional<string> graphApiVersion = default;
             Optional<LoginScopes> login = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("registration"))
+                if (property.NameEquals("registration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,12 +70,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                     registration = ContainerAppRegistration.DeserializeContainerAppRegistration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("graphApiVersion"))
+                if (property.NameEquals("graphApiVersion"u8))
                 {
                     graphApiVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("login"))
+                if (property.NameEquals("login"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

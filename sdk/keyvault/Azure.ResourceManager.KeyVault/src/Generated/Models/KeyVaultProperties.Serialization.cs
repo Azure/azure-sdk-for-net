@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tenantId");
+            writer.WritePropertyName("tenantId"u8);
             writer.WriteStringValue(TenantId);
-            writer.WritePropertyName("sku");
+            writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
             if (Optional.IsCollectionDefined(AccessPolicies))
             {
-                writer.WritePropertyName("accessPolicies");
+                writer.WritePropertyName("accessPolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in AccessPolicies)
                 {
@@ -33,62 +33,62 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             if (Optional.IsDefined(VaultUri))
             {
-                writer.WritePropertyName("vaultUri");
+                writer.WritePropertyName("vaultUri"u8);
                 writer.WriteStringValue(VaultUri.AbsoluteUri);
             }
             if (Optional.IsDefined(EnabledForDeployment))
             {
-                writer.WritePropertyName("enabledForDeployment");
+                writer.WritePropertyName("enabledForDeployment"u8);
                 writer.WriteBooleanValue(EnabledForDeployment.Value);
             }
             if (Optional.IsDefined(EnabledForDiskEncryption))
             {
-                writer.WritePropertyName("enabledForDiskEncryption");
+                writer.WritePropertyName("enabledForDiskEncryption"u8);
                 writer.WriteBooleanValue(EnabledForDiskEncryption.Value);
             }
             if (Optional.IsDefined(EnabledForTemplateDeployment))
             {
-                writer.WritePropertyName("enabledForTemplateDeployment");
+                writer.WritePropertyName("enabledForTemplateDeployment"u8);
                 writer.WriteBooleanValue(EnabledForTemplateDeployment.Value);
             }
             if (Optional.IsDefined(EnableSoftDelete))
             {
-                writer.WritePropertyName("enableSoftDelete");
+                writer.WritePropertyName("enableSoftDelete"u8);
                 writer.WriteBooleanValue(EnableSoftDelete.Value);
             }
             if (Optional.IsDefined(SoftDeleteRetentionInDays))
             {
-                writer.WritePropertyName("softDeleteRetentionInDays");
+                writer.WritePropertyName("softDeleteRetentionInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionInDays.Value);
             }
             if (Optional.IsDefined(EnableRbacAuthorization))
             {
-                writer.WritePropertyName("enableRbacAuthorization");
+                writer.WritePropertyName("enableRbacAuthorization"u8);
                 writer.WriteBooleanValue(EnableRbacAuthorization.Value);
             }
             if (Optional.IsDefined(CreateMode))
             {
-                writer.WritePropertyName("createMode");
+                writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(EnablePurgeProtection))
             {
-                writer.WritePropertyName("enablePurgeProtection");
+                writer.WritePropertyName("enablePurgeProtection"u8);
                 writer.WriteBooleanValue(EnablePurgeProtection.Value);
             }
             if (Optional.IsDefined(NetworkRuleSet))
             {
-                writer.WritePropertyName("networkAcls");
+                writer.WritePropertyName("networkAcls"u8);
                 writer.WriteObjectValue(NetworkRuleSet);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess);
             }
             writer.WriteEndObject();
@@ -96,6 +96,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static KeyVaultProperties DeserializeKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Guid tenantId = default;
             KeyVaultSku sku = default;
             Optional<IList<KeyVaultAccessPolicy>> accessPolicies = default;
@@ -115,17 +119,17 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<string> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     sku = KeyVaultSku.DeserializeKeyVaultSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("accessPolicies"))
+                if (property.NameEquals("accessPolicies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -140,7 +144,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     accessPolicies = array;
                     continue;
                 }
-                if (property.NameEquals("vaultUri"))
+                if (property.NameEquals("vaultUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -150,12 +154,12 @@ namespace Azure.ResourceManager.KeyVault.Models
                     vaultUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hsmPoolResourceId"))
+                if (property.NameEquals("hsmPoolResourceId"u8))
                 {
                     hsmPoolResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enabledForDeployment"))
+                if (property.NameEquals("enabledForDeployment"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -165,7 +169,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     enabledForDeployment = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enabledForDiskEncryption"))
+                if (property.NameEquals("enabledForDiskEncryption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -175,7 +179,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     enabledForDiskEncryption = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enabledForTemplateDeployment"))
+                if (property.NameEquals("enabledForTemplateDeployment"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -185,7 +189,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     enabledForTemplateDeployment = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableSoftDelete"))
+                if (property.NameEquals("enableSoftDelete"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -195,7 +199,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     enableSoftDelete = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("softDeleteRetentionInDays"))
+                if (property.NameEquals("softDeleteRetentionInDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -205,7 +209,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     softDeleteRetentionInDays = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("enableRbacAuthorization"))
+                if (property.NameEquals("enableRbacAuthorization"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -215,7 +219,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     enableRbacAuthorization = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("createMode"))
+                if (property.NameEquals("createMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -225,7 +229,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     createMode = property.Value.GetString().ToKeyVaultCreateMode();
                     continue;
                 }
-                if (property.NameEquals("enablePurgeProtection"))
+                if (property.NameEquals("enablePurgeProtection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -235,7 +239,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     enablePurgeProtection = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("networkAcls"))
+                if (property.NameEquals("networkAcls"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -245,7 +249,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     networkAcls = KeyVaultNetworkRuleSet.DeserializeKeyVaultNetworkRuleSet(property.Value);
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -255,7 +259,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     provisioningState = new KeyVaultProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("privateEndpointConnections"))
+                if (property.NameEquals("privateEndpointConnections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -270,7 +274,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     privateEndpointConnections = array;
                     continue;
                 }
-                if (property.NameEquals("publicNetworkAccess"))
+                if (property.NameEquals("publicNetworkAccess"u8))
                 {
                     publicNetworkAccess = property.Value.GetString();
                     continue;

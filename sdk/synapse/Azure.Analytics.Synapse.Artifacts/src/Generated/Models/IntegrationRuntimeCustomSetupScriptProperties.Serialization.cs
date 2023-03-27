@@ -20,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BlobContainerUri))
             {
-                writer.WritePropertyName("blobContainerUri");
+                writer.WritePropertyName("blobContainerUri"u8);
                 writer.WriteStringValue(BlobContainerUri);
             }
             if (Optional.IsDefined(SasToken))
             {
-                writer.WritePropertyName("sasToken");
+                writer.WritePropertyName("sasToken"u8);
                 writer.WriteObjectValue(SasToken);
             }
             writer.WriteEndObject();
@@ -33,16 +33,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static IntegrationRuntimeCustomSetupScriptProperties DeserializeIntegrationRuntimeCustomSetupScriptProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> blobContainerUri = default;
             Optional<SecureString> sasToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("blobContainerUri"))
+                if (property.NameEquals("blobContainerUri"u8))
                 {
                     blobContainerUri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sasToken"))
+                if (property.NameEquals("sasToken"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

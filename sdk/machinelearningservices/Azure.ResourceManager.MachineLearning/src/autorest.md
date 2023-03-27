@@ -5,6 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
+generate-model-factory: false
 library-name: MachineLearning
 namespace: Azure.ResourceManager.MachineLearning
 require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b32e1896f30e6ea155449cb49719a6286e32b961/specification/machinelearningservices/resource-manager/readme.md
@@ -14,9 +15,6 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-
-mgmt-debug:
-  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -52,6 +50,10 @@ rename-rules:
   PAT: Pat
   SAS: Sas
   LRS: Lrs
+  AAD: Aad
+  AML: Aml
+  VCPU: VCpu|vCpu
+  VCPUs: VCpus|vCpus
 
 override-operation-name:
   Quotas_List: GetMachineLearningQuotas
@@ -177,7 +179,6 @@ rename-mapping:
   LoadBalancerType: MachineLearningLoadBalancerType
   SslConfiguration: MachineLearningSslConfiguration
   SystemService: MachineLearningComputeSystemService
-  AllocationState: AmlAllocationState
   IdentityConfiguration: MachineLearningIdentityConfiguration
   ManagedIdentity: MachineLearningManagedIdentity
   ManagedIdentity.resourceId: -|arm-id
@@ -342,7 +343,7 @@ rename-mapping:
   QuotaUnit: MachineLearningQuotaUnit
   RecurrenceFrequency: MachineLearningRecurrenceFrequency
   RecurrenceSchedule: MachineLearningRecurrenceSchedule
-  WeekDay: MachineLearningWeekday
+  WeekDay: MachineLearningDayOfWeek
   RegenerateEndpointKeysRequest: MachineLearningEndpointKeyRegenerateContent
   Regression: AutoMLVerticalRegression
   RegressionModels: AutoMLVerticalRegressionModel
@@ -385,8 +386,35 @@ rename-mapping:
   VirtualMachineSshCredentials: MachineLearningVmSshCredentials
   VmPriority: MachineLearningVmPriority
   WorkspaceConnectionUsernamePassword: MachineLearningWorkspaceConnectionUsernamePassword
+  Workspace.properties.hbiWorkspace: IsHbiWorkspace
+  AllocationState: MachineLearningAllocationState
+  ResourceId.id: -|arm-id
+  JobBase.componentId: -|arm-id
+  JobBase.computeId: -|arm-id
+  CommandJob.environmentId: -|arm-id
+  EndpointComputeType.AzureMLCompute: AmlCompute
+  OutputPathAssetReference.jobId: -|arm-id
+  PipelineJob.sourceJobId: -|arm-id
+  VirtualMachineSize.premiumIO: IsPremiumIOSupported
+  AmlComputeNodeInformation.privateIpAddress: -|ip-address
+  AmlComputeNodeInformation.publicIpAddress: -|ip-address
+  CommandJob.codeId: -|arm-id
+  CodeConfiguration.codeId: -|arm-id
+  HDInsightProperties.address: -|ip-address
+  VirtualMachineSchemaProperties.address: -|ip-address
+  TrialComponent: MachineLearningTrialComponent
+  TrialComponent.codeId: -|arm-id
+  TrialComponent.environmentId: -|arm-id
+  Forecasting: MachineLearningForecasting
+  EndpointAuthToken.expiryTimeUtc: ExpireOn|unixtime # this temporarily does not work
+  EndpointAuthToken.refreshAfterTimeUtc: RefreshOn|unixtime # this temporarily does not work
 
 directive:
+  - from: swagger-document
+    where: $.definitions.EndpointAuthToken.properties
+    transform: >
+      $["expiryTimeUtc"].format = "unixtime";
+      $["refreshAfterTimeUtc"].format = "unixtime";
   - from: swagger-document
     where: $.definitions.ComputeNodesInformation.properties
     transform: delete $.nextLink;
@@ -440,7 +468,7 @@ directive:
   - from: swagger-document
     where: $.definitions.TableVerticalValidationDataSettings.properties.cvSplitColumnNames
     transform: $["x-nullable"] = true;
-  # quite a few x-ms-client-name extensions are defined in the swagger, we here erase them all to prevent some funny interaction between our own renaming configuration
+  # quite a few x-ms-client-name extensions are defined in the swagger, we here erase them all to prevent some funny interactions between our own renaming configuration
   - from: mfe.json
     where: $.definitions
     transform: >

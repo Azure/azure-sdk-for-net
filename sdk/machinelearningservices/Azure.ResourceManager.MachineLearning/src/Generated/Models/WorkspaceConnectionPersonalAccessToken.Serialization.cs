@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Pat))
             {
-                writer.WritePropertyName("pat");
+                writer.WritePropertyName("pat"u8);
                 writer.WriteStringValue(Pat);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static WorkspaceConnectionPersonalAccessToken DeserializeWorkspaceConnectionPersonalAccessToken(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> pat = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("pat"))
+                if (property.NameEquals("pat"u8))
                 {
                     pat = property.Value.GetString();
                     continue;

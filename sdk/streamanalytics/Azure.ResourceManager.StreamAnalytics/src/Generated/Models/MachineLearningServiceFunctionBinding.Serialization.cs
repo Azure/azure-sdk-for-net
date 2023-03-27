@@ -16,23 +16,23 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FunctionBindingType);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Endpoint))
             {
-                writer.WritePropertyName("endpoint");
+                writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
             }
             if (Optional.IsDefined(ApiKey))
             {
-                writer.WritePropertyName("apiKey");
+                writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
             if (Optional.IsCollectionDefined(Inputs))
             {
-                writer.WritePropertyName("inputs");
+                writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
             if (Optional.IsCollectionDefined(Outputs))
             {
-                writer.WritePropertyName("outputs");
+                writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
@@ -52,22 +52,22 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
             if (Optional.IsDefined(BatchSize))
             {
-                writer.WritePropertyName("batchSize");
+                writer.WritePropertyName("batchSize"u8);
                 writer.WriteNumberValue(BatchSize.Value);
             }
             if (Optional.IsDefined(NumberOfParallelRequests))
             {
-                writer.WritePropertyName("numberOfParallelRequests");
+                writer.WritePropertyName("numberOfParallelRequests"u8);
                 writer.WriteNumberValue(NumberOfParallelRequests.Value);
             }
             if (Optional.IsDefined(InputRequestName))
             {
-                writer.WritePropertyName("inputRequestName");
+                writer.WritePropertyName("inputRequestName"u8);
                 writer.WriteStringValue(InputRequestName);
             }
             if (Optional.IsDefined(OutputResponseName))
             {
-                writer.WritePropertyName("outputResponseName");
+                writer.WritePropertyName("outputResponseName"u8);
                 writer.WriteStringValue(OutputResponseName);
             }
             writer.WriteEndObject();
@@ -76,6 +76,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static MachineLearningServiceFunctionBinding DeserializeMachineLearningServiceFunctionBinding(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> endpoint = default;
             Optional<string> apiKey = default;
@@ -87,12 +91,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> outputResponseName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,17 +105,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("endpoint"))
+                        if (property0.NameEquals("endpoint"u8))
                         {
                             endpoint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("apiKey"))
+                        if (property0.NameEquals("apiKey"u8))
                         {
                             apiKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("inputs"))
+                        if (property0.NameEquals("inputs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -126,7 +130,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             inputs = array;
                             continue;
                         }
-                        if (property0.NameEquals("outputs"))
+                        if (property0.NameEquals("outputs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -141,7 +145,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             outputs = array;
                             continue;
                         }
-                        if (property0.NameEquals("batchSize"))
+                        if (property0.NameEquals("batchSize"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -151,7 +155,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             batchSize = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("numberOfParallelRequests"))
+                        if (property0.NameEquals("numberOfParallelRequests"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -161,12 +165,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             numberOfParallelRequests = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("inputRequestName"))
+                        if (property0.NameEquals("inputRequestName"u8))
                         {
                             inputRequestName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("outputResponseName"))
+                        if (property0.NameEquals("outputResponseName"u8))
                         {
                             outputResponseName = property0.Value.GetString();
                             continue;

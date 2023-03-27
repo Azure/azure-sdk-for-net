@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -45,8 +44,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Creates or updates a role definition.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}
-        /// Operation Id: RoleDefinitions_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleDefinitions_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="roleDefinitionId"> The ID of the role definition. </param>
@@ -77,8 +84,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Creates or updates a role definition.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}
-        /// Operation Id: RoleDefinitions_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleDefinitions_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="roleDefinitionId"> The ID of the role definition. </param>
@@ -109,8 +124,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Get role definition by name (GUID).
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}
-        /// Operation Id: RoleDefinitions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleDefinitions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleDefinitionId"> The ID of the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -137,8 +160,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Get role definition by name (GUID).
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}
-        /// Operation Id: RoleDefinitions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleDefinitions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleDefinitionId"> The ID of the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -165,94 +196,62 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Get all role definitions that are applicable at scope and above.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleDefinitions
-        /// Operation Id: RoleDefinitions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleDefinitions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AuthorizationRoleDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AuthorizationRoleDefinitionResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AuthorizationRoleDefinitionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics.CreateScope("AuthorizationRoleDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _authorizationRoleDefinitionRoleDefinitionsRestClient.ListAsync(Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AuthorizationRoleDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AuthorizationRoleDefinitionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics.CreateScope("AuthorizationRoleDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _authorizationRoleDefinitionRoleDefinitionsRestClient.ListNextPageAsync(nextLink, Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AuthorizationRoleDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateListRequest(Id, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateListNextPageRequest(nextLink, Id, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AuthorizationRoleDefinitionResource(Client, AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(e)), _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics, Pipeline, "AuthorizationRoleDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get all role definitions that are applicable at scope and above.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleDefinitions
-        /// Operation Id: RoleDefinitions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleDefinitions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AuthorizationRoleDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AuthorizationRoleDefinitionResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<AuthorizationRoleDefinitionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics.CreateScope("AuthorizationRoleDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _authorizationRoleDefinitionRoleDefinitionsRestClient.List(Id, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AuthorizationRoleDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AuthorizationRoleDefinitionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics.CreateScope("AuthorizationRoleDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _authorizationRoleDefinitionRoleDefinitionsRestClient.ListNextPage(nextLink, Id, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AuthorizationRoleDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateListRequest(Id, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateListNextPageRequest(nextLink, Id, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AuthorizationRoleDefinitionResource(Client, AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(e)), _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics, Pipeline, "AuthorizationRoleDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}
-        /// Operation Id: RoleDefinitions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleDefinitions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleDefinitionId"> The ID of the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -277,8 +276,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}
-        /// Operation Id: RoleDefinitions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleDefinitions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleDefinitionId"> The ID of the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

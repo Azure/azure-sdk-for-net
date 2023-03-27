@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static CustomerDiskJobSecrets DeserializeCustomerDiskJobSecrets(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataBoxDiskSecret>> diskSecrets = default;
             Optional<string> carrierAccountNumber = default;
             DataBoxOrderType jobSecretsType = default;
@@ -23,7 +27,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskSecrets"))
+                if (property.NameEquals("diskSecrets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,17 +42,17 @@ namespace Azure.ResourceManager.DataBox.Models
                     diskSecrets = array;
                     continue;
                 }
-                if (property.NameEquals("carrierAccountNumber"))
+                if (property.NameEquals("carrierAccountNumber"u8))
                 {
                     carrierAccountNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobSecretsType"))
+                if (property.NameEquals("jobSecretsType"u8))
                 {
                     jobSecretsType = property.Value.GetString().ToDataBoxOrderType();
                     continue;
                 }
-                if (property.NameEquals("dcAccessSecurityCode"))
+                if (property.NameEquals("dcAccessSecurityCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value);
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

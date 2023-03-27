@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static SqlBackupSetInfo DeserializeSqlBackupSetInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> backupSetId = default;
             Optional<string> firstLSN = default;
             Optional<string> lastLSN = default;
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IReadOnlyList<string>> ignoreReasons = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("backupSetId"))
+                if (property.NameEquals("backupSetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,22 +43,22 @@ namespace Azure.ResourceManager.DataMigration.Models
                     backupSetId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("firstLSN"))
+                if (property.NameEquals("firstLSN"u8))
                 {
                     firstLSN = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastLSN"))
+                if (property.NameEquals("lastLSN"u8))
                 {
                     lastLSN = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("backupType"))
+                if (property.NameEquals("backupType"u8))
                 {
                     backupType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("listOfBackupFiles"))
+                if (property.NameEquals("listOfBackupFiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +73,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     listOfBackupFiles = array;
                     continue;
                 }
-                if (property.NameEquals("backupStartDate"))
+                if (property.NameEquals("backupStartDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +83,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     backupStartDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("backupFinishDate"))
+                if (property.NameEquals("backupFinishDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +93,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     backupFinishDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("isBackupRestored"))
+                if (property.NameEquals("isBackupRestored"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     isBackupRestored = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("hasBackupChecksums"))
+                if (property.NameEquals("hasBackupChecksums"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,7 +113,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     hasBackupChecksums = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("familyCount"))
+                if (property.NameEquals("familyCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,7 +123,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     familyCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("ignoreReasons"))
+                if (property.NameEquals("ignoreReasons"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

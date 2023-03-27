@@ -10,48 +10,26 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class ManifestListAttributes : IUtf8JsonSerializable
+    internal partial class ManifestListAttributes
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(MediaType))
-            {
-                writer.WritePropertyName("mediaType");
-                writer.WriteStringValue(MediaType);
-            }
-            if (Optional.IsDefined(Size))
-            {
-                writer.WritePropertyName("size");
-                writer.WriteNumberValue(Size.Value);
-            }
-            if (Optional.IsDefined(Digest))
-            {
-                writer.WritePropertyName("digest");
-                writer.WriteStringValue(Digest);
-            }
-            if (Optional.IsDefined(Platform))
-            {
-                writer.WritePropertyName("platform");
-                writer.WriteObjectValue(Platform);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static ManifestListAttributes DeserializeManifestListAttributes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> mediaType = default;
             Optional<long> size = default;
             Optional<string> digest = default;
             Optional<Platform> platform = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mediaType"))
+                if (property.NameEquals("mediaType"u8))
                 {
                     mediaType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("size"))
+                if (property.NameEquals("size"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,12 +39,12 @@ namespace Azure.Containers.ContainerRegistry
                     size = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("digest"))
+                if (property.NameEquals("digest"u8))
                 {
                     digest = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("platform"))
+                if (property.NameEquals("platform"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

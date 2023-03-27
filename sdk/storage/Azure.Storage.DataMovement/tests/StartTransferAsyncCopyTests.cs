@@ -435,7 +435,10 @@ namespace Azure.Storage.DataMovement.Tests
                 newSourceFile,
                 GetNewBlobName(),
                 size);
+
+            // Create destination of a blob type that's not the same as the source
             PageBlobClient pageBlobClient = testContainer.Container.GetPageBlobClient(GetNewBlobName());
+            await pageBlobClient.CreateAsync(size);
             StorageResource sourceResource = new BlockBlobStorageResource(blockBlobClient);
             StorageResource destinationResource = new PageBlobStorageResource(
                 pageBlobClient,
@@ -503,10 +506,14 @@ namespace Azure.Storage.DataMovement.Tests
                 newSourceFile,
                 GetNewBlobName(),
                 size);
-            AppendBlobClient pageBlobClient = testContainer.Container.GetAppendBlobClient(GetNewBlobName());
+
+            // Create destination of a blob type that's not the same as the source
+            AppendBlobClient appendBlobClient = testContainer.Container.GetAppendBlobClient(GetNewBlobName());
+            await appendBlobClient.CreateAsync();
+
             StorageResource sourceResource = new BlockBlobStorageResource(blockBlobClient);
             StorageResource destinationResource = new AppendBlobStorageResource(
-                pageBlobClient,
+                appendBlobClient,
                 new AppendBlobStorageResourceOptions()
                 {
                     CopyMethod = TransferCopyMethod.AsyncCopy,
@@ -1743,5 +1750,203 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
         #endregion AsyncCopy Source AppendBlob
+
+        #region Single Concurrency
+        private async Task<DataTransfer> CreateStartTransfer(
+            BlobContainerClient containerClient,
+            int concurrency,
+            bool createFailedCondition = false,
+            SingleTransferOptions options = default,
+            int size = Constants.KB)
+        {
+            // Arrange
+            // Create source local file for checking, and source blob
+            string sourceBlobName = GetNewBlobName();
+            string destinationBlobName = GetNewBlobName();
+            BlockBlobClient destinationClient;
+            if (createFailedCondition)
+            {
+                destinationClient = await CreateBlockBlob(containerClient, Path.GetTempFileName(), sourceBlobName, size);
+            }
+            else
+            {
+                destinationClient = containerClient.GetBlockBlobClient(destinationBlobName);
+            }
+
+            // Create new source block blob.
+            string newSourceFile = Path.GetTempFileName();
+            BlockBlobClient blockBlobClient = await CreateBlockBlob(containerClient, newSourceFile, sourceBlobName, size);
+            StorageResource sourceResource = new BlockBlobStorageResource(blockBlobClient);
+            StorageResource destinationResource = new BlockBlobStorageResource(destinationClient, new BlockBlobStorageResourceOptions()
+            {
+                CopyMethod = TransferCopyMethod.AsyncCopy,
+            });
+
+            // Create Transfer Manager with single threaded operation
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
+            {
+                MaximumConcurrency = concurrency,
+            };
+            TransferManager transferManager = new TransferManager(managerOptions);
+
+            // Start transfer and await for completion.
+            return await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options).ConfigureAwait(false);
+        }
+
+        [RecordedTest]
+        public async Task StartTransfer_AwaitCompletion()
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+
+            // Create transfer to do a AwaitCompletion
+            DataTransfer transfer = await CreateStartTransfer(test.Container, 1);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
+        }
+
+        [RecordedTest]
+        public async Task StartTransfer_AwaitCompletion_Failed()
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+
+            SingleTransferOptions options = new SingleTransferOptions()
+            {
+                CreateMode = StorageResourceCreateMode.Fail
+            };
+
+            // Create transfer to do a AwaitCompletion
+            DataTransfer transfer = await CreateStartTransfer(
+                test.Container,
+                1,
+                createFailedCondition: true,
+                options: options);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
+        }
+
+        [RecordedTest]
+        public async Task StartTransfer_AwaitCompletion_Skipped()
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+
+            // Create transfer options with Skipping available
+            SingleTransferOptions options = new SingleTransferOptions()
+            {
+                CreateMode = StorageResourceCreateMode.Skip
+            };
+
+            // Create transfer to do a AwaitCompletion
+            DataTransfer transfer = await CreateStartTransfer(
+                test.Container,
+                1,
+                createFailedCondition: true,
+                options: options);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(StorageTransferStatus.CompletedWithSkippedTransfers, transfer.TransferStatus);
+        }
+
+        [RecordedTest]
+        public async Task StartTransfer_EnsureCompleted()
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+
+            // Create transfer to do a EnsureCompleted
+            DataTransfer transfer = await CreateStartTransfer(test.Container, 1);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            transfer.EnsureCompleted(cancellationTokenSource.Token);
+
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
+        }
+
+        [RecordedTest]
+        public async Task StartTransfer_EnsureCompleted_Failed()
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+
+            SingleTransferOptions options = new SingleTransferOptions()
+            {
+                CreateMode = StorageResourceCreateMode.Fail
+            };
+
+            // Create transfer to do a AwaitCompletion
+            DataTransfer transfer = await CreateStartTransfer(
+                test.Container,
+                1,
+                createFailedCondition: true,
+                options: options);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            transfer.EnsureCompleted(cancellationTokenSource.Token);
+
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
+        }
+
+        [RecordedTest]
+        public async Task StartTransfer_EnsureCompleted_Skipped()
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+
+            // Create transfer options with Skipping available
+            SingleTransferOptions options = new SingleTransferOptions()
+            {
+                CreateMode = StorageResourceCreateMode.Skip
+            };
+
+            // Create transfer to do a EnsureCompleted
+            DataTransfer transfer = await CreateStartTransfer(
+                test.Container,
+                1,
+                createFailedCondition: true,
+                options: options);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            transfer.EnsureCompleted(cancellationTokenSource.Token);
+
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(StorageTransferStatus.CompletedWithSkippedTransfers, transfer.TransferStatus);
+        }
+        #endregion
     }
 }

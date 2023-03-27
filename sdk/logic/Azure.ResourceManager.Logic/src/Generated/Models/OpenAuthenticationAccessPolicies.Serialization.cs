@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AccessPolicies))
             {
-                writer.WritePropertyName("policies");
+                writer.WritePropertyName("policies"u8);
                 writer.WriteStartObject();
                 foreach (var item in AccessPolicies)
                 {
@@ -32,10 +32,14 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static OpenAuthenticationAccessPolicies DeserializeOpenAuthenticationAccessPolicies(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, OpenAuthenticationAccessPolicy>> policies = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("policies"))
+                if (property.NameEquals("policies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

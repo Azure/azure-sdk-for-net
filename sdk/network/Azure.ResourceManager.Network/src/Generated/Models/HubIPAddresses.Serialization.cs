@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PublicIPs))
             {
-                writer.WritePropertyName("publicIPs");
+                writer.WritePropertyName("publicIPs"u8);
                 writer.WriteObjectValue(PublicIPs);
             }
             if (Optional.IsDefined(PrivateIPAddress))
             {
-                writer.WritePropertyName("privateIPAddress");
+                writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static HubIPAddresses DeserializeHubIPAddresses(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HubPublicIPAddresses> publicIPs = default;
             Optional<string> privateIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publicIPs"))
+                if (property.NameEquals("publicIPs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
                     publicIPs = HubPublicIPAddresses.DeserializeHubPublicIPAddresses(property.Value);
                     continue;
                 }
-                if (property.NameEquals("privateIPAddress"))
+                if (property.NameEquals("privateIPAddress"u8))
                 {
                     privateIPAddress = property.Value.GetString();
                     continue;

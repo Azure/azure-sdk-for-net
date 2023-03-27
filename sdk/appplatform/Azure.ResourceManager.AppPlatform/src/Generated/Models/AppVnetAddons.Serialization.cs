@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsPublicEndpoint))
             {
-                writer.WritePropertyName("publicEndpoint");
+                writer.WritePropertyName("publicEndpoint"u8);
                 writer.WriteBooleanValue(IsPublicEndpoint.Value);
             }
             writer.WriteEndObject();
@@ -26,11 +26,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppVnetAddons DeserializeAppVnetAddons(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> publicEndpoint = default;
             Optional<Uri> publicEndpointUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publicEndpoint"))
+                if (property.NameEquals("publicEndpoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     publicEndpoint = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("publicEndpointUrl"))
+                if (property.NameEquals("publicEndpointUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

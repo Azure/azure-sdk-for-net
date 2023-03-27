@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DBName))
             {
-                writer.WritePropertyName("db");
+                writer.WritePropertyName("db"u8);
                 writer.WriteStringValue(DBName);
             }
             if (Optional.IsDefined(Collection))
             {
-                writer.WritePropertyName("collection");
+                writer.WritePropertyName("collection"u8);
                 writer.WriteStringValue(Collection);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static MongoDBPrivilegeResourceInfo DeserializeMongoDBPrivilegeResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> db = default;
             Optional<string> collection = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("db"))
+                if (property.NameEquals("db"u8))
                 {
                     db = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("collection"))
+                if (property.NameEquals("collection"u8))
                 {
                     collection = property.Value.GetString();
                     continue;

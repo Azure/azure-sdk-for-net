@@ -18,12 +18,12 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TitleField))
             {
-                writer.WritePropertyName("titleField");
+                writer.WritePropertyName("titleField"u8);
                 writer.WriteObjectValue(TitleField);
             }
             if (Optional.IsCollectionDefined(ContentFields))
             {
-                writer.WritePropertyName("prioritizedContentFields");
+                writer.WritePropertyName("prioritizedContentFields"u8);
                 writer.WriteStartArray();
                 foreach (var item in ContentFields)
                 {
@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsCollectionDefined(KeywordFields))
             {
-                writer.WritePropertyName("prioritizedKeywordsFields");
+                writer.WritePropertyName("prioritizedKeywordsFields"u8);
                 writer.WriteStartArray();
                 foreach (var item in KeywordFields)
                 {
@@ -46,12 +46,16 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static PrioritizedFields DeserializePrioritizedFields(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SemanticField> titleField = default;
             Optional<IList<SemanticField>> prioritizedContentFields = default;
             Optional<IList<SemanticField>> prioritizedKeywordsFields = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("titleField"))
+                if (property.NameEquals("titleField"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     titleField = SemanticField.DeserializeSemanticField(property.Value);
                     continue;
                 }
-                if (property.NameEquals("prioritizedContentFields"))
+                if (property.NameEquals("prioritizedContentFields"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +80,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     prioritizedContentFields = array;
                     continue;
                 }
-                if (property.NameEquals("prioritizedKeywordsFields"))
+                if (property.NameEquals("prioritizedKeywordsFields"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

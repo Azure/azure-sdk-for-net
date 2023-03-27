@@ -14,6 +14,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaJobOutputAsset DeserializeMediaJobOutputAsset(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> assetName = default;
             string odataType = default;
             Optional<MediaJobError> error = default;
@@ -22,17 +26,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             MediaJobState state = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("assetName"))
+                if (property.NameEquals("assetName"u8))
                 {
                     assetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,17 +46,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     error = MediaJobError.DeserializeMediaJobError(property.Value);
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("progress"))
+                if (property.NameEquals("progress"u8))
                 {
                     progress = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = property.Value.GetString().ToMediaJobState();
                     continue;

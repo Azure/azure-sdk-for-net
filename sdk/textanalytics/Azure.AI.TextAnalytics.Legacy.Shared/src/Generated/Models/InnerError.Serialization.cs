@@ -16,6 +16,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static InnerError DeserializeInnerError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             InnerErrorCodeValue code = default;
             string message = default;
             Optional<IReadOnlyDictionary<string, string>> details = default;
@@ -23,17 +27,17 @@ namespace Azure.AI.TextAnalytics.Legacy
             Optional<InnerError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = new InnerErrorCodeValue(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("details"))
+                if (property.NameEquals("details"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,12 +52,12 @@ namespace Azure.AI.TextAnalytics.Legacy
                     details = dictionary;
                     continue;
                 }
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
                     target = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("innererror"))
+                if (property.NameEquals("innererror"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

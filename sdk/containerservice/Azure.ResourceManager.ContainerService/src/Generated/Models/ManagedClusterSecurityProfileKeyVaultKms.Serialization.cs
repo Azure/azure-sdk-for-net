@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(KeyId))
             {
-                writer.WritePropertyName("keyId");
+                writer.WritePropertyName("keyId"u8);
                 writer.WriteStringValue(KeyId);
             }
             if (Optional.IsDefined(KeyVaultNetworkAccess))
             {
-                writer.WritePropertyName("keyVaultNetworkAccess");
+                writer.WritePropertyName("keyVaultNetworkAccess"u8);
                 writer.WriteStringValue(KeyVaultNetworkAccess.Value.ToString());
             }
             if (Optional.IsDefined(KeyVaultResourceId))
             {
-                writer.WritePropertyName("keyVaultResourceId");
+                writer.WritePropertyName("keyVaultResourceId"u8);
                 writer.WriteStringValue(KeyVaultResourceId);
             }
             writer.WriteEndObject();
@@ -40,13 +40,17 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterSecurityProfileKeyVaultKms DeserializeManagedClusterSecurityProfileKeyVaultKms(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<string> keyId = default;
             Optional<ManagedClusterKeyVaultNetworkAccessType> keyVaultNetworkAccess = default;
             Optional<ResourceIdentifier> keyVaultResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,12 +60,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("keyId"))
+                if (property.NameEquals("keyId"u8))
                 {
                     keyId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVaultNetworkAccess"))
+                if (property.NameEquals("keyVaultNetworkAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     keyVaultNetworkAccess = new ManagedClusterKeyVaultNetworkAccessType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyVaultResourceId"))
+                if (property.NameEquals("keyVaultResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

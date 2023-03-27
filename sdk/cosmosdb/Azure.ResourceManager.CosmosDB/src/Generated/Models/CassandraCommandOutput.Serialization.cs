@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CassandraCommandOutput DeserializeCassandraCommandOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> commandOutput = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("commandOutput"))
+                if (property.NameEquals("commandOutput"u8))
                 {
                     commandOutput = property.Value.GetString();
                     continue;

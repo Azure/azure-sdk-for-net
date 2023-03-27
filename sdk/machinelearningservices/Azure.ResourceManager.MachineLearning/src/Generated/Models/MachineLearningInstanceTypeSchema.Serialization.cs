@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (NodeSelector != null)
                 {
-                    writer.WritePropertyName("nodeSelector");
+                    writer.WritePropertyName("nodeSelector"u8);
                     writer.WriteStartObject();
                     foreach (var item in NodeSelector)
                     {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Resources))
             {
-                writer.WritePropertyName("resources");
+                writer.WritePropertyName("resources"u8);
                 writer.WriteObjectValue(Resources);
             }
             writer.WriteEndObject();
@@ -44,11 +44,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningInstanceTypeSchema DeserializeMachineLearningInstanceTypeSchema(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> nodeSelector = default;
             Optional<MachineLearningInstanceTypeSchemaResources> resources = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nodeSelector"))
+                if (property.NameEquals("nodeSelector"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,19 +62,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     nodeSelector = dictionary;
                     continue;
                 }
-                if (property.NameEquals("resources"))
+                if (property.NameEquals("resources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

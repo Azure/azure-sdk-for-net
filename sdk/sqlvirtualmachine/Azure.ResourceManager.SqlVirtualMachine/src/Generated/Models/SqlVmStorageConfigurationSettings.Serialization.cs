@@ -17,32 +17,32 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SqlDataSettings))
             {
-                writer.WritePropertyName("sqlDataSettings");
+                writer.WritePropertyName("sqlDataSettings"u8);
                 writer.WriteObjectValue(SqlDataSettings);
             }
             if (Optional.IsDefined(SqlLogSettings))
             {
-                writer.WritePropertyName("sqlLogSettings");
+                writer.WritePropertyName("sqlLogSettings"u8);
                 writer.WriteObjectValue(SqlLogSettings);
             }
             if (Optional.IsDefined(SqlTempDBSettings))
             {
-                writer.WritePropertyName("sqlTempDbSettings");
+                writer.WritePropertyName("sqlTempDbSettings"u8);
                 writer.WriteObjectValue(SqlTempDBSettings);
             }
             if (Optional.IsDefined(IsSqlSystemDBOnDataDisk))
             {
-                writer.WritePropertyName("sqlSystemDbOnDataDisk");
+                writer.WritePropertyName("sqlSystemDbOnDataDisk"u8);
                 writer.WriteBooleanValue(IsSqlSystemDBOnDataDisk.Value);
             }
             if (Optional.IsDefined(DiskConfigurationType))
             {
-                writer.WritePropertyName("diskConfigurationType");
+                writer.WritePropertyName("diskConfigurationType"u8);
                 writer.WriteStringValue(DiskConfigurationType.Value.ToString());
             }
             if (Optional.IsDefined(StorageWorkloadType))
             {
-                writer.WritePropertyName("storageWorkloadType");
+                writer.WritePropertyName("storageWorkloadType"u8);
                 writer.WriteStringValue(StorageWorkloadType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlVmStorageConfigurationSettings DeserializeSqlVmStorageConfigurationSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlStorageSettings> sqlDataSettings = default;
             Optional<SqlStorageSettings> sqlLogSettings = default;
             Optional<SqlTempDBSettings> sqlTempDBSettings = default;
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<SqlVmStorageWorkloadType> storageWorkloadType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sqlDataSettings"))
+                if (property.NameEquals("sqlDataSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     sqlDataSettings = SqlStorageSettings.DeserializeSqlStorageSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sqlLogSettings"))
+                if (property.NameEquals("sqlLogSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +82,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     sqlLogSettings = SqlStorageSettings.DeserializeSqlStorageSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sqlTempDbSettings"))
+                if (property.NameEquals("sqlTempDbSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +92,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     sqlTempDBSettings = SqlTempDBSettings.DeserializeSqlTempDBSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sqlSystemDbOnDataDisk"))
+                if (property.NameEquals("sqlSystemDbOnDataDisk"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +102,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     sqlSystemDBOnDataDisk = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("diskConfigurationType"))
+                if (property.NameEquals("diskConfigurationType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +112,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     diskConfigurationType = new SqlVmDiskConfigurationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageWorkloadType"))
+                if (property.NameEquals("storageWorkloadType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

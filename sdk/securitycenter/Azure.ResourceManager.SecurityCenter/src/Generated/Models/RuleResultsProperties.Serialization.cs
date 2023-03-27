@@ -18,10 +18,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Results))
             {
-                writer.WritePropertyName("results");
+                writer.WritePropertyName("results"u8);
                 writer.WriteStartArray();
                 foreach (var item in Results)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartArray();
                     foreach (var item0 in item)
                     {
@@ -36,10 +41,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static RuleResultsProperties DeserializeRuleResultsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<IList<string>>> results = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("results"))
+                if (property.NameEquals("results"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,12 +58,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<IList<string>> array = new List<IList<string>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        List<string> array0 = new List<string>();
-                        foreach (var item0 in item.EnumerateArray())
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array0.Add(item0.GetString());
+                            array.Add(null);
                         }
-                        array.Add(array0);
+                        else
+                        {
+                            List<string> array0 = new List<string>();
+                            foreach (var item0 in item.EnumerateArray())
+                            {
+                                array0.Add(item0.GetString());
+                            }
+                            array.Add(array0);
+                        }
                     }
                     results = array;
                     continue;

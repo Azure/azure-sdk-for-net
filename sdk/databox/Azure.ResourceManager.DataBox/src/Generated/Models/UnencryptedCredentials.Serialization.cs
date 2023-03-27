@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static UnencryptedCredentials DeserializeUnencryptedCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> jobName = default;
             Optional<JobSecrets> jobSecrets = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobName"))
+                if (property.NameEquals("jobName"u8))
                 {
                     jobName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobSecrets"))
+                if (property.NameEquals("jobSecrets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

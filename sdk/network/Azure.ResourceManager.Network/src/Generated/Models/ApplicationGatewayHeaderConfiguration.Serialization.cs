@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(HeaderName))
             {
-                writer.WritePropertyName("headerName");
+                writer.WritePropertyName("headerName"u8);
                 writer.WriteStringValue(HeaderName);
             }
             if (Optional.IsDefined(HeaderValue))
             {
-                writer.WritePropertyName("headerValue");
+                writer.WritePropertyName("headerValue"u8);
                 writer.WriteStringValue(HeaderValue);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayHeaderConfiguration DeserializeApplicationGatewayHeaderConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> headerName = default;
             Optional<string> headerValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("headerName"))
+                if (property.NameEquals("headerName"u8))
                 {
                     headerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("headerValue"))
+                if (property.NameEquals("headerValue"u8))
                 {
                     headerValue = property.Value.GetString();
                     continue;

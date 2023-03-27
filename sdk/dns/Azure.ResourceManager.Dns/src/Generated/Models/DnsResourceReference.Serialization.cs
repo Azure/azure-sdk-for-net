@@ -16,11 +16,15 @@ namespace Azure.ResourceManager.Dns.Models
     {
         internal static DnsResourceReference DeserializeDnsResourceReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<WritableSubResource>> dnsResources = default;
             Optional<WritableSubResource> targetResource = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dnsResources"))
+                if (property.NameEquals("dnsResources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +39,7 @@ namespace Azure.ResourceManager.Dns.Models
                     dnsResources = array;
                     continue;
                 }
-                if (property.NameEquals("targetResource"))
+                if (property.NameEquals("targetResource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

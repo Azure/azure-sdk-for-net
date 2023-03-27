@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IP))
             {
-                writer.WritePropertyName("ip");
+                writer.WritePropertyName("ip"u8);
                 writer.WriteObjectValue(IP);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static LiveEventInputAccessControl DeserializeLiveEventInputAccessControl(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IPAccessControl> ip = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ip"))
+                if (property.NameEquals("ip"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

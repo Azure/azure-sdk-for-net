@@ -17,33 +17,37 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DisablePasswordAuthentication))
             {
-                writer.WritePropertyName("disablePasswordAuthentication");
+                writer.WritePropertyName("disablePasswordAuthentication"u8);
                 writer.WriteBooleanValue(DisablePasswordAuthentication.Value);
             }
             if (Optional.IsDefined(Ssh))
             {
-                writer.WritePropertyName("ssh");
+                writer.WritePropertyName("ssh"u8);
                 writer.WriteObjectValue(Ssh);
             }
             if (Optional.IsDefined(SshKeyPair))
             {
-                writer.WritePropertyName("sshKeyPair");
+                writer.WritePropertyName("sshKeyPair"u8);
                 writer.WriteObjectValue(SshKeyPair);
             }
-            writer.WritePropertyName("osType");
+            writer.WritePropertyName("osType"u8);
             writer.WriteStringValue(OSType.ToString());
             writer.WriteEndObject();
         }
 
         internal static LinuxConfiguration DeserializeLinuxConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> disablePasswordAuthentication = default;
             Optional<SshConfiguration> ssh = default;
             Optional<SshKeyPair> sshKeyPair = default;
             OSType osType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("disablePasswordAuthentication"))
+                if (property.NameEquals("disablePasswordAuthentication"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     disablePasswordAuthentication = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("ssh"))
+                if (property.NameEquals("ssh"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +67,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     ssh = SshConfiguration.DeserializeSshConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sshKeyPair"))
+                if (property.NameEquals("sshKeyPair"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +77,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     sshKeyPair = SshKeyPair.DeserializeSshKeyPair(property.Value);
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = new OSType(property.Value.GetString());
                     continue;

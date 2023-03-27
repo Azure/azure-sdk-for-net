@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.Authorization
     {
         internal static RoleAssignmentData DeserializeRoleAssignmentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -35,22 +39,22 @@ namespace Azure.ResourceManager.Authorization
             Optional<ResourceIdentifier> delegatedManagedIdentityResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.Authorization
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,12 +73,12 @@ namespace Azure.ResourceManager.Authorization
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("scope"))
+                        if (property0.NameEquals("scope"u8))
                         {
                             scope = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("roleDefinitionId"))
+                        if (property0.NameEquals("roleDefinitionId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -84,7 +88,7 @@ namespace Azure.ResourceManager.Authorization
                             roleDefinitionId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("principalId"))
+                        if (property0.NameEquals("principalId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -94,7 +98,7 @@ namespace Azure.ResourceManager.Authorization
                             principalId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("principalType"))
+                        if (property0.NameEquals("principalType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -104,22 +108,22 @@ namespace Azure.ResourceManager.Authorization
                             principalType = new RoleManagementPrincipalType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("condition"))
+                        if (property0.NameEquals("condition"u8))
                         {
                             condition = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("conditionVersion"))
+                        if (property0.NameEquals("conditionVersion"u8))
                         {
                             conditionVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("createdOn"))
+                        if (property0.NameEquals("createdOn"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -129,7 +133,7 @@ namespace Azure.ResourceManager.Authorization
                             createdOn = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("updatedOn"))
+                        if (property0.NameEquals("updatedOn"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -139,17 +143,17 @@ namespace Azure.ResourceManager.Authorization
                             updatedOn = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("createdBy"))
+                        if (property0.NameEquals("createdBy"u8))
                         {
                             createdBy = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("updatedBy"))
+                        if (property0.NameEquals("updatedBy"u8))
                         {
                             updatedBy = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("delegatedManagedIdentityResourceId"))
+                        if (property0.NameEquals("delegatedManagedIdentityResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

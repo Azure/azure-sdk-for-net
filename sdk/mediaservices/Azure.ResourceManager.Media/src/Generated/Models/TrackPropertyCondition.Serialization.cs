@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("property");
+            writer.WritePropertyName("property"u8);
             writer.WriteStringValue(Property.ToString());
-            writer.WritePropertyName("operation");
+            writer.WritePropertyName("operation"u8);
             writer.WriteStringValue(Operation.ToString());
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
             writer.WriteEndObject();
@@ -29,22 +29,26 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static TrackPropertyCondition DeserializeTrackPropertyCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TrackPropertyType property = default;
             TrackPropertyCompareOperation operation = default;
             Optional<string> value = default;
             foreach (var property0 in element.EnumerateObject())
             {
-                if (property0.NameEquals("property"))
+                if (property0.NameEquals("property"u8))
                 {
                     property = new TrackPropertyType(property0.Value.GetString());
                     continue;
                 }
-                if (property0.NameEquals("operation"))
+                if (property0.NameEquals("operation"u8))
                 {
                     operation = new TrackPropertyCompareOperation(property0.Value.GetString());
                     continue;
                 }
-                if (property0.NameEquals("value"))
+                if (property0.NameEquals("value"u8))
                 {
                     value = property0.Value.GetString();
                     continue;

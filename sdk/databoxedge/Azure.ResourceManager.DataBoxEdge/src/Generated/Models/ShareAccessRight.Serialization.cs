@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static ShareAccessRight DeserializeShareAccessRight(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier shareId = default;
             ShareAccessType accessType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("shareId"))
+                if (property.NameEquals("shareId"u8))
                 {
                     shareId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("accessType"))
+                if (property.NameEquals("accessType"u8))
                 {
                     accessType = new ShareAccessType(property.Value.GetString());
                     continue;

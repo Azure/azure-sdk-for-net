@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Day))
             {
-                writer.WritePropertyName("day");
+                writer.WritePropertyName("day"u8);
                 writer.WriteStringValue(Day.Value.ToString());
             }
             if (Optional.IsCollectionDefined(HourSlots))
             {
-                writer.WritePropertyName("hourSlots");
+                writer.WritePropertyName("hourSlots"u8);
                 writer.WriteStartArray();
                 foreach (var item in HourSlots)
                 {
@@ -36,11 +36,15 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceTimeInWeek DeserializeContainerServiceTimeInWeek(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerServiceWeekDay> day = default;
             Optional<IList<int>> hourSlots = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("day"))
+                if (property.NameEquals("day"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     day = new ContainerServiceWeekDay(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hourSlots"))
+                if (property.NameEquals("hourSlots"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

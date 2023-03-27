@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.ContainerService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("adminUsername");
+            writer.WritePropertyName("adminUsername"u8);
             writer.WriteStringValue(AdminUsername);
-            writer.WritePropertyName("ssh");
+            writer.WritePropertyName("ssh"u8);
             writer.WriteObjectValue(Ssh);
             writer.WriteEndObject();
         }
 
         internal static ContainerServiceLinuxProfile DeserializeContainerServiceLinuxProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string adminUsername = default;
             ContainerServiceSshConfiguration ssh = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("adminUsername"))
+                if (property.NameEquals("adminUsername"u8))
                 {
                     adminUsername = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ssh"))
+                if (property.NameEquals("ssh"u8))
                 {
                     ssh = ContainerServiceSshConfiguration.DeserializeContainerServiceSshConfiguration(property.Value);
                     continue;

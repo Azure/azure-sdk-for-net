@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.ServiceBus.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SqlExpression))
             {
-                writer.WritePropertyName("sqlExpression");
+                writer.WritePropertyName("sqlExpression"u8);
                 writer.WriteStringValue(SqlExpression);
             }
             if (Optional.IsDefined(CompatibilityLevel))
             {
-                writer.WritePropertyName("compatibilityLevel");
+                writer.WritePropertyName("compatibilityLevel"u8);
                 writer.WriteNumberValue(CompatibilityLevel.Value);
             }
             if (Optional.IsDefined(RequiresPreprocessing))
             {
-                writer.WritePropertyName("requiresPreprocessing");
+                writer.WritePropertyName("requiresPreprocessing"u8);
                 writer.WriteBooleanValue(RequiresPreprocessing.Value);
             }
             writer.WriteEndObject();
@@ -35,17 +35,21 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static ServiceBusSqlFilter DeserializeServiceBusSqlFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sqlExpression = default;
             Optional<int> compatibilityLevel = default;
             Optional<bool> requiresPreprocessing = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sqlExpression"))
+                if (property.NameEquals("sqlExpression"u8))
                 {
                     sqlExpression = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("compatibilityLevel"))
+                if (property.NameEquals("compatibilityLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     compatibilityLevel = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("requiresPreprocessing"))
+                if (property.NameEquals("requiresPreprocessing"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ManagedServiceIdentityType.ToString());
             if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
-                writer.WritePropertyName("userAssignedIdentities");
+                writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();
                 foreach (var item in UserAssignedIdentities)
                 {
@@ -35,16 +35,20 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static UserAssignedServiceIdentity DeserializeUserAssignedServiceIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ManagedServiceIdentityType type = default;
             Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ManagedServiceIdentityType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("userAssignedIdentities"))
+                if (property.NameEquals("userAssignedIdentities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

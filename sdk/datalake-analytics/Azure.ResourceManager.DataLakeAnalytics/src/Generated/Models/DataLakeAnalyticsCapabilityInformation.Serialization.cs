@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     {
         internal static DataLakeAnalyticsCapabilityInformation DeserializeDataLakeAnalyticsCapabilityInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> subscriptionId = default;
             Optional<DataLakeAnalyticsSubscriptionState> state = default;
             Optional<int> maxAccountCount = default;
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             Optional<bool> migrationState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +36,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                     subscriptionId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                     state = new DataLakeAnalyticsSubscriptionState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("maxAccountCount"))
+                if (property.NameEquals("maxAccountCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                     maxAccountCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("accountCount"))
+                if (property.NameEquals("accountCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +66,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                     accountCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("migrationState"))
+                if (property.NameEquals("migrationState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

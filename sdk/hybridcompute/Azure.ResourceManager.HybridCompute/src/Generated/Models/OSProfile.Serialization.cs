@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(WindowsConfiguration))
             {
-                writer.WritePropertyName("windowsConfiguration");
+                writer.WritePropertyName("windowsConfiguration"u8);
                 writer.WriteObjectValue(WindowsConfiguration);
             }
             if (Optional.IsDefined(LinuxConfiguration))
             {
-                writer.WritePropertyName("linuxConfiguration");
+                writer.WritePropertyName("linuxConfiguration"u8);
                 writer.WriteObjectValue(LinuxConfiguration);
             }
             writer.WriteEndObject();
@@ -30,17 +30,21 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static OSProfile DeserializeOSProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> computerName = default;
             Optional<OSProfileWindowsConfiguration> windowsConfiguration = default;
             Optional<OSProfileLinuxConfiguration> linuxConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("computerName"))
+                if (property.NameEquals("computerName"u8))
                 {
                     computerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("windowsConfiguration"))
+                if (property.NameEquals("windowsConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     windowsConfiguration = OSProfileWindowsConfiguration.DeserializeOSProfileWindowsConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("linuxConfiguration"))
+                if (property.NameEquals("linuxConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

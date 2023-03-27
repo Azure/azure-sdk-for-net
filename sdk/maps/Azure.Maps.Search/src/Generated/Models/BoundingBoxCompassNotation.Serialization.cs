@@ -14,22 +14,26 @@ namespace Azure.Maps.Search.Models
     {
         internal static BoundingBoxCompassNotation DeserializeBoundingBoxCompassNotation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> northEast = default;
             Optional<string> southWest = default;
             Optional<MapsEntityType> entity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("northEast"))
+                if (property.NameEquals("northEast"u8))
                 {
                     northEast = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("southWest"))
+                if (property.NameEquals("southWest"u8))
                 {
                     southWest = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("entity"))
+                if (property.NameEquals("entity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

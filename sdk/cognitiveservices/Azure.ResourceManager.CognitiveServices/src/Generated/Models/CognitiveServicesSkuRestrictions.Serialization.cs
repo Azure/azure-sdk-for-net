@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static CognitiveServicesSkuRestrictions DeserializeCognitiveServicesSkuRestrictions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CognitiveServicesSkuRestrictionsType> type = default;
             Optional<IReadOnlyList<string>> values = default;
             Optional<CognitiveServicesSkuRestrictionInfo> restrictionInfo = default;
             Optional<CognitiveServicesSkuRestrictionReasonCode> reasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +35,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     type = property.Value.GetString().ToCognitiveServicesSkuRestrictionsType();
                     continue;
                 }
-                if (property.NameEquals("values"))
+                if (property.NameEquals("values"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     values = array;
                     continue;
                 }
-                if (property.NameEquals("restrictionInfo"))
+                if (property.NameEquals("restrictionInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     restrictionInfo = CognitiveServicesSkuRestrictionInfo.DeserializeCognitiveServicesSkuRestrictionInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("reasonCode"))
+                if (property.NameEquals("reasonCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

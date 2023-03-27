@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Sites))
             {
-                writer.WritePropertyName("sites");
+                writer.WritePropertyName("sites"u8);
                 writer.WriteStartArray();
                 foreach (var item in Sites)
                 {
@@ -26,9 +26,19 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(ExtensionKey1))
+            {
+                writer.WritePropertyName("extensionKey1"u8);
+                writer.WriteStringValue(ExtensionKey1);
+            }
+            if (Optional.IsDefined(ExtensionKey2))
+            {
+                writer.WritePropertyName("extensionKey2"u8);
+                writer.WriteStringValue(ExtensionKey2);
+            }
             if (Optional.IsDefined(DirectLineEmbedCode))
             {
-                writer.WritePropertyName("DirectLineEmbedCode");
+                writer.WritePropertyName("DirectLineEmbedCode"u8);
                 writer.WriteStringValue(DirectLineEmbedCode);
             }
             writer.WriteEndObject();
@@ -36,13 +46,17 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static DirectLineChannelProperties DeserializeDirectLineChannelProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<DirectLineSite>> sites = default;
             Optional<string> extensionKey1 = default;
             Optional<string> extensionKey2 = default;
             Optional<string> directLineEmbedCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sites"))
+                if (property.NameEquals("sites"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,17 +71,17 @@ namespace Azure.ResourceManager.BotService.Models
                     sites = array;
                     continue;
                 }
-                if (property.NameEquals("extensionKey1"))
+                if (property.NameEquals("extensionKey1"u8))
                 {
                     extensionKey1 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("extensionKey2"))
+                if (property.NameEquals("extensionKey2"u8))
                 {
                     extensionKey2 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("DirectLineEmbedCode"))
+                if (property.NameEquals("DirectLineEmbedCode"u8))
                 {
                     directLineEmbedCode = property.Value.GetString();
                     continue;

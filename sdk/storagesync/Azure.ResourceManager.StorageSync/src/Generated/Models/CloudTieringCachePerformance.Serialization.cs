@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static CloudTieringCachePerformance DeserializeCloudTieringCachePerformance(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> lastUpdatedTimestamp = default;
             Optional<long> cacheHitBytes = default;
             Optional<long> cacheMissBytes = default;
             Optional<int> cacheHitBytesPercent = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastUpdatedTimestamp"))
+                if (property.NameEquals("lastUpdatedTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +35,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     lastUpdatedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("cacheHitBytes"))
+                if (property.NameEquals("cacheHitBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     cacheHitBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("cacheMissBytes"))
+                if (property.NameEquals("cacheMissBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     cacheMissBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("cacheHitBytesPercent"))
+                if (property.NameEquals("cacheHitBytesPercent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

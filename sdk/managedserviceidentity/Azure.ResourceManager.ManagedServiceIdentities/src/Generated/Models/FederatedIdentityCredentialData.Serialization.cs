@@ -18,21 +18,21 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IssuerUri))
             {
-                writer.WritePropertyName("issuer");
+                writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(IssuerUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Subject))
             {
-                writer.WritePropertyName("subject");
+                writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
             if (Optional.IsCollectionDefined(Audiences))
             {
-                writer.WritePropertyName("audiences");
+                writer.WritePropertyName("audiences"u8);
                 writer.WriteStartArray();
                 foreach (var item in Audiences)
                 {
@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 
         internal static FederatedIdentityCredentialData DeserializeFederatedIdentityCredentialData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -55,22 +59,22 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             Optional<IList<string>> audiences = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +84,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +93,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("issuer"))
+                        if (property0.NameEquals("issuer"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -99,12 +103,12 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                             issuer = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("subject"))
+                        if (property0.NameEquals("subject"u8))
                         {
                             subject = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("audiences"))
+                        if (property0.NameEquals("audiences"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

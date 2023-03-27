@@ -15,28 +15,32 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static ManagedClusterPoolUpgradeProfile DeserializeManagedClusterPoolUpgradeProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string kubernetesVersion = default;
             Optional<string> name = default;
             ContainerServiceOSType osType = default;
             Optional<IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem>> upgrades = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kubernetesVersion"))
+                if (property.NameEquals("kubernetesVersion"u8))
                 {
                     kubernetesVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = new ContainerServiceOSType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("upgrades"))
+                if (property.NameEquals("upgrades"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

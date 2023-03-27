@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static SecurityCve DeserializeSecurityCve(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> title = default;
             Optional<string> link = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("title"))
+                if (property.NameEquals("title"u8))
                 {
                     title = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("link"))
+                if (property.NameEquals("link"u8))
                 {
                     link = property.Value.GetString();
                     continue;

@@ -15,12 +15,16 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static ImageDefinition DeserializeImageDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> imageExists = default;
             Optional<Uri> contentUrl = default;
             Optional<string> relativePath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("imageExists"))
+                if (property.NameEquals("imageExists"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     imageExists = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("contentUrl"))
+                if (property.NameEquals("contentUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     contentUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("relativePath"))
+                if (property.NameEquals("relativePath"u8))
                 {
                     relativePath = property.Value.GetString();
                     continue;

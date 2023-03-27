@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(ColumnType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ColumnType.Value.ToString());
             }
             if (Optional.IsDefined(DataTypeHint))
             {
-                writer.WritePropertyName("dataTypeHint");
+                writer.WritePropertyName("dataTypeHint"u8);
                 writer.WriteStringValue(DataTypeHint.Value.ToString());
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static OperationalInsightsColumn DeserializeOperationalInsightsColumn(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<OperationalInsightsColumnType> type = default;
             Optional<OperationalInsightsColumnDataTypeHint> dataTypeHint = default;
@@ -54,12 +58,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<bool> isHidden = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +73,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     type = new OperationalInsightsColumnType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dataTypeHint"))
+                if (property.NameEquals("dataTypeHint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,17 +83,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     dataTypeHint = new OperationalInsightsColumnDataTypeHint(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isDefaultDisplay"))
+                if (property.NameEquals("isDefaultDisplay"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     isDefaultDisplay = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isHidden"))
+                if (property.NameEquals("isHidden"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

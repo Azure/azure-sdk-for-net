@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProductFamilyName))
             {
-                writer.WritePropertyName("productFamilyName");
+                writer.WritePropertyName("productFamilyName"u8);
                 writer.WriteStringValue(ProductFamilyName);
             }
             if (Optional.IsDefined(ProductLineName))
             {
-                writer.WritePropertyName("productLineName");
+                writer.WritePropertyName("productLineName"u8);
                 writer.WriteStringValue(ProductLineName);
             }
             if (Optional.IsDefined(ProductName))
             {
-                writer.WritePropertyName("productName");
+                writer.WritePropertyName("productName"u8);
                 writer.WriteStringValue(ProductName);
             }
             if (Optional.IsDefined(ConfigurationName))
             {
-                writer.WritePropertyName("configurationName");
+                writer.WritePropertyName("configurationName"u8);
                 writer.WriteStringValue(ConfigurationName);
             }
             writer.WriteEndObject();
@@ -40,28 +40,32 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static HierarchyInformation DeserializeHierarchyInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> productFamilyName = default;
             Optional<string> productLineName = default;
             Optional<string> productName = default;
             Optional<string> configurationName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("productFamilyName"))
+                if (property.NameEquals("productFamilyName"u8))
                 {
                     productFamilyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("productLineName"))
+                if (property.NameEquals("productLineName"u8))
                 {
                     productLineName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("productName"))
+                if (property.NameEquals("productName"u8))
                 {
                     productName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("configurationName"))
+                if (property.NameEquals("configurationName"u8))
                 {
                     configurationName = property.Value.GetString();
                     continue;

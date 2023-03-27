@@ -4,6 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
+generate-model-factory: false
 csharp: true
 library-name: AppContainers
 namespace: Azure.ResourceManager.AppContainers
@@ -125,7 +126,7 @@ rename-mapping:
   EnvironmentProvisioningState: ContainerAppEnvironmentProvisioningState
   EnvironmentVar: ContainerAppEnvironmentVariable
   ExtendedLocation: ContainerAppExtendedLocation
-  ExtendedLocationType: ContainerAppExtendedLocationType
+  ExtendedLocationTypes: ContainerAppExtendedLocationType
   ForwardProxy: ContainerAppForwardProxy
   ForwardProxyConvention: ContainerAppForwardProxyConvention
   GithubActionConfiguration: ContainerAppGitHubActionConfiguration
@@ -226,5 +227,6 @@ directive:
   - from: ContainerApps.json
     where: $.definitions.ContainerApp
     transform: >
-      $.properties.properties.properties.outboundIpAddresses.items.format = 'uri';
+      $.properties.properties.properties.outboundIpAddresses['x-ms-client-name'] = 'outboundIpAddressList';
+      $.properties.properties.properties.outboundIpAddresses.items['x-ms-format'] = 'ip-address';
 ```

@@ -15,18 +15,22 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal static Category DeserializeCategory(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> categoryName = default;
             Optional<CategoryType> categoryType = default;
             Optional<CategoryStatus> categoryStatus = default;
             Optional<IReadOnlyList<ControlFamily>> controlFamilies = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("categoryName"))
+                if (property.NameEquals("categoryName"u8))
                 {
                     categoryName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("categoryType"))
+                if (property.NameEquals("categoryType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +40,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     categoryType = new CategoryType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("categoryStatus"))
+                if (property.NameEquals("categoryStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     categoryStatus = new CategoryStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("controlFamilies"))
+                if (property.NameEquals("controlFamilies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

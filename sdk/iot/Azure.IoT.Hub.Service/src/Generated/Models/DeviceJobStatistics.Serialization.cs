@@ -14,6 +14,10 @@ namespace Azure.IoT.Hub.Service.Models
     {
         internal static DeviceJobStatistics DeserializeDeviceJobStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> deviceCount = default;
             Optional<int> failedCount = default;
             Optional<int> succeededCount = default;
@@ -21,7 +25,7 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<int> pendingCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceCount"))
+                if (property.NameEquals("deviceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +35,7 @@ namespace Azure.IoT.Hub.Service.Models
                     deviceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("failedCount"))
+                if (property.NameEquals("failedCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.IoT.Hub.Service.Models
                     failedCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("succeededCount"))
+                if (property.NameEquals("succeededCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.IoT.Hub.Service.Models
                     succeededCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("runningCount"))
+                if (property.NameEquals("runningCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.IoT.Hub.Service.Models
                     runningCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("pendingCount"))
+                if (property.NameEquals("pendingCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

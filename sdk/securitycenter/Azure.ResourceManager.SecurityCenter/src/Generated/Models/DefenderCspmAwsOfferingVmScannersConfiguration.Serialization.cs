@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CloudRoleArn))
             {
-                writer.WritePropertyName("cloudRoleArn");
+                writer.WritePropertyName("cloudRoleArn"u8);
                 writer.WriteStringValue(CloudRoleArn);
             }
             if (Optional.IsDefined(ScanningMode))
             {
-                writer.WritePropertyName("scanningMode");
+                writer.WritePropertyName("scanningMode"u8);
                 writer.WriteStringValue(ScanningMode.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ExclusionTags))
             {
-                writer.WritePropertyName("exclusionTags");
+                writer.WritePropertyName("exclusionTags"u8);
                 writer.WriteStartObject();
                 foreach (var item in ExclusionTags)
                 {
@@ -42,17 +42,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderCspmAwsOfferingVmScannersConfiguration DeserializeDefenderCspmAwsOfferingVmScannersConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> cloudRoleArn = default;
             Optional<DefenderForServersScanningMode> scanningMode = default;
             Optional<IDictionary<string, string>> exclusionTags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cloudRoleArn"))
+                if (property.NameEquals("cloudRoleArn"u8))
                 {
                     cloudRoleArn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scanningMode"))
+                if (property.NameEquals("scanningMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     scanningMode = new DefenderForServersScanningMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("exclusionTags"))
+                if (property.NameEquals("exclusionTags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

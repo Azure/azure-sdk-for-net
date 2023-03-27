@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Synapse
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, EncryptionProtectorName encryptionProtectorName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, SynapseEncryptionProtectorName encryptionProtectorName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EncryptionProtectorData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseEncryptionProtectorData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, SynapseEncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        EncryptionProtectorData value = default;
+                        SynapseEncryptionProtectorData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EncryptionProtectorData.DeserializeEncryptionProtectorData(document.RootElement);
+                        value = SynapseEncryptionProtectorData.DeserializeSynapseEncryptionProtectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EncryptionProtectorData)null, message.Response);
+                    return Response.FromValue((SynapseEncryptionProtectorData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EncryptionProtectorData> Get(string subscriptionId, string resourceGroupName, string workspaceName, EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        public Response<SynapseEncryptionProtectorData> Get(string subscriptionId, string resourceGroupName, string workspaceName, SynapseEncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -111,19 +111,19 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        EncryptionProtectorData value = default;
+                        SynapseEncryptionProtectorData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EncryptionProtectorData.DeserializeEncryptionProtectorData(document.RootElement);
+                        value = SynapseEncryptionProtectorData.DeserializeSynapseEncryptionProtectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EncryptionProtectorData)null, message.Response);
+                    return Response.FromValue((SynapseEncryptionProtectorData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, EncryptionProtectorName encryptionProtectorName, EncryptionProtectorData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, SynapseEncryptionProtectorName encryptionProtectorName, SynapseEncryptionProtectorData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, EncryptionProtectorName encryptionProtectorName, EncryptionProtectorData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, SynapseEncryptionProtectorName encryptionProtectorName, SynapseEncryptionProtectorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, EncryptionProtectorName encryptionProtectorName, EncryptionProtectorData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, SynapseEncryptionProtectorName encryptionProtectorName, SynapseEncryptionProtectorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EncryptionProtectorListResult>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseEncryptionProtectorListResult>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -245,9 +245,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        EncryptionProtectorListResult value = default;
+                        SynapseEncryptionProtectorListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EncryptionProtectorListResult.DeserializeEncryptionProtectorListResult(document.RootElement);
+                        value = SynapseEncryptionProtectorListResult.DeserializeSynapseEncryptionProtectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EncryptionProtectorListResult> List(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<SynapseEncryptionProtectorListResult> List(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -274,9 +274,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        EncryptionProtectorListResult value = default;
+                        SynapseEncryptionProtectorListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EncryptionProtectorListResult.DeserializeEncryptionProtectorListResult(document.RootElement);
+                        value = SynapseEncryptionProtectorListResult.DeserializeSynapseEncryptionProtectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        internal HttpMessage CreateRevalidateRequest(string subscriptionId, string resourceGroupName, string workspaceName, EncryptionProtectorName encryptionProtectorName)
+        internal HttpMessage CreateRevalidateRequest(string subscriptionId, string resourceGroupName, string workspaceName, SynapseEncryptionProtectorName encryptionProtectorName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RevalidateAsync(string subscriptionId, string resourceGroupName, string workspaceName, EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        public async Task<Response> RevalidateAsync(string subscriptionId, string resourceGroupName, string workspaceName, SynapseEncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Revalidate(string subscriptionId, string resourceGroupName, string workspaceName, EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        public Response Revalidate(string subscriptionId, string resourceGroupName, string workspaceName, SynapseEncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EncryptionProtectorListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseEncryptionProtectorListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -393,9 +393,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        EncryptionProtectorListResult value = default;
+                        SynapseEncryptionProtectorListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EncryptionProtectorListResult.DeserializeEncryptionProtectorListResult(document.RootElement);
+                        value = SynapseEncryptionProtectorListResult.DeserializeSynapseEncryptionProtectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EncryptionProtectorListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<SynapseEncryptionProtectorListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -424,9 +424,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        EncryptionProtectorListResult value = default;
+                        SynapseEncryptionProtectorListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EncryptionProtectorListResult.DeserializeEncryptionProtectorListResult(document.RootElement);
+                        value = SynapseEncryptionProtectorListResult.DeserializeSynapseEncryptionProtectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

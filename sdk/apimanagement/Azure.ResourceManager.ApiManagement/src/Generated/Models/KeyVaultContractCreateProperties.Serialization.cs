@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SecretIdentifier))
             {
-                writer.WritePropertyName("secretIdentifier");
+                writer.WritePropertyName("secretIdentifier"u8);
                 writer.WriteStringValue(SecretIdentifier);
             }
             if (Optional.IsDefined(IdentityClientId))
             {
-                writer.WritePropertyName("identityClientId");
+                writer.WritePropertyName("identityClientId"u8);
                 writer.WriteStringValue(IdentityClientId);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static KeyVaultContractCreateProperties DeserializeKeyVaultContractCreateProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> secretIdentifier = default;
             Optional<string> identityClientId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("secretIdentifier"))
+                if (property.NameEquals("secretIdentifier"u8))
                 {
                     secretIdentifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identityClientId"))
+                if (property.NameEquals("identityClientId"u8))
                 {
                     identityClientId = property.Value.GetString();
                     continue;

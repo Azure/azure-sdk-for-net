@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Attestation
 {
-    /// <summary> A class representing the AttestationProvider data model. </summary>
+    /// <summary>
+    /// A class representing the AttestationProvider data model.
+    /// Attestation service response message.
+    /// </summary>
     public partial class AttestationProviderData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AttestationProviderData. </summary>

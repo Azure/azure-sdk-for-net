@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static FabricProperties DeserializeFabricProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> friendlyName = default;
             Optional<EncryptionDetails> encryptionDetails = default;
             Optional<EncryptionDetails> rolloverEncryptionDetails = default;
@@ -25,12 +29,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> health = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptionDetails"))
+                if (property.NameEquals("encryptionDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     encryptionDetails = EncryptionDetails.DeserializeEncryptionDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("rolloverEncryptionDetails"))
+                if (property.NameEquals("rolloverEncryptionDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,17 +54,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     rolloverEncryptionDetails = EncryptionDetails.DeserializeEncryptionDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("internalIdentifier"))
+                if (property.NameEquals("internalIdentifier"u8))
                 {
                     internalIdentifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("bcdrState"))
+                if (property.NameEquals("bcdrState"u8))
                 {
                     bcdrState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customDetails"))
+                if (property.NameEquals("customDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     customDetails = FabricSpecificDetails.DeserializeFabricSpecificDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("healthErrorDetails"))
+                if (property.NameEquals("healthErrorDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     healthErrorDetails = array;
                     continue;
                 }
-                if (property.NameEquals("health"))
+                if (property.NameEquals("health"u8))
                 {
                     health = property.Value.GetString();
                     continue;

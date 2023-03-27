@@ -1,6 +1,6 @@
 # Release History
 
-## 1.27.0-beta.1 (Unreleased)
+## 1.31.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,7 +8,49 @@
 
 ### Bugs Fixed
 
+- Set the Activity status to `Error` on failed activity source activities.
+- Mark the `Azure.Core.Http.Request` span as failed if the request fails with an exception thrown in the pipeline.
+
 ### Other Changes
+
+## 1.30.0 (2023-03-09)
+
+### Bugs Fixed
+
+- Fixed the issue with empty header names and values, caused by `ArrayBackedPropertyBag` keeping reference to the array after returning it to array pool [in (https://github.com/Azure/azure-sdk-for-net/pull/34800)  `Dispose` method]. 
+
+## 1.29.0 (2023-03-02)
+
+### Features Added
+
+- `ActivitySource` activities that are used when using the [experimental OpenTelemetry support](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/) will include the `az.schema_url` tag indicating the OpenTelemetry schema version. They will also include the attribute names specified [here](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.yml). 
+- "West US 3", "Sweden Central" and "Qatar Central" locations are added to `Azure.Core.AzureLocation`
+
+### Improvements
+
+- `Azure.Core.ArrayBackedPropertyBag` is used to store request headers before `HttpRequestMessage` is created instead of `System.Net.Http.Headers.HttpContentHeaders`
+- `Azure.HttpRange.ToString` uses `string.Create` instead of `FormattableString.Invariant` in .NET 6.0+
+- `Azure.Core.Diagnostics.AzureCoreEventSource` checks `EventLevel` before formatting data for the events
+- `Azure.Core.Pipeline.HttpClientTransport.JoinHeaderValues` uses `System.Runtime.CompilerServices.DefaultInterpolatedStringHandler` to join header string values in .NET 6.0+
+
+### Bugs Fixed
+
+- `ActivitySource` activities will no longer be stamped with the `kind` attribute as this is redundant with the OpenTelemetry `SpanKind` attribute.
+- The product information section of the UserAgent header is now validated for invalid parenthesis formatting and escaped, if necessary.
+
+## 1.28.0 (2023-02-06)
+
+### Bugs Fixed
+- Fixed an issue with `AzureSasCredential` which resulted in messages to fail authentication if the SAS signature was updated while a message was in a retry cycle.
+
+## 1.27.0 (2023-01-10)
+
+### Features Added
+
+- Made `RedirectPolicy` public to provide `SetAllowAutoRedirect()` method to library authors.
+- Added `RetryPolicy` property to `ClientOptions` to allow library authors to set a custom retry policy.
+- Added `MessageProcessingContext` type and `ProcessingContext` property to `HttpMessage` which contains information about the message as it traverses through the pipeline.
+- Added `SetProperty` and `TryGetProperty` overloads to `HttpMessage` to allow setting property values using a `Type` as the key.
 
 ## 1.26.0 (2022-11-08)
 
@@ -20,7 +62,7 @@
 
 ### Bugs Fixed
 
-- Fixed issue where fixed delay was applied when the `RetryMode` was set to `Exponential` when retrying a request that resulted in an exception. 
+- Fixed issue where fixed delay was applied when the `RetryMode` was set to `Exponential` when retrying a request that resulted in an exception.
 
 ### Other Changes
 

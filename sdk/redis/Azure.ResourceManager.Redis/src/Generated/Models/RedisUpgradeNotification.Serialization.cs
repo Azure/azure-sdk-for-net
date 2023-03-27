@@ -16,17 +16,21 @@ namespace Azure.ResourceManager.Redis.Models
     {
         internal static RedisUpgradeNotification DeserializeRedisUpgradeNotification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<DateTimeOffset> timestamp = default;
             Optional<IReadOnlyDictionary<string, string>> upsellNotification = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +40,7 @@ namespace Azure.ResourceManager.Redis.Models
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("upsellNotification"))
+                if (property.NameEquals("upsellNotification"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,22 +15,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningEstimatedVmPrices DeserializeMachineLearningEstimatedVmPrices(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MachineLearningBillingCurrency billingCurrency = default;
             MachineLearningUnitOfMeasure unitOfMeasure = default;
             IReadOnlyList<MachineLearningEstimatedVmPrice> values = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("billingCurrency"))
+                if (property.NameEquals("billingCurrency"u8))
                 {
                     billingCurrency = new MachineLearningBillingCurrency(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("unitOfMeasure"))
+                if (property.NameEquals("unitOfMeasure"u8))
                 {
                     unitOfMeasure = new MachineLearningUnitOfMeasure(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("values"))
+                if (property.NameEquals("values"u8))
                 {
                     List<MachineLearningEstimatedVmPrice> array = new List<MachineLearningEstimatedVmPrice>();
                     foreach (var item in property.Value.EnumerateArray())

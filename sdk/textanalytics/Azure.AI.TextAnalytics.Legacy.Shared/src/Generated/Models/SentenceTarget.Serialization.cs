@@ -16,6 +16,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static SentenceTarget DeserializeSentenceTarget(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TokenSentimentValue sentiment = default;
             TargetConfidenceScoreLabel confidenceScores = default;
             int offset = default;
@@ -24,32 +28,32 @@ namespace Azure.AI.TextAnalytics.Legacy
             IReadOnlyList<TargetRelation> relations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sentiment"))
+                if (property.NameEquals("sentiment"u8))
                 {
                     sentiment = property.Value.GetString().ToTokenSentimentValue();
                     continue;
                 }
-                if (property.NameEquals("confidenceScores"))
+                if (property.NameEquals("confidenceScores"u8))
                 {
                     confidenceScores = TargetConfidenceScoreLabel.DeserializeTargetConfidenceScoreLabel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("offset"))
+                if (property.NameEquals("offset"u8))
                 {
                     offset = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("length"))
+                if (property.NameEquals("length"u8))
                 {
                     length = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("text"))
+                if (property.NameEquals("text"u8))
                 {
                     text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("relations"))
+                if (property.NameEquals("relations"u8))
                 {
                     List<TargetRelation> array = new List<TargetRelation>();
                     foreach (var item in property.Value.EnumerateArray())

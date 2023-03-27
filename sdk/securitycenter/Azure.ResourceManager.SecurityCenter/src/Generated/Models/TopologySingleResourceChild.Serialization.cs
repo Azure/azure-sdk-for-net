@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static TopologySingleResourceChild DeserializeTopologySingleResourceChild(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

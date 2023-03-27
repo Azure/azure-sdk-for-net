@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Resource))
             {
-                writer.WritePropertyName("resource");
+                writer.WritePropertyName("resource"u8);
                 writer.WriteObjectValue(Resource);
             }
             if (Optional.IsCollectionDefined(Actions))
             {
-                writer.WritePropertyName("actions");
+                writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
@@ -36,11 +36,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static MongoDBPrivilege DeserializeMongoDBPrivilege(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MongoDBPrivilegeResourceInfo> resource = default;
             Optional<IList<string>> actions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resource"))
+                if (property.NameEquals("resource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     resource = MongoDBPrivilegeResourceInfo.DeserializeMongoDBPrivilegeResourceInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("actions"))
+                if (property.NameEquals("actions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

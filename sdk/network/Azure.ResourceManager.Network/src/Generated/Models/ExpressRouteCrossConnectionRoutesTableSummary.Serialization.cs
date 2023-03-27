@@ -14,18 +14,22 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ExpressRouteCrossConnectionRoutesTableSummary DeserializeExpressRouteCrossConnectionRoutesTableSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> neighbor = default;
             Optional<int> asn = default;
             Optional<string> upDown = default;
             Optional<string> stateOrPrefixesReceived = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("neighbor"))
+                if (property.NameEquals("neighbor"u8))
                 {
                     neighbor = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("asn"))
+                if (property.NameEquals("asn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,12 +39,12 @@ namespace Azure.ResourceManager.Network.Models
                     asn = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("upDown"))
+                if (property.NameEquals("upDown"u8))
                 {
                     upDown = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stateOrPrefixesReceived"))
+                if (property.NameEquals("stateOrPrefixesReceived"u8))
                 {
                     stateOrPrefixesReceived = property.Value.GetString();
                     continue;

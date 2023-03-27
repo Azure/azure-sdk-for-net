@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ManualPrivateLinkServiceConnections))
             {
-                writer.WritePropertyName("manualPrivateLinkServiceConnections");
+                writer.WritePropertyName("manualPrivateLinkServiceConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in ManualPrivateLinkServiceConnections)
                 {
@@ -32,11 +32,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamAnalyticsPrivateEndpointProperties DeserializeStreamAnalyticsPrivateEndpointProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> createdDate = default;
             Optional<IList<StreamAnalyticsPrivateLinkServiceConnection>> manualPrivateLinkServiceConnections = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("createdDate"))
+                if (property.NameEquals("createdDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     createdDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("manualPrivateLinkServiceConnections"))
+                if (property.NameEquals("manualPrivateLinkServiceConnections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

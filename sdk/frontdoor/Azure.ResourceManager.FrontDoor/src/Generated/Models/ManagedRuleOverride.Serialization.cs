@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("ruleId");
+            writer.WritePropertyName("ruleId"u8);
             writer.WriteStringValue(RuleId);
             if (Optional.IsDefined(EnabledState))
             {
-                writer.WritePropertyName("enabledState");
+                writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
             if (Optional.IsDefined(Action))
             {
-                writer.WritePropertyName("action");
+                writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Exclusions))
             {
-                writer.WritePropertyName("exclusions");
+                writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Exclusions)
                 {
@@ -43,18 +43,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static ManagedRuleOverride DeserializeManagedRuleOverride(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string ruleId = default;
             Optional<ManagedRuleEnabledState> enabledState = default;
             Optional<RuleMatchActionType> action = default;
             Optional<IList<ManagedRuleExclusion>> exclusions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ruleId"))
+                if (property.NameEquals("ruleId"u8))
                 {
                     ruleId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enabledState"))
+                if (property.NameEquals("enabledState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +68,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     enabledState = new ManagedRuleEnabledState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     action = new RuleMatchActionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("exclusions"))
+                if (property.NameEquals("exclusions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

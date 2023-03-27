@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,29 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2023-02-12)
+
+### Features Added
+
+- Introduce management of table functions sharing for follower database
+- Introduce new SKU
+
+### Other Changes
+
+- Upgraded API version to 2022-12-29.
+
+## 1.2.0 (2023-01-10)
+
+### Features Added
+
+- Supported CosmosDB data connection.
+- Supported cluster creation with LanguageExtensionImage.
+- Added method `GetSkus` to get available skus by location.
+
+### Other Changes
+
+- Upgraded API version to 2022-11-11.
 
 ## 1.1.0 (2022-11-17)
 

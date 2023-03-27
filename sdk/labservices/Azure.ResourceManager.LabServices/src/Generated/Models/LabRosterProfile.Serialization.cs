@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ActiveDirectoryGroupId))
             {
-                writer.WritePropertyName("activeDirectoryGroupId");
+                writer.WritePropertyName("activeDirectoryGroupId"u8);
                 writer.WriteStringValue(ActiveDirectoryGroupId);
             }
             if (Optional.IsDefined(LtiContextId))
             {
-                writer.WritePropertyName("ltiContextId");
+                writer.WritePropertyName("ltiContextId"u8);
                 writer.WriteStringValue(LtiContextId);
             }
             if (Optional.IsDefined(LmsInstance))
             {
-                writer.WritePropertyName("lmsInstance");
+                writer.WritePropertyName("lmsInstance"u8);
                 writer.WriteStringValue(LmsInstance.AbsoluteUri);
             }
             if (Optional.IsDefined(LtiClientId))
             {
-                writer.WritePropertyName("ltiClientId");
+                writer.WritePropertyName("ltiClientId"u8);
                 writer.WriteStringValue(LtiClientId);
             }
             if (Optional.IsDefined(LtiRosterEndpoint))
             {
-                writer.WritePropertyName("ltiRosterEndpoint");
+                writer.WritePropertyName("ltiRosterEndpoint"u8);
                 writer.WriteStringValue(LtiRosterEndpoint.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabRosterProfile DeserializeLabRosterProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> activeDirectoryGroupId = default;
             Optional<string> ltiContextId = default;
             Optional<Uri> lmsInstance = default;
@@ -53,17 +57,17 @@ namespace Azure.ResourceManager.LabServices.Models
             Optional<Uri> ltiRosterEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("activeDirectoryGroupId"))
+                if (property.NameEquals("activeDirectoryGroupId"u8))
                 {
                     activeDirectoryGroupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ltiContextId"))
+                if (property.NameEquals("ltiContextId"u8))
                 {
                     ltiContextId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lmsInstance"))
+                if (property.NameEquals("lmsInstance"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,12 +77,12 @@ namespace Azure.ResourceManager.LabServices.Models
                     lmsInstance = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ltiClientId"))
+                if (property.NameEquals("ltiClientId"u8))
                 {
                     ltiClientId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ltiRosterEndpoint"))
+                if (property.NameEquals("ltiRosterEndpoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

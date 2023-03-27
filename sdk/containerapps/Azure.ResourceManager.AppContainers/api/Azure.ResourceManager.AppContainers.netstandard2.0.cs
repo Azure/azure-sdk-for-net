@@ -274,7 +274,10 @@ namespace Azure.ResourceManager.AppContainers
         public string LatestRevisionFqdn { get { throw null; } }
         public string LatestRevisionName { get { throw null; } }
         public Azure.Core.ResourceIdentifier ManagedEnvironmentId { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public System.Collections.Generic.IReadOnlyList<System.Uri> OutboundIPAddresses { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.Net.IPAddress> OutboundIPAddressList { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppTemplate Template { get { throw null; } set { } }
         public string WorkloadProfileType { get { throw null; } set { } }
@@ -1281,8 +1284,25 @@ namespace Azure.ResourceManager.AppContainers.Models
     public partial class ContainerAppExtendedLocation
     {
         public ContainerAppExtendedLocation() { }
-        public Azure.ResourceManager.AppContainers.Models.ExtendedLocationType? ExtendedLocationType { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppExtendedLocationType? ExtendedLocationType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerAppExtendedLocationType : System.IEquatable<Azure.ResourceManager.AppContainers.Models.ContainerAppExtendedLocationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerAppExtendedLocationType(string value) { throw null; }
+        public static Azure.ResourceManager.AppContainers.Models.ContainerAppExtendedLocationType CustomLocation { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppContainers.Models.ContainerAppExtendedLocationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppContainers.Models.ContainerAppExtendedLocationType left, Azure.ResourceManager.AppContainers.Models.ContainerAppExtendedLocationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppContainers.Models.ContainerAppExtendedLocationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppContainers.Models.ContainerAppExtendedLocationType left, Azure.ResourceManager.AppContainers.Models.ContainerAppExtendedLocationType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ContainerAppFacebookConfiguration
     {
@@ -1926,22 +1946,5 @@ namespace Azure.ResourceManager.AppContainers.Models
         public ContainerAppWritableSecret() { }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ExtendedLocationType : System.IEquatable<Azure.ResourceManager.AppContainers.Models.ExtendedLocationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ExtendedLocationType(string value) { throw null; }
-        public static Azure.ResourceManager.AppContainers.Models.ExtendedLocationType CustomLocation { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppContainers.Models.ExtendedLocationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppContainers.Models.ExtendedLocationType left, Azure.ResourceManager.AppContainers.Models.ExtendedLocationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppContainers.Models.ExtendedLocationType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppContainers.Models.ExtendedLocationType left, Azure.ResourceManager.AppContainers.Models.ExtendedLocationType right) { throw null; }
-        public override string ToString() { throw null; }
     }
 }

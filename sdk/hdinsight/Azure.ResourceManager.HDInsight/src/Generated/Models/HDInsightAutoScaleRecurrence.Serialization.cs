@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TimeZone))
             {
-                writer.WritePropertyName("timeZone");
+                writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
             if (Optional.IsCollectionDefined(Schedule))
             {
-                writer.WritePropertyName("schedule");
+                writer.WritePropertyName("schedule"u8);
                 writer.WriteStartArray();
                 foreach (var item in Schedule)
                 {
@@ -36,16 +36,20 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightAutoScaleRecurrence DeserializeHDInsightAutoScaleRecurrence(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> timeZone = default;
             Optional<IList<HDInsightAutoScaleSchedule>> schedule = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timeZone"))
+                if (property.NameEquals("timeZone"u8))
                 {
                     timeZone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("schedule"))
+                if (property.NameEquals("schedule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

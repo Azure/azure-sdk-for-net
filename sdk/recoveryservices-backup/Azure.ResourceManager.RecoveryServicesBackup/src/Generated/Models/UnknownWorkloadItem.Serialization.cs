@@ -17,24 +17,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BackupManagementType))
             {
-                writer.WritePropertyName("backupManagementType");
+                writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType);
             }
             if (Optional.IsDefined(WorkloadType))
             {
-                writer.WritePropertyName("workloadType");
+                writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
-            writer.WritePropertyName("workloadItemType");
+            writer.WritePropertyName("workloadItemType"u8);
             writer.WriteStringValue(WorkloadItemType);
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(ProtectionState))
             {
-                writer.WritePropertyName("protectionState");
+                writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
             writer.WriteEndObject();
@@ -42,41 +42,45 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static UnknownWorkloadItem DeserializeUnknownWorkloadItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> backupManagementType = default;
             Optional<string> workloadType = default;
             string workloadItemType = "Unknown";
             Optional<string> friendlyName = default;
-            Optional<ProtectionStatus> protectionState = default;
+            Optional<BackupProtectionStatus> protectionState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("backupManagementType"))
+                if (property.NameEquals("backupManagementType"u8))
                 {
                     backupManagementType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workloadType"))
+                if (property.NameEquals("workloadType"u8))
                 {
                     workloadType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workloadItemType"))
+                if (property.NameEquals("workloadItemType"u8))
                 {
                     workloadItemType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectionState"))
+                if (property.NameEquals("protectionState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    protectionState = new ProtectionStatus(property.Value.GetString());
+                    protectionState = new BackupProtectionStatus(property.Value.GetString());
                     continue;
                 }
             }

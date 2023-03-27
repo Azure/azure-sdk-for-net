@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static HealthError DeserializeHealthError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<InnerHealthError>> innerHealthErrors = default;
             Optional<string> errorSource = default;
             Optional<string> errorType = default;
@@ -33,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<HealthErrorCustomerResolvability> customerResolvability = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("innerHealthErrors"))
+                if (property.NameEquals("innerHealthErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,52 +52,52 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     innerHealthErrors = array;
                     continue;
                 }
-                if (property.NameEquals("errorSource"))
+                if (property.NameEquals("errorSource"u8))
                 {
                     errorSource = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorType"))
+                if (property.NameEquals("errorType"u8))
                 {
                     errorType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorLevel"))
+                if (property.NameEquals("errorLevel"u8))
                 {
                     errorLevel = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorCategory"))
+                if (property.NameEquals("errorCategory"u8))
                 {
                     errorCategory = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorCode"))
+                if (property.NameEquals("errorCode"u8))
                 {
                     errorCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("summaryMessage"))
+                if (property.NameEquals("summaryMessage"u8))
                 {
                     summaryMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     errorMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("possibleCauses"))
+                if (property.NameEquals("possibleCauses"u8))
                 {
                     possibleCauses = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recommendedAction"))
+                if (property.NameEquals("recommendedAction"u8))
                 {
                     recommendedAction = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("creationTimeUtc"))
+                if (property.NameEquals("creationTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,22 +107,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     creationTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("recoveryProviderErrorMessage"))
+                if (property.NameEquals("recoveryProviderErrorMessage"u8))
                 {
                     recoveryProviderErrorMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("entityId"))
+                if (property.NameEquals("entityId"u8))
                 {
                     entityId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorId"))
+                if (property.NameEquals("errorId"u8))
                 {
                     errorId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customerResolvability"))
+                if (property.NameEquals("customerResolvability"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

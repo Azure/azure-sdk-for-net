@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static AppServiceStorageType ToAppServiceStorageType(this string value)
         {
-            if (string.Equals(value, "AzureFiles", StringComparison.InvariantCultureIgnoreCase)) return AppServiceStorageType.AzureFiles;
-            if (string.Equals(value, "AzureBlob", StringComparison.InvariantCultureIgnoreCase)) return AppServiceStorageType.AzureBlob;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureFiles")) return AppServiceStorageType.AzureFiles;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureBlob")) return AppServiceStorageType.AzureBlob;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServiceStorageType value.");
         }
     }

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomerId))
             {
-                writer.WritePropertyName("customerId");
+                writer.WritePropertyName("customerId"u8);
                 writer.WriteStringValue(CustomerId);
             }
             if (Optional.IsDefined(SharedKey))
             {
-                writer.WritePropertyName("sharedKey");
+                writer.WritePropertyName("sharedKey"u8);
                 writer.WriteStringValue(SharedKey);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static LogAnalyticsConfiguration DeserializeLogAnalyticsConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> customerId = default;
             Optional<string> sharedKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("customerId"))
+                if (property.NameEquals("customerId"u8))
                 {
                     customerId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sharedKey"))
+                if (property.NameEquals("sharedKey"u8))
                 {
                     sharedKey = property.Value.GetString();
                     continue;

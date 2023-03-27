@@ -16,13 +16,17 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationOrderBillingPlanInformation DeserializeReservationOrderBillingPlanInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PurchasePrice> pricingCurrencyTotal = default;
             Optional<DateTimeOffset> startDate = default;
             Optional<DateTimeOffset> nextPaymentDueDate = default;
             Optional<IReadOnlyList<PaymentDetail>> transactions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("pricingCurrencyTotal"))
+                if (property.NameEquals("pricingCurrencyTotal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +36,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     pricingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
-                if (property.NameEquals("startDate"))
+                if (property.NameEquals("startDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     startDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
-                if (property.NameEquals("nextPaymentDueDate"))
+                if (property.NameEquals("nextPaymentDueDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     nextPaymentDueDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
-                if (property.NameEquals("transactions"))
+                if (property.NameEquals("transactions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static AlertProperties DeserializeAlertProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sendToOwners = default;
             Optional<IReadOnlyList<string>> customEmailAddresses = default;
             Optional<string> locale = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sendToOwners"))
+                if (property.NameEquals("sendToOwners"u8))
                 {
                     sendToOwners = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customEmailAddresses"))
+                if (property.NameEquals("customEmailAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     customEmailAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("locale"))
+                if (property.NameEquals("locale"u8))
                 {
                     locale = property.Value.GetString();
                     continue;

@@ -18,32 +18,32 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Timestamp))
             {
-                writer.WritePropertyName("timestamp");
+                writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
             if (Optional.IsDefined(RoleInstance))
             {
-                writer.WritePropertyName("roleInstance");
+                writer.WritePropertyName("roleInstance"u8);
                 writer.WriteStringValue(RoleInstance);
             }
             if (Optional.IsDefined(Total))
             {
-                writer.WritePropertyName("total");
+                writer.WritePropertyName("total"u8);
                 writer.WriteNumberValue(Total.Value);
             }
             if (Optional.IsDefined(Maximum))
             {
-                writer.WritePropertyName("maximum");
+                writer.WritePropertyName("maximum"u8);
                 writer.WriteNumberValue(Maximum.Value);
             }
             if (Optional.IsDefined(Minimum))
             {
-                writer.WritePropertyName("minimum");
+                writer.WritePropertyName("minimum"u8);
                 writer.WriteNumberValue(Minimum.Value);
             }
             if (Optional.IsDefined(IsAggregated))
             {
-                writer.WritePropertyName("isAggregated");
+                writer.WritePropertyName("isAggregated"u8);
                 writer.WriteBooleanValue(IsAggregated.Value);
             }
             writer.WriteEndObject();
@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DiagnosticMetricSample DeserializeDiagnosticMetricSample(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> timestamp = default;
             Optional<string> roleInstance = default;
             Optional<double> total = default;
@@ -59,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> isAggregated = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,12 +73,12 @@ namespace Azure.ResourceManager.AppService.Models
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("roleInstance"))
+                if (property.NameEquals("roleInstance"u8))
                 {
                     roleInstance = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("total"))
+                if (property.NameEquals("total"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     total = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("maximum"))
+                if (property.NameEquals("maximum"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
                     maximum = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("minimum"))
+                if (property.NameEquals("minimum"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.AppService.Models
                     minimum = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("isAggregated"))
+                if (property.NameEquals("isAggregated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

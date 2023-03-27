@@ -18,37 +18,37 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.Value);
             }
             if (Optional.IsDefined(EventType))
             {
-                writer.WritePropertyName("eventType");
+                writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType);
             }
             if (Optional.IsDefined(CommitId))
             {
-                writer.WritePropertyName("commitId");
+                writer.WritePropertyName("commitId"u8);
                 writer.WriteStringValue(CommitId);
             }
             if (Optional.IsDefined(PullRequestId))
             {
-                writer.WritePropertyName("pullRequestId");
+                writer.WritePropertyName("pullRequestId"u8);
                 writer.WriteStringValue(PullRequestId);
             }
             if (Optional.IsDefined(RepositoryUri))
             {
-                writer.WritePropertyName("repositoryUrl");
+                writer.WritePropertyName("repositoryUrl"u8);
                 writer.WriteStringValue(RepositoryUri.AbsoluteUri);
             }
             if (Optional.IsDefined(BranchName))
             {
-                writer.WritePropertyName("branchName");
+                writer.WritePropertyName("branchName"u8);
                 writer.WriteStringValue(BranchName);
             }
             if (Optional.IsDefined(ProviderType))
             {
-                writer.WritePropertyName("providerType");
+                writer.WritePropertyName("providerType"u8);
                 writer.WriteStringValue(ProviderType);
             }
             writer.WriteEndObject();
@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistrySourceTriggerDescriptor DeserializeContainerRegistrySourceTriggerDescriptor(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> id = default;
             Optional<string> eventType = default;
             Optional<string> commitId = default;
@@ -65,7 +69,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<string> providerType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,22 +79,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     id = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("eventType"))
+                if (property.NameEquals("eventType"u8))
                 {
                     eventType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("commitId"))
+                if (property.NameEquals("commitId"u8))
                 {
                     commitId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pullRequestId"))
+                if (property.NameEquals("pullRequestId"u8))
                 {
                     pullRequestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("repositoryUrl"))
+                if (property.NameEquals("repositoryUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,12 +104,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     repositoryUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("branchName"))
+                if (property.NameEquals("branchName"u8))
                 {
                     branchName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providerType"))
+                if (property.NameEquals("providerType"u8))
                 {
                     providerType = property.Value.GetString();
                     continue;

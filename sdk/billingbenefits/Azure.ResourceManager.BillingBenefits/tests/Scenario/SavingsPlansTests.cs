@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         [RecordedTest]
         public async Task TestListSavingsPlans()
         {
-            var response = _tenant.GetBillingBenefitsSavingsPlansAsync();
+            var response = _tenant.GetBillingBenefitsSavingsPlansAsync(new TenantResourceGetBillingBenefitsSavingsPlansOptions());
             List<BillingBenefitsSavingsPlanResource> savingsPlanModelResources = await response.ToEnumerableAsync();
 
             Assert.Greater(savingsPlanModelResources.Count, 0);
@@ -51,7 +51,9 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         [RecordedTest]
         public async Task TestListSavingsPlansWithSelectedState()
         {
-            var response = _tenant.GetBillingBenefitsSavingsPlansAsync(selectedState: "Succeeded");
+            var options = new TenantResourceGetBillingBenefitsSavingsPlansOptions();
+            options.SelectedState = "Succeeded";
+            var response = _tenant.GetBillingBenefitsSavingsPlansAsync(options);
             List<BillingBenefitsSavingsPlanResource> savingsPlanModelResources = await response.ToEnumerableAsync();
 
             Assert.Greater(savingsPlanModelResources.Count, 0);

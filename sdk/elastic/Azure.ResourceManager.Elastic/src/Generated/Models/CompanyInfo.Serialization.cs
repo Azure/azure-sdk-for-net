@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.Elastic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Domain))
             {
-                writer.WritePropertyName("domain");
+                writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
             if (Optional.IsDefined(Business))
             {
-                writer.WritePropertyName("business");
+                writer.WritePropertyName("business"u8);
                 writer.WriteStringValue(Business);
             }
             if (Optional.IsDefined(EmployeesNumber))
             {
-                writer.WritePropertyName("employeesNumber");
+                writer.WritePropertyName("employeesNumber"u8);
                 writer.WriteStringValue(EmployeesNumber);
             }
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
             if (Optional.IsDefined(Country))
             {
-                writer.WritePropertyName("country");
+                writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
             writer.WriteEndObject();
@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static CompanyInfo DeserializeCompanyInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> domain = default;
             Optional<string> business = default;
             Optional<string> employeesNumber = default;
@@ -52,27 +56,27 @@ namespace Azure.ResourceManager.Elastic.Models
             Optional<string> country = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("domain"))
+                if (property.NameEquals("domain"u8))
                 {
                     domain = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("business"))
+                if (property.NameEquals("business"u8))
                 {
                     business = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("employeesNumber"))
+                if (property.NameEquals("employeesNumber"u8))
                 {
                     employeesNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("country"))
+                if (property.NameEquals("country"u8))
                 {
                     country = property.Value.GetString();
                     continue;

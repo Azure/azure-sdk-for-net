@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
@@ -13,6 +11,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class ConnectionStringParserTests
     {
+        [Fact]
+        public void TestConnectionString_Full()
+        {
+            RunTest(
+                connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://ingestion.azuremonitor.com/;AADAudience=https://monitor.azure.com//testing",
+                expectedIngestionEndpoint: "https://ingestion.azuremonitor.com/",
+                expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000",
+                expectedAadAudience: "https://monitor.azure.com//testing");
+        }
+
         [Fact]
         public void TestInstrumentationKey_IsRequired()
         {
@@ -131,15 +139,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void TestParseConnectionString_Null()
-        {
-            Assert.Throws<InvalidOperationException>(() => RunTest(
-                connectionString: null,
-                expectedIngestionEndpoint: null,
-                expectedInstrumentationKey: null));
-        }
-
-        [Fact]
         public void TestParseConnectionString_Empty()
         {
             Assert.Throws<InvalidOperationException>(() => RunTest(
@@ -157,12 +156,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 expectedInstrumentationKey: null));
         }
 
-        private void RunTest(string connectionString, string expectedIngestionEndpoint, string expectedInstrumentationKey)
+        private void RunTest(string connectionString, string? expectedIngestionEndpoint, string? expectedInstrumentationKey, string? expectedAadAudience = null)
         {
-            ConnectionStringParser.GetValues(connectionString, out string ikey, out string endpoint);
+            var connectionVars = ConnectionStringParser.GetValues(connectionString);
 
-            Assert.Equal(expectedIngestionEndpoint, endpoint);
-            Assert.Equal(expectedInstrumentationKey, ikey);
+            Assert.Equal(expectedIngestionEndpoint, connectionVars.IngestionEndpoint);
+            Assert.Equal(expectedInstrumentationKey, connectionVars.InstrumentationKey);
+            Assert.Equal(expectedAadAudience, connectionVars.AadAudience);
         }
     }
 }

@@ -88,8 +88,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a list of available maintenance windows.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindowOptions/current
-        /// Operation Id: MaintenanceWindowOptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindowOptions/current</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MaintenanceWindowOptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="maintenanceWindowOptionsName"> Maintenance window options name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -116,8 +124,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a list of available maintenance windows.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindowOptions/current
-        /// Operation Id: MaintenanceWindowOptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindowOptions/current</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MaintenanceWindowOptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="maintenanceWindowOptionsName"> Maintenance window options name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

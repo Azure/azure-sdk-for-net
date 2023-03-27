@@ -15,31 +15,49 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targets");
+            writer.WritePropertyName("targets"u8);
             writer.WriteStartArray();
             foreach (var item in Targets)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("source");
-            writer.WriteObjectValue(Source);
+            if (Optional.IsDefined(SourceCallerIdNumber))
+            {
+                writer.WritePropertyName("sourceCallerIdNumber"u8);
+                writer.WriteObjectValue(SourceCallerIdNumber);
+            }
+            if (Optional.IsDefined(SourceDisplayName))
+            {
+                writer.WritePropertyName("sourceDisplayName"u8);
+                writer.WriteStringValue(SourceDisplayName);
+            }
+            if (Optional.IsDefined(SourceIdentity))
+            {
+                writer.WritePropertyName("sourceIdentity"u8);
+                writer.WriteObjectValue(SourceIdentity);
+            }
             if (Optional.IsDefined(OperationContext))
             {
-                writer.WritePropertyName("operationContext");
+                writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            writer.WritePropertyName("callbackUri");
+            writer.WritePropertyName("callbackUri"u8);
             writer.WriteStringValue(CallbackUri);
             if (Optional.IsDefined(MediaStreamingConfiguration))
             {
-                writer.WritePropertyName("mediaStreamingConfiguration");
+                writer.WritePropertyName("mediaStreamingConfiguration"u8);
                 writer.WriteObjectValue(MediaStreamingConfiguration);
             }
             if (Optional.IsDefined(AzureCognitiveServicesEndpointUrl))
             {
-                writer.WritePropertyName("azureCognitiveServicesEndpointUrl");
+                writer.WritePropertyName("azureCognitiveServicesEndpointUrl"u8);
                 writer.WriteStringValue(AzureCognitiveServicesEndpointUrl);
+            }
+            if (Optional.IsDefined(CustomContext))
+            {
+                writer.WritePropertyName("customContext"u8);
+                writer.WriteObjectValue(CustomContext);
             }
             writer.WriteEndObject();
         }

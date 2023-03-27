@@ -19,7 +19,7 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(EpochIds))
             {
-                writer.WritePropertyName("epochIds");
+                writer.WritePropertyName("epochIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in EpochIds)
                 {
@@ -29,7 +29,7 @@ namespace Azure.AI.AnomalyDetector
             }
             if (Optional.IsCollectionDefined(TrainLosses))
             {
-                writer.WritePropertyName("trainLosses");
+                writer.WritePropertyName("trainLosses"u8);
                 writer.WriteStartArray();
                 foreach (var item in TrainLosses)
                 {
@@ -39,7 +39,7 @@ namespace Azure.AI.AnomalyDetector
             }
             if (Optional.IsCollectionDefined(ValidationLosses))
             {
-                writer.WritePropertyName("validationLosses");
+                writer.WritePropertyName("validationLosses"u8);
                 writer.WriteStartArray();
                 foreach (var item in ValidationLosses)
                 {
@@ -49,7 +49,7 @@ namespace Azure.AI.AnomalyDetector
             }
             if (Optional.IsCollectionDefined(LatenciesInSeconds))
             {
-                writer.WritePropertyName("latenciesInSeconds");
+                writer.WritePropertyName("latenciesInSeconds"u8);
                 writer.WriteStartArray();
                 foreach (var item in LatenciesInSeconds)
                 {
@@ -62,13 +62,17 @@ namespace Azure.AI.AnomalyDetector
 
         internal static ModelState DeserializeModelState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<int>> epochIds = default;
             Optional<IList<float>> trainLosses = default;
             Optional<IList<float>> validationLosses = default;
             Optional<IList<float>> latenciesInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("epochIds"))
+                if (property.NameEquals("epochIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +87,7 @@ namespace Azure.AI.AnomalyDetector
                     epochIds = array;
                     continue;
                 }
-                if (property.NameEquals("trainLosses"))
+                if (property.NameEquals("trainLosses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +102,7 @@ namespace Azure.AI.AnomalyDetector
                     trainLosses = array;
                     continue;
                 }
-                if (property.NameEquals("validationLosses"))
+                if (property.NameEquals("validationLosses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +117,7 @@ namespace Azure.AI.AnomalyDetector
                     validationLosses = array;
                     continue;
                 }
-                if (property.NameEquals("latenciesInSeconds"))
+                if (property.NameEquals("latenciesInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

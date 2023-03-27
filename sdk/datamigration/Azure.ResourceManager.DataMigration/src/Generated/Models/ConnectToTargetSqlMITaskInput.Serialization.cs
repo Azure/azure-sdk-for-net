@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetConnectionInfo");
+            writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo);
             if (Optional.IsDefined(CollectLogins))
             {
-                writer.WritePropertyName("collectLogins");
+                writer.WritePropertyName("collectLogins"u8);
                 writer.WriteBooleanValue(CollectLogins.Value);
             }
             if (Optional.IsDefined(CollectAgentJobs))
             {
-                writer.WritePropertyName("collectAgentJobs");
+                writer.WritePropertyName("collectAgentJobs"u8);
                 writer.WriteBooleanValue(CollectAgentJobs.Value);
             }
             if (Optional.IsDefined(ValidateSsisCatalogOnly))
             {
-                writer.WritePropertyName("validateSsisCatalogOnly");
+                writer.WritePropertyName("validateSsisCatalogOnly"u8);
                 writer.WriteBooleanValue(ValidateSsisCatalogOnly.Value);
             }
             writer.WriteEndObject();
@@ -37,18 +37,22 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ConnectToTargetSqlMITaskInput DeserializeConnectToTargetSqlMITaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SqlConnectionInfo targetConnectionInfo = default;
             Optional<bool> collectLogins = default;
             Optional<bool> collectAgentJobs = default;
             Optional<bool> validateSsisCatalogOnly = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetConnectionInfo"))
+                if (property.NameEquals("targetConnectionInfo"u8))
                 {
                     targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("collectLogins"))
+                if (property.NameEquals("collectLogins"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     collectLogins = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("collectAgentJobs"))
+                if (property.NameEquals("collectAgentJobs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     collectAgentJobs = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("validateSsisCatalogOnly"))
+                if (property.NameEquals("validateSsisCatalogOnly"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

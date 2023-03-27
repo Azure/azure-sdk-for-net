@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Header))
             {
-                writer.WritePropertyName("header");
+                writer.WritePropertyName("header"u8);
                 writer.WriteStringValue(Header);
             }
             if (Optional.IsDefined(Query))
             {
-                writer.WritePropertyName("query");
+                writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static SubscriptionKeyParameterNamesContract DeserializeSubscriptionKeyParameterNamesContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> header = default;
             Optional<string> query = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("header"))
+                if (property.NameEquals("header"u8))
                 {
                     header = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("query"))
+                if (property.NameEquals("query"u8))
                 {
                     query = property.Value.GetString();
                     continue;

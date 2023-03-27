@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Subnet))
             {
-                writer.WritePropertyName("subnet");
+                writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
             }
             if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
             {
-                writer.WritePropertyName("ignoreMissingVnetServiceEndpoint");
+                writer.WritePropertyName("ignoreMissingVnetServiceEndpoint"u8);
                 writer.WriteBooleanValue(IgnoreMissingVnetServiceEndpoint.Value);
             }
             writer.WriteEndObject();
@@ -31,11 +31,15 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EventHubsNetworkRuleSetVirtualNetworkRules DeserializeEventHubsNetworkRuleSetVirtualNetworkRules(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> subnet = default;
             Optional<bool> ignoreMissingVnetServiceEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subnet"))
+                if (property.NameEquals("subnet"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     subnet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("ignoreMissingVnetServiceEndpoint"))
+                if (property.NameEquals("ignoreMissingVnetServiceEndpoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

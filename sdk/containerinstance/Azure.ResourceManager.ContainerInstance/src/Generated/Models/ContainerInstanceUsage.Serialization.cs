@@ -14,18 +14,28 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static ContainerInstanceUsage DeserializeContainerInstanceUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> id = default;
             Optional<string> unit = default;
             Optional<int> currentValue = default;
             Optional<int> limit = default;
             Optional<ContainerInstanceUsageName> name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("unit"u8))
                 {
                     unit = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("currentValue"))
+                if (property.NameEquals("currentValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +45,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     currentValue = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +55,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     limit = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +66,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerInstanceUsage(unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value);
+            return new ContainerInstanceUsage(id.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value);
         }
     }
 }

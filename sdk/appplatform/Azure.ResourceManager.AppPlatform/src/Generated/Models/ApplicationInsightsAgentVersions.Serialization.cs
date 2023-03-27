@@ -20,10 +20,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static ApplicationInsightsAgentVersions DeserializeApplicationInsightsAgentVersions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> java = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("java"))
+                if (property.NameEquals("java"u8))
                 {
                     java = property.Value.GetString();
                     continue;

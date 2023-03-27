@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsApprovalRequired))
             {
-                writer.WritePropertyName("isApprovalRequired");
+                writer.WritePropertyName("isApprovalRequired"u8);
                 writer.WriteBooleanValue(IsApprovalRequired.Value);
             }
             if (Optional.IsDefined(IsApprovalRequiredForExtension))
             {
-                writer.WritePropertyName("isApprovalRequiredForExtension");
+                writer.WritePropertyName("isApprovalRequiredForExtension"u8);
                 writer.WriteBooleanValue(IsApprovalRequiredForExtension.Value);
             }
             if (Optional.IsDefined(IsRequestorJustificationRequired))
             {
-                writer.WritePropertyName("isRequestorJustificationRequired");
+                writer.WritePropertyName("isRequestorJustificationRequired"u8);
                 writer.WriteBooleanValue(IsRequestorJustificationRequired.Value);
             }
             if (Optional.IsDefined(ApprovalMode))
             {
-                writer.WritePropertyName("approvalMode");
+                writer.WritePropertyName("approvalMode"u8);
                 writer.WriteStringValue(ApprovalMode.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ApprovalStages))
             {
-                writer.WritePropertyName("approvalStages");
+                writer.WritePropertyName("approvalStages"u8);
                 writer.WriteStartArray();
                 foreach (var item in ApprovalStages)
                 {
@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleManagementApprovalSettings DeserializeRoleManagementApprovalSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isApprovalRequired = default;
             Optional<bool> isApprovalRequiredForExtension = default;
             Optional<bool> isRequestorJustificationRequired = default;
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<IList<RoleManagementApprovalStage>> approvalStages = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isApprovalRequired"))
+                if (property.NameEquals("isApprovalRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     isApprovalRequired = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isApprovalRequiredForExtension"))
+                if (property.NameEquals("isApprovalRequiredForExtension"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +82,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     isApprovalRequiredForExtension = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isRequestorJustificationRequired"))
+                if (property.NameEquals("isRequestorJustificationRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +92,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     isRequestorJustificationRequired = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("approvalMode"))
+                if (property.NameEquals("approvalMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +102,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     approvalMode = new RoleManagementApprovalMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("approvalStages"))
+                if (property.NameEquals("approvalStages"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

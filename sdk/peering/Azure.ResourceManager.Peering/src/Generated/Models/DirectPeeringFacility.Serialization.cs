@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Peering.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Address))
             {
-                writer.WritePropertyName("address");
+                writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
             if (Optional.IsDefined(DirectPeeringType))
             {
-                writer.WritePropertyName("directPeeringType");
+                writer.WritePropertyName("directPeeringType"u8);
                 writer.WriteStringValue(DirectPeeringType.Value.ToString());
             }
             if (Optional.IsDefined(PeeringDBFacilityId))
             {
-                writer.WritePropertyName("peeringDBFacilityId");
+                writer.WritePropertyName("peeringDBFacilityId"u8);
                 writer.WriteNumberValue(PeeringDBFacilityId.Value);
             }
             if (Optional.IsDefined(PeeringDBFacilityLink))
             {
-                writer.WritePropertyName("peeringDBFacilityLink");
+                writer.WritePropertyName("peeringDBFacilityLink"u8);
                 writer.WriteStringValue(PeeringDBFacilityLink);
             }
             writer.WriteEndObject();
@@ -40,18 +40,22 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static DirectPeeringFacility DeserializeDirectPeeringFacility(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> address = default;
             Optional<DirectPeeringType> directPeeringType = default;
             Optional<int> peeringDBFacilityId = default;
             Optional<string> peeringDBFacilityLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("address"))
+                if (property.NameEquals("address"u8))
                 {
                     address = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("directPeeringType"))
+                if (property.NameEquals("directPeeringType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.Peering.Models
                     directPeeringType = new DirectPeeringType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("peeringDBFacilityId"))
+                if (property.NameEquals("peeringDBFacilityId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.Peering.Models
                     peeringDBFacilityId = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("peeringDBFacilityLink"))
+                if (property.NameEquals("peeringDBFacilityLink"u8))
                 {
                     peeringDBFacilityLink = property.Value.GetString();
                     continue;

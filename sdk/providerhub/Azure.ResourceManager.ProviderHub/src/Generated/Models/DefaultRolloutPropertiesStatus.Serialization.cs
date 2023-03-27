@@ -19,22 +19,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(NextTrafficRegion))
             {
-                writer.WritePropertyName("nextTrafficRegion");
+                writer.WritePropertyName("nextTrafficRegion"u8);
                 writer.WriteStringValue(NextTrafficRegion.Value.ToString());
             }
             if (Optional.IsDefined(NextTrafficRegionScheduledOn))
             {
-                writer.WritePropertyName("nextTrafficRegionScheduledTime");
+                writer.WritePropertyName("nextTrafficRegionScheduledTime"u8);
                 writer.WriteStringValue(NextTrafficRegionScheduledOn.Value, "O");
             }
             if (Optional.IsDefined(SubscriptionReregistrationResult))
             {
-                writer.WritePropertyName("subscriptionReregistrationResult");
+                writer.WritePropertyName("subscriptionReregistrationResult"u8);
                 writer.WriteStringValue(SubscriptionReregistrationResult.Value.ToString());
             }
             if (Optional.IsCollectionDefined(CompletedRegions))
             {
-                writer.WritePropertyName("completedRegions");
+                writer.WritePropertyName("completedRegions"u8);
                 writer.WriteStartArray();
                 foreach (var item in CompletedRegions)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             if (Optional.IsCollectionDefined(FailedOrSkippedRegions))
             {
-                writer.WritePropertyName("failedOrSkippedRegions");
+                writer.WritePropertyName("failedOrSkippedRegions"u8);
                 writer.WriteStartObject();
                 foreach (var item in FailedOrSkippedRegions)
                 {
@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static DefaultRolloutPropertiesStatus DeserializeDefaultRolloutPropertiesStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TrafficRegionCategory> nextTrafficRegion = default;
             Optional<DateTimeOffset> nextTrafficRegionScheduledTime = default;
             Optional<SubscriptionReregistrationResult> subscriptionReregistrationResult = default;
@@ -65,7 +69,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<IDictionary<string, ExtendedErrorInfo>> failedOrSkippedRegions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextTrafficRegion"))
+                if (property.NameEquals("nextTrafficRegion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +79,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     nextTrafficRegion = new TrafficRegionCategory(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("nextTrafficRegionScheduledTime"))
+                if (property.NameEquals("nextTrafficRegionScheduledTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +89,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     nextTrafficRegionScheduledTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("subscriptionReregistrationResult"))
+                if (property.NameEquals("subscriptionReregistrationResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,7 +99,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     subscriptionReregistrationResult = new SubscriptionReregistrationResult(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("completedRegions"))
+                if (property.NameEquals("completedRegions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +114,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     completedRegions = array;
                     continue;
                 }
-                if (property.NameEquals("failedOrSkippedRegions"))
+                if (property.NameEquals("failedOrSkippedRegions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

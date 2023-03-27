@@ -17,16 +17,16 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("summaries");
+            writer.WritePropertyName("summaries"u8);
             writer.WriteStartArray();
             foreach (var item in Summaries)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("id");
+            writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            writer.WritePropertyName("warnings");
+            writer.WritePropertyName("warnings"u8);
             writer.WriteStartArray();
             foreach (var item in Warnings)
             {
@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
-                writer.WritePropertyName("statistics");
+                writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics.Value);
             }
             writer.WriteEndObject();
@@ -43,13 +43,17 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static AbstractiveSummaryDocumentResult DeserializeAbstractiveSummaryDocumentResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<AbstractiveSummaryInternal> summaries = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("summaries"))
+                if (property.NameEquals("summaries"u8))
                 {
                     List<AbstractiveSummaryInternal> array = new List<AbstractiveSummaryInternal>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -59,12 +63,12 @@ namespace Azure.AI.TextAnalytics.Models
                     summaries = array;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("warnings"))
+                if (property.NameEquals("warnings"u8))
                 {
                     List<DocumentWarning> array = new List<DocumentWarning>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -74,7 +78,7 @@ namespace Azure.AI.TextAnalytics.Models
                     warnings = array;
                     continue;
                 }
-                if (property.NameEquals("statistics"))
+                if (property.NameEquals("statistics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -1,0 +1,7 @@
+// OpenTelemetry Self-diagnostics configuration.
+// For more information see: https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry/README.md#troubleshooting
+{
+    "LogDirectory": ".",
+    "FileSize": 1024,
+    "LogLevel": "Warning"
+}

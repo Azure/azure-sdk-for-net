@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(MpnsCertificate))
             {
-                writer.WritePropertyName("mpnsCertificate");
+                writer.WritePropertyName("mpnsCertificate"u8);
                 writer.WriteStringValue(MpnsCertificate);
             }
             if (Optional.IsDefined(CertificateKey))
             {
-                writer.WritePropertyName("certificateKey");
+                writer.WritePropertyName("certificateKey"u8);
                 writer.WriteStringValue(CertificateKey);
             }
             if (Optional.IsDefined(Thumbprint))
             {
-                writer.WritePropertyName("thumbprint");
+                writer.WritePropertyName("thumbprint"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Thumbprint);
 #else
@@ -43,12 +43,16 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static NotificationHubMpnsCredential DeserializeNotificationHubMpnsCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> mpnsCertificate = default;
             Optional<string> certificateKey = default;
             Optional<BinaryData> thumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,17 +61,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("mpnsCertificate"))
+                        if (property0.NameEquals("mpnsCertificate"u8))
                         {
                             mpnsCertificate = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("certificateKey"))
+                        if (property0.NameEquals("certificateKey"u8))
                         {
                             certificateKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("thumbprint"))
+                        if (property0.NameEquals("thumbprint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         internal static ResourceType DeserializeResourceType(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<RoutingType> routingType = default;
             Optional<ResourceValidation> resourceValidation = default;
@@ -42,12 +46,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<ManifestResourceDeletionPolicy> resourceDeletionPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("routingType"))
+                if (property.NameEquals("routingType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +61,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     routingType = new RoutingType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceValidation"))
+                if (property.NameEquals("resourceValidation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +71,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     resourceValidation = new ResourceValidation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("allowedUnauthorizedActions"))
+                if (property.NameEquals("allowedUnauthorizedActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +86,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     allowedUnauthorizedActions = array;
                     continue;
                 }
-                if (property.NameEquals("authorizationActionMappings"))
+                if (property.NameEquals("authorizationActionMappings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +101,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     authorizationActionMappings = array;
                     continue;
                 }
-                if (property.NameEquals("linkedAccessChecks"))
+                if (property.NameEquals("linkedAccessChecks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,12 +116,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     linkedAccessChecks = array;
                     continue;
                 }
-                if (property.NameEquals("defaultApiVersion"))
+                if (property.NameEquals("defaultApiVersion"u8))
                 {
                     defaultApiVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("loggingRules"))
+                if (property.NameEquals("loggingRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +136,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     loggingRules = array;
                     continue;
                 }
-                if (property.NameEquals("throttlingRules"))
+                if (property.NameEquals("throttlingRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -147,7 +151,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     throttlingRules = array;
                     continue;
                 }
-                if (property.NameEquals("endpoints"))
+                if (property.NameEquals("endpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -162,7 +166,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     endpoints = array;
                     continue;
                 }
-                if (property.NameEquals("marketplaceType"))
+                if (property.NameEquals("marketplaceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -172,7 +176,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     marketplaceType = new ResourceTypeMarketplaceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("identityManagement"))
+                if (property.NameEquals("identityManagement"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -182,7 +186,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     identityManagement = ResourceTypeIdentityManagement.DeserializeResourceTypeIdentityManagement(property.Value);
                     continue;
                 }
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -192,7 +196,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     metadata = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("requiredFeatures"))
+                if (property.NameEquals("requiredFeatures"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -207,7 +211,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     requiredFeatures = array;
                     continue;
                 }
-                if (property.NameEquals("featuresRule"))
+                if (property.NameEquals("featuresRule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -217,7 +221,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     featuresRule = ResourceTypeFeaturesRule.DeserializeResourceTypeFeaturesRule(property.Value);
                     continue;
                 }
-                if (property.NameEquals("subscriptionStateRules"))
+                if (property.NameEquals("subscriptionStateRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -232,7 +236,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     subscriptionStateRules = array;
                     continue;
                 }
-                if (property.NameEquals("serviceTreeInfos"))
+                if (property.NameEquals("serviceTreeInfos"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -247,7 +251,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     serviceTreeInfos = array;
                     continue;
                 }
-                if (property.NameEquals("requestHeaderOptions"))
+                if (property.NameEquals("requestHeaderOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -257,12 +261,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     requestHeaderOptions = ResourceTypeRequestHeaderOptions.DeserializeResourceTypeRequestHeaderOptions(property.Value);
                     continue;
                 }
-                if (property.NameEquals("skuLink"))
+                if (property.NameEquals("skuLink"u8))
                 {
                     skuLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("disallowedActionVerbs"))
+                if (property.NameEquals("disallowedActionVerbs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -277,7 +281,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     disallowedActionVerbs = array;
                     continue;
                 }
-                if (property.NameEquals("templateDeploymentPolicy"))
+                if (property.NameEquals("templateDeploymentPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -287,7 +291,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     templateDeploymentPolicy = ResourceTypeTemplateDeploymentPolicy.DeserializeResourceTypeTemplateDeploymentPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("extendedLocations"))
+                if (property.NameEquals("extendedLocations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -302,7 +306,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     extendedLocations = array;
                     continue;
                 }
-                if (property.NameEquals("linkedOperationRules"))
+                if (property.NameEquals("linkedOperationRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -317,7 +321,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     linkedOperationRules = array;
                     continue;
                 }
-                if (property.NameEquals("resourceDeletionPolicy"))
+                if (property.NameEquals("resourceDeletionPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

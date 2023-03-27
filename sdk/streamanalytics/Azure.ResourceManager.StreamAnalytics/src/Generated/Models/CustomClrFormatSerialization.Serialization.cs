@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(EventSerializationType.ToString());
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(SerializationDllPath))
             {
-                writer.WritePropertyName("serializationDllPath");
+                writer.WritePropertyName("serializationDllPath"u8);
                 writer.WriteStringValue(SerializationDllPath);
             }
             if (Optional.IsDefined(SerializationClassName))
             {
-                writer.WritePropertyName("serializationClassName");
+                writer.WritePropertyName("serializationClassName"u8);
                 writer.WriteStringValue(SerializationClassName);
             }
             writer.WriteEndObject();
@@ -35,17 +35,21 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static CustomClrFormatSerialization DeserializeCustomClrFormatSerialization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EventSerializationType type = default;
             Optional<string> serializationDllPath = default;
             Optional<string> serializationClassName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new EventSerializationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,12 +58,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("serializationDllPath"))
+                        if (property0.NameEquals("serializationDllPath"u8))
                         {
                             serializationDllPath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("serializationClassName"))
+                        if (property0.NameEquals("serializationClassName"u8))
                         {
                             serializationClassName = property0.Value.GetString();
                             continue;

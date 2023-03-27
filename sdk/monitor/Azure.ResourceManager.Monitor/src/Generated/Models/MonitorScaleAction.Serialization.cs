@@ -16,44 +16,48 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("direction");
+            writer.WritePropertyName("direction"u8);
             writer.WriteStringValue(Direction.ToSerialString());
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ScaleType.ToSerialString());
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            writer.WritePropertyName("cooldown");
+            writer.WritePropertyName("cooldown"u8);
             writer.WriteStringValue(Cooldown, "P");
             writer.WriteEndObject();
         }
 
         internal static MonitorScaleAction DeserializeMonitorScaleAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MonitorScaleDirection direction = default;
             MonitorScaleType type = default;
             Optional<string> value = default;
             TimeSpan cooldown = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("direction"))
+                if (property.NameEquals("direction"u8))
                 {
                     direction = property.Value.GetString().ToMonitorScaleDirection();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString().ToMonitorScaleType();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cooldown"))
+                if (property.NameEquals("cooldown"u8))
                 {
                     cooldown = property.Value.GetTimeSpan("P");
                     continue;

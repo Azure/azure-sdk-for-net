@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static PolicyInsightsPolicyStateCreatedEventData DeserializePolicyInsightsPolicyStateCreatedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> timestamp = default;
             Optional<string> policyAssignmentId = default;
             Optional<string> policyDefinitionId = default;
@@ -26,7 +30,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> complianceReasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,32 +40,32 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("policyAssignmentId"))
+                if (property.NameEquals("policyAssignmentId"u8))
                 {
                     policyAssignmentId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyDefinitionId"))
+                if (property.NameEquals("policyDefinitionId"u8))
                 {
                     policyDefinitionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyDefinitionReferenceId"))
+                if (property.NameEquals("policyDefinitionReferenceId"u8))
                 {
                     policyDefinitionReferenceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("complianceState"))
+                if (property.NameEquals("complianceState"u8))
                 {
                     complianceState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("complianceReasonCode"))
+                if (property.NameEquals("complianceReasonCode"u8))
                 {
                     complianceReasonCode = property.Value.GetString();
                     continue;

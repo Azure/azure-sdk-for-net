@@ -17,41 +17,41 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MessageId))
             {
-                writer.WritePropertyName("messageId");
+                writer.WritePropertyName("messageId"u8);
                 writer.WriteStringValue(MessageId);
             }
             if (Optional.IsDefined(MessageVersion))
             {
-                writer.WritePropertyName("messageVersion");
+                writer.WritePropertyName("messageVersion"u8);
                 writer.WriteStringValue(MessageVersion);
             }
             if (Optional.IsDefined(MessageRelease))
             {
-                writer.WritePropertyName("messageRelease");
+                writer.WritePropertyName("messageRelease"u8);
                 writer.WriteStringValue(MessageRelease);
             }
-            writer.WritePropertyName("dataElementSeparator");
+            writer.WritePropertyName("dataElementSeparator"u8);
             writer.WriteNumberValue(DataElementSeparator);
-            writer.WritePropertyName("componentSeparator");
+            writer.WritePropertyName("componentSeparator"u8);
             writer.WriteNumberValue(ComponentSeparator);
-            writer.WritePropertyName("segmentTerminator");
+            writer.WritePropertyName("segmentTerminator"u8);
             writer.WriteNumberValue(SegmentTerminator);
-            writer.WritePropertyName("repetitionSeparator");
+            writer.WritePropertyName("repetitionSeparator"u8);
             writer.WriteNumberValue(RepetitionSeparator);
-            writer.WritePropertyName("segmentTerminatorSuffix");
+            writer.WritePropertyName("segmentTerminatorSuffix"u8);
             writer.WriteStringValue(SegmentTerminatorSuffix.ToSerialString());
-            writer.WritePropertyName("decimalPointIndicator");
+            writer.WritePropertyName("decimalPointIndicator"u8);
             writer.WriteStringValue(DecimalPointIndicator.ToSerialString());
-            writer.WritePropertyName("releaseIndicator");
+            writer.WritePropertyName("releaseIndicator"u8);
             writer.WriteNumberValue(ReleaseIndicator);
             if (Optional.IsDefined(MessageAssociationAssignedCode))
             {
-                writer.WritePropertyName("messageAssociationAssignedCode");
+                writer.WritePropertyName("messageAssociationAssignedCode"u8);
                 writer.WriteStringValue(MessageAssociationAssignedCode);
             }
             if (Optional.IsDefined(TargetNamespace))
             {
-                writer.WritePropertyName("targetNamespace");
+                writer.WritePropertyName("targetNamespace"u8);
                 writer.WriteStringValue(TargetNamespace);
             }
             writer.WriteEndObject();
@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static EdifactDelimiterOverride DeserializeEdifactDelimiterOverride(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> messageId = default;
             Optional<string> messageVersion = default;
             Optional<string> messageRelease = default;
@@ -73,62 +77,62 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> targetNamespace = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("messageId"))
+                if (property.NameEquals("messageId"u8))
                 {
                     messageId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("messageVersion"))
+                if (property.NameEquals("messageVersion"u8))
                 {
                     messageVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("messageRelease"))
+                if (property.NameEquals("messageRelease"u8))
                 {
                     messageRelease = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataElementSeparator"))
+                if (property.NameEquals("dataElementSeparator"u8))
                 {
                     dataElementSeparator = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("componentSeparator"))
+                if (property.NameEquals("componentSeparator"u8))
                 {
                     componentSeparator = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("segmentTerminator"))
+                if (property.NameEquals("segmentTerminator"u8))
                 {
                     segmentTerminator = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("repetitionSeparator"))
+                if (property.NameEquals("repetitionSeparator"u8))
                 {
                     repetitionSeparator = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("segmentTerminatorSuffix"))
+                if (property.NameEquals("segmentTerminatorSuffix"u8))
                 {
                     segmentTerminatorSuffix = property.Value.GetString().ToSegmentTerminatorSuffix();
                     continue;
                 }
-                if (property.NameEquals("decimalPointIndicator"))
+                if (property.NameEquals("decimalPointIndicator"u8))
                 {
                     decimalPointIndicator = property.Value.GetString().ToEdifactDecimalIndicator();
                     continue;
                 }
-                if (property.NameEquals("releaseIndicator"))
+                if (property.NameEquals("releaseIndicator"u8))
                 {
                     releaseIndicator = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("messageAssociationAssignedCode"))
+                if (property.NameEquals("messageAssociationAssignedCode"u8))
                 {
                     messageAssociationAssignedCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetNamespace"))
+                if (property.NameEquals("targetNamespace"u8))
                 {
                     targetNamespace = property.Value.GetString();
                     continue;

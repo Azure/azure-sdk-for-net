@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsLogStreamPublicEndpoint))
             {
-                writer.WritePropertyName("logStreamPublicEndpoint");
+                writer.WritePropertyName("logStreamPublicEndpoint"u8);
                 writer.WriteBooleanValue(IsLogStreamPublicEndpoint.Value);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static ServiceVnetAddons DeserializeServiceVnetAddons(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> logStreamPublicEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("logStreamPublicEndpoint"))
+                if (property.NameEquals("logStreamPublicEndpoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,21 +18,21 @@ namespace Azure.ResourceManager.Support
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Sender))
             {
-                writer.WritePropertyName("sender");
+                writer.WritePropertyName("sender"u8);
                 writer.WriteStringValue(Sender);
             }
             if (Optional.IsDefined(Subject))
             {
-                writer.WritePropertyName("subject");
+                writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
             if (Optional.IsDefined(Body))
             {
-                writer.WritePropertyName("body");
+                writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
             }
             writer.WriteEndObject();
@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Support
 
         internal static SupportTicketCommunicationData DeserializeSupportTicketCommunicationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -53,22 +57,22 @@ namespace Azure.ResourceManager.Support
             Optional<DateTimeOffset> createdDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +82,7 @@ namespace Azure.ResourceManager.Support
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +91,7 @@ namespace Azure.ResourceManager.Support
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("communicationType"))
+                        if (property0.NameEquals("communicationType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -97,7 +101,7 @@ namespace Azure.ResourceManager.Support
                             communicationType = new SupportTicketCommunicationType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("communicationDirection"))
+                        if (property0.NameEquals("communicationDirection"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -107,22 +111,22 @@ namespace Azure.ResourceManager.Support
                             communicationDirection = new SupportTicketCommunicationDirection(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("sender"))
+                        if (property0.NameEquals("sender"u8))
                         {
                             sender = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("subject"))
+                        if (property0.NameEquals("subject"u8))
                         {
                             subject = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("body"))
+                        if (property0.NameEquals("body"u8))
                         {
                             body = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("createdDate"))
+                        if (property0.NameEquals("createdDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(ResourceProperties))
             {
                 if (ResourceProperties != null)
                 {
-                    writer.WritePropertyName("resourceProperties");
+                    writer.WritePropertyName("resourceProperties"u8);
                     writer.WriteObjectValue(ResourceProperties);
                 }
                 else
@@ -32,19 +32,23 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("resourceProperties");
                 }
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TargetServiceType.ToString());
             writer.WriteEndObject();
         }
 
         internal static AzureResourceInfo DeserializeAzureResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<AzureResourceBaseProperties> resourceProperties = default;
             TargetServiceType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +58,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceProperties"))
+                if (property.NameEquals("resourceProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +68,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     resourceProperties = AzureResourceBaseProperties.DeserializeAzureResourceBaseProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new TargetServiceType(property.Value.GetString());
                     continue;

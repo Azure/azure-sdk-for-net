@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static SecurityInsightsIPEntityGeoLocation DeserializeSecurityInsightsIPEntityGeoLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> asn = default;
             Optional<string> city = default;
             Optional<string> countryCode = default;
@@ -23,7 +27,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<string> state = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("asn"))
+                if (property.NameEquals("asn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,22 +37,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     asn = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("city"))
+                if (property.NameEquals("city"u8))
                 {
                     city = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("countryCode"))
+                if (property.NameEquals("countryCode"u8))
                 {
                     countryCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("countryName"))
+                if (property.NameEquals("countryName"u8))
                 {
                     countryName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("latitude"))
+                if (property.NameEquals("latitude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     latitude = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("longitude"))
+                if (property.NameEquals("longitude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     longitude = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = property.Value.GetString();
                     continue;

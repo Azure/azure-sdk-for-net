@@ -21,13 +21,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static ResourceHealthDetails DeserializeResourceHealthDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> code = default;
             Optional<string> title = default;
             Optional<string> message = default;
             Optional<IReadOnlyList<string>> recommendations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,17 +41,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     code = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("title"))
+                if (property.NameEquals("title"u8))
                 {
                     title = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recommendations"))
+                if (property.NameEquals("recommendations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

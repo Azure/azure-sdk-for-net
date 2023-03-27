@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyIdentifier))
             {
-                writer.WritePropertyName("keyIdentifier");
+                writer.WritePropertyName("keyIdentifier"u8);
                 writer.WriteStringValue(KeyIdentifier);
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 writer.WriteStringValue(Identity);
             }
             writer.WriteEndObject();
@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryKeyVaultProperties DeserializeContainerRegistryKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> keyIdentifier = default;
             Optional<string> versionedKeyIdentifier = default;
             Optional<string> identity = default;
@@ -38,22 +42,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyIdentifier"))
+                if (property.NameEquals("keyIdentifier"u8))
                 {
                     keyIdentifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("versionedKeyIdentifier"))
+                if (property.NameEquals("versionedKeyIdentifier"u8))
                 {
                     versionedKeyIdentifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     identity = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyRotationEnabled"))
+                if (property.NameEquals("keyRotationEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +67,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     keyRotationEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("lastKeyRotationTimestamp"))
+                if (property.NameEquals("lastKeyRotationTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

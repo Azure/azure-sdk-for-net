@@ -18,13 +18,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MapsGeofenceEnteredEventData DeserializeMapsGeofenceEnteredEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> expiredGeofenceGeometryId = default;
             Optional<IReadOnlyList<MapsGeofenceGeometry>> geometries = default;
             Optional<IReadOnlyList<string>> invalidPeriodGeofenceGeometryId = default;
             Optional<bool> isEventPublished = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("expiredGeofenceGeometryId"))
+                if (property.NameEquals("expiredGeofenceGeometryId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +43,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     expiredGeofenceGeometryId = array;
                     continue;
                 }
-                if (property.NameEquals("geometries"))
+                if (property.NameEquals("geometries"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +58,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     geometries = array;
                     continue;
                 }
-                if (property.NameEquals("invalidPeriodGeofenceGeometryId"))
+                if (property.NameEquals("invalidPeriodGeofenceGeometryId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +73,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     invalidPeriodGeofenceGeometryId = array;
                     continue;
                 }
-                if (property.NameEquals("isEventPublished"))
+                if (property.NameEquals("isEventPublished"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

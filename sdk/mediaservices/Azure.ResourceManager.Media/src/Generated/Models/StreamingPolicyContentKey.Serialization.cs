@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Label))
             {
-                writer.WritePropertyName("label");
+                writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
             if (Optional.IsDefined(PolicyName))
             {
-                writer.WritePropertyName("policyName");
+                writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
             if (Optional.IsCollectionDefined(Tracks))
             {
-                writer.WritePropertyName("tracks");
+                writer.WritePropertyName("tracks"u8);
                 writer.WriteStartArray();
                 foreach (var item in Tracks)
                 {
@@ -41,22 +41,26 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static StreamingPolicyContentKey DeserializeStreamingPolicyContentKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> label = default;
             Optional<string> policyName = default;
             Optional<IList<MediaTrackSelection>> tracks = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyName"))
+                if (property.NameEquals("policyName"u8))
                 {
                     policyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tracks"))
+                if (property.NameEquals("tracks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

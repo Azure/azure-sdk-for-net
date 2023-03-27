@@ -17,32 +17,36 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ImageName))
             {
-                writer.WritePropertyName("imageName");
+                writer.WritePropertyName("imageName"u8);
                 writer.WriteStringValue(ImageName);
             }
             if (Optional.IsDefined(IsSysPrepEnabled))
             {
-                writer.WritePropertyName("sysPrep");
+                writer.WritePropertyName("sysPrep"u8);
                 writer.WriteBooleanValue(IsSysPrepEnabled.Value);
             }
-            writer.WritePropertyName("osType");
+            writer.WritePropertyName("osType"u8);
             writer.WriteStringValue(OSType.ToString());
             writer.WriteEndObject();
         }
 
         internal static DevTestLabCustomImageVhd DeserializeDevTestLabCustomImageVhd(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> imageName = default;
             Optional<bool> sysPrep = default;
             DevTestLabCustomImageOSType osType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("imageName"))
+                if (property.NameEquals("imageName"u8))
                 {
                     imageName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sysPrep"))
+                if (property.NameEquals("sysPrep"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     sysPrep = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = new DevTestLabCustomImageOSType(property.Value.GetString());
                     continue;

@@ -15,11 +15,15 @@ namespace Azure.DigitalTwins.Core
     {
         internal static PagedDigitalTwinsModelDataCollection DeserializePagedDigitalTwinsModelDataCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<DigitalTwinsModelData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<DigitalTwinsModelData> array = new List<DigitalTwinsModelData>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -29,7 +33,7 @@ namespace Azure.DigitalTwins.Core
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

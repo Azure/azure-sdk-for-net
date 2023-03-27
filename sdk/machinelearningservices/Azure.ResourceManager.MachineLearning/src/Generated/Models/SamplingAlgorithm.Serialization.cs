@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("samplingAlgorithmType");
+            writer.WritePropertyName("samplingAlgorithmType"u8);
             writer.WriteStringValue(SamplingAlgorithmType.ToString());
             writer.WriteEndObject();
         }
 
         internal static SamplingAlgorithm DeserializeSamplingAlgorithm(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("samplingAlgorithmType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

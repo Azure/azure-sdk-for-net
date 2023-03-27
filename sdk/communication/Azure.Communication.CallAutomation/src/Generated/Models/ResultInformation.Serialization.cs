@@ -14,12 +14,16 @@ namespace Azure.Communication.CallAutomation
     {
         internal static ResultInformation DeserializeResultInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> code = default;
             Optional<int> subCode = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.Communication.CallAutomation
                     code = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("subCode"))
+                if (property.NameEquals("subCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +43,7 @@ namespace Azure.Communication.CallAutomation
                     subCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;

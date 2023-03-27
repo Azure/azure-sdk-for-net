@@ -16,54 +16,58 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("allowTestDevices");
+            writer.WritePropertyName("allowTestDevices"u8);
             writer.WriteBooleanValue(AllowTestDevices);
             if (Optional.IsDefined(SecurityLevel))
             {
-                writer.WritePropertyName("securityLevel");
+                writer.WritePropertyName("securityLevel"u8);
                 writer.WriteStringValue(SecurityLevel.Value.ToString());
             }
             if (Optional.IsDefined(BeginOn))
             {
-                writer.WritePropertyName("beginDate");
+                writer.WritePropertyName("beginDate"u8);
                 writer.WriteStringValue(BeginOn.Value, "O");
             }
             if (Optional.IsDefined(ExpireOn))
             {
-                writer.WritePropertyName("expirationDate");
+                writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(RelativeBeginDate))
             {
-                writer.WritePropertyName("relativeBeginDate");
+                writer.WritePropertyName("relativeBeginDate"u8);
                 writer.WriteStringValue(RelativeBeginDate.Value, "P");
             }
             if (Optional.IsDefined(RelativeExpirationDate))
             {
-                writer.WritePropertyName("relativeExpirationDate");
+                writer.WritePropertyName("relativeExpirationDate"u8);
                 writer.WriteStringValue(RelativeExpirationDate.Value, "P");
             }
             if (Optional.IsDefined(GracePeriod))
             {
-                writer.WritePropertyName("gracePeriod");
+                writer.WritePropertyName("gracePeriod"u8);
                 writer.WriteStringValue(GracePeriod.Value, "P");
             }
             if (Optional.IsDefined(PlayRight))
             {
-                writer.WritePropertyName("playRight");
+                writer.WritePropertyName("playRight"u8);
                 writer.WriteObjectValue(PlayRight);
             }
-            writer.WritePropertyName("licenseType");
+            writer.WritePropertyName("licenseType"u8);
             writer.WriteStringValue(LicenseType.ToString());
-            writer.WritePropertyName("contentKeyLocation");
+            writer.WritePropertyName("contentKeyLocation"u8);
             writer.WriteObjectValue(ContentKeyLocation);
-            writer.WritePropertyName("contentType");
+            writer.WritePropertyName("contentType"u8);
             writer.WriteStringValue(ContentType.ToString());
             writer.WriteEndObject();
         }
 
         internal static ContentKeyPolicyPlayReadyLicense DeserializeContentKeyPolicyPlayReadyLicense(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool allowTestDevices = default;
             Optional<PlayReadySecurityLevel> securityLevel = default;
             Optional<DateTimeOffset> beginDate = default;
@@ -77,12 +81,12 @@ namespace Azure.ResourceManager.Media.Models
             ContentKeyPolicyPlayReadyContentType contentType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowTestDevices"))
+                if (property.NameEquals("allowTestDevices"u8))
                 {
                     allowTestDevices = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("securityLevel"))
+                if (property.NameEquals("securityLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.Media.Models
                     securityLevel = new PlayReadySecurityLevel(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("beginDate"))
+                if (property.NameEquals("beginDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,7 +106,7 @@ namespace Azure.ResourceManager.Media.Models
                     beginDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("expirationDate"))
+                if (property.NameEquals("expirationDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,7 +116,7 @@ namespace Azure.ResourceManager.Media.Models
                     expirationDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("relativeBeginDate"))
+                if (property.NameEquals("relativeBeginDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,7 +126,7 @@ namespace Azure.ResourceManager.Media.Models
                     relativeBeginDate = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("relativeExpirationDate"))
+                if (property.NameEquals("relativeExpirationDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +136,7 @@ namespace Azure.ResourceManager.Media.Models
                     relativeExpirationDate = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("gracePeriod"))
+                if (property.NameEquals("gracePeriod"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -142,7 +146,7 @@ namespace Azure.ResourceManager.Media.Models
                     gracePeriod = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("playRight"))
+                if (property.NameEquals("playRight"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -152,17 +156,17 @@ namespace Azure.ResourceManager.Media.Models
                     playRight = ContentKeyPolicyPlayReadyPlayRight.DeserializeContentKeyPolicyPlayReadyPlayRight(property.Value);
                     continue;
                 }
-                if (property.NameEquals("licenseType"))
+                if (property.NameEquals("licenseType"u8))
                 {
                     licenseType = new ContentKeyPolicyPlayReadyLicenseType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("contentKeyLocation"))
+                if (property.NameEquals("contentKeyLocation"u8))
                 {
                     contentKeyLocation = ContentKeyPolicyPlayReadyContentKeyLocation.DeserializeContentKeyPolicyPlayReadyContentKeyLocation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("contentType"))
+                if (property.NameEquals("contentType"u8))
                 {
                     contentType = new ContentKeyPolicyPlayReadyContentType(property.Value.GetString());
                     continue;

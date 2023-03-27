@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Pages))
             {
-                writer.WritePropertyName("pages");
+                writer.WritePropertyName("pages"u8);
                 writer.WriteStartArray();
                 foreach (var item in Pages)
                 {
@@ -27,20 +27,24 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("appId");
+            writer.WritePropertyName("appId"u8);
             writer.WriteStringValue(AppId);
             if (Optional.IsDefined(AppSecret))
             {
-                writer.WritePropertyName("appSecret");
+                writer.WritePropertyName("appSecret"u8);
                 writer.WriteStringValue(AppSecret);
             }
-            writer.WritePropertyName("isEnabled");
+            writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             writer.WriteEndObject();
         }
 
         internal static FacebookChannelProperties DeserializeFacebookChannelProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> verifyToken = default;
             Optional<IList<FacebookPage>> pages = default;
             string appId = default;
@@ -49,12 +53,12 @@ namespace Azure.ResourceManager.BotService.Models
             bool isEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("verifyToken"))
+                if (property.NameEquals("verifyToken"u8))
                 {
                     verifyToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pages"))
+                if (property.NameEquals("pages"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,17 +73,17 @@ namespace Azure.ResourceManager.BotService.Models
                     pages = array;
                     continue;
                 }
-                if (property.NameEquals("appId"))
+                if (property.NameEquals("appId"u8))
                 {
                     appId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("appSecret"))
+                if (property.NameEquals("appSecret"u8))
                 {
                     appSecret = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("callbackUrl"))
+                if (property.NameEquals("callbackUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +93,7 @@ namespace Azure.ResourceManager.BotService.Models
                     callbackUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("isEnabled"))
+                if (property.NameEquals("isEnabled"u8))
                 {
                     isEnabled = property.Value.GetBoolean();
                     continue;

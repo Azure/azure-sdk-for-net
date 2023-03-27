@@ -1,15 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System.Diagnostics;
 using System.Globalization;
-
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-
-using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
@@ -17,7 +12,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     {
         public RequestData(int version, Activity activity, ref TagEnumerationState monitorTags) : base(version)
         {
-            string url = null;
+            string? url = null;
 
             switch (monitorTags.activityType)
             {
@@ -34,17 +29,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
                 ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
                 : SchemaConstants.Duration_MaxValue;
-            Success = activity.Status != ActivityStatusCode.Error;
             ResponseCode = AzMonList.GetTagValue(ref monitorTags.MappedTags, SemanticConventions.AttributeHttpStatusCode)
                 ?.ToString().Truncate(SchemaConstants.RequestData_ResponseCode_MaxLength)
                 ?? "0";
-            Url = url.Truncate(SchemaConstants.RequestData_Url_MaxLength);
 
+            Success = IsSuccess(activity, ResponseCode, monitorTags.activityType);
+
+            Url = url.Truncate(SchemaConstants.RequestData_Url_MaxLength);
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
 
-            TraceHelper.AddActivityLinksToProperties(activity.Links, ref monitorTags.UnMappedTags);
+            TraceHelper.AddActivityLinksToProperties(activity, ref monitorTags.UnMappedTags);
             TraceHelper.AddPropertiesToTelemetry(Properties, ref monitorTags.UnMappedTags);
+        }
+
+        internal static bool IsSuccess(Activity activity, string? responseCode, OperationType operationType)
+        {
+            if (operationType == OperationType.Http
+                && responseCode != null
+                && int.TryParse(responseCode, out int statusCode))
+            {
+                bool isSuccessStatusCode = statusCode != 0 && statusCode < 400;
+                return activity.Status != ActivityStatusCode.Error && isSuccessStatusCode;
+            }
+            else
+            {
+                return activity.Status != ActivityStatusCode.Error;
+            }
         }
     }
 }

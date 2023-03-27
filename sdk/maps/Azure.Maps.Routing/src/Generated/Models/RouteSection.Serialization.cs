@@ -14,6 +14,10 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteSection DeserializeRouteSection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> startPointIndex = default;
             Optional<int> endPointIndex = default;
             Optional<ResponseSectionType> sectionType = default;
@@ -25,7 +29,7 @@ namespace Azure.Maps.Routing.Models
             Optional<RouteSectionTec> tec = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("startPointIndex"))
+                if (property.NameEquals("startPointIndex"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +39,7 @@ namespace Azure.Maps.Routing.Models
                     startPointIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("endPointIndex"))
+                if (property.NameEquals("endPointIndex"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.Maps.Routing.Models
                     endPointIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sectionType"))
+                if (property.NameEquals("sectionType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.Maps.Routing.Models
                     sectionType = new ResponseSectionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("travelMode"))
+                if (property.NameEquals("travelMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +69,7 @@ namespace Azure.Maps.Routing.Models
                     travelMode = new ResponseTravelMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("simpleCategory"))
+                if (property.NameEquals("simpleCategory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +79,7 @@ namespace Azure.Maps.Routing.Models
                     simpleCategory = new TrafficIncidentCategory(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("effectiveSpeedInKmh"))
+                if (property.NameEquals("effectiveSpeedInKmh"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +89,7 @@ namespace Azure.Maps.Routing.Models
                     effectiveSpeedInKmh = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("delayInSeconds"))
+                if (property.NameEquals("delayInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,7 +99,7 @@ namespace Azure.Maps.Routing.Models
                     delayInSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("magnitudeOfDelay"))
+                if (property.NameEquals("magnitudeOfDelay"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,7 +109,7 @@ namespace Azure.Maps.Routing.Models
                     magnitudeOfDelay = new DelayMagnitude(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tec"))
+                if (property.NameEquals("tec"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

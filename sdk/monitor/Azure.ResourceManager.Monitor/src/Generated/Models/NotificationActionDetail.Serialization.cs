@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static NotificationActionDetail DeserializeNotificationActionDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> mechanismType = default;
             Optional<string> name = default;
             Optional<string> status = default;
@@ -23,27 +27,27 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> detail = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("MechanismType"))
+                if (property.NameEquals("MechanismType"u8))
                 {
                     mechanismType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("Name"))
+                if (property.NameEquals("Name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("Status"))
+                if (property.NameEquals("Status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("SubState"))
+                if (property.NameEquals("SubState"u8))
                 {
                     subState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("SendTime"))
+                if (property.NameEquals("SendTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     sendTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("Detail"))
+                if (property.NameEquals("Detail"u8))
                 {
                     detail = property.Value.GetString();
                     continue;

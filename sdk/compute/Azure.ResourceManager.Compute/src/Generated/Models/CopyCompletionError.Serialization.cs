@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("errorCode");
+            writer.WritePropertyName("errorCode"u8);
             writer.WriteStringValue(ErrorCode.ToString());
-            writer.WritePropertyName("errorMessage");
+            writer.WritePropertyName("errorMessage"u8);
             writer.WriteStringValue(ErrorMessage);
             writer.WriteEndObject();
         }
 
         internal static CopyCompletionError DeserializeCopyCompletionError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CopyCompletionErrorReason errorCode = default;
             string errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errorCode"))
+                if (property.NameEquals("errorCode"u8))
                 {
                     errorCode = new CopyCompletionErrorReason(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     errorMessage = property.Value.GetString();
                     continue;

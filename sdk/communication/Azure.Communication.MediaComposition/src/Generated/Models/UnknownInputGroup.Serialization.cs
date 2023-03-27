@@ -16,31 +16,31 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(Position))
             {
-                writer.WritePropertyName("position");
+                writer.WritePropertyName("position"u8);
                 writer.WriteObjectValue(Position);
             }
             if (Optional.IsDefined(Width))
             {
-                writer.WritePropertyName("width");
+                writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
             if (Optional.IsDefined(Height))
             {
-                writer.WritePropertyName("height");
+                writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
             }
             if (Optional.IsDefined(Layer))
             {
-                writer.WritePropertyName("layer");
+                writer.WritePropertyName("layer"u8);
                 writer.WriteStringValue(Layer);
             }
             if (Optional.IsDefined(ScalingMode))
             {
-                writer.WritePropertyName("scalingMode");
+                writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());
             }
             writer.WriteEndObject();
@@ -48,6 +48,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static UnknownInputGroup DeserializeUnknownInputGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             InputGroupType kind = "Unknown";
             Optional<InputPosition> position = default;
             Optional<string> width = default;
@@ -56,12 +60,12 @@ namespace Azure.Communication.MediaComposition
             Optional<ScalingMode> scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new InputGroupType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("position"))
+                if (property.NameEquals("position"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,22 +75,22 @@ namespace Azure.Communication.MediaComposition
                     position = InputPosition.DeserializeInputPosition(property.Value);
                     continue;
                 }
-                if (property.NameEquals("width"))
+                if (property.NameEquals("width"u8))
                 {
                     width = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("height"))
+                if (property.NameEquals("height"u8))
                 {
                     height = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("layer"))
+                if (property.NameEquals("layer"u8))
                 {
                     layer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scalingMode"))
+                if (property.NameEquals("scalingMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

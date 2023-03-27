@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.Sql
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -40,134 +40,170 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CreateMode))
             {
-                writer.WritePropertyName("createMode");
+                writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
             if (Optional.IsDefined(Collation))
             {
-                writer.WritePropertyName("collation");
+                writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
             if (Optional.IsDefined(MaxSizeBytes))
             {
-                writer.WritePropertyName("maxSizeBytes");
+                writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteNumberValue(MaxSizeBytes.Value);
             }
             if (Optional.IsDefined(SampleName))
             {
-                writer.WritePropertyName("sampleName");
+                writer.WritePropertyName("sampleName"u8);
                 writer.WriteStringValue(SampleName.Value.ToString());
             }
             if (Optional.IsDefined(ElasticPoolId))
             {
-                writer.WritePropertyName("elasticPoolId");
+                writer.WritePropertyName("elasticPoolId"u8);
                 writer.WriteStringValue(ElasticPoolId);
             }
             if (Optional.IsDefined(SourceDatabaseId))
             {
-                writer.WritePropertyName("sourceDatabaseId");
+                writer.WritePropertyName("sourceDatabaseId"u8);
                 writer.WriteStringValue(SourceDatabaseId);
             }
             if (Optional.IsDefined(RestorePointInTime))
             {
-                writer.WritePropertyName("restorePointInTime");
+                writer.WritePropertyName("restorePointInTime"u8);
                 writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
             if (Optional.IsDefined(SourceDatabaseDeletedOn))
             {
-                writer.WritePropertyName("sourceDatabaseDeletionDate");
+                writer.WritePropertyName("sourceDatabaseDeletionDate"u8);
                 writer.WriteStringValue(SourceDatabaseDeletedOn.Value, "O");
             }
             if (Optional.IsDefined(RecoveryServicesRecoveryPointId))
             {
-                writer.WritePropertyName("recoveryServicesRecoveryPointId");
+                writer.WritePropertyName("recoveryServicesRecoveryPointId"u8);
                 writer.WriteStringValue(RecoveryServicesRecoveryPointId);
             }
             if (Optional.IsDefined(LongTermRetentionBackupResourceId))
             {
-                writer.WritePropertyName("longTermRetentionBackupResourceId");
+                writer.WritePropertyName("longTermRetentionBackupResourceId"u8);
                 writer.WriteStringValue(LongTermRetentionBackupResourceId);
             }
             if (Optional.IsDefined(RecoverableDatabaseId))
             {
-                writer.WritePropertyName("recoverableDatabaseId");
+                writer.WritePropertyName("recoverableDatabaseId"u8);
                 writer.WriteStringValue(RecoverableDatabaseId);
             }
             if (Optional.IsDefined(RestorableDroppedDatabaseId))
             {
-                writer.WritePropertyName("restorableDroppedDatabaseId");
+                writer.WritePropertyName("restorableDroppedDatabaseId"u8);
                 writer.WriteStringValue(RestorableDroppedDatabaseId);
             }
             if (Optional.IsDefined(CatalogCollation))
             {
-                writer.WritePropertyName("catalogCollation");
+                writer.WritePropertyName("catalogCollation"u8);
                 writer.WriteStringValue(CatalogCollation.Value.ToString());
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {
-                writer.WritePropertyName("zoneRedundant");
+                writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (Optional.IsDefined(LicenseType))
             {
-                writer.WritePropertyName("licenseType");
+                writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
             if (Optional.IsDefined(ReadScale))
             {
-                writer.WritePropertyName("readScale");
+                writer.WritePropertyName("readScale"u8);
                 writer.WriteStringValue(ReadScale.Value.ToString());
             }
             if (Optional.IsDefined(HighAvailabilityReplicaCount))
             {
-                writer.WritePropertyName("highAvailabilityReplicaCount");
+                writer.WritePropertyName("highAvailabilityReplicaCount"u8);
                 writer.WriteNumberValue(HighAvailabilityReplicaCount.Value);
             }
             if (Optional.IsDefined(SecondaryType))
             {
-                writer.WritePropertyName("secondaryType");
+                writer.WritePropertyName("secondaryType"u8);
                 writer.WriteStringValue(SecondaryType.Value.ToString());
             }
             if (Optional.IsDefined(AutoPauseDelay))
             {
-                writer.WritePropertyName("autoPauseDelay");
+                writer.WritePropertyName("autoPauseDelay"u8);
                 writer.WriteNumberValue(AutoPauseDelay.Value);
             }
             if (Optional.IsDefined(RequestedBackupStorageRedundancy))
             {
-                writer.WritePropertyName("requestedBackupStorageRedundancy");
+                writer.WritePropertyName("requestedBackupStorageRedundancy"u8);
                 writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
             }
             if (Optional.IsDefined(MinCapacity))
             {
-                writer.WritePropertyName("minCapacity");
+                writer.WritePropertyName("minCapacity"u8);
                 writer.WriteNumberValue(MinCapacity.Value);
             }
             if (Optional.IsDefined(MaintenanceConfigurationId))
             {
-                writer.WritePropertyName("maintenanceConfigurationId");
+                writer.WritePropertyName("maintenanceConfigurationId"u8);
                 writer.WriteStringValue(MaintenanceConfigurationId);
             }
             if (Optional.IsDefined(IsLedgerOn))
             {
-                writer.WritePropertyName("isLedgerOn");
+                writer.WritePropertyName("isLedgerOn"u8);
                 writer.WriteBooleanValue(IsLedgerOn.Value);
             }
             if (Optional.IsDefined(FederatedClientId))
             {
-                writer.WritePropertyName("federatedClientId");
+                writer.WritePropertyName("federatedClientId"u8);
                 writer.WriteStringValue(FederatedClientId.Value);
+            }
+            if (Optional.IsCollectionDefined(Keys))
+            {
+                writer.WritePropertyName("keys"u8);
+                writer.WriteStartObject();
+                foreach (var item in Keys)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(EncryptionProtector))
+            {
+                writer.WritePropertyName("encryptionProtector"u8);
+                writer.WriteStringValue(EncryptionProtector);
+            }
+            if (Optional.IsDefined(PreferredEnclaveType))
+            {
+                writer.WritePropertyName("preferredEnclaveType"u8);
+                writer.WriteStringValue(PreferredEnclaveType.Value.ToString());
             }
             if (Optional.IsDefined(SourceResourceId))
             {
-                writer.WritePropertyName("sourceResourceId");
+                writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
+            }
+            if (Optional.IsDefined(ManualCutover))
+            {
+                writer.WritePropertyName("manualCutover"u8);
+                writer.WriteBooleanValue(ManualCutover.Value);
+            }
+            if (Optional.IsDefined(PerformCutover))
+            {
+                writer.WritePropertyName("performCutover"u8);
+                writer.WriteBooleanValue(PerformCutover.Value);
+            }
+            if (Optional.IsDefined(AvailabilityZone))
+            {
+                writer.WritePropertyName("availabilityZone"u8);
+                writer.WriteStringValue(AvailabilityZone.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -175,6 +211,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static SqlDatabaseData DeserializeSqlDatabaseData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlSku> sku = default;
             Optional<string> kind = default;
             Optional<string> managedBy = default;
@@ -223,10 +263,16 @@ namespace Azure.ResourceManager.Sql
             Optional<bool> isLedgerOn = default;
             Optional<bool> isInfraEncryptionEnabled = default;
             Optional<Guid> federatedClientId = default;
+            Optional<IDictionary<string, SqlDatabaseKey>> keys = default;
+            Optional<string> encryptionProtector = default;
+            Optional<SqlAlwaysEncryptedEnclaveType> preferredEnclaveType = default;
             Optional<ResourceIdentifier> sourceResourceId = default;
+            Optional<bool> manualCutover = default;
+            Optional<bool> performCutover = default;
+            Optional<SqlAvailabilityZoneType> availabilityZone = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -236,17 +282,17 @@ namespace Azure.ResourceManager.Sql
                     sku = SqlSku.DeserializeSqlSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("managedBy"))
+                if (property.NameEquals("managedBy"u8))
                 {
                     managedBy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -256,7 +302,7 @@ namespace Azure.ResourceManager.Sql
                     identity = DatabaseIdentity.DeserializeDatabaseIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -271,27 +317,27 @@ namespace Azure.ResourceManager.Sql
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -301,7 +347,7 @@ namespace Azure.ResourceManager.Sql
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -310,7 +356,7 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("createMode"))
+                        if (property0.NameEquals("createMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -320,12 +366,12 @@ namespace Azure.ResourceManager.Sql
                             createMode = new SqlDatabaseCreateMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("collation"))
+                        if (property0.NameEquals("collation"u8))
                         {
                             collation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("maxSizeBytes"))
+                        if (property0.NameEquals("maxSizeBytes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -335,7 +381,7 @@ namespace Azure.ResourceManager.Sql
                             maxSizeBytes = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("sampleName"))
+                        if (property0.NameEquals("sampleName"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -345,7 +391,7 @@ namespace Azure.ResourceManager.Sql
                             sampleName = new SampleSchemaName(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("elasticPoolId"))
+                        if (property0.NameEquals("elasticPoolId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -355,7 +401,7 @@ namespace Azure.ResourceManager.Sql
                             elasticPoolId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("sourceDatabaseId"))
+                        if (property0.NameEquals("sourceDatabaseId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -365,7 +411,7 @@ namespace Azure.ResourceManager.Sql
                             sourceDatabaseId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -375,7 +421,7 @@ namespace Azure.ResourceManager.Sql
                             status = new SqlDatabaseStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("databaseId"))
+                        if (property0.NameEquals("databaseId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -385,7 +431,7 @@ namespace Azure.ResourceManager.Sql
                             databaseId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("creationDate"))
+                        if (property0.NameEquals("creationDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -395,17 +441,17 @@ namespace Azure.ResourceManager.Sql
                             creationDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("currentServiceObjectiveName"))
+                        if (property0.NameEquals("currentServiceObjectiveName"u8))
                         {
                             currentServiceObjectiveName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("requestedServiceObjectiveName"))
+                        if (property0.NameEquals("requestedServiceObjectiveName"u8))
                         {
                             requestedServiceObjectiveName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("defaultSecondaryLocation"))
+                        if (property0.NameEquals("defaultSecondaryLocation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -415,7 +461,7 @@ namespace Azure.ResourceManager.Sql
                             defaultSecondaryLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("failoverGroupId"))
+                        if (property0.NameEquals("failoverGroupId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -425,7 +471,7 @@ namespace Azure.ResourceManager.Sql
                             failoverGroupId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("restorePointInTime"))
+                        if (property0.NameEquals("restorePointInTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -435,7 +481,7 @@ namespace Azure.ResourceManager.Sql
                             restorePointInTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("sourceDatabaseDeletionDate"))
+                        if (property0.NameEquals("sourceDatabaseDeletionDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -445,7 +491,7 @@ namespace Azure.ResourceManager.Sql
                             sourceDatabaseDeletionDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("recoveryServicesRecoveryPointId"))
+                        if (property0.NameEquals("recoveryServicesRecoveryPointId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -455,7 +501,7 @@ namespace Azure.ResourceManager.Sql
                             recoveryServicesRecoveryPointId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("longTermRetentionBackupResourceId"))
+                        if (property0.NameEquals("longTermRetentionBackupResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -465,7 +511,7 @@ namespace Azure.ResourceManager.Sql
                             longTermRetentionBackupResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("recoverableDatabaseId"))
+                        if (property0.NameEquals("recoverableDatabaseId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -475,7 +521,7 @@ namespace Azure.ResourceManager.Sql
                             recoverableDatabaseId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("restorableDroppedDatabaseId"))
+                        if (property0.NameEquals("restorableDroppedDatabaseId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -485,7 +531,7 @@ namespace Azure.ResourceManager.Sql
                             restorableDroppedDatabaseId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("catalogCollation"))
+                        if (property0.NameEquals("catalogCollation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -495,7 +541,7 @@ namespace Azure.ResourceManager.Sql
                             catalogCollation = new CatalogCollationType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("zoneRedundant"))
+                        if (property0.NameEquals("zoneRedundant"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -505,7 +551,7 @@ namespace Azure.ResourceManager.Sql
                             zoneRedundant = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("licenseType"))
+                        if (property0.NameEquals("licenseType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -515,7 +561,7 @@ namespace Azure.ResourceManager.Sql
                             licenseType = new DatabaseLicenseType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("maxLogSizeBytes"))
+                        if (property0.NameEquals("maxLogSizeBytes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -525,7 +571,7 @@ namespace Azure.ResourceManager.Sql
                             maxLogSizeBytes = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("earliestRestoreDate"))
+                        if (property0.NameEquals("earliestRestoreDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -535,7 +581,7 @@ namespace Azure.ResourceManager.Sql
                             earliestRestoreDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("readScale"))
+                        if (property0.NameEquals("readScale"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -545,7 +591,7 @@ namespace Azure.ResourceManager.Sql
                             readScale = new DatabaseReadScale(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("highAvailabilityReplicaCount"))
+                        if (property0.NameEquals("highAvailabilityReplicaCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -555,7 +601,7 @@ namespace Azure.ResourceManager.Sql
                             highAvailabilityReplicaCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("secondaryType"))
+                        if (property0.NameEquals("secondaryType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -565,7 +611,7 @@ namespace Azure.ResourceManager.Sql
                             secondaryType = new SecondaryType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("currentSku"))
+                        if (property0.NameEquals("currentSku"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -575,7 +621,7 @@ namespace Azure.ResourceManager.Sql
                             currentSku = SqlSku.DeserializeSqlSku(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("autoPauseDelay"))
+                        if (property0.NameEquals("autoPauseDelay"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -585,7 +631,7 @@ namespace Azure.ResourceManager.Sql
                             autoPauseDelay = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("currentBackupStorageRedundancy"))
+                        if (property0.NameEquals("currentBackupStorageRedundancy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -595,7 +641,7 @@ namespace Azure.ResourceManager.Sql
                             currentBackupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("requestedBackupStorageRedundancy"))
+                        if (property0.NameEquals("requestedBackupStorageRedundancy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -605,7 +651,7 @@ namespace Azure.ResourceManager.Sql
                             requestedBackupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("minCapacity"))
+                        if (property0.NameEquals("minCapacity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -615,7 +661,7 @@ namespace Azure.ResourceManager.Sql
                             minCapacity = property0.Value.GetDouble();
                             continue;
                         }
-                        if (property0.NameEquals("pausedDate"))
+                        if (property0.NameEquals("pausedDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -625,7 +671,7 @@ namespace Azure.ResourceManager.Sql
                             pausedDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("resumedDate"))
+                        if (property0.NameEquals("resumedDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -635,7 +681,7 @@ namespace Azure.ResourceManager.Sql
                             resumedDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("maintenanceConfigurationId"))
+                        if (property0.NameEquals("maintenanceConfigurationId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -645,7 +691,7 @@ namespace Azure.ResourceManager.Sql
                             maintenanceConfigurationId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("isLedgerOn"))
+                        if (property0.NameEquals("isLedgerOn"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -655,7 +701,7 @@ namespace Azure.ResourceManager.Sql
                             isLedgerOn = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("isInfraEncryptionEnabled"))
+                        if (property0.NameEquals("isInfraEncryptionEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -665,7 +711,7 @@ namespace Azure.ResourceManager.Sql
                             isInfraEncryptionEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("federatedClientId"))
+                        if (property0.NameEquals("federatedClientId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -675,7 +721,37 @@ namespace Azure.ResourceManager.Sql
                             federatedClientId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("sourceResourceId"))
+                        if (property0.NameEquals("keys"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            Dictionary<string, SqlDatabaseKey> dictionary = new Dictionary<string, SqlDatabaseKey>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, SqlDatabaseKey.DeserializeSqlDatabaseKey(property1.Value));
+                            }
+                            keys = dictionary;
+                            continue;
+                        }
+                        if (property0.NameEquals("encryptionProtector"u8))
+                        {
+                            encryptionProtector = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("preferredEnclaveType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            preferredEnclaveType = new SqlAlwaysEncryptedEnclaveType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("sourceResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -685,11 +761,41 @@ namespace Azure.ResourceManager.Sql
                             sourceResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("manualCutover"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            manualCutover = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("performCutover"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            performCutover = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("availabilityZone"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            availabilityZone = new SqlAvailabilityZoneType(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new SqlDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, kind.Value, managedBy.Value, identity.Value, Optional.ToNullable(createMode), collation.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(sampleName), elasticPoolId.Value, sourceDatabaseId.Value, Optional.ToNullable(status), Optional.ToNullable(databaseId), Optional.ToNullable(creationDate), currentServiceObjectiveName.Value, requestedServiceObjectiveName.Value, Optional.ToNullable(defaultSecondaryLocation), failoverGroupId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(sourceDatabaseDeletionDate), recoveryServicesRecoveryPointId.Value, longTermRetentionBackupResourceId.Value, recoverableDatabaseId.Value, restorableDroppedDatabaseId.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), Optional.ToNullable(maxLogSizeBytes), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(readScale), Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(secondaryType), currentSku.Value, Optional.ToNullable(autoPauseDelay), Optional.ToNullable(currentBackupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(minCapacity), Optional.ToNullable(pausedDate), Optional.ToNullable(resumedDate), maintenanceConfigurationId.Value, Optional.ToNullable(isLedgerOn), Optional.ToNullable(isInfraEncryptionEnabled), Optional.ToNullable(federatedClientId), sourceResourceId.Value);
+            return new SqlDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, kind.Value, managedBy.Value, identity.Value, Optional.ToNullable(createMode), collation.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(sampleName), elasticPoolId.Value, sourceDatabaseId.Value, Optional.ToNullable(status), Optional.ToNullable(databaseId), Optional.ToNullable(creationDate), currentServiceObjectiveName.Value, requestedServiceObjectiveName.Value, Optional.ToNullable(defaultSecondaryLocation), failoverGroupId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(sourceDatabaseDeletionDate), recoveryServicesRecoveryPointId.Value, longTermRetentionBackupResourceId.Value, recoverableDatabaseId.Value, restorableDroppedDatabaseId.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), Optional.ToNullable(maxLogSizeBytes), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(readScale), Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(secondaryType), currentSku.Value, Optional.ToNullable(autoPauseDelay), Optional.ToNullable(currentBackupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(minCapacity), Optional.ToNullable(pausedDate), Optional.ToNullable(resumedDate), maintenanceConfigurationId.Value, Optional.ToNullable(isLedgerOn), Optional.ToNullable(isInfraEncryptionEnabled), Optional.ToNullable(federatedClientId), Optional.ToDictionary(keys), encryptionProtector.Value, Optional.ToNullable(preferredEnclaveType), sourceResourceId.Value, Optional.ToNullable(manualCutover), Optional.ToNullable(performCutover), Optional.ToNullable(availabilityZone));
         }
     }
 }

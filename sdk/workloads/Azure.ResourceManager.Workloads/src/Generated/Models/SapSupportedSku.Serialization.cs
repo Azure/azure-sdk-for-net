@@ -14,17 +14,21 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static SapSupportedSku DeserializeSapSupportedSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vmSku = default;
             Optional<bool> isAppServerCertified = default;
             Optional<bool> isDatabaseCertified = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vmSku"))
+                if (property.NameEquals("vmSku"u8))
                 {
                     vmSku = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isAppServerCertified"))
+                if (property.NameEquals("isAppServerCertified"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     isAppServerCertified = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isDatabaseCertified"))
+                if (property.NameEquals("isDatabaseCertified"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

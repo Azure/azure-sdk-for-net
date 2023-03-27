@@ -14,12 +14,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static RollbackStatusInfo DeserializeRollbackStatusInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> successfullyRolledbackInstanceCount = default;
             Optional<int> failedRolledbackInstanceCount = default;
             Optional<ComputeApiError> rollbackError = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("successfullyRolledbackInstanceCount"))
+                if (property.NameEquals("successfullyRolledbackInstanceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
                     successfullyRolledbackInstanceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("failedRolledbackInstanceCount"))
+                if (property.NameEquals("failedRolledbackInstanceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
                     failedRolledbackInstanceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rollbackError"))
+                if (property.NameEquals("rollbackError"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

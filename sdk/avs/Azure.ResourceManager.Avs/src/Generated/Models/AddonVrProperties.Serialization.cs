@@ -15,31 +15,35 @@ namespace Azure.ResourceManager.Avs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("vrsCount");
+            writer.WritePropertyName("vrsCount"u8);
             writer.WriteNumberValue(VrsCount);
-            writer.WritePropertyName("addonType");
+            writer.WritePropertyName("addonType"u8);
             writer.WriteStringValue(AddonType.ToString());
             writer.WriteEndObject();
         }
 
         internal static AddonVrProperties DeserializeAddonVrProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int vrsCount = default;
             AddonType addonType = default;
             Optional<AddonProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vrsCount"))
+                if (property.NameEquals("vrsCount"u8))
                 {
                     vrsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("addonType"))
+                if (property.NameEquals("addonType"u8))
                 {
                     addonType = new AddonType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

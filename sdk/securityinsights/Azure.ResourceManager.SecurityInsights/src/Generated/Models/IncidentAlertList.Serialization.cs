@@ -15,10 +15,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static IncidentAlertList DeserializeIncidentAlertList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SecurityInsightsAlert> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<SecurityInsightsAlert> array = new List<SecurityInsightsAlert>();
                     foreach (var item in property.Value.EnumerateArray())

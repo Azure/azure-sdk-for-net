@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningDiagnoseResultValue DeserializeMachineLearningDiagnoseResultValue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MachineLearningDiagnoseResult>> userDefinedRouteResults = default;
             Optional<IReadOnlyList<MachineLearningDiagnoseResult>> networkSecurityRuleResults = default;
             Optional<IReadOnlyList<MachineLearningDiagnoseResult>> resourceLockResults = default;
@@ -26,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IReadOnlyList<MachineLearningDiagnoseResult>> otherResults = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userDefinedRouteResults"))
+                if (property.NameEquals("userDefinedRouteResults"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     userDefinedRouteResults = array;
                     continue;
                 }
-                if (property.NameEquals("networkSecurityRuleResults"))
+                if (property.NameEquals("networkSecurityRuleResults"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     networkSecurityRuleResults = array;
                     continue;
                 }
-                if (property.NameEquals("resourceLockResults"))
+                if (property.NameEquals("resourceLockResults"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     resourceLockResults = array;
                     continue;
                 }
-                if (property.NameEquals("dnsResolutionResults"))
+                if (property.NameEquals("dnsResolutionResults"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     dnsResolutionResults = array;
                     continue;
                 }
-                if (property.NameEquals("storageAccountResults"))
+                if (property.NameEquals("storageAccountResults"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     storageAccountResults = array;
                     continue;
                 }
-                if (property.NameEquals("keyVaultResults"))
+                if (property.NameEquals("keyVaultResults"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     keyVaultResults = array;
                     continue;
                 }
-                if (property.NameEquals("containerRegistryResults"))
+                if (property.NameEquals("containerRegistryResults"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -131,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     containerRegistryResults = array;
                     continue;
                 }
-                if (property.NameEquals("applicationInsightsResults"))
+                if (property.NameEquals("applicationInsightsResults"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -146,7 +150,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     applicationInsightsResults = array;
                     continue;
                 }
-                if (property.NameEquals("otherResults"))
+                if (property.NameEquals("otherResults"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

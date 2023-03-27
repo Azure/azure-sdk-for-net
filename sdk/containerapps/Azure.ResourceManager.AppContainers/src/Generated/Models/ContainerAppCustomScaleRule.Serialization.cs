@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomScaleRuleType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(CustomScaleRuleType);
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
                 foreach (var item in Metadata)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             if (Optional.IsCollectionDefined(Auth))
             {
-                writer.WritePropertyName("auth");
+                writer.WritePropertyName("auth"u8);
                 writer.WriteStartArray();
                 foreach (var item in Auth)
                 {
@@ -47,17 +47,21 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppCustomScaleRule DeserializeContainerAppCustomScaleRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<IDictionary<string, string>> metadata = default;
             Optional<IList<ContainerAppScaleRuleAuth>> auth = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     metadata = dictionary;
                     continue;
                 }
-                if (property.NameEquals("auth"))
+                if (property.NameEquals("auth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

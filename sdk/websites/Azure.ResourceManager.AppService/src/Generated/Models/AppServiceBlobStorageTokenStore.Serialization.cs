@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SasUrlSettingName))
             {
-                writer.WritePropertyName("sasUrlSettingName");
+                writer.WritePropertyName("sasUrlSettingName"u8);
                 writer.WriteStringValue(SasUrlSettingName);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceBlobStorageTokenStore DeserializeAppServiceBlobStorageTokenStore(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sasUrlSettingName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sasUrlSettingName"))
+                if (property.NameEquals("sasUrlSettingName"u8))
                 {
                     sasUrlSettingName = property.Value.GetString();
                     continue;

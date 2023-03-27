@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CertificateUri))
             {
-                writer.WritePropertyName("certificateUrl");
+                writer.WritePropertyName("certificateUrl"u8);
                 writer.WriteStringValue(CertificateUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -26,10 +26,14 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static CloudServiceVaultCertificate DeserializeCloudServiceVaultCertificate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> certificateUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("certificateUrl"))
+                if (property.NameEquals("certificateUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Capacity))
             {
-                writer.WritePropertyName("capacity");
+                writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
             if (Optional.IsDefined(Recurrence))
             {
-                writer.WritePropertyName("recurrence");
+                writer.WritePropertyName("recurrence"u8);
                 writer.WriteObjectValue(Recurrence);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightAutoScaleConfiguration DeserializeHDInsightAutoScaleConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HDInsightAutoScaleCapacity> capacity = default;
             Optional<HDInsightAutoScaleRecurrence> recurrence = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("capacity"))
+                if (property.NameEquals("capacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     capacity = HDInsightAutoScaleCapacity.DeserializeHDInsightAutoScaleCapacity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("recurrence"))
+                if (property.NameEquals("recurrence"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

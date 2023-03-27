@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static AutomationRunbookTaskDetails DeserializeAutomationRunbookTaskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> cloudServiceName = default;
             Optional<string> subscriptionId = default;
@@ -26,47 +30,47 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cloudServiceName"))
+                if (property.NameEquals("cloudServiceName"u8))
                 {
                     cloudServiceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accountName"))
+                if (property.NameEquals("accountName"u8))
                 {
                     accountName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runbookId"))
+                if (property.NameEquals("runbookId"u8))
                 {
                     runbookId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runbookName"))
+                if (property.NameEquals("runbookName"u8))
                 {
                     runbookName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobId"))
+                if (property.NameEquals("jobId"u8))
                 {
                     jobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobOutput"))
+                if (property.NameEquals("jobOutput"u8))
                 {
                     jobOutput = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isPrimarySideScript"))
+                if (property.NameEquals("isPrimarySideScript"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     isPrimarySideScript = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

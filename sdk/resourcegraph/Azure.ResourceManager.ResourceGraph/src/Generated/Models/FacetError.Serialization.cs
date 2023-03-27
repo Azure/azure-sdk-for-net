@@ -15,27 +15,31 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     {
         internal static FacetError DeserializeFacetError(JsonElement element)
         {
-            IReadOnlyList<ErrorDetails> errors = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<FacetErrorDetails> errors = default;
             string expression = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
-                    List<ErrorDetails> array = new List<ErrorDetails>();
+                    List<FacetErrorDetails> array = new List<FacetErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorDetails.DeserializeErrorDetails(item));
+                        array.Add(FacetErrorDetails.DeserializeFacetErrorDetails(item));
                     }
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("expression"))
+                if (property.NameEquals("expression"u8))
                 {
                     expression = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultType"))
+                if (property.NameEquals("resultType"u8))
                 {
                     resultType = property.Value.GetString();
                     continue;

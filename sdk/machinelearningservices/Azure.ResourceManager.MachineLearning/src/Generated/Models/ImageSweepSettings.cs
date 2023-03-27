@@ -7,17 +7,11 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Model sweeping and hyperparameter sweeping related settings.
-    /// Serialized Name: ImageSweepSettings
-    /// </summary>
+    /// <summary> Model sweeping and hyperparameter sweeping related settings. </summary>
     public partial class ImageSweepSettings
     {
         /// <summary> Initializes a new instance of ImageSweepSettings. </summary>
-        /// <param name="samplingAlgorithm">
-        /// [Required] Type of the hyperparameter sampling algorithms.
-        /// Serialized Name: ImageSweepSettings.samplingAlgorithm
-        /// </param>
+        /// <param name="samplingAlgorithm"> [Required] Type of the hyperparameter sampling algorithms. </param>
         public ImageSweepSettings(SamplingAlgorithmType samplingAlgorithm)
         {
             SamplingAlgorithm = samplingAlgorithm;
@@ -26,14 +20,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of ImageSweepSettings. </summary>
         /// <param name="earlyTermination">
         /// Type of early termination policy.
-        /// Serialized Name: ImageSweepSettings.earlyTermination
         /// Please note <see cref="MachineLearningEarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BanditPolicy"/>, <see cref="MedianStoppingPolicy"/> and <see cref="TruncationSelectionPolicy"/>.
         /// </param>
-        /// <param name="samplingAlgorithm">
-        /// [Required] Type of the hyperparameter sampling algorithms.
-        /// Serialized Name: ImageSweepSettings.samplingAlgorithm
-        /// </param>
+        /// <param name="samplingAlgorithm"> [Required] Type of the hyperparameter sampling algorithms. </param>
         internal ImageSweepSettings(MachineLearningEarlyTerminationPolicy earlyTermination, SamplingAlgorithmType samplingAlgorithm)
         {
             EarlyTermination = earlyTermination;
@@ -42,15 +32,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary>
         /// Type of early termination policy.
-        /// Serialized Name: ImageSweepSettings.earlyTermination
         /// Please note <see cref="MachineLearningEarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BanditPolicy"/>, <see cref="MedianStoppingPolicy"/> and <see cref="TruncationSelectionPolicy"/>.
         /// </summary>
         public MachineLearningEarlyTerminationPolicy EarlyTermination { get; set; }
-        /// <summary>
-        /// [Required] Type of the hyperparameter sampling algorithms.
-        /// Serialized Name: ImageSweepSettings.samplingAlgorithm
-        /// </summary>
+        /// <summary> [Required] Type of the hyperparameter sampling algorithms. </summary>
         public SamplingAlgorithmType SamplingAlgorithm { get; set; }
     }
 }

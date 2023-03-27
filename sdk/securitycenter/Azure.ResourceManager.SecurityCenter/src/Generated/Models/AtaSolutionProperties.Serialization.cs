@@ -20,22 +20,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LastEventReceived))
             {
-                writer.WritePropertyName("lastEventReceived");
+                writer.WritePropertyName("lastEventReceived"u8);
                 writer.WriteStringValue(LastEventReceived);
             }
             if (Optional.IsDefined(DeviceVendor))
             {
-                writer.WritePropertyName("deviceVendor");
+                writer.WritePropertyName("deviceVendor"u8);
                 writer.WriteStringValue(DeviceVendor);
             }
             if (Optional.IsDefined(DeviceType))
             {
-                writer.WritePropertyName("deviceType");
+                writer.WritePropertyName("deviceType"u8);
                 writer.WriteStringValue(DeviceType);
             }
             if (Optional.IsDefined(Workspace))
             {
-                writer.WritePropertyName("workspace");
+                writer.WritePropertyName("workspace"u8);
                 JsonSerializer.Serialize(writer, Workspace);
             }
             foreach (var item in AdditionalProperties)
@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AtaSolutionProperties DeserializeAtaSolutionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> lastEventReceived = default;
             Optional<string> deviceVendor = default;
             Optional<string> deviceType = default;
@@ -60,22 +64,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastEventReceived"))
+                if (property.NameEquals("lastEventReceived"u8))
                 {
                     lastEventReceived = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deviceVendor"))
+                if (property.NameEquals("deviceVendor"u8))
                 {
                     deviceVendor = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deviceType"))
+                if (property.NameEquals("deviceType"u8))
                 {
                     deviceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workspace"))
+                if (property.NameEquals("workspace"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

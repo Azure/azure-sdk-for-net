@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Defaults != null)
                 {
-                    writer.WritePropertyName("defaults");
+                    writer.WritePropertyName("defaults"u8);
                     writer.WriteObjectValue(Defaults);
                 }
                 else
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("defaults");
                 }
             }
-            writer.WritePropertyName("authMode");
+            writer.WritePropertyName("authMode"u8);
             writer.WriteStringValue(AuthMode.ToString());
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
-                    writer.WritePropertyName("description");
+                    writer.WritePropertyName("description"u8);
                     writer.WriteStringValue(Description);
                 }
                 else
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Keys != null)
                 {
-                    writer.WritePropertyName("keys");
+                    writer.WritePropertyName("keys"u8);
                     writer.WriteObjectValue(Keys);
                 }
                 else
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties != null)
                 {
-                    writer.WritePropertyName("properties");
+                    writer.WritePropertyName("properties"u8);
                     writer.WriteStartObject();
                     foreach (var item in Properties)
                     {
@@ -78,6 +78,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningBatchEndpointProperties DeserializeMachineLearningBatchEndpointProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BatchEndpointDefaults> defaults = default;
             Optional<MachineLearningEndpointProvisioningState> provisioningState = default;
             MachineLearningEndpointAuthMode authMode = default;
@@ -88,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<Uri> swaggerUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("defaults"))
+                if (property.NameEquals("defaults"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     defaults = BatchEndpointDefaults.DeserializeBatchEndpointDefaults(property.Value);
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,12 +112,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     provisioningState = new MachineLearningEndpointProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("authMode"))
+                if (property.NameEquals("authMode"u8))
                 {
                     authMode = new MachineLearningEndpointAuthMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keys"))
+                if (property.NameEquals("keys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     keys = MachineLearningEndpointAuthKeys.DeserializeMachineLearningEndpointAuthKeys(property.Value);
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -143,19 +147,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("scoringUri"))
+                if (property.NameEquals("scoringUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -165,7 +162,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     scoringUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("swaggerUri"))
+                if (property.NameEquals("swaggerUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

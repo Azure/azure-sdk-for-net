@@ -16,7 +16,7 @@ namespace Azure.Maps.Search.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("coordinates");
+            writer.WritePropertyName("coordinates"u8);
             writer.WriteStartArray();
             foreach (var item in Coordinates)
             {
@@ -28,10 +28,14 @@ namespace Azure.Maps.Search.Models
 
         internal static GeoJsonPointData DeserializeGeoJsonPointData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<double> coordinates = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("coordinates"))
+                if (property.NameEquals("coordinates"u8))
                 {
                     List<double> array = new List<double>();
                     foreach (var item in property.Value.EnumerateArray())

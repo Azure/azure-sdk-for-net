@@ -15,6 +15,10 @@ namespace Azure.Communication.CallAutomation
     {
         internal static RecordingStateChanged DeserializeRecordingStateChanged(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
@@ -23,27 +27,27 @@ namespace Azure.Communication.CallAutomation
             Optional<DateTimeOffset> startDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("callConnectionId"))
+                if (property.NameEquals("callConnectionId"u8))
                 {
                     callConnectionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverCallId"))
+                if (property.NameEquals("serverCallId"u8))
                 {
                     serverCallId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("correlationId"))
+                if (property.NameEquals("correlationId"u8))
                 {
                     correlationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recordingId"))
+                if (property.NameEquals("recordingId"u8))
                 {
                     recordingId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.Communication.CallAutomation
                     state = new RecordingState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("startDateTime"))
+                if (property.NameEquals("startDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

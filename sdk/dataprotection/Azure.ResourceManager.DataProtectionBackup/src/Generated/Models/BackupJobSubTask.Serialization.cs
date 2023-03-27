@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal static BackupJobSubTask DeserializeBackupJobSubTask(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyDictionary<string, string>> additionalDetails = default;
             int taskId = default;
             string taskName = default;
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string taskStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("additionalDetails"))
+                if (property.NameEquals("additionalDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,22 +41,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalDetails = dictionary;
                     continue;
                 }
-                if (property.NameEquals("taskId"))
+                if (property.NameEquals("taskId"u8))
                 {
                     taskId = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("taskName"))
+                if (property.NameEquals("taskName"u8))
                 {
                     taskName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("taskProgress"))
+                if (property.NameEquals("taskProgress"u8))
                 {
                     taskProgress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("taskStatus"))
+                if (property.NameEquals("taskStatus"u8))
                 {
                     taskStatus = property.Value.GetString();
                     continue;

@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("linkedServiceName");
+            writer.WritePropertyName("linkedServiceName"u8);
             writer.WriteObjectValue(LinkedServiceName);
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Path);
 #else
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(LogLevel))
             {
-                writer.WritePropertyName("logLevel");
+                writer.WritePropertyName("logLevel"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(LogLevel);
 #else
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(EnableReliableLogging))
             {
-                writer.WritePropertyName("enableReliableLogging");
+                writer.WritePropertyName("enableReliableLogging"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(EnableReliableLogging);
 #else
@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static LogStorageSettings DeserializeLogStorageSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FactoryLinkedServiceReference linkedServiceName = default;
             Optional<BinaryData> path = default;
             Optional<BinaryData> logLevel = default;
@@ -68,12 +72,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linkedServiceName"))
+                if (property.NameEquals("linkedServiceName"u8))
                 {
                     linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     path = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("logLevel"))
+                if (property.NameEquals("logLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +97,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     logLevel = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("enableReliableLogging"))
+                if (property.NameEquals("enableReliableLogging"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

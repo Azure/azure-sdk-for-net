@@ -15,15 +15,19 @@ namespace Azure.ResourceManager.Kusto.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("clusterResourceId");
+            writer.WritePropertyName("clusterResourceId"u8);
             writer.WriteStringValue(ClusterResourceId);
-            writer.WritePropertyName("attachedDatabaseConfigurationName");
+            writer.WritePropertyName("attachedDatabaseConfigurationName"u8);
             writer.WriteStringValue(AttachedDatabaseConfigurationName);
             writer.WriteEndObject();
         }
 
         internal static KustoFollowerDatabaseDefinition DeserializeKustoFollowerDatabaseDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier clusterResourceId = default;
             string attachedDatabaseConfigurationName = default;
             Optional<string> databaseName = default;
@@ -31,22 +35,22 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<KustoDatabaseShareOrigin> databaseShareOrigin = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clusterResourceId"))
+                if (property.NameEquals("clusterResourceId"u8))
                 {
                     clusterResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("attachedDatabaseConfigurationName"))
+                if (property.NameEquals("attachedDatabaseConfigurationName"u8))
                 {
                     attachedDatabaseConfigurationName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databaseName"))
+                if (property.NameEquals("databaseName"u8))
                 {
                     databaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tableLevelSharingProperties"))
+                if (property.NameEquals("tableLevelSharingProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     tableLevelSharingProperties = KustoDatabaseTableLevelSharingProperties.DeserializeKustoDatabaseTableLevelSharingProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("databaseShareOrigin"))
+                if (property.NameEquals("databaseShareOrigin"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

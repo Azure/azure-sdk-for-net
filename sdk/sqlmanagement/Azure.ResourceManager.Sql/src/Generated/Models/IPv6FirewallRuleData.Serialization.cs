@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.Sql
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StartIPv6Address))
             {
-                writer.WritePropertyName("startIPv6Address");
+                writer.WritePropertyName("startIPv6Address"u8);
                 writer.WriteStringValue(StartIPv6Address);
             }
             if (Optional.IsDefined(EndIPv6Address))
             {
-                writer.WritePropertyName("endIPv6Address");
+                writer.WritePropertyName("endIPv6Address"u8);
                 writer.WriteStringValue(EndIPv6Address);
             }
             writer.WriteEndObject();
@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static IPv6FirewallRuleData DeserializeIPv6FirewallRuleData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.Sql
             Optional<string> endIPv6Address = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,12 +59,12 @@ namespace Azure.ResourceManager.Sql
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +74,7 @@ namespace Azure.ResourceManager.Sql
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,12 +83,12 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("startIPv6Address"))
+                        if (property0.NameEquals("startIPv6Address"u8))
                         {
                             startIPv6Address = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("endIPv6Address"))
+                        if (property0.NameEquals("endIPv6Address"u8))
                         {
                             endIPv6Address = property0.Value.GetString();
                             continue;

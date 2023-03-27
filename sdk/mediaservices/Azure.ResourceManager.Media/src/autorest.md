@@ -5,10 +5,12 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
+generate-model-factory: false
 csharp: true
 library-name: Media
 namespace: Azure.ResourceManager.Media
-require: https://github.com/Azure/azure-rest-api-specs/blob/aefbcc5fb18a3b33f401394ebeae01df0733c830/specification/mediaservices/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/daeb320057bd56a88379c377d934150ef48d143f/specification/mediaservices/resource-manager/readme.md
+tag: package-2023-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -131,6 +133,7 @@ rename-mapping:
   EntropyMode: LayerEntropyMode
   EntityNameAvailabilityCheckOutput: MediaServicesNameAvailabilityResult
   EntityNameAvailabilityCheckOutput.nameAvailable: IsNameAvailable
+  Fade: FadeOptions
   Filters: FilteringOperations
   Format: MediaFormatBase
   GetEdgePoliciesContent: EdgePoliciesRequestContent
@@ -222,6 +225,7 @@ rename-mapping:
   Video: MediaVideoBase
   VideoLayer.adaptiveBFrame: UseAdaptiveBFrame
   Visibility: PlayerVisibility
+  MinimumTlsVersion: MediaServicesMinimumTlsVersion
 
 directive:
   - remove-operation: OperationResults_Get

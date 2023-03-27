@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("patchSettings");
+            writer.WritePropertyName("patchSettings"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AssessmentMode))
             {
-                writer.WritePropertyName("assessmentMode");
+                writer.WritePropertyName("assessmentMode"u8);
                 writer.WriteStringValue(AssessmentMode.Value.ToString());
             }
             if (Optional.IsDefined(PatchMode))
             {
-                writer.WritePropertyName("patchMode");
+                writer.WritePropertyName("patchMode"u8);
                 writer.WriteStringValue(PatchMode.Value.ToString());
             }
             writer.WriteEndObject();
@@ -33,11 +33,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static OSProfileWindowsConfiguration DeserializeOSProfileWindowsConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AssessmentModeType> assessmentMode = default;
             Optional<PatchModeType> patchMode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("patchSettings"))
+                if (property.NameEquals("patchSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("assessmentMode"))
+                        if (property0.NameEquals("assessmentMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             assessmentMode = new AssessmentModeType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("patchMode"))
+                        if (property0.NameEquals("patchMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

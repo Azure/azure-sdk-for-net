@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MinNodeCount))
             {
-                writer.WritePropertyName("minNodeCount");
+                writer.WritePropertyName("minNodeCount"u8);
                 writer.WriteNumberValue(MinNodeCount.Value);
             }
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(MaxNodeCount))
             {
-                writer.WritePropertyName("maxNodeCount");
+                writer.WritePropertyName("maxNodeCount"u8);
                 writer.WriteNumberValue(MaxNodeCount.Value);
             }
             writer.WriteEndObject();
@@ -35,12 +35,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningAutoScaleProperties DeserializeMachineLearningAutoScaleProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> minNodeCount = default;
             Optional<bool> enabled = default;
             Optional<int> maxNodeCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minNodeCount"))
+                if (property.NameEquals("minNodeCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     minNodeCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("maxNodeCount"))
+                if (property.NameEquals("maxNodeCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static ThreeTierRecommendationResult DeserializeThreeTierRecommendationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dbVmSku = default;
             Optional<long> databaseInstanceCount = default;
             Optional<string> centralServerVmSku = default;
@@ -23,12 +27,12 @@ namespace Azure.ResourceManager.Workloads.Models
             SapDeploymentType deploymentType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dbVmSku"))
+                if (property.NameEquals("dbVmSku"u8))
                 {
                     dbVmSku = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databaseInstanceCount"))
+                if (property.NameEquals("databaseInstanceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,12 +42,12 @@ namespace Azure.ResourceManager.Workloads.Models
                     databaseInstanceCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("centralServerVmSku"))
+                if (property.NameEquals("centralServerVmSku"u8))
                 {
                     centralServerVmSku = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("centralServerInstanceCount"))
+                if (property.NameEquals("centralServerInstanceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,12 +57,12 @@ namespace Azure.ResourceManager.Workloads.Models
                     centralServerInstanceCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("applicationServerVmSku"))
+                if (property.NameEquals("applicationServerVmSku"u8))
                 {
                     applicationServerVmSku = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("applicationServerInstanceCount"))
+                if (property.NameEquals("applicationServerInstanceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     applicationServerInstanceCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("deploymentType"))
+                if (property.NameEquals("deploymentType"u8))
                 {
                     deploymentType = new SapDeploymentType(property.Value.GetString());
                     continue;

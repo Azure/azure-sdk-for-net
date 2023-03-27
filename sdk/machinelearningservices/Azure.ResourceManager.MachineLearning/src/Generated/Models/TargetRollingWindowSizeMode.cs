@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Target rolling windows size mode.
-    /// Serialized Name: TargetRollingWindowSizeMode
-    /// </summary>
+    /// <summary> Target rolling windows size mode. </summary>
     internal readonly partial struct TargetRollingWindowSizeMode : IEquatable<TargetRollingWindowSizeMode>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string AutoValue = "Auto";
         private const string CustomValue = "Custom";
 
-        /// <summary>
-        /// Determine rolling windows size automatically.
-        /// Serialized Name: TargetRollingWindowSizeMode.Auto
-        /// </summary>
+        /// <summary> Determine rolling windows size automatically. </summary>
         public static TargetRollingWindowSizeMode Auto { get; } = new TargetRollingWindowSizeMode(AutoValue);
-        /// <summary>
-        /// Use the specified rolling window size.
-        /// Serialized Name: TargetRollingWindowSizeMode.Custom
-        /// </summary>
+        /// <summary> Use the specified rolling window size. </summary>
         public static TargetRollingWindowSizeMode Custom { get; } = new TargetRollingWindowSizeMode(CustomValue);
         /// <summary> Determines if two <see cref="TargetRollingWindowSizeMode"/> values are the same. </summary>
         public static bool operator ==(TargetRollingWindowSizeMode left, TargetRollingWindowSizeMode right) => left.Equals(right);

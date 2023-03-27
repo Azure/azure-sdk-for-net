@@ -17,26 +17,30 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ParentHierarchyId))
             {
-                writer.WritePropertyName("parentHierarchyId");
+                writer.WritePropertyName("parentHierarchyId"u8);
                 writer.WriteStringValue(ParentHierarchyId);
             }
-            writer.WritePropertyName("organizationMembershipType");
+            writer.WritePropertyName("organizationMembershipType"u8);
             writer.WriteStringValue(OrganizationMembershipType.ToString());
             writer.WriteEndObject();
         }
 
         internal static AwsOrganizationalDataMember DeserializeAwsOrganizationalDataMember(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> parentHierarchyId = default;
             OrganizationMembershipType organizationMembershipType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("parentHierarchyId"))
+                if (property.NameEquals("parentHierarchyId"u8))
                 {
                     parentHierarchyId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("organizationMembershipType"))
+                if (property.NameEquals("organizationMembershipType"u8))
                 {
                     organizationMembershipType = new OrganizationMembershipType(property.Value.GetString());
                     continue;

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("counters");
+            writer.WritePropertyName("counters"u8);
             writer.WriteStartArray();
             foreach (var item in Counters)
             {
@@ -28,10 +28,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataBoxEdgeMetricCounterSet DeserializeDataBoxEdgeMetricCounterSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<DataBoxEdgeMetricCounter> counters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("counters"))
+                if (property.NameEquals("counters"u8))
                 {
                     List<DataBoxEdgeMetricCounter> array = new List<DataBoxEdgeMetricCounter>();
                     foreach (var item in property.Value.EnumerateArray())

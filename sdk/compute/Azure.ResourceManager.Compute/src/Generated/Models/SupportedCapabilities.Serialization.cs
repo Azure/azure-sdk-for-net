@@ -15,14 +15,19 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(DiskControllerTypes))
+            {
+                writer.WritePropertyName("diskControllerTypes"u8);
+                writer.WriteStringValue(DiskControllerTypes);
+            }
             if (Optional.IsDefined(AcceleratedNetwork))
             {
-                writer.WritePropertyName("acceleratedNetwork");
+                writer.WritePropertyName("acceleratedNetwork"u8);
                 writer.WriteBooleanValue(AcceleratedNetwork.Value);
             }
             if (Optional.IsDefined(Architecture))
             {
-                writer.WritePropertyName("architecture");
+                writer.WritePropertyName("architecture"u8);
                 writer.WriteStringValue(Architecture.Value.ToString());
             }
             writer.WriteEndObject();
@@ -30,11 +35,21 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static SupportedCapabilities DeserializeSupportedCapabilities(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> diskControllerTypes = default;
             Optional<bool> acceleratedNetwork = default;
             Optional<ArchitectureType> architecture = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("acceleratedNetwork"))
+                if (property.NameEquals("diskControllerTypes"u8))
+                {
+                    diskControllerTypes = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("acceleratedNetwork"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
                     acceleratedNetwork = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("architecture"))
+                if (property.NameEquals("architecture"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new SupportedCapabilities(Optional.ToNullable(acceleratedNetwork), Optional.ToNullable(architecture));
+            return new SupportedCapabilities(diskControllerTypes.Value, Optional.ToNullable(acceleratedNetwork), Optional.ToNullable(architecture));
         }
     }
 }

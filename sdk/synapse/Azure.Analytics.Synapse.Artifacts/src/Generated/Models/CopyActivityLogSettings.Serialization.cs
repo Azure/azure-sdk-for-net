@@ -20,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LogLevel))
             {
-                writer.WritePropertyName("logLevel");
+                writer.WritePropertyName("logLevel"u8);
                 writer.WriteObjectValue(LogLevel);
             }
             if (Optional.IsDefined(EnableReliableLogging))
             {
-                writer.WritePropertyName("enableReliableLogging");
+                writer.WritePropertyName("enableReliableLogging"u8);
                 writer.WriteObjectValue(EnableReliableLogging);
             }
             writer.WriteEndObject();
@@ -33,11 +33,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static CopyActivityLogSettings DeserializeCopyActivityLogSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> logLevel = default;
             Optional<object> enableReliableLogging = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("logLevel"))
+                if (property.NameEquals("logLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     logLevel = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("enableReliableLogging"))
+                if (property.NameEquals("enableReliableLogging"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

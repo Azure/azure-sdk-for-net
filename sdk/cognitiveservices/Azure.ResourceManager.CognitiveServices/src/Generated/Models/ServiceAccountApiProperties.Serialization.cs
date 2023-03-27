@@ -19,52 +19,52 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(QnaRuntimeEndpoint))
             {
-                writer.WritePropertyName("qnaRuntimeEndpoint");
+                writer.WritePropertyName("qnaRuntimeEndpoint"u8);
                 writer.WriteStringValue(QnaRuntimeEndpoint);
             }
             if (Optional.IsDefined(QnaAzureSearchEndpointKey))
             {
-                writer.WritePropertyName("qnaAzureSearchEndpointKey");
+                writer.WritePropertyName("qnaAzureSearchEndpointKey"u8);
                 writer.WriteStringValue(QnaAzureSearchEndpointKey);
             }
             if (Optional.IsDefined(QnaAzureSearchEndpointId))
             {
-                writer.WritePropertyName("qnaAzureSearchEndpointId");
+                writer.WritePropertyName("qnaAzureSearchEndpointId"u8);
                 writer.WriteStringValue(QnaAzureSearchEndpointId);
             }
             if (Optional.IsDefined(EnableStatistics))
             {
-                writer.WritePropertyName("statisticsEnabled");
+                writer.WritePropertyName("statisticsEnabled"u8);
                 writer.WriteBooleanValue(EnableStatistics.Value);
             }
             if (Optional.IsDefined(EventHubConnectionString))
             {
-                writer.WritePropertyName("eventHubConnectionString");
+                writer.WritePropertyName("eventHubConnectionString"u8);
                 writer.WriteStringValue(EventHubConnectionString);
             }
             if (Optional.IsDefined(StorageAccountConnectionString))
             {
-                writer.WritePropertyName("storageAccountConnectionString");
+                writer.WritePropertyName("storageAccountConnectionString"u8);
                 writer.WriteStringValue(StorageAccountConnectionString);
             }
             if (Optional.IsDefined(AadClientId))
             {
-                writer.WritePropertyName("aadClientId");
+                writer.WritePropertyName("aadClientId"u8);
                 writer.WriteStringValue(AadClientId.Value);
             }
             if (Optional.IsDefined(AadTenantId))
             {
-                writer.WritePropertyName("aadTenantId");
+                writer.WritePropertyName("aadTenantId"u8);
                 writer.WriteStringValue(AadTenantId.Value);
             }
             if (Optional.IsDefined(SuperUser))
             {
-                writer.WritePropertyName("superUser");
+                writer.WritePropertyName("superUser"u8);
                 writer.WriteStringValue(SuperUser);
             }
             if (Optional.IsDefined(WebsiteName))
             {
-                writer.WritePropertyName("websiteName");
+                writer.WritePropertyName("websiteName"u8);
                 writer.WriteStringValue(WebsiteName);
             }
             foreach (var item in AdditionalProperties)
@@ -81,6 +81,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static ServiceAccountApiProperties DeserializeServiceAccountApiProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> qnaRuntimeEndpoint = default;
             Optional<string> qnaAzureSearchEndpointKey = default;
             Optional<ResourceIdentifier> qnaAzureSearchEndpointId = default;
@@ -95,17 +99,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("qnaRuntimeEndpoint"))
+                if (property.NameEquals("qnaRuntimeEndpoint"u8))
                 {
                     qnaRuntimeEndpoint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("qnaAzureSearchEndpointKey"))
+                if (property.NameEquals("qnaAzureSearchEndpointKey"u8))
                 {
                     qnaAzureSearchEndpointKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("qnaAzureSearchEndpointId"))
+                if (property.NameEquals("qnaAzureSearchEndpointId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -115,7 +119,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     qnaAzureSearchEndpointId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("statisticsEnabled"))
+                if (property.NameEquals("statisticsEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -125,17 +129,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     statisticsEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("eventHubConnectionString"))
+                if (property.NameEquals("eventHubConnectionString"u8))
                 {
                     eventHubConnectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageAccountConnectionString"))
+                if (property.NameEquals("storageAccountConnectionString"u8))
                 {
                     storageAccountConnectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("aadClientId"))
+                if (property.NameEquals("aadClientId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -145,7 +149,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     aadClientId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("aadTenantId"))
+                if (property.NameEquals("aadTenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -155,12 +159,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     aadTenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("superUser"))
+                if (property.NameEquals("superUser"u8))
                 {
                     superUser = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("websiteName"))
+                if (property.NameEquals("websiteName"u8))
                 {
                     websiteName = property.Value.GetString();
                     continue;

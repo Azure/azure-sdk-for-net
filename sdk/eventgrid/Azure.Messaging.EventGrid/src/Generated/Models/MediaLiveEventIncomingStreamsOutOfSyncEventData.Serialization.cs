@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaLiveEventIncomingStreamsOutOfSyncEventData DeserializeMediaLiveEventIncomingStreamsOutOfSyncEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> minLastTimestamp = default;
             Optional<string> typeOfStreamWithMinLastTimestamp = default;
             Optional<string> maxLastTimestamp = default;
@@ -25,32 +29,32 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> timescaleOfMaxLastTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minLastTimestamp"))
+                if (property.NameEquals("minLastTimestamp"u8))
                 {
                     minLastTimestamp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("typeOfStreamWithMinLastTimestamp"))
+                if (property.NameEquals("typeOfStreamWithMinLastTimestamp"u8))
                 {
                     typeOfStreamWithMinLastTimestamp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxLastTimestamp"))
+                if (property.NameEquals("maxLastTimestamp"u8))
                 {
                     maxLastTimestamp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("typeOfStreamWithMaxLastTimestamp"))
+                if (property.NameEquals("typeOfStreamWithMaxLastTimestamp"u8))
                 {
                     typeOfStreamWithMaxLastTimestamp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timescaleOfMinLastTimestamp"))
+                if (property.NameEquals("timescaleOfMinLastTimestamp"u8))
                 {
                     timescaleOfMinLastTimestamp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timescaleOfMaxLastTimestamp"))
+                if (property.NameEquals("timescaleOfMaxLastTimestamp"u8))
                 {
                     timescaleOfMaxLastTimestamp = property.Value.GetString();
                     continue;

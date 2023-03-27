@@ -89,15 +89,15 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(RolePermissions.Read | RolePermissions.Write, PathAccessControlExtensions.ParseSymbolicRolePermissions("rw-", true));
             Assert.AreEqual(RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("rwx", true));
 
-            Assert.AreEqual(RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("--t", true));
-            Assert.AreEqual(RolePermissions.Write | RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("-wt", true));
-            Assert.AreEqual(RolePermissions.Read | RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("r-t", true));
-            Assert.AreEqual(RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("rwt", true));
-
             Assert.AreEqual(RolePermissions.None, PathAccessControlExtensions.ParseSymbolicRolePermissions("--T", true));
             Assert.AreEqual(RolePermissions.Write, PathAccessControlExtensions.ParseSymbolicRolePermissions("-wT", true));
             Assert.AreEqual(RolePermissions.Read, PathAccessControlExtensions.ParseSymbolicRolePermissions("r-T", true));
             Assert.AreEqual(RolePermissions.Read | RolePermissions.Write, PathAccessControlExtensions.ParseSymbolicRolePermissions("rwT", true));
+
+            Assert.AreEqual(RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("--t", true));
+            Assert.AreEqual(RolePermissions.Write | RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("-wt", true));
+            Assert.AreEqual(RolePermissions.Read | RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("r-t", true));
+            Assert.AreEqual(RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("rwt", true));
         }
 
         [Test]
@@ -152,6 +152,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual("r-x", (RolePermissions.Read | RolePermissions.Execute).ToSymbolicRolePermissions());
             Assert.AreEqual("rw-", (RolePermissions.Read | RolePermissions.Write).ToSymbolicRolePermissions());
             Assert.AreEqual("rwx", (RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute).ToSymbolicRolePermissions());
+            Assert.AreEqual("rwT", (RolePermissions.Read | RolePermissions.Write).ToSymbolicRolePermissions(true));
+            Assert.AreEqual("rwt", (RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute).ToSymbolicRolePermissions(true));
         }
 
         [Test]

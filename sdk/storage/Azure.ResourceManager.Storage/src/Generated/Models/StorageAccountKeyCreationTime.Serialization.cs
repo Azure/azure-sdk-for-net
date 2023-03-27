@@ -15,11 +15,15 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static StorageAccountKeyCreationTime DeserializeStorageAccountKeyCreationTime(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> key1 = default;
             Optional<DateTimeOffset> key2 = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("key1"))
+                if (property.NameEquals("key1"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
                     key1 = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("key2"))
+                if (property.NameEquals("key2"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

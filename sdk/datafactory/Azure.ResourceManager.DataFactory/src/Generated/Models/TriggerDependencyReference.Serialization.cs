@@ -15,15 +15,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("referenceTrigger");
+            writer.WritePropertyName("referenceTrigger"u8);
             writer.WriteObjectValue(ReferenceTrigger);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DependencyReferenceType);
             writer.WriteEndObject();
         }
 
         internal static TriggerDependencyReference DeserializeTriggerDependencyReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -35,12 +39,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             string type = "TriggerDependencyReference";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("referenceTrigger"))
+                if (property.NameEquals("referenceTrigger"u8))
                 {
                     referenceTrigger = FactoryTriggerReference.DeserializeFactoryTriggerReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

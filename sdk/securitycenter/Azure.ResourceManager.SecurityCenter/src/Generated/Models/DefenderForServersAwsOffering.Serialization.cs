@@ -17,41 +17,45 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DefenderForServers))
             {
-                writer.WritePropertyName("defenderForServers");
+                writer.WritePropertyName("defenderForServers"u8);
                 writer.WriteObjectValue(DefenderForServers);
             }
             if (Optional.IsDefined(ArcAutoProvisioning))
             {
-                writer.WritePropertyName("arcAutoProvisioning");
+                writer.WritePropertyName("arcAutoProvisioning"u8);
                 writer.WriteObjectValue(ArcAutoProvisioning);
             }
             if (Optional.IsDefined(VaAutoProvisioning))
             {
-                writer.WritePropertyName("vaAutoProvisioning");
+                writer.WritePropertyName("vaAutoProvisioning"u8);
                 writer.WriteObjectValue(VaAutoProvisioning);
             }
             if (Optional.IsDefined(MdeAutoProvisioning))
             {
-                writer.WritePropertyName("mdeAutoProvisioning");
+                writer.WritePropertyName("mdeAutoProvisioning"u8);
                 writer.WriteObjectValue(MdeAutoProvisioning);
             }
             if (Optional.IsDefined(SubPlan))
             {
-                writer.WritePropertyName("subPlan");
+                writer.WritePropertyName("subPlan"u8);
                 writer.WriteObjectValue(SubPlan);
             }
             if (Optional.IsDefined(VmScanners))
             {
-                writer.WritePropertyName("vmScanners");
+                writer.WritePropertyName("vmScanners"u8);
                 writer.WriteObjectValue(VmScanners);
             }
-            writer.WritePropertyName("offeringType");
+            writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
             writer.WriteEndObject();
         }
 
         internal static DefenderForServersAwsOffering DeserializeDefenderForServersAwsOffering(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AwsDefenderForServersInfo> defenderForServers = default;
             Optional<DefenderForServersAwsOfferingArcAutoProvisioning> arcAutoProvisioning = default;
             Optional<DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning> vaAutoProvisioning = default;
@@ -62,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("defenderForServers"))
+                if (property.NameEquals("defenderForServers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     defenderForServers = AwsDefenderForServersInfo.DeserializeAwsDefenderForServersInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("arcAutoProvisioning"))
+                if (property.NameEquals("arcAutoProvisioning"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     arcAutoProvisioning = DefenderForServersAwsOfferingArcAutoProvisioning.DeserializeDefenderForServersAwsOfferingArcAutoProvisioning(property.Value);
                     continue;
                 }
-                if (property.NameEquals("vaAutoProvisioning"))
+                if (property.NameEquals("vaAutoProvisioning"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     vaAutoProvisioning = DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning.DeserializeDefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning(property.Value);
                     continue;
                 }
-                if (property.NameEquals("mdeAutoProvisioning"))
+                if (property.NameEquals("mdeAutoProvisioning"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,7 +106,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     mdeAutoProvisioning = DefenderForServersAwsOfferingMdeAutoProvisioning.DeserializeDefenderForServersAwsOfferingMdeAutoProvisioning(property.Value);
                     continue;
                 }
-                if (property.NameEquals("subPlan"))
+                if (property.NameEquals("subPlan"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,7 +116,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     subPlan = DefenderForServersAwsOfferingSubPlan.DeserializeDefenderForServersAwsOfferingSubPlan(property.Value);
                     continue;
                 }
-                if (property.NameEquals("vmScanners"))
+                if (property.NameEquals("vmScanners"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,12 +126,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     vmScanners = DefenderForServersAwsOfferingVmScanners.DeserializeDefenderForServersAwsOfferingVmScanners(property.Value);
                     continue;
                 }
-                if (property.NameEquals("offeringType"))
+                if (property.NameEquals("offeringType"u8))
                 {
                     offeringType = new OfferingType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;

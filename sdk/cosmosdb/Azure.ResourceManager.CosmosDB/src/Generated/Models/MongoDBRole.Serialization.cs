@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DBName))
             {
-                writer.WritePropertyName("db");
+                writer.WritePropertyName("db"u8);
                 writer.WriteStringValue(DBName);
             }
             if (Optional.IsDefined(Role))
             {
-                writer.WritePropertyName("role");
+                writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static MongoDBRole DeserializeMongoDBRole(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> db = default;
             Optional<string> role = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("db"))
+                if (property.NameEquals("db"u8))
                 {
                     db = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("role"))
+                if (property.NameEquals("role"u8))
                 {
                     role = property.Value.GetString();
                     continue;

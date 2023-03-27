@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceType");
+            writer.WritePropertyName("sourceType"u8);
             writer.WriteStringValue(SourceType);
-            writer.WritePropertyName("sourceName");
+            writer.WritePropertyName("sourceName"u8);
             writer.WriteStringValue(SourceName);
             writer.WriteEndObject();
         }
 
         internal static DataBoxEdgeMetricDimension DeserializeDataBoxEdgeMetricDimension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string sourceType = default;
             string sourceName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceType"))
+                if (property.NameEquals("sourceType"u8))
                 {
                     sourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceName"))
+                if (property.NameEquals("sourceName"u8))
                 {
                     sourceName = property.Value.GetString();
                     continue;

@@ -17,21 +17,21 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ClusterExtensionId))
             {
-                writer.WritePropertyName("clusterExtensionId");
+                writer.WritePropertyName("clusterExtensionId"u8);
                 writer.WriteStringValue(ClusterExtensionId);
             }
             if (Optional.IsDefined(ExtensionType))
             {
-                writer.WritePropertyName("extensionType");
+                writer.WritePropertyName("extensionType"u8);
                 writer.WriteStringValue(ExtensionType);
             }
             if (Optional.IsCollectionDefined(TypesMetadata))
             {
-                writer.WritePropertyName("typesMetadata");
+                writer.WritePropertyName("typesMetadata"u8);
                 writer.WriteStartArray();
                 foreach (var item in TypesMetadata)
                 {
@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
 
         internal static CustomLocationEnabledResourceType DeserializeCustomLocationEnabledResourceType(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -54,22 +58,22 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             Optional<IList<CustomLocationEnabledResourceTypeMetadata>> typesMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +83,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +92,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("clusterExtensionId"))
+                        if (property0.NameEquals("clusterExtensionId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -98,12 +102,12 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                             clusterExtensionId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("extensionType"))
+                        if (property0.NameEquals("extensionType"u8))
                         {
                             extensionType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("typesMetadata"))
+                        if (property0.NameEquals("typesMetadata"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

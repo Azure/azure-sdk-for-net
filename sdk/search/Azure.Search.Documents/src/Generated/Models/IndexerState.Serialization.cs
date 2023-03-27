@@ -15,6 +15,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static IndexerState DeserializeIndexerState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IndexingMode> mode = default;
             Optional<string> allDocsInitialChangeTrackingState = default;
             Optional<string> allDocsFinalChangeTrackingState = default;
@@ -24,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<IReadOnlyList<string>> resetDatasourceDocumentIds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mode"))
+                if (property.NameEquals("mode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,27 +38,27 @@ namespace Azure.Search.Documents.Indexes.Models
                     mode = new IndexingMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("allDocsInitialChangeTrackingState"))
+                if (property.NameEquals("allDocsInitialChangeTrackingState"u8))
                 {
                     allDocsInitialChangeTrackingState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("allDocsFinalChangeTrackingState"))
+                if (property.NameEquals("allDocsFinalChangeTrackingState"u8))
                 {
                     allDocsFinalChangeTrackingState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resetDocsInitialChangeTrackingState"))
+                if (property.NameEquals("resetDocsInitialChangeTrackingState"u8))
                 {
                     resetDocsInitialChangeTrackingState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resetDocsFinalChangeTrackingState"))
+                if (property.NameEquals("resetDocsFinalChangeTrackingState"u8))
                 {
                     resetDocsFinalChangeTrackingState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resetDocumentKeys"))
+                if (property.NameEquals("resetDocumentKeys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +73,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     resetDocumentKeys = array;
                     continue;
                 }
-                if (property.NameEquals("resetDatasourceDocumentIds"))
+                if (property.NameEquals("resetDatasourceDocumentIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

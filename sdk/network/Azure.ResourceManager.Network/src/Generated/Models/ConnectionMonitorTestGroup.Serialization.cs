@@ -16,28 +16,28 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Disable))
             {
-                writer.WritePropertyName("disable");
+                writer.WritePropertyName("disable"u8);
                 writer.WriteBooleanValue(Disable.Value);
             }
-            writer.WritePropertyName("testConfigurations");
+            writer.WritePropertyName("testConfigurations"u8);
             writer.WriteStartArray();
             foreach (var item in TestConfigurations)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("sources");
+            writer.WritePropertyName("sources"u8);
             writer.WriteStartArray();
             foreach (var item in Sources)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("destinations");
+            writer.WritePropertyName("destinations"u8);
             writer.WriteStartArray();
             foreach (var item in Destinations)
             {
@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorTestGroup DeserializeConnectionMonitorTestGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<bool> disable = default;
             IList<string> testConfigurations = default;
@@ -56,12 +60,12 @@ namespace Azure.ResourceManager.Network.Models
             IList<string> destinations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("disable"))
+                if (property.NameEquals("disable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
                     disable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("testConfigurations"))
+                if (property.NameEquals("testConfigurations"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -81,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                     testConfigurations = array;
                     continue;
                 }
-                if (property.NameEquals("sources"))
+                if (property.NameEquals("sources"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     sources = array;
                     continue;
                 }
-                if (property.NameEquals("destinations"))
+                if (property.NameEquals("destinations"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())

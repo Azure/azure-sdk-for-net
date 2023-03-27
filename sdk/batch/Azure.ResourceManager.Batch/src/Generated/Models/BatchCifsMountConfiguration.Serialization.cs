@@ -15,24 +15,28 @@ namespace Azure.ResourceManager.Batch.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("userName");
+            writer.WritePropertyName("userName"u8);
             writer.WriteStringValue(Username);
-            writer.WritePropertyName("source");
+            writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source);
-            writer.WritePropertyName("relativeMountPath");
+            writer.WritePropertyName("relativeMountPath"u8);
             writer.WriteStringValue(RelativeMountPath);
             if (Optional.IsDefined(MountOptions))
             {
-                writer.WritePropertyName("mountOptions");
+                writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStringValue(MountOptions);
             }
-            writer.WritePropertyName("password");
+            writer.WritePropertyName("password"u8);
             writer.WriteStringValue(Password);
             writer.WriteEndObject();
         }
 
         internal static BatchCifsMountConfiguration DeserializeBatchCifsMountConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string userName = default;
             string source = default;
             string relativeMountPath = default;
@@ -40,27 +44,27 @@ namespace Azure.ResourceManager.Batch.Models
             string password = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userName"))
+                if (property.NameEquals("userName"u8))
                 {
                     userName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     source = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("relativeMountPath"))
+                if (property.NameEquals("relativeMountPath"u8))
                 {
                     relativeMountPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mountOptions"))
+                if (property.NameEquals("mountOptions"u8))
                 {
                     mountOptions = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
                     continue;

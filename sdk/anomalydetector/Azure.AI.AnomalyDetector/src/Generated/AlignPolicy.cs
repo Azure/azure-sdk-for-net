@@ -16,9 +16,15 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Initializes a new instance of AlignPolicy. </summary>
-        /// <param name="alignMode"></param>
-        /// <param name="fillNAMethod"></param>
-        /// <param name="paddingValue"></param>
+        /// <param name="alignMode">
+        /// An optional field, indicating how to align different variables to the same
+        /// time-range. Either Inner or Outer. 
+        /// </param>
+        /// <param name="fillNAMethod">
+        /// An optional field, indicating how missing values will be filled. One of
+        /// Previous, Subsequent, Linear, Zero, Fixed.
+        /// </param>
+        /// <param name="paddingValue"> An optional field. Required when fillNAMethod is Fixed. </param>
         internal AlignPolicy(AlignMode? alignMode, FillNAMethod? fillNAMethod, float? paddingValue)
         {
             AlignMode = alignMode;
@@ -26,11 +32,17 @@ namespace Azure.AI.AnomalyDetector
             PaddingValue = paddingValue;
         }
 
-        /// <summary> Gets or sets the align mode. </summary>
+        /// <summary>
+        /// An optional field, indicating how to align different variables to the same
+        /// time-range. Either Inner or Outer. 
+        /// </summary>
         public AlignMode? AlignMode { get; set; }
-        /// <summary> Gets or sets the fill na method. </summary>
+        /// <summary>
+        /// An optional field, indicating how missing values will be filled. One of
+        /// Previous, Subsequent, Linear, Zero, Fixed.
+        /// </summary>
         public FillNAMethod? FillNAMethod { get; set; }
-        /// <summary> Gets or sets the padding value. </summary>
+        /// <summary> An optional field. Required when fillNAMethod is Fixed. </summary>
         public float? PaddingValue { get; set; }
     }
 }

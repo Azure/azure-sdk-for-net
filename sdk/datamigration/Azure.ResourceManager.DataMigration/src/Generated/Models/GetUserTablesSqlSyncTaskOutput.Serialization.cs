@@ -15,28 +15,32 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static GetUserTablesSqlSyncTaskOutput DeserializeGetUserTablesSqlSyncTaskOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> databasesToSourceTables = default;
             Optional<string> databasesToTargetTables = default;
             Optional<string> tableValidationErrors = default;
             Optional<IReadOnlyList<ReportableException>> validationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("databasesToSourceTables"))
+                if (property.NameEquals("databasesToSourceTables"u8))
                 {
                     databasesToSourceTables = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databasesToTargetTables"))
+                if (property.NameEquals("databasesToTargetTables"u8))
                 {
                     databasesToTargetTables = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tableValidationErrors"))
+                if (property.NameEquals("tableValidationErrors"u8))
                 {
                     tableValidationErrors = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("validationErrors"))
+                if (property.NameEquals("validationErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -26,7 +26,7 @@ namespace QnAMaker.Tests
                 // Loop while operation is success
                 createOp = OperationHelper.MonitorOperation(createOp, client);
 
-                Assert.Equal(createOp.OperationState, OperationStateType.Succeeded);
+                Assert.Equal(OperationStateType.Succeeded, createOp.OperationState);
 
                 var kbid = createOp.ResourceLocation.Replace("/knowledgebases/", string.Empty);
                 Assert.NotEmpty(kbid);
@@ -42,7 +42,7 @@ namespace QnAMaker.Tests
                 // Loop while operation is success
                 updateOp = OperationHelper.MonitorOperation(updateOp, client);
 
-                Assert.Equal(updateOp.OperationState, OperationStateType.Succeeded);
+                Assert.Equal(OperationStateType.Succeeded, updateOp.OperationState);
 
                 kbdata = client.Knowledgebase.DownloadAsync(kbid, EnvironmentType.Test).Result;
                 Assert.Equal("goodbye", kbdata.QnaDocuments[1].Answer);

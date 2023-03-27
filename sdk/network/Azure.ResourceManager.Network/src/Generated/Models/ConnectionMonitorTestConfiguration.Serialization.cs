@@ -15,38 +15,38 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(TestFrequencySec))
             {
-                writer.WritePropertyName("testFrequencySec");
+                writer.WritePropertyName("testFrequencySec"u8);
                 writer.WriteNumberValue(TestFrequencySec.Value);
             }
-            writer.WritePropertyName("protocol");
+            writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
             if (Optional.IsDefined(PreferredIPVersion))
             {
-                writer.WritePropertyName("preferredIPVersion");
+                writer.WritePropertyName("preferredIPVersion"u8);
                 writer.WriteStringValue(PreferredIPVersion.Value.ToString());
             }
             if (Optional.IsDefined(HttpConfiguration))
             {
-                writer.WritePropertyName("httpConfiguration");
+                writer.WritePropertyName("httpConfiguration"u8);
                 writer.WriteObjectValue(HttpConfiguration);
             }
             if (Optional.IsDefined(TcpConfiguration))
             {
-                writer.WritePropertyName("tcpConfiguration");
+                writer.WritePropertyName("tcpConfiguration"u8);
                 writer.WriteObjectValue(TcpConfiguration);
             }
             if (Optional.IsDefined(IcmpConfiguration))
             {
-                writer.WritePropertyName("icmpConfiguration");
+                writer.WritePropertyName("icmpConfiguration"u8);
                 writer.WriteObjectValue(IcmpConfiguration);
             }
             if (Optional.IsDefined(SuccessThreshold))
             {
-                writer.WritePropertyName("successThreshold");
+                writer.WritePropertyName("successThreshold"u8);
                 writer.WriteObjectValue(SuccessThreshold);
             }
             writer.WriteEndObject();
@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorTestConfiguration DeserializeConnectionMonitorTestConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<int> testFrequencySec = default;
             ConnectionMonitorTestConfigurationProtocol protocol = default;
@@ -64,12 +68,12 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ConnectionMonitorSuccessThreshold> successThreshold = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("testFrequencySec"))
+                if (property.NameEquals("testFrequencySec"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,12 +83,12 @@ namespace Azure.ResourceManager.Network.Models
                     testFrequencySec = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("protocol"))
+                if (property.NameEquals("protocol"u8))
                 {
                     protocol = new ConnectionMonitorTestConfigurationProtocol(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("preferredIPVersion"))
+                if (property.NameEquals("preferredIPVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
                     preferredIPVersion = new TestEvalPreferredIPVersion(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("httpConfiguration"))
+                if (property.NameEquals("httpConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.Network.Models
                     httpConfiguration = ConnectionMonitorHttpConfiguration.DeserializeConnectionMonitorHttpConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tcpConfiguration"))
+                if (property.NameEquals("tcpConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +118,7 @@ namespace Azure.ResourceManager.Network.Models
                     tcpConfiguration = ConnectionMonitorTcpConfiguration.DeserializeConnectionMonitorTcpConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("icmpConfiguration"))
+                if (property.NameEquals("icmpConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
                     icmpConfiguration = ConnectionMonitorIcmpConfiguration.DeserializeConnectionMonitorIcmpConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("successThreshold"))
+                if (property.NameEquals("successThreshold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("dimension");
+            writer.WritePropertyName("dimension"u8);
             writer.WriteStartObject();
             foreach (var item in Dimension)
             {
@@ -29,10 +29,14 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static SeriesIdentity DeserializeSeriesIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IDictionary<string, string> dimension = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dimension"))
+                if (property.NameEquals("dimension"u8))
                 {
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())

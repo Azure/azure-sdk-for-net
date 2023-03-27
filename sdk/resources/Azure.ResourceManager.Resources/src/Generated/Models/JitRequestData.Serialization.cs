@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Resources
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -30,18 +30,18 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ApplicationResourceId))
             {
-                writer.WritePropertyName("applicationResourceId");
+                writer.WritePropertyName("applicationResourceId"u8);
                 writer.WriteStringValue(ApplicationResourceId);
             }
             if (Optional.IsCollectionDefined(JitAuthorizationPolicies))
             {
-                writer.WritePropertyName("jitAuthorizationPolicies");
+                writer.WritePropertyName("jitAuthorizationPolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in JitAuthorizationPolicies)
                 {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources
             }
             if (Optional.IsDefined(JitSchedulingPolicy))
             {
-                writer.WritePropertyName("jitSchedulingPolicy");
+                writer.WritePropertyName("jitSchedulingPolicy"u8);
                 writer.WriteObjectValue(JitSchedulingPolicy);
             }
             writer.WriteEndObject();
@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.Resources
 
         internal static JitRequestData DeserializeJitRequestData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.Resources
             Optional<ArmApplicationDetails> updatedBy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,27 +95,27 @@ namespace Azure.ResourceManager.Resources
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -121,7 +125,7 @@ namespace Azure.ResourceManager.Resources
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,12 +134,12 @@ namespace Azure.ResourceManager.Resources
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("applicationResourceId"))
+                        if (property0.NameEquals("applicationResourceId"u8))
                         {
                             applicationResourceId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("publisherTenantId"))
+                        if (property0.NameEquals("publisherTenantId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -145,7 +149,7 @@ namespace Azure.ResourceManager.Resources
                             publisherTenantId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("jitAuthorizationPolicies"))
+                        if (property0.NameEquals("jitAuthorizationPolicies"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -160,7 +164,7 @@ namespace Azure.ResourceManager.Resources
                             jitAuthorizationPolicies = array;
                             continue;
                         }
-                        if (property0.NameEquals("jitSchedulingPolicy"))
+                        if (property0.NameEquals("jitSchedulingPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -170,7 +174,7 @@ namespace Azure.ResourceManager.Resources
                             jitSchedulingPolicy = JitSchedulingPolicy.DeserializeJitSchedulingPolicy(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -180,7 +184,7 @@ namespace Azure.ResourceManager.Resources
                             provisioningState = new ResourcesProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("jitRequestState"))
+                        if (property0.NameEquals("jitRequestState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -190,7 +194,7 @@ namespace Azure.ResourceManager.Resources
                             jitRequestState = new JitRequestState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("createdBy"))
+                        if (property0.NameEquals("createdBy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -200,7 +204,7 @@ namespace Azure.ResourceManager.Resources
                             createdBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("updatedBy"))
+                        if (property0.NameEquals("updatedBy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -14,11 +14,15 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         internal static IotHubTestRouteResult DeserializeIotHubTestRouteResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IotHubTestResultStatus> result = default;
             Optional<IotHubTestRouteResultDetails> details = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("result"))
+                if (property.NameEquals("result"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     result = new IotHubTestResultStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("details"))
+                if (property.NameEquals("details"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

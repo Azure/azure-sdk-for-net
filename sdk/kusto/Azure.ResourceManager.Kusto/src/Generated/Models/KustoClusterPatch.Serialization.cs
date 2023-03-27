@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -40,13 +40,13 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(TrustedExternalTenants))
             {
-                writer.WritePropertyName("trustedExternalTenants");
+                writer.WritePropertyName("trustedExternalTenants"u8);
                 writer.WriteStartArray();
                 foreach (var item in TrustedExternalTenants)
                 {
@@ -56,47 +56,52 @@ namespace Azure.ResourceManager.Kusto.Models
             }
             if (Optional.IsDefined(OptimizedAutoscale))
             {
-                writer.WritePropertyName("optimizedAutoscale");
+                writer.WritePropertyName("optimizedAutoscale"u8);
                 writer.WriteObjectValue(OptimizedAutoscale);
             }
             if (Optional.IsDefined(IsDiskEncryptionEnabled))
             {
-                writer.WritePropertyName("enableDiskEncryption");
+                writer.WritePropertyName("enableDiskEncryption"u8);
                 writer.WriteBooleanValue(IsDiskEncryptionEnabled.Value);
             }
             if (Optional.IsDefined(IsStreamingIngestEnabled))
             {
-                writer.WritePropertyName("enableStreamingIngest");
+                writer.WritePropertyName("enableStreamingIngest"u8);
                 writer.WriteBooleanValue(IsStreamingIngestEnabled.Value);
             }
             if (Optional.IsDefined(VirtualNetworkConfiguration))
             {
-                writer.WritePropertyName("virtualNetworkConfiguration");
+                writer.WritePropertyName("virtualNetworkConfiguration"u8);
                 writer.WriteObjectValue(VirtualNetworkConfiguration);
             }
             if (Optional.IsDefined(KeyVaultProperties))
             {
-                writer.WritePropertyName("keyVaultProperties");
+                writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
             if (Optional.IsDefined(IsPurgeEnabled))
             {
-                writer.WritePropertyName("enablePurge");
+                writer.WritePropertyName("enablePurge"u8);
                 writer.WriteBooleanValue(IsPurgeEnabled.Value);
+            }
+            if (Optional.IsDefined(LanguageExtensions))
+            {
+                writer.WritePropertyName("languageExtensions"u8);
+                writer.WriteObjectValue(LanguageExtensions);
             }
             if (Optional.IsDefined(IsDoubleEncryptionEnabled))
             {
-                writer.WritePropertyName("enableDoubleEncryption");
+                writer.WritePropertyName("enableDoubleEncryption"u8);
                 writer.WriteBooleanValue(IsDoubleEncryptionEnabled.Value);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             if (Optional.IsCollectionDefined(AllowedIPRangeList))
             {
-                writer.WritePropertyName("allowedIpRangeList");
+                writer.WritePropertyName("allowedIpRangeList"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedIPRangeList)
                 {
@@ -106,12 +111,12 @@ namespace Azure.ResourceManager.Kusto.Models
             }
             if (Optional.IsDefined(EngineType))
             {
-                writer.WritePropertyName("engineType");
+                writer.WritePropertyName("engineType"u8);
                 writer.WriteStringValue(EngineType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(AcceptedAudiences))
             {
-                writer.WritePropertyName("acceptedAudiences");
+                writer.WritePropertyName("acceptedAudiences"u8);
                 writer.WriteStartArray();
                 foreach (var item in AcceptedAudiences)
                 {
@@ -121,17 +126,17 @@ namespace Azure.ResourceManager.Kusto.Models
             }
             if (Optional.IsDefined(IsAutoStopEnabled))
             {
-                writer.WritePropertyName("enableAutoStop");
+                writer.WritePropertyName("enableAutoStop"u8);
                 writer.WriteBooleanValue(IsAutoStopEnabled.Value);
             }
             if (Optional.IsDefined(RestrictOutboundNetworkAccess))
             {
-                writer.WritePropertyName("restrictOutboundNetworkAccess");
+                writer.WritePropertyName("restrictOutboundNetworkAccess"u8);
                 writer.WriteStringValue(RestrictOutboundNetworkAccess.Value.ToString());
             }
             if (Optional.IsCollectionDefined(AllowedFqdnList))
             {
-                writer.WritePropertyName("allowedFqdnList");
+                writer.WritePropertyName("allowedFqdnList"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedFqdnList)
                 {
@@ -141,12 +146,12 @@ namespace Azure.ResourceManager.Kusto.Models
             }
             if (Optional.IsDefined(PublicIPType))
             {
-                writer.WritePropertyName("publicIPType");
+                writer.WritePropertyName("publicIPType"u8);
                 writer.WriteStringValue(PublicIPType.Value.ToString());
             }
             if (Optional.IsDefined(VirtualClusterGraduationProperties))
             {
-                writer.WritePropertyName("virtualClusterGraduationProperties");
+                writer.WritePropertyName("virtualClusterGraduationProperties"u8);
                 writer.WriteStringValue(VirtualClusterGraduationProperties);
             }
             writer.WriteEndObject();
@@ -155,6 +160,10 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoClusterPatch DeserializeKustoClusterPatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<KustoSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -189,7 +198,7 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<IReadOnlyList<KustoPrivateEndpointConnectionData>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -199,7 +208,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     sku = KustoSku.DeserializeKustoSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -209,7 +218,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -224,27 +233,27 @@ namespace Azure.ResourceManager.Kusto.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -254,7 +263,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -263,7 +272,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -273,7 +282,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             state = new KustoClusterState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -283,7 +292,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             provisioningState = new KustoProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("uri"))
+                        if (property0.NameEquals("uri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -293,7 +302,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             uri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("dataIngestionUri"))
+                        if (property0.NameEquals("dataIngestionUri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -303,12 +312,12 @@ namespace Azure.ResourceManager.Kusto.Models
                             dataIngestionUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("stateReason"))
+                        if (property0.NameEquals("stateReason"u8))
                         {
                             stateReason = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("trustedExternalTenants"))
+                        if (property0.NameEquals("trustedExternalTenants"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -323,7 +332,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             trustedExternalTenants = array;
                             continue;
                         }
-                        if (property0.NameEquals("optimizedAutoscale"))
+                        if (property0.NameEquals("optimizedAutoscale"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -333,7 +342,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             optimizedAutoscale = OptimizedAutoscale.DeserializeOptimizedAutoscale(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("enableDiskEncryption"))
+                        if (property0.NameEquals("enableDiskEncryption"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -343,7 +352,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             enableDiskEncryption = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("enableStreamingIngest"))
+                        if (property0.NameEquals("enableStreamingIngest"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -353,7 +362,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             enableStreamingIngest = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("virtualNetworkConfiguration"))
+                        if (property0.NameEquals("virtualNetworkConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -363,7 +372,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             virtualNetworkConfiguration = KustoClusterVirtualNetworkConfiguration.DeserializeKustoClusterVirtualNetworkConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("keyVaultProperties"))
+                        if (property0.NameEquals("keyVaultProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -373,7 +382,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             keyVaultProperties = KustoKeyVaultProperties.DeserializeKustoKeyVaultProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("enablePurge"))
+                        if (property0.NameEquals("enablePurge"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -383,7 +392,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             enablePurge = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("languageExtensions"))
+                        if (property0.NameEquals("languageExtensions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -393,7 +402,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             languageExtensions = KustoLanguageExtensionList.DeserializeKustoLanguageExtensionList(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("enableDoubleEncryption"))
+                        if (property0.NameEquals("enableDoubleEncryption"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -403,7 +412,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             enableDoubleEncryption = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("publicNetworkAccess"))
+                        if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -413,7 +422,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             publicNetworkAccess = new KustoClusterPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("allowedIpRangeList"))
+                        if (property0.NameEquals("allowedIpRangeList"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -428,7 +437,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             allowedIPRangeList = array;
                             continue;
                         }
-                        if (property0.NameEquals("engineType"))
+                        if (property0.NameEquals("engineType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -438,7 +447,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             engineType = new KustoClusterEngineType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("acceptedAudiences"))
+                        if (property0.NameEquals("acceptedAudiences"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -453,7 +462,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             acceptedAudiences = array;
                             continue;
                         }
-                        if (property0.NameEquals("enableAutoStop"))
+                        if (property0.NameEquals("enableAutoStop"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -463,7 +472,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             enableAutoStop = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("restrictOutboundNetworkAccess"))
+                        if (property0.NameEquals("restrictOutboundNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -473,7 +482,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             restrictOutboundNetworkAccess = new KustoClusterNetworkAccessFlag(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("allowedFqdnList"))
+                        if (property0.NameEquals("allowedFqdnList"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -488,7 +497,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             allowedFqdnList = array;
                             continue;
                         }
-                        if (property0.NameEquals("publicIPType"))
+                        if (property0.NameEquals("publicIPType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -498,12 +507,12 @@ namespace Azure.ResourceManager.Kusto.Models
                             publicIPType = new KustoClusterPublicIPType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("virtualClusterGraduationProperties"))
+                        if (property0.NameEquals("virtualClusterGraduationProperties"u8))
                         {
                             virtualClusterGraduationProperties = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("privateEndpointConnections"))
+                        if (property0.NameEquals("privateEndpointConnections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -15,23 +15,27 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static PolicySummary DeserializePolicySummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> odataId = default;
             Optional<string> odataContext = default;
             Optional<PolicySummaryResults> results = default;
             Optional<IReadOnlyList<PolicyAssignmentSummary>> policyAssignments = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.id"))
+                if (property.NameEquals("@odata.id"u8))
                 {
                     odataId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@odata.context"))
+                if (property.NameEquals("@odata.context"u8))
                 {
                     odataContext = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("results"))
+                if (property.NameEquals("results"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value);
                     continue;
                 }
-                if (property.NameEquals("policyAssignments"))
+                if (property.NameEquals("policyAssignments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

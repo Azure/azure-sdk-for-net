@@ -18,21 +18,21 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Credentials))
             {
-                writer.WritePropertyName("credentials");
+                writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
             if (Optional.IsDefined(HttpProxyConfig))
             {
-                writer.WritePropertyName("httpProxyConfig");
+                writer.WritePropertyName("httpProxyConfig"u8);
                 writer.WriteObjectValue(HttpProxyConfig);
             }
             if (Optional.IsDefined(ProvisioningAction))
             {
-                writer.WritePropertyName("provisioningAction");
+                writer.WritePropertyName("provisioningAction"u8);
                 writer.WriteStringValue(ProvisioningAction.Value.ToString());
             }
             writer.WriteEndObject();
@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         internal static GuestAgentData DeserializeGuestAgentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -55,22 +59,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +84,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,12 +93,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("uuid"))
+                        if (property0.NameEquals("uuid"u8))
                         {
                             uuid = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("credentials"))
+                        if (property0.NameEquals("credentials"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             credentials = GuestCredential.DeserializeGuestCredential(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("httpProxyConfig"))
+                        if (property0.NameEquals("httpProxyConfig"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -114,7 +118,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             httpProxyConfig = HttpProxyConfiguration.DeserializeHttpProxyConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("provisioningAction"))
+                        if (property0.NameEquals("provisioningAction"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -124,17 +128,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             provisioningAction = new ProvisioningAction(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             status = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("customResourceName"))
+                        if (property0.NameEquals("customResourceName"u8))
                         {
                             customResourceName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("statuses"))
+                        if (property0.NameEquals("statuses"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -149,7 +153,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             statuses = array;
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;

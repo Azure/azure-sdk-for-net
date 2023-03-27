@@ -6,18 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Returns the requested Docker V2 Manifest file. </summary>
-    internal partial class V2Manifest : ArtifactManifest
+    internal partial class V2Manifest : Manifest
     {
         /// <summary> Initializes a new instance of V2Manifest. </summary>
-        public V2Manifest()
+        internal V2Manifest()
         {
-            Layers = new ChangeTrackingList<OciBlobDescriptor>();
+            Layers = new ChangeTrackingList<OciDescriptor>();
         }
 
         /// <summary> Initializes a new instance of V2Manifest. </summary>
@@ -25,7 +24,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="mediaType"> Media type for this Manifest. </param>
         /// <param name="config"> V2 image config descriptor. </param>
         /// <param name="layers"> List of V2 image layer information. </param>
-        internal V2Manifest(int? schemaVersion, string mediaType, OciBlobDescriptor config, IList<OciBlobDescriptor> layers) : base(schemaVersion)
+        internal V2Manifest(int? schemaVersion, string mediaType, OciDescriptor config, IReadOnlyList<OciDescriptor> layers) : base(schemaVersion)
         {
             MediaType = mediaType;
             Config = config;
@@ -33,10 +32,10 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Media type for this Manifest. </summary>
-        public string MediaType { get; set; }
+        public string MediaType { get; }
         /// <summary> V2 image config descriptor. </summary>
-        public OciBlobDescriptor Config { get; set; }
+        public OciDescriptor Config { get; }
         /// <summary> List of V2 image layer information. </summary>
-        public IList<OciBlobDescriptor> Layers { get; }
+        public IReadOnlyList<OciDescriptor> Layers { get; }
     }
 }

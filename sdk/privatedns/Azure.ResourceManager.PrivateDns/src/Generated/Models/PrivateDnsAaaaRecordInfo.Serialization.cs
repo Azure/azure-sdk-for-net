@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IPv6Address))
             {
-                writer.WritePropertyName("ipv6Address");
+                writer.WritePropertyName("ipv6Address"u8);
                 writer.WriteStringValue(IPv6Address.ToString());
             }
             writer.WriteEndObject();
@@ -26,10 +26,14 @@ namespace Azure.ResourceManager.PrivateDns.Models
 
         internal static PrivateDnsAaaaRecordInfo DeserializePrivateDnsAaaaRecordInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IPAddress> ipv6Address = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ipv6Address"))
+                if (property.NameEquals("ipv6Address"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

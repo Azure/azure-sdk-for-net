@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DomainName))
             {
-                writer.WritePropertyName("domainName");
+                writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
             if (Optional.IsCollectionDefined(EndpointDetails))
             {
-                writer.WritePropertyName("endpointDetails");
+                writer.WritePropertyName("endpointDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in EndpointDetails)
                 {
@@ -36,16 +36,20 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static EndpointDependency DeserializeEndpointDependency(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> domainName = default;
             Optional<IList<EndpointDetail>> endpointDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("domainName"))
+                if (property.NameEquals("domainName"u8))
                 {
                     domainName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpointDetails"))
+                if (property.NameEquals("endpointDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

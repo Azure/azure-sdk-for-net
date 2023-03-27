@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         internal static PostgreSqlFlexibleServerDelegatedSubnetUsage DeserializePostgreSqlFlexibleServerDelegatedSubnetUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> subnetName = default;
             Optional<long> usage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subnetName"))
+                if (property.NameEquals("subnetName"u8))
                 {
                     subnetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("usage"))
+                if (property.NameEquals("usage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

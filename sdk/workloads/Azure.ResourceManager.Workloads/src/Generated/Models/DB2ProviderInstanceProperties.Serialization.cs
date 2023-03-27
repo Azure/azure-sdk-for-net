@@ -18,46 +18,60 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Hostname))
             {
-                writer.WritePropertyName("hostname");
+                writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
             if (Optional.IsDefined(DBName))
             {
-                writer.WritePropertyName("dbName");
+                writer.WritePropertyName("dbName"u8);
                 writer.WriteStringValue(DBName);
             }
             if (Optional.IsDefined(DBPort))
             {
-                writer.WritePropertyName("dbPort");
+                writer.WritePropertyName("dbPort"u8);
                 writer.WriteStringValue(DBPort);
             }
             if (Optional.IsDefined(DBUsername))
             {
-                writer.WritePropertyName("dbUsername");
+                writer.WritePropertyName("dbUsername"u8);
                 writer.WriteStringValue(DBUsername);
             }
             if (Optional.IsDefined(DBPassword))
             {
-                writer.WritePropertyName("dbPassword");
+                writer.WritePropertyName("dbPassword"u8);
                 writer.WriteStringValue(DBPassword);
             }
             if (Optional.IsDefined(DBPasswordUri))
             {
-                writer.WritePropertyName("dbPasswordUri");
+                writer.WritePropertyName("dbPasswordUri"u8);
                 writer.WriteStringValue(DBPasswordUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SapSid))
             {
-                writer.WritePropertyName("sapSid");
+                writer.WritePropertyName("sapSid"u8);
                 writer.WriteStringValue(SapSid);
             }
-            writer.WritePropertyName("providerType");
+            if (Optional.IsDefined(SslPreference))
+            {
+                writer.WritePropertyName("sslPreference"u8);
+                writer.WriteStringValue(SslPreference.Value.ToString());
+            }
+            if (Optional.IsDefined(SslCertificateUri))
+            {
+                writer.WritePropertyName("sslCertificateUri"u8);
+                writer.WriteStringValue(SslCertificateUri.AbsoluteUri);
+            }
+            writer.WritePropertyName("providerType"u8);
             writer.WriteStringValue(ProviderType);
             writer.WriteEndObject();
         }
 
         internal static DB2ProviderInstanceProperties DeserializeDB2ProviderInstanceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> hostname = default;
             Optional<string> dbName = default;
             Optional<string> dbPort = default;
@@ -65,35 +79,37 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<string> dbPassword = default;
             Optional<Uri> dbPasswordUri = default;
             Optional<string> sapSid = default;
+            Optional<SslPreference> sslPreference = default;
+            Optional<Uri> sslCertificateUri = default;
             string providerType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hostname"))
+                if (property.NameEquals("hostname"u8))
                 {
                     hostname = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dbName"))
+                if (property.NameEquals("dbName"u8))
                 {
                     dbName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dbPort"))
+                if (property.NameEquals("dbPort"u8))
                 {
                     dbPort = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dbUsername"))
+                if (property.NameEquals("dbUsername"u8))
                 {
                     dbUsername = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dbPassword"))
+                if (property.NameEquals("dbPassword"u8))
                 {
                     dbPassword = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dbPasswordUri"))
+                if (property.NameEquals("dbPasswordUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,18 +119,38 @@ namespace Azure.ResourceManager.Workloads.Models
                     dbPasswordUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sapSid"))
+                if (property.NameEquals("sapSid"u8))
                 {
                     sapSid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providerType"))
+                if (property.NameEquals("sslPreference"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sslPreference = new SslPreference(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sslCertificateUri"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        sslCertificateUri = null;
+                        continue;
+                    }
+                    sslCertificateUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("providerType"u8))
                 {
                     providerType = property.Value.GetString();
                     continue;
                 }
             }
-            return new DB2ProviderInstanceProperties(providerType, hostname.Value, dbName.Value, dbPort.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, sapSid.Value);
+            return new DB2ProviderInstanceProperties(providerType, hostname.Value, dbName.Value, dbPort.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, sapSid.Value, Optional.ToNullable(sslPreference), sslCertificateUri.Value);
         }
     }
 }

@@ -15,11 +15,15 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static IntegrationAccountKeyVaultKeyList DeserializeIntegrationAccountKeyVaultKeyList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<IntegrationAccountKeyVaultKey>> value = default;
             Optional<string> skipToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.Logic.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("skipToken"))
+                if (property.NameEquals("skipToken"u8))
                 {
                     skipToken = property.Value.GetString();
                     continue;

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,27 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.1 (2023-02-17)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
+
+## 1.0.0 (2023-02-01)
+
+This package is the first stable release of the Microsoft Azure Load Testing management client library.
+
+## 1.0.0-beta.2 (2023-01-06)
+
+### Features Added
+
+- Update to the latest api-version.
+
+### Other Changes
+
+- Update the Readme with samples.
 
 ## 1.0.0-beta.1 (2022-11-24)
 

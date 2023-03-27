@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
                 if (DependsOn != null)
                 {
-                    writer.WritePropertyName("dependsOn");
+                    writer.WritePropertyName("dependsOn"u8);
                     writer.WriteStartArray();
                     foreach (var item in DependsOn)
                     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (TimeoutInSeconds != null)
                 {
-                    writer.WritePropertyName("timeoutInSeconds");
+                    writer.WritePropertyName("timeoutInSeconds"u8);
                     writer.WriteNumberValue(TimeoutInSeconds.Value);
                 }
                 else
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (SyncIntervalInSeconds != null)
                 {
-                    writer.WritePropertyName("syncIntervalInSeconds");
+                    writer.WritePropertyName("syncIntervalInSeconds"u8);
                     writer.WriteNumberValue(SyncIntervalInSeconds.Value);
                 }
                 else
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (RetryIntervalInSeconds != null)
                 {
-                    writer.WritePropertyName("retryIntervalInSeconds");
+                    writer.WritePropertyName("retryIntervalInSeconds"u8);
                     writer.WriteNumberValue(RetryIntervalInSeconds.Value);
                 }
                 else
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             if (Optional.IsDefined(Prune))
             {
-                writer.WritePropertyName("prune");
+                writer.WritePropertyName("prune"u8);
                 writer.WriteBooleanValue(Prune.Value);
             }
             if (Optional.IsDefined(Force))
             {
-                writer.WritePropertyName("force");
+                writer.WritePropertyName("force"u8);
                 writer.WriteBooleanValue(Force.Value);
             }
             writer.WriteEndObject();
@@ -89,6 +89,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         internal static Kustomization DeserializeKustomization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> path = default;
             Optional<IList<string>> dependsOn = default;
@@ -99,17 +103,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Optional<bool> force = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dependsOn"))
+                if (property.NameEquals("dependsOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +128,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     dependsOn = array;
                     continue;
                 }
-                if (property.NameEquals("timeoutInSeconds"))
+                if (property.NameEquals("timeoutInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -134,7 +138,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     timeoutInSeconds = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("syncIntervalInSeconds"))
+                if (property.NameEquals("syncIntervalInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -144,7 +148,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     syncIntervalInSeconds = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("retryIntervalInSeconds"))
+                if (property.NameEquals("retryIntervalInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,7 +158,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     retryIntervalInSeconds = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("prune"))
+                if (property.NameEquals("prune"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -164,7 +168,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     prune = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("force"))
+                if (property.NameEquals("force"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(ContainerId))
             {
-                writer.WritePropertyName("containerId");
+                writer.WritePropertyName("containerId"u8);
                 writer.WriteStringValue(ContainerId);
             }
             if (Optional.IsDefined(IsReady))
             {
-                writer.WritePropertyName("ready");
+                writer.WritePropertyName("ready"u8);
                 writer.WriteBooleanValue(IsReady.Value);
             }
             if (Optional.IsDefined(IsStarted))
             {
-                writer.WritePropertyName("started");
+                writer.WritePropertyName("started"u8);
                 writer.WriteBooleanValue(IsStarted.Value);
             }
             if (Optional.IsDefined(RestartCount))
             {
-                writer.WritePropertyName("restartCount");
+                writer.WritePropertyName("restartCount"u8);
                 writer.WriteNumberValue(RestartCount.Value);
             }
             writer.WriteEndObject();
@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppReplicaContainer DeserializeContainerAppReplicaContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> containerId = default;
             Optional<bool> ready = default;
@@ -54,17 +58,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> execEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containerId"))
+                if (property.NameEquals("containerId"u8))
                 {
                     containerId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ready"))
+                if (property.NameEquals("ready"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     ready = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("started"))
+                if (property.NameEquals("started"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     started = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("restartCount"))
+                if (property.NameEquals("restartCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,12 +98,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                     restartCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("logStreamEndpoint"))
+                if (property.NameEquals("logStreamEndpoint"u8))
                 {
                     logStreamEndpoint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("execEndpoint"))
+                if (property.NameEquals("execEndpoint"u8))
                 {
                     execEndpoint = property.Value.GetString();
                     continue;

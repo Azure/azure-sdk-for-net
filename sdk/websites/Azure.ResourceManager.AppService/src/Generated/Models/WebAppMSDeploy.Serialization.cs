@@ -20,34 +20,34 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PackageUri))
             {
-                writer.WritePropertyName("packageUri");
+                writer.WritePropertyName("packageUri"u8);
                 writer.WriteStringValue(PackageUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ConnectionString))
             {
-                writer.WritePropertyName("connectionString");
+                writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
             if (Optional.IsDefined(DBType))
             {
-                writer.WritePropertyName("dbType");
+                writer.WritePropertyName("dbType"u8);
                 writer.WriteStringValue(DBType);
             }
             if (Optional.IsDefined(SetParametersXmlFileUri))
             {
-                writer.WritePropertyName("setParametersXmlFileUri");
+                writer.WritePropertyName("setParametersXmlFileUri"u8);
                 writer.WriteStringValue(SetParametersXmlFileUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(SetParameters))
             {
-                writer.WritePropertyName("setParameters");
+                writer.WritePropertyName("setParameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in SetParameters)
                 {
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(SkipAppData))
             {
-                writer.WritePropertyName("skipAppData");
+                writer.WritePropertyName("skipAppData"u8);
                 writer.WriteBooleanValue(SkipAppData.Value);
             }
             if (Optional.IsDefined(IsAppOffline))
             {
-                writer.WritePropertyName("appOffline");
+                writer.WritePropertyName("appOffline"u8);
                 writer.WriteBooleanValue(IsAppOffline.Value);
             }
             writer.WriteEndObject();
@@ -72,6 +72,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static WebAppMSDeploy DeserializeWebAppMSDeploy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -86,27 +90,27 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> appOffline = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,7 +120,7 @@ namespace Azure.ResourceManager.AppService.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -125,7 +129,7 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("packageUri"))
+                        if (property0.NameEquals("packageUri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -135,17 +139,17 @@ namespace Azure.ResourceManager.AppService.Models
                             packageUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("connectionString"))
+                        if (property0.NameEquals("connectionString"u8))
                         {
                             connectionString = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("dbType"))
+                        if (property0.NameEquals("dbType"u8))
                         {
                             dbType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("setParametersXmlFileUri"))
+                        if (property0.NameEquals("setParametersXmlFileUri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -155,7 +159,7 @@ namespace Azure.ResourceManager.AppService.Models
                             setParametersXmlFileUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("setParameters"))
+                        if (property0.NameEquals("setParameters"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -170,7 +174,7 @@ namespace Azure.ResourceManager.AppService.Models
                             setParameters = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("skipAppData"))
+                        if (property0.NameEquals("skipAppData"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -180,7 +184,7 @@ namespace Azure.ResourceManager.AppService.Models
                             skipAppData = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("appOffline"))
+                        if (property0.NameEquals("appOffline"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

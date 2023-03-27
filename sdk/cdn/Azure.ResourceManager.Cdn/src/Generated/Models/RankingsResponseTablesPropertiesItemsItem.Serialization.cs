@@ -15,16 +15,20 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static RankingsResponseTablesPropertiesItemsItem DeserializeRankingsResponseTablesPropertiesItemsItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<RankingsResponseTablesPropertiesItemsMetricsItem>> metrics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metrics"))
+                if (property.NameEquals("metrics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

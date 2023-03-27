@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Billing.Models
     {
         internal static SubscriptionRenewalTermDetails DeserializeSubscriptionRenewalTermDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> billingFrequency = default;
             Optional<string> productTypeId = default;
             Optional<long> quantity = default;
@@ -22,17 +26,17 @@ namespace Azure.ResourceManager.Billing.Models
             Optional<TimeSpan> termDuration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("billingFrequency"))
+                if (property.NameEquals("billingFrequency"u8))
                 {
                     billingFrequency = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("productTypeId"))
+                if (property.NameEquals("productTypeId"u8))
                 {
                     productTypeId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("quantity"))
+                if (property.NameEquals("quantity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,12 +46,12 @@ namespace Azure.ResourceManager.Billing.Models
                     quantity = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("skuId"))
+                if (property.NameEquals("skuId"u8))
                 {
                     skuId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("termDuration"))
+                if (property.NameEquals("termDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

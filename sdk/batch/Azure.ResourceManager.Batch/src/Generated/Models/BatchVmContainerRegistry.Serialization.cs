@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(UserName))
             {
-                writer.WritePropertyName("username");
+                writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(UserName);
             }
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
+                writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
             if (Optional.IsDefined(RegistryServer))
             {
-                writer.WritePropertyName("registryServer");
+                writer.WritePropertyName("registryServer"u8);
                 writer.WriteStringValue(RegistryServer);
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identityReference");
+                writer.WritePropertyName("identityReference"u8);
                 writer.WriteObjectValue(Identity);
             }
             writer.WriteEndObject();
@@ -40,28 +40,32 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchVmContainerRegistry DeserializeBatchVmContainerRegistry(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> username = default;
             Optional<string> password = default;
             Optional<string> registryServer = default;
             Optional<ComputeNodeIdentityReference> identityReference = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("username"))
+                if (property.NameEquals("username"u8))
                 {
                     username = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("registryServer"))
+                if (property.NameEquals("registryServer"u8))
                 {
                     registryServer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identityReference"))
+                if (property.NameEquals("identityReference"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,31 +15,35 @@ namespace Azure.ResourceManager.StoragePool.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("managedDiskAzureResourceId");
+            writer.WritePropertyName("managedDiskAzureResourceId"u8);
             writer.WriteStringValue(ManagedDiskAzureResourceId);
             writer.WriteEndObject();
         }
 
         internal static ManagedDiskIscsiLun DeserializeManagedDiskIscsiLun(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             ResourceIdentifier managedDiskAzureResourceId = default;
             Optional<int> lun = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("managedDiskAzureResourceId"))
+                if (property.NameEquals("managedDiskAzureResourceId"u8))
                 {
                     managedDiskAzureResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("lun"))
+                if (property.NameEquals("lun"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

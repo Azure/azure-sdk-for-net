@@ -16,10 +16,14 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static EHNamespaceIdListResult DeserializeEHNamespaceIdListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SubResource>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -14,28 +14,32 @@ namespace Azure.ResourceManager.SignalR.Models
     {
         internal static SignalRKeys DeserializeSignalRKeys(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
             Optional<string> primaryConnectionString = default;
             Optional<string> secondaryConnectionString = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryKey"))
+                if (property.NameEquals("primaryKey"u8))
                 {
                     primaryKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryKey"))
+                if (property.NameEquals("secondaryKey"u8))
                 {
                     secondaryKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primaryConnectionString"))
+                if (property.NameEquals("primaryConnectionString"u8))
                 {
                     primaryConnectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryConnectionString"))
+                if (property.NameEquals("secondaryConnectionString"u8))
                 {
                     secondaryConnectionString = property.Value.GetString();
                     continue;

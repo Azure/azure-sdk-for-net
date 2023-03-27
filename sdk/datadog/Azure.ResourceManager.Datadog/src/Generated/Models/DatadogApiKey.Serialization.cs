@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.Datadog.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CreatedBy))
             {
-                writer.WritePropertyName("createdBy");
+                writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("key");
+            writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
             if (Optional.IsDefined(Created))
             {
-                writer.WritePropertyName("created");
+                writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(Created);
             }
             writer.WriteEndObject();
@@ -37,28 +37,32 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static DatadogApiKey DeserializeDatadogApiKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> createdBy = default;
             Optional<string> name = default;
             string key = default;
             Optional<string> created = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("createdBy"))
+                if (property.NameEquals("createdBy"u8))
                 {
                     createdBy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("created"))
+                if (property.NameEquals("created"u8))
                 {
                     created = property.Value.GetString();
                     continue;

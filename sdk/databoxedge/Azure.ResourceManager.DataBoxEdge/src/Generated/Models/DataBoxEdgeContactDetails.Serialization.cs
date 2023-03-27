@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("contactPerson");
+            writer.WritePropertyName("contactPerson"u8);
             writer.WriteStringValue(ContactPerson);
-            writer.WritePropertyName("companyName");
+            writer.WritePropertyName("companyName"u8);
             writer.WriteStringValue(CompanyName);
-            writer.WritePropertyName("phone");
+            writer.WritePropertyName("phone"u8);
             writer.WriteStringValue(Phone);
-            writer.WritePropertyName("emailList");
+            writer.WritePropertyName("emailList"u8);
             writer.WriteStartArray();
             foreach (var item in EmailList)
             {
@@ -34,28 +34,32 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataBoxEdgeContactDetails DeserializeDataBoxEdgeContactDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string contactPerson = default;
             string companyName = default;
             string phone = default;
             IList<string> emailList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("contactPerson"))
+                if (property.NameEquals("contactPerson"u8))
                 {
                     contactPerson = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("companyName"))
+                if (property.NameEquals("companyName"u8))
                 {
                     companyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phone"))
+                if (property.NameEquals("phone"u8))
                 {
                     phone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("emailList"))
+                if (property.NameEquals("emailList"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())

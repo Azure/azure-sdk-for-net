@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static AssociatedProductProperties DeserializeAssociatedProductProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             string name = default;
             Optional<string> description = default;
@@ -24,27 +28,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<ApiManagementProductState> state = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("terms"))
+                if (property.NameEquals("terms"u8))
                 {
                     terms = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionRequired"))
+                if (property.NameEquals("subscriptionRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +58,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     subscriptionRequired = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("approvalRequired"))
+                if (property.NameEquals("approvalRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     approvalRequired = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("subscriptionsLimit"))
+                if (property.NameEquals("subscriptionsLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     subscriptionsLimit = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

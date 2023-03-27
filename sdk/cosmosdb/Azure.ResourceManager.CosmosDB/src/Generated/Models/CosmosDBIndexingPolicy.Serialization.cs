@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsAutomatic))
             {
-                writer.WritePropertyName("automatic");
+                writer.WritePropertyName("automatic"u8);
                 writer.WriteBooleanValue(IsAutomatic.Value);
             }
             if (Optional.IsDefined(IndexingMode))
             {
-                writer.WritePropertyName("indexingMode");
+                writer.WritePropertyName("indexingMode"u8);
                 writer.WriteStringValue(IndexingMode.Value.ToString());
             }
             if (Optional.IsCollectionDefined(IncludedPaths))
             {
-                writer.WritePropertyName("includedPaths");
+                writer.WritePropertyName("includedPaths"u8);
                 writer.WriteStartArray();
                 foreach (var item in IncludedPaths)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             if (Optional.IsCollectionDefined(ExcludedPaths))
             {
-                writer.WritePropertyName("excludedPaths");
+                writer.WritePropertyName("excludedPaths"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExcludedPaths)
                 {
@@ -48,10 +48,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             if (Optional.IsCollectionDefined(CompositeIndexes))
             {
-                writer.WritePropertyName("compositeIndexes");
+                writer.WritePropertyName("compositeIndexes"u8);
                 writer.WriteStartArray();
                 foreach (var item in CompositeIndexes)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartArray();
                     foreach (var item0 in item)
                     {
@@ -63,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             if (Optional.IsCollectionDefined(SpatialIndexes))
             {
-                writer.WritePropertyName("spatialIndexes");
+                writer.WritePropertyName("spatialIndexes"u8);
                 writer.WriteStartArray();
                 foreach (var item in SpatialIndexes)
                 {
@@ -76,6 +81,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBIndexingPolicy DeserializeCosmosDBIndexingPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> automatic = default;
             Optional<CosmosDBIndexingMode> indexingMode = default;
             Optional<IList<CosmosDBIncludedPath>> includedPaths = default;
@@ -84,7 +93,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<IList<SpatialSpec>> spatialIndexes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("automatic"))
+                if (property.NameEquals("automatic"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +103,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     automatic = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("indexingMode"))
+                if (property.NameEquals("indexingMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     indexingMode = new CosmosDBIndexingMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("includedPaths"))
+                if (property.NameEquals("includedPaths"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,7 +128,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     includedPaths = array;
                     continue;
                 }
-                if (property.NameEquals("excludedPaths"))
+                if (property.NameEquals("excludedPaths"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -134,7 +143,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     excludedPaths = array;
                     continue;
                 }
-                if (property.NameEquals("compositeIndexes"))
+                if (property.NameEquals("compositeIndexes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -144,17 +153,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<IList<CosmosDBCompositePath>> array = new List<IList<CosmosDBCompositePath>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        List<CosmosDBCompositePath> array0 = new List<CosmosDBCompositePath>();
-                        foreach (var item0 in item.EnumerateArray())
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array0.Add(CosmosDBCompositePath.DeserializeCosmosDBCompositePath(item0));
+                            array.Add(null);
                         }
-                        array.Add(array0);
+                        else
+                        {
+                            List<CosmosDBCompositePath> array0 = new List<CosmosDBCompositePath>();
+                            foreach (var item0 in item.EnumerateArray())
+                            {
+                                array0.Add(CosmosDBCompositePath.DeserializeCosmosDBCompositePath(item0));
+                            }
+                            array.Add(array0);
+                        }
                     }
                     compositeIndexes = array;
                     continue;
                 }
-                if (property.NameEquals("spatialIndexes"))
+                if (property.NameEquals("spatialIndexes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

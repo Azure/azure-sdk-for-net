@@ -19,22 +19,22 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PublisherUri))
             {
-                writer.WritePropertyName("publisherUri");
+                writer.WritePropertyName("publisherUri"u8);
                 writer.WriteStringValue(PublisherUri.AbsoluteUri);
             }
             if (Optional.IsDefined(PublisherContact))
             {
-                writer.WritePropertyName("publisherContact");
+                writer.WritePropertyName("publisherContact"u8);
                 writer.WriteStringValue(PublisherContact);
             }
             if (Optional.IsDefined(Eula))
             {
-                writer.WritePropertyName("eula");
+                writer.WritePropertyName("eula"u8);
                 writer.WriteStringValue(Eula);
             }
             if (Optional.IsDefined(PublicNamePrefix))
             {
-                writer.WritePropertyName("publicNamePrefix");
+                writer.WritePropertyName("publicNamePrefix"u8);
                 writer.WriteStringValue(PublicNamePrefix);
             }
             writer.WriteEndObject();
@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static CommunityGalleryInfo DeserializeCommunityGalleryInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> publisherUri = default;
             Optional<string> publisherContact = default;
             Optional<string> eula = default;
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IReadOnlyList<string>> publicNames = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publisherUri"))
+                if (property.NameEquals("publisherUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,22 +64,22 @@ namespace Azure.ResourceManager.Compute.Models
                     publisherUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("publisherContact"))
+                if (property.NameEquals("publisherContact"u8))
                 {
                     publisherContact = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eula"))
+                if (property.NameEquals("eula"u8))
                 {
                     eula = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publicNamePrefix"))
+                if (property.NameEquals("publicNamePrefix"u8))
                 {
                     publicNamePrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("communityGalleryEnabled"))
+                if (property.NameEquals("communityGalleryEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
                     communityGalleryEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("publicNames"))
+                if (property.NameEquals("publicNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(EventHandlers))
             {
-                writer.WritePropertyName("eventHandlers");
+                writer.WritePropertyName("eventHandlers"u8);
                 writer.WriteStartArray();
                 foreach (var item in EventHandlers)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
             if (Optional.IsDefined(AnonymousConnectPolicy))
             {
-                writer.WritePropertyName("anonymousConnectPolicy");
+                writer.WritePropertyName("anonymousConnectPolicy"u8);
                 writer.WriteStringValue(AnonymousConnectPolicy);
             }
             writer.WriteEndObject();
@@ -36,11 +36,15 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static WebPubSubHubProperties DeserializeWebPubSubHubProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<WebPubSubEventHandler>> eventHandlers = default;
             Optional<string> anonymousConnectPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eventHandlers"))
+                if (property.NameEquals("eventHandlers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     eventHandlers = array;
                     continue;
                 }
-                if (property.NameEquals("anonymousConnectPolicy"))
+                if (property.NameEquals("anonymousConnectPolicy"u8))
                 {
                     anonymousConnectPolicy = property.Value.GetString();
                     continue;

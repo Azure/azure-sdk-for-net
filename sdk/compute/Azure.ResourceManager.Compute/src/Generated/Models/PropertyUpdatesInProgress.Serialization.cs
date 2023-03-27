@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static PropertyUpdatesInProgress DeserializePropertyUpdatesInProgress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> targetTier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetTier"))
+                if (property.NameEquals("targetTier"u8))
                 {
                     targetTier = property.Value.GetString();
                     continue;

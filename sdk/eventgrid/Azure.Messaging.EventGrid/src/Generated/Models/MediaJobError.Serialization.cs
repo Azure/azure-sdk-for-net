@@ -15,6 +15,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaJobError DeserializeMediaJobError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MediaJobErrorCode> code = default;
             Optional<string> message = default;
             Optional<MediaJobErrorCategory> category = default;
@@ -22,7 +26,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<IReadOnlyList<MediaJobErrorDetail>> details = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,12 +36,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     code = property.Value.GetString().ToMediaJobErrorCode();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +51,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     category = property.Value.GetString().ToMediaJobErrorCategory();
                     continue;
                 }
-                if (property.NameEquals("retry"))
+                if (property.NameEquals("retry"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +61,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     retry = property.Value.GetString().ToMediaJobRetry();
                     continue;
                 }
-                if (property.NameEquals("details"))
+                if (property.NameEquals("details"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,31 +17,35 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DailySchedule))
             {
-                writer.WritePropertyName("dailySchedule");
+                writer.WritePropertyName("dailySchedule"u8);
                 writer.WriteObjectValue(DailySchedule);
             }
             if (Optional.IsDefined(WeeklySchedule))
             {
-                writer.WritePropertyName("weeklySchedule");
+                writer.WritePropertyName("weeklySchedule"u8);
                 writer.WriteObjectValue(WeeklySchedule);
             }
             if (Optional.IsDefined(MonthlySchedule))
             {
-                writer.WritePropertyName("monthlySchedule");
+                writer.WritePropertyName("monthlySchedule"u8);
                 writer.WriteObjectValue(MonthlySchedule);
             }
             if (Optional.IsDefined(YearlySchedule))
             {
-                writer.WritePropertyName("yearlySchedule");
+                writer.WritePropertyName("yearlySchedule"u8);
                 writer.WriteObjectValue(YearlySchedule);
             }
-            writer.WritePropertyName("retentionPolicyType");
+            writer.WritePropertyName("retentionPolicyType"u8);
             writer.WriteStringValue(RetentionPolicyType);
             writer.WriteEndObject();
         }
 
         internal static LongTermRetentionPolicy DeserializeLongTermRetentionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DailyRetentionSchedule> dailySchedule = default;
             Optional<WeeklyRetentionSchedule> weeklySchedule = default;
             Optional<MonthlyRetentionSchedule> monthlySchedule = default;
@@ -49,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string retentionPolicyType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dailySchedule"))
+                if (property.NameEquals("dailySchedule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     dailySchedule = DailyRetentionSchedule.DeserializeDailyRetentionSchedule(property.Value);
                     continue;
                 }
-                if (property.NameEquals("weeklySchedule"))
+                if (property.NameEquals("weeklySchedule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     weeklySchedule = WeeklyRetentionSchedule.DeserializeWeeklyRetentionSchedule(property.Value);
                     continue;
                 }
-                if (property.NameEquals("monthlySchedule"))
+                if (property.NameEquals("monthlySchedule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +83,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     monthlySchedule = MonthlyRetentionSchedule.DeserializeMonthlyRetentionSchedule(property.Value);
                     continue;
                 }
-                if (property.NameEquals("yearlySchedule"))
+                if (property.NameEquals("yearlySchedule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     yearlySchedule = YearlyRetentionSchedule.DeserializeYearlyRetentionSchedule(property.Value);
                     continue;
                 }
-                if (property.NameEquals("retentionPolicyType"))
+                if (property.NameEquals("retentionPolicyType"u8))
                 {
                     retentionPolicyType = property.Value.GetString();
                     continue;

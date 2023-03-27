@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("stepType");
+            writer.WritePropertyName("stepType"u8);
             writer.WriteStringValue(StepType.ToSerialString());
             writer.WriteEndObject();
         }
 
         internal static UnknownStepProperties DeserializeUnknownStepProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             StepType stepType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("stepType"))
+                if (property.NameEquals("stepType"u8))
                 {
                     stepType = property.Value.GetString().ToStepType();
                     continue;

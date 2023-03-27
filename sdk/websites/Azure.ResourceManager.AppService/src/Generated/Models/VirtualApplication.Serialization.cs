@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VirtualPath))
             {
-                writer.WritePropertyName("virtualPath");
+                writer.WritePropertyName("virtualPath"u8);
                 writer.WriteStringValue(VirtualPath);
             }
             if (Optional.IsDefined(PhysicalPath))
             {
-                writer.WritePropertyName("physicalPath");
+                writer.WritePropertyName("physicalPath"u8);
                 writer.WriteStringValue(PhysicalPath);
             }
             if (Optional.IsDefined(IsPreloadEnabled))
             {
-                writer.WritePropertyName("preloadEnabled");
+                writer.WritePropertyName("preloadEnabled"u8);
                 writer.WriteBooleanValue(IsPreloadEnabled.Value);
             }
             if (Optional.IsCollectionDefined(VirtualDirectories))
             {
-                writer.WritePropertyName("virtualDirectories");
+                writer.WritePropertyName("virtualDirectories"u8);
                 writer.WriteStartArray();
                 foreach (var item in VirtualDirectories)
                 {
@@ -46,23 +46,27 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static VirtualApplication DeserializeVirtualApplication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> virtualPath = default;
             Optional<string> physicalPath = default;
             Optional<bool> preloadEnabled = default;
             Optional<IList<VirtualDirectory>> virtualDirectories = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("virtualPath"))
+                if (property.NameEquals("virtualPath"u8))
                 {
                     virtualPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("physicalPath"))
+                if (property.NameEquals("physicalPath"u8))
                 {
                     physicalPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("preloadEnabled"))
+                if (property.NameEquals("preloadEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.AppService.Models
                     preloadEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("virtualDirectories"))
+                if (property.NameEquals("virtualDirectories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,37 +17,41 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryVirtualNetworkResourceGroupName))
             {
-                writer.WritePropertyName("recoveryVirtualNetworkResourceGroupName");
+                writer.WritePropertyName("recoveryVirtualNetworkResourceGroupName"u8);
                 writer.WriteStringValue(RecoveryVirtualNetworkResourceGroupName);
             }
             if (Optional.IsDefined(RecoveryVirtualNetworkName))
             {
-                writer.WritePropertyName("recoveryVirtualNetworkName");
+                writer.WritePropertyName("recoveryVirtualNetworkName"u8);
                 writer.WriteStringValue(RecoveryVirtualNetworkName);
             }
-            writer.WritePropertyName("resourceType");
+            writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
             writer.WriteEndObject();
         }
 
         internal static NewRecoveryVirtualNetwork DeserializeNewRecoveryVirtualNetwork(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recoveryVirtualNetworkResourceGroupName = default;
             Optional<string> recoveryVirtualNetworkName = default;
             string resourceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryVirtualNetworkResourceGroupName"))
+                if (property.NameEquals("recoveryVirtualNetworkResourceGroupName"u8))
                 {
                     recoveryVirtualNetworkResourceGroupName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryVirtualNetworkName"))
+                if (property.NameEquals("recoveryVirtualNetworkName"u8))
                 {
                     recoveryVirtualNetworkName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;

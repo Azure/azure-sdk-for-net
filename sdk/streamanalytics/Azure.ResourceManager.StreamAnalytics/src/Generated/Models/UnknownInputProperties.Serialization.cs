@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(InputPropertiesType);
             if (Optional.IsDefined(Serialization))
             {
-                writer.WritePropertyName("serialization");
+                writer.WritePropertyName("serialization"u8);
                 writer.WriteObjectValue(Serialization);
             }
             if (Optional.IsDefined(Compression))
             {
-                writer.WritePropertyName("compression");
+                writer.WritePropertyName("compression"u8);
                 writer.WriteObjectValue(Compression);
             }
             if (Optional.IsDefined(PartitionKey))
             {
-                writer.WritePropertyName("partitionKey");
+                writer.WritePropertyName("partitionKey"u8);
                 writer.WriteStringValue(PartitionKey);
             }
             if (Optional.IsDefined(WatermarkSettings))
             {
-                writer.WritePropertyName("watermarkSettings");
+                writer.WritePropertyName("watermarkSettings"u8);
                 writer.WriteObjectValue(WatermarkSettings);
             }
             writer.WriteEndObject();
@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static UnknownInputProperties DeserializeUnknownInputProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = "Unknown";
             Optional<StreamAnalyticsDataSerialization> serialization = default;
             Optional<StreamingJobDiagnostics> diagnostics = default;
@@ -52,12 +56,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<StreamingJobInputWatermarkProperties> watermarkSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serialization"))
+                if (property.NameEquals("serialization"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +71,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     serialization = StreamAnalyticsDataSerialization.DeserializeStreamAnalyticsDataSerialization(property.Value);
                     continue;
                 }
-                if (property.NameEquals("diagnostics"))
+                if (property.NameEquals("diagnostics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +81,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     diagnostics = StreamingJobDiagnostics.DeserializeStreamingJobDiagnostics(property.Value);
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +91,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("compression"))
+                if (property.NameEquals("compression"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,12 +101,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     compression = StreamingCompression.DeserializeStreamingCompression(property.Value);
                     continue;
                 }
-                if (property.NameEquals("partitionKey"))
+                if (property.NameEquals("partitionKey"u8))
                 {
                     partitionKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("watermarkSettings"))
+                if (property.NameEquals("watermarkSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

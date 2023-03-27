@@ -15,10 +15,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static OperationalInsightsWorkspacePurgeResult DeserializeOperationalInsightsWorkspacePurgeResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Guid operationId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operationId"))
+                if (property.NameEquals("operationId"u8))
                 {
                     operationId = property.Value.GetGuid();
                     continue;

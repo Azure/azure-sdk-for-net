@@ -14,11 +14,15 @@ namespace Azure.ResourceManager.ResourceMover.Models
     {
         internal static MoverSummaryItemInfo DeserializeMoverSummaryItemInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> count = default;
             Optional<string> item = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     count = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("item"))
+                if (property.NameEquals("item"u8))
                 {
                     item = property.Value.GetString();
                     continue;

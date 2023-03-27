@@ -21,21 +21,25 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static OperationalInsightsCapacityReservationProperties DeserializeOperationalInsightsCapacityReservationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> lastSkuUpdate = default;
             Optional<long> minCapacity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastSkuUpdate"))
+                if (property.NameEquals("lastSkuUpdate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    lastSkuUpdate = property.Value.GetDateTimeOffset();
+                    lastSkuUpdate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("minCapacity"))
+                if (property.NameEquals("minCapacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

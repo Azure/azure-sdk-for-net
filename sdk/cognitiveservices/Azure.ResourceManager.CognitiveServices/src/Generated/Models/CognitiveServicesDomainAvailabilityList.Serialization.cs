@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static CognitiveServicesDomainAvailabilityList DeserializeCognitiveServicesDomainAvailabilityList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isSubdomainAvailable = default;
             Optional<string> reason = default;
             Optional<string> subdomainName = default;
@@ -21,7 +25,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<string> kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isSubdomainAvailable"))
+                if (property.NameEquals("isSubdomainAvailable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,22 +35,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     isSubdomainAvailable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("reason"))
+                if (property.NameEquals("reason"u8))
                 {
                     reason = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subdomainName"))
+                if (property.NameEquals("subdomainName"u8))
                 {
                     subdomainName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;

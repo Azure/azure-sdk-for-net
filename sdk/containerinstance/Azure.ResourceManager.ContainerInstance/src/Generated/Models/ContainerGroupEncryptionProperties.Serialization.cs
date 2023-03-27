@@ -16,39 +16,54 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("vaultBaseUrl");
+            writer.WritePropertyName("vaultBaseUrl"u8);
             writer.WriteStringValue(VaultBaseUri.AbsoluteUri);
-            writer.WritePropertyName("keyName");
+            writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName);
-            writer.WritePropertyName("keyVersion");
+            writer.WritePropertyName("keyVersion"u8);
             writer.WriteStringValue(KeyVersion);
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteStringValue(Identity);
+            }
             writer.WriteEndObject();
         }
 
         internal static ContainerGroupEncryptionProperties DeserializeContainerGroupEncryptionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri vaultBaseUrl = default;
             string keyName = default;
             string keyVersion = default;
+            Optional<string> identity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vaultBaseUrl"))
+                if (property.NameEquals("vaultBaseUrl"u8))
                 {
                     vaultBaseUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyName"))
+                if (property.NameEquals("keyName"u8))
                 {
                     keyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVersion"))
+                if (property.NameEquals("keyVersion"u8))
                 {
                     keyVersion = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("identity"u8))
+                {
+                    identity = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ContainerGroupEncryptionProperties(vaultBaseUrl, keyName, keyVersion);
+            return new ContainerGroupEncryptionProperties(vaultBaseUrl, keyName, keyVersion, identity.Value);
         }
     }
 }

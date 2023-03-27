@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CurrencyCode))
             {
-                writer.WritePropertyName("currencyCode");
+                writer.WritePropertyName("currencyCode"u8);
                 writer.WriteStringValue(CurrencyCode);
             }
             if (Optional.IsDefined(Amount))
             {
-                writer.WritePropertyName("amount");
+                writer.WritePropertyName("amount"u8);
                 writer.WriteNumberValue(Amount.Value);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         internal static BillingBenefitsPrice DeserializeBillingBenefitsPrice(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> currencyCode = default;
             Optional<double> amount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("currencyCode"))
+                if (property.NameEquals("currencyCode"u8))
                 {
                     currencyCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("amount"))
+                if (property.NameEquals("amount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

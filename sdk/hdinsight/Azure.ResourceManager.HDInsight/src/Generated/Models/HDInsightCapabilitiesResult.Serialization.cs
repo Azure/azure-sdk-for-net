@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightCapabilitiesResult DeserializeHDInsightCapabilitiesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyDictionary<string, HDInsightVersionsCapability>> versions = default;
             Optional<IReadOnlyDictionary<string, RegionsCapability>> regions = default;
             Optional<IReadOnlyList<string>> features = default;
             Optional<QuotaCapability> quota = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("versions"))
+                if (property.NameEquals("versions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +40,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     versions = dictionary;
                     continue;
                 }
-                if (property.NameEquals("regions"))
+                if (property.NameEquals("regions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     regions = dictionary;
                     continue;
                 }
-                if (property.NameEquals("features"))
+                if (property.NameEquals("features"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     features = array;
                     continue;
                 }
-                if (property.NameEquals("quota"))
+                if (property.NameEquals("quota"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

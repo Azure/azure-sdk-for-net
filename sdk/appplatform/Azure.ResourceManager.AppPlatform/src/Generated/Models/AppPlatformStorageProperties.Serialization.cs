@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("storageType");
+            writer.WritePropertyName("storageType"u8);
             writer.WriteStringValue(StorageType.ToString());
             writer.WriteEndObject();
         }
 
         internal static AppPlatformStorageProperties DeserializeAppPlatformStorageProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("storageType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

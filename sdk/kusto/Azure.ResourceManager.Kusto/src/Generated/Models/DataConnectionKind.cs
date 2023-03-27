@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Kusto.Models
         private const string EventHubValue = "EventHub";
         private const string EventGridValue = "EventGrid";
         private const string IotHubValue = "IotHub";
+        private const string CosmosDBValue = "CosmosDb";
 
         /// <summary> EventHub. </summary>
         public static DataConnectionKind EventHub { get; } = new DataConnectionKind(EventHubValue);
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.Kusto.Models
         public static DataConnectionKind EventGrid { get; } = new DataConnectionKind(EventGridValue);
         /// <summary> IotHub. </summary>
         public static DataConnectionKind IotHub { get; } = new DataConnectionKind(IotHubValue);
+        /// <summary> CosmosDb. </summary>
+        public static DataConnectionKind CosmosDB { get; } = new DataConnectionKind(CosmosDBValue);
         /// <summary> Determines if two <see cref="DataConnectionKind"/> values are the same. </summary>
         public static bool operator ==(DataConnectionKind left, DataConnectionKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataConnectionKind"/> values are not the same. </summary>

@@ -15,10 +15,14 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static SapSupportedResourceSkusResult DeserializeSapSupportedResourceSkusResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SapSupportedSku>> supportedSkus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("supportedSkus"))
+                if (property.NameEquals("supportedSkus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

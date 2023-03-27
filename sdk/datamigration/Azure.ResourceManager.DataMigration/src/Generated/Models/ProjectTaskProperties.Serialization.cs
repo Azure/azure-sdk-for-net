@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("taskType");
+            writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
             if (Optional.IsCollectionDefined(ClientData))
             {
-                writer.WritePropertyName("clientData");
+                writer.WritePropertyName("clientData"u8);
                 writer.WriteStartObject();
                 foreach (var item in ClientData)
                 {
@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ProjectTaskProperties DeserializeProjectTaskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("taskType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

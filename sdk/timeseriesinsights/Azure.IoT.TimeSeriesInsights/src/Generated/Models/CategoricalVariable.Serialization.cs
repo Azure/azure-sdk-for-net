@@ -16,16 +16,16 @@ namespace Azure.IoT.TimeSeriesInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("value");
+            writer.WritePropertyName("value"u8);
             writer.WriteObjectValue(Value);
             if (Optional.IsDefined(Interpolation))
             {
-                writer.WritePropertyName("interpolation");
+                writer.WritePropertyName("interpolation"u8);
                 writer.WriteObjectValue(Interpolation);
             }
             if (Optional.IsCollectionDefined(Categories))
             {
-                writer.WritePropertyName("categories");
+                writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
@@ -33,13 +33,13 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("defaultCategory");
+            writer.WritePropertyName("defaultCategory"u8);
             writer.WriteObjectValue(DefaultCategory);
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Filter))
             {
-                writer.WritePropertyName("filter");
+                writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
             }
             writer.WriteEndObject();
@@ -47,6 +47,10 @@ namespace Azure.IoT.TimeSeriesInsights
 
         internal static CategoricalVariable DeserializeCategoricalVariable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TimeSeriesExpression value = default;
             Optional<TimeSeriesInterpolation> interpolation = default;
             Optional<IList<TimeSeriesAggregateCategory>> categories = default;
@@ -55,12 +59,12 @@ namespace Azure.IoT.TimeSeriesInsights
             Optional<TimeSeriesExpression> filter = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = TimeSeriesExpression.DeserializeTimeSeriesExpression(property.Value);
                     continue;
                 }
-                if (property.NameEquals("interpolation"))
+                if (property.NameEquals("interpolation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +74,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     interpolation = TimeSeriesInterpolation.DeserializeTimeSeriesInterpolation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("categories"))
+                if (property.NameEquals("categories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,17 +89,17 @@ namespace Azure.IoT.TimeSeriesInsights
                     categories = array;
                     continue;
                 }
-                if (property.NameEquals("defaultCategory"))
+                if (property.NameEquals("defaultCategory"u8))
                 {
                     defaultCategory = TimeSeriesDefaultCategory.DeserializeTimeSeriesDefaultCategory(property.Value);
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filter"))
+                if (property.NameEquals("filter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

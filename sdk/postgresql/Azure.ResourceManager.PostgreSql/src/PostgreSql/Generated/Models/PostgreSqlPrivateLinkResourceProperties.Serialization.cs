@@ -15,16 +15,20 @@ namespace Azure.ResourceManager.PostgreSql.Models
     {
         internal static PostgreSqlPrivateLinkResourceProperties DeserializePostgreSqlPrivateLinkResourceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> groupId = default;
             Optional<IReadOnlyList<string>> requiredMembers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("groupId"))
+                if (property.NameEquals("groupId"u8))
                 {
                     groupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requiredMembers"))
+                if (property.NameEquals("requiredMembers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

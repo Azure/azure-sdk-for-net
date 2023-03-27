@@ -15,11 +15,15 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
     {
         internal static SparkJobListViewResponse DeserializeSparkJobListViewResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> nJobs = default;
             Optional<IReadOnlyList<SparkJob>> sparkJobs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nJobs"))
+                if (property.NameEquals("nJobs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                     nJobs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sparkJobs"))
+                if (property.NameEquals("sparkJobs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

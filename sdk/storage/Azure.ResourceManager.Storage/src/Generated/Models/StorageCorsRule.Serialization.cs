@@ -16,30 +16,30 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("allowedOrigins");
+            writer.WritePropertyName("allowedOrigins"u8);
             writer.WriteStartArray();
             foreach (var item in AllowedOrigins)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("allowedMethods");
+            writer.WritePropertyName("allowedMethods"u8);
             writer.WriteStartArray();
             foreach (var item in AllowedMethods)
             {
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("maxAgeInSeconds");
+            writer.WritePropertyName("maxAgeInSeconds"u8);
             writer.WriteNumberValue(MaxAgeInSeconds);
-            writer.WritePropertyName("exposedHeaders");
+            writer.WritePropertyName("exposedHeaders"u8);
             writer.WriteStartArray();
             foreach (var item in ExposedHeaders)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("allowedHeaders");
+            writer.WritePropertyName("allowedHeaders"u8);
             writer.WriteStartArray();
             foreach (var item in AllowedHeaders)
             {
@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageCorsRule DeserializeStorageCorsRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> allowedOrigins = default;
             IList<CorsRuleAllowedMethod> allowedMethods = default;
             int maxAgeInSeconds = default;
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.Storage.Models
             IList<string> allowedHeaders = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowedOrigins"))
+                if (property.NameEquals("allowedOrigins"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.Storage.Models
                     allowedOrigins = array;
                     continue;
                 }
-                if (property.NameEquals("allowedMethods"))
+                if (property.NameEquals("allowedMethods"u8))
                 {
                     List<CorsRuleAllowedMethod> array = new List<CorsRuleAllowedMethod>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -78,12 +82,12 @@ namespace Azure.ResourceManager.Storage.Models
                     allowedMethods = array;
                     continue;
                 }
-                if (property.NameEquals("maxAgeInSeconds"))
+                if (property.NameEquals("maxAgeInSeconds"u8))
                 {
                     maxAgeInSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("exposedHeaders"))
+                if (property.NameEquals("exposedHeaders"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -93,7 +97,7 @@ namespace Azure.ResourceManager.Storage.Models
                     exposedHeaders = array;
                     continue;
                 }
-                if (property.NameEquals("allowedHeaders"))
+                if (property.NameEquals("allowedHeaders"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())

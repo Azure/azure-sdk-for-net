@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(StorageType))
             {
-                writer.WritePropertyName("storageType");
+                writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType.Value.ToString());
             }
             if (Optional.IsDefined(StorageName))
             {
-                writer.WritePropertyName("storageName");
+                writer.WritePropertyName("storageName"u8);
                 writer.WriteStringValue(StorageName);
             }
             writer.WriteEndObject();
@@ -35,17 +35,21 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppVolume DeserializeContainerAppVolume(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<ContainerAppStorageType> storageType = default;
             Optional<string> storageName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageType"))
+                if (property.NameEquals("storageType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     storageType = new ContainerAppStorageType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageName"))
+                if (property.NameEquals("storageName"u8))
                 {
                     storageName = property.Value.GetString();
                     continue;

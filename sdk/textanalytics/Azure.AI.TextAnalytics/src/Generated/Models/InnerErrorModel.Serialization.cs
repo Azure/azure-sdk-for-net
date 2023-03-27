@@ -16,13 +16,13 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("code");
+            writer.WritePropertyName("code"u8);
             writer.WriteStringValue(Code.ToString());
-            writer.WritePropertyName("message");
+            writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
             if (Optional.IsCollectionDefined(Details))
             {
-                writer.WritePropertyName("details");
+                writer.WritePropertyName("details"u8);
                 writer.WriteStartObject();
                 foreach (var item in Details)
                 {
@@ -33,12 +33,12 @@ namespace Azure.AI.TextAnalytics.Models
             }
             if (Optional.IsDefined(Target))
             {
-                writer.WritePropertyName("target");
+                writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
             if (Optional.IsDefined(Innererror))
             {
-                writer.WritePropertyName("innererror");
+                writer.WritePropertyName("innererror"u8);
                 writer.WriteObjectValue(Innererror);
             }
             writer.WriteEndObject();
@@ -46,6 +46,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static InnerErrorModel DeserializeInnerErrorModel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             InnerErrorCode code = default;
             string message = default;
             Optional<IDictionary<string, string>> details = default;
@@ -53,17 +57,17 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<InnerErrorModel> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = new InnerErrorCode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("details"))
+                if (property.NameEquals("details"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,12 +82,12 @@ namespace Azure.AI.TextAnalytics.Models
                     details = dictionary;
                     continue;
                 }
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
                     target = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("innererror"))
+                if (property.NameEquals("innererror"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

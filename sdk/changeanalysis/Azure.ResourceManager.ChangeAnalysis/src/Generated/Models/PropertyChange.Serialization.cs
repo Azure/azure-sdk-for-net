@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
     {
         internal static PropertyChange DeserializePropertyChange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ChangeType> changeType = default;
             Optional<ChangeCategory> changeCategory = default;
             Optional<string> jsonPath = default;
@@ -25,7 +29,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             Optional<bool> isDataMasked = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("changeType"))
+                if (property.NameEquals("changeType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +39,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                     changeType = new ChangeType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("changeCategory"))
+                if (property.NameEquals("changeCategory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,17 +49,17 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                     changeCategory = property.Value.GetString().ToChangeCategory();
                     continue;
                 }
-                if (property.NameEquals("jsonPath"))
+                if (property.NameEquals("jsonPath"u8))
                 {
                     jsonPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("level"))
+                if (property.NameEquals("level"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,22 +69,22 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                     level = new PropertyChangeLevel(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("oldValue"))
+                if (property.NameEquals("oldValue"u8))
                 {
                     oldValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("newValue"))
+                if (property.NameEquals("newValue"u8))
                 {
                     newValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isDataMasked"))
+                if (property.NameEquals("isDataMasked"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

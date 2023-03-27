@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,26 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.2 (2023-02-14)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
+
+## 1.1.0-beta.1 (2023-01-12)
+
+### Features Added
+
+- Supported ServiceBusNamespace creation with `MinimumTlsVersion`, `PublicNetworkAccess` and `PremiumMessagingPartitions`.
+
+### Other Changes
+
+- Upgraded API version to 2022-10-01-preview.
+- Upgraded dependent `Azure.Core` to 1.27.0.
+- Upgraded dependent `Azure.ResourceManager` to 1.3.2.
+- Optimized the implementation of methods related to tag operations.
 
 ## 1.0.0 (2022-07-21)
 

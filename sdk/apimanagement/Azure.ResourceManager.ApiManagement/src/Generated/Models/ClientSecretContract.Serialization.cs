@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ClientSecretContract DeserializeClientSecretContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clientSecret = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientSecret"))
+                if (property.NameEquals("clientSecret"u8))
                 {
                     clientSecret = property.Value.GetString();
                     continue;

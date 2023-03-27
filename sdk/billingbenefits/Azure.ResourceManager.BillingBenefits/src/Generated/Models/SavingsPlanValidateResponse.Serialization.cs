@@ -15,11 +15,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     {
         internal static SavingsPlanValidateResponse DeserializeSavingsPlanValidateResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SavingsPlanValidateResult>> benefits = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("benefits"))
+                if (property.NameEquals("benefits"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     benefits = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

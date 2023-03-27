@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         internal static ContainerRegistryRunGetLogResult DeserializeContainerRegistryRunGetLogResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> logLink = default;
             Optional<string> logArtifactLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("logLink"))
+                if (property.NameEquals("logLink"u8))
                 {
                     logLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("logArtifactLink"))
+                if (property.NameEquals("logArtifactLink"u8))
                 {
                     logArtifactLink = property.Value.GetString();
                     continue;

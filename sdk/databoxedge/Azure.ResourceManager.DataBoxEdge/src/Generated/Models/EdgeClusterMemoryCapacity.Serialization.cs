@@ -17,47 +17,47 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ClusterFreeMemoryInMB))
             {
-                writer.WritePropertyName("clusterFreeMemoryMb");
+                writer.WritePropertyName("clusterFreeMemoryMb"u8);
                 writer.WriteNumberValue(ClusterFreeMemoryInMB.Value);
             }
             if (Optional.IsDefined(ClusterUsedMemoryInMB))
             {
-                writer.WritePropertyName("clusterUsedMemoryMb");
+                writer.WritePropertyName("clusterUsedMemoryMb"u8);
                 writer.WriteNumberValue(ClusterUsedMemoryInMB.Value);
             }
             if (Optional.IsDefined(ClusterFailoverMemoryInMB))
             {
-                writer.WritePropertyName("clusterFailoverMemoryMb");
+                writer.WritePropertyName("clusterFailoverMemoryMb"u8);
                 writer.WriteNumberValue(ClusterFailoverMemoryInMB.Value);
             }
             if (Optional.IsDefined(ClusterFragmentationMemoryInMB))
             {
-                writer.WritePropertyName("clusterFragmentationMemoryMb");
+                writer.WritePropertyName("clusterFragmentationMemoryMb"u8);
                 writer.WriteNumberValue(ClusterFragmentationMemoryInMB.Value);
             }
             if (Optional.IsDefined(ClusterHyperVReserveMemoryMb))
             {
-                writer.WritePropertyName("clusterHypervReserveMemoryMb");
+                writer.WritePropertyName("clusterHypervReserveMemoryMb"u8);
                 writer.WriteNumberValue(ClusterHyperVReserveMemoryMb.Value);
             }
             if (Optional.IsDefined(ClusterInfraVmMemoryInMB))
             {
-                writer.WritePropertyName("clusterInfraVmMemoryMb");
+                writer.WritePropertyName("clusterInfraVmMemoryMb"u8);
                 writer.WriteNumberValue(ClusterInfraVmMemoryInMB.Value);
             }
             if (Optional.IsDefined(ClusterTotalMemoryInMB))
             {
-                writer.WritePropertyName("clusterTotalMemoryMb");
+                writer.WritePropertyName("clusterTotalMemoryMb"u8);
                 writer.WriteNumberValue(ClusterTotalMemoryInMB.Value);
             }
             if (Optional.IsDefined(ClusterNonFailoverVmInMB))
             {
-                writer.WritePropertyName("clusterNonFailoverVmMb");
+                writer.WritePropertyName("clusterNonFailoverVmMb"u8);
                 writer.WriteNumberValue(ClusterNonFailoverVmInMB.Value);
             }
             if (Optional.IsDefined(ClusterMemoryUsedByVmsInMB))
             {
-                writer.WritePropertyName("clusterMemoryUsedByVmsMb");
+                writer.WritePropertyName("clusterMemoryUsedByVmsMb"u8);
                 writer.WriteNumberValue(ClusterMemoryUsedByVmsInMB.Value);
             }
             writer.WriteEndObject();
@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeClusterMemoryCapacity DeserializeEdgeClusterMemoryCapacity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> clusterFreeMemoryMb = default;
             Optional<double> clusterUsedMemoryMb = default;
             Optional<double> clusterFailoverMemoryMb = default;
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<double> clusterMemoryUsedByVmsMb = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clusterFreeMemoryMb"))
+                if (property.NameEquals("clusterFreeMemoryMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +90,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     clusterFreeMemoryMb = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("clusterUsedMemoryMb"))
+                if (property.NameEquals("clusterUsedMemoryMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +100,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     clusterUsedMemoryMb = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("clusterFailoverMemoryMb"))
+                if (property.NameEquals("clusterFailoverMemoryMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,7 +110,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     clusterFailoverMemoryMb = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("clusterFragmentationMemoryMb"))
+                if (property.NameEquals("clusterFragmentationMemoryMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,7 +120,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     clusterFragmentationMemoryMb = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("clusterHypervReserveMemoryMb"))
+                if (property.NameEquals("clusterHypervReserveMemoryMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,7 +130,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     clusterHyperVReserveMemoryMb = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("clusterInfraVmMemoryMb"))
+                if (property.NameEquals("clusterInfraVmMemoryMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,7 +140,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     clusterInfraVmMemoryMb = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("clusterTotalMemoryMb"))
+                if (property.NameEquals("clusterTotalMemoryMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -146,7 +150,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     clusterTotalMemoryMb = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("clusterNonFailoverVmMb"))
+                if (property.NameEquals("clusterNonFailoverVmMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -156,7 +160,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     clusterNonFailoverVmMb = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("clusterMemoryUsedByVmsMb"))
+                if (property.NameEquals("clusterMemoryUsedByVmsMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

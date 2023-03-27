@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(LoadBalancerConfigurations))
             {
-                writer.WritePropertyName("loadBalancerConfigurations");
+                writer.WritePropertyName("loadBalancerConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerConfigurations)
                 {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(SlotType))
             {
-                writer.WritePropertyName("slotType");
+                writer.WritePropertyName("slotType"u8);
                 writer.WriteStringValue(SlotType.Value.ToString());
             }
             if (Optional.IsDefined(SwappableCloudService))
             {
-                writer.WritePropertyName("swappableCloudService");
+                writer.WritePropertyName("swappableCloudService"u8);
                 JsonSerializer.Serialize(writer, SwappableCloudService);
             }
             writer.WriteEndObject();
@@ -42,12 +42,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static CloudServiceNetworkProfile DeserializeCloudServiceNetworkProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<CloudServiceLoadBalancerConfiguration>> loadBalancerConfigurations = default;
             Optional<CloudServiceSlotType> slotType = default;
             Optional<WritableSubResource> swappableCloudService = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("loadBalancerConfigurations"))
+                if (property.NameEquals("loadBalancerConfigurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
                     loadBalancerConfigurations = array;
                     continue;
                 }
-                if (property.NameEquals("slotType"))
+                if (property.NameEquals("slotType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Models
                     slotType = new CloudServiceSlotType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("swappableCloudService"))
+                if (property.NameEquals("swappableCloudService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

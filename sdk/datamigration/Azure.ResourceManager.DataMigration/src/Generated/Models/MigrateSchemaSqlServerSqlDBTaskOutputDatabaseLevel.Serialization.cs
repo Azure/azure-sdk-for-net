@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel DeserializeMigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> databaseName = default;
             Optional<MigrationState> state = default;
             Optional<SchemaMigrationStage> stage = default;
@@ -29,12 +33,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("databaseName"))
+                if (property.NameEquals("databaseName"u8))
                 {
                     databaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     state = new MigrationState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("stage"))
+                if (property.NameEquals("stage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +58,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     stage = new SchemaMigrationStage(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("startedOn"))
+                if (property.NameEquals("startedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +68,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     startedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endedOn"))
+                if (property.NameEquals("endedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,17 +78,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                     endedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("databaseErrorResultPrefix"))
+                if (property.NameEquals("databaseErrorResultPrefix"u8))
                 {
                     databaseErrorResultPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("schemaErrorResultPrefix"))
+                if (property.NameEquals("schemaErrorResultPrefix"u8))
                 {
                     schemaErrorResultPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("numberOfSuccessfulOperations"))
+                if (property.NameEquals("numberOfSuccessfulOperations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +98,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     numberOfSuccessfulOperations = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("numberOfFailedOperations"))
+                if (property.NameEquals("numberOfFailedOperations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,17 +108,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                     numberOfFailedOperations = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("fileId"))
+                if (property.NameEquals("fileId"u8))
                 {
                     fileId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultType"))
+                if (property.NameEquals("resultType"u8))
                 {
                     resultType = property.Value.GetString();
                     continue;

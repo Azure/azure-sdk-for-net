@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static StorageAccountInternetEndpoints DeserializeStorageAccountInternetEndpoints(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> blob = default;
             Optional<Uri> file = default;
             Optional<Uri> web = default;
             Optional<Uri> dfs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("blob"))
+                if (property.NameEquals("blob"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +35,7 @@ namespace Azure.ResourceManager.Storage.Models
                     blob = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("file"))
+                if (property.NameEquals("file"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.Storage.Models
                     file = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("web"))
+                if (property.NameEquals("web"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.Storage.Models
                     web = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dfs"))
+                if (property.NameEquals("dfs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

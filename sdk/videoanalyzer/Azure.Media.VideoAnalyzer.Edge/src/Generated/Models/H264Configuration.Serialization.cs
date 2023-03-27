@@ -17,12 +17,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(GovLength))
             {
-                writer.WritePropertyName("govLength");
+                writer.WritePropertyName("govLength"u8);
                 writer.WriteNumberValue(GovLength.Value);
             }
             if (Optional.IsDefined(Profile))
             {
-                writer.WritePropertyName("profile");
+                writer.WritePropertyName("profile"u8);
                 writer.WriteStringValue(Profile.Value.ToString());
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static H264Configuration DeserializeH264Configuration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> govLength = default;
             Optional<H264Profile> profile = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("govLength"))
+                if (property.NameEquals("govLength"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     govLength = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("profile"))
+                if (property.NameEquals("profile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

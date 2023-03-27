@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// AutoMLJob Task type.
-    /// Serialized Name: TaskType
-    /// </summary>
+    /// <summary> AutoMLJob Task type. </summary>
     internal readonly partial struct TaskType : IEquatable<TaskType>
     {
         private readonly string _value;
@@ -39,59 +36,45 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// Classification in machine learning and statistics is a supervised learning approach in which
         /// the computer program learns from the data given to it and make new observations or classifications.
-        /// Serialized Name: TaskType.Classification
         /// </summary>
         public static TaskType Classification { get; } = new TaskType(ClassificationValue);
-        /// <summary>
-        /// Regression means to predict the value using the input data. Regression models are used to predict a continuous value.
-        /// Serialized Name: TaskType.Regression
-        /// </summary>
+        /// <summary> Regression means to predict the value using the input data. Regression models are used to predict a continuous value. </summary>
         public static TaskType Regression { get; } = new TaskType(RegressionValue);
         /// <summary>
         /// Forecasting is a special kind of regression task that deals with time-series data and creates forecasting model
         /// that can be used to predict the near future values based on the inputs.
-        /// Serialized Name: TaskType.Forecasting
         /// </summary>
         public static TaskType Forecasting { get; } = new TaskType(ForecastingValue);
         /// <summary>
         /// Image Classification. Multi-class image classification is used when an image is classified with only a single label
         /// from a set of classes - e.g. each image is classified as either an image of a &apos;cat&apos; or a &apos;dog&apos; or a &apos;duck&apos;.
-        /// Serialized Name: TaskType.ImageClassification
         /// </summary>
         public static TaskType ImageClassification { get; } = new TaskType(ImageClassificationValue);
         /// <summary>
         /// Image Classification Multilabel. Multi-label image classification is used when an image could have one or more labels
         /// from a set of labels - e.g. an image could be labeled with both &apos;cat&apos; and &apos;dog&apos;.
-        /// Serialized Name: TaskType.ImageClassificationMultilabel
         /// </summary>
         public static TaskType ImageClassificationMultilabel { get; } = new TaskType(ImageClassificationMultilabelValue);
         /// <summary>
         /// Image Object Detection. Object detection is used to identify objects in an image and locate each object with a
         /// bounding box e.g. locate all dogs and cats in an image and draw a bounding box around each.
-        /// Serialized Name: TaskType.ImageObjectDetection
         /// </summary>
         public static TaskType ImageObjectDetection { get; } = new TaskType(ImageObjectDetectionValue);
         /// <summary>
         /// Image Instance Segmentation. Instance segmentation is used to identify objects in an image at the pixel level,
         /// drawing a polygon around each object in the image.
-        /// Serialized Name: TaskType.ImageInstanceSegmentation
         /// </summary>
         public static TaskType ImageInstanceSegmentation { get; } = new TaskType(ImageInstanceSegmentationValue);
         /// <summary>
         /// Text classification (also known as text tagging or text categorization) is the process of sorting texts into categories.
         /// Categories are mutually exclusive.
-        /// Serialized Name: TaskType.TextClassification
         /// </summary>
         public static TaskType TextClassification { get; } = new TaskType(TextClassificationValue);
-        /// <summary>
-        /// Multilabel classification task assigns each sample to a group (zero or more) of target labels.
-        /// Serialized Name: TaskType.TextClassificationMultilabel
-        /// </summary>
+        /// <summary> Multilabel classification task assigns each sample to a group (zero or more) of target labels. </summary>
         public static TaskType TextClassificationMultilabel { get; } = new TaskType(TextClassificationMultilabelValue);
         /// <summary>
         /// Text Named Entity Recognition a.k.a. TextNER.
         /// Named Entity Recognition (NER) is the ability to take free-form text and identify the occurrences of entities such as people, locations, organizations, and more.
-        /// Serialized Name: TaskType.TextNER
         /// </summary>
         public static TaskType TextNER { get; } = new TaskType(TextNERValue);
         /// <summary> Determines if two <see cref="TaskType"/> values are the same. </summary>

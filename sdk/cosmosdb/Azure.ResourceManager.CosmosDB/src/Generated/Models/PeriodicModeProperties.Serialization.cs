@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BackupIntervalInMinutes))
             {
-                writer.WritePropertyName("backupIntervalInMinutes");
+                writer.WritePropertyName("backupIntervalInMinutes"u8);
                 writer.WriteNumberValue(BackupIntervalInMinutes.Value);
             }
             if (Optional.IsDefined(BackupRetentionIntervalInHours))
             {
-                writer.WritePropertyName("backupRetentionIntervalInHours");
+                writer.WritePropertyName("backupRetentionIntervalInHours"u8);
                 writer.WriteNumberValue(BackupRetentionIntervalInHours.Value);
             }
             if (Optional.IsDefined(BackupStorageRedundancy))
             {
-                writer.WritePropertyName("backupStorageRedundancy");
+                writer.WritePropertyName("backupStorageRedundancy"u8);
                 writer.WriteStringValue(BackupStorageRedundancy.Value.ToString());
             }
             writer.WriteEndObject();
@@ -35,12 +35,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static PeriodicModeProperties DeserializePeriodicModeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> backupIntervalInMinutes = default;
             Optional<int> backupRetentionIntervalInHours = default;
             Optional<CosmosDBBackupStorageRedundancy> backupStorageRedundancy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("backupIntervalInMinutes"))
+                if (property.NameEquals("backupIntervalInMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     backupIntervalInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("backupRetentionIntervalInHours"))
+                if (property.NameEquals("backupRetentionIntervalInHours"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     backupRetentionIntervalInHours = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("backupStorageRedundancy"))
+                if (property.NameEquals("backupStorageRedundancy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

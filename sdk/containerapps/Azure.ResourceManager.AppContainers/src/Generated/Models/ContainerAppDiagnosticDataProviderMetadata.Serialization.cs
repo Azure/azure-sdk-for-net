@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProviderName))
             {
-                writer.WritePropertyName("providerName");
+                writer.WritePropertyName("providerName"u8);
                 writer.WriteStringValue(ProviderName);
             }
             if (Optional.IsCollectionDefined(PropertyBag))
             {
-                writer.WritePropertyName("propertyBag");
+                writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartArray();
                 foreach (var item in PropertyBag)
                 {
@@ -36,16 +36,20 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppDiagnosticDataProviderMetadata DeserializeContainerAppDiagnosticDataProviderMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> providerName = default;
             Optional<IList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>> propertyBag = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("providerName"))
+                if (property.NameEquals("providerName"u8))
                 {
                     providerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("propertyBag"))
+                if (property.NameEquals("propertyBag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

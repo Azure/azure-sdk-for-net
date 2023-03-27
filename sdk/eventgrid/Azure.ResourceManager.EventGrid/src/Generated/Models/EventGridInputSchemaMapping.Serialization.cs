@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.EventGrid.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("inputSchemaMappingType");
+            writer.WritePropertyName("inputSchemaMappingType"u8);
             writer.WriteStringValue(InputSchemaMappingType.ToString());
             writer.WriteEndObject();
         }
 
         internal static EventGridInputSchemaMapping DeserializeEventGridInputSchemaMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("inputSchemaMappingType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

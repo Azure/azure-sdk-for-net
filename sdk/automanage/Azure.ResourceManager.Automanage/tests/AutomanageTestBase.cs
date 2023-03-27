@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.Automanage.Models;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources;
@@ -25,11 +27,13 @@ namespace Azure.ResourceManager.Automanage.Tests
         protected AutomanageTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            IgnoreApiVersionInResourcesOperations();
         }
 
         protected AutomanageTestBase(bool isAsync)
             : base(isAsync)
         {
+            IgnoreApiVersionInResourcesOperations();
         }
 
         [SetUp]
@@ -65,7 +69,7 @@ namespace Azure.ResourceManager.Automanage.Tests
         /// <param name="collection">Configruation profile collection to perform actions against</param>
         /// <param name="profileName">Desired configuration profile name</param>
         /// <returns>ConfigurationProfileResource</returns>
-        protected async Task<ConfigurationProfileResource> CreateConfigurationProfile(ConfigurationProfileCollection collection, string profileName)
+        protected async Task<AutomanageConfigurationProfileResource> CreateConfigurationProfile(AutomanageConfigurationProfileCollection collection, string profileName)
         {
             string configuration = "{" +
                 "\"Antimalware/Enable\":true," +
@@ -83,7 +87,7 @@ namespace Azure.ResourceManager.Automanage.Tests
                 "\"BootDiagnostics/Enable\":true" +
             "}";
 
-            ConfigurationProfileData data = new ConfigurationProfileData(DefaultLocation)
+            AutomanageConfigurationProfileData data = new AutomanageConfigurationProfileData(DefaultLocation)
             {
                 Configuration = new BinaryData(configuration)
             };
@@ -95,17 +99,18 @@ namespace Azure.ResourceManager.Automanage.Tests
         /// <summary>
         /// Creates an assignment between a configuration profile and a virtual machine
         /// </summary>
-        /// <param name="vm">Virtual Machine to assign a profile to</param>
+        /// <param name="vmId">The ID of the Virtual Machine to assign a profile to</param>
         /// <param name="profileId">ID of desired configuration profile to use</param>
-        /// <param name="scope">Scope to create the assignment under</param>
         /// <returns>ConfigurationProfileAssignmentResource</returns>
-        protected async Task<ConfigurationProfileAssignmentResource> CreateAssignment(VirtualMachineResource vm, string profileId)
+        protected async Task<AutomanageVmConfigurationProfileAssignmentResource> CreateAssignment(ResourceIdentifier vmId, string profileId)
         {
-            var data = new ConfigurationProfileAssignmentData();
-            data.Properties = new ConfigurationProfileAssignmentProperties() { ConfigurationProfile = profileId };
+            var data = new AutomanageConfigurationProfileAssignmentData()
+            {
+                Properties = new AutomanageConfigurationProfileAssignmentProperties() { ConfigurationProfile = new ResourceIdentifier(profileId) }
+            };
 
             // fetch assignments collection
-            var collection = ArmClient.GetConfigurationProfileAssignments(vm.Id);
+            var collection = ArmClient.GetAutomanageVmConfigurationProfileAssignments(vmId);
             var assignment = await collection.CreateOrUpdateAsync(WaitUntil.Completed, "default", data);
 
             return assignment.Value;
@@ -116,8 +121,8 @@ namespace Azure.ResourceManager.Automanage.Tests
         /// </summary>
         /// <param name="vmName">Desired name of the Virtual Machine</param>
         /// <param name="rg">Resource Group to perform actions against</param>
-        /// <returns>VirtualMachineResource</returns>
-        protected async Task<VirtualMachineResource> CreateVirtualMachineFromTemplate(string vmName, ResourceGroupResource rg)
+        /// <returns>The <see cref="ResourceIdentifier"/> of the created VirtualMachineResource</returns>
+        protected async Task<ResourceIdentifier> CreateVirtualMachineFromTemplate(string vmName, ResourceGroupResource rg)
         {
             // get ARM template contents
             var httpClient = new HttpClient();
@@ -134,11 +139,23 @@ namespace Azure.ResourceManager.Automanage.Tests
             });
 
             // create vm
-            await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, "deployVM", deploymentContent);
+            var deploymentLro = await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, "deployVM", deploymentContent);
+            var deployment = deploymentLro.Value.Data;
 
-            // fetch vm
-            var vm = rg.GetVirtualMachineAsync(vmName).Result.Value;
-            return vm;
+            var vmId = deployment.Properties.OutputResources.Select(sub => sub.Id).First(id => id.ResourceType == VirtualMachineResource.ResourceType);
+
+            return vmId;
+        }
+
+        private void IgnoreApiVersionInResourcesOperations()
+        {
+            // Ignore the api-version of deployment operations
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/providers/Microsoft.Resources/deployments/[^/]+(/operationStatuses/[^/]+)?pi-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
         }
     }
 }

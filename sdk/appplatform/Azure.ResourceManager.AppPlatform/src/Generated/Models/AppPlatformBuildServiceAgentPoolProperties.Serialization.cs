@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PoolSize))
             {
-                writer.WritePropertyName("poolSize");
+                writer.WritePropertyName("poolSize"u8);
                 writer.WriteObjectValue(PoolSize);
             }
             writer.WriteEndObject();
@@ -25,16 +25,20 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformBuildServiceAgentPoolProperties DeserializeAppPlatformBuildServiceAgentPoolProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> provisioningState = default;
             Optional<BuildServiceAgentPoolSizeProperties> poolSize = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     provisioningState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("poolSize"))
+                if (property.NameEquals("poolSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

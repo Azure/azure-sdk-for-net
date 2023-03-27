@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.NetApp
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             if (Optional.IsDefined(Size))
             {
                 if (Size != null)
                 {
-                    writer.WritePropertyName("size");
+                    writer.WritePropertyName("size"u8);
                     writer.WriteNumberValue(Size.Value);
                 }
                 else
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 if (ParentPath != null)
                 {
-                    writer.WritePropertyName("parentPath");
+                    writer.WritePropertyName("parentPath"u8);
                     writer.WriteStringValue(ParentPath);
                 }
                 else
@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.NetApp
 
         internal static NetAppSubvolumeInfoData DeserializeNetAppSubvolumeInfoData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -63,22 +67,22 @@ namespace Azure.ResourceManager.NetApp
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +92,7 @@ namespace Azure.ResourceManager.NetApp
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,12 +101,12 @@ namespace Azure.ResourceManager.NetApp
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("path"))
+                        if (property0.NameEquals("path"u8))
                         {
                             path = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("size"))
+                        if (property0.NameEquals("size"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -112,7 +116,7 @@ namespace Azure.ResourceManager.NetApp
                             size = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("parentPath"))
+                        if (property0.NameEquals("parentPath"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -122,7 +126,7 @@ namespace Azure.ResourceManager.NetApp
                             parentPath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;

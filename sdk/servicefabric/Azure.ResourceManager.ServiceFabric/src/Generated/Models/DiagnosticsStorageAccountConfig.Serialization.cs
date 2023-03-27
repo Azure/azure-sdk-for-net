@@ -16,26 +16,30 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("storageAccountName");
+            writer.WritePropertyName("storageAccountName"u8);
             writer.WriteStringValue(StorageAccountName);
-            writer.WritePropertyName("protectedAccountKeyName");
+            writer.WritePropertyName("protectedAccountKeyName"u8);
             writer.WriteStringValue(ProtectedAccountKeyName);
             if (Optional.IsDefined(ProtectedAccountKeyName2))
             {
-                writer.WritePropertyName("protectedAccountKeyName2");
+                writer.WritePropertyName("protectedAccountKeyName2"u8);
                 writer.WriteStringValue(ProtectedAccountKeyName2);
             }
-            writer.WritePropertyName("blobEndpoint");
+            writer.WritePropertyName("blobEndpoint"u8);
             writer.WriteStringValue(BlobEndpoint.AbsoluteUri);
-            writer.WritePropertyName("queueEndpoint");
+            writer.WritePropertyName("queueEndpoint"u8);
             writer.WriteStringValue(QueueEndpoint.AbsoluteUri);
-            writer.WritePropertyName("tableEndpoint");
+            writer.WritePropertyName("tableEndpoint"u8);
             writer.WriteStringValue(TableEndpoint.AbsoluteUri);
             writer.WriteEndObject();
         }
 
         internal static DiagnosticsStorageAccountConfig DeserializeDiagnosticsStorageAccountConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string storageAccountName = default;
             string protectedAccountKeyName = default;
             Optional<string> protectedAccountKeyName2 = default;
@@ -44,32 +48,32 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Uri tableEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageAccountName"))
+                if (property.NameEquals("storageAccountName"u8))
                 {
                     storageAccountName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectedAccountKeyName"))
+                if (property.NameEquals("protectedAccountKeyName"u8))
                 {
                     protectedAccountKeyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectedAccountKeyName2"))
+                if (property.NameEquals("protectedAccountKeyName2"u8))
                 {
                     protectedAccountKeyName2 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("blobEndpoint"))
+                if (property.NameEquals("blobEndpoint"u8))
                 {
                     blobEndpoint = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("queueEndpoint"))
+                if (property.NameEquals("queueEndpoint"u8))
                 {
                     queueEndpoint = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tableEndpoint"))
+                if (property.NameEquals("tableEndpoint"u8))
                 {
                     tableEndpoint = new Uri(property.Value.GetString());
                     continue;

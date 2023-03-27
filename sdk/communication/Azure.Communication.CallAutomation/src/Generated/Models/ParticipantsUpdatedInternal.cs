@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -17,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of ParticipantsUpdatedInternal. </summary>
         internal ParticipantsUpdatedInternal()
         {
-            Participants = new ChangeTrackingList<CommunicationIdentifierModel>();
+            Participants = new ChangeTrackingList<CallParticipantInternal>();
         }
 
         /// <summary> Initializes a new instance of ParticipantsUpdatedInternal. </summary>
@@ -25,12 +24,14 @@ namespace Azure.Communication.CallAutomation
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="participants"> The list of participants in the call. </param>
-        internal ParticipantsUpdatedInternal(string callConnectionId, string serverCallId, string correlationId, IReadOnlyList<CommunicationIdentifierModel> participants)
+        /// <param name="sequenceNumber"> Sequence number to indicate order of ParticipantsUpdated events. </param>
+        internal ParticipantsUpdatedInternal(string callConnectionId, string serverCallId, string correlationId, IReadOnlyList<CallParticipantInternal> participants, int? sequenceNumber)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
             Participants = participants;
+            SequenceNumber = sequenceNumber;
         }
 
         /// <summary> Call connection ID. </summary>
@@ -40,6 +41,8 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
         public string CorrelationId { get; }
         /// <summary> The list of participants in the call. </summary>
-        public IReadOnlyList<CommunicationIdentifierModel> Participants { get; }
+        public IReadOnlyList<CallParticipantInternal> Participants { get; }
+        /// <summary> Sequence number to indicate order of ParticipantsUpdated events. </summary>
+        public int? SequenceNumber { get; }
     }
 }

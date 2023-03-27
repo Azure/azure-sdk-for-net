@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("propertyName");
+            writer.WritePropertyName("propertyName"u8);
             writer.WriteStringValue(PropertyName);
-            writer.WritePropertyName("columnName");
+            writer.WritePropertyName("columnName"u8);
             writer.WriteStringValue(ColumnName);
             if (Optional.IsDefined(CustomFormatSpecifier))
             {
-                writer.WritePropertyName("customFormatSpecifier");
+                writer.WritePropertyName("customFormatSpecifier"u8);
                 writer.WriteStringValue(CustomFormatSpecifier);
             }
             if (Optional.IsDefined(IsEncrypted))
             {
-                writer.WritePropertyName("isEncrypted");
+                writer.WritePropertyName("isEncrypted"u8);
                 writer.WriteBooleanValue(IsEncrypted.Value);
             }
             writer.WriteEndObject();
@@ -34,28 +34,32 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static ConnectorMappingStructure DeserializeConnectorMappingStructure(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string propertyName = default;
             string columnName = default;
             Optional<string> customFormatSpecifier = default;
             Optional<bool> isEncrypted = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("propertyName"))
+                if (property.NameEquals("propertyName"u8))
                 {
                     propertyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("columnName"))
+                if (property.NameEquals("columnName"u8))
                 {
                     columnName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customFormatSpecifier"))
+                if (property.NameEquals("customFormatSpecifier"u8))
                 {
                     customFormatSpecifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isEncrypted"))
+                if (property.NameEquals("isEncrypted"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

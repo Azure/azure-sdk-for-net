@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,6 +13,11 @@ namespace Azure.Core.Tests
 {
     public class AzureSasCredentialSynchronousPolicyTests : PolicyTestBase
     {
+        private const string INITIAL_QUERY_URI = "?foo=bar";
+        private const string FIRST_SIGNATURE_VALUE = "sig=first_signature_value";
+        private const string SECOND_SIGNATURE_VALUE = "sig=second_signature_value";
+        private const string THIRD_SIGNATURE_VALUE = "sig=third_signature_value";
+
         [TestCase("sig=test_signature_value")]
         [TestCase("?sig=test_signature_value")]
         public async Task SetsSignatureEmptyQuery(string signatureValue)
@@ -95,29 +101,24 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task VerifyRetryAfterSasCredentialUpdateOperation()
+        public async Task VerifyRetryAfterMultipleSasCredentialUpdate()
         {
             // Arrange
-            const string INITIAL_QUERY_URI = "?foo=bar";
-            const string FIRST_SIGNATURE_VALUE = "?sig=first_signature_value";
-            const string SECOND_SIGNATURE_VALUE = "?sig=second_signature_value";
+
+            string[] signatures = new string[] { FIRST_SIGNATURE_VALUE, SECOND_SIGNATURE_VALUE, THIRD_SIGNATURE_VALUE };
             int callCount = 0;
             var azureSasCredential = new AzureSasCredential(FIRST_SIGNATURE_VALUE);
+
             var transport = new MockTransport((req) =>
             {
-                if (callCount++ == 0)
+                Assert.AreEqual($"{INITIAL_QUERY_URI}&{signatures[callCount]}", req.Uri.Query);
+                if (callCount < 2)
                 {
-                    Assert.AreEqual("?foo=bar&sig=first_signature_value", req.Uri.Query);
-                    Thread.Sleep(100);
-                    azureSasCredential.Update(SECOND_SIGNATURE_VALUE);
-                    return new MockResponse(429);
+                    azureSasCredential.Update(signatures[callCount + 1]);
                 }
-                else
-                {
-                    Assert.AreEqual("?foo=bar&sig=second_signature_value", req.Uri.Query);
-                    return new MockResponse(200);
-                }
+                return callCount++ == 2 ? new MockResponse(200) : new MockResponse(429);
             });
+
             var sasPolicy = new AzureSasCredentialSynchronousPolicy(azureSasCredential);
 
             // Act + Assert
@@ -125,7 +126,7 @@ namespace Azure.Core.Tests
             {
                 request.Method = RequestMethod.Get;
                 request.Uri.Query = INITIAL_QUERY_URI;
-                var pipeline = new HttpPipeline(transport, new HttpPipelinePolicy[] { new DefaultRetryPolicy(new RetryOptions()), sasPolicy });
+                var pipeline = new HttpPipeline(transport, new HttpPipelinePolicy[] { new DefaultRetryPolicy(new RetryOptions() { Delay = TimeSpan.FromMilliseconds(100) }), sasPolicy });
 
                 Response response = await pipeline.SendRequestAsync(request, CancellationToken.None).ConfigureAwait(false);
                 Assert.AreEqual((int)HttpStatusCode.OK, response.Status);

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LogLevel))
             {
-                writer.WritePropertyName("logLevel");
+                writer.WritePropertyName("logLevel"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(LogLevel);
 #else
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(EnableReliableLogging))
             {
-                writer.WritePropertyName("enableReliableLogging");
+                writer.WritePropertyName("enableReliableLogging"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(EnableReliableLogging);
 #else
@@ -39,11 +39,15 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static CopyActivityLogSettings DeserializeCopyActivityLogSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> logLevel = default;
             Optional<BinaryData> enableReliableLogging = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("logLevel"))
+                if (property.NameEquals("logLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     logLevel = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("enableReliableLogging"))
+                if (property.NameEquals("enableReliableLogging"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

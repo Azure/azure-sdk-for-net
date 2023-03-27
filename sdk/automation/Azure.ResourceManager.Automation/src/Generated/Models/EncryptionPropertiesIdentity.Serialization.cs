@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(UserAssignedIdentity))
             {
-                writer.WritePropertyName("userAssignedIdentity");
+                writer.WritePropertyName("userAssignedIdentity"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(UserAssignedIdentity);
 #else
@@ -30,10 +30,14 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static EncryptionPropertiesIdentity DeserializeEncryptionPropertiesIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> userAssignedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userAssignedIdentity"))
+                if (property.NameEquals("userAssignedIdentity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

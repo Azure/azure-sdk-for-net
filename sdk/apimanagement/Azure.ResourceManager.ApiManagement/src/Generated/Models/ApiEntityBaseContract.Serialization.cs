@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ApiEntityBaseContract DeserializeApiEntityBaseContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<AuthenticationSettingsContract> authenticationSettings = default;
             Optional<SubscriptionKeyParameterNamesContract> subscriptionKeyParameterNames = default;
@@ -32,12 +36,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<ApiLicenseInformation> license = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authenticationSettings"))
+                if (property.NameEquals("authenticationSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     authenticationSettings = AuthenticationSettingsContract.DeserializeAuthenticationSettingsContract(property.Value);
                     continue;
                 }
-                if (property.NameEquals("subscriptionKeyParameterNames"))
+                if (property.NameEquals("subscriptionKeyParameterNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +61,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     subscriptionKeyParameterNames = SubscriptionKeyParameterNamesContract.DeserializeSubscriptionKeyParameterNamesContract(property.Value);
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,17 +71,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     type = new ApiType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("apiRevision"))
+                if (property.NameEquals("apiRevision"u8))
                 {
                     apiRevision = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("apiVersion"))
+                if (property.NameEquals("apiVersion"u8))
                 {
                     apiVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isCurrent"))
+                if (property.NameEquals("isCurrent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     isCurrent = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isOnline"))
+                if (property.NameEquals("isOnline"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,17 +101,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     isOnline = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("apiRevisionDescription"))
+                if (property.NameEquals("apiRevisionDescription"u8))
                 {
                     apiRevisionDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("apiVersionDescription"))
+                if (property.NameEquals("apiVersionDescription"u8))
                 {
                     apiVersionDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("apiVersionSetId"))
+                if (property.NameEquals("apiVersionSetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -117,7 +121,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     apiVersionSetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("subscriptionRequired"))
+                if (property.NameEquals("subscriptionRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -127,7 +131,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     subscriptionRequired = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("termsOfServiceUrl"))
+                if (property.NameEquals("termsOfServiceUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -137,7 +141,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     termsOfServiceUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("contact"))
+                if (property.NameEquals("contact"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -147,7 +151,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     contact = ApiContactInformation.DeserializeApiContactInformation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("license"))
+                if (property.NameEquals("license"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

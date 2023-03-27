@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(NodeName))
             {
-                writer.WritePropertyName("nodeName");
+                writer.WritePropertyName("nodeName"u8);
                 writer.WriteStringValue(NodeName);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
             if (Optional.IsDefined(ErrorDetail))
             {
-                writer.WritePropertyName("errorDetail");
+                writer.WritePropertyName("errorDetail"u8);
                 writer.WriteObjectValue(ErrorDetail);
             }
             writer.WriteEndObject();
@@ -35,29 +35,33 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static DistributedNodesInfo DeserializeDistributedNodesInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nodeName = default;
             Optional<string> status = default;
-            Optional<ErrorDetail> errorDetail = default;
+            Optional<BackupErrorDetail> errorDetail = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nodeName"))
+                if (property.NameEquals("nodeName"u8))
                 {
                     nodeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorDetail"))
+                if (property.NameEquals("errorDetail"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    errorDetail = ErrorDetail.DeserializeErrorDetail(property.Value);
+                    errorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value);
                     continue;
                 }
             }

@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VirtualNetworkUsageName DeserializeVirtualNetworkUsageName(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> localizedValue = default;
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("localizedValue"))
+                if (property.NameEquals("localizedValue"u8))
                 {
                     localizedValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;

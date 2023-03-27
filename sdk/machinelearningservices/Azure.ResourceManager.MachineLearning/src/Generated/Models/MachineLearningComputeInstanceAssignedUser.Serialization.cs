@@ -16,25 +16,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("objectId");
+            writer.WritePropertyName("objectId"u8);
             writer.WriteStringValue(ObjectId);
-            writer.WritePropertyName("tenantId");
+            writer.WritePropertyName("tenantId"u8);
             writer.WriteStringValue(TenantId);
             writer.WriteEndObject();
         }
 
         internal static MachineLearningComputeInstanceAssignedUser DeserializeMachineLearningComputeInstanceAssignedUser(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string objectId = default;
             Guid tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("objectId"))
+                if (property.NameEquals("objectId"u8))
                 {
                     objectId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     tenantId = property.Value.GetGuid();
                     continue;

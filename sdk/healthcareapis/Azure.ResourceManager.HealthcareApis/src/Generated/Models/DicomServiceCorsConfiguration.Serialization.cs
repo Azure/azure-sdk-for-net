@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Origins))
             {
-                writer.WritePropertyName("origins");
+                writer.WritePropertyName("origins"u8);
                 writer.WriteStartArray();
                 foreach (var item in Origins)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
             if (Optional.IsCollectionDefined(Headers))
             {
-                writer.WritePropertyName("headers");
+                writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
             if (Optional.IsCollectionDefined(Methods))
             {
-                writer.WritePropertyName("methods");
+                writer.WritePropertyName("methods"u8);
                 writer.WriteStartArray();
                 foreach (var item in Methods)
                 {
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
             if (Optional.IsDefined(MaxAge))
             {
-                writer.WritePropertyName("maxAge");
+                writer.WritePropertyName("maxAge"u8);
                 writer.WriteNumberValue(MaxAge.Value);
             }
             if (Optional.IsDefined(AllowCredentials))
             {
-                writer.WritePropertyName("allowCredentials");
+                writer.WritePropertyName("allowCredentials"u8);
                 writer.WriteBooleanValue(AllowCredentials.Value);
             }
             writer.WriteEndObject();
@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static DicomServiceCorsConfiguration DeserializeDicomServiceCorsConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> origins = default;
             Optional<IList<string>> headers = default;
             Optional<IList<string>> methods = default;
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             Optional<bool> allowCredentials = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("origins"))
+                if (property.NameEquals("origins"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +87,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     origins = array;
                     continue;
                 }
-                if (property.NameEquals("headers"))
+                if (property.NameEquals("headers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +102,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     headers = array;
                     continue;
                 }
-                if (property.NameEquals("methods"))
+                if (property.NameEquals("methods"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +117,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     methods = array;
                     continue;
                 }
-                if (property.NameEquals("maxAge"))
+                if (property.NameEquals("maxAge"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +127,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     maxAge = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("allowCredentials"))
+                if (property.NameEquals("allowCredentials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

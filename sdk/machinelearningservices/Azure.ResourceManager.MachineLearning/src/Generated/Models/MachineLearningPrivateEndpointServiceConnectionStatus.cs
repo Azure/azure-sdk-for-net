@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The private endpoint connection status.
-    /// Serialized Name: PrivateEndpointServiceConnectionStatus
-    /// </summary>
+    /// <summary> The private endpoint connection status. </summary>
     public readonly partial struct MachineLearningPrivateEndpointServiceConnectionStatus : IEquatable<MachineLearningPrivateEndpointServiceConnectionStatus>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string DisconnectedValue = "Disconnected";
         private const string TimeoutValue = "Timeout";
 
-        /// <summary>
-        /// Pending
-        /// Serialized Name: PrivateEndpointServiceConnectionStatus.Pending
-        /// </summary>
+        /// <summary> Pending. </summary>
         public static MachineLearningPrivateEndpointServiceConnectionStatus Pending { get; } = new MachineLearningPrivateEndpointServiceConnectionStatus(PendingValue);
-        /// <summary>
-        /// Approved
-        /// Serialized Name: PrivateEndpointServiceConnectionStatus.Approved
-        /// </summary>
+        /// <summary> Approved. </summary>
         public static MachineLearningPrivateEndpointServiceConnectionStatus Approved { get; } = new MachineLearningPrivateEndpointServiceConnectionStatus(ApprovedValue);
-        /// <summary>
-        /// Rejected
-        /// Serialized Name: PrivateEndpointServiceConnectionStatus.Rejected
-        /// </summary>
+        /// <summary> Rejected. </summary>
         public static MachineLearningPrivateEndpointServiceConnectionStatus Rejected { get; } = new MachineLearningPrivateEndpointServiceConnectionStatus(RejectedValue);
-        /// <summary>
-        /// Disconnected
-        /// Serialized Name: PrivateEndpointServiceConnectionStatus.Disconnected
-        /// </summary>
+        /// <summary> Disconnected. </summary>
         public static MachineLearningPrivateEndpointServiceConnectionStatus Disconnected { get; } = new MachineLearningPrivateEndpointServiceConnectionStatus(DisconnectedValue);
-        /// <summary>
-        /// Timeout
-        /// Serialized Name: PrivateEndpointServiceConnectionStatus.Timeout
-        /// </summary>
+        /// <summary> Timeout. </summary>
         public static MachineLearningPrivateEndpointServiceConnectionStatus Timeout { get; } = new MachineLearningPrivateEndpointServiceConnectionStatus(TimeoutValue);
         /// <summary> Determines if two <see cref="MachineLearningPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(MachineLearningPrivateEndpointServiceConnectionStatus left, MachineLearningPrivateEndpointServiceConnectionStatus right) => left.Equals(right);

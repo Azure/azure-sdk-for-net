@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(UltraSsdEnabled))
             {
-                writer.WritePropertyName("ultraSSDEnabled");
+                writer.WritePropertyName("ultraSSDEnabled"u8);
                 writer.WriteBooleanValue(UltraSsdEnabled.Value);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DedicatedHostGroupPropertiesAdditionalCapabilities DeserializeDedicatedHostGroupPropertiesAdditionalCapabilities(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> ultraSsdEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ultraSSDEnabled"))
+                if (property.NameEquals("ultraSSDEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

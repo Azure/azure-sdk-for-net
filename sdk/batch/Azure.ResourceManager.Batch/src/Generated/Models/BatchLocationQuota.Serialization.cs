@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.Batch.Models
     {
         internal static BatchLocationQuota DeserializeBatchLocationQuota(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> accountQuota = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountQuota"))
+                if (property.NameEquals("accountQuota"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

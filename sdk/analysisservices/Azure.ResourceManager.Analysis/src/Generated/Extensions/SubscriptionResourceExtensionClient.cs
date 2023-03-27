@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -46,116 +45,100 @@ namespace Azure.ResourceManager.Analysis
 
         /// <summary>
         /// Lists all the Analysis Services servers for the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/servers
-        /// Operation Id: Servers_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/servers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AnalysisServerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AnalysisServerResource> GetAnalysisServersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AnalysisServerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AnalysisServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAnalysisServers");
-                scope.Start();
-                try
-                {
-                    var response = await AnalysisServerServersRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.AnalysisResources.Select(value => new AnalysisServerResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AnalysisServerServersRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AnalysisServerResource(Client, AnalysisServerData.DeserializeAnalysisServerData(e)), AnalysisServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAnalysisServers", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Lists all the Analysis Services servers for the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/servers
-        /// Operation Id: Servers_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/servers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AnalysisServerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AnalysisServerResource> GetAnalysisServers(CancellationToken cancellationToken = default)
         {
-            Page<AnalysisServerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AnalysisServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAnalysisServers");
-                scope.Start();
-                try
-                {
-                    var response = AnalysisServerServersRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.AnalysisResources.Select(value => new AnalysisServerResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AnalysisServerServersRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AnalysisServerResource(Client, AnalysisServerData.DeserializeAnalysisServerData(e)), AnalysisServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAnalysisServers", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Lists eligible SKUs for Analysis Services resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/skus
-        /// Operation Id: Servers_ListSkusForNew
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_ListSkusForNew</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AnalysisResourceSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AnalysisResourceSku> GetEligibleSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AnalysisResourceSku>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AnalysisServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEligibleSkus");
-                scope.Start();
-                try
-                {
-                    var response = await AnalysisServerServersRestClient.ListSkusForNewAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AnalysisServerServersRestClient.CreateListSkusForNewRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AnalysisResourceSku.DeserializeAnalysisResourceSku, AnalysisServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEligibleSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Lists eligible SKUs for Analysis Services resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/skus
-        /// Operation Id: Servers_ListSkusForNew
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_ListSkusForNew</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AnalysisResourceSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AnalysisResourceSku> GetEligibleSkus(CancellationToken cancellationToken = default)
         {
-            Page<AnalysisResourceSku> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AnalysisServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEligibleSkus");
-                scope.Start();
-                try
-                {
-                    var response = AnalysisServerServersRestClient.ListSkusForNew(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AnalysisServerServersRestClient.CreateListSkusForNewRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AnalysisResourceSku.DeserializeAnalysisResourceSku, AnalysisServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEligibleSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Check the name availability in the target location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/locations/{location}/checkNameAvailability
-        /// Operation Id: Servers_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The region name which the operation will lookup into. </param>
         /// <param name="content"> Contains the information used to provision the Analysis Services server. </param>
@@ -178,8 +161,16 @@ namespace Azure.ResourceManager.Analysis
 
         /// <summary>
         /// Check the name availability in the target location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/locations/{location}/checkNameAvailability
-        /// Operation Id: Servers_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The region name which the operation will lookup into. </param>
         /// <param name="content"> Contains the information used to provision the Analysis Services server. </param>

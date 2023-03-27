@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (ComponentId != null)
                 {
-                    writer.WritePropertyName("componentId");
+                    writer.WritePropertyName("componentId"u8);
                     writer.WriteStringValue(ComponentId);
                 }
                 else
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (ComputeId != null)
                 {
-                    writer.WritePropertyName("computeId");
+                    writer.WritePropertyName("computeId"u8);
                     writer.WriteStringValue(ComputeId);
                 }
                 else
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (DisplayName != null)
                 {
-                    writer.WritePropertyName("displayName");
+                    writer.WritePropertyName("displayName"u8);
                     writer.WriteStringValue(DisplayName);
                 }
                 else
@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(ExperimentName))
             {
-                writer.WritePropertyName("experimentName");
+                writer.WritePropertyName("experimentName"u8);
                 writer.WriteStringValue(ExperimentName);
             }
             if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
-                    writer.WritePropertyName("identity");
+                    writer.WritePropertyName("identity"u8);
                     writer.WriteObjectValue(Identity);
                 }
                 else
@@ -71,16 +71,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(IsArchived))
             {
-                writer.WritePropertyName("isArchived");
+                writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
-            writer.WritePropertyName("jobType");
+            writer.WritePropertyName("jobType"u8);
             writer.WriteStringValue(JobType.ToString());
             if (Optional.IsCollectionDefined(Services))
             {
                 if (Services != null)
                 {
-                    writer.WritePropertyName("services");
+                    writer.WritePropertyName("services"u8);
                     writer.WriteStartObject();
                     foreach (var item in Services)
                     {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Description != null)
                 {
-                    writer.WritePropertyName("description");
+                    writer.WritePropertyName("description"u8);
                     writer.WriteStringValue(Description);
                 }
                 else
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties != null)
                 {
-                    writer.WritePropertyName("properties");
+                    writer.WritePropertyName("properties"u8);
                     writer.WriteStartObject();
                     foreach (var item in Properties)
                     {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Tags != null)
                 {
-                    writer.WritePropertyName("tags");
+                    writer.WritePropertyName("tags"u8);
                     writer.WriteStartObject();
                     foreach (var item in Tags)
                     {
@@ -147,6 +147,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningJobProperties DeserializeMachineLearningJobProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("jobType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -157,8 +161,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "Sweep": return MachineLearningSweepJob.DeserializeMachineLearningSweepJob(element);
                 }
             }
-            Optional<string> componentId = default;
-            Optional<string> computeId = default;
+            Optional<ResourceIdentifier> componentId = default;
+            Optional<ResourceIdentifier> computeId = default;
             Optional<string> displayName = default;
             Optional<string> experimentName = default;
             Optional<MachineLearningIdentityConfiguration> identity = default;
@@ -171,27 +175,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("componentId"))
+                if (property.NameEquals("componentId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         componentId = null;
                         continue;
                     }
-                    componentId = property.Value.GetString();
+                    componentId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("computeId"))
+                if (property.NameEquals("computeId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         computeId = null;
                         continue;
                     }
-                    computeId = property.Value.GetString();
+                    computeId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -201,12 +205,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("experimentName"))
+                if (property.NameEquals("experimentName"u8))
                 {
                     experimentName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -216,7 +220,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     identity = MachineLearningIdentityConfiguration.DeserializeMachineLearningIdentityConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("isArchived"))
+                if (property.NameEquals("isArchived"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -226,12 +230,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     isArchived = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("jobType"))
+                if (property.NameEquals("jobType"u8))
                 {
                     jobType = new JobType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("services"))
+                if (property.NameEquals("services"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -241,19 +245,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MachineLearningJobService> dictionary = new Dictionary<string, MachineLearningJobService>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, MachineLearningJobService.DeserializeMachineLearningJobService(property0.Value));
-                        }
+                        dictionary.Add(property0.Name, MachineLearningJobService.DeserializeMachineLearningJobService(property0.Value));
                     }
                     services = dictionary;
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -263,7 +260,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     status = new MachineLearningJobStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -273,7 +270,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -283,19 +280,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -305,14 +295,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;

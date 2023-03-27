@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ConsumerKey))
             {
-                writer.WritePropertyName("consumerKey");
+                writer.WritePropertyName("consumerKey"u8);
                 writer.WriteStringValue(ConsumerKey);
             }
             if (Optional.IsDefined(ConsumerSecretSettingName))
             {
-                writer.WritePropertyName("consumerSecretSettingName");
+                writer.WritePropertyName("consumerSecretSettingName"u8);
                 writer.WriteStringValue(ConsumerSecretSettingName);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static TwitterRegistration DeserializeTwitterRegistration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> consumerKey = default;
             Optional<string> consumerSecretSettingName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("consumerKey"))
+                if (property.NameEquals("consumerKey"u8))
                 {
                     consumerKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("consumerSecretSettingName"))
+                if (property.NameEquals("consumerSecretSettingName"u8))
                 {
                     consumerSecretSettingName = property.Value.GetString();
                     continue;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static PacketCaptureQueryStatusResult DeserializePacketCaptureQueryStatusResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> id = default;
             Optional<DateTimeOffset> captureStartTime = default;
@@ -24,17 +28,17 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IReadOnlyList<PcError>> packetCaptureError = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("captureStartTime"))
+                if (property.NameEquals("captureStartTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
                     captureStartTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("packetCaptureStatus"))
+                if (property.NameEquals("packetCaptureStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,12 +58,12 @@ namespace Azure.ResourceManager.Network.Models
                     packetCaptureStatus = new PcStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("stopReason"))
+                if (property.NameEquals("stopReason"u8))
                 {
                     stopReason = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("packetCaptureError"))
+                if (property.NameEquals("packetCaptureError"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

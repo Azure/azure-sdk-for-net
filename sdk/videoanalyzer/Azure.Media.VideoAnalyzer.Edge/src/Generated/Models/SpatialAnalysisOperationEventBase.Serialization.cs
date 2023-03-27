@@ -17,12 +17,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Threshold))
             {
-                writer.WritePropertyName("threshold");
+                writer.WritePropertyName("threshold"u8);
                 writer.WriteStringValue(Threshold);
             }
             if (Optional.IsDefined(Focus))
             {
-                writer.WritePropertyName("focus");
+                writer.WritePropertyName("focus"u8);
                 writer.WriteStringValue(Focus.Value.ToString());
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static SpatialAnalysisOperationEventBase DeserializeSpatialAnalysisOperationEventBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> threshold = default;
             Optional<SpatialAnalysisOperationFocus> focus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("threshold"))
+                if (property.NameEquals("threshold"u8))
                 {
                     threshold = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("focus"))
+                if (property.NameEquals("focus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

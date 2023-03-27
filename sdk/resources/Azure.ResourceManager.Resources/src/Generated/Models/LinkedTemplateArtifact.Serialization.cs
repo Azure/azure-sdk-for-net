@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("path");
+            writer.WritePropertyName("path"u8);
             writer.WriteStringValue(Path);
-            writer.WritePropertyName("template");
+            writer.WritePropertyName("template"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Template);
 #else
@@ -29,16 +29,20 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static LinkedTemplateArtifact DeserializeLinkedTemplateArtifact(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string path = default;
             BinaryData template = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("template"))
+                if (property.NameEquals("template"u8))
                 {
                     template = BinaryData.FromString(property.Value.GetRawText());
                     continue;

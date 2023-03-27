@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 if (IsDataExportEnabled != null)
                 {
-                    writer.WritePropertyName("enableDataExport");
+                    writer.WritePropertyName("enableDataExport"u8);
                     writer.WriteBooleanValue(IsDataExportEnabled.Value);
                 }
                 else
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 if (ImmediatePurgeDataOn30Days != null)
                 {
-                    writer.WritePropertyName("immediatePurgeDataOn30Days");
+                    writer.WritePropertyName("immediatePurgeDataOn30Days"u8);
                     writer.WriteBooleanValue(ImmediatePurgeDataOn30Days.Value);
                 }
                 else
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 if (IsLogAccessUsingOnlyResourcePermissionsEnabled != null)
                 {
-                    writer.WritePropertyName("enableLogAccessUsingOnlyResourcePermissions");
+                    writer.WritePropertyName("enableLogAccessUsingOnlyResourcePermissions"u8);
                     writer.WriteBooleanValue(IsLogAccessUsingOnlyResourcePermissionsEnabled.Value);
                 }
                 else
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 if (ClusterResourceId != null)
                 {
-                    writer.WritePropertyName("clusterResourceId");
+                    writer.WritePropertyName("clusterResourceId"u8);
                     writer.WriteStringValue(ClusterResourceId);
                 }
                 else
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 if (IsLocalAuthDisabled != null)
                 {
-                    writer.WritePropertyName("disableLocalAuth");
+                    writer.WritePropertyName("disableLocalAuth"u8);
                     writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
                 }
                 else
@@ -91,6 +91,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static OperationalInsightsWorkspaceFeatures DeserializeOperationalInsightsWorkspaceFeatures(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool?> enableDataExport = default;
             Optional<bool?> immediatePurgeDataOn30Days = default;
             Optional<bool?> enableLogAccessUsingOnlyResourcePermissions = default;
@@ -100,7 +104,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enableDataExport"))
+                if (property.NameEquals("enableDataExport"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +114,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     enableDataExport = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("immediatePurgeDataOn30Days"))
+                if (property.NameEquals("immediatePurgeDataOn30Days"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +124,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     immediatePurgeDataOn30Days = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableLogAccessUsingOnlyResourcePermissions"))
+                if (property.NameEquals("enableLogAccessUsingOnlyResourcePermissions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,7 +134,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     enableLogAccessUsingOnlyResourcePermissions = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("clusterResourceId"))
+                if (property.NameEquals("clusterResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -140,7 +144,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     clusterResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("disableLocalAuth"))
+                if (property.NameEquals("disableLocalAuth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

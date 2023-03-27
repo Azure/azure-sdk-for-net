@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceSupportedRegion))
             {
-                writer.WritePropertyName("serviceSupportedRegion");
+                writer.WritePropertyName("serviceSupportedRegion"u8);
                 writer.WriteStringValue(ServiceSupportedRegion);
             }
             if (Optional.IsDefined(CommunityName))
             {
-                writer.WritePropertyName("communityName");
+                writer.WritePropertyName("communityName"u8);
                 writer.WriteStringValue(CommunityName);
             }
             if (Optional.IsDefined(CommunityValue))
             {
-                writer.WritePropertyName("communityValue");
+                writer.WritePropertyName("communityValue"u8);
                 writer.WriteStringValue(CommunityValue);
             }
             if (Optional.IsCollectionDefined(CommunityPrefixes))
             {
-                writer.WritePropertyName("communityPrefixes");
+                writer.WritePropertyName("communityPrefixes"u8);
                 writer.WriteStartArray();
                 foreach (var item in CommunityPrefixes)
                 {
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(IsAuthorizedToUse))
             {
-                writer.WritePropertyName("isAuthorizedToUse");
+                writer.WritePropertyName("isAuthorizedToUse"u8);
                 writer.WriteBooleanValue(IsAuthorizedToUse.Value);
             }
             if (Optional.IsDefined(ServiceGroup))
             {
-                writer.WritePropertyName("serviceGroup");
+                writer.WritePropertyName("serviceGroup"u8);
                 writer.WriteStringValue(ServiceGroup);
             }
             writer.WriteEndObject();
@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static BgpCommunity DeserializeBgpCommunity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serviceSupportedRegion = default;
             Optional<string> communityName = default;
             Optional<string> communityValue = default;
@@ -64,22 +68,22 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> serviceGroup = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceSupportedRegion"))
+                if (property.NameEquals("serviceSupportedRegion"u8))
                 {
                     serviceSupportedRegion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("communityName"))
+                if (property.NameEquals("communityName"u8))
                 {
                     communityName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("communityValue"))
+                if (property.NameEquals("communityValue"u8))
                 {
                     communityValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("communityPrefixes"))
+                if (property.NameEquals("communityPrefixes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
                     communityPrefixes = array;
                     continue;
                 }
-                if (property.NameEquals("isAuthorizedToUse"))
+                if (property.NameEquals("isAuthorizedToUse"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.Network.Models
                     isAuthorizedToUse = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("serviceGroup"))
+                if (property.NameEquals("serviceGroup"u8))
                 {
                     serviceGroup = property.Value.GetString();
                     continue;

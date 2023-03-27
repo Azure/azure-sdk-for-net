@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Values))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.PrivateDns.Models
 
         internal static PrivateDnsTxtRecordInfo DeserializePrivateDnsTxtRecordInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

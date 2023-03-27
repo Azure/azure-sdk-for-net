@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Language))
             {
-                writer.WritePropertyName("language");
+                writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
             if (Optional.IsCollectionDefined(InputTrackSelection))
             {
-                writer.WritePropertyName("inputTrackSelection");
+                writer.WritePropertyName("inputTrackSelection"u8);
                 writer.WriteStartArray();
                 foreach (var item in InputTrackSelection)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media.Models
             }
             if (Optional.IsDefined(OutputTranscriptionTrack))
             {
-                writer.WritePropertyName("outputTranscriptionTrack");
+                writer.WritePropertyName("outputTranscriptionTrack"u8);
                 writer.WriteObjectValue(OutputTranscriptionTrack);
             }
             writer.WriteEndObject();
@@ -41,17 +41,21 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static LiveEventTranscription DeserializeLiveEventTranscription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> language = default;
             Optional<IList<LiveEventInputTrackSelection>> inputTrackSelection = default;
             Optional<LiveEventOutputTranscriptionTrack> outputTranscriptionTrack = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("language"))
+                if (property.NameEquals("language"u8))
                 {
                     language = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("inputTrackSelection"))
+                if (property.NameEquals("inputTrackSelection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.Media.Models
                     inputTrackSelection = array;
                     continue;
                 }
-                if (property.NameEquals("outputTranscriptionTrack"))
+                if (property.NameEquals("outputTranscriptionTrack"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

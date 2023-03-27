@@ -17,10 +17,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static MetastoreRequestSuccessResponse DeserializeMetastoreRequestSuccessResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

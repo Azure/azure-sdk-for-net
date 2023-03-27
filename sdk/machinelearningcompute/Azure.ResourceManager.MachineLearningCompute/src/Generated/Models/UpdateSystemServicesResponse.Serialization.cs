@@ -15,12 +15,16 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     {
         internal static UpdateSystemServicesResponse DeserializeUpdateSystemServicesResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OperationStatus> updateStatus = default;
             Optional<DateTimeOffset> updateStartedOn = default;
             Optional<DateTimeOffset> updateCompletedOn = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("updateStatus"))
+                if (property.NameEquals("updateStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     updateStatus = new OperationStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("updateStartedOn"))
+                if (property.NameEquals("updateStartedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     updateStartedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("updateCompletedOn"))
+                if (property.NameEquals("updateCompletedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

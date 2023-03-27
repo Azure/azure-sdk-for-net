@@ -17,142 +17,142 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(NetCoreSomaxconn))
             {
-                writer.WritePropertyName("netCoreSomaxconn");
+                writer.WritePropertyName("netCoreSomaxconn"u8);
                 writer.WriteNumberValue(NetCoreSomaxconn.Value);
             }
             if (Optional.IsDefined(NetCoreNetdevMaxBacklog))
             {
-                writer.WritePropertyName("netCoreNetdevMaxBacklog");
+                writer.WritePropertyName("netCoreNetdevMaxBacklog"u8);
                 writer.WriteNumberValue(NetCoreNetdevMaxBacklog.Value);
             }
             if (Optional.IsDefined(NetCoreRmemDefault))
             {
-                writer.WritePropertyName("netCoreRmemDefault");
+                writer.WritePropertyName("netCoreRmemDefault"u8);
                 writer.WriteNumberValue(NetCoreRmemDefault.Value);
             }
             if (Optional.IsDefined(NetCoreRmemMax))
             {
-                writer.WritePropertyName("netCoreRmemMax");
+                writer.WritePropertyName("netCoreRmemMax"u8);
                 writer.WriteNumberValue(NetCoreRmemMax.Value);
             }
             if (Optional.IsDefined(NetCoreWmemDefault))
             {
-                writer.WritePropertyName("netCoreWmemDefault");
+                writer.WritePropertyName("netCoreWmemDefault"u8);
                 writer.WriteNumberValue(NetCoreWmemDefault.Value);
             }
             if (Optional.IsDefined(NetCoreWmemMax))
             {
-                writer.WritePropertyName("netCoreWmemMax");
+                writer.WritePropertyName("netCoreWmemMax"u8);
                 writer.WriteNumberValue(NetCoreWmemMax.Value);
             }
             if (Optional.IsDefined(NetCoreOptmemMax))
             {
-                writer.WritePropertyName("netCoreOptmemMax");
+                writer.WritePropertyName("netCoreOptmemMax"u8);
                 writer.WriteNumberValue(NetCoreOptmemMax.Value);
             }
             if (Optional.IsDefined(NetIPv4TcpMaxSynBacklog))
             {
-                writer.WritePropertyName("netIpv4TcpMaxSynBacklog");
+                writer.WritePropertyName("netIpv4TcpMaxSynBacklog"u8);
                 writer.WriteNumberValue(NetIPv4TcpMaxSynBacklog.Value);
             }
             if (Optional.IsDefined(NetIPv4TcpMaxTwBuckets))
             {
-                writer.WritePropertyName("netIpv4TcpMaxTwBuckets");
+                writer.WritePropertyName("netIpv4TcpMaxTwBuckets"u8);
                 writer.WriteNumberValue(NetIPv4TcpMaxTwBuckets.Value);
             }
             if (Optional.IsDefined(NetIPv4TcpFinTimeout))
             {
-                writer.WritePropertyName("netIpv4TcpFinTimeout");
+                writer.WritePropertyName("netIpv4TcpFinTimeout"u8);
                 writer.WriteNumberValue(NetIPv4TcpFinTimeout.Value);
             }
             if (Optional.IsDefined(NetIPv4TcpKeepaliveTime))
             {
-                writer.WritePropertyName("netIpv4TcpKeepaliveTime");
+                writer.WritePropertyName("netIpv4TcpKeepaliveTime"u8);
                 writer.WriteNumberValue(NetIPv4TcpKeepaliveTime.Value);
             }
             if (Optional.IsDefined(NetIPv4TcpKeepaliveProbes))
             {
-                writer.WritePropertyName("netIpv4TcpKeepaliveProbes");
+                writer.WritePropertyName("netIpv4TcpKeepaliveProbes"u8);
                 writer.WriteNumberValue(NetIPv4TcpKeepaliveProbes.Value);
             }
             if (Optional.IsDefined(NetIPv4TcpKeepaliveIntvl))
             {
-                writer.WritePropertyName("netIpv4TcpkeepaliveIntvl");
+                writer.WritePropertyName("netIpv4TcpkeepaliveIntvl"u8);
                 writer.WriteNumberValue(NetIPv4TcpKeepaliveIntvl.Value);
             }
             if (Optional.IsDefined(NetIPv4TcpTwReuse))
             {
-                writer.WritePropertyName("netIpv4TcpTwReuse");
+                writer.WritePropertyName("netIpv4TcpTwReuse"u8);
                 writer.WriteBooleanValue(NetIPv4TcpTwReuse.Value);
             }
             if (Optional.IsDefined(NetIPv4IPLocalPortRange))
             {
-                writer.WritePropertyName("netIpv4IpLocalPortRange");
+                writer.WritePropertyName("netIpv4IpLocalPortRange"u8);
                 writer.WriteStringValue(NetIPv4IPLocalPortRange);
             }
             if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh1))
             {
-                writer.WritePropertyName("netIpv4NeighDefaultGcThresh1");
+                writer.WritePropertyName("netIpv4NeighDefaultGcThresh1"u8);
                 writer.WriteNumberValue(NetIPv4NeighDefaultGcThresh1.Value);
             }
             if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh2))
             {
-                writer.WritePropertyName("netIpv4NeighDefaultGcThresh2");
+                writer.WritePropertyName("netIpv4NeighDefaultGcThresh2"u8);
                 writer.WriteNumberValue(NetIPv4NeighDefaultGcThresh2.Value);
             }
             if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh3))
             {
-                writer.WritePropertyName("netIpv4NeighDefaultGcThresh3");
+                writer.WritePropertyName("netIpv4NeighDefaultGcThresh3"u8);
                 writer.WriteNumberValue(NetIPv4NeighDefaultGcThresh3.Value);
             }
             if (Optional.IsDefined(NetNetfilterNfConntrackMax))
             {
-                writer.WritePropertyName("netNetfilterNfConntrackMax");
+                writer.WritePropertyName("netNetfilterNfConntrackMax"u8);
                 writer.WriteNumberValue(NetNetfilterNfConntrackMax.Value);
             }
             if (Optional.IsDefined(NetNetfilterNfConntrackBuckets))
             {
-                writer.WritePropertyName("netNetfilterNfConntrackBuckets");
+                writer.WritePropertyName("netNetfilterNfConntrackBuckets"u8);
                 writer.WriteNumberValue(NetNetfilterNfConntrackBuckets.Value);
             }
             if (Optional.IsDefined(FsInotifyMaxUserWatches))
             {
-                writer.WritePropertyName("fsInotifyMaxUserWatches");
+                writer.WritePropertyName("fsInotifyMaxUserWatches"u8);
                 writer.WriteNumberValue(FsInotifyMaxUserWatches.Value);
             }
             if (Optional.IsDefined(FsFileMax))
             {
-                writer.WritePropertyName("fsFileMax");
+                writer.WritePropertyName("fsFileMax"u8);
                 writer.WriteNumberValue(FsFileMax.Value);
             }
             if (Optional.IsDefined(FsAioMaxNr))
             {
-                writer.WritePropertyName("fsAioMaxNr");
+                writer.WritePropertyName("fsAioMaxNr"u8);
                 writer.WriteNumberValue(FsAioMaxNr.Value);
             }
             if (Optional.IsDefined(FsNrOpen))
             {
-                writer.WritePropertyName("fsNrOpen");
+                writer.WritePropertyName("fsNrOpen"u8);
                 writer.WriteNumberValue(FsNrOpen.Value);
             }
             if (Optional.IsDefined(KernelThreadsMax))
             {
-                writer.WritePropertyName("kernelThreadsMax");
+                writer.WritePropertyName("kernelThreadsMax"u8);
                 writer.WriteNumberValue(KernelThreadsMax.Value);
             }
             if (Optional.IsDefined(VmMaxMapCount))
             {
-                writer.WritePropertyName("vmMaxMapCount");
+                writer.WritePropertyName("vmMaxMapCount"u8);
                 writer.WriteNumberValue(VmMaxMapCount.Value);
             }
             if (Optional.IsDefined(VmSwappiness))
             {
-                writer.WritePropertyName("vmSwappiness");
+                writer.WritePropertyName("vmSwappiness"u8);
                 writer.WriteNumberValue(VmSwappiness.Value);
             }
             if (Optional.IsDefined(VmVfsCachePressure))
             {
-                writer.WritePropertyName("vmVfsCachePressure");
+                writer.WritePropertyName("vmVfsCachePressure"u8);
                 writer.WriteNumberValue(VmVfsCachePressure.Value);
             }
             writer.WriteEndObject();
@@ -160,6 +160,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static SysctlConfig DeserializeSysctlConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> netCoreSomaxconn = default;
             Optional<int> netCoreNetdevMaxBacklog = default;
             Optional<int> netCoreRmemDefault = default;
@@ -190,7 +194,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<int> vmVfsCachePressure = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("netCoreSomaxconn"))
+                if (property.NameEquals("netCoreSomaxconn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -200,7 +204,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     netCoreSomaxconn = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netCoreNetdevMaxBacklog"))
+                if (property.NameEquals("netCoreNetdevMaxBacklog"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -210,7 +214,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     netCoreNetdevMaxBacklog = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netCoreRmemDefault"))
+                if (property.NameEquals("netCoreRmemDefault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -220,7 +224,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     netCoreRmemDefault = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netCoreRmemMax"))
+                if (property.NameEquals("netCoreRmemMax"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -230,7 +234,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     netCoreRmemMax = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netCoreWmemDefault"))
+                if (property.NameEquals("netCoreWmemDefault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -240,7 +244,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     netCoreWmemDefault = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netCoreWmemMax"))
+                if (property.NameEquals("netCoreWmemMax"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -250,7 +254,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     netCoreWmemMax = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netCoreOptmemMax"))
+                if (property.NameEquals("netCoreOptmemMax"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -260,7 +264,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     netCoreOptmemMax = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netIpv4TcpMaxSynBacklog"))
+                if (property.NameEquals("netIpv4TcpMaxSynBacklog"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -270,7 +274,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     netIPv4TcpMaxSynBacklog = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netIpv4TcpMaxTwBuckets"))
+                if (property.NameEquals("netIpv4TcpMaxTwBuckets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -280,7 +284,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     netIPv4TcpMaxTwBuckets = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netIpv4TcpFinTimeout"))
+                if (property.NameEquals("netIpv4TcpFinTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -290,7 +294,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     netIPv4TcpFinTimeout = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netIpv4TcpKeepaliveTime"))
+                if (property.NameEquals("netIpv4TcpKeepaliveTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -300,7 +304,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     netIPv4TcpKeepaliveTime = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netIpv4TcpKeepaliveProbes"))
+                if (property.NameEquals("netIpv4TcpKeepaliveProbes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -310,7 +314,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     netIPv4TcpKeepaliveProbes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netIpv4TcpkeepaliveIntvl"))
+                if (property.NameEquals("netIpv4TcpkeepaliveIntvl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -320,7 +324,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     netIPv4TcpKeepaliveIntvl = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netIpv4TcpTwReuse"))
+                if (property.NameEquals("netIpv4TcpTwReuse"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -330,12 +334,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                     netIPv4TcpTwReuse = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("netIpv4IpLocalPortRange"))
+                if (property.NameEquals("netIpv4IpLocalPortRange"u8))
                 {
                     netIPv4IPLocalPortRange = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("netIpv4NeighDefaultGcThresh1"))
+                if (property.NameEquals("netIpv4NeighDefaultGcThresh1"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -345,7 +349,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     netIPv4NeighDefaultGcThresh1 = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netIpv4NeighDefaultGcThresh2"))
+                if (property.NameEquals("netIpv4NeighDefaultGcThresh2"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -355,7 +359,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     netIPv4NeighDefaultGcThresh2 = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netIpv4NeighDefaultGcThresh3"))
+                if (property.NameEquals("netIpv4NeighDefaultGcThresh3"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -365,7 +369,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     netIPv4NeighDefaultGcThresh3 = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netNetfilterNfConntrackMax"))
+                if (property.NameEquals("netNetfilterNfConntrackMax"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -375,7 +379,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     netNetfilterNfConntrackMax = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netNetfilterNfConntrackBuckets"))
+                if (property.NameEquals("netNetfilterNfConntrackBuckets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -385,7 +389,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     netNetfilterNfConntrackBuckets = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("fsInotifyMaxUserWatches"))
+                if (property.NameEquals("fsInotifyMaxUserWatches"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -395,7 +399,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     fsInotifyMaxUserWatches = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("fsFileMax"))
+                if (property.NameEquals("fsFileMax"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -405,7 +409,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     fsFileMax = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("fsAioMaxNr"))
+                if (property.NameEquals("fsAioMaxNr"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -415,7 +419,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     fsAioMaxNr = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("fsNrOpen"))
+                if (property.NameEquals("fsNrOpen"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -425,7 +429,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     fsNrOpen = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("kernelThreadsMax"))
+                if (property.NameEquals("kernelThreadsMax"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -435,7 +439,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     kernelThreadsMax = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("vmMaxMapCount"))
+                if (property.NameEquals("vmMaxMapCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -445,7 +449,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     vmMaxMapCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("vmSwappiness"))
+                if (property.NameEquals("vmSwappiness"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -455,7 +459,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     vmSwappiness = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("vmVfsCachePressure"))
+                if (property.NameEquals("vmVfsCachePressure"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

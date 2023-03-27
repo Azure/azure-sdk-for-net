@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsDefault))
             {
-                writer.WritePropertyName("default");
+                writer.WritePropertyName("default"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
             if (Optional.IsDefined(IsForced))
             {
-                writer.WritePropertyName("forced");
+                writer.WritePropertyName("forced"u8);
                 writer.WriteBooleanValue(IsForced.Value);
             }
             if (Optional.IsDefined(Characteristics))
             {
-                writer.WritePropertyName("characteristics");
+                writer.WritePropertyName("characteristics"u8);
                 writer.WriteStringValue(Characteristics);
             }
             writer.WriteEndObject();
@@ -35,12 +35,16 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static HlsSettings DeserializeHlsSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> @default = default;
             Optional<bool> forced = default;
             Optional<string> characteristics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("default"))
+                if (property.NameEquals("default"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.Media.Models
                     @default = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("forced"))
+                if (property.NameEquals("forced"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.Media.Models
                     forced = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("characteristics"))
+                if (property.NameEquals("characteristics"u8))
                 {
                     characteristics = property.Value.GetString();
                     continue;

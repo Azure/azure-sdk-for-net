@@ -17,34 +17,38 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TransactionManagerCommunicationSettings))
             {
-                writer.WritePropertyName("transactionManagerCommunicationSettings");
+                writer.WritePropertyName("transactionManagerCommunicationSettings"u8);
                 writer.WriteObjectValue(TransactionManagerCommunicationSettings);
             }
-            if (Optional.IsDefined(XaTransactionsEnabled))
+            if (Optional.IsDefined(IsXATransactionsEnabled))
             {
-                writer.WritePropertyName("xaTransactionsEnabled");
-                writer.WriteBooleanValue(XaTransactionsEnabled.Value);
+                writer.WritePropertyName("xaTransactionsEnabled"u8);
+                writer.WriteBooleanValue(IsXATransactionsEnabled.Value);
             }
             if (Optional.IsDefined(SnaLu6Point2TransactionsEnabled))
             {
-                writer.WritePropertyName("snaLu6point2TransactionsEnabled");
+                writer.WritePropertyName("snaLu6point2TransactionsEnabled"u8);
                 writer.WriteBooleanValue(SnaLu6Point2TransactionsEnabled.Value);
             }
-            if (Optional.IsDefined(XaTransactionsDefaultTimeout))
+            if (Optional.IsDefined(XATransactionsDefaultTimeoutInSeconds))
             {
-                writer.WritePropertyName("xaTransactionsDefaultTimeout");
-                writer.WriteNumberValue(XaTransactionsDefaultTimeout.Value);
+                writer.WritePropertyName("xaTransactionsDefaultTimeout"u8);
+                writer.WriteNumberValue(XATransactionsDefaultTimeoutInSeconds.Value);
             }
-            if (Optional.IsDefined(XaTransactionsMaximumTimeout))
+            if (Optional.IsDefined(XATransactionsMaximumTimeoutInSeconds))
             {
-                writer.WritePropertyName("xaTransactionsMaximumTimeout");
-                writer.WriteNumberValue(XaTransactionsMaximumTimeout.Value);
+                writer.WritePropertyName("xaTransactionsMaximumTimeout"u8);
+                writer.WriteNumberValue(XATransactionsMaximumTimeoutInSeconds.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static ManagedInstanceDtcSecuritySettings DeserializeManagedInstanceDtcSecuritySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedInstanceDtcTransactionManagerCommunicationSettings> transactionManagerCommunicationSettings = default;
             Optional<bool> xaTransactionsEnabled = default;
             Optional<bool> snaLu6point2TransactionsEnabled = default;
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<int> xaTransactionsMaximumTimeout = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("transactionManagerCommunicationSettings"))
+                if (property.NameEquals("transactionManagerCommunicationSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +66,7 @@ namespace Azure.ResourceManager.Sql.Models
                     transactionManagerCommunicationSettings = ManagedInstanceDtcTransactionManagerCommunicationSettings.DeserializeManagedInstanceDtcTransactionManagerCommunicationSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("xaTransactionsEnabled"))
+                if (property.NameEquals("xaTransactionsEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.Sql.Models
                     xaTransactionsEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("snaLu6point2TransactionsEnabled"))
+                if (property.NameEquals("snaLu6point2TransactionsEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +86,7 @@ namespace Azure.ResourceManager.Sql.Models
                     snaLu6point2TransactionsEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("xaTransactionsDefaultTimeout"))
+                if (property.NameEquals("xaTransactionsDefaultTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.Sql.Models
                     xaTransactionsDefaultTimeout = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("xaTransactionsMaximumTimeout"))
+                if (property.NameEquals("xaTransactionsMaximumTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

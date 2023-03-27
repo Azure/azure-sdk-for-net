@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -50,8 +49,16 @@ namespace Azure.ResourceManager.AgFoodPlatform
 
         /// <summary>
         /// Lists the FarmBeats instances for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/farmBeats
-        /// Operation Id: FarmBeatsModels_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/farmBeats</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FarmBeatsModels_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
@@ -62,43 +69,23 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> An async collection of <see cref="FarmBeatResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FarmBeatResource> GetFarmBeatsAsync(int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<FarmBeatResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = FarmBeatFarmBeatsModelsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFarmBeats");
-                scope.Start();
-                try
-                {
-                    var response = await FarmBeatFarmBeatsModelsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, pageSizeHint, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FarmBeatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<FarmBeatResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = FarmBeatFarmBeatsModelsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFarmBeats");
-                scope.Start();
-                try
-                {
-                    var response = await FarmBeatFarmBeatsModelsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, pageSizeHint, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FarmBeatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, pageSizeHint, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, pageSizeHint, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FarmBeatResource(Client, FarmBeatData.DeserializeFarmBeatData(e)), FarmBeatFarmBeatsModelsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFarmBeats", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists the FarmBeats instances for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/farmBeats
-        /// Operation Id: FarmBeatsModels_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/farmBeats</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FarmBeatsModels_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
@@ -109,43 +96,23 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> A collection of <see cref="FarmBeatResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FarmBeatResource> GetFarmBeats(int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<FarmBeatResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = FarmBeatFarmBeatsModelsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFarmBeats");
-                scope.Start();
-                try
-                {
-                    var response = FarmBeatFarmBeatsModelsRestClient.ListBySubscription(Id.SubscriptionId, pageSizeHint, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FarmBeatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<FarmBeatResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = FarmBeatFarmBeatsModelsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFarmBeats");
-                scope.Start();
-                try
-                {
-                    var response = FarmBeatFarmBeatsModelsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, pageSizeHint, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FarmBeatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, pageSizeHint, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, pageSizeHint, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FarmBeatResource(Client, FarmBeatData.DeserializeFarmBeatData(e)), FarmBeatFarmBeatsModelsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFarmBeats", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks the name availability of the resource with requested resource name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/checkNameAvailability
-        /// Operation Id: Locations_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> NameAvailabilityRequest object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,8 +134,16 @@ namespace Azure.ResourceManager.AgFoodPlatform
 
         /// <summary>
         /// Checks the name availability of the resource with requested resource name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/checkNameAvailability
-        /// Operation Id: Locations_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> NameAvailabilityRequest object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

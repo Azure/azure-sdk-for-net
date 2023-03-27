@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         internal static ResourceProviderManifest DeserializeResourceProviderManifest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceProviderManifestProviderAuthentication> providerAuthentication = default;
             Optional<IReadOnlyList<ResourceProviderAuthorization>> providerAuthorizations = default;
             Optional<string> @namespace = default;
@@ -32,7 +36,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<ResourceProviderManifestReRegisterSubscriptionMetadata> reRegisterSubscriptionMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("providerAuthentication"))
+                if (property.NameEquals("providerAuthentication"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     providerAuthentication = ResourceProviderManifestProviderAuthentication.DeserializeResourceProviderManifestProviderAuthentication(property.Value);
                     continue;
                 }
-                if (property.NameEquals("providerAuthorizations"))
+                if (property.NameEquals("providerAuthorizations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,17 +61,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     providerAuthorizations = array;
                     continue;
                 }
-                if (property.NameEquals("namespace"))
+                if (property.NameEquals("namespace"u8))
                 {
                     @namespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providerVersion"))
+                if (property.NameEquals("providerVersion"u8))
                 {
                     providerVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providerType"))
+                if (property.NameEquals("providerType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +81,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     providerType = new ResourceProviderType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("requiredFeatures"))
+                if (property.NameEquals("requiredFeatures"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     requiredFeatures = array;
                     continue;
                 }
-                if (property.NameEquals("featuresRule"))
+                if (property.NameEquals("featuresRule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,7 +106,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     featuresRule = ResourceProviderManifestFeaturesRule.DeserializeResourceProviderManifestFeaturesRule(property.Value);
                     continue;
                 }
-                if (property.NameEquals("requestHeaderOptions"))
+                if (property.NameEquals("requestHeaderOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,7 +116,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     requestHeaderOptions = ResourceProviderManifestRequestHeaderOptions.DeserializeResourceProviderManifestRequestHeaderOptions(property.Value);
                     continue;
                 }
-                if (property.NameEquals("resourceTypes"))
+                if (property.NameEquals("resourceTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -127,7 +131,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     resourceTypes = array;
                     continue;
                 }
-                if (property.NameEquals("management"))
+                if (property.NameEquals("management"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -137,7 +141,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     management = ResourceProviderManifestManagement.DeserializeResourceProviderManifestManagement(property.Value);
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -152,7 +156,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     capabilities = array;
                     continue;
                 }
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -162,7 +166,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     metadata = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("globalNotificationEndpoints"))
+                if (property.NameEquals("globalNotificationEndpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -177,7 +181,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     globalNotificationEndpoints = array;
                     continue;
                 }
-                if (property.NameEquals("reRegisterSubscriptionMetadata"))
+                if (property.NameEquals("reRegisterSubscriptionMetadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

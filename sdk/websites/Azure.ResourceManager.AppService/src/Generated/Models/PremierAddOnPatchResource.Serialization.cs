@@ -18,34 +18,34 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
             if (Optional.IsDefined(Product))
             {
-                writer.WritePropertyName("product");
+                writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
             if (Optional.IsDefined(Vendor))
             {
-                writer.WritePropertyName("vendor");
+                writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
             if (Optional.IsDefined(MarketplacePublisher))
             {
-                writer.WritePropertyName("marketplacePublisher");
+                writer.WritePropertyName("marketplacePublisher"u8);
                 writer.WriteStringValue(MarketplacePublisher);
             }
             if (Optional.IsDefined(MarketplaceOffer))
             {
-                writer.WritePropertyName("marketplaceOffer");
+                writer.WritePropertyName("marketplaceOffer"u8);
                 writer.WriteStringValue(MarketplaceOffer);
             }
             writer.WriteEndObject();
@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static PremierAddOnPatchResource DeserializePremierAddOnPatchResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -66,27 +70,27 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> marketplaceOffer = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,27 +109,27 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("sku"))
+                        if (property0.NameEquals("sku"u8))
                         {
                             sku = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("product"))
+                        if (property0.NameEquals("product"u8))
                         {
                             product = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("vendor"))
+                        if (property0.NameEquals("vendor"u8))
                         {
                             vendor = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("marketplacePublisher"))
+                        if (property0.NameEquals("marketplacePublisher"u8))
                         {
                             marketplacePublisher = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("marketplaceOffer"))
+                        if (property0.NameEquals("marketplaceOffer"u8))
                         {
                             marketplaceOffer = property0.Value.GetString();
                             continue;

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(FilePrefixList))
             {
-                writer.WritePropertyName("filePrefixList");
+                writer.WritePropertyName("filePrefixList"u8);
                 writer.WriteStartArray();
                 foreach (var item in FilePrefixList)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             if (Optional.IsCollectionDefined(FilePathList))
             {
-                writer.WritePropertyName("filePathList");
+                writer.WritePropertyName("filePathList"u8);
                 writer.WriteStartArray();
                 foreach (var item in FilePathList)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             if (Optional.IsCollectionDefined(FileShareList))
             {
-                writer.WritePropertyName("fileShareList");
+                writer.WritePropertyName("fileShareList"u8);
                 writer.WriteStartArray();
                 foreach (var item in FileShareList)
                 {
@@ -51,12 +51,16 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static AzureFileFilterDetails DeserializeAzureFileFilterDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> filePrefixList = default;
             Optional<IList<string>> filePathList = default;
             Optional<IList<string>> fileShareList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("filePrefixList"))
+                if (property.NameEquals("filePrefixList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     filePrefixList = array;
                     continue;
                 }
-                if (property.NameEquals("filePathList"))
+                if (property.NameEquals("filePathList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +90,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     filePathList = array;
                     continue;
                 }
-                if (property.NameEquals("fileShareList"))
+                if (property.NameEquals("fileShareList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

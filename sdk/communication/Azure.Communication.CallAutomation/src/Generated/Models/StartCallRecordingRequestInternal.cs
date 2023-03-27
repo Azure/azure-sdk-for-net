@@ -43,7 +43,7 @@ namespace Azure.Communication.CallAutomation
         /// first audio was detected.  Channel to participant mapping details can be found in the metadata of the recording.
         /// </summary>
         public IList<CommunicationIdentifierModel> AudioChannelParticipantOrdering { get; }
-        /// <summary> Recording storage mode. `External` enables bring your own storage. </summary>
-        public RecordingStorageType? RecordingStorageType { get; set; }
+        /// <summary> Optional property to specify location where recording will be stored. </summary>
+        public ExternalStorageInternal ExternalStorage { get; set; }
     }
 }

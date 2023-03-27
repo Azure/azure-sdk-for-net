@@ -17,42 +17,42 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Complexity))
             {
-                writer.WritePropertyName("complexity");
+                writer.WritePropertyName("complexity"u8);
                 writer.WriteStringValue(Complexity.Value.ToString());
             }
             if (Optional.IsDefined(InterleaveOutput))
             {
-                writer.WritePropertyName("interleaveOutput");
+                writer.WritePropertyName("interleaveOutput"u8);
                 writer.WriteStringValue(InterleaveOutput.Value.ToString());
             }
             if (Optional.IsDefined(KeyFrameIntervalInSeconds))
             {
-                writer.WritePropertyName("keyFrameIntervalInSeconds");
+                writer.WritePropertyName("keyFrameIntervalInSeconds"u8);
                 writer.WriteNumberValue(KeyFrameIntervalInSeconds.Value);
             }
             if (Optional.IsDefined(MaxBitrateBps))
             {
-                writer.WritePropertyName("maxBitrateBps");
+                writer.WritePropertyName("maxBitrateBps"u8);
                 writer.WriteNumberValue(MaxBitrateBps.Value);
             }
             if (Optional.IsDefined(MaxHeight))
             {
-                writer.WritePropertyName("maxHeight");
+                writer.WritePropertyName("maxHeight"u8);
                 writer.WriteNumberValue(MaxHeight.Value);
             }
             if (Optional.IsDefined(MaxLayers))
             {
-                writer.WritePropertyName("maxLayers");
+                writer.WritePropertyName("maxLayers"u8);
                 writer.WriteNumberValue(MaxLayers.Value);
             }
             if (Optional.IsDefined(MinBitrateBps))
             {
-                writer.WritePropertyName("minBitrateBps");
+                writer.WritePropertyName("minBitrateBps"u8);
                 writer.WriteNumberValue(MinBitrateBps.Value);
             }
             if (Optional.IsDefined(MinHeight))
             {
-                writer.WritePropertyName("minHeight");
+                writer.WritePropertyName("minHeight"u8);
                 writer.WriteNumberValue(MinHeight.Value);
             }
             writer.WriteEndObject();
@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static EncoderPresetConfigurations DeserializeEncoderPresetConfigurations(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EncodingComplexity> complexity = default;
             Optional<InterleaveOutput> interleaveOutput = default;
             Optional<float> keyFrameIntervalInSeconds = default;
@@ -70,7 +74,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<int> minHeight = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("complexity"))
+                if (property.NameEquals("complexity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +84,7 @@ namespace Azure.ResourceManager.Media.Models
                     complexity = new EncodingComplexity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("interleaveOutput"))
+                if (property.NameEquals("interleaveOutput"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.Media.Models
                     interleaveOutput = new InterleaveOutput(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyFrameIntervalInSeconds"))
+                if (property.NameEquals("keyFrameIntervalInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +104,7 @@ namespace Azure.ResourceManager.Media.Models
                     keyFrameIntervalInSeconds = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("maxBitrateBps"))
+                if (property.NameEquals("maxBitrateBps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +114,7 @@ namespace Azure.ResourceManager.Media.Models
                     maxBitrateBps = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxHeight"))
+                if (property.NameEquals("maxHeight"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +124,7 @@ namespace Azure.ResourceManager.Media.Models
                     maxHeight = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxLayers"))
+                if (property.NameEquals("maxLayers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,7 +134,7 @@ namespace Azure.ResourceManager.Media.Models
                     maxLayers = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minBitrateBps"))
+                if (property.NameEquals("minBitrateBps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -140,7 +144,7 @@ namespace Azure.ResourceManager.Media.Models
                     minBitrateBps = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minHeight"))
+                if (property.NameEquals("minHeight"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(HttpProxy))
             {
-                writer.WritePropertyName("httpProxy");
+                writer.WritePropertyName("httpProxy"u8);
                 writer.WriteStringValue(HttpProxy);
             }
             if (Optional.IsDefined(HttpsProxy))
             {
-                writer.WritePropertyName("httpsProxy");
+                writer.WritePropertyName("httpsProxy"u8);
                 writer.WriteStringValue(HttpsProxy);
             }
             if (Optional.IsCollectionDefined(NoProxy))
             {
-                writer.WritePropertyName("noProxy");
+                writer.WritePropertyName("noProxy"u8);
                 writer.WriteStartArray();
                 foreach (var item in NoProxy)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             if (Optional.IsDefined(TrustedCA))
             {
-                writer.WritePropertyName("trustedCa");
+                writer.WritePropertyName("trustedCa"u8);
                 writer.WriteStringValue(TrustedCA);
             }
             writer.WriteEndObject();
@@ -46,23 +46,28 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterHttpProxyConfig DeserializeManagedClusterHttpProxyConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> httpProxy = default;
             Optional<string> httpsProxy = default;
             Optional<IList<string>> noProxy = default;
+            Optional<IReadOnlyList<string>> effectiveNoProxy = default;
             Optional<string> trustedCA = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("httpProxy"))
+                if (property.NameEquals("httpProxy"u8))
                 {
                     httpProxy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("httpsProxy"))
+                if (property.NameEquals("httpsProxy"u8))
                 {
                     httpsProxy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("noProxy"))
+                if (property.NameEquals("noProxy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,13 +82,28 @@ namespace Azure.ResourceManager.ContainerService.Models
                     noProxy = array;
                     continue;
                 }
-                if (property.NameEquals("trustedCa"))
+                if (property.NameEquals("effectiveNoProxy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    effectiveNoProxy = array;
+                    continue;
+                }
+                if (property.NameEquals("trustedCa"u8))
                 {
                     trustedCA = property.Value.GetString();
                     continue;
                 }
             }
-            return new ManagedClusterHttpProxyConfig(httpProxy.Value, httpsProxy.Value, Optional.ToList(noProxy), trustedCA.Value);
+            return new ManagedClusterHttpProxyConfig(httpProxy.Value, httpsProxy.Value, Optional.ToList(noProxy), Optional.ToList(effectiveNoProxy), trustedCA.Value);
         }
     }
 }

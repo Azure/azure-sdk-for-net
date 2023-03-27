@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(StorageSpaceIds))
             {
-                writer.WritePropertyName("storageSpaceIds");
+                writer.WritePropertyName("storageSpaceIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in StorageSpaceIds)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static CloudProviderProfileInfraStorageProfile DeserializeCloudProviderProfileInfraStorageProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> storageSpaceIds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageSpaceIds"))
+                if (property.NameEquals("storageSpaceIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

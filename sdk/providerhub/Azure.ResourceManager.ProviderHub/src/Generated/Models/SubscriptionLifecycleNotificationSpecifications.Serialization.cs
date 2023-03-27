@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(SubscriptionStateOverrideActions))
             {
-                writer.WritePropertyName("subscriptionStateOverrideActions");
+                writer.WritePropertyName("subscriptionStateOverrideActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in SubscriptionStateOverrideActions)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             if (Optional.IsDefined(SoftDeleteTTL))
             {
-                writer.WritePropertyName("softDeleteTTL");
+                writer.WritePropertyName("softDeleteTTL"u8);
                 writer.WriteStringValue(SoftDeleteTTL.Value, "P");
             }
             writer.WriteEndObject();
@@ -37,11 +37,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static SubscriptionLifecycleNotificationSpecifications DeserializeSubscriptionLifecycleNotificationSpecifications(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SubscriptionStateOverrideAction>> subscriptionStateOverrideActions = default;
             Optional<TimeSpan> softDeleteTTL = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subscriptionStateOverrideActions"))
+                if (property.NameEquals("subscriptionStateOverrideActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     subscriptionStateOverrideActions = array;
                     continue;
                 }
-                if (property.NameEquals("softDeleteTTL"))
+                if (property.NameEquals("softDeleteTTL"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.StorageCache.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("username");
+            writer.WritePropertyName("username"u8);
             writer.WriteStringValue(Username);
-            writer.WritePropertyName("password");
+            writer.WritePropertyName("password"u8);
             writer.WriteStringValue(Password);
             writer.WriteEndObject();
         }
 
         internal static StorageCacheActiveDirectorySettingsCredentials DeserializeStorageCacheActiveDirectorySettingsCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string username = default;
             string password = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("username"))
+                if (property.NameEquals("username"u8))
                 {
                     username = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
                     continue;

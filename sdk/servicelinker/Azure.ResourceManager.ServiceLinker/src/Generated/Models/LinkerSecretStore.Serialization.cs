@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 if (KeyVaultId != null)
                 {
-                    writer.WritePropertyName("keyVaultId");
+                    writer.WritePropertyName("keyVaultId"u8);
                     writer.WriteStringValue(KeyVaultId);
                 }
                 else
@@ -32,10 +32,14 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static LinkerSecretStore DeserializeLinkerSecretStore(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> keyVaultId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyVaultId"))
+                if (property.NameEquals("keyVaultId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

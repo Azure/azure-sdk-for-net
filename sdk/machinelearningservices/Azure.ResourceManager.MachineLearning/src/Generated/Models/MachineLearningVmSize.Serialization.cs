@@ -15,9 +15,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningVmSize DeserializeMachineLearningVmSize(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> family = default;
-            Optional<int> vcpUs = default;
+            Optional<int> vCpus = default;
             Optional<int> gpus = default;
             Optional<int> osVhdSizeMB = default;
             Optional<int> maxResourceVolumeMB = default;
@@ -28,27 +32,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IReadOnlyList<string>> supportedComputeTypes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("family"))
+                if (property.NameEquals("family"u8))
                 {
                     family = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vCPUs"))
+                if (property.NameEquals("vCPUs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vcpUs = property.Value.GetInt32();
+                    vCpus = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("gpus"))
+                if (property.NameEquals("gpus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     gpus = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("osVhdSizeMB"))
+                if (property.NameEquals("osVhdSizeMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     osVhdSizeMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxResourceVolumeMB"))
+                if (property.NameEquals("maxResourceVolumeMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     maxResourceVolumeMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("memoryGB"))
+                if (property.NameEquals("memoryGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     memoryGB = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("lowPriorityCapable"))
+                if (property.NameEquals("lowPriorityCapable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     lowPriorityCapable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("premiumIO"))
+                if (property.NameEquals("premiumIO"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     premiumIO = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("estimatedVMPrices"))
+                if (property.NameEquals("estimatedVMPrices"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     estimatedVmPrices = MachineLearningEstimatedVmPrices.DeserializeMachineLearningEstimatedVmPrices(property.Value);
                     continue;
                 }
-                if (property.NameEquals("supportedComputeTypes"))
+                if (property.NameEquals("supportedComputeTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -134,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningVmSize(name.Value, family.Value, Optional.ToNullable(vcpUs), Optional.ToNullable(gpus), Optional.ToNullable(osVhdSizeMB), Optional.ToNullable(maxResourceVolumeMB), Optional.ToNullable(memoryGB), Optional.ToNullable(lowPriorityCapable), Optional.ToNullable(premiumIO), estimatedVmPrices.Value, Optional.ToList(supportedComputeTypes));
+            return new MachineLearningVmSize(name.Value, family.Value, Optional.ToNullable(vCpus), Optional.ToNullable(gpus), Optional.ToNullable(osVhdSizeMB), Optional.ToNullable(maxResourceVolumeMB), Optional.ToNullable(memoryGB), Optional.ToNullable(lowPriorityCapable), Optional.ToNullable(premiumIO), estimatedVmPrices.Value, Optional.ToList(supportedComputeTypes));
         }
     }
 }

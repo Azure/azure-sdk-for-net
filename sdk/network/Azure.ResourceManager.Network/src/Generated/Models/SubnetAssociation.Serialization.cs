@@ -16,11 +16,15 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static SubnetAssociation DeserializeSubnetAssociation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<IReadOnlyList<SecurityRuleData>> securityRules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("securityRules"))
+                if (property.NameEquals("securityRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Roles))
             {
-                writer.WritePropertyName("roles");
+                writer.WritePropertyName("roles"u8);
                 writer.WriteStartObject();
                 foreach (var item in Roles)
                 {
@@ -32,10 +32,14 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         internal static UserRoleAssignmentValue DeserializeUserRoleAssignmentValue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, EnvironmentRole>> roles = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("roles"))
+                if (property.NameEquals("roles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

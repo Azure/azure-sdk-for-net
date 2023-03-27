@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(OrgsCount))
             {
-                writer.WritePropertyName("orgsCount");
+                writer.WritePropertyName("orgsCount"u8);
                 writer.WriteNumberValue(OrgsCount.Value);
             }
             if (Optional.IsDefined(ProjectsCount))
             {
-                writer.WritePropertyName("projectsCount");
+                writer.WritePropertyName("projectsCount"u8);
                 writer.WriteNumberValue(ProjectsCount.Value);
             }
             if (Optional.IsDefined(ReposCount))
             {
-                writer.WritePropertyName("reposCount");
+                writer.WritePropertyName("reposCount"u8);
                 writer.WriteNumberValue(ReposCount.Value);
             }
             writer.WriteEndObject();
@@ -40,13 +40,17 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static AzureDevOpsConnectorStatsProperties DeserializeAzureDevOpsConnectorStatsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<long> orgsCount = default;
             Optional<long> projectsCount = default;
             Optional<long> reposCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("orgsCount"))
+                if (property.NameEquals("orgsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     orgsCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("projectsCount"))
+                if (property.NameEquals("projectsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     projectsCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("reposCount"))
+                if (property.NameEquals("reposCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

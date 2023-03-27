@@ -18,49 +18,49 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BackupConfiguration))
             {
-                writer.WritePropertyName("backupConfiguration");
+                writer.WritePropertyName("backupConfiguration"u8);
                 writer.WriteObjectValue(BackupConfiguration);
             }
             if (Optional.IsDefined(OfflineConfiguration))
             {
-                writer.WritePropertyName("offlineConfiguration");
+                writer.WritePropertyName("offlineConfiguration"u8);
                 writer.WriteObjectValue(OfflineConfiguration);
             }
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(Scope))
             {
-                writer.WritePropertyName("scope");
+                writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
             if (Optional.IsDefined(SourceSqlConnection))
             {
-                writer.WritePropertyName("sourceSqlConnection");
+                writer.WritePropertyName("sourceSqlConnection"u8);
                 writer.WriteObjectValue(SourceSqlConnection);
             }
             if (Optional.IsDefined(SourceDatabaseName))
             {
-                writer.WritePropertyName("sourceDatabaseName");
+                writer.WritePropertyName("sourceDatabaseName"u8);
                 writer.WriteStringValue(SourceDatabaseName);
             }
             if (Optional.IsDefined(MigrationService))
             {
-                writer.WritePropertyName("migrationService");
+                writer.WritePropertyName("migrationService"u8);
                 writer.WriteStringValue(MigrationService);
             }
             if (Optional.IsDefined(MigrationOperationId))
             {
-                writer.WritePropertyName("migrationOperationId");
+                writer.WritePropertyName("migrationOperationId"u8);
                 writer.WriteStringValue(MigrationOperationId);
             }
             if (Optional.IsDefined(TargetDatabaseCollation))
             {
-                writer.WritePropertyName("targetDatabaseCollation");
+                writer.WritePropertyName("targetDatabaseCollation"u8);
                 writer.WriteStringValue(TargetDatabaseCollation);
             }
             if (Optional.IsDefined(ProvisioningError))
             {
-                writer.WritePropertyName("provisioningError");
+                writer.WritePropertyName("provisioningError"u8);
                 writer.WriteStringValue(ProvisioningError);
             }
             writer.WriteEndObject();
@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static DatabaseMigrationSqlMIProperties DeserializeDatabaseMigrationSqlMIProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MigrationStatusDetails> migrationStatusDetails = default;
             Optional<BackupConfiguration> backupConfiguration = default;
             Optional<OfflineConfiguration> offlineConfiguration = default;
@@ -87,7 +91,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> provisioningError = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("migrationStatusDetails"))
+                if (property.NameEquals("migrationStatusDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +101,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     migrationStatusDetails = MigrationStatusDetails.DeserializeMigrationStatusDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("backupConfiguration"))
+                if (property.NameEquals("backupConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,7 +111,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     backupConfiguration = BackupConfiguration.DeserializeBackupConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("offlineConfiguration"))
+                if (property.NameEquals("offlineConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -117,27 +121,27 @@ namespace Azure.ResourceManager.DataMigration.Models
                     offlineConfiguration = OfflineConfiguration.DeserializeOfflineConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scope"))
+                if (property.NameEquals("scope"u8))
                 {
                     scope = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     provisioningState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("migrationStatus"))
+                if (property.NameEquals("migrationStatus"u8))
                 {
                     migrationStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startedOn"))
+                if (property.NameEquals("startedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -147,7 +151,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     startedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endedOn"))
+                if (property.NameEquals("endedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -157,7 +161,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     endedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("sourceSqlConnection"))
+                if (property.NameEquals("sourceSqlConnection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -167,27 +171,27 @@ namespace Azure.ResourceManager.DataMigration.Models
                     sourceSqlConnection = SqlConnectionInformation.DeserializeSqlConnectionInformation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sourceDatabaseName"))
+                if (property.NameEquals("sourceDatabaseName"u8))
                 {
                     sourceDatabaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceServerName"))
+                if (property.NameEquals("sourceServerName"u8))
                 {
                     sourceServerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("migrationService"))
+                if (property.NameEquals("migrationService"u8))
                 {
                     migrationService = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("migrationOperationId"))
+                if (property.NameEquals("migrationOperationId"u8))
                 {
                     migrationOperationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("migrationFailureError"))
+                if (property.NameEquals("migrationFailureError"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -197,12 +201,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     migrationFailureError = ErrorInfo.DeserializeErrorInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("targetDatabaseCollation"))
+                if (property.NameEquals("targetDatabaseCollation"u8))
                 {
                     targetDatabaseCollation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningError"))
+                if (property.NameEquals("provisioningError"u8))
                 {
                     provisioningError = property.Value.GetString();
                     continue;

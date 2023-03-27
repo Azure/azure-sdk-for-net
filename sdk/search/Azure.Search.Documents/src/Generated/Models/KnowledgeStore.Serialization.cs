@@ -16,9 +16,9 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("storageConnectionString");
+            writer.WritePropertyName("storageConnectionString"u8);
             writer.WriteStringValue(StorageConnectionString);
-            writer.WritePropertyName("projections");
+            writer.WritePropertyName("projections"u8);
             writer.WriteStartArray();
             foreach (var item in Projections)
             {
@@ -30,16 +30,20 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static KnowledgeStore DeserializeKnowledgeStore(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string storageConnectionString = default;
             IList<KnowledgeStoreProjection> projections = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageConnectionString"))
+                if (property.NameEquals("storageConnectionString"u8))
                 {
                     storageConnectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("projections"))
+                if (property.NameEquals("projections"u8))
                 {
                     List<KnowledgeStoreProjection> array = new List<KnowledgeStoreProjection>();
                     foreach (var item in property.Value.EnumerateArray())

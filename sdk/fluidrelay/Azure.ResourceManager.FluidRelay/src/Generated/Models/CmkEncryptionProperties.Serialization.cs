@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.FluidRelay.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyEncryptionKeyIdentity))
             {
-                writer.WritePropertyName("keyEncryptionKeyIdentity");
+                writer.WritePropertyName("keyEncryptionKeyIdentity"u8);
                 writer.WriteObjectValue(KeyEncryptionKeyIdentity);
             }
             if (Optional.IsDefined(KeyEncryptionKeyUri))
             {
-                writer.WritePropertyName("keyEncryptionKeyUrl");
+                writer.WritePropertyName("keyEncryptionKeyUrl"u8);
                 writer.WriteStringValue(KeyEncryptionKeyUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -31,11 +31,15 @@ namespace Azure.ResourceManager.FluidRelay.Models
 
         internal static CmkEncryptionProperties DeserializeCmkEncryptionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CmkIdentity> keyEncryptionKeyIdentity = default;
             Optional<Uri> keyEncryptionKeyUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyEncryptionKeyIdentity"))
+                if (property.NameEquals("keyEncryptionKeyIdentity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                     keyEncryptionKeyIdentity = CmkIdentity.DeserializeCmkIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("keyEncryptionKeyUrl"))
+                if (property.NameEquals("keyEncryptionKeyUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

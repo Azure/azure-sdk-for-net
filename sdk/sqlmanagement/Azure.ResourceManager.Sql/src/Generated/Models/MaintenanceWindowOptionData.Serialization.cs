@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.Sql
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("isEnabled");
+                writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsCollectionDefined(MaintenanceWindowCycles))
             {
-                writer.WritePropertyName("maintenanceWindowCycles");
+                writer.WritePropertyName("maintenanceWindowCycles"u8);
                 writer.WriteStartArray();
                 foreach (var item in MaintenanceWindowCycles)
                 {
@@ -37,27 +37,27 @@ namespace Azure.ResourceManager.Sql
             }
             if (Optional.IsDefined(MinDurationInMinutes))
             {
-                writer.WritePropertyName("minDurationInMinutes");
+                writer.WritePropertyName("minDurationInMinutes"u8);
                 writer.WriteNumberValue(MinDurationInMinutes.Value);
             }
             if (Optional.IsDefined(DefaultDurationInMinutes))
             {
-                writer.WritePropertyName("defaultDurationInMinutes");
+                writer.WritePropertyName("defaultDurationInMinutes"u8);
                 writer.WriteNumberValue(DefaultDurationInMinutes.Value);
             }
             if (Optional.IsDefined(MinCycles))
             {
-                writer.WritePropertyName("minCycles");
+                writer.WritePropertyName("minCycles"u8);
                 writer.WriteNumberValue(MinCycles.Value);
             }
             if (Optional.IsDefined(TimeGranularityInMinutes))
             {
-                writer.WritePropertyName("timeGranularityInMinutes");
+                writer.WritePropertyName("timeGranularityInMinutes"u8);
                 writer.WriteNumberValue(TimeGranularityInMinutes.Value);
             }
             if (Optional.IsDefined(AllowMultipleMaintenanceWindowsPerCycle))
             {
-                writer.WritePropertyName("allowMultipleMaintenanceWindowsPerCycle");
+                writer.WritePropertyName("allowMultipleMaintenanceWindowsPerCycle"u8);
                 writer.WriteBooleanValue(AllowMultipleMaintenanceWindowsPerCycle.Value);
             }
             writer.WriteEndObject();
@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static MaintenanceWindowOptionData DeserializeMaintenanceWindowOptionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -79,22 +83,22 @@ namespace Azure.ResourceManager.Sql
             Optional<bool> allowMultipleMaintenanceWindowsPerCycle = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.Sql
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +117,7 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("isEnabled"))
+                        if (property0.NameEquals("isEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -123,7 +127,7 @@ namespace Azure.ResourceManager.Sql
                             isEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("maintenanceWindowCycles"))
+                        if (property0.NameEquals("maintenanceWindowCycles"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -138,7 +142,7 @@ namespace Azure.ResourceManager.Sql
                             maintenanceWindowCycles = array;
                             continue;
                         }
-                        if (property0.NameEquals("minDurationInMinutes"))
+                        if (property0.NameEquals("minDurationInMinutes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -148,7 +152,7 @@ namespace Azure.ResourceManager.Sql
                             minDurationInMinutes = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("defaultDurationInMinutes"))
+                        if (property0.NameEquals("defaultDurationInMinutes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -158,7 +162,7 @@ namespace Azure.ResourceManager.Sql
                             defaultDurationInMinutes = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("minCycles"))
+                        if (property0.NameEquals("minCycles"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -168,7 +172,7 @@ namespace Azure.ResourceManager.Sql
                             minCycles = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("timeGranularityInMinutes"))
+                        if (property0.NameEquals("timeGranularityInMinutes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -178,7 +182,7 @@ namespace Azure.ResourceManager.Sql
                             timeGranularityInMinutes = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("allowMultipleMaintenanceWindowsPerCycle"))
+                        if (property0.NameEquals("allowMultipleMaintenanceWindowsPerCycle"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

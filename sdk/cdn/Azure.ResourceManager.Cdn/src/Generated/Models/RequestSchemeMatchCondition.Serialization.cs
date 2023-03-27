@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("typeName");
+            writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(ConditionType.ToString());
-            writer.WritePropertyName("operator");
+            writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(RequestSchemeOperator.ToString());
             if (Optional.IsDefined(NegateCondition))
             {
-                writer.WritePropertyName("negateCondition");
+                writer.WritePropertyName("negateCondition"u8);
                 writer.WriteBooleanValue(NegateCondition.Value);
             }
             if (Optional.IsCollectionDefined(Transforms))
             {
-                writer.WritePropertyName("transforms");
+                writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
                 foreach (var item in Transforms)
                 {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsCollectionDefined(MatchValues))
             {
-                writer.WritePropertyName("matchValues");
+                writer.WritePropertyName("matchValues"u8);
                 writer.WriteStartArray();
                 foreach (var item in MatchValues)
                 {
@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static RequestSchemeMatchCondition DeserializeRequestSchemeMatchCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RequestSchemeMatchConditionType typeName = default;
             RequestSchemeOperator @operator = default;
             Optional<bool> negateCondition = default;
@@ -57,17 +61,17 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<IList<RequestSchemeMatchConditionMatchValue>> matchValues = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("typeName"))
+                if (property.NameEquals("typeName"u8))
                 {
                     typeName = new RequestSchemeMatchConditionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("operator"))
+                if (property.NameEquals("operator"u8))
                 {
                     @operator = new RequestSchemeOperator(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("negateCondition"))
+                if (property.NameEquals("negateCondition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +81,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     negateCondition = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("transforms"))
+                if (property.NameEquals("transforms"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     transforms = array;
                     continue;
                 }
-                if (property.NameEquals("matchValues"))
+                if (property.NameEquals("matchValues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

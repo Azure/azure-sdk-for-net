@@ -14,22 +14,26 @@ namespace Azure.ResourceManager.PostgreSql.Models
     {
         internal static PostgreSqlServerPrivateLinkServiceConnectionStateProperty DeserializePostgreSqlServerPrivateLinkServiceConnectionStateProperty(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PostgreSqlPrivateLinkServiceConnectionStateStatus status = default;
             string description = default;
             Optional<PostgreSqlPrivateLinkServiceConnectionStateRequiredAction> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = new PostgreSqlPrivateLinkServiceConnectionStateStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("actionsRequired"))
+                if (property.NameEquals("actionsRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

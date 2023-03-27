@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FlowName))
             {
-                writer.WritePropertyName("flowName");
+                writer.WritePropertyName("flowName"u8);
                 writer.WriteStringValue(FlowName);
             }
             if (Optional.IsDefined(TriggerName))
             {
-                writer.WritePropertyName("triggerName");
+                writer.WritePropertyName("triggerName"u8);
                 writer.WriteStringValue(TriggerName);
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WriteEndObject();
@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicWorkflowTriggerReference DeserializeLogicWorkflowTriggerReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> flowName = default;
             Optional<string> triggerName = default;
             Optional<ResourceIdentifier> id = default;
@@ -42,17 +46,17 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<ResourceType> type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("flowName"))
+                if (property.NameEquals("flowName"u8))
                 {
                     flowName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("triggerName"))
+                if (property.NameEquals("triggerName"u8))
                 {
                     triggerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,12 +66,12 @@ namespace Azure.ResourceManager.Logic.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

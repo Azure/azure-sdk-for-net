@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AllowedCallerIPAddresses))
             {
-                writer.WritePropertyName("allowedCallerIpAddresses");
+                writer.WritePropertyName("allowedCallerIpAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedCallerIPAddresses)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
             if (Optional.IsDefined(OpenAuthenticationPolicies))
             {
-                writer.WritePropertyName("openAuthenticationPolicies");
+                writer.WritePropertyName("openAuthenticationPolicies"u8);
                 writer.WriteObjectValue(OpenAuthenticationPolicies);
             }
             writer.WriteEndObject();
@@ -36,11 +36,15 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static FlowAccessControlConfigurationPolicy DeserializeFlowAccessControlConfigurationPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<FlowAccessControlIPAddressRange>> allowedCallerIPAddresses = default;
             Optional<OpenAuthenticationAccessPolicies> openAuthenticationPolicies = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowedCallerIpAddresses"))
+                if (property.NameEquals("allowedCallerIpAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.Logic.Models
                     allowedCallerIPAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("openAuthenticationPolicies"))
+                if (property.NameEquals("openAuthenticationPolicies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

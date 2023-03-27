@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     {
         internal static KubernetesObjectStatusCondition DeserializeKubernetesObjectStatusCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> lastTransitionTime = default;
             Optional<string> message = default;
             Optional<string> reason = default;
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Optional<string> type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastTransitionTime"))
+                if (property.NameEquals("lastTransitionTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,22 +36,22 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     lastTransitionTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reason"))
+                if (property.NameEquals("reason"u8))
                 {
                     reason = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

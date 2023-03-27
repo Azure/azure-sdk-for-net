@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AccessModes))
             {
-                writer.WritePropertyName("accessModes");
+                writer.WritePropertyName("accessModes"u8);
                 writer.WriteStartArray();
                 foreach (var item in AccessModes)
                 {
@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             if (Optional.IsDefined(DestinationPort))
             {
-                writer.WritePropertyName("destinationPort");
+                writer.WritePropertyName("destinationPort"u8);
                 writer.WriteNumberValue(DestinationPort.Value);
             }
             if (Optional.IsDefined(PrivateIPAddress))
             {
-                writer.WritePropertyName("privateIPAddress");
+                writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
             }
             if (Optional.IsDefined(SubDomainSuffix))
             {
-                writer.WritePropertyName("subDomainSuffix");
+                writer.WritePropertyName("subDomainSuffix"u8);
                 writer.WriteStringValue(SubDomainSuffix);
             }
             if (Optional.IsDefined(DisableGatewayAuth))
             {
-                writer.WritePropertyName("disableGatewayAuth");
+                writer.WritePropertyName("disableGatewayAuth"u8);
                 writer.WriteBooleanValue(DisableGatewayAuth.Value);
             }
             writer.WriteEndObject();
@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightApplicationHttpsEndpoint DeserializeHDInsightApplicationHttpsEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> accessModes = default;
             Optional<string> location = default;
             Optional<int> destinationPort = default;
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<bool> disableGatewayAuth = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accessModes"))
+                if (property.NameEquals("accessModes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,12 +80,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                     accessModes = array;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("destinationPort"))
+                if (property.NameEquals("destinationPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     destinationPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("publicPort"))
+                if (property.NameEquals("publicPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +105,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     publicPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("privateIPAddress"))
+                if (property.NameEquals("privateIPAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,12 +115,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                     privateIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("subDomainSuffix"))
+                if (property.NameEquals("subDomainSuffix"u8))
                 {
                     subDomainSuffix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("disableGatewayAuth"))
+                if (property.NameEquals("disableGatewayAuth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

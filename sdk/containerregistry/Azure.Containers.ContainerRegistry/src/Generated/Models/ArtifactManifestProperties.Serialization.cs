@@ -16,6 +16,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static ArtifactManifestProperties DeserializeArtifactManifestProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> registry = default;
             Optional<string> imageName = default;
             string digest = default;
@@ -32,17 +36,17 @@ namespace Azure.Containers.ContainerRegistry
             Optional<bool> readEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("registry"))
+                if (property.NameEquals("registry"u8))
                 {
                     registry = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("imageName"))
+                if (property.NameEquals("imageName"u8))
                 {
                     imageName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("manifest"))
+                if (property.NameEquals("manifest"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,12 +55,12 @@ namespace Azure.Containers.ContainerRegistry
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("digest"))
+                        if (property0.NameEquals("digest"u8))
                         {
                             digest = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("imageSize"))
+                        if (property0.NameEquals("imageSize"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -66,17 +70,17 @@ namespace Azure.Containers.ContainerRegistry
                             imageSize = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("createdTime"))
+                        if (property0.NameEquals("createdTime"u8))
                         {
                             createdTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastUpdateTime"))
+                        if (property0.NameEquals("lastUpdateTime"u8))
                         {
                             lastUpdateTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("architecture"))
+                        if (property0.NameEquals("architecture"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -86,7 +90,7 @@ namespace Azure.Containers.ContainerRegistry
                             architecture = new ArtifactArchitecture(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("os"))
+                        if (property0.NameEquals("os"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -96,7 +100,7 @@ namespace Azure.Containers.ContainerRegistry
                             os = new ArtifactOperatingSystem(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("references"))
+                        if (property0.NameEquals("references"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -111,7 +115,7 @@ namespace Azure.Containers.ContainerRegistry
                             references = array;
                             continue;
                         }
-                        if (property0.NameEquals("tags"))
+                        if (property0.NameEquals("tags"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -126,7 +130,7 @@ namespace Azure.Containers.ContainerRegistry
                             tags = array;
                             continue;
                         }
-                        if (property0.NameEquals("changeableAttributes"))
+                        if (property0.NameEquals("changeableAttributes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -135,7 +139,7 @@ namespace Azure.Containers.ContainerRegistry
                             }
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.NameEquals("deleteEnabled"))
+                                if (property1.NameEquals("deleteEnabled"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
@@ -145,7 +149,7 @@ namespace Azure.Containers.ContainerRegistry
                                     deleteEnabled = property1.Value.GetBoolean();
                                     continue;
                                 }
-                                if (property1.NameEquals("writeEnabled"))
+                                if (property1.NameEquals("writeEnabled"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
@@ -155,7 +159,7 @@ namespace Azure.Containers.ContainerRegistry
                                     writeEnabled = property1.Value.GetBoolean();
                                     continue;
                                 }
-                                if (property1.NameEquals("listEnabled"))
+                                if (property1.NameEquals("listEnabled"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
@@ -165,7 +169,7 @@ namespace Azure.Containers.ContainerRegistry
                                     listEnabled = property1.Value.GetBoolean();
                                     continue;
                                 }
-                                if (property1.NameEquals("readEnabled"))
+                                if (property1.NameEquals("readEnabled"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {

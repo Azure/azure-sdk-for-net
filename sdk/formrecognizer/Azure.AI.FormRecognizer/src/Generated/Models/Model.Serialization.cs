@@ -16,18 +16,22 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static Model DeserializeModel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CustomFormModelInfo modelInfo = default;
             Optional<KeysResult> keys = default;
             Optional<TrainResult> trainResult = default;
             Optional<IReadOnlyList<TrainResult>> composedTrainResults = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("modelInfo"))
+                if (property.NameEquals("modelInfo"u8))
                 {
                     modelInfo = CustomFormModelInfo.DeserializeCustomFormModelInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("keys"))
+                if (property.NameEquals("keys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,7 +41,7 @@ namespace Azure.AI.FormRecognizer.Models
                     keys = KeysResult.DeserializeKeysResult(property.Value);
                     continue;
                 }
-                if (property.NameEquals("trainResult"))
+                if (property.NameEquals("trainResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +51,7 @@ namespace Azure.AI.FormRecognizer.Models
                     trainResult = TrainResult.DeserializeTrainResult(property.Value);
                     continue;
                 }
-                if (property.NameEquals("composedTrainResults"))
+                if (property.NameEquals("composedTrainResults"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

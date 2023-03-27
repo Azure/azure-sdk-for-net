@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LivenessRoute))
             {
-                writer.WritePropertyName("livenessRoute");
+                writer.WritePropertyName("livenessRoute"u8);
                 writer.WriteObjectValue(LivenessRoute);
             }
             if (Optional.IsDefined(ReadinessRoute))
             {
-                writer.WritePropertyName("readinessRoute");
+                writer.WritePropertyName("readinessRoute"u8);
                 writer.WriteObjectValue(ReadinessRoute);
             }
             if (Optional.IsDefined(ScoringRoute))
             {
-                writer.WritePropertyName("scoringRoute");
+                writer.WritePropertyName("scoringRoute"u8);
                 writer.WriteObjectValue(ScoringRoute);
             }
             writer.WriteEndObject();
@@ -35,12 +35,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningInferenceContainerProperties DeserializeMachineLearningInferenceContainerProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningInferenceContainerRoute> livenessRoute = default;
             Optional<MachineLearningInferenceContainerRoute> readinessRoute = default;
             Optional<MachineLearningInferenceContainerRoute> scoringRoute = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("livenessRoute"))
+                if (property.NameEquals("livenessRoute"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     livenessRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value);
                     continue;
                 }
-                if (property.NameEquals("readinessRoute"))
+                if (property.NameEquals("readinessRoute"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     readinessRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value);
                     continue;
                 }
-                if (property.NameEquals("scoringRoute"))
+                if (property.NameEquals("scoringRoute"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

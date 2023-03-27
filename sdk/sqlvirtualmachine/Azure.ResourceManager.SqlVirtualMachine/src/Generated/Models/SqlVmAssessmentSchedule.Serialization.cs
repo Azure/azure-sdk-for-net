@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enable");
+                writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(WeeklyInterval))
             {
-                writer.WritePropertyName("weeklyInterval");
+                writer.WritePropertyName("weeklyInterval"u8);
                 writer.WriteNumberValue(WeeklyInterval.Value);
             }
             if (Optional.IsDefined(MonthlyOccurrence))
             {
-                writer.WritePropertyName("monthlyOccurrence");
+                writer.WritePropertyName("monthlyOccurrence"u8);
                 writer.WriteNumberValue(MonthlyOccurrence.Value);
             }
             if (Optional.IsDefined(DayOfWeek))
             {
-                writer.WritePropertyName("dayOfWeek");
+                writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToSerialString());
             }
             if (Optional.IsDefined(StartTime))
             {
-                writer.WritePropertyName("startTime");
+                writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
             }
             writer.WriteEndObject();
@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlVmAssessmentSchedule DeserializeSqlVmAssessmentSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enable = default;
             Optional<int> weeklyInterval = default;
             Optional<int> monthlyOccurrence = default;
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<string> startTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enable"))
+                if (property.NameEquals("enable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +66,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     enable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("weeklyInterval"))
+                if (property.NameEquals("weeklyInterval"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     weeklyInterval = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("monthlyOccurrence"))
+                if (property.NameEquals("monthlyOccurrence"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +86,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     monthlyOccurrence = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("dayOfWeek"))
+                if (property.NameEquals("dayOfWeek"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     dayOfWeek = property.Value.GetString().ToSqlVmAssessmentDayOfWeek();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     startTime = property.Value.GetString();
                     continue;

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Error))
             {
-                writer.WritePropertyName("error");
+                writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
             writer.WriteEndObject();
@@ -26,10 +26,14 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
 
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

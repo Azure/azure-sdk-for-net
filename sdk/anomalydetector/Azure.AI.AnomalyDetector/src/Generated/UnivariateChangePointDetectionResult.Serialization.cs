@@ -16,12 +16,16 @@ namespace Azure.AI.AnomalyDetector
     {
         internal static UnivariateChangePointDetectionResult DeserializeUnivariateChangePointDetectionResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int?> period = default;
             Optional<IReadOnlyList<bool>> isChangePoint = default;
             Optional<IReadOnlyList<float>> confidenceScores = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("period"))
+                if (property.NameEquals("period"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +35,7 @@ namespace Azure.AI.AnomalyDetector
                     period = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("isChangePoint"))
+                if (property.NameEquals("isChangePoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.AI.AnomalyDetector
                     isChangePoint = array;
                     continue;
                 }
-                if (property.NameEquals("confidenceScores"))
+                if (property.NameEquals("confidenceScores"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

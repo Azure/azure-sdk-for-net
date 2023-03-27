@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("principalId");
+            writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
-            writer.WritePropertyName("principalType");
+            writer.WritePropertyName("principalType"u8);
             writer.WriteStringValue(PrincipalType);
             if (Optional.IsCollectionDefined(PrincipalMetadata))
             {
-                writer.WritePropertyName("principalMetadata");
+                writer.WritePropertyName("principalMetadata"u8);
                 writer.WriteStartObject();
                 foreach (var item in PrincipalMetadata)
                 {
@@ -36,22 +36,26 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static AssignmentPrincipal DeserializeAssignmentPrincipal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string principalId = default;
             string principalType = default;
             Optional<IDictionary<string, string>> principalMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("principalId"))
+                if (property.NameEquals("principalId"u8))
                 {
                     principalId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("principalType"))
+                if (property.NameEquals("principalType"u8))
                 {
                     principalType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("principalMetadata"))
+                if (property.NameEquals("principalMetadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

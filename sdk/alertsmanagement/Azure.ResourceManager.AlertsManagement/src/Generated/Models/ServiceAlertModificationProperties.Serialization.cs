@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Modifications))
             {
-                writer.WritePropertyName("modifications");
+                writer.WritePropertyName("modifications"u8);
                 writer.WriteStartArray();
                 foreach (var item in Modifications)
                 {
@@ -32,11 +32,15 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static ServiceAlertModificationProperties DeserializeServiceAlertModificationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> alertId = default;
             Optional<IList<ServiceAlertModificationItemInfo>> modifications = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("alertId"))
+                if (property.NameEquals("alertId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     alertId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("modifications"))
+                if (property.NameEquals("modifications"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

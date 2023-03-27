@@ -17,32 +17,32 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteNumberValue(Status.Value);
             }
             if (Optional.IsDefined(SubStatus))
             {
-                writer.WritePropertyName("subStatus");
+                writer.WritePropertyName("subStatus"u8);
                 writer.WriteNumberValue(SubStatus.Value);
             }
             if (Optional.IsDefined(Win32Status))
             {
-                writer.WritePropertyName("win32Status");
+                writer.WritePropertyName("win32Status"u8);
                 writer.WriteNumberValue(Win32Status.Value);
             }
             if (Optional.IsDefined(Count))
             {
-                writer.WritePropertyName("count");
+                writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
             if (Optional.IsDefined(TimeInterval))
             {
-                writer.WritePropertyName("timeInterval");
+                writer.WritePropertyName("timeInterval"u8);
                 writer.WriteStringValue(TimeInterval);
             }
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             writer.WriteEndObject();
@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static StatusCodesBasedTrigger DeserializeStatusCodesBasedTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> status = default;
             Optional<int> subStatus = default;
             Optional<int> win32Status = default;
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> path = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
                     status = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("subStatus"))
+                if (property.NameEquals("subStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
                     subStatus = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("win32Status"))
+                if (property.NameEquals("win32Status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +92,7 @@ namespace Azure.ResourceManager.AppService.Models
                     win32Status = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,12 +102,12 @@ namespace Azure.ResourceManager.AppService.Models
                     count = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("timeInterval"))
+                if (property.NameEquals("timeInterval"u8))
                 {
                     timeInterval = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;

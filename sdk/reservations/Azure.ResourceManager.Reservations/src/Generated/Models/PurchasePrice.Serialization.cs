@@ -10,20 +10,40 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class PurchasePrice
+    public partial class PurchasePrice : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CurrencyCode))
+            {
+                writer.WritePropertyName("currencyCode"u8);
+                writer.WriteStringValue(CurrencyCode);
+            }
+            if (Optional.IsDefined(Amount))
+            {
+                writer.WritePropertyName("amount"u8);
+                writer.WriteNumberValue(Amount.Value);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static PurchasePrice DeserializePurchasePrice(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> currencyCode = default;
             Optional<double> amount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("currencyCode"))
+                if (property.NameEquals("currencyCode"u8))
                 {
                     currencyCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("amount"))
+                if (property.NameEquals("amount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

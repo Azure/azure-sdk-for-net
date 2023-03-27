@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RetentionScheduleFormatType))
             {
-                writer.WritePropertyName("retentionScheduleFormatType");
+                writer.WritePropertyName("retentionScheduleFormatType"u8);
                 writer.WriteStringValue(RetentionScheduleFormatType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(MonthsOfYear))
             {
-                writer.WritePropertyName("monthsOfYear");
+                writer.WritePropertyName("monthsOfYear"u8);
                 writer.WriteStartArray();
                 foreach (var item in MonthsOfYear)
                 {
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(RetentionScheduleDaily))
             {
-                writer.WritePropertyName("retentionScheduleDaily");
+                writer.WritePropertyName("retentionScheduleDaily"u8);
                 writer.WriteObjectValue(RetentionScheduleDaily);
             }
             if (Optional.IsDefined(RetentionScheduleWeekly))
             {
-                writer.WritePropertyName("retentionScheduleWeekly");
+                writer.WritePropertyName("retentionScheduleWeekly"u8);
                 writer.WriteObjectValue(RetentionScheduleWeekly);
             }
             if (Optional.IsCollectionDefined(RetentionTimes))
             {
-                writer.WritePropertyName("retentionTimes");
+                writer.WritePropertyName("retentionTimes"u8);
                 writer.WriteStartArray();
                 foreach (var item in RetentionTimes)
                 {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(RetentionDuration))
             {
-                writer.WritePropertyName("retentionDuration");
+                writer.WritePropertyName("retentionDuration"u8);
                 writer.WriteObjectValue(RetentionDuration);
             }
             writer.WriteEndObject();
@@ -62,15 +62,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static YearlyRetentionSchedule DeserializeYearlyRetentionSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RetentionScheduleFormat> retentionScheduleFormatType = default;
-            Optional<IList<MonthOfYear>> monthsOfYear = default;
+            Optional<IList<BackupMonthOfYear>> monthsOfYear = default;
             Optional<DailyRetentionFormat> retentionScheduleDaily = default;
             Optional<WeeklyRetentionFormat> retentionScheduleWeekly = default;
             Optional<IList<DateTimeOffset>> retentionTimes = default;
             Optional<RetentionDuration> retentionDuration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("retentionScheduleFormatType"))
+                if (property.NameEquals("retentionScheduleFormatType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,22 +84,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     retentionScheduleFormatType = new RetentionScheduleFormat(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("monthsOfYear"))
+                if (property.NameEquals("monthsOfYear"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MonthOfYear> array = new List<MonthOfYear>();
+                    List<BackupMonthOfYear> array = new List<BackupMonthOfYear>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToMonthOfYear());
+                        array.Add(item.GetString().ToBackupMonthOfYear());
                     }
                     monthsOfYear = array;
                     continue;
                 }
-                if (property.NameEquals("retentionScheduleDaily"))
+                if (property.NameEquals("retentionScheduleDaily"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     retentionScheduleDaily = DailyRetentionFormat.DeserializeDailyRetentionFormat(property.Value);
                     continue;
                 }
-                if (property.NameEquals("retentionScheduleWeekly"))
+                if (property.NameEquals("retentionScheduleWeekly"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -115,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     retentionScheduleWeekly = WeeklyRetentionFormat.DeserializeWeeklyRetentionFormat(property.Value);
                     continue;
                 }
-                if (property.NameEquals("retentionTimes"))
+                if (property.NameEquals("retentionTimes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,7 +134,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     retentionTimes = array;
                     continue;
                 }
-                if (property.NameEquals("retentionDuration"))
+                if (property.NameEquals("retentionDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

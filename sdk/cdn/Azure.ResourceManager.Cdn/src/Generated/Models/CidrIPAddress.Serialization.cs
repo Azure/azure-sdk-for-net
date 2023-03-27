@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BaseIPAddress))
             {
-                writer.WritePropertyName("baseIpAddress");
+                writer.WritePropertyName("baseIpAddress"u8);
                 writer.WriteStringValue(BaseIPAddress);
             }
             if (Optional.IsDefined(PrefixLength))
             {
-                writer.WritePropertyName("prefixLength");
+                writer.WritePropertyName("prefixLength"u8);
                 writer.WriteNumberValue(PrefixLength.Value);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CidrIPAddress DeserializeCidrIPAddress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> baseIPAddress = default;
             Optional<int> prefixLength = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("baseIpAddress"))
+                if (property.NameEquals("baseIpAddress"u8))
                 {
                     baseIPAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("prefixLength"))
+                if (property.NameEquals("prefixLength"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

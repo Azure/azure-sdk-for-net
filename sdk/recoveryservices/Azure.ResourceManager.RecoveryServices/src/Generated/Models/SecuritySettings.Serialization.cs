@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ImmutabilitySettings))
             {
-                writer.WritePropertyName("immutabilitySettings");
+                writer.WritePropertyName("immutabilitySettings"u8);
                 writer.WriteObjectValue(ImmutabilitySettings);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static SecuritySettings DeserializeSecuritySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ImmutabilitySettings> immutabilitySettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("immutabilitySettings"))
+                if (property.NameEquals("immutabilitySettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

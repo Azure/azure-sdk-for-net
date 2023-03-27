@@ -11,10 +11,7 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// A paginated list of BatchDeployment entities.
-    /// Serialized Name: BatchDeploymentTrackedResourceArmPaginatedResult
-    /// </summary>
+    /// <summary> A paginated list of BatchDeployment entities. </summary>
     internal partial class BatchDeploymentTrackedResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of BatchDeploymentTrackedResourceArmPaginatedResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of BatchDeploymentTrackedResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink">
-        /// The link to the next page of BatchDeployment objects. If null, there are no additional pages.
-        /// Serialized Name: BatchDeploymentTrackedResourceArmPaginatedResult.nextLink
-        /// </param>
-        /// <param name="value">
-        /// An array of objects of type BatchDeployment.
-        /// Serialized Name: BatchDeploymentTrackedResourceArmPaginatedResult.value
-        /// </param>
+        /// <param name="nextLink"> The link to the next page of BatchDeployment objects. If null, there are no additional pages. </param>
+        /// <param name="value"> An array of objects of type BatchDeployment. </param>
         internal BatchDeploymentTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningBatchDeploymentData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary>
-        /// The link to the next page of BatchDeployment objects. If null, there are no additional pages.
-        /// Serialized Name: BatchDeploymentTrackedResourceArmPaginatedResult.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of BatchDeployment objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// An array of objects of type BatchDeployment.
-        /// Serialized Name: BatchDeploymentTrackedResourceArmPaginatedResult.value
-        /// </summary>
+        /// <summary> An array of objects of type BatchDeployment. </summary>
         public IReadOnlyList<MachineLearningBatchDeploymentData> Value { get; }
     }
 }

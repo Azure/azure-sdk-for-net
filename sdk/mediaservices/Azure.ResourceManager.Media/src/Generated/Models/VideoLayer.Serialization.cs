@@ -15,46 +15,46 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("bitrate");
+            writer.WritePropertyName("bitrate"u8);
             writer.WriteNumberValue(Bitrate);
             if (Optional.IsDefined(MaxBitrate))
             {
-                writer.WritePropertyName("maxBitrate");
+                writer.WritePropertyName("maxBitrate"u8);
                 writer.WriteNumberValue(MaxBitrate.Value);
             }
             if (Optional.IsDefined(BFrames))
             {
-                writer.WritePropertyName("bFrames");
+                writer.WritePropertyName("bFrames"u8);
                 writer.WriteNumberValue(BFrames.Value);
             }
             if (Optional.IsDefined(FrameRate))
             {
-                writer.WritePropertyName("frameRate");
+                writer.WritePropertyName("frameRate"u8);
                 writer.WriteStringValue(FrameRate);
             }
             if (Optional.IsDefined(Slices))
             {
-                writer.WritePropertyName("slices");
+                writer.WritePropertyName("slices"u8);
                 writer.WriteNumberValue(Slices.Value);
             }
             if (Optional.IsDefined(UseAdaptiveBFrame))
             {
-                writer.WritePropertyName("adaptiveBFrame");
+                writer.WritePropertyName("adaptiveBFrame"u8);
                 writer.WriteBooleanValue(UseAdaptiveBFrame.Value);
             }
             if (Optional.IsDefined(Width))
             {
-                writer.WritePropertyName("width");
+                writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
             if (Optional.IsDefined(Height))
             {
-                writer.WritePropertyName("height");
+                writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
             }
             if (Optional.IsDefined(Label))
             {
-                writer.WritePropertyName("label");
+                writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
             writer.WriteEndObject();
@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static VideoLayer DeserializeVideoLayer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int bitrate = default;
             Optional<int> maxBitrate = default;
             Optional<int> bFrames = default;
@@ -73,12 +77,12 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> label = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("bitrate"))
+                if (property.NameEquals("bitrate"u8))
                 {
                     bitrate = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxBitrate"))
+                if (property.NameEquals("maxBitrate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +92,7 @@ namespace Azure.ResourceManager.Media.Models
                     maxBitrate = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("bFrames"))
+                if (property.NameEquals("bFrames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,12 +102,12 @@ namespace Azure.ResourceManager.Media.Models
                     bFrames = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("frameRate"))
+                if (property.NameEquals("frameRate"u8))
                 {
                     frameRate = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("slices"))
+                if (property.NameEquals("slices"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +117,7 @@ namespace Azure.ResourceManager.Media.Models
                     slices = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("adaptiveBFrame"))
+                if (property.NameEquals("adaptiveBFrame"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,17 +127,17 @@ namespace Azure.ResourceManager.Media.Models
                     adaptiveBFrame = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("width"))
+                if (property.NameEquals("width"u8))
                 {
                     width = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("height"))
+                if (property.NameEquals("height"u8))
                 {
                     height = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;

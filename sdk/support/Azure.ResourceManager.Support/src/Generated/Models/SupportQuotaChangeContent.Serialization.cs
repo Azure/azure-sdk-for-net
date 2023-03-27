@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Support.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Region))
             {
-                writer.WritePropertyName("region");
+                writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
             if (Optional.IsDefined(Payload))
             {
-                writer.WritePropertyName("payload");
+                writer.WritePropertyName("payload"u8);
                 writer.WriteStringValue(Payload);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.Support.Models
 
         internal static SupportQuotaChangeContent DeserializeSupportQuotaChangeContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> region = default;
             Optional<string> payload = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("region"))
+                if (property.NameEquals("region"u8))
                 {
                     region = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("payload"))
+                if (property.NameEquals("payload"u8))
                 {
                     payload = property.Value.GetString();
                     continue;

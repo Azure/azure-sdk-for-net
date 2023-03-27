@@ -14,22 +14,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static OSDiskDetails DeserializeOSDiskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> osVhdId = default;
             Optional<string> osType = default;
             Optional<string> vhdName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("osVhdId"))
+                if (property.NameEquals("osVhdId"u8))
                 {
                     osVhdId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vhdName"))
+                if (property.NameEquals("vhdName"u8))
                 {
                     vhdName = property.Value.GetString();
                     continue;

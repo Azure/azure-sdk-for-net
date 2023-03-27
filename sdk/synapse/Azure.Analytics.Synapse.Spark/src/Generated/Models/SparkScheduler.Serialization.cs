@@ -15,6 +15,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkScheduler DeserializeSparkScheduler(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset?> submittedAt = default;
             Optional<DateTimeOffset?> scheduledAt = default;
             Optional<DateTimeOffset?> endedAt = default;
@@ -22,7 +26,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Optional<SchedulerCurrentState> currentState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("submittedAt"))
+                if (property.NameEquals("submittedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +36,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     submittedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("scheduledAt"))
+                if (property.NameEquals("scheduledAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +46,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     scheduledAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endedAt"))
+                if (property.NameEquals("endedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +56,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     endedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("cancellationRequestedAt"))
+                if (property.NameEquals("cancellationRequestedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +66,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     cancellationRequestedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("currentState"))
+                if (property.NameEquals("currentState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

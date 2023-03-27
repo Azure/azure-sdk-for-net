@@ -15,13 +15,13 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("boostingRangeStart");
+            writer.WritePropertyName("boostingRangeStart"u8);
             writer.WriteNumberValue(BoostingRangeStart);
-            writer.WritePropertyName("boostingRangeEnd");
+            writer.WritePropertyName("boostingRangeEnd"u8);
             writer.WriteNumberValue(BoostingRangeEnd);
             if (Optional.IsDefined(ShouldBoostBeyondRangeByConstant))
             {
-                writer.WritePropertyName("constantBoostBeyondRange");
+                writer.WritePropertyName("constantBoostBeyondRange"u8);
                 writer.WriteBooleanValue(ShouldBoostBeyondRangeByConstant.Value);
             }
             writer.WriteEndObject();
@@ -29,22 +29,26 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static MagnitudeScoringParameters DeserializeMagnitudeScoringParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             double boostingRangeStart = default;
             double boostingRangeEnd = default;
             Optional<bool> constantBoostBeyondRange = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("boostingRangeStart"))
+                if (property.NameEquals("boostingRangeStart"u8))
                 {
                     boostingRangeStart = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("boostingRangeEnd"))
+                if (property.NameEquals("boostingRangeEnd"u8))
                 {
                     boostingRangeEnd = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("constantBoostBeyondRange"))
+                if (property.NameEquals("constantBoostBeyondRange"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

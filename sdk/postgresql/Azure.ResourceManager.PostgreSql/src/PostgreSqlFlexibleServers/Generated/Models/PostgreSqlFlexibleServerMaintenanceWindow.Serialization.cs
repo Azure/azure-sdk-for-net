@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomWindow))
             {
-                writer.WritePropertyName("customWindow");
+                writer.WritePropertyName("customWindow"u8);
                 writer.WriteStringValue(CustomWindow);
             }
             if (Optional.IsDefined(StartHour))
             {
-                writer.WritePropertyName("startHour");
+                writer.WritePropertyName("startHour"u8);
                 writer.WriteNumberValue(StartHour.Value);
             }
             if (Optional.IsDefined(StartMinute))
             {
-                writer.WritePropertyName("startMinute");
+                writer.WritePropertyName("startMinute"u8);
                 writer.WriteNumberValue(StartMinute.Value);
             }
             if (Optional.IsDefined(DayOfWeek))
             {
-                writer.WritePropertyName("dayOfWeek");
+                writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteNumberValue(DayOfWeek.Value);
             }
             writer.WriteEndObject();
@@ -40,18 +40,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         internal static PostgreSqlFlexibleServerMaintenanceWindow DeserializePostgreSqlFlexibleServerMaintenanceWindow(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> customWindow = default;
             Optional<int> startHour = default;
             Optional<int> startMinute = default;
             Optional<int> dayOfWeek = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("customWindow"))
+                if (property.NameEquals("customWindow"u8))
                 {
                     customWindow = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startHour"))
+                if (property.NameEquals("startHour"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     startHour = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("startMinute"))
+                if (property.NameEquals("startMinute"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     startMinute = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("dayOfWeek"))
+                if (property.NameEquals("dayOfWeek"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

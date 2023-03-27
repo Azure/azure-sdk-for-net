@@ -14,17 +14,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static DataBoxEdgeSkuCost DeserializeDataBoxEdgeSkuCost(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> meterId = default;
             Optional<long> quantity = default;
             Optional<string> extendedUnit = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("meterId"))
+                if (property.NameEquals("meterId"u8))
                 {
                     meterId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("quantity"))
+                if (property.NameEquals("quantity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     quantity = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("extendedUnit"))
+                if (property.NameEquals("extendedUnit"u8))
                 {
                     extendedUnit = property.Value.GetString();
                     continue;

@@ -21,10 +21,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("configs");
+            writer.WritePropertyName("configs"u8);
             writer.WriteStartObject();
             foreach (var item in Configs)
             {
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
             if (Optional.IsCollectionDefined(Annotations))
             {
-                writer.WritePropertyName("annotations");
+                writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
@@ -44,22 +44,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsDefined(Notes))
             {
-                writer.WritePropertyName("notes");
+                writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
             if (Optional.IsDefined(CreatedBy))
             {
-                writer.WritePropertyName("createdBy");
+                writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
             if (Optional.IsDefined(Created))
             {
-                writer.WritePropertyName("created");
+                writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(Created.Value, "O");
             }
             if (Optional.IsCollectionDefined(ConfigMergeRule))
             {
-                writer.WritePropertyName("configMergeRule");
+                writer.WritePropertyName("configMergeRule"u8);
                 writer.WriteStartObject();
                 foreach (var item in ConfigMergeRule)
                 {
@@ -73,6 +73,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SparkConfiguration DeserializeSparkConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             IDictionary<string, string> configs = default;
             Optional<IList<string>> annotations = default;
@@ -82,12 +86,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IDictionary<string, string>> configMergeRule = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("configs"))
+                if (property.NameEquals("configs"u8))
                 {
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
@@ -97,7 +101,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     configs = dictionary;
                     continue;
                 }
-                if (property.NameEquals("annotations"))
+                if (property.NameEquals("annotations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,17 +116,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     annotations = array;
                     continue;
                 }
-                if (property.NameEquals("notes"))
+                if (property.NameEquals("notes"u8))
                 {
                     notes = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdBy"))
+                if (property.NameEquals("createdBy"u8))
                 {
                     createdBy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("created"))
+                if (property.NameEquals("created"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +136,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     created = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("configMergeRule"))
+                if (property.NameEquals("configMergeRule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

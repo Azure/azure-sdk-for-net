@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.StorageMover.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("storageAccountResourceId");
+            writer.WritePropertyName("storageAccountResourceId"u8);
             writer.WriteStringValue(StorageAccountResourceId);
-            writer.WritePropertyName("blobContainerName");
+            writer.WritePropertyName("blobContainerName"u8);
             writer.WriteStringValue(BlobContainerName);
-            writer.WritePropertyName("endpointType");
+            writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         internal static AzureStorageBlobContainerEndpointProperties DeserializeAzureStorageBlobContainerEndpointProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string storageAccountResourceId = default;
             string blobContainerName = default;
             EndpointType endpointType = default;
@@ -38,27 +42,27 @@ namespace Azure.ResourceManager.StorageMover.Models
             Optional<StorageMoverProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageAccountResourceId"))
+                if (property.NameEquals("storageAccountResourceId"u8))
                 {
                     storageAccountResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("blobContainerName"))
+                if (property.NameEquals("blobContainerName"u8))
                 {
                     blobContainerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpointType"))
+                if (property.NameEquals("endpointType"u8))
                 {
                     endpointType = new EndpointType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

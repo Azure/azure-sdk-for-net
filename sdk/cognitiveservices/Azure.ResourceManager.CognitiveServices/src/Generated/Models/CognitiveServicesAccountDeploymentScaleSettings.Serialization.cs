@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ScaleType))
             {
-                writer.WritePropertyName("scaleType");
+                writer.WritePropertyName("scaleType"u8);
                 writer.WriteStringValue(ScaleType.Value.ToString());
             }
             if (Optional.IsDefined(Capacity))
             {
-                writer.WritePropertyName("capacity");
+                writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
             writer.WriteEndObject();
@@ -30,12 +30,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CognitiveServicesAccountDeploymentScaleSettings DeserializeCognitiveServicesAccountDeploymentScaleSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CognitiveServicesAccountDeploymentScaleType> scaleType = default;
             Optional<int> capacity = default;
             Optional<int> activeCapacity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scaleType"))
+                if (property.NameEquals("scaleType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     scaleType = new CognitiveServicesAccountDeploymentScaleType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("capacity"))
+                if (property.NameEquals("capacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     capacity = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("activeCapacity"))
+                if (property.NameEquals("activeCapacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

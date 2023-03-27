@@ -16,11 +16,11 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("searchMode");
+            writer.WritePropertyName("searchMode"u8);
             writer.WriteStringValue(SearchMode);
-            writer.WritePropertyName("sourceFields");
+            writer.WritePropertyName("sourceFields"u8);
             writer.WriteStartArray();
             foreach (var item in SourceFields)
             {
@@ -32,22 +32,26 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SearchSuggester DeserializeSearchSuggester(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string searchMode = default;
             IList<string> sourceFields = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("searchMode"))
+                if (property.NameEquals("searchMode"u8))
                 {
                     searchMode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceFields"))
+                if (property.NameEquals("sourceFields"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())

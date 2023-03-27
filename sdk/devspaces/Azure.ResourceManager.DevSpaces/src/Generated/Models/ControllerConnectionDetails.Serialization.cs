@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.DevSpaces.Models
     {
         internal static ControllerConnectionDetails DeserializeControllerConnectionDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OrchestratorSpecificConnectionDetails> orchestratorSpecificConnectionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("orchestratorSpecificConnectionDetails"))
+                if (property.NameEquals("orchestratorSpecificConnectionDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

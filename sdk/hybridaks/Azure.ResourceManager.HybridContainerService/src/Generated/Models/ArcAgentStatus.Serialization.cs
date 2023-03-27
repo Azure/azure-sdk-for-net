@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     {
         internal static ArcAgentStatus DeserializeArcAgentStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DeploymentState> deploymentState = default;
             Optional<string> errorMessage = default;
             Optional<string> onboardingPublicKey = default;
@@ -24,7 +28,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<DateTimeOffset> lastConnectivityTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deploymentState"))
+                if (property.NameEquals("deploymentState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,22 +38,22 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     deploymentState = new DeploymentState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     errorMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("onboardingPublicKey"))
+                if (property.NameEquals("onboardingPublicKey"u8))
                 {
                     onboardingPublicKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentVersion"))
+                if (property.NameEquals("agentVersion"u8))
                 {
                     agentVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("coreCount"))
+                if (property.NameEquals("coreCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +63,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     coreCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("managedIdentityCertificateExpirationTime"))
+                if (property.NameEquals("managedIdentityCertificateExpirationTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +73,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     managedIdentityCertificateExpirationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastConnectivityTime"))
+                if (property.NameEquals("lastConnectivityTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static SubContent DeserializeSubContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> limit = default;
             Optional<ReservationResourceName> name = default;
             Optional<string> resourceType = default;
@@ -24,7 +28,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<Guid> subRequestId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     limit = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,17 +48,17 @@ namespace Azure.ResourceManager.Reservations.Models
                     name = ReservationResourceName.DeserializeReservationResourceName(property.Value);
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     unit = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,12 +68,12 @@ namespace Azure.ResourceManager.Reservations.Models
                     provisioningState = new QuotaRequestState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subRequestId"))
+                if (property.NameEquals("subRequestId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

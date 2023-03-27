@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.Batch.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("password");
+            writer.WritePropertyName("password"u8);
             writer.WriteStringValue(Password);
             if (Optional.IsDefined(ElevationLevel))
             {
-                writer.WritePropertyName("elevationLevel");
+                writer.WritePropertyName("elevationLevel"u8);
                 writer.WriteStringValue(ElevationLevel.Value.ToSerialString());
             }
             if (Optional.IsDefined(LinuxUserConfiguration))
             {
-                writer.WritePropertyName("linuxUserConfiguration");
+                writer.WritePropertyName("linuxUserConfiguration"u8);
                 writer.WriteObjectValue(LinuxUserConfiguration);
             }
             if (Optional.IsDefined(WindowsUserConfiguration))
             {
-                writer.WritePropertyName("windowsUserConfiguration");
+                writer.WritePropertyName("windowsUserConfiguration"u8);
                 writer.WriteObjectValue(WindowsUserConfiguration);
             }
             writer.WriteEndObject();
@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchUserAccount DeserializeBatchUserAccount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string password = default;
             Optional<BatchUserAccountElevationLevel> elevationLevel = default;
@@ -46,17 +50,17 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<BatchWindowsUserConfiguration> windowsUserConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("elevationLevel"))
+                if (property.NameEquals("elevationLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.Batch.Models
                     elevationLevel = property.Value.GetString().ToBatchUserAccountElevationLevel();
                     continue;
                 }
-                if (property.NameEquals("linuxUserConfiguration"))
+                if (property.NameEquals("linuxUserConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.Batch.Models
                     linuxUserConfiguration = BatchLinuxUserConfiguration.DeserializeBatchLinuxUserConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("windowsUserConfiguration"))
+                if (property.NameEquals("windowsUserConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

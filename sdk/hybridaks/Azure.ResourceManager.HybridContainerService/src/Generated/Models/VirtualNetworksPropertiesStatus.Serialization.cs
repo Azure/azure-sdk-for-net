@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     {
         internal static VirtualNetworksPropertiesStatus DeserializeVirtualNetworksPropertiesStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VirtualNetworksPropertiesStatusProvisioningStatus> provisioningStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningStatus"))
+                if (property.NameEquals("provisioningStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

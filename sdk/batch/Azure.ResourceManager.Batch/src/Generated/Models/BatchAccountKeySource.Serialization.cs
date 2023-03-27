@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchAccountKeySource ToBatchAccountKeySource(this string value)
         {
-            if (string.Equals(value, "Microsoft.Batch", StringComparison.InvariantCultureIgnoreCase)) return BatchAccountKeySource.MicrosoftBatch;
-            if (string.Equals(value, "Microsoft.KeyVault", StringComparison.InvariantCultureIgnoreCase)) return BatchAccountKeySource.MicrosoftKeyVault;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Batch")) return BatchAccountKeySource.MicrosoftBatch;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.KeyVault")) return BatchAccountKeySource.MicrosoftKeyVault;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAccountKeySource value.");
         }
     }

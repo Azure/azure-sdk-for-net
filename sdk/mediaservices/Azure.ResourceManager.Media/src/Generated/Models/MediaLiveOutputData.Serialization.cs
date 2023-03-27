@@ -18,28 +18,28 @@ namespace Azure.ResourceManager.Media
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(AssetName))
             {
-                writer.WritePropertyName("assetName");
+                writer.WritePropertyName("assetName"u8);
                 writer.WriteStringValue(AssetName);
             }
             if (Optional.IsDefined(ArchiveWindowLength))
             {
-                writer.WritePropertyName("archiveWindowLength");
+                writer.WritePropertyName("archiveWindowLength"u8);
                 writer.WriteStringValue(ArchiveWindowLength.Value, "P");
             }
             if (Optional.IsDefined(RewindWindowLength))
             {
                 if (RewindWindowLength != null)
                 {
-                    writer.WritePropertyName("rewindWindowLength");
+                    writer.WritePropertyName("rewindWindowLength"u8);
                     writer.WriteStringValue(RewindWindowLength.Value, "P");
                 }
                 else
@@ -49,17 +49,17 @@ namespace Azure.ResourceManager.Media
             }
             if (Optional.IsDefined(ManifestName))
             {
-                writer.WritePropertyName("manifestName");
+                writer.WritePropertyName("manifestName"u8);
                 writer.WriteStringValue(ManifestName);
             }
             if (Optional.IsDefined(Hls))
             {
-                writer.WritePropertyName("hls");
+                writer.WritePropertyName("hls"u8);
                 writer.WriteObjectValue(Hls);
             }
             if (Optional.IsDefined(OutputSnapTime))
             {
-                writer.WritePropertyName("outputSnapTime");
+                writer.WritePropertyName("outputSnapTime"u8);
                 writer.WriteNumberValue(OutputSnapTime.Value);
             }
             writer.WriteEndObject();
@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.Media
 
         internal static MediaLiveOutputData DeserializeMediaLiveOutputData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -85,22 +89,22 @@ namespace Azure.ResourceManager.Media
             Optional<LiveOutputResourceState> resourceState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +114,7 @@ namespace Azure.ResourceManager.Media
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,17 +123,17 @@ namespace Azure.ResourceManager.Media
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("assetName"))
+                        if (property0.NameEquals("assetName"u8))
                         {
                             assetName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("archiveWindowLength"))
+                        if (property0.NameEquals("archiveWindowLength"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -139,7 +143,7 @@ namespace Azure.ResourceManager.Media
                             archiveWindowLength = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("rewindWindowLength"))
+                        if (property0.NameEquals("rewindWindowLength"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -149,12 +153,12 @@ namespace Azure.ResourceManager.Media
                             rewindWindowLength = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("manifestName"))
+                        if (property0.NameEquals("manifestName"u8))
                         {
                             manifestName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("hls"))
+                        if (property0.NameEquals("hls"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -164,7 +168,7 @@ namespace Azure.ResourceManager.Media
                             hls = Hls.DeserializeHls(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("outputSnapTime"))
+                        if (property0.NameEquals("outputSnapTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -174,7 +178,7 @@ namespace Azure.ResourceManager.Media
                             outputSnapTime = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("created"))
+                        if (property0.NameEquals("created"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -184,7 +188,7 @@ namespace Azure.ResourceManager.Media
                             created = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastModified"))
+                        if (property0.NameEquals("lastModified"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -194,12 +198,12 @@ namespace Azure.ResourceManager.Media
                             lastModified = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("resourceState"))
+                        if (property0.NameEquals("resourceState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

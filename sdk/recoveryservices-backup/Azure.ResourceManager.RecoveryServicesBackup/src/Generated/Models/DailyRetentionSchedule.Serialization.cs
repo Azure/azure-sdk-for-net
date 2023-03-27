@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(RetentionTimes))
             {
-                writer.WritePropertyName("retentionTimes");
+                writer.WritePropertyName("retentionTimes"u8);
                 writer.WriteStartArray();
                 foreach (var item in RetentionTimes)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(RetentionDuration))
             {
-                writer.WritePropertyName("retentionDuration");
+                writer.WritePropertyName("retentionDuration"u8);
                 writer.WriteObjectValue(RetentionDuration);
             }
             writer.WriteEndObject();
@@ -37,11 +37,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static DailyRetentionSchedule DeserializeDailyRetentionSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<DateTimeOffset>> retentionTimes = default;
             Optional<RetentionDuration> retentionDuration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("retentionTimes"))
+                if (property.NameEquals("retentionTimes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     retentionTimes = array;
                     continue;
                 }
-                if (property.NameEquals("retentionDuration"))
+                if (property.NameEquals("retentionDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

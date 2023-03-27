@@ -15,11 +15,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("logDestination");
+            writer.WritePropertyName("logDestination"u8);
             writer.WriteStringValue(LogDestination.ToString());
             if (Optional.IsDefined(LogLocationSettings))
             {
-                writer.WritePropertyName("logLocationSettings");
+                writer.WritePropertyName("logLocationSettings"u8);
                 writer.WriteObjectValue(LogLocationSettings);
             }
             writer.WriteEndObject();
@@ -27,16 +27,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ScriptActivityTypePropertiesLogSettings DeserializeScriptActivityTypePropertiesLogSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ScriptActivityLogDestination logDestination = default;
             Optional<LogLocationSettings> logLocationSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("logDestination"))
+                if (property.NameEquals("logDestination"u8))
                 {
                     logDestination = new ScriptActivityLogDestination(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("logLocationSettings"))
+                if (property.NameEquals("logLocationSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

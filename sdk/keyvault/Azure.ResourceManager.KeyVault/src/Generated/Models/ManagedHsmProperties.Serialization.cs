@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsCollectionDefined(InitialAdminObjectIds))
             {
-                writer.WritePropertyName("initialAdminObjectIds");
+                writer.WritePropertyName("initialAdminObjectIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in InitialAdminObjectIds)
                 {
@@ -34,32 +34,32 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             if (Optional.IsDefined(EnableSoftDelete))
             {
-                writer.WritePropertyName("enableSoftDelete");
+                writer.WritePropertyName("enableSoftDelete"u8);
                 writer.WriteBooleanValue(EnableSoftDelete.Value);
             }
             if (Optional.IsDefined(SoftDeleteRetentionInDays))
             {
-                writer.WritePropertyName("softDeleteRetentionInDays");
+                writer.WritePropertyName("softDeleteRetentionInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionInDays.Value);
             }
             if (Optional.IsDefined(EnablePurgeProtection))
             {
-                writer.WritePropertyName("enablePurgeProtection");
+                writer.WritePropertyName("enablePurgeProtection"u8);
                 writer.WriteBooleanValue(EnablePurgeProtection.Value);
             }
             if (Optional.IsDefined(CreateMode))
             {
-                writer.WritePropertyName("createMode");
+                writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(NetworkRuleSet))
             {
-                writer.WritePropertyName("networkAcls");
+                writer.WritePropertyName("networkAcls"u8);
                 writer.WriteObjectValue(NetworkRuleSet);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             writer.WriteEndObject();
@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static ManagedHsmProperties DeserializeManagedHsmProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> tenantId = default;
             Optional<IList<string>> initialAdminObjectIds = default;
             Optional<Uri> hsmUri = default;
@@ -82,7 +86,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<DateTimeOffset> scheduledPurgeDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("initialAdminObjectIds"))
+                if (property.NameEquals("initialAdminObjectIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,7 +111,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     initialAdminObjectIds = array;
                     continue;
                 }
-                if (property.NameEquals("hsmUri"))
+                if (property.NameEquals("hsmUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -117,7 +121,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     hsmUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("enableSoftDelete"))
+                if (property.NameEquals("enableSoftDelete"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -127,7 +131,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     enableSoftDelete = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("softDeleteRetentionInDays"))
+                if (property.NameEquals("softDeleteRetentionInDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -137,7 +141,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     softDeleteRetentionInDays = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("enablePurgeProtection"))
+                if (property.NameEquals("enablePurgeProtection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -147,7 +151,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     enablePurgeProtection = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("createMode"))
+                if (property.NameEquals("createMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -157,12 +161,12 @@ namespace Azure.ResourceManager.KeyVault.Models
                     createMode = property.Value.GetString().ToManagedHsmCreateMode();
                     continue;
                 }
-                if (property.NameEquals("statusMessage"))
+                if (property.NameEquals("statusMessage"u8))
                 {
                     statusMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -172,7 +176,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     provisioningState = new ManagedHsmProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("networkAcls"))
+                if (property.NameEquals("networkAcls"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -182,7 +186,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     networkAcls = ManagedHsmNetworkRuleSet.DeserializeManagedHsmNetworkRuleSet(property.Value);
                     continue;
                 }
-                if (property.NameEquals("privateEndpointConnections"))
+                if (property.NameEquals("privateEndpointConnections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -197,7 +201,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     privateEndpointConnections = array;
                     continue;
                 }
-                if (property.NameEquals("publicNetworkAccess"))
+                if (property.NameEquals("publicNetworkAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -207,7 +211,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     publicNetworkAccess = new ManagedHsmPublicNetworkAccess(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scheduledPurgeDate"))
+                if (property.NameEquals("scheduledPurgeDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

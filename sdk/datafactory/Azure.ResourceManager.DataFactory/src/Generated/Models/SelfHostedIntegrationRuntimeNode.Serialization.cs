@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static SelfHostedIntegrationRuntimeNode DeserializeSelfHostedIntegrationRuntimeNode(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nodeName = default;
             Optional<string> machineName = default;
             Optional<Uri> hostServiceUri = default;
@@ -38,17 +42,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nodeName"))
+                if (property.NameEquals("nodeName"u8))
                 {
                     nodeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("machineName"))
+                if (property.NameEquals("machineName"u8))
                 {
                     machineName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hostServiceUri"))
+                if (property.NameEquals("hostServiceUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     hostServiceUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     status = new SelfHostedIntegrationRuntimeNodeStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,17 +87,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                     capabilities = dictionary;
                     continue;
                 }
-                if (property.NameEquals("versionStatus"))
+                if (property.NameEquals("versionStatus"u8))
                 {
                     versionStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("registerTime"))
+                if (property.NameEquals("registerTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     registerTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastConnectTime"))
+                if (property.NameEquals("lastConnectTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     lastConnectTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("expiryTime"))
+                if (property.NameEquals("expiryTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +127,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     expiryTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastStartTime"))
+                if (property.NameEquals("lastStartTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     lastStartTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastStopTime"))
+                if (property.NameEquals("lastStopTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -143,7 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     lastStopTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdateResult"))
+                if (property.NameEquals("lastUpdateResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -153,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     lastUpdateResult = new IntegrationRuntimeUpdateResult(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("lastStartUpdateTime"))
+                if (property.NameEquals("lastStartUpdateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -163,7 +167,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     lastStartUpdateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastEndUpdateTime"))
+                if (property.NameEquals("lastEndUpdateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -173,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     lastEndUpdateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("isActiveDispatcher"))
+                if (property.NameEquals("isActiveDispatcher"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -183,7 +187,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     isActiveDispatcher = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("concurrentJobsLimit"))
+                if (property.NameEquals("concurrentJobsLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -193,7 +197,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     concurrentJobsLimit = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentJobs"))
+                if (property.NameEquals("maxConcurrentJobs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

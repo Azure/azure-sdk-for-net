@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(WindowSize))
             {
-                writer.WritePropertyName("windowSize");
+                writer.WritePropertyName("windowSize"u8);
                 writer.WriteStringValue(WindowSize.Value, "P");
             }
-            writer.WritePropertyName("failedLocationCount");
+            writer.WritePropertyName("failedLocationCount"u8);
             writer.WriteNumberValue(FailedLocationCount);
-            writer.WritePropertyName("odata.type");
+            writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(DataSource))
             {
-                writer.WritePropertyName("dataSource");
+                writer.WritePropertyName("dataSource"u8);
                 writer.WriteObjectValue(DataSource);
             }
             writer.WriteEndObject();
@@ -35,13 +35,17 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static LocationThresholdRuleCondition DeserializeLocationThresholdRuleCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSpan> windowSize = default;
             int failedLocationCount = default;
             string odataType = default;
             Optional<RuleDataSource> dataSource = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("windowSize"))
+                if (property.NameEquals("windowSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,17 +55,17 @@ namespace Azure.ResourceManager.Monitor.Models
                     windowSize = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("failedLocationCount"))
+                if (property.NameEquals("failedLocationCount"u8))
                 {
                     failedLocationCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("odata.type"))
+                if (property.NameEquals("odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataSource"))
+                if (property.NameEquals("dataSource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

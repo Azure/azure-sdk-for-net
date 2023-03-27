@@ -14,28 +14,32 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static MetricDimension DeserializeMetricDimension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> displayName = default;
             Optional<string> internalName = default;
             Optional<bool> toBeExportedForShoebox = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("internalName"))
+                if (property.NameEquals("internalName"u8))
                 {
                     internalName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("toBeExportedForShoebox"))
+                if (property.NameEquals("toBeExportedForShoebox"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

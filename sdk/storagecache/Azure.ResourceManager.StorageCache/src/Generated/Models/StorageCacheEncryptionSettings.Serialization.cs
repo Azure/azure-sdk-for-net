@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyEncryptionKey))
             {
-                writer.WritePropertyName("keyEncryptionKey");
+                writer.WritePropertyName("keyEncryptionKey"u8);
                 writer.WriteObjectValue(KeyEncryptionKey);
             }
             if (Optional.IsDefined(EnableRotationToLatestKeyVersion))
             {
-                writer.WritePropertyName("rotationToLatestKeyVersionEnabled");
+                writer.WritePropertyName("rotationToLatestKeyVersionEnabled"u8);
                 writer.WriteBooleanValue(EnableRotationToLatestKeyVersion.Value);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static StorageCacheEncryptionSettings DeserializeStorageCacheEncryptionSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageCacheEncryptionKeyVaultKeyReference> keyEncryptionKey = default;
             Optional<bool> rotationToLatestKeyVersionEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyEncryptionKey"))
+                if (property.NameEquals("keyEncryptionKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     keyEncryptionKey = StorageCacheEncryptionKeyVaultKeyReference.DeserializeStorageCacheEncryptionKeyVaultKeyReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("rotationToLatestKeyVersionEnabled"))
+                if (property.NameEquals("rotationToLatestKeyVersionEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

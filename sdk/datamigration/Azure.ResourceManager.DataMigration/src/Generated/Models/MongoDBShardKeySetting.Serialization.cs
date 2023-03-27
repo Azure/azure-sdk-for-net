@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("fields");
+            writer.WritePropertyName("fields"u8);
             writer.WriteStartArray();
             foreach (var item in Fields)
             {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(IsUnique))
             {
-                writer.WritePropertyName("isUnique");
+                writer.WritePropertyName("isUnique"u8);
                 writer.WriteBooleanValue(IsUnique.Value);
             }
             writer.WriteEndObject();
@@ -33,11 +33,15 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MongoDBShardKeySetting DeserializeMongoDBShardKeySetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<MongoDBShardKeyField> fields = default;
             Optional<bool> isUnique = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fields"))
+                if (property.NameEquals("fields"u8))
                 {
                     List<MongoDBShardKeyField> array = new List<MongoDBShardKeyField>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -47,7 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     fields = array;
                     continue;
                 }
-                if (property.NameEquals("isUnique"))
+                if (property.NameEquals("isUnique"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

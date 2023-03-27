@@ -14,13 +14,17 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static WebAppRuntimes DeserializeWebAppRuntimes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WebAppRuntimeSettings> linuxRuntimeSettings = default;
             Optional<WebAppRuntimeSettings> windowsRuntimeSettings = default;
             Optional<LinuxJavaContainerSettings> linuxContainerSettings = default;
             Optional<WindowsJavaContainerSettings> windowsContainerSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linuxRuntimeSettings"))
+                if (property.NameEquals("linuxRuntimeSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
                     linuxRuntimeSettings = WebAppRuntimeSettings.DeserializeWebAppRuntimeSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("windowsRuntimeSettings"))
+                if (property.NameEquals("windowsRuntimeSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
                     windowsRuntimeSettings = WebAppRuntimeSettings.DeserializeWebAppRuntimeSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("linuxContainerSettings"))
+                if (property.NameEquals("linuxContainerSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
                     linuxContainerSettings = LinuxJavaContainerSettings.DeserializeLinuxJavaContainerSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("windowsContainerSettings"))
+                if (property.NameEquals("windowsContainerSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

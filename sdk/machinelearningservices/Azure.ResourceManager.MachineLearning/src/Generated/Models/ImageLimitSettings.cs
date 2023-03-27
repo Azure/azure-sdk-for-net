@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Limit settings for the AutoML job.
-    /// Serialized Name: ImageLimitSettings
-    /// </summary>
+    /// <summary> Limit settings for the AutoML job. </summary>
     public partial class ImageLimitSettings
     {
         /// <summary> Initializes a new instance of ImageLimitSettings. </summary>
@@ -21,18 +18,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ImageLimitSettings. </summary>
-        /// <param name="maxConcurrentTrials">
-        /// Maximum number of concurrent AutoML iterations.
-        /// Serialized Name: ImageLimitSettings.maxConcurrentTrials
-        /// </param>
-        /// <param name="maxTrials">
-        /// Maximum number of AutoML iterations.
-        /// Serialized Name: ImageLimitSettings.maxTrials
-        /// </param>
-        /// <param name="timeout">
-        /// AutoML job timeout.
-        /// Serialized Name: ImageLimitSettings.timeout
-        /// </param>
+        /// <param name="maxConcurrentTrials"> Maximum number of concurrent AutoML iterations. </param>
+        /// <param name="maxTrials"> Maximum number of AutoML iterations. </param>
+        /// <param name="timeout"> AutoML job timeout. </param>
         internal ImageLimitSettings(int? maxConcurrentTrials, int? maxTrials, TimeSpan? timeout)
         {
             MaxConcurrentTrials = maxConcurrentTrials;
@@ -40,20 +28,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Timeout = timeout;
         }
 
-        /// <summary>
-        /// Maximum number of concurrent AutoML iterations.
-        /// Serialized Name: ImageLimitSettings.maxConcurrentTrials
-        /// </summary>
+        /// <summary> Maximum number of concurrent AutoML iterations. </summary>
         public int? MaxConcurrentTrials { get; set; }
-        /// <summary>
-        /// Maximum number of AutoML iterations.
-        /// Serialized Name: ImageLimitSettings.maxTrials
-        /// </summary>
+        /// <summary> Maximum number of AutoML iterations. </summary>
         public int? MaxTrials { get; set; }
-        /// <summary>
-        /// AutoML job timeout.
-        /// Serialized Name: ImageLimitSettings.timeout
-        /// </summary>
+        /// <summary> AutoML job timeout. </summary>
         public TimeSpan? Timeout { get; set; }
     }
 }

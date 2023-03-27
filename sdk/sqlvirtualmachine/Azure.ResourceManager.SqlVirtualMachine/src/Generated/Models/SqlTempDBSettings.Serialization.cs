@@ -18,42 +18,42 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DataFileSize))
             {
-                writer.WritePropertyName("dataFileSize");
+                writer.WritePropertyName("dataFileSize"u8);
                 writer.WriteNumberValue(DataFileSize.Value);
             }
             if (Optional.IsDefined(DataGrowth))
             {
-                writer.WritePropertyName("dataGrowth");
+                writer.WritePropertyName("dataGrowth"u8);
                 writer.WriteNumberValue(DataGrowth.Value);
             }
             if (Optional.IsDefined(LogFileSize))
             {
-                writer.WritePropertyName("logFileSize");
+                writer.WritePropertyName("logFileSize"u8);
                 writer.WriteNumberValue(LogFileSize.Value);
             }
             if (Optional.IsDefined(LogGrowth))
             {
-                writer.WritePropertyName("logGrowth");
+                writer.WritePropertyName("logGrowth"u8);
                 writer.WriteNumberValue(LogGrowth.Value);
             }
             if (Optional.IsDefined(DataFileCount))
             {
-                writer.WritePropertyName("dataFileCount");
+                writer.WritePropertyName("dataFileCount"u8);
                 writer.WriteNumberValue(DataFileCount.Value);
             }
             if (Optional.IsDefined(PersistFolder))
             {
-                writer.WritePropertyName("persistFolder");
+                writer.WritePropertyName("persistFolder"u8);
                 writer.WriteBooleanValue(PersistFolder.Value);
             }
             if (Optional.IsDefined(PersistFolderPath))
             {
-                writer.WritePropertyName("persistFolderPath");
+                writer.WritePropertyName("persistFolderPath"u8);
                 writer.WriteStringValue(PersistFolderPath);
             }
             if (Optional.IsCollectionDefined(LogicalUnitNumbers))
             {
-                writer.WritePropertyName("luns");
+                writer.WritePropertyName("luns"u8);
                 writer.WriteStartArray();
                 foreach (var item in LogicalUnitNumbers)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
             if (Optional.IsDefined(DefaultFilePath))
             {
-                writer.WritePropertyName("defaultFilePath");
+                writer.WritePropertyName("defaultFilePath"u8);
                 writer.WriteStringValue(DefaultFilePath);
             }
             writer.WriteEndObject();
@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlTempDBSettings DeserializeSqlTempDBSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> dataFileSize = default;
             Optional<int> dataGrowth = default;
             Optional<int> logFileSize = default;
@@ -82,7 +86,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<string> defaultFilePath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataFileSize"))
+                if (property.NameEquals("dataFileSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     dataFileSize = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("dataGrowth"))
+                if (property.NameEquals("dataGrowth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,7 +106,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     dataGrowth = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("logFileSize"))
+                if (property.NameEquals("logFileSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,7 +116,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     logFileSize = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("logGrowth"))
+                if (property.NameEquals("logGrowth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,7 +126,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     logGrowth = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("dataFileCount"))
+                if (property.NameEquals("dataFileCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +136,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     dataFileCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("persistFolder"))
+                if (property.NameEquals("persistFolder"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -142,12 +146,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     persistFolder = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("persistFolderPath"))
+                if (property.NameEquals("persistFolderPath"u8))
                 {
                     persistFolderPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("luns"))
+                if (property.NameEquals("luns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -162,7 +166,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     luns = array;
                     continue;
                 }
-                if (property.NameEquals("defaultFilePath"))
+                if (property.NameEquals("defaultFilePath"u8))
                 {
                     defaultFilePath = property.Value.GetString();
                     continue;

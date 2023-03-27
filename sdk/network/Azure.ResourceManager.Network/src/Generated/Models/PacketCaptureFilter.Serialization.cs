@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Protocol))
             {
-                writer.WritePropertyName("protocol");
+                writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
             if (Optional.IsDefined(LocalIPAddress))
             {
-                writer.WritePropertyName("localIPAddress");
+                writer.WritePropertyName("localIPAddress"u8);
                 writer.WriteStringValue(LocalIPAddress);
             }
             if (Optional.IsDefined(RemoteIPAddress))
             {
-                writer.WritePropertyName("remoteIPAddress");
+                writer.WritePropertyName("remoteIPAddress"u8);
                 writer.WriteStringValue(RemoteIPAddress);
             }
             if (Optional.IsDefined(LocalPort))
             {
-                writer.WritePropertyName("localPort");
+                writer.WritePropertyName("localPort"u8);
                 writer.WriteStringValue(LocalPort);
             }
             if (Optional.IsDefined(RemotePort))
             {
-                writer.WritePropertyName("remotePort");
+                writer.WritePropertyName("remotePort"u8);
                 writer.WriteStringValue(RemotePort);
             }
             writer.WriteEndObject();
@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PacketCaptureFilter DeserializePacketCaptureFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PcProtocol> protocol = default;
             Optional<string> localIPAddress = default;
             Optional<string> remoteIPAddress = default;
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> remotePort = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("protocol"))
+                if (property.NameEquals("protocol"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,22 +66,22 @@ namespace Azure.ResourceManager.Network.Models
                     protocol = new PcProtocol(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("localIPAddress"))
+                if (property.NameEquals("localIPAddress"u8))
                 {
                     localIPAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("remoteIPAddress"))
+                if (property.NameEquals("remoteIPAddress"u8))
                 {
                     remoteIPAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("localPort"))
+                if (property.NameEquals("localPort"u8))
                 {
                     localPort = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("remotePort"))
+                if (property.NameEquals("remotePort"u8))
                 {
                     remotePort = property.Value.GetString();
                     continue;

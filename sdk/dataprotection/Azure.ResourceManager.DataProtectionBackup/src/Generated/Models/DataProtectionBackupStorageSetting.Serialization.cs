@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DataStoreType))
             {
-                writer.WritePropertyName("datastoreType");
+                writer.WritePropertyName("datastoreType"u8);
                 writer.WriteStringValue(DataStoreType.Value.ToString());
             }
             if (Optional.IsDefined(StorageSettingType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(StorageSettingType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static DataProtectionBackupStorageSetting DeserializeDataProtectionBackupStorageSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageSettingStoreType> datastoreType = default;
             Optional<StorageSettingType> type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("datastoreType"))
+                if (property.NameEquals("datastoreType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     datastoreType = new StorageSettingStoreType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

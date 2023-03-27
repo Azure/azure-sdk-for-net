@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CknSecretIdentifier))
             {
-                writer.WritePropertyName("cknSecretIdentifier");
+                writer.WritePropertyName("cknSecretIdentifier"u8);
                 writer.WriteStringValue(CknSecretIdentifier);
             }
             if (Optional.IsDefined(CakSecretIdentifier))
             {
-                writer.WritePropertyName("cakSecretIdentifier");
+                writer.WritePropertyName("cakSecretIdentifier"u8);
                 writer.WriteStringValue(CakSecretIdentifier);
             }
             if (Optional.IsDefined(Cipher))
             {
-                writer.WritePropertyName("cipher");
+                writer.WritePropertyName("cipher"u8);
                 writer.WriteStringValue(Cipher.Value.ToString());
             }
             if (Optional.IsDefined(SciState))
             {
-                writer.WritePropertyName("sciState");
+                writer.WritePropertyName("sciState"u8);
                 writer.WriteStringValue(SciState.Value.ToString());
             }
             writer.WriteEndObject();
@@ -40,23 +40,27 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ExpressRouteLinkMacSecConfig DeserializeExpressRouteLinkMacSecConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> cknSecretIdentifier = default;
             Optional<string> cakSecretIdentifier = default;
             Optional<ExpressRouteLinkMacSecCipher> cipher = default;
             Optional<ExpressRouteLinkMacSecSciState> sciState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cknSecretIdentifier"))
+                if (property.NameEquals("cknSecretIdentifier"u8))
                 {
                     cknSecretIdentifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cakSecretIdentifier"))
+                if (property.NameEquals("cakSecretIdentifier"u8))
                 {
                     cakSecretIdentifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cipher"))
+                if (property.NameEquals("cipher"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
                     cipher = new ExpressRouteLinkMacSecCipher(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sciState"))
+                if (property.NameEquals("sciState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -1,0 +1,43 @@
+parameters:
+  - name: TargetDirectory
+    type: string
+  - name: CustomTestSteps
+    type: object
+    default: []
+  - name: EnvVars
+    type: object
+    default: {}
+  - name: TargetTags
+    type: string
+    default: ''
+
+variables:
+  - template: /eng/pipelines/templates/variables/globals.yml
+
+stages:
+  - stage: 'eng_script_tests'
+    jobs:
+      - job: 'Test'
+        strategy:
+          matrix:
+            Windows:
+              Pool: 'azsdk-pool-mms-win-2022-general'
+              Image: 'windows-2022'
+            Linux:
+              Pool: azsdk-pool-mms-ubuntu-2204-general
+              Image: MMSUbuntu22.04
+            Mac:
+              Pool: 'Azure Pipelines'
+              Image: 'macos-11'
+
+        pool:
+          name: $(Pool)
+          vmImage: $(Image)
+
+        steps:
+          - template: /eng/common/pipelines/templates/steps/run-pester-tests.yml
+            parameters:
+              TargetDirectory: ${{ parameters.TargetDirectory }}
+              CustomTestSteps: ${{ parameters.CustomTestSteps }}
+              EnvVars: ${{ parameters.EnvVars }}
+              TargetTags: ${{ parameters.TargetTags }}

@@ -18,25 +18,29 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("configuration");
+            writer.WritePropertyName("configuration"u8);
             writer.WriteObjectValue(Configuration);
-            writer.WritePropertyName("restriction");
+            writer.WritePropertyName("restriction"u8);
             writer.WriteObjectValue(Restriction);
             writer.WriteEndObject();
         }
 
         internal static ContentKeyPolicyOption DeserializeContentKeyPolicyOption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> policyOptionId = default;
             Optional<string> name = default;
             ContentKeyPolicyConfiguration configuration = default;
             ContentKeyPolicyRestriction restriction = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("policyOptionId"))
+                if (property.NameEquals("policyOptionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,17 +50,17 @@ namespace Azure.ResourceManager.Media.Models
                     policyOptionId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("configuration"))
+                if (property.NameEquals("configuration"u8))
                 {
                     configuration = ContentKeyPolicyConfiguration.DeserializeContentKeyPolicyConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("restriction"))
+                if (property.NameEquals("restriction"u8))
                 {
                     restriction = ContentKeyPolicyRestriction.DeserializeContentKeyPolicyRestriction(property.Value);
                     continue;

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.IO;
 using System.Text;
@@ -11,6 +9,9 @@ using System.Threading;
 
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using OpenTelemetry;
+using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -51,8 +52,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return MinimumRetryInterval;
         }
 
-        internal static byte[] GetRequestContent(RequestContent content)
+        internal static bool TryGetRetryIntervalTimespan(Response? httpResponse, out TimeSpan retryAfter)
         {
+            if (httpResponse != null && httpResponse.Headers.TryGetValue(RetryAfterHeaderName, out var retryAfterValue))
+            {
+                if (int.TryParse(retryAfterValue, out var delaySeconds))
+                {
+                    retryAfter = TimeSpan.FromSeconds(delaySeconds);
+                    return true;
+                }
+                if (DateTimeOffset.TryParse(retryAfterValue, out DateTimeOffset delayTime))
+                {
+                    retryAfter = (delayTime - DateTimeOffset.Now);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        internal static byte[]? GetRequestContent(RequestContent? content)
+        {
+            if (content == null)
+            {
+                return null;
+            }
+
             using MemoryStream st = new MemoryStream();
 
             content.WriteTo(st, CancellationToken.None);
@@ -60,25 +85,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return st.ToArray();
         }
 
-        internal static byte[] GetPartialContentForRetry(TrackResponse trackResponse, RequestContent content)
+        internal static byte[]? GetPartialContentForRetry(TrackResponse trackResponse, RequestContent? content)
         {
-            string partialContent = null;
-            var fullContent = Encoding.UTF8.GetString(GetRequestContent(content))?.Split('\n');
+            if (content == null)
+            {
+                return null;
+            }
+
+            string? partialContent = null;
+            var fullContent = Encoding.UTF8.GetString(GetRequestContent(content)).Split('\n');
             foreach (var error in trackResponse.Errors)
             {
-                if (error != null)
+                if (error != null && error.Index != null)
                 {
-                    if (error.Index != null && error.Index >= fullContent.Length || error.Index < 0)
+                    if (error.Index >= fullContent.Length || error.Index < 0)
                     {
-                        // log
+                        // TODO: log
                         continue;
                     }
 
-                    if (error.StatusCode == ResponseStatusCodes.RequestTimeout ||
-                    error.StatusCode == ResponseStatusCodes.ServiceUnavailable ||
-                    error.StatusCode == ResponseStatusCodes.InternalServerError ||
-                    error.StatusCode == ResponseStatusCodes.ResponseCodeTooManyRequests ||
-                    error.StatusCode == ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache)
+                    if (error.StatusCode == ResponseStatusCodes.RequestTimeout
+                        || error.StatusCode == ResponseStatusCodes.ServiceUnavailable
+                        || error.StatusCode == ResponseStatusCodes.InternalServerError
+                        || error.StatusCode == ResponseStatusCodes.ResponseCodeTooManyRequests
+                        || error.StatusCode == ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache)
                     {
                         if (string.IsNullOrEmpty(partialContent))
                         {
@@ -98,6 +128,64 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             return Encoding.UTF8.GetBytes(partialContent);
+        }
+
+        internal static ExportResult IsSuccess(HttpMessage httpMessage)
+        {
+            if (httpMessage.HasResponse && httpMessage.Response.Status == ResponseStatusCodes.Success)
+            {
+                return ExportResult.Success;
+            }
+
+            return ExportResult.Failure;
+        }
+
+        internal static void HandleFailures(HttpMessage httpMessage, PersistentBlob blob, PersistentBlobProvider blobProvider)
+        {
+            int statusCode = 0;
+            bool shouldRetry = true;
+
+            if (httpMessage.HasResponse)
+            {
+                statusCode = httpMessage.Response.Status;
+                switch (statusCode)
+                {
+                    case ResponseStatusCodes.PartialSuccess:
+                        // Parse retry-after header
+                        // Send Failed Messages To Storage
+                        // Delete existing file
+                        TrackResponse trackResponse = GetTrackResponse(httpMessage);
+                        var content = GetPartialContentForRetry(trackResponse, httpMessage.Request.Content);
+                        if (content != null)
+                        {
+                            blob.TryDelete();
+                            blobProvider.SaveTelemetry(content);
+                        }
+                        break;
+                    case ResponseStatusCodes.RequestTimeout:
+                    case ResponseStatusCodes.ResponseCodeTooManyRequests:
+                    case ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache:
+                    case ResponseStatusCodes.Unauthorized:
+                    case ResponseStatusCodes.Forbidden:
+                    case ResponseStatusCodes.InternalServerError:
+                    case ResponseStatusCodes.BadGateway:
+                    case ResponseStatusCodes.ServiceUnavailable:
+                    case ResponseStatusCodes.GatewayTimeout:
+                        break;
+                    default:
+                        shouldRetry = false;
+                        break;
+                }
+            }
+
+            if (shouldRetry)
+            {
+                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmitFromStorage", $"Error code is {statusCode}: Telemetry is stored offline for retry");
+            }
+            else
+            {
+                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmitFromStorage", $"Error code is {statusCode}: Telemetry is dropped");
+            }
         }
     }
 }

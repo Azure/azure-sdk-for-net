@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CosmosDBBackupInformation DeserializeCosmosDBBackupInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContinuousBackupInformation> continuousBackupInformation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("continuousBackupInformation"))
+                if (property.NameEquals("continuousBackupInformation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

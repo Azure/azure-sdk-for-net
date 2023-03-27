@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static ReportableException DeserializeReportableException(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             Optional<string> actionableMessage = default;
             Optional<string> filePath = default;
@@ -22,27 +26,27 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> stackTrace = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("actionableMessage"))
+                if (property.NameEquals("actionableMessage"u8))
                 {
                     actionableMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filePath"))
+                if (property.NameEquals("filePath"u8))
                 {
                     filePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lineNumber"))
+                if (property.NameEquals("lineNumber"u8))
                 {
                     lineNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hResult"))
+                if (property.NameEquals("hResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     hResult = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("stackTrace"))
+                if (property.NameEquals("stackTrace"u8))
                 {
                     stackTrace = property.Value.GetString();
                     continue;

@@ -15,16 +15,20 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         internal static ContainerRegistryListCredentialsResult DeserializeContainerRegistryListCredentialsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> username = default;
             Optional<IReadOnlyList<ContainerRegistryPassword>> passwords = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("username"))
+                if (property.NameEquals("username"u8))
                 {
                     username = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("passwords"))
+                if (property.NameEquals("passwords"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -63,72 +63,62 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs
-        /// Operation Id: GetCatalog
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetCatalog</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="reservedResourceType"> The type of the resource for which the skus should be provided. </param>
-        /// <param name="location"> Filters the skus based on the location specified in this parameter. This can be an azure region or global. </param>
-        /// <param name="publisherId"> Publisher id used to get the third party products. </param>
-        /// <param name="offerId"> Offer id used to get the third party products. </param>
-        /// <param name="planId"> Plan id used to get the third party products. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReservationCatalog> GetCatalogAsync(string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReservationCatalog> GetCatalogAsync(SubscriptionResourceGetCatalogOptions options, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ReservationCatalog>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCatalog");
-                scope.Start();
-                try
-                {
-                    var response = await DefaultRestClient.GetCatalogAsync(Id.SubscriptionId, reservedResourceType, location, publisherId, offerId, planId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateGetCatalogRequest(Id.SubscriptionId, options.ReservedResourceType, options.Location, options.PublisherId, options.OfferId, options.PlanId, options.Filter, options.Skip, options.Take);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateGetCatalogNextPageRequest(nextLink, Id.SubscriptionId, options.ReservedResourceType, options.Location, options.PublisherId, options.OfferId, options.PlanId, options.Filter, options.Skip, options.Take);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReservationCatalog.DeserializeReservationCatalog, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCatalog", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs
-        /// Operation Id: GetCatalog
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetCatalog</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="reservedResourceType"> The type of the resource for which the skus should be provided. </param>
-        /// <param name="location"> Filters the skus based on the location specified in this parameter. This can be an azure region or global. </param>
-        /// <param name="publisherId"> Publisher id used to get the third party products. </param>
-        /// <param name="offerId"> Offer id used to get the third party products. </param>
-        /// <param name="planId"> Plan id used to get the third party products. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReservationCatalog> GetCatalog(string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReservationCatalog> GetCatalog(SubscriptionResourceGetCatalogOptions options, CancellationToken cancellationToken = default)
         {
-            Page<ReservationCatalog> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCatalog");
-                scope.Start();
-                try
-                {
-                    var response = DefaultRestClient.GetCatalog(Id.SubscriptionId, reservedResourceType, location, publisherId, offerId, planId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateGetCatalogRequest(Id.SubscriptionId, options.ReservedResourceType, options.Location, options.PublisherId, options.OfferId, options.PlanId, options.Filter, options.Skip, options.Take);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateGetCatalogNextPageRequest(nextLink, Id.SubscriptionId, options.ReservedResourceType, options.Location, options.PublisherId, options.OfferId, options.PlanId, options.Filter, options.Skip, options.Take);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReservationCatalog.DeserializeReservationCatalog, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCatalog", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get applicable `Reservation`s that are applied to this subscription or a resource group under this subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/appliedReservations
-        /// Operation Id: GetAppliedReservationList
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/appliedReservations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetAppliedReservationList</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AppliedReservationData>> GetAppliedReservationsAsync(CancellationToken cancellationToken = default)
@@ -149,8 +139,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Get applicable `Reservation`s that are applied to this subscription or a resource group under this subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/appliedReservations
-        /// Operation Id: GetAppliedReservationList
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/appliedReservations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetAppliedReservationList</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppliedReservationData> GetAppliedReservations(CancellationToken cancellationToken = default)

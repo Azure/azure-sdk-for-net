@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(CompletedRegions))
             {
-                writer.WritePropertyName("completedRegions");
+                writer.WritePropertyName("completedRegions"u8);
                 writer.WriteStartArray();
                 foreach (var item in CompletedRegions)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             if (Optional.IsCollectionDefined(FailedOrSkippedRegions))
             {
-                writer.WritePropertyName("failedOrSkippedRegions");
+                writer.WritePropertyName("failedOrSkippedRegions"u8);
                 writer.WriteStartObject();
                 foreach (var item in FailedOrSkippedRegions)
                 {
@@ -42,11 +42,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static CustomRolloutStatus DeserializeCustomRolloutStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> completedRegions = default;
             Optional<IDictionary<string, ExtendedErrorInfo>> failedOrSkippedRegions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("completedRegions"))
+                if (property.NameEquals("completedRegions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     completedRegions = array;
                     continue;
                 }
-                if (property.NameEquals("failedOrSkippedRegions"))
+                if (property.NameEquals("failedOrSkippedRegions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PublicIPs))
             {
-                writer.WritePropertyName("publicIPs");
+                writer.WritePropertyName("publicIPs"u8);
                 writer.WriteStartArray();
                 foreach (var item in PublicIPs)
                 {
@@ -32,10 +32,14 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterLoadBalancerProfileOutboundIPs DeserializeManagedClusterLoadBalancerProfileOutboundIPs(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<WritableSubResource>> publicIPs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publicIPs"))
+                if (property.NameEquals("publicIPs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

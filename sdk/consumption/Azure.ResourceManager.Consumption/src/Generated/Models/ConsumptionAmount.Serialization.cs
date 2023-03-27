@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static ConsumptionAmount DeserializeConsumptionAmount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> currency = default;
             Optional<decimal> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("currency"))
+                if (property.NameEquals("currency"u8))
                 {
                     currency = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

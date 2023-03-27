@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(AzureQueue))
             {
-                writer.WritePropertyName("azureQueue");
+                writer.WritePropertyName("azureQueue"u8);
                 writer.WriteObjectValue(AzureQueue);
             }
             if (Optional.IsDefined(Custom))
             {
-                writer.WritePropertyName("custom");
+                writer.WritePropertyName("custom"u8);
                 writer.WriteObjectValue(Custom);
             }
             if (Optional.IsDefined(Http))
             {
-                writer.WritePropertyName("http");
+                writer.WritePropertyName("http"u8);
                 writer.WriteObjectValue(Http);
             }
             if (Optional.IsDefined(Tcp))
             {
-                writer.WritePropertyName("tcp");
+                writer.WritePropertyName("tcp"u8);
                 writer.WriteObjectValue(Tcp);
             }
             writer.WriteEndObject();
@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppScaleRule DeserializeContainerAppScaleRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<ContainerAppQueueScaleRule> azureQueue = default;
             Optional<ContainerAppCustomScaleRule> custom = default;
@@ -52,12 +56,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<ContainerAppTcpScaleRule> tcp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("azureQueue"))
+                if (property.NameEquals("azureQueue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +71,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     azureQueue = ContainerAppQueueScaleRule.DeserializeContainerAppQueueScaleRule(property.Value);
                     continue;
                 }
-                if (property.NameEquals("custom"))
+                if (property.NameEquals("custom"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +81,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     custom = ContainerAppCustomScaleRule.DeserializeContainerAppCustomScaleRule(property.Value);
                     continue;
                 }
-                if (property.NameEquals("http"))
+                if (property.NameEquals("http"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +91,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     http = ContainerAppHttpScaleRule.DeserializeContainerAppHttpScaleRule(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tcp"))
+                if (property.NameEquals("tcp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

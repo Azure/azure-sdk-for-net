@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static DatabaseStatistics DeserializeDatabaseStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> size = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("size"))
+                if (property.NameEquals("size"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

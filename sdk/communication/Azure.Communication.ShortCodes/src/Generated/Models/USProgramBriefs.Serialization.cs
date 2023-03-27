@@ -15,11 +15,15 @@ namespace Azure.Communication.ShortCodes.Models
     {
         internal static USProgramBriefs DeserializeUSProgramBriefs(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<USProgramBrief>> programBriefs = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("programBriefs"))
+                if (property.NameEquals("programBriefs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +38,7 @@ namespace Azure.Communication.ShortCodes.Models
                     programBriefs = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

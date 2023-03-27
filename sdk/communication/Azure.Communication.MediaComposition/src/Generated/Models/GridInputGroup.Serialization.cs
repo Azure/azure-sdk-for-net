@@ -17,10 +17,15 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("inputIds");
+            writer.WritePropertyName("inputIds"u8);
             writer.WriteStartArray();
             foreach (var item in InputIds)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteStartArray();
                 foreach (var item0 in item)
                 {
@@ -29,35 +34,35 @@ namespace Azure.Communication.MediaComposition
                 writer.WriteEndArray();
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("rows");
+            writer.WritePropertyName("rows"u8);
             writer.WriteNumberValue(Rows);
-            writer.WritePropertyName("columns");
+            writer.WritePropertyName("columns"u8);
             writer.WriteNumberValue(Columns);
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(Position))
             {
-                writer.WritePropertyName("position");
+                writer.WritePropertyName("position"u8);
                 writer.WriteObjectValue(Position);
             }
             if (Optional.IsDefined(Width))
             {
-                writer.WritePropertyName("width");
+                writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
             if (Optional.IsDefined(Height))
             {
-                writer.WritePropertyName("height");
+                writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
             }
             if (Optional.IsDefined(Layer))
             {
-                writer.WritePropertyName("layer");
+                writer.WritePropertyName("layer"u8);
                 writer.WriteStringValue(Layer);
             }
             if (Optional.IsDefined(ScalingMode))
             {
-                writer.WritePropertyName("scalingMode");
+                writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());
             }
             writer.WriteEndObject();
@@ -65,6 +70,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static GridInputGroup DeserializeGridInputGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<IList<string>> inputIds = default;
             int rows = default;
             int columns = default;
@@ -76,37 +85,44 @@ namespace Azure.Communication.MediaComposition
             Optional<ScalingMode> scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("inputIds"))
+                if (property.NameEquals("inputIds"u8))
                 {
                     List<IList<string>> array = new List<IList<string>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        List<string> array0 = new List<string>();
-                        foreach (var item0 in item.EnumerateArray())
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array0.Add(item0.GetString());
+                            array.Add(null);
                         }
-                        array.Add(array0);
+                        else
+                        {
+                            List<string> array0 = new List<string>();
+                            foreach (var item0 in item.EnumerateArray())
+                            {
+                                array0.Add(item0.GetString());
+                            }
+                            array.Add(array0);
+                        }
                     }
                     inputIds = array;
                     continue;
                 }
-                if (property.NameEquals("rows"))
+                if (property.NameEquals("rows"u8))
                 {
                     rows = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("columns"))
+                if (property.NameEquals("columns"u8))
                 {
                     columns = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new InputGroupType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("position"))
+                if (property.NameEquals("position"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,22 +132,22 @@ namespace Azure.Communication.MediaComposition
                     position = InputPosition.DeserializeInputPosition(property.Value);
                     continue;
                 }
-                if (property.NameEquals("width"))
+                if (property.NameEquals("width"u8))
                 {
                     width = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("height"))
+                if (property.NameEquals("height"u8))
                 {
                     height = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("layer"))
+                if (property.NameEquals("layer"u8))
                 {
                     layer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scalingMode"))
+                if (property.NameEquals("scalingMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -14,11 +14,15 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static SearchInstancesResponsePage DeserializeSearchInstancesResponsePage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SearchInstancesResponse> instances = default;
             Optional<SearchHierarchyNodesResponse> hierarchyNodes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("instances"))
+                if (property.NameEquals("instances"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +32,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     instances = SearchInstancesResponse.DeserializeSearchInstancesResponse(property.Value);
                     continue;
                 }
-                if (property.NameEquals("hierarchyNodes"))
+                if (property.NameEquals("hierarchyNodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

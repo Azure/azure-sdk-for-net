@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-01";
+            _apiVersion = apiVersion ?? "2023-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -58,13 +58,13 @@ namespace Azure.ResourceManager.RecoveryServices
         }
 
         /// <summary> Get the vault extended info. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VaultExtendedInfoResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        public async Task<Response<RecoveryServicesVaultExtendedInfoData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -76,26 +76,26 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 case 200:
                     {
-                        VaultExtendedInfoResourceData value = default;
+                        RecoveryServicesVaultExtendedInfoData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VaultExtendedInfoResourceData.DeserializeVaultExtendedInfoResourceData(document.RootElement);
+                        value = RecoveryServicesVaultExtendedInfoData.DeserializeRecoveryServicesVaultExtendedInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VaultExtendedInfoResourceData)null, message.Response);
+                    return Response.FromValue((RecoveryServicesVaultExtendedInfoData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Get the vault extended info. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VaultExtendedInfoResourceData> Get(string subscriptionId, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        public Response<RecoveryServicesVaultExtendedInfoData> Get(string subscriptionId, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -107,19 +107,19 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 case 200:
                     {
-                        VaultExtendedInfoResourceData value = default;
+                        RecoveryServicesVaultExtendedInfoData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VaultExtendedInfoResourceData.DeserializeVaultExtendedInfoResourceData(document.RootElement);
+                        value = RecoveryServicesVaultExtendedInfoData.DeserializeRecoveryServicesVaultExtendedInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VaultExtendedInfoResourceData)null, message.Response);
+                    return Response.FromValue((RecoveryServicesVaultExtendedInfoData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, VaultExtendedInfoResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, RecoveryServicesVaultExtendedInfoData info)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -138,36 +138,36 @@ namespace Azure.ResourceManager.RecoveryServices
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(info);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Create vault extended info. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="data"> Details of ResourceExtendedInfo. </param>
+        /// <param name="info"> Details of ResourceExtendedInfo. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VaultExtendedInfoResourceData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, VaultExtendedInfoResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<RecoveryServicesVaultExtendedInfoData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, RecoveryServicesVaultExtendedInfoData info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vaultName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vaultName, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VaultExtendedInfoResourceData value = default;
+                        RecoveryServicesVaultExtendedInfoData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VaultExtendedInfoResourceData.DeserializeVaultExtendedInfoResourceData(document.RootElement);
+                        value = RecoveryServicesVaultExtendedInfoData.DeserializeRecoveryServicesVaultExtendedInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -176,29 +176,29 @@ namespace Azure.ResourceManager.RecoveryServices
         }
 
         /// <summary> Create vault extended info. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="data"> Details of ResourceExtendedInfo. </param>
+        /// <param name="info"> Details of ResourceExtendedInfo. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VaultExtendedInfoResourceData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string vaultName, VaultExtendedInfoResourceData data, CancellationToken cancellationToken = default)
+        public Response<RecoveryServicesVaultExtendedInfoData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string vaultName, RecoveryServicesVaultExtendedInfoData info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vaultName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vaultName, info);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VaultExtendedInfoResourceData value = default;
+                        RecoveryServicesVaultExtendedInfoData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VaultExtendedInfoResourceData.DeserializeVaultExtendedInfoResourceData(document.RootElement);
+                        value = RecoveryServicesVaultExtendedInfoData.DeserializeRecoveryServicesVaultExtendedInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.RecoveryServices
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, VaultExtendedInfoResourceData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, RecoveryServicesVaultExtendedInfoData info)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -225,36 +225,36 @@ namespace Azure.ResourceManager.RecoveryServices
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(info);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Update vault extended info. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="data"> Details of ResourceExtendedInfo. </param>
+        /// <param name="info"> Details of ResourceExtendedInfo. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VaultExtendedInfoResourceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, VaultExtendedInfoResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<RecoveryServicesVaultExtendedInfoData>> UpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, RecoveryServicesVaultExtendedInfoData info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, vaultName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, vaultName, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VaultExtendedInfoResourceData value = default;
+                        RecoveryServicesVaultExtendedInfoData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VaultExtendedInfoResourceData.DeserializeVaultExtendedInfoResourceData(document.RootElement);
+                        value = RecoveryServicesVaultExtendedInfoData.DeserializeRecoveryServicesVaultExtendedInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -263,29 +263,29 @@ namespace Azure.ResourceManager.RecoveryServices
         }
 
         /// <summary> Update vault extended info. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="data"> Details of ResourceExtendedInfo. </param>
+        /// <param name="info"> Details of ResourceExtendedInfo. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VaultExtendedInfoResourceData> Update(string subscriptionId, string resourceGroupName, string vaultName, VaultExtendedInfoResourceData data, CancellationToken cancellationToken = default)
+        public Response<RecoveryServicesVaultExtendedInfoData> Update(string subscriptionId, string resourceGroupName, string vaultName, RecoveryServicesVaultExtendedInfoData info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, vaultName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, vaultName, info);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VaultExtendedInfoResourceData value = default;
+                        RecoveryServicesVaultExtendedInfoData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VaultExtendedInfoResourceData.DeserializeVaultExtendedInfoResourceData(document.RootElement);
+                        value = RecoveryServicesVaultExtendedInfoData.DeserializeRecoveryServicesVaultExtendedInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

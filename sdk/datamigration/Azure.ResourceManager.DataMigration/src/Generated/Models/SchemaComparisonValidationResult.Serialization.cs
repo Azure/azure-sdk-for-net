@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static SchemaComparisonValidationResult DeserializeSchemaComparisonValidationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SchemaComparisonValidationResultType> schemaDifferences = default;
             Optional<ValidationError> validationErrors = default;
             Optional<IReadOnlyDictionary<string, long>> sourceDatabaseObjectCount = default;
             Optional<IReadOnlyDictionary<string, long>> targetDatabaseObjectCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("schemaDifferences"))
+                if (property.NameEquals("schemaDifferences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +35,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     schemaDifferences = SchemaComparisonValidationResultType.DeserializeSchemaComparisonValidationResultType(property.Value);
                     continue;
                 }
-                if (property.NameEquals("validationErrors"))
+                if (property.NameEquals("validationErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     validationErrors = ValidationError.DeserializeValidationError(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sourceDatabaseObjectCount"))
+                if (property.NameEquals("sourceDatabaseObjectCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     sourceDatabaseObjectCount = dictionary;
                     continue;
                 }
-                if (property.NameEquals("targetDatabaseObjectCount"))
+                if (property.NameEquals("targetDatabaseObjectCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

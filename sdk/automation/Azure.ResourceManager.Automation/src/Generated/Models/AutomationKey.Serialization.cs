@@ -14,12 +14,16 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static AutomationKey DeserializeAutomationKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AutomationKeyName> keyName = default;
             Optional<AutomationKeyPermission> permissions = default;
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("KeyName"))
+                if (property.NameEquals("KeyName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.Automation.Models
                     keyName = new AutomationKeyName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("Permissions"))
+                if (property.NameEquals("Permissions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +43,7 @@ namespace Azure.ResourceManager.Automation.Models
                     permissions = new AutomationKeyPermission(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("Value"))
+                if (property.NameEquals("Value"u8))
                 {
                     value = property.Value.GetString();
                     continue;

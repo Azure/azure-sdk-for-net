@@ -15,31 +15,35 @@ namespace Azure.ResourceManager.IotHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("filterName");
+            writer.WritePropertyName("filterName"u8);
             writer.WriteStringValue(FilterName);
             if (Optional.IsDefined(Action))
             {
-                writer.WritePropertyName("action");
+                writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            writer.WritePropertyName("ipMask");
+            writer.WritePropertyName("ipMask"u8);
             writer.WriteStringValue(IPMask);
             writer.WriteEndObject();
         }
 
         internal static IotHubNetworkRuleSetIPRule DeserializeIotHubNetworkRuleSetIPRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string filterName = default;
             Optional<IotHubNetworkRuleIPAction> action = default;
             string ipMask = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("filterName"))
+                if (property.NameEquals("filterName"u8))
                 {
                     filterName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +53,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     action = new IotHubNetworkRuleIPAction(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ipMask"))
+                if (property.NameEquals("ipMask"u8))
                 {
                     ipMask = property.Value.GetString();
                     continue;

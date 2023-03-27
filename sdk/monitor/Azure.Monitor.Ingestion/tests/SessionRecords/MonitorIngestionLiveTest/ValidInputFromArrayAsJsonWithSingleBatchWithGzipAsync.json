@@ -1,252 +1,38 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://15e322f7-cf21-5e8d-91a9-bc1e187dbdea-hl8u.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-aa319c33f01b4fe1a780278e9ab95638/streams/Custom-MyTableRawData?api-version=2021-11-01-preview",
+      "RequestUri": "https://6e504d24-46d0-5b81-be2b-7cd413502c03-pysm.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-69c634da62074a9c920c614959722bfd/streams/Custom-MyTableRawData?api-version=2023-01-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Encoding": "gzip",
-        "Content-Length": "87",
+        "Content-Length": "841",
         "Content-Type": "application/json",
-        "traceparent": "00-911c9e4bac6fed4c87a2b172862d210b-5864a96278a39a40-00",
-        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20221123.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "441bd4b2f10d1efe205eea4c97f319fd",
+        "traceparent": "00-064454b87c73f34fd0e12b3ed55838f5-499f4807c30136ea-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20230217.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a151e9dab77867ed5146e87b9e374a66",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "[[{\u0022Time\u0022:\u00222022-11-23T18:23:58.2577767\u0022,\u0022Computer\u0022:\u0022Computer0\u0022,\u0022AdditionalContext\u0022:0}]]",
+      "RequestBody": "[{\u0022Time\u0022:\u00222023-02-17T13:17:36.8290457\u0022,\u0022Computer\u0022:\u0022Computer0\u0022,\u0022AdditionalContext\u0022:0},{\u0022Time\u0022:\u00222023-02-17T13:17:36.8290457\u0022,\u0022Computer\u0022:\u0022Computer1\u0022,\u0022AdditionalContext\u0022:1},{\u0022Time\u0022:\u00222023-02-17T13:17:36.8290457\u0022,\u0022Computer\u0022:\u0022Computer2\u0022,\u0022AdditionalContext\u0022:2},{\u0022Time\u0022:\u00222023-02-17T13:17:36.8290457\u0022,\u0022Computer\u0022:\u0022Computer3\u0022,\u0022AdditionalContext\u0022:3},{\u0022Time\u0022:\u00222023-02-17T13:17:36.8290457\u0022,\u0022Computer\u0022:\u0022Computer4\u0022,\u0022AdditionalContext\u0022:4},{\u0022Time\u0022:\u00222023-02-17T13:17:36.8290457\u0022,\u0022Computer\u0022:\u0022Computer5\u0022,\u0022AdditionalContext\u0022:5},{\u0022Time\u0022:\u00222023-02-17T13:17:36.8290457\u0022,\u0022Computer\u0022:\u0022Computer6\u0022,\u0022AdditionalContext\u0022:6},{\u0022Time\u0022:\u00222023-02-17T13:17:36.8290457\u0022,\u0022Computer\u0022:\u0022Computer7\u0022,\u0022AdditionalContext\u0022:7},{\u0022Time\u0022:\u00222023-02-17T13:17:36.8290457\u0022,\u0022Computer\u0022:\u0022Computer8\u0022,\u0022AdditionalContext\u0022:8},{\u0022Time\u0022:\u00222023-02-17T13:17:36.8290457\u0022,\u0022Computer\u0022:\u0022Computer9\u0022,\u0022AdditionalContext\u0022:9}]",
       "StatusCode": 204,
       "ResponseHeaders": {
-        "Date": "Thu, 24 Nov 2022 02:23:57 GMT",
+        "Date": "Fri, 17 Feb 2023 21:17:37 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "441bd4b2-f10d-1efe-205e-ea4c97f319fd",
-        "x-ms-request-id": "a4361c86-23d2-4f88-9eb0-505f0d2d9550"
-      },
-      "ResponseBody": null
-    },
-    {
-      "RequestUri": "https://15e322f7-cf21-5e8d-91a9-bc1e187dbdea-hl8u.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-aa319c33f01b4fe1a780278e9ab95638/streams/Custom-MyTableRawData?api-version=2021-11-01-preview",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Encoding": "gzip",
-        "Content-Length": "87",
-        "Content-Type": "application/json",
-        "traceparent": "00-911c9e4bac6fed4c87a2b172862d210b-8c7ec11985d49a48-00",
-        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20221123.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "a1fe8f3b9c77018cf44de3fd635f7123",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": "[[{\u0022Time\u0022:\u00222022-11-23T18:23:58.2577767\u0022,\u0022Computer\u0022:\u0022Computer1\u0022,\u0022AdditionalContext\u0022:1}]]",
-      "StatusCode": 204,
-      "ResponseHeaders": {
-        "Date": "Thu, 24 Nov 2022 02:23:58 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "a1fe8f3b-9c77-018c-f44d-e3fd635f7123",
-        "x-ms-request-id": "06100a68-1475-4f3b-892a-5d4163a60ed6"
-      },
-      "ResponseBody": null
-    },
-    {
-      "RequestUri": "https://15e322f7-cf21-5e8d-91a9-bc1e187dbdea-hl8u.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-aa319c33f01b4fe1a780278e9ab95638/streams/Custom-MyTableRawData?api-version=2021-11-01-preview",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Encoding": "gzip",
-        "Content-Length": "87",
-        "Content-Type": "application/json",
-        "traceparent": "00-911c9e4bac6fed4c87a2b172862d210b-374be7370dead749-00",
-        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20221123.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "651c7bc46cc5350906b09ed05efd412f",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": "[[{\u0022Time\u0022:\u00222022-11-23T18:23:58.2577767\u0022,\u0022Computer\u0022:\u0022Computer2\u0022,\u0022AdditionalContext\u0022:2}]]",
-      "StatusCode": 204,
-      "ResponseHeaders": {
-        "Date": "Thu, 24 Nov 2022 02:23:58 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "651c7bc4-6cc5-3509-06b0-9ed05efd412f",
-        "x-ms-request-id": "3abe024a-963a-46c8-aa6d-0773cd794fe6"
-      },
-      "ResponseBody": null
-    },
-    {
-      "RequestUri": "https://15e322f7-cf21-5e8d-91a9-bc1e187dbdea-hl8u.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-aa319c33f01b4fe1a780278e9ab95638/streams/Custom-MyTableRawData?api-version=2021-11-01-preview",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Encoding": "gzip",
-        "Content-Length": "87",
-        "Content-Type": "application/json",
-        "traceparent": "00-911c9e4bac6fed4c87a2b172862d210b-7ee33333db462c43-00",
-        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20221123.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "b4f961d9128f1569471a50c00d01bbc1",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": "[[{\u0022Time\u0022:\u00222022-11-23T18:23:58.2577767\u0022,\u0022Computer\u0022:\u0022Computer3\u0022,\u0022AdditionalContext\u0022:3}]]",
-      "StatusCode": 204,
-      "ResponseHeaders": {
-        "Date": "Thu, 24 Nov 2022 02:23:58 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "b4f961d9-128f-1569-471a-50c00d01bbc1",
-        "x-ms-request-id": "91113b23-344d-45b8-a15c-e0dd8bc55ed7"
-      },
-      "ResponseBody": null
-    },
-    {
-      "RequestUri": "https://15e322f7-cf21-5e8d-91a9-bc1e187dbdea-hl8u.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-aa319c33f01b4fe1a780278e9ab95638/streams/Custom-MyTableRawData?api-version=2021-11-01-preview",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Encoding": "gzip",
-        "Content-Length": "87",
-        "Content-Type": "application/json",
-        "traceparent": "00-911c9e4bac6fed4c87a2b172862d210b-ded22cee57cfe44f-00",
-        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20221123.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "1b87c7edb3d6cf3885c99ac7febca3f6",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": "[[{\u0022Time\u0022:\u00222022-11-23T18:23:58.2577767\u0022,\u0022Computer\u0022:\u0022Computer4\u0022,\u0022AdditionalContext\u0022:4}]]",
-      "StatusCode": 204,
-      "ResponseHeaders": {
-        "Date": "Thu, 24 Nov 2022 02:23:58 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "1b87c7ed-b3d6-cf38-85c9-9ac7febca3f6",
-        "x-ms-request-id": "dd5fd7cf-daed-450d-a2b1-125f0b3a7216"
-      },
-      "ResponseBody": null
-    },
-    {
-      "RequestUri": "https://15e322f7-cf21-5e8d-91a9-bc1e187dbdea-hl8u.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-aa319c33f01b4fe1a780278e9ab95638/streams/Custom-MyTableRawData?api-version=2021-11-01-preview",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Encoding": "gzip",
-        "Content-Length": "87",
-        "Content-Type": "application/json",
-        "traceparent": "00-911c9e4bac6fed4c87a2b172862d210b-9338e1a7157e9d41-00",
-        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20221123.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "0223b40bbc66b29411061daa1c492704",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": "[[{\u0022Time\u0022:\u00222022-11-23T18:23:58.2577767\u0022,\u0022Computer\u0022:\u0022Computer5\u0022,\u0022AdditionalContext\u0022:5}]]",
-      "StatusCode": 204,
-      "ResponseHeaders": {
-        "Date": "Thu, 24 Nov 2022 02:23:58 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "0223b40b-bc66-b294-1106-1daa1c492704",
-        "x-ms-request-id": "9b087892-4bb1-4e6a-929c-d5340cec45c4"
-      },
-      "ResponseBody": null
-    },
-    {
-      "RequestUri": "https://15e322f7-cf21-5e8d-91a9-bc1e187dbdea-hl8u.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-aa319c33f01b4fe1a780278e9ab95638/streams/Custom-MyTableRawData?api-version=2021-11-01-preview",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Encoding": "gzip",
-        "Content-Length": "87",
-        "Content-Type": "application/json",
-        "traceparent": "00-911c9e4bac6fed4c87a2b172862d210b-b03176901b681245-00",
-        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20221123.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "97e3dcf425762658282a2fc578a2178b",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": "[[{\u0022Time\u0022:\u00222022-11-23T18:23:58.2577767\u0022,\u0022Computer\u0022:\u0022Computer6\u0022,\u0022AdditionalContext\u0022:6}]]",
-      "StatusCode": 204,
-      "ResponseHeaders": {
-        "Date": "Thu, 24 Nov 2022 02:23:58 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "97e3dcf4-2576-2658-282a-2fc578a2178b",
-        "x-ms-request-id": "719c84c9-5699-4259-bde7-71b276b07141"
-      },
-      "ResponseBody": null
-    },
-    {
-      "RequestUri": "https://15e322f7-cf21-5e8d-91a9-bc1e187dbdea-hl8u.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-aa319c33f01b4fe1a780278e9ab95638/streams/Custom-MyTableRawData?api-version=2021-11-01-preview",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Encoding": "gzip",
-        "Content-Length": "87",
-        "Content-Type": "application/json",
-        "traceparent": "00-911c9e4bac6fed4c87a2b172862d210b-22c26a7954feff4c-00",
-        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20221123.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "59b45977b8de315b32d50ad0958db23b",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": "[[{\u0022Time\u0022:\u00222022-11-23T18:23:58.2577767\u0022,\u0022Computer\u0022:\u0022Computer7\u0022,\u0022AdditionalContext\u0022:7}]]",
-      "StatusCode": 204,
-      "ResponseHeaders": {
-        "Date": "Thu, 24 Nov 2022 02:23:58 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "59b45977-b8de-315b-32d5-0ad0958db23b",
-        "x-ms-request-id": "6dd0379c-b7dd-4d35-9520-46c2eb2cc2ec"
-      },
-      "ResponseBody": null
-    },
-    {
-      "RequestUri": "https://15e322f7-cf21-5e8d-91a9-bc1e187dbdea-hl8u.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-aa319c33f01b4fe1a780278e9ab95638/streams/Custom-MyTableRawData?api-version=2021-11-01-preview",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Encoding": "gzip",
-        "Content-Length": "87",
-        "Content-Type": "application/json",
-        "traceparent": "00-911c9e4bac6fed4c87a2b172862d210b-2b3cd6a820282c45-00",
-        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20221123.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "21d295a10cd9e6805bfcd93b8cce396f",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": "[[{\u0022Time\u0022:\u00222022-11-23T18:23:58.2577767\u0022,\u0022Computer\u0022:\u0022Computer8\u0022,\u0022AdditionalContext\u0022:8}]]",
-      "StatusCode": 204,
-      "ResponseHeaders": {
-        "Date": "Thu, 24 Nov 2022 02:23:58 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "21d295a1-0cd9-e680-5bfc-d93b8cce396f",
-        "x-ms-request-id": "76a7b7b2-460b-43a7-962e-4304ef711343"
-      },
-      "ResponseBody": null
-    },
-    {
-      "RequestUri": "https://15e322f7-cf21-5e8d-91a9-bc1e187dbdea-hl8u.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-aa319c33f01b4fe1a780278e9ab95638/streams/Custom-MyTableRawData?api-version=2021-11-01-preview",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Encoding": "gzip",
-        "Content-Length": "87",
-        "Content-Type": "application/json",
-        "traceparent": "00-911c9e4bac6fed4c87a2b172862d210b-61f5201961bb8346-00",
-        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20221123.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "c23392eece953b2681b164a01b88909a",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": "[[{\u0022Time\u0022:\u00222022-11-23T18:23:58.2577767\u0022,\u0022Computer\u0022:\u0022Computer9\u0022,\u0022AdditionalContext\u0022:9}]]",
-      "StatusCode": 204,
-      "ResponseHeaders": {
-        "Date": "Thu, 24 Nov 2022 02:23:59 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "c23392ee-ce95-3b26-81b1-64a01b88909a",
-        "x-ms-request-id": "f7bc5ec6-f14e-4e98-b74f-311b4464ddc8"
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a151e9da-b778-67ed-5146-e87b9e374a66",
+        "x-ms-request-id": "1efb7189-3406-416a-aa75-768fae6451d5"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "DateTimeOffsetNow": "2022-11-23T18:23:58.2577767-08:00",
-    "INGESTION_DATA_COLLECTION_ENDPOINT": "https://15e322f7-cf21-5e8d-91a9-bc1e187dbdea-hl8u.westus-1.ingest.monitor.azure.com",
-    "INGESTION_DATA_COLLECTION_RULE_IMMUTABLE_ID": "dcr-aa319c33f01b4fe1a780278e9ab95638",
+    "DateTimeOffsetNow": "2023-02-17T13:17:36.8290457-08:00",
+    "INGESTION_DATA_COLLECTION_ENDPOINT": "https://6e504d24-46d0-5b81-be2b-7cd413502c03-pysm.westus-1.ingest.monitor.azure.com",
+    "INGESTION_DATA_COLLECTION_RULE_IMMUTABLE_ID": "dcr-69c634da62074a9c920c614959722bfd",
     "INGESTION_STREAM_NAME": "Custom-MyTableRawData",
-    "RandomSeed": "2119494175"
+    "RandomSeed": "1503981013"
   }
 }

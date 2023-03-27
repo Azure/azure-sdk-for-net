@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("assessedResourceType");
+            writer.WritePropertyName("assessedResourceType"u8);
             writer.WriteStringValue(AssessedResourceType.ToString());
             writer.WriteEndObject();
         }
 
         internal static SecuritySubAssessmentAdditionalInfo DeserializeSecuritySubAssessmentAdditionalInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("assessedResourceType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

@@ -15,10 +15,14 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static AcrErrors DeserializeAcrErrors(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AcrErrorInfo>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

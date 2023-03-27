@@ -14,12 +14,16 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         internal static IotHubRegistryStatistics DeserializeIotHubRegistryStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> totalDeviceCount = default;
             Optional<long> enabledDeviceCount = default;
             Optional<long> disabledDeviceCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("totalDeviceCount"))
+                if (property.NameEquals("totalDeviceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     totalDeviceCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("enabledDeviceCount"))
+                if (property.NameEquals("enabledDeviceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +43,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     enabledDeviceCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("disabledDeviceCount"))
+                if (property.NameEquals("disabledDeviceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

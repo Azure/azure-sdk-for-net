@@ -15,6 +15,10 @@ namespace Azure.Messaging.EventGrid.Models
     {
         internal static UnknownMediaJobOutput DeserializeUnknownMediaJobOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string odataType = "Unknown";
             Optional<MediaJobError> error = default;
             Optional<string> label = default;
@@ -22,12 +26,12 @@ namespace Azure.Messaging.EventGrid.Models
             MediaJobState state = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,17 +41,17 @@ namespace Azure.Messaging.EventGrid.Models
                     error = MediaJobError.DeserializeMediaJobError(property.Value);
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("progress"))
+                if (property.NameEquals("progress"u8))
                 {
                     progress = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = property.Value.GetString().ToMediaJobState();
                     continue;

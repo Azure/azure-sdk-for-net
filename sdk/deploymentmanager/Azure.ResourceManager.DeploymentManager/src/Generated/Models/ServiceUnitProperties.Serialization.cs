@@ -14,22 +14,26 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     {
         internal static ServiceUnitProperties DeserializeServiceUnitProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string targetResourceGroup = default;
             DeploymentMode deploymentMode = default;
             Optional<ServiceUnitArtifacts> artifacts = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetResourceGroup"))
+                if (property.NameEquals("targetResourceGroup"u8))
                 {
                     targetResourceGroup = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deploymentMode"))
+                if (property.NameEquals("deploymentMode"u8))
                 {
                     deploymentMode = property.Value.GetString().ToDeploymentMode();
                     continue;
                 }
-                if (property.NameEquals("artifacts"))
+                if (property.NameEquals("artifacts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

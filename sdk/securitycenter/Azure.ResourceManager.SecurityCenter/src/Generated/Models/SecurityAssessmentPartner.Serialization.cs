@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("partnerName");
+            writer.WritePropertyName("partnerName"u8);
             writer.WriteStringValue(PartnerName);
-            writer.WritePropertyName("secret");
+            writer.WritePropertyName("secret"u8);
             writer.WriteStringValue(Secret);
             writer.WriteEndObject();
         }
 
         internal static SecurityAssessmentPartner DeserializeSecurityAssessmentPartner(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string partnerName = default;
             string secret = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("partnerName"))
+                if (property.NameEquals("partnerName"u8))
                 {
                     partnerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secret"))
+                if (property.NameEquals("secret"u8))
                 {
                     secret = property.Value.GetString();
                     continue;

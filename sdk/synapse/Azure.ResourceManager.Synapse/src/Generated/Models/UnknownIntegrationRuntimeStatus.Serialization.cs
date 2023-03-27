@@ -16,31 +16,35 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static UnknownIntegrationRuntimeStatus DeserializeUnknownIntegrationRuntimeStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IntegrationRuntimeType type = "Unknown";
             Optional<string> dataFactoryName = default;
-            Optional<IntegrationRuntimeState> state = default;
+            Optional<SynapseIntegrationRuntimeState> state = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new IntegrationRuntimeType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dataFactoryName"))
+                if (property.NameEquals("dataFactoryName"u8))
                 {
                     dataFactoryName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    state = new IntegrationRuntimeState(property.Value.GetString());
+                    state = new SynapseIntegrationRuntimeState(property.Value.GetString());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

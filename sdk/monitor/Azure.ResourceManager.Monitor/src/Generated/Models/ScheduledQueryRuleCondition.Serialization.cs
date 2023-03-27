@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
-                writer.WritePropertyName("query");
+                writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
             if (Optional.IsDefined(TimeAggregation))
             {
-                writer.WritePropertyName("timeAggregation");
+                writer.WritePropertyName("timeAggregation"u8);
                 writer.WriteStringValue(TimeAggregation.Value.ToString());
             }
             if (Optional.IsDefined(MetricMeasureColumn))
             {
-                writer.WritePropertyName("metricMeasureColumn");
+                writer.WritePropertyName("metricMeasureColumn"u8);
                 writer.WriteStringValue(MetricMeasureColumn);
             }
             if (Optional.IsDefined(ResourceIdColumn))
             {
-                writer.WritePropertyName("resourceIdColumn");
+                writer.WritePropertyName("resourceIdColumn"u8);
                 writer.WriteStringValue(ResourceIdColumn);
             }
             if (Optional.IsCollectionDefined(Dimensions))
             {
-                writer.WritePropertyName("dimensions");
+                writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
@@ -48,22 +48,22 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsDefined(Operator))
             {
-                writer.WritePropertyName("operator");
+                writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToSerialString());
             }
             if (Optional.IsDefined(Threshold))
             {
-                writer.WritePropertyName("threshold");
+                writer.WritePropertyName("threshold"u8);
                 writer.WriteNumberValue(Threshold.Value);
             }
             if (Optional.IsDefined(FailingPeriods))
             {
-                writer.WritePropertyName("failingPeriods");
+                writer.WritePropertyName("failingPeriods"u8);
                 writer.WriteObjectValue(FailingPeriods);
             }
             if (Optional.IsDefined(MetricName))
             {
-                writer.WritePropertyName("metricName");
+                writer.WritePropertyName("metricName"u8);
                 writer.WriteStringValue(MetricName);
             }
             writer.WriteEndObject();
@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ScheduledQueryRuleCondition DeserializeScheduledQueryRuleCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> query = default;
             Optional<ScheduledQueryRuleTimeAggregationType> timeAggregation = default;
             Optional<string> metricMeasureColumn = default;
@@ -82,12 +86,12 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> metricName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("query"))
+                if (property.NameEquals("query"u8))
                 {
                     query = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timeAggregation"))
+                if (property.NameEquals("timeAggregation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,17 +101,17 @@ namespace Azure.ResourceManager.Monitor.Models
                     timeAggregation = new ScheduledQueryRuleTimeAggregationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("metricMeasureColumn"))
+                if (property.NameEquals("metricMeasureColumn"u8))
                 {
                     metricMeasureColumn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceIdColumn"))
+                if (property.NameEquals("resourceIdColumn"u8))
                 {
                     resourceIdColumn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dimensions"))
+                if (property.NameEquals("dimensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,7 +126,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     dimensions = array;
                     continue;
                 }
-                if (property.NameEquals("operator"))
+                if (property.NameEquals("operator"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +136,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     @operator = property.Value.GetString().ToMonitorConditionOperator();
                     continue;
                 }
-                if (property.NameEquals("threshold"))
+                if (property.NameEquals("threshold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -142,7 +146,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     threshold = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("failingPeriods"))
+                if (property.NameEquals("failingPeriods"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -152,7 +156,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     failingPeriods = ConditionFailingPeriods.DeserializeConditionFailingPeriods(property.Value);
                     continue;
                 }
-                if (property.NameEquals("metricName"))
+                if (property.NameEquals("metricName"u8))
                 {
                     metricName = property.Value.GetString();
                     continue;

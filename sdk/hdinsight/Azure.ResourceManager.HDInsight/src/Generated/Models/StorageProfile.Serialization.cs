@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(StorageAccounts))
             {
-                writer.WritePropertyName("storageaccounts");
+                writer.WritePropertyName("storageaccounts"u8);
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static StorageProfile DeserializeStorageProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<HDInsightStorageAccountInfo>> storageaccounts = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageaccounts"))
+                if (property.NameEquals("storageaccounts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
