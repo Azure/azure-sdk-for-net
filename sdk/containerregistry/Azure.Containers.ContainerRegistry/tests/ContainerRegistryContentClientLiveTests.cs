@@ -715,6 +715,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             using FileStream downloadFs = File.OpenWrite(filePath);
             await client.DownloadBlobToAsync(uploadResult.Digest, downloadFs);
 
+            // Content is validated by the client, so we only need to check length.
             Assert.IsTrue(File.Exists(filePath));
             Assert.AreEqual(size, new FileInfo(filePath).Length);
         }
