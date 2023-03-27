@@ -4,9 +4,6 @@
 - Added support for service version 2022-11-02.
 - Fixed bug where GenerateSasUri did not honor TrimBlobNameSlashes when creating the SAS (#34591).
 
-## 5.1.1 (2023-03-24)
-- Bumped Azure.Core dependency from 1.28 and 1.30, fixing issue with headers being non-resilient to double dispose of the request.
-
 ## 12.15.1 (2023-03-24)
 - Bumped Azure.Core dependency from 1.28 and 1.30, fixing issue with headers being non-resilient to double dispose of the request.
 
