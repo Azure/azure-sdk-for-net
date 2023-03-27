@@ -7,12 +7,23 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The DtmfToneReceived. </summary>
-    internal partial class DtmfToneReceived
+    /// <summary> The ContinuousDtmfRecognitionToneReceived. </summary>
+    internal partial class ContinuousDtmfRecognitionToneReceived
     {
         /// <summary> Initializes a new instance of DtmfToneReceived. </summary>
-        internal DtmfToneReceived()
+        internal ContinuousDtmfRecognitionToneReceived()
         {
+        }
+
+        internal ContinuousDtmfRecognitionToneReceived(ToneInfo toneInfo, string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
+        {
+        ToneInfo = toneInfo;
+            CallConnectionId = callConnectionId;
+            ServerCallId = serverCallId;
+            CorrelationId = correlationId;
+            OperationContext = operationContext;
+            ResultInformation = resultInformation;
+            
         }
 
         /// <summary> Information about Tone. </summary>
