@@ -44,15 +44,10 @@ namespace Azure.ResourceManager.Storage.Tests
         [RecordedTest]
         public async Task CreatePrivateEndpointConnection()
         {
-            if (Mode == RecordedTestMode.Record)
-            {
-                using (Recording.DisableRecording())
-                {
-                    PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();
-                }
-            }
+            PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();
             List<StoragePrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             StoragePrivateEndpointConnectionResource privateEndpointConnection = privateEndpointConnections[0];
+            VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnection);
             Assert.AreEqual(StoragePrivateEndpointServiceConnectionStatus.Pending, privateEndpointConnection.Data.ConnectionState.Status);
 
             _ = await _privateEndpointConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnection.Data.Name, new StoragePrivateEndpointConnectionData()
@@ -63,7 +58,9 @@ namespace Azure.ResourceManager.Storage.Tests
                     Description = "Approved by test",
                 }
             });
+            privateEndpoint = await privateEndpoint.GetAsync();
             privateEndpointConnection = await _privateEndpointConnectionCollection.GetAsync(privateEndpointConnection.Data.Name);
+            VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnection);
             Assert.AreEqual(StoragePrivateEndpointServiceConnectionStatus.Approved, privateEndpointConnection.Data.ConnectionState.Status);
         }
 
@@ -71,28 +68,18 @@ namespace Azure.ResourceManager.Storage.Tests
         [RecordedTest]
         public async Task GetAllPrivateEndpointConnection()
         {
-            if (Mode == RecordedTestMode.Record)
-            {
-                using (Recording.DisableRecording())
-                {
-                    PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();
-                    Assert.AreEqual(privateEndpoint.Data.ManualPrivateLinkServiceConnections.Count, 1);
-                }
-            }
+            PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();
+            Assert.AreEqual(privateEndpoint.Data.ManualPrivateLinkServiceConnections.Count, 1);
+
             List<StoragePrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, privateEndpointConnections.Count);
+            VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnections[0]);
         }
         [Test]
         [RecordedTest]
         public async Task StoragePrivateEndpointConnectionDelete()
         {
-            if (Mode == RecordedTestMode.Record)
-            {
-                using (Recording.DisableRecording())
-                {
-                    PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();
-                }
-            }
+            await CreatePrivateEndpoint();
 
             List<StoragePrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             string name = privateEndpointConnections[0].Data.Name;

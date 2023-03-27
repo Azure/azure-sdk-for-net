@@ -114,12 +114,9 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             string rgName = Recording.GenerateAssetName("testRg-ResourceMover-");
             ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName, AzureLocation.EastUS);
             string vnetName = Recording.GenerateAssetName("Vnet-");
-            string moverResourceName = Recording.GenerateAssetName("MoverResource-");
-            string targetVnetName = Recording.GenerateAssetName("targetVnet-");
-            string targetRgName = Recording.GenerateAssetName("testRg-ResourceMover-Target-");
-            string moverDependentResourceName = Recording.GenerateAssetName("MoverResource-");
             VirtualNetworkResource virtualNetwork = await CreareVirtualNetwork(rg, vnetName);
-            MoverResource moverResource = await CreateMoverResource(moverResourceSet, virtualNetwork.Id, moverResourceName, targetVnetName);
+            string moverResourceName = Recording.GenerateAssetName("MoverResource-");
+            MoverResource moverResource = await CreateMoverResource(moverResourceSet, virtualNetwork.Id, moverResourceName);
 
             // Validate that the Vnet has an dependency.
             ArmOperation<MoverOperationStatus> lro = await moverResourceSet.ResolveDependenciesAsync(WaitUntil.Completed);
@@ -138,7 +135,9 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             Assert.AreEqual(unresolvedDependencyId, rg.Id);
 
             // Add the source resource group to the moverResourceSet and verify there are no missed dependencies.
+            string targetRgName = Recording.GenerateAssetName("testRg-ResourceMover-Target-");
             ResourceGroupResource targetRg = await CreateResourceGroup(subscription, targetRgName, AzureLocation.EastUS2);
+            string moverDependentResourceName = Recording.GenerateAssetName("MoverResource-");
             MoverResourceData input = new MoverResourceData
             {
                 Properties = new MoverResourceProperties(unresolvedDependencyId)
