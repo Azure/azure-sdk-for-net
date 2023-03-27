@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -18,13 +19,11 @@ namespace Azure.Core.Tests.DelayStrategies
                 new int[] { 500, 5000, 1250, 2000 },
                 new int[] { 500, 500, 1250 },
                 new int[] { 500, 5000, 1250, 2000, 10000, 7500 },
-                new int[] { 500, 5000, 1250, 2000, 10000, 7500, 20000, 20000, 20000, 20000, 20000, 20000, 20000 })] int[] delayValues,
-            [Values(500, 1000, 2000, 5000, null)] int? suggestedWaitInMs)
+                new int[] { 500, 5000, 1250, 2000, 10000, 7500, 20000, 20000, 20000, 20000, 20000, 20000, 20000 })] int[] delayValues)
         {
             var strategy = new SequentialDelayStrategy();
             TimeSpan[] defaultDelays = strategy.GetType().GetField("_pollingSequence", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as TimeSpan[];
             TimeSpan actual = TimeSpan.Zero;
-            TimeSpan? suggestion = suggestedWaitInMs.HasValue ? TimeSpan.FromMilliseconds(suggestedWaitInMs.Value) : null;
             int expected = 0;
             for (int i = 0; i < delayValues.Length; i++)
             {
@@ -33,7 +32,7 @@ namespace Azure.Core.Tests.DelayStrategies
                 expected += GetExpected(headerName, delayValues[i], null, (int)defaultDelays[Math.Min(i, defaultDelays.Length - 1)].TotalMilliseconds);
                 if (headerName is not null)
                     response.AddHeader(new HttpHeader(headerName, delayValues[i].ToString()));
-                actual += strategy.GetNextDelay(response, i + 1, default, suggestion);
+                actual += strategy.GetNextDelay(response, i + 1, default, null);
             }
 
             Assert.AreEqual(TimeSpan.FromMilliseconds(expected), actual);
@@ -46,13 +45,11 @@ namespace Azure.Core.Tests.DelayStrategies
                 new int[] { 1, 2, 1, 2 },
                 new int[] { 1, 1, 2 },
                 new int[] { 1, 5, 2, 2, 10, 8 },
-                new int[] { 1, 5, 1, 2, 10, 8, 20, 20, 20, 20, 20, 20, 20 })] int[] delayValues,
-            [Values(1, 2, 5, null)] int? suggestedWaitInMs)
+                new int[] { 1, 5, 1, 2, 10, 8, 20, 20, 20, 20, 20, 20, 20 })] int[] delayValues)
         {
             var strategy = new SequentialDelayStrategy();
             TimeSpan[] defaultDelays = strategy.GetType().GetField("_pollingSequence", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as TimeSpan[];
             TimeSpan actual = TimeSpan.Zero;
-            TimeSpan? suggestion = suggestedWaitInMs.HasValue ? TimeSpan.FromSeconds(suggestedWaitInMs.Value) : null;
             int expected = 0;
             for (int i = 0; i < delayValues.Length; i++)
             {
@@ -61,7 +58,7 @@ namespace Azure.Core.Tests.DelayStrategies
                 expected += GetExpected(headerName, delayValues[i], null, (int)defaultDelays[Math.Min(i, defaultDelays.Length - 1)].TotalSeconds);
                 if (headerName is not null)
                     response.AddHeader(new HttpHeader(headerName, delayValues[i].ToString()));
-                actual += strategy.GetNextDelay(response, i + 1, default, suggestion);
+                actual += strategy.GetNextDelay(response, i + 1, response.Headers.RetryAfter, new Dictionary<string, object>());
             }
 
             Assert.AreEqual(TimeSpan.FromSeconds(expected), actual);
@@ -77,9 +74,10 @@ namespace Azure.Core.Tests.DelayStrategies
             [Values(500, 1000, 2000, 5000, null)] int? suggestedWaitInMs)
         {
             var delay = TimeSpan.FromSeconds(1);
-            var strategy = new FixedDelayStrategy(delay);
             TimeSpan actual = TimeSpan.Zero;
             TimeSpan? suggestion = suggestedWaitInMs.HasValue ? TimeSpan.FromMilliseconds(suggestedWaitInMs.Value) : null;
+            var strategy = DelayStrategy.CreateFixedDelayStrategy(suggestion);
+
             int expected = 0;
             for (int i = 0; i < delayValues.Length; i++)
             {
@@ -87,7 +85,7 @@ namespace Azure.Core.Tests.DelayStrategies
                 expected += GetExpected(headerName, delayValues[i], suggestedWaitInMs, (int)delay.TotalMilliseconds);
                 if (headerName is not null)
                     response.AddHeader(new HttpHeader(headerName, delayValues[i].ToString()));
-                actual += strategy.GetNextDelay(response, i + 1, default, suggestion);
+                actual += strategy.GetNextDelay(response, i + 1, response.Headers.RetryAfter, new Dictionary<string, object>());
             }
 
             Assert.AreEqual(TimeSpan.FromMilliseconds(expected), actual);
@@ -103,9 +101,11 @@ namespace Azure.Core.Tests.DelayStrategies
             [Values(1, 2, 5, null)] int? suggestedWaitInSeconds)
         {
             var delay = TimeSpan.FromSeconds(1);
-            var strategy = new FixedDelayStrategy(delay);
             TimeSpan actual = TimeSpan.Zero;
             TimeSpan? suggestion = suggestedWaitInSeconds.HasValue ? TimeSpan.FromSeconds(suggestedWaitInSeconds.Value) : null;
+
+            var strategy = DelayStrategy.CreateFixedDelayStrategy(suggestion);
+
             int expected = 0;
             for (int i = 0; i < delayValues.Length; i++)
             {
@@ -113,7 +113,7 @@ namespace Azure.Core.Tests.DelayStrategies
                 expected += GetExpected(headerName, delayValues[i], suggestedWaitInSeconds, (int)delay.TotalSeconds);
                 if (headerName is not null)
                     response.AddHeader(new HttpHeader(headerName, delayValues[i].ToString()));
-                actual += strategy.GetNextDelay(response, i + 1, default, suggestion);
+                actual += strategy.GetNextDelay(response, i + 1, response.Headers.RetryAfter, new Dictionary<string, object>());
             }
 
             Assert.AreEqual(TimeSpan.FromSeconds(expected), actual);

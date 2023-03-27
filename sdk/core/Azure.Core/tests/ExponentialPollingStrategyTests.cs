@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -10,15 +11,6 @@ namespace Azure.Core.Tests.DelayStrategies
     internal class ExponentialPollingStrategyTests
     {
         private static readonly MockResponse _mockResponse = new MockResponse(200);
-
-        [Test]
-        public void WillIgnoreSuggest(
-           [Values(90, 100, 120)] int suggest)
-        {
-            var strategy = new SequentialDelayStrategy();
-            var expected = TimeSpan.FromSeconds(1);
-            Assert.AreEqual(expected, strategy.GetNextDelay(_mockResponse, 1, default, TimeSpan.FromSeconds(suggest)));
-        }
 
         private static readonly int[] _expectedValues = new int[]
         {
@@ -40,12 +32,11 @@ namespace Azure.Core.Tests.DelayStrategies
             [Values(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)] int retries)
         {
             var strategy = new SequentialDelayStrategy();
-            var suggestion = TimeSpan.FromSeconds(suggestionInS);
             var expected = TimeSpan.FromSeconds(_expectedValues[retries - 1]);
             TimeSpan actual = TimeSpan.Zero;
             for (int i = 0; i < retries; i++)
             {
-                actual += strategy.GetNextDelay(_mockResponse, i + 1, default, suggestion);
+                actual += strategy.GetNextDelay(_mockResponse, i + 1, default, new Dictionary<string, object>());
             }
             Assert.AreEqual(expected, actual);
         }

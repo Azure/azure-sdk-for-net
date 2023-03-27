@@ -662,14 +662,7 @@ namespace Azure.Core.Tests
 
             internal Exception LastException { get; set; }
 
-            public RetryPolicyMock(RetryMode mode, int maxRetries = 3, TimeSpan delay = default, TimeSpan maxDelay = default) : base(
-                new RetryOptions
-                {
-                    Mode = mode,
-                    Delay = delay,
-                    MaxDelay = maxDelay,
-                    MaxRetries = maxRetries
-                })
+            public RetryPolicyMock(RetryMode mode, int maxRetries = 3, TimeSpan delay = default, TimeSpan maxDelay = default) : base(maxRetries)
             {
             }
 

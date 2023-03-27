@@ -116,13 +116,12 @@ namespace Azure.Core.Samples
         public void CustomizedJitterExponentialDelay()
         {
             #region Snippet:CustomizeExponentialDelay
-            var strategy = DelayStrategy.CreateExponentialDelayStrategy(minJitterFactor: 0, maxJitterFactor: 1);
+            var strategy = DelayStrategy.CreateExponentialDelayStrategy();
             SecretClientOptions options = new SecretClientOptions()
             {
                 RetryPolicy = new RetryPolicy(delayStrategy: strategy)
             };
             #endregion
         }
-
     }
 }
