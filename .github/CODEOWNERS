@@ -195,7 +195,7 @@
 #/<NotInRepo>/                                                     @swmachan
 
 # PRLabel: %Cognitive - Translator
-/sdk/translation/                                                  @mikeymcz, @cpoulain, @joseharriaga
+/sdk/translation/                                                  @mikeymcz @cpoulain @joseharriaga
 
 # ServiceLabel: %Cognitive - Speech %Service Attention
 #/<NotInRepo>/                                                     @robch @oscholz
