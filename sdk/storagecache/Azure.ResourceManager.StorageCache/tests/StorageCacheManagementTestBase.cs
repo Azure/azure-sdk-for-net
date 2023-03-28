@@ -44,7 +44,9 @@ namespace Azure.ResourceManager.StorageCache.Tests
         public void TearDown()
         {
             // this clean up is needed when running in live mode because at most 4 storagecache can be created in one subscription
-            while (this.CleanupActions.Count > 0)
+            // enable it in live mode
+            bool enableCleanup = false;
+            while (enableCleanup && this.CleanupActions.Count > 0)
             {
                 var action = this.CleanupActions.Pop();
                 try
