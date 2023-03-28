@@ -73,7 +73,6 @@
     <Compile Include="Shared\GeoRedundantFallbackPolicy.cs" />
     <Compile Remove="FixedDelay.cs" />
     <Compile Remove="ExponentialDelay.cs" />
-    <Compile Remove="Delay.cs" />
   </ItemGroup>
 
 </Project>

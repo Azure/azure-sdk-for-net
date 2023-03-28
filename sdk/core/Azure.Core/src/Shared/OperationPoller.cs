@@ -17,9 +17,9 @@ namespace Azure.Core
     /// </summary>
     internal sealed class OperationPoller
     {
-        private readonly DelayStrategy _delayStrategy;
+        private readonly Delay _delayStrategy;
 
-        public OperationPoller(DelayStrategy? strategy = null)
+        public OperationPoller(Delay? strategy = null)
         {
             _delayStrategy = strategy ?? new FixedDelayWithNoJitterStrategy();
         }

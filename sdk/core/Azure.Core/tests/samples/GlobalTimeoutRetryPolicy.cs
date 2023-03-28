@@ -12,7 +12,7 @@ namespace Azure.Core.Samples
     {
         private readonly TimeSpan _timeout;
 
-        public GlobalTimeoutRetryPolicy(int maxRetries, DelayStrategy delayStrategy, TimeSpan timeout) : base(maxRetries, delayStrategy)
+        public GlobalTimeoutRetryPolicy(int maxRetries, Delay delayStrategy, TimeSpan timeout) : base(maxRetries, delayStrategy)
         {
             _timeout = timeout;
         }

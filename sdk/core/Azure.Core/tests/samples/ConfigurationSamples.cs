@@ -104,7 +104,7 @@ namespace Azure.Core.Samples
         {
             #region Snippet:SetGlobalTimeoutRetryPolicy
 
-            var strategy = DelayStrategy.CreateFixedDelayStrategy(TimeSpan.FromSeconds(2));
+            var strategy = Delay.CreateFixedDelayStrategy(TimeSpan.FromSeconds(2));
             SecretClientOptions options = new SecretClientOptions()
             {
                 RetryPolicy = new GlobalTimeoutRetryPolicy(maxRetries: 4, delayStrategy: strategy, timeout: TimeSpan.FromSeconds(30))
@@ -116,7 +116,7 @@ namespace Azure.Core.Samples
         public void CustomizedJitterExponentialDelay()
         {
             #region Snippet:CustomizeExponentialDelay
-            var strategy = DelayStrategy.CreateExponentialDelayStrategy();
+            var strategy = Delay.CreateExponentialDelayStrategy();
             SecretClientOptions options = new SecretClientOptions()
             {
                 RetryPolicy = new RetryPolicy(delayStrategy: strategy)

@@ -17,22 +17,22 @@ namespace Azure.Core.Pipeline
     public class RetryPolicy : HttpPipelinePolicy
     {
         private readonly int _maxRetries;
-        private readonly DelayStrategy _delayStrategy;
+        private readonly Delay _delayStrategy;
 
         /// <summary>
         ///
         /// </summary>
-        protected DelayStrategy DelayStrategy => _delayStrategy;
+        protected Delay DelayStrategy => _delayStrategy;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryPolicy"/> class.
         /// </summary>
         /// <param name="maxRetries"></param>
         /// <param name="delayStrategy">The delay strategy to use</param>
-        public RetryPolicy(int maxRetries = 3, DelayStrategy? delayStrategy = default)
+        public RetryPolicy(int maxRetries = 3, Delay? delayStrategy = default)
         {
             _maxRetries = maxRetries;
-            _delayStrategy = delayStrategy ?? DelayStrategy.CreateExponentialDelayStrategy();
+            _delayStrategy = delayStrategy ?? Delay.CreateExponentialDelayStrategy();
         }
 
         /// <summary>

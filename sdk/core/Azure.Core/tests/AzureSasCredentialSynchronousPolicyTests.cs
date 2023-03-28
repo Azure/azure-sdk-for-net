@@ -126,7 +126,7 @@ namespace Azure.Core.Tests
             {
                 request.Method = RequestMethod.Get;
                 request.Uri.Query = INITIAL_QUERY_URI;
-                var pipeline = new HttpPipeline(transport, new HttpPipelinePolicy[] { new RetryPolicy(delayStrategy: DelayStrategy.CreateExponentialDelayStrategy(TimeSpan.FromMilliseconds(100))), sasPolicy });
+                var pipeline = new HttpPipeline(transport, new HttpPipelinePolicy[] { new RetryPolicy(delayStrategy: Delay.CreateExponentialDelayStrategy(TimeSpan.FromMilliseconds(100))), sasPolicy });
 
                 Response response = await pipeline.SendRequestAsync(request, CancellationToken.None).ConfigureAwait(false);
                 Assert.AreEqual((int)HttpStatusCode.OK, response.Status);

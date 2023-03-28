@@ -11,7 +11,7 @@ namespace Azure.Core
     /// <summary>
     ///
     /// </summary>
-    internal class ExponentialDelayStrategy : DelayStrategy
+    internal class ExponentialDelayStrategy : Delay
     {
         private readonly TimeSpan _delay;
 
@@ -21,11 +21,10 @@ namespace Azure.Core
         /// <param name="delay"></param>
         /// <param name="maxDelay"></param>
         public ExponentialDelayStrategy(
-            TimeSpan? delay,
-            TimeSpan? maxDelay) : base(maxDelay)
+            TimeSpan delay,
+            TimeSpan maxDelay) : base(maxDelay)
         {
-            // use same defaults as RetryOptions
-            _delay = delay ?? TimeSpan.FromSeconds(0.8);
+            _delay = delay;
         }
 
         protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber, IDictionary<string, object?> context) =>

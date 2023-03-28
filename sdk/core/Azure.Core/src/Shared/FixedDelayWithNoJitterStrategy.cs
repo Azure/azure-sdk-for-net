@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Shared
 {
-    internal class FixedDelayWithNoJitterStrategy : DelayStrategy
+    internal class FixedDelayWithNoJitterStrategy : Delay
     {
         private static readonly TimeSpan DefaultDelay = TimeSpan.FromSeconds(1);
         private readonly TimeSpan _delay;

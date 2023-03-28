@@ -89,7 +89,7 @@ namespace Azure.Core
             Response rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategy? strategy = null)
+            Delay? strategy = null)
             :base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, strategy)
         {
             _internalOperation = new OperationInternal<VoidValue>(clientDiagnostics, new OperationToOperationOfTProxy(operation), rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, strategy);

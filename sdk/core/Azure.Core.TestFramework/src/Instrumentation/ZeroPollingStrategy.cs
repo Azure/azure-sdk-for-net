@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 namespace Azure.Core
 {
     /// <summary>
-    /// Implementation of a <see cref="DelayStrategy"/> with 0 interval.
+    /// Implementation of a <see cref="Delay"/> with 0 interval.
     /// This is normally used for testing, like record playback.
     /// </summary>
-    internal class ZeroPollingStrategy : DelayStrategy
+    internal class ZeroPollingStrategy : Delay
     {
         protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber, IDictionary<string, object?> context) => TimeSpan.Zero;
 

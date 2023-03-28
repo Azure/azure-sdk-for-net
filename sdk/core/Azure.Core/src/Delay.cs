@@ -13,7 +13,7 @@ namespace Azure.Core
     /// <summary>
     /// Strategy to control delay behavior.
     /// </summary>
-    public abstract class DelayStrategy
+    public abstract class Delay
     {
         private readonly Random _random = new ThreadSafeRandom();
         private readonly double _minJitterFactor;
@@ -25,7 +25,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="maxDelay"></param>
         /// <param name="jitterFactor"></param>
-        protected DelayStrategy(TimeSpan? maxDelay = default, double jitterFactor = 0.2)
+        protected Delay(TimeSpan? maxDelay = default, double jitterFactor = 0.2)
         {
             // use same defaults as RetryOptions
             _minJitterFactor = 1 - jitterFactor;
@@ -39,7 +39,7 @@ namespace Azure.Core
         /// <param name="initialDelay"></param>
         /// <param name="maxDelay"></param>
         /// <returns></returns>
-        public static DelayStrategy CreateExponentialDelayStrategy(
+        public static Delay CreateExponentialDelayStrategy(
             TimeSpan? initialDelay = default,
             TimeSpan? maxDelay = default)
         {
@@ -51,7 +51,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="delay"></param>
         /// <returns></returns>
-        public static DelayStrategy CreateFixedDelayStrategy(
+        public static Delay CreateFixedDelayStrategy(
             TimeSpan? delay = default)
         {
             return new FixedDelayStrategy(delay ?? TimeSpan.FromSeconds(0.8));

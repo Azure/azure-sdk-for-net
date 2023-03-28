@@ -10,7 +10,7 @@ namespace Azure.Core
     /// <summary>
     ///
     /// </summary>
-    internal class FixedDelayStrategy : DelayStrategy
+    internal class FixedDelayStrategy : Delay
     {
         private readonly TimeSpan _delay;
 
