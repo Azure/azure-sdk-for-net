@@ -194,7 +194,7 @@ namespace Azure.Core.Json
             span[span.Length - 1] = (byte)'"';
             writer.WriteRawValue(span);
 #else
-            JsonEncodedText text = JsonEncodedText.Encode(reader.ValueSpan, JavaScriptEncoder.UnsafeRelaxedJsonEscaping);//, JavaScriptEncoder.Create(new UnicodeRange(32, 47)));
+            JsonEncodedText text = JsonEncodedText.Encode(reader.ValueSpan, JavaScriptEncoder.UnsafeRelaxedJsonEscaping);
             writer.WriteStringValue(text);
 #endif
             return;
