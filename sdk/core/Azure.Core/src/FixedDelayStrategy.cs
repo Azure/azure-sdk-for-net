@@ -18,8 +18,7 @@ namespace Azure.Core
         ///
         /// </summary>
         /// <param name="delay"></param>
-        public FixedDelayStrategy(
-            TimeSpan delay) : base(TimeSpan.FromMilliseconds(delay.TotalMilliseconds * 1.2), 0.8, 1.2)
+        public  FixedDelayStrategy(TimeSpan delay) : base(TimeSpan.FromMilliseconds(delay.TotalMilliseconds))
         {
             _delay = delay;
         }

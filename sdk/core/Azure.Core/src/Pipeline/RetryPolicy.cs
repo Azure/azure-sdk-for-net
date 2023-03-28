@@ -278,9 +278,9 @@ namespace Azure.Core.Pipeline
         private TimeSpan GetNextDelayInternal(HttpMessage message)
         {
             return _delayStrategy.GetNextDelay(
-                message.Response,
+                message.HasResponse ? message.Response : default,
                 message.RetryNumber,
-                message.Response.Headers.RetryAfter,
+                message.HasResponse ? message.Response.Headers.RetryAfter : default,
                 GetDelayContext(message)!);
         }
 

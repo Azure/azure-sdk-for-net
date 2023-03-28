@@ -355,7 +355,7 @@ namespace Azure.Core.Tests
 
             Response response = await task.TimeoutAfterDefault();
 
-            Assert.AreEqual(TimeSpan.FromMilliseconds(120000), retryDelay);
+            Assert.That(retryDelay, Is.EqualTo(TimeSpan.FromMilliseconds(120000)).Within(TimeSpan.FromMilliseconds(0.2 * 120000)));
             Assert.AreEqual(501, response.Status);
         }
 
@@ -662,7 +662,12 @@ namespace Azure.Core.Tests
 
             internal Exception LastException { get; set; }
 
-            public RetryPolicyMock(RetryMode mode, int maxRetries = 3, TimeSpan delay = default, TimeSpan maxDelay = default) : base(maxRetries)
+            public RetryPolicyMock(RetryMode mode, int maxRetries = 3, TimeSpan delay = default, TimeSpan maxDelay = default)
+                : base(
+                    maxRetries,
+                    mode == RetryMode.Exponential ?
+                        DelayStrategy.CreateExponentialDelayStrategy(delay, maxDelay) :
+                        DelayStrategy.CreateFixedDelayStrategy(delay))
             {
             }
 

@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests.DelayStrategies
 {
-    internal class ExponentialPollingStrategyTests
+    internal class SequentialPollingStrategyTests
     {
         private static readonly MockResponse _mockResponse = new MockResponse(200);
 
@@ -27,8 +27,7 @@ namespace Azure.Core.Tests.DelayStrategies
         };
 
         [Test]
-        public void WillIgnoreSuggestMultipleIterations(
-            [Values(1, 10, 100)] int suggestionInS,
+        public void SequentialPollingFollowsExpectedSequence(
             [Values(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)] int retries)
         {
             var strategy = new SequentialDelayStrategy();

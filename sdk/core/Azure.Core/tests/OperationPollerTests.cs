@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -21,7 +22,7 @@ namespace Azure.Core.Tests.DelayStrategies
             var delayStrategy = poller.GetType().GetField("_delayStrategy", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(poller);
 
             Assert.IsNotNull(delayStrategy);
-            Assert.AreEqual(typeof(FixedDelayStrategy), delayStrategy.GetType());
+            Assert.AreEqual(typeof(FixedDelayWithNoJitterStrategy), delayStrategy.GetType());
         }
 
         [Test]

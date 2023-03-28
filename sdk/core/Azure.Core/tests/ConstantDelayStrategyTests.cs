@@ -14,18 +14,18 @@ namespace Azure.Core.Tests.DelayStrategies
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(3)]
-        public void DefaultShouldUseOneSecond(int count)
+        public void DefaultFixedDelay(int count)
         {
             var strategy = DelayStrategy.CreateFixedDelayStrategy();
             TimeSpan total = TimeSpan.Zero;
-            TimeSpan expected = TimeSpan.FromSeconds(count);
+            TimeSpan expected = TimeSpan.FromSeconds(0.8 * count);
 
-            for (int i=0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 total += strategy.GetNextDelay(_mockResponse, i + 1, null, null);
             }
 
-            Assert.AreEqual(expected, total);
+            Assert.That(total, Is.EqualTo(expected).Within(TimeSpan.FromSeconds(0.2 * count)));
         }
     }
 }

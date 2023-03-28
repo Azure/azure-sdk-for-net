@@ -24,13 +24,12 @@ namespace Azure.Core
         ///
         /// </summary>
         /// <param name="maxDelay"></param>
-        /// <param name="minJitterFactor"></param>
-        /// <param name="maxJitterFactor"></param>
-        protected DelayStrategy(TimeSpan? maxDelay = default, double minJitterFactor = 0.8, double maxJitterFactor = 1.2)
+        /// <param name="jitterFactor"></param>
+        protected DelayStrategy(TimeSpan? maxDelay = default, double jitterFactor = 0.2)
         {
             // use same defaults as RetryOptions
-            _minJitterFactor = minJitterFactor;
-            _maxJitterFactor = maxJitterFactor;
+            _minJitterFactor = 1 - jitterFactor;
+            _maxJitterFactor = 1 + jitterFactor;
             _maxDelay = maxDelay ?? TimeSpan.FromMinutes(1);
         }
 
@@ -56,11 +55,6 @@ namespace Azure.Core
             TimeSpan? delay = default)
         {
             return new FixedDelayStrategy(delay ?? TimeSpan.FromSeconds(0.8));
-        }
-
-        private TimeSpan ApplyJitter(TimeSpan delay)
-        {
-            return TimeSpan.FromMilliseconds(_random.Next((int)(delay.TotalMilliseconds * _minJitterFactor), (int)(delay.TotalMilliseconds * _maxJitterFactor)));
         }
 
         /// <summary>
@@ -105,15 +99,16 @@ namespace Azure.Core
         public async ValueTask<TimeSpan> GetNextDelayAsync(Response? response, int retryNumber, TimeSpan? serverDelayHint, IDictionary<string, object?> context)
             => await GetNextDelayInternalAsync(true, response, retryNumber, serverDelayHint, context).ConfigureAwait(false);
 
-        private async ValueTask<TimeSpan> GetNextDelayInternalAsync(bool async, Response? response, int retryNumber, TimeSpan? serverDelayHint, IDictionary<string, object?> context)
-        {
-            return
+        private async ValueTask<TimeSpan> GetNextDelayInternalAsync(bool async, Response? response, int retryNumber, TimeSpan? serverDelayHint, IDictionary<string, object?> context) =>
+            Max(
+                serverDelayHint ?? TimeSpan.Zero,
                 Min(
-                    ApplyJitter(
-                        Max(
-                            serverDelayHint ?? TimeSpan.Zero,
-                            async ? await GetNextDelayCoreAsync(response, retryNumber, context).ConfigureAwait(false) : GetNextDelayCore(response, retryNumber, context))),
-                    _maxDelay);
+                    ApplyJitter(async ? await GetNextDelayCoreAsync(response, retryNumber, context).ConfigureAwait(false) : GetNextDelayCore(response, retryNumber, context)),
+                    _maxDelay));
+
+        private TimeSpan ApplyJitter(TimeSpan delay)
+        {
+            return TimeSpan.FromMilliseconds(_random.Next((int)(delay.TotalMilliseconds * _minJitterFactor), (int)(delay.TotalMilliseconds * _maxJitterFactor)));
         }
 
         /// <summary>

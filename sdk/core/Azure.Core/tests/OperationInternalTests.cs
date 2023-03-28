@@ -257,14 +257,23 @@ namespace Azure.Core.Tests
             var stopwatch = Stopwatch.StartNew();
             if (hasSuggest)
             {
-                await operationInternal.WaitForCompletionResponseAsync(TimeSpan.FromSeconds(10), CancellationToken.None);
+                await operationInternal.WaitForCompletionResponseAsync(TimeSpan.FromSeconds(2), CancellationToken.None);
             }
             else
             {
                 await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None);
             }
             stopwatch.Stop();
-            Assert.IsTrue(stopwatch.Elapsed < TimeSpan.FromSeconds(1));
+
+            // if there is a suggested time, it should be used instead of the zero polling interval
+            if (hasSuggest)
+            {
+                Assert.IsTrue(stopwatch.Elapsed > TimeSpan.FromSeconds(1));
+            }
+            else
+            {
+                Assert.IsTrue(stopwatch.Elapsed < TimeSpan.FromSeconds(1));
+            }
         }
 
         [Test]

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Azure.Core.Shared;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
@@ -32,7 +33,7 @@ namespace Azure.Core.Tests.DelayStrategies
                 expected += GetExpected(headerName, delayValues[i], null, (int)defaultDelays[Math.Min(i, defaultDelays.Length - 1)].TotalMilliseconds);
                 if (headerName is not null)
                     response.AddHeader(new HttpHeader(headerName, delayValues[i].ToString()));
-                actual += strategy.GetNextDelay(response, i + 1, default, null);
+                actual += strategy.GetNextDelay(response, i + 1, response.Headers.RetryAfter, new Dictionary<string, object>());
             }
 
             Assert.AreEqual(TimeSpan.FromMilliseconds(expected), actual);
@@ -76,7 +77,7 @@ namespace Azure.Core.Tests.DelayStrategies
             var delay = TimeSpan.FromSeconds(1);
             TimeSpan actual = TimeSpan.Zero;
             TimeSpan? suggestion = suggestedWaitInMs.HasValue ? TimeSpan.FromMilliseconds(suggestedWaitInMs.Value) : null;
-            var strategy = DelayStrategy.CreateFixedDelayStrategy(suggestion);
+            var strategy = new FixedDelayWithNoJitterStrategy(suggestion);
 
             int expected = 0;
             for (int i = 0; i < delayValues.Length; i++)
@@ -104,7 +105,7 @@ namespace Azure.Core.Tests.DelayStrategies
             TimeSpan actual = TimeSpan.Zero;
             TimeSpan? suggestion = suggestedWaitInSeconds.HasValue ? TimeSpan.FromSeconds(suggestedWaitInSeconds.Value) : null;
 
-            var strategy = DelayStrategy.CreateFixedDelayStrategy(suggestion);
+            var strategy = new FixedDelayWithNoJitterStrategy(suggestion ?? delay);
 
             int expected = 0;
             for (int i = 0; i < delayValues.Length; i++)
@@ -116,7 +117,7 @@ namespace Azure.Core.Tests.DelayStrategies
                 actual += strategy.GetNextDelay(response, i + 1, response.Headers.RetryAfter, new Dictionary<string, object>());
             }
 
-            Assert.AreEqual(TimeSpan.FromSeconds(expected), actual);
+            Assert.That(actual, Is.EqualTo(TimeSpan.FromSeconds(expected)).Within(TimeSpan.FromSeconds(0.2 * delayValues.Length * expected)));
         }
 
         private static int GetExpected(string headerName, int delayValue, int? suggestedWaitInMs, int defaultPoll) => (headerName is not null, suggestedWaitInMs.HasValue) switch

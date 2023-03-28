@@ -22,7 +22,7 @@ namespace Azure.Core
         /// <param name="maxDelay"></param>
         public ExponentialDelayStrategy(
             TimeSpan? delay,
-            TimeSpan? maxDelay) : base(maxDelay, 0.8, 1.2)
+            TimeSpan? maxDelay) : base(maxDelay)
         {
             // use same defaults as RetryOptions
             _delay = delay ?? TimeSpan.FromSeconds(0.8);

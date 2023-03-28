@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 #nullable enable
@@ -17,7 +16,7 @@ namespace Azure.Core
     /// <remarks>Polling interval always follows the given sequence.</remarks>
     internal class SequentialDelayStrategy : DelayStrategy
     {
-        private static readonly TimeSpan[] s_pollingSequence = new TimeSpan[]
+        private static readonly TimeSpan[] _pollingSequence = new TimeSpan[]
         {
             TimeSpan.FromSeconds(1),
             TimeSpan.FromSeconds(1),
@@ -28,9 +27,9 @@ namespace Azure.Core
             TimeSpan.FromSeconds(16),
             TimeSpan.FromSeconds(32)
         };
-        private static readonly TimeSpan _maxDelay = s_pollingSequence[s_pollingSequence.Length - 1];
+        private static readonly TimeSpan _maxDelay = _pollingSequence[_pollingSequence.Length - 1];
 
-        public SequentialDelayStrategy() : base(_maxDelay, 1.0, 1.0)
+        public SequentialDelayStrategy() : base(_maxDelay, 0)
         {
         }
 
@@ -42,7 +41,8 @@ namespace Azure.Core
 
         private static TimeSpan GetNextDelayCoreInternal(int retryNumber)
         {
-            return retryNumber >= s_pollingSequence.Length ? _maxDelay : s_pollingSequence[retryNumber];
+            int index = retryNumber - 1;
+            return index >= _pollingSequence.Length ? _maxDelay : _pollingSequence[index];
         }
     }
 }
