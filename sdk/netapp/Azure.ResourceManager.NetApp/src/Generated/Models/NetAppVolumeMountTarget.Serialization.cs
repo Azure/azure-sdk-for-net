@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static NetAppVolumeMountTarget DeserializeNetAppVolumeMountTarget(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> mountTargetId = default;
             Guid fileSystemId = default;
             Optional<IPAddress> ipAddress = default;

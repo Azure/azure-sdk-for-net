@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Quota.Models
     {
         internal static QuotaRequestDetailsList DeserializeQuotaRequestDetailsList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<QuotaRequestDetailData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -33,6 +33,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public Microsoft.Azure.WebJobs.EventHubs.InitialOffsetOptions InitialOffsetOptions { get { throw null; } }
         public System.TimeSpan LoadBalancingUpdateInterval { get { throw null; } set { } }
         public int MaxEventBatchSize { get { throw null; } set { } }
+        public System.TimeSpan MaxWaitTime { get { throw null; } set { } }
+        public int MinEventBatchSize { get { throw null; } set { } }
         public System.TimeSpan PartitionOwnershipExpirationInterval { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
         public long? PrefetchSizeInBytes { get { throw null; } set { } }

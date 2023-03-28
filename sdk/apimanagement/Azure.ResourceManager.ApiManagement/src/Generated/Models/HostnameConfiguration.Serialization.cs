@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static HostnameConfiguration DeserializeHostnameConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             HostnameType type = default;
             string hostName = default;
             Optional<Uri> keyVaultId = default;

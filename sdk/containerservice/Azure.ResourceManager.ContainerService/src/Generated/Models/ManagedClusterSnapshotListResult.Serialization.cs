@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static ManagedClusterSnapshotListResult DeserializeManagedClusterSnapshotListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ManagedClusterSnapshotData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

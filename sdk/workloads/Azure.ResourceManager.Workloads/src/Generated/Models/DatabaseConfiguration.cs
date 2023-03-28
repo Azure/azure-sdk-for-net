@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
@@ -33,12 +34,14 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="subnetId"> The subnet id. </param>
         /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
         /// <param name="instanceCount"> The number of database VMs. </param>
-        internal DatabaseConfiguration(SapDatabaseType? databaseType, ResourceIdentifier subnetId, VirtualMachineConfiguration virtualMachineConfiguration, long instanceCount)
+        /// <param name="diskConfiguration"> Gets or sets the disk configuration. </param>
+        internal DatabaseConfiguration(SapDatabaseType? databaseType, ResourceIdentifier subnetId, VirtualMachineConfiguration virtualMachineConfiguration, long instanceCount, DiskConfiguration diskConfiguration)
         {
             DatabaseType = databaseType;
             SubnetId = subnetId;
             VirtualMachineConfiguration = virtualMachineConfiguration;
             InstanceCount = instanceCount;
+            DiskConfiguration = diskConfiguration;
         }
 
         /// <summary> The database type. </summary>
@@ -49,5 +52,17 @@ namespace Azure.ResourceManager.Workloads.Models
         public VirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
         /// <summary> The number of database VMs. </summary>
         public long InstanceCount { get; set; }
+        /// <summary> Gets or sets the disk configuration. </summary>
+        internal DiskConfiguration DiskConfiguration { get; set; }
+        /// <summary> The disk configuration for the db volume. For HANA, Required volumes are: [&apos;hana/data&apos;, &apos;hana/log&apos;, hana/shared&apos;, &apos;usr/sap&apos;, &apos;os&apos;], Optional volume : [&apos;backup&apos;]. </summary>
+        public IDictionary<string, DiskVolumeConfiguration> DiskVolumeConfigurations
+        {
+            get
+            {
+                if (DiskConfiguration is null)
+                    DiskConfiguration = new DiskConfiguration();
+                return DiskConfiguration.DiskVolumeConfigurations;
+            }
+        }
     }
 }

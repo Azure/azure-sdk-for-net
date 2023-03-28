@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static IssueListResult DeserializeIssueListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<IssueContractData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;

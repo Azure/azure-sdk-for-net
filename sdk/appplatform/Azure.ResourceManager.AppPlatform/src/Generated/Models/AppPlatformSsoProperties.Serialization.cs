@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformSsoProperties DeserializeAppPlatformSsoProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> scope = default;
             Optional<string> clientId = default;
             Optional<string> clientSecret = default;

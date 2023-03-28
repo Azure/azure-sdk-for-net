@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningSkuCapacity DeserializeMachineLearningSkuCapacity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> @default = default;
             Optional<int> maximum = default;
             Optional<int> minimum = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     {
         internal static SimPolicyListResult DeserializeSimPolicyListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SimPolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

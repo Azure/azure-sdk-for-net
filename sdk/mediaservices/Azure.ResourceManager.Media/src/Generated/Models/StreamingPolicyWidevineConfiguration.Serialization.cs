@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static StreamingPolicyWidevineConfiguration DeserializeStreamingPolicyWidevineConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> customLicenseAcquisitionUriTemplate = default;
             foreach (var property in element.EnumerateObject())
             {

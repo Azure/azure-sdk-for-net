@@ -144,6 +144,10 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppAccountActiveDirectory DeserializeNetAppAccountActiveDirectory(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> activeDirectoryId = default;
             Optional<string> username = default;
             Optional<string> password = default;

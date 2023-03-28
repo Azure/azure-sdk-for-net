@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.2 (2023-03-28)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fix failure to parse different format of GUID value for `AppPlatformServiceProperties.ServiceId`. Add a new string type property `AppPlatformServiceProperties.ServiceInstanceId` to replace `AppPlatformServiceProperties.ServiceId` which is now marked as obsolete.
 
 ## 1.0.1 (2023-02-17)
 

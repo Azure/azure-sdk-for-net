@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InnerHealthError DeserializeInnerHealthError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> errorSource = default;
             Optional<string> errorType = default;
             Optional<string> errorLevel = default;

@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static GithubScopeEnvironment DeserializeGithubScopeEnvironment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EnvironmentType environmentType = default;
             foreach (var property in element.EnumerateObject())
             {

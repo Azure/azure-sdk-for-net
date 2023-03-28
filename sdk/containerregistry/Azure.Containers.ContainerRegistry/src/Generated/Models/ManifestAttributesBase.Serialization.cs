@@ -16,6 +16,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static ManifestAttributesBase DeserializeManifestAttributesBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string digest = default;
             Optional<long> imageSize = default;
             DateTimeOffset createdTime = default;

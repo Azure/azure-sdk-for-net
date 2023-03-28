@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static GetUserTablesSqlTaskProperties DeserializeGetUserTablesSqlTaskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GetUserTablesSqlTaskInput> input = default;
             Optional<IReadOnlyList<GetUserTablesSqlTaskOutput>> output = default;
             Optional<string> taskId = default;

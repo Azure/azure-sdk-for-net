@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static BoolEqualsAdvancedFilter DeserializeBoolEqualsAdvancedFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> value = default;
             AdvancedFilterOperatorType operatorType = default;
             Optional<string> key = default;

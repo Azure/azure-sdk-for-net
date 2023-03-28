@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static AppPlatformCertificateData DeserializeAppPlatformCertificateData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformCertificateProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static EMachineLearningStudioFunctionBinding DeserializeEMachineLearningStudioFunctionBinding(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> endpoint = default;
             Optional<string> apiKey = default;

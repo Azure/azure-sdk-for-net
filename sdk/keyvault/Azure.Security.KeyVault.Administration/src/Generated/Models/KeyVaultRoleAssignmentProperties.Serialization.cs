@@ -14,6 +14,10 @@ namespace Azure.Security.KeyVault.Administration
     {
         internal static KeyVaultRoleAssignmentProperties DeserializeKeyVaultRoleAssignmentProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<KeyVaultRoleScope> scope = default;
             Optional<string> roleDefinitionId = default;
             Optional<string> principalId = default;

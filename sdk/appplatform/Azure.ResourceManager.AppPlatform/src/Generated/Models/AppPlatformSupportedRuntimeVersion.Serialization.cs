@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static AppPlatformSupportedRuntimeVersion DeserializeAppPlatformSupportedRuntimeVersion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformSupportedRuntimeValue> value = default;
             Optional<AppPlatformSupportedRuntimePlatform> platform = default;
             Optional<string> version = default;

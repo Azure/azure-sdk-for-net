@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VaultSecretGroup DeserializeVaultSecretGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> sourceVault = default;
             Optional<IList<VaultCertificate>> vaultCertificates = default;
             foreach (var property in element.EnumerateObject())

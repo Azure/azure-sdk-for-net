@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
                 {
                     RegistryInfo = new ContainerAppRegistryInfo()
                     {
-                        RegistryUri = new Uri("xwang971reg.azurecr.io"),
+                        RegistryServer = "xwang971reg.azurecr.io",
                         RegistryUserName = "xwang971reg",
                         RegistryPassword = "<registrypassword>",
                     },

@@ -49,6 +49,11 @@ namespace Azure.Search.Documents.Indexes.Models
                     foreach (var item in Configuration)
                     {
                         writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
                         writer.WriteObjectValue(item.Value);
                     }
                     writer.WriteEndObject();
@@ -94,6 +99,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static DocumentExtractionSkill DeserializeDocumentExtractionSkill(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BlobIndexerParsingMode?> parsingMode = default;
             Optional<BlobIndexerDataToExtract?> dataToExtract = default;
             Optional<IDictionary<string, object>> configuration = default;
@@ -135,7 +144,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetObject());
+                        }
                     }
                     configuration = dictionary;
                     continue;

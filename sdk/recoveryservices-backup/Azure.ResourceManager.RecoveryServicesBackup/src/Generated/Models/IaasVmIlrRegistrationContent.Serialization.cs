@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static IaasVmIlrRegistrationContent DeserializeIaasVmIlrRegistrationContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recoveryPointId = default;
             Optional<ResourceIdentifier> virtualMachineId = default;
             Optional<string> initiatorName = default;

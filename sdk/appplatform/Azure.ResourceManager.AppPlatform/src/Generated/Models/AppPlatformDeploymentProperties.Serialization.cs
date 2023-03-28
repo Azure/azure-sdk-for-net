@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformDeploymentProperties DeserializeAppPlatformDeploymentProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformUserSourceInfo> source = default;
             Optional<AppPlatformDeploymentSettings> deploymentSettings = default;
             Optional<AppPlatformDeploymentProvisioningState> provisioningState = default;

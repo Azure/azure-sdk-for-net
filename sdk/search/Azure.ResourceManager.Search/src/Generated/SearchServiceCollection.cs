@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary>
-        /// Gets a list of all search services in the given resource group.
+        /// Gets a list of all Search services in the given resource group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary>
-        /// Gets a list of all search services in the given resource group.
+        /// Gets a list of all Search services in the given resource group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

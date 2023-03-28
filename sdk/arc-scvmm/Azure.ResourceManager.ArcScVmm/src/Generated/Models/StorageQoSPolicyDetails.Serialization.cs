@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
 
         internal static StorageQoSPolicyDetails DeserializeStorageQoSPolicyDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> id = default;
             foreach (var property in element.EnumerateObject())

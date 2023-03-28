@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.MachineLearning
 
         internal static MachineLearningWorkspaceConnectionData DeserializeMachineLearningWorkspaceConnectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MachineLearningWorkspaceConnectionProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;

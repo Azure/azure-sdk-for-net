@@ -579,6 +579,58 @@ namespace Azure.Storage.DataMovement.Tests
                 Directory.Delete(folder, true);
             }
         }
+
+        [Test]
+        [LiveOnly]
+        [TestCase(BlobType.Block)]
+        [TestCase(BlobType.Append)]
+        [TestCase(BlobType.Page)]
+        public async Task DirectoryUpload_BlobType(BlobType blobType)
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
+
+            string dirName = GetNewBlobName();
+            string folder = CreateRandomDirectory(Path.GetTempPath());
+            try
+            {
+                string file1 = await CreateRandomFileAsync(folder);
+                string openSubfolder = CreateRandomDirectory(folder);
+                string file2 = await CreateRandomFileAsync(openSubfolder);
+                string destinationPrefix = "foo";
+
+                TransferManager transferManager = new TransferManager();
+
+                StorageResourceContainer sourceResource = new LocalDirectoryStorageResourceContainer(folder);
+                BlobStorageResourceContainerOptions options = new BlobStorageResourceContainerOptions()
+                {
+                    BlobType = blobType
+                };
+                StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(
+                    test.Container,
+                    destinationPrefix,
+                    options);
+
+                // Act
+                DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource);
+                await transfer.AwaitCompletion();
+
+                // Assert
+                AsyncPageable<BlobItem> blobs = test.Container.GetBlobsAsync(prefix: destinationPrefix);
+                await foreach (BlobItem blob in blobs)
+                {
+                    Assert.AreEqual(blob.Properties.BlobType, blobType);
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.StackTrace);
+            }
+            finally
+            {
+                Directory.Delete(folder, true);
+            }
+        }
         #endregion DirectoryUploadTests
 
         #region Single Concurrency

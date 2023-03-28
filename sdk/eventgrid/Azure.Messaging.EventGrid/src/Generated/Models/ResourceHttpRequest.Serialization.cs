@@ -14,6 +14,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static ResourceHttpRequest DeserializeResourceHttpRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clientRequestId = default;
             Optional<string> clientIpAddress = default;
             Optional<string> method = default;

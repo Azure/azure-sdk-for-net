@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal static DownloadResponse DeserializeDownloadResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ResourceItem>> resourceList = default;
             Optional<IReadOnlyList<ComplianceReportItem>> complianceReport = default;
             Optional<DownloadResponseCompliancePdfReport> compliancePdfReport = default;

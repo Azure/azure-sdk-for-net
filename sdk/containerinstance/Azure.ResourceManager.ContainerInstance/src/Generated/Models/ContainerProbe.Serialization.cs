@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerProbe DeserializeContainerProbe(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerExec> exec = default;
             Optional<ContainerHttpGet> httpGet = default;
             Optional<int> initialDelaySeconds = default;

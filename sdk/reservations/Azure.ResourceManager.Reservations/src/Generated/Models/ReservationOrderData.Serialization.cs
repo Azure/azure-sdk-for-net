@@ -18,6 +18,10 @@ namespace Azure.ResourceManager.Reservations
     {
         internal static ReservationOrderData DeserializeReservationOrderData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -27,6 +31,7 @@ namespace Azure.ResourceManager.Reservations
             Optional<DateTimeOffset> requestDateTime = default;
             Optional<DateTimeOffset> createdDateTime = default;
             Optional<DateTimeOffset> expiryDate = default;
+            Optional<DateTimeOffset> expiryDateTime = default;
             Optional<DateTimeOffset> benefitStartTime = default;
             Optional<int> originalQuantity = default;
             Optional<ReservationTerm> term = default;
@@ -34,6 +39,7 @@ namespace Azure.ResourceManager.Reservations
             Optional<ReservationBillingPlan> billingPlan = default;
             Optional<ReservationOrderBillingPlanInformation> planInformation = default;
             Optional<IReadOnlyList<ReservationDetailData>> reservations = default;
+            Optional<DateTimeOffset> reviewDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -115,6 +121,16 @@ namespace Azure.ResourceManager.Reservations
                             expiryDate = property0.Value.GetDateTimeOffset("D");
                             continue;
                         }
+                        if (property0.NameEquals("expiryDateTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            expiryDateTime = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
                         if (property0.NameEquals("benefitStartTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -190,11 +206,21 @@ namespace Azure.ResourceManager.Reservations
                             reservations = array;
                             continue;
                         }
+                        if (property0.NameEquals("reviewDateTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            reviewDateTime = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ReservationOrderData(id, name, type, systemData.Value, Optional.ToNullable(etag), displayName.Value, Optional.ToNullable(requestDateTime), Optional.ToNullable(createdDateTime), Optional.ToNullable(expiryDate), Optional.ToNullable(benefitStartTime), Optional.ToNullable(originalQuantity), Optional.ToNullable(term), Optional.ToNullable(provisioningState), Optional.ToNullable(billingPlan), planInformation.Value, Optional.ToList(reservations));
+            return new ReservationOrderData(id, name, type, systemData.Value, Optional.ToNullable(etag), displayName.Value, Optional.ToNullable(requestDateTime), Optional.ToNullable(createdDateTime), Optional.ToNullable(expiryDate), Optional.ToNullable(expiryDateTime), Optional.ToNullable(benefitStartTime), Optional.ToNullable(originalQuantity), Optional.ToNullable(term), Optional.ToNullable(provisioningState), Optional.ToNullable(billingPlan), planInformation.Value, Optional.ToList(reservations), Optional.ToNullable(reviewDateTime));
         }
     }
 }

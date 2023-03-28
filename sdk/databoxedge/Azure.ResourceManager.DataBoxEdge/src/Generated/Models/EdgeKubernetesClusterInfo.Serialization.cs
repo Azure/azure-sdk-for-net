@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeKubernetesClusterInfo DeserializeEdgeKubernetesClusterInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataBoxEdgeEtcdInfo> etcdInfo = default;
             Optional<IReadOnlyList<EdgeKubernetesNodeInfo>> nodes = default;
             string version = default;

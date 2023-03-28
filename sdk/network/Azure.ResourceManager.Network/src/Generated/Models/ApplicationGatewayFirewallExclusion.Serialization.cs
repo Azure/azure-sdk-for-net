@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayFirewallExclusion DeserializeApplicationGatewayFirewallExclusion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string matchVariable = default;
             string selectorMatchOperator = default;
             string selector = default;

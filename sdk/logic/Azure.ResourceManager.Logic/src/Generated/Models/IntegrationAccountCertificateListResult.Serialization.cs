@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static IntegrationAccountCertificateListResult DeserializeIntegrationAccountCertificateListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<IntegrationAccountCertificateData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

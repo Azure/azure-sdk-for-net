@@ -86,6 +86,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         internal static RemotePrivateEndpoint DeserializeRemotePrivateEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<AzureLocation> location = default;
             Optional<string> immutableSubscriptionId = default;

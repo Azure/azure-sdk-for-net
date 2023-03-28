@@ -79,6 +79,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static IaasVmProtectionPolicy DeserializeIaasVmProtectionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<InstantRPAdditionalDetails> instantRPDetails = default;
             Optional<BackupSchedulePolicy> schedulePolicy = default;
             Optional<BackupRetentionPolicy> retentionPolicy = default;

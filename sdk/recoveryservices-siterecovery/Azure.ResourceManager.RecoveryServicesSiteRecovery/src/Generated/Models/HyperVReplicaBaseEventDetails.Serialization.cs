@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static HyperVReplicaBaseEventDetails DeserializeHyperVReplicaBaseEventDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> containerName = default;
             Optional<string> fabricName = default;
             Optional<string> remoteContainerName = default;

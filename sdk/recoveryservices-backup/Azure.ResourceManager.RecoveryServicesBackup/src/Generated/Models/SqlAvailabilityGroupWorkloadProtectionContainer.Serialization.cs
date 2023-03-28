@@ -73,6 +73,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static SqlAvailabilityGroupWorkloadProtectionContainer DeserializeSqlAvailabilityGroupWorkloadProtectionContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> sourceResourceId = default;
             Optional<DateTimeOffset> lastUpdatedTime = default;
             Optional<WorkloadContainerExtendedInfo> extendedInfo = default;

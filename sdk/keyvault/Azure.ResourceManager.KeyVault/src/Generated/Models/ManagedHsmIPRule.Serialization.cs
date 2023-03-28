@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static ManagedHsmIPRule DeserializeManagedHsmIPRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string value = default;
             foreach (var property in element.EnumerateObject())
             {

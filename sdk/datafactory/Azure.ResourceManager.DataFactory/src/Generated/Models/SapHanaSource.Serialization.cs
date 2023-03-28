@@ -119,6 +119,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SapHanaSource DeserializeSapHanaSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> query = default;
             Optional<BinaryData> packetSize = default;
             Optional<BinaryData> partitionOption = default;

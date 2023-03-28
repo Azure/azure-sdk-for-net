@@ -114,6 +114,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static WebApiSkill DeserializeWebApiSkill(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string uri = default;
             Optional<IDictionary<string, string>> httpHeaders = default;
             Optional<string> httpMethod = default;

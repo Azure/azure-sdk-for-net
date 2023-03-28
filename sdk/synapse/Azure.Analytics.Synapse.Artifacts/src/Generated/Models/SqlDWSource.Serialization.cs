@@ -81,6 +81,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SqlDWSource DeserializeSqlDWSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> sqlReaderQuery = default;
             Optional<object> sqlReaderStoredProcedureName = default;
             Optional<object> storedProcedureParameters = default;

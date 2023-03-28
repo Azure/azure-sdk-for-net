@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FactoryPurviewConfiguration DeserializeFactoryPurviewConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> purviewResourceId = default;
             foreach (var property in element.EnumerateObject())
             {

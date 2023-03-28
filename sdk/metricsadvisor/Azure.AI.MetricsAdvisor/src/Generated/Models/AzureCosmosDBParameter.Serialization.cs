@@ -59,6 +59,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static AzureCosmosDBParameter DeserializeAzureCosmosDBParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> connectionString = default;
             string sqlQuery = default;
             string database = default;

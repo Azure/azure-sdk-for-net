@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static UnknownProbeAction DeserializeUnknownProbeAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ProbeActionType type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

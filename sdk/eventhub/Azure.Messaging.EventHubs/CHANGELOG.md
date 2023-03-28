@@ -1,10 +1,32 @@
 # Release History
 
-## 5.8.0-beta.1 (Unreleased)
+## 5.9.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
+
+- If diagnostic tracing is enabled, diagnostic tracing information is retained on `EventData` instances when they are added to an `EventDataBatch`. This matches the existing behavior when sending events using the `SendEventsAsync` method that takes an `IEnumerable<EventData>`.
+
+### Bugs Fixed
+
+- Changed the approach that the event processor uses to validate permissions on startup to ensure that it does not interrupt other processors already running by temporarily asserting ownership of a partition.
+
+### Other Changes
+
+- Enhanced the log emitted when an event processor begins reading from a partition to report whether the offset chosen was based on a checkpoint or default value.
+
+## 5.8.1 (2023-03-09)
+
+### Other Changes
+
+- Upgrading dependency on `Azure.Core` library.
+
+## 5.8.0 (2023-03-07)
+
+### Features Added
+
+- `ActivitySource` activities that are used when using the [experimental OpenTelemetry support](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/) will include the `az.schema_url` tag indicating the OpenTelemetry schema version. They will also include the messaging attribute specified [here](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.yml#L98).
 
 ### Bugs Fixed
 

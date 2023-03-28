@@ -83,6 +83,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureDatabricksDeltaLakeSource DeserializeAzureDatabricksDeltaLakeSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> query = default;
             Optional<AzureDatabricksDeltaLakeExportCommand> exportSettings = default;
             string type = default;

@@ -66,6 +66,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ParquetSink DeserializeParquetSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StoreWriteSettings> storeSettings = default;
             Optional<ParquetWriteSettings> formatSettings = default;
             string type = default;

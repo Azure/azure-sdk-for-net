@@ -98,6 +98,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ClassificationTrainingSettings DeserializeClassificationTrainingSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ClassificationModel>> allowedTrainingAlgorithms = default;
             Optional<IList<ClassificationModel>> blockedTrainingAlgorithms = default;
             Optional<bool> enableDnnTraining = default;

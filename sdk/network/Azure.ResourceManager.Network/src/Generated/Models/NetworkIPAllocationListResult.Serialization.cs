@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NetworkIPAllocationListResult DeserializeNetworkIPAllocationListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<IPAllocationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

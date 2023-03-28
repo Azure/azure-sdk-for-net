@@ -1,21 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30309.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33414.496
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{0F413CC1-26A1-4512-B887-B318ED9503BF}") = "Azure.ResourceManager.Consumption", "src\Azure.ResourceManager.Consumption.csproj", "{5FE471C2-AA91-4591-8B0D-A0FE20812D9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Consumption", "src\Azure.ResourceManager.Consumption.csproj", "{5FE471C2-AA91-4591-8B0D-A0FE20812D9E}"
 EndProject
-Project("{0F413CC1-26A1-4512-B887-B318ED9503BF}") = "Azure.ResourceManager.Consumption.Tests", "tests\Azure.ResourceManager.Consumption.Tests.csproj", "{0C580677-FD47-4529-8C6F-B874E41D320E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Consumption.Tests", "tests\Azure.ResourceManager.Consumption.Tests.csproj", "{0C580677-FD47-4529-8C6F-B874E41D320E}"
 EndProject
-Project("{0F413CC1-26A1-4512-B887-B318ED9503BF}") = "Azure.ResourceManager.Consumption.Samples", "samples\Azure.ResourceManager.Consumption.Samples.csproj", "{A0EE1BB5-A263-4338-9679-5A78C3565659}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Consumption.Samples", "samples\Azure.ResourceManager.Consumption.Samples.csproj", "{A0EE1BB5-A263-4338-9679-5A78C3565659}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {A43C9634-AD7A-4170-A7A9-89F8DAB1EE3C}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -49,5 +43,23 @@ Global
 		{0C580677-FD47-4529-8C6F-B874E41D320E}.Release|x64.Build.0 = Release|Any CPU
 		{0C580677-FD47-4529-8C6F-B874E41D320E}.Release|x86.ActiveCfg = Release|Any CPU
 		{0C580677-FD47-4529-8C6F-B874E41D320E}.Release|x86.Build.0 = Release|Any CPU
+		{A0EE1BB5-A263-4338-9679-5A78C3565659}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0EE1BB5-A263-4338-9679-5A78C3565659}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0EE1BB5-A263-4338-9679-5A78C3565659}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A0EE1BB5-A263-4338-9679-5A78C3565659}.Debug|x64.Build.0 = Debug|Any CPU
+		{A0EE1BB5-A263-4338-9679-5A78C3565659}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A0EE1BB5-A263-4338-9679-5A78C3565659}.Debug|x86.Build.0 = Debug|Any CPU
+		{A0EE1BB5-A263-4338-9679-5A78C3565659}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0EE1BB5-A263-4338-9679-5A78C3565659}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0EE1BB5-A263-4338-9679-5A78C3565659}.Release|x64.ActiveCfg = Release|Any CPU
+		{A0EE1BB5-A263-4338-9679-5A78C3565659}.Release|x64.Build.0 = Release|Any CPU
+		{A0EE1BB5-A263-4338-9679-5A78C3565659}.Release|x86.ActiveCfg = Release|Any CPU
+		{A0EE1BB5-A263-4338-9679-5A78C3565659}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A43C9634-AD7A-4170-A7A9-89F8DAB1EE3C}
 	EndGlobalSection
 EndGlobal

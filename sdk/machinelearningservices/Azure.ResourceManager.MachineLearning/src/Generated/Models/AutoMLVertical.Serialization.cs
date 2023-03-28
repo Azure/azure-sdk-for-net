@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static AutoMLVertical DeserializeAutoMLVertical(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("taskType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

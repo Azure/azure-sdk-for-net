@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static WebhookNotification DeserializeWebhookNotification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> serviceUri = default;
             Optional<IDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())

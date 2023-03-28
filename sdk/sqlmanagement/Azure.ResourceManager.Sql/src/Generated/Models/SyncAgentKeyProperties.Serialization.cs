@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static SyncAgentKeyProperties DeserializeSyncAgentKeyProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> syncAgentKey = default;
             foreach (var property in element.EnumerateObject())
             {

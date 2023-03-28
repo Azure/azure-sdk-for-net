@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         internal static UnknownEndpointBaseProperties DeserializeUnknownEndpointBaseProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EndpointType endpointType = "Unknown";
             Optional<string> description = default;
             Optional<StorageMoverProvisioningState> provisioningState = default;

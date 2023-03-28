@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamingJobFunctionInput DeserializeStreamingJobFunctionInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dataType = default;
             Optional<bool?> isConfigurationParameter = default;
             foreach (var property in element.EnumerateObject())

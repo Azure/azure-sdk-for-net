@@ -14,6 +14,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AcsSmsEventBaseProperties DeserializeAcsSmsEventBaseProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> messageId = default;
             Optional<string> @from = default;
             Optional<string> to = default;

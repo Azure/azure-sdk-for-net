@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> Direct Line channel definition. </summary>
-    public partial class DirectLineChannel : Channel
+    public partial class DirectLineChannel : BotChannelProperties
     {
         /// <summary> Initializes a new instance of DirectLineChannel. </summary>
         public DirectLineChannel()

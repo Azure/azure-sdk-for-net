@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static PolicySummary DeserializePolicySummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> odataId = default;
             Optional<string> odataContext = default;
             Optional<PolicySummaryResults> results = default;

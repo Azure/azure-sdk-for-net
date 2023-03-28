@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CosmosDBPrivateLinkResourceListResult DeserializeCosmosDBPrivateLinkResourceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<CosmosDBPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

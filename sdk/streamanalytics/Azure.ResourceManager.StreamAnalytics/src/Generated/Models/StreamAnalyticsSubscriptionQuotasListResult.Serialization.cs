@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         internal static StreamAnalyticsSubscriptionQuotasListResult DeserializeStreamAnalyticsSubscriptionQuotasListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StreamAnalyticsSubscriptionQuota>> value = default;
             foreach (var property in element.EnumerateObject())
             {

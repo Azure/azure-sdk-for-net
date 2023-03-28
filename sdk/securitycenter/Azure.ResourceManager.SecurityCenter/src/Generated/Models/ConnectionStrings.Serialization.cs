@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static ConnectionStrings DeserializeConnectionStrings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<IngestionConnectionString> value = default;
             foreach (var property in element.EnumerateObject())
             {

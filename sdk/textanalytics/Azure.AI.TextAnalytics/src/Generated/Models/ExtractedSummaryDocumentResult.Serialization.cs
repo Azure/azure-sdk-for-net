@@ -43,6 +43,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static ExtractedSummaryDocumentResult DeserializeExtractedSummaryDocumentResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<ExtractedSummarySentence> sentences = default;
             string id = default;
             IList<DocumentWarning> warnings = default;

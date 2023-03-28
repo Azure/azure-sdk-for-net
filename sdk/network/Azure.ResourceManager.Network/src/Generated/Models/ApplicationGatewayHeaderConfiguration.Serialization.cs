@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayHeaderConfiguration DeserializeApplicationGatewayHeaderConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> headerName = default;
             Optional<string> headerValue = default;
             foreach (var property in element.EnumerateObject())

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MongoDBDatabaseProgress DeserializeMongoDBDatabaseProgress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyDictionary<string, MongoDBCollectionProgress>> collections = default;
             long bytesCopied = default;
             long documentsCopied = default;

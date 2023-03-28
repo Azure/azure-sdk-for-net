@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceType = default;
             Optional<IReadOnlyList<string>> locations = default;
             Optional<IReadOnlyList<ProviderExtendedLocation>> locationMappings = default;

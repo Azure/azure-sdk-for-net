@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ManagementPolicyRule DeserializeManagementPolicyRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             string name = default;
             ManagementPolicyRuleType type = default;

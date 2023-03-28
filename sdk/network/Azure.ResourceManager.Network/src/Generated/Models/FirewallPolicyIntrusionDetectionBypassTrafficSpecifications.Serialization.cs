@@ -86,6 +86,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPolicyIntrusionDetectionBypassTrafficSpecifications DeserializeFirewallPolicyIntrusionDetectionBypassTrafficSpecifications(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> description = default;
             Optional<FirewallPolicyIntrusionDetectionProtocol> protocol = default;

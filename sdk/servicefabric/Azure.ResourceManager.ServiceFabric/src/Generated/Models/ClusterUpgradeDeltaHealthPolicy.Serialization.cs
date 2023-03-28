@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ClusterUpgradeDeltaHealthPolicy DeserializeClusterUpgradeDeltaHealthPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int maxPercentDeltaUnhealthyNodes = default;
             int maxPercentUpgradeDomainDeltaUnhealthyNodes = default;
             int maxPercentDeltaUnhealthyApplications = default;

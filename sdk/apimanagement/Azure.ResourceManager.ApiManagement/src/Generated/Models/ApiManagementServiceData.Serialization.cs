@@ -159,6 +159,10 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static ApiManagementServiceData DeserializeApiManagementServiceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ApiManagementServiceSkuProperties sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> etag = default;
@@ -403,7 +407,14 @@ namespace Azure.ResourceManager.ApiManagement
                             List<IPAddress> array = new List<IPAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPAddress.Parse(item.GetString()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(IPAddress.Parse(item.GetString()));
+                                }
                             }
                             publicIPAddresses = array;
                             continue;
@@ -418,7 +429,14 @@ namespace Azure.ResourceManager.ApiManagement
                             List<IPAddress> array = new List<IPAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPAddress.Parse(item.GetString()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(IPAddress.Parse(item.GetString()));
+                                }
                             }
                             privateIPAddresses = array;
                             continue;

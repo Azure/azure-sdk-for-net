@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryTokenPassword DeserializeContainerRegistryTokenPassword(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> creationTime = default;
             Optional<DateTimeOffset> expiry = default;
             Optional<ContainerRegistryTokenPasswordName> name = default;

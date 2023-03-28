@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput> input = default;
             Optional<IReadOnlyList<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput>> output = default;
             Optional<string> taskId = default;

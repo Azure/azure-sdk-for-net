@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Datadog.Models
     {
         internal static DatadogSetPasswordLink DeserializeDatadogSetPasswordLink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> setPasswordLink = default;
             foreach (var property in element.EnumerateObject())
             {

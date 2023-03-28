@@ -45,6 +45,10 @@ namespace Azure.Communication
 
         internal static CommunicationIdentifierModel DeserializeCommunicationIdentifierModel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CommunicationIdentifierModelKind> kind = default;
             Optional<string> rawId = default;
             Optional<CommunicationUserIdentifierModel> communicationUser = default;

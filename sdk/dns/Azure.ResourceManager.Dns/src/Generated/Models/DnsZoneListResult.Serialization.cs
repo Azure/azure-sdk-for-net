@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Dns.Models
     {
         internal static DnsZoneListResult DeserializeDnsZoneListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DnsZoneData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
