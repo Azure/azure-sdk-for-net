@@ -8,7 +8,7 @@
       "Ubuntu-20.04_NETCore3.1": {
         "OSVmImage": "MMSUbuntu20.04",
         "Pool": "azsdk-pool-mms-ubuntu-2004-general",
-        "TestTargetFramework": "netcoreapp3.1"
+        "TestTargetFramework": "net6.0"
       }
     },
     "AdditionalTestArguments": [
