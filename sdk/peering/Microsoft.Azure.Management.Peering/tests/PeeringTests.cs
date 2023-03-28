@@ -309,10 +309,10 @@ namespace Peering.Tests
                 try
                 {
                     var prefix = new PeeringServicePrefix
-                        {
-                            Prefix = "34.56.10.0/24",
-                            PeeringServicePrefixKey = TestUtilities.GenerateGuid().ToString()
-                        };
+                    {
+                        Prefix = "34.56.10.0/24",
+                        PeeringServicePrefixKey = TestUtilities.GenerateGuid().ToString()
+                    };
 
                     var peeringServicePrefix = this.Client.Prefixes.CreateOrUpdate(
                         rgname,
@@ -415,19 +415,19 @@ namespace Peering.Tests
 
                     // Create Direct Peering
                     var directConnection = new DirectConnection
-                        {
-                            ConnectionIdentifier = Guid.NewGuid().ToString(),
-                            BandwidthInMbps = 10000,
-                            PeeringDBFacilityId =
+                    {
+                        ConnectionIdentifier = Guid.NewGuid().ToString(),
+                        BandwidthInMbps = 10000,
+                        PeeringDBFacilityId =
                                 loc.Direct.PeeringFacilities.FirstOrDefault(x => x.PeeringDBFacilityId == 99999)
                                     ?.PeeringDBFacilityId,
-                            SessionAddressProvider = SessionAddressProvider.Peer,
-                            BgpSession = new BgpSession
-                                {
-                                    SessionPrefixV4 = prefix.Prefix, MaxPrefixesAdvertisedV4 = 20000
-                                },
-                            UseForPeeringService = true
-                        };
+                        SessionAddressProvider = SessionAddressProvider.Peer,
+                        BgpSession = new BgpSession
+                        {
+                            SessionPrefixV4 = prefix.Prefix, MaxPrefixesAdvertisedV4 = 20000
+                        },
+                        UseForPeeringService = true
+                    };
 
                     directPeeringProperties.Connections.Add(directConnection);
                     var peeringModel = new PeeringModel
@@ -453,7 +453,7 @@ namespace Peering.Tests
                     var resourceGroupName = this.GetResourceGroup(peering?.Id);
                     var peeringName = this.GetPeeringName(peering?.Id);
                     var registeredPrefixName = $"{peering?.Name}{prefixName}";
-                    
+
                     var resource = this.Client.RegisteredPrefixes.CreateOrUpdate(
                         resourceGroupName,
                         peeringName,
@@ -549,7 +549,7 @@ namespace Peering.Tests
                     catch (Exception ex)
                     {
                         Assert.Contains("NotFound", ex.Message);
-                }
+                    }
                     var rgName = this.GetResourceGroup(peering.Id);
                     var pName = this.GetPeeringName(peering.Id);
                     var registeredAsnName = $"{peering.Name}_{peerAsn.PeerAsnProperty}";
@@ -1061,12 +1061,6 @@ namespace Peering.Tests
 
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 ServicePointManager.Expect100Continue = true;
-                var request = (HttpWebRequest)WebRequest.Create(url);
-
-                request.Method = HttpMethod.Put.ToString();
-                request.ClientCertificates = new X509Certificate2Collection(cert);
-                request.ServerCertificateValidationCallback = (a, b, c, d) => true;
-                request.ContentLength = 0;
                 var postData = @"{
                                 'state': 'Registered',
                                 'registrationDate': '2019-03-01T23:57:05.644Z',
@@ -1090,24 +1084,22 @@ namespace Peering.Tests
                                     ]
                                 }
                             }";
-                var data = Encoding.UTF8.GetBytes(postData);
-                request.ContentType = "application/json";
-                request.ContentLength = data.Length;
-                request.GetRequestStream().Write(data, 0, data.Length);
+                using var handler = new HttpClientHandler() { UseDefaultCredentials = true, ServerCertificateCustomValidationCallback = (a, b, c, d) => true };
+                handler.ClientCertificates.Add(cert);
+                using var client = new HttpClient(handler);
+                using StringContent jsonContent = new(postData, Encoding.UTF8, "application/json");
+                var response = client.PutAsync(url, jsonContent).GetAwaiter().GetResult();
 
                 var responseString = string.Empty;
 
-                using (var response = request.GetResponse())
+                using (var responseStream = response.Content.ReadAsStream())
                 {
-                    using (var responseStream = response.GetResponseStream())
+                    if (responseStream != null)
                     {
-                        if (responseStream != null)
+                        using (var sr = new StreamReader(responseStream, Encoding.UTF8))
                         {
-                            using (var sr = new StreamReader(responseStream, Encoding.UTF8))
-                            {
-                                responseString = sr.ReadToEnd();
-                                sr.Close();
-                            }
+                            responseString = sr.ReadToEnd();
+                            sr.Close();
                         }
                     }
                 }
@@ -1136,8 +1128,29 @@ namespace Peering.Tests
                 $"api/v1/subscriptions?subscriptionId={this.SubscriptionId}&peerAsnName={peerAsn.Name}&api-version={ApiVersionLatest}&validationState={asnValidationState}";
             try
             {
-                var response = this.Send(peerAsn, "PATCH", url);
-                return JsonConvert.DeserializeObject<PeerAsn>(response, this.Client.DeserializationSettings);
+                var cert = this.GetClientCertificate();
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                ServicePointManager.Expect100Continue = true;
+                using var handler = new HttpClientHandler() { UseDefaultCredentials = true, ServerCertificateCustomValidationCallback = (a, b, c, d) => true };
+                handler.ClientCertificates.Add(cert);
+                using var client = new HttpClient(handler);
+                var path = LocalEdgeRpUri + url;
+                using StringContent jsonContent = new(JsonConvert.SerializeObject(peerAsn), Encoding.UTF8, "application/json");
+                var response = client.PatchAsync(path, jsonContent).GetAwaiter().GetResult();
+                var responseString = string.Empty;
+
+                using (var responseStream = response.Content.ReadAsStream())
+                {
+                    if (responseStream != null)
+                    {
+                        using (var sr = new StreamReader(responseStream, Encoding.UTF8))
+                        {
+                            responseString = sr.ReadToEnd();
+                            sr.Close();
+                        }
+                    }
+                }
+                return JsonConvert.DeserializeObject<PeerAsn>(responseString, this.Client.DeserializationSettings);
             }
             catch
             {
@@ -1158,61 +1171,6 @@ namespace Peering.Tests
         private string GetPeerAsnName(string id)
         {
             return id.Split("/")[6];
-        }
-
-        /// <summary>
-        /// The send.
-        /// </summary>
-        /// <param name="t">
-        /// The t.
-        /// </param>
-        /// <param name="httpMethod">
-        /// The http method.
-        /// </param>
-        /// <param name="url">
-        /// The url.
-        /// </param>
-        /// <typeparam name="T">
-        /// </typeparam>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        private string Send<T>(T t, string httpMethod, string url)
-        {
-            var cert = this.GetClientCertificate();
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            ServicePointManager.Expect100Continue = true;
-            var path = LocalEdgeRpUri + url;
-            var request = (HttpWebRequest)WebRequest.Create(path);
-
-            request.Method = httpMethod;
-            request.ClientCertificates = new X509Certificate2Collection(cert);
-            request.ServerCertificateValidationCallback = (a, b, c, d) => true;
-            request.ContentLength = 0;
-            var postData = JsonConvert.SerializeObject(t);
-            var data = Encoding.UTF8.GetBytes(postData);
-            request.ContentType = "application/json";
-            request.ContentLength = data.Length;
-            request.GetRequestStream().Write(data, 0, data.Length);
-
-            var responseString = string.Empty;
-
-            using (var response = request.GetResponse())
-            {
-                using (var responseStream = response.GetResponseStream())
-                {
-                    if (responseStream != null)
-                    {
-                        using (var sr = new StreamReader(responseStream, Encoding.UTF8))
-                        {
-                            responseString = sr.ReadToEnd();
-                            sr.Close();
-                        }
-                    }
-                }
-            }
-
-            return responseString;
         }
     }
 }
