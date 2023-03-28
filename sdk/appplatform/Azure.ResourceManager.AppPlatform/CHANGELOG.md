@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.2 (Unreleased)
+## 1.0.2 (2023-03-28)
 
 ### Bugs Fixed
 
