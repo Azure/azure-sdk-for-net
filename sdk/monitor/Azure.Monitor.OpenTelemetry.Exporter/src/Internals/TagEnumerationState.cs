@@ -51,9 +51,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             [SemanticConventions.AttributeFaasCron] = OperationType.FaaS,
             [SemanticConventions.AttributeFaasTime] = OperationType.FaaS,
 
-            [SemanticConventions.AttributeAzureNameSpace] = OperationType.Azure,
-            [SemanticConventions.AttributeMessageBusDestination] = OperationType.Azure,
-
             [SemanticConventions.AttributeEndpointAddress] = OperationType.Messaging,
             [SemanticConventions.AttributeMessagingSystem] = OperationType.Messaging,
             [SemanticConventions.AttributeMessagingDestination] = OperationType.Messaging,
