@@ -136,40 +136,104 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(2, items.Count());
         }
 
-        // TODO: REWRITE THIS TEST FOR IDISPOSABLE
         [Fact]
-        public void TransmitFromStorage()
+        public void TelemetryIsTransmittedSuccessfullyFromStorage()
         {
             using var activity = CreateActivity("TestActivity");
             var telemetryItem = CreateTelemetryItem(activity);
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             telemetryItems.Add(telemetryItem);
 
-            //Even though we are using different transmitter instances
-            // we need to use the same instance of fileProvider for this test.
-            var mockFileProvider = new MockFileProvider();
             // Transmit
-            var mockResponse = new MockResponse(500).SetContent("Internal Server Error");
-            var transmitter = GetTransmitter(mockResponse);
-            transmitter._fileBlobProvider = mockFileProvider;
+            var mockResponseError = new MockResponse(500).SetContent("Internal Server Error");
+            var mockResponseSuccess = new MockResponse(200).SetContent("{\"itemsReceived\": 1,\"itemsAccepted\": 1,\"errors\":[]}");
+            var transmitter = GetTransmitter(mockResponseError, mockResponseSuccess);
+
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
+            Assert.NotNull(transmitter._fileBlobProvider);
             Assert.Single(transmitter._fileBlobProvider.GetBlobs());
 
-            // reset server logic to return 200
-            mockResponse = new MockResponse(200).SetContent("{\"itemsReceived\": 1,\"itemsAccepted\": 1,\"errors\":[]}");
-            transmitter = GetTransmitter(mockResponse);
-            transmitter._fileBlobProvider = mockFileProvider;
+            Assert.Equal(TransmissionState.Open, transmitter._transmissionStateManager.State);
 
-            transmitter.TransmitFromStorage(1, false, CancellationToken.None).EnsureCompleted();
+            // Reset transmission state
+            transmitter._transmissionStateManager.ResetConsecutiveErrors();
+            transmitter._transmissionStateManager.CloseTransmission();
+
+            transmitter._transmitFromStorageHandler?.TransmitFromStorage(null, null);
 
             // Assert
             // Blob will be deleted on successful transmission
             Assert.Empty(transmitter._fileBlobProvider.GetBlobs());
+
+            transmitter.Dispose();
         }
 
-        private static AzureMonitorTransmitter GetTransmitter(MockResponse mockResponse)
+        [Fact]
+        public void TelemetryIsNotTransmittedWhenTransmissionStateIsOpen()
+        {
+            using var activity = CreateActivity("TestActivity");
+            var telemetryItem = CreateTelemetryItem(activity);
+            List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
+            telemetryItems.Add(telemetryItem);
+
+            // Transmit
+            var mockResponseError = new MockResponse(500).SetContent("Internal Server Error");
+            var mockResponseSuccess = new MockResponse(200).SetContent("{\"itemsReceived\": 1,\"itemsAccepted\": 1,\"errors\":[]}");
+            var transmitter = GetTransmitter(mockResponseError, mockResponseSuccess);
+
+            transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
+
+            //Assert
+            Assert.NotNull(transmitter._fileBlobProvider);
+            Assert.Single(transmitter._fileBlobProvider.GetBlobs());
+
+            Assert.Equal(TransmissionState.Open, transmitter._transmissionStateManager.State);
+
+            transmitter._transmitFromStorageHandler?.TransmitFromStorage(null, null);
+
+            // Assert
+            // Blob will not be deleted as the transmission state is open.
+            Assert.Single(transmitter._fileBlobProvider.GetBlobs());
+
+            transmitter.Dispose();
+        }
+
+        [Fact]
+        public void TransmissionStateIsSetToOpenOnFailedRequest()
+        {
+            using var activity = CreateActivity("TestActivity");
+            var telemetryItem = CreateTelemetryItem(activity);
+            List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
+            telemetryItems.Add(telemetryItem);
+;
+            // Transmit
+            var mockResponse = new MockResponse(500).SetContent("Internal Server Error");
+            var transmitter = GetTransmitter(mockResponse, mockResponse);
+            transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
+
+            //Assert
+            Assert.NotNull(transmitter._fileBlobProvider);
+            Assert.Single(transmitter._fileBlobProvider.GetBlobs());
+
+            Assert.Equal(TransmissionState.Open, transmitter._transmissionStateManager.State);
+
+            // Reset transmission state
+            transmitter._transmissionStateManager.ResetConsecutiveErrors();
+            transmitter._transmissionStateManager.CloseTransmission();
+
+            transmitter._transmitFromStorageHandler?.TransmitFromStorage(null, null);
+
+            // Assert
+            // Blob will not be deleted as the transmission state is open.
+            Assert.Equal(TransmissionState.Open, transmitter._transmissionStateManager.State);
+            Assert.Single(transmitter._fileBlobProvider.GetBlobs());
+
+            transmitter.Dispose();
+        }
+
+        private static AzureMonitorTransmitter GetTransmitter(params MockResponse[] mockResponse)
         {
             MockTransport mockTransport = new MockTransport(mockResponse);
             AzureMonitorExporterOptions options = new AzureMonitorExporterOptions
@@ -183,6 +247,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // Overwrite storage with mock
             transmitter._fileBlobProvider = new MockFileProvider();
+            if (transmitter._transmitFromStorageHandler != null)
+            {
+                transmitter._transmitFromStorageHandler._blobProvider = transmitter._fileBlobProvider;
+            }
 
             return transmitter;
         }

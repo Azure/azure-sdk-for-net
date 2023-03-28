@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static ConnectorMappingFormat DeserializeConnectorMappingFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FormatType formatType = default;
             Optional<string> columnDelimiter = default;
             Optional<string> acceptLanguage = default;

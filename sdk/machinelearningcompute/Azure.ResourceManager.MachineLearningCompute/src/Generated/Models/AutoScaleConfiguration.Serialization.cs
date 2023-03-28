@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 
         internal static AutoScaleConfiguration DeserializeAutoScaleConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Status> status = default;
             Optional<int> minReplicas = default;
             Optional<int> maxReplicas = default;

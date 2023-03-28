@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
     {
         internal static ChangeList DeserializeChangeList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DetectedChangeData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

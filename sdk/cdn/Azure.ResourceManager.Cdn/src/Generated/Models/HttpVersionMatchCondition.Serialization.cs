@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static HttpVersionMatchCondition DeserializeHttpVersionMatchCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             HttpVersionMatchConditionType typeName = default;
             HttpVersionOperator @operator = default;
             Optional<bool> negateCondition = default;

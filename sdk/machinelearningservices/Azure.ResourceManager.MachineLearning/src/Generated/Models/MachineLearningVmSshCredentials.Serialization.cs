@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningVmSshCredentials DeserializeMachineLearningVmSshCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> username = default;
             Optional<string> password = default;
             Optional<string> publicKeyData = default;

@@ -50,6 +50,10 @@ namespace Azure.Communication.ShortCodes.Models
 
         internal static TrafficDetails DeserializeTrafficDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> totalMonthlyVolume = default;
             Optional<int> monthlyAverageMessagesFromUser = default;
             Optional<int> monthlyAverageMessagesToUser = default;

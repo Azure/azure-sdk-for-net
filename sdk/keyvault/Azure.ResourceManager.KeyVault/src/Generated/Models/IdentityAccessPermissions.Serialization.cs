@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static IdentityAccessPermissions DeserializeIdentityAccessPermissions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<IdentityAccessKeyPermission>> keys = default;
             Optional<IList<IdentityAccessSecretPermission>> secrets = default;
             Optional<IList<IdentityAccessCertificatePermission>> certificates = default;

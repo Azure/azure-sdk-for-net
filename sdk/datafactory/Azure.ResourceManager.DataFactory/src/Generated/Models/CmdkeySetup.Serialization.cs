@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static CmdkeySetup DeserializeCmdkeySetup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             BinaryData targetName = default;
             BinaryData userName = default;

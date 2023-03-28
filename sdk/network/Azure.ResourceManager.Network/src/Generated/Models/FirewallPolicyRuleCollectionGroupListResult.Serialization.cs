@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static FirewallPolicyRuleCollectionGroupListResult DeserializeFirewallPolicyRuleCollectionGroupListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<FirewallPolicyRuleCollectionGroupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

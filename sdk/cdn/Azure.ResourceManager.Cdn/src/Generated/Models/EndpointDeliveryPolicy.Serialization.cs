@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static EndpointDeliveryPolicy DeserializeEndpointDeliveryPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             IList<DeliveryRule> rules = default;
             foreach (var property in element.EnumerateObject())

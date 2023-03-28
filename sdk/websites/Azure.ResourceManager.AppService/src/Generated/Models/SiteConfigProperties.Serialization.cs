@@ -855,6 +855,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static SiteConfigProperties DeserializeSiteConfigProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int?> numberOfWorkers = default;
             Optional<IList<string>> defaultDocuments = default;
             Optional<string> netFrameworkVersion = default;

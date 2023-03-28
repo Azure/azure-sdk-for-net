@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightIPConfiguration DeserializeHDInsightIPConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             string name = default;
             Optional<ResourceType> type = default;

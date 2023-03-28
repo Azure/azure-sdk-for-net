@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal static SnapshotProperties DeserializeSnapshotProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> snapshotName = default;
             Optional<DateTimeOffset> createdAt = default;

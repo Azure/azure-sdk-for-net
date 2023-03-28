@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Grafana.Models
 
         internal static GrafanaIntegrations DeserializeGrafanaIntegrations(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<MonitorWorkspaceIntegration>> azureMonitorWorkspaceIntegrations = default;
             foreach (var property in element.EnumerateObject())
             {

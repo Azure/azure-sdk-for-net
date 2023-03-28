@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static KeyVaultNetworkRuleSet DeserializeKeyVaultNetworkRuleSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<KeyVaultNetworkRuleBypassOption> bypass = default;
             Optional<KeyVaultNetworkRuleAction> defaultAction = default;
             Optional<IList<KeyVaultIPRule>> ipRules = default;

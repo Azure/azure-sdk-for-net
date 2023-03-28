@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         internal static BackupResourceConfigData DeserializeBackupResourceConfigData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BackupResourceConfigProperties> properties = default;
             Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;

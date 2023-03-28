@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaLiveEventChannelArchiveHeartbeatEventData DeserializeMediaLiveEventChannelArchiveHeartbeatEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string channelLatencyMs = default;
             string latencyResultCode = default;
             foreach (var property in element.EnumerateObject())

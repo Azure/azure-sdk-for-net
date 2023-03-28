@@ -104,6 +104,10 @@ namespace Azure.ResourceManager.Network
 
         internal static NetworkInterfaceData DeserializeNetworkInterfaceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;

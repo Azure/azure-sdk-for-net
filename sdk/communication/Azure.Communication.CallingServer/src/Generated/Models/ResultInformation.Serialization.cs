@@ -14,6 +14,10 @@ namespace Azure.Communication.CallingServer
     {
         internal static ResultInformation DeserializeResultInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> code = default;
             Optional<int> subCode = default;
             Optional<string> message = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static UpdateInstallProgress DeserializeUpdateInstallProgress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> percentComplete = default;
             Optional<int> numberOfUpdatesToInstall = default;
             Optional<int> numberOfUpdatesInstalled = default;

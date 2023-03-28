@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static ContainerCapabilities DeserializeContainerCapabilities(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceType = default;
             Optional<string> osType = default;
             Optional<AzureLocation> location = default;

@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxKeyEncryptionKey DeserializeDataBoxKeyEncryptionKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataBoxKeyEncryptionKeyType kekType = default;
             Optional<DataBoxManagedIdentity> identityProperties = default;
             Optional<Uri> kekUrl = default;

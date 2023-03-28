@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerGpuResourceInfo DeserializeContainerGpuResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int count = default;
             ContainerGpuSku sku = default;
             foreach (var property in element.EnumerateObject())

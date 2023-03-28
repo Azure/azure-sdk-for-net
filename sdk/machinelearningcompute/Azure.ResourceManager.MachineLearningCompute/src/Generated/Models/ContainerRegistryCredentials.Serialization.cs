@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     {
         internal static ContainerRegistryCredentials DeserializeContainerRegistryCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> loginServer = default;
             Optional<string> password = default;
             Optional<string> password2 = default;

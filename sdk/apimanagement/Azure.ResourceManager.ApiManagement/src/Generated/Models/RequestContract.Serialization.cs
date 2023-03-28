@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static RequestContract DeserializeRequestContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<IList<ParameterContract>> queryParameters = default;
             Optional<IList<ParameterContract>> headers = default;

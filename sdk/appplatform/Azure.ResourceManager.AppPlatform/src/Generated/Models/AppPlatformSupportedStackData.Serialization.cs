@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static AppPlatformSupportedStackData DeserializeAppPlatformSupportedStackData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformSupportedStackProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

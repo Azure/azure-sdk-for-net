@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Search.Models
     {
         internal static ShareableSearchServicePrivateLinkResourceProperties DeserializeShareableSearchServicePrivateLinkResourceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<string> groupId = default;
             Optional<string> description = default;

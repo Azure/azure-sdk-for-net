@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationServiceEnvironmenEncryptionKeyReference DeserializeIntegrationServiceEnvironmenEncryptionKeyReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LogicResourceReference> keyVault = default;
             Optional<string> keyName = default;
             Optional<string> keyVersion = default;

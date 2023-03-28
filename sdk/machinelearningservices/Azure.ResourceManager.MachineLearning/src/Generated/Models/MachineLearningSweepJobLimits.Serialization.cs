@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningSweepJobLimits DeserializeMachineLearningSweepJobLimits(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int?> maxConcurrentTrials = default;
             Optional<int?> maxTotalTrials = default;
             Optional<TimeSpan?> trialTimeout = default;

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static DailyRetentionFormat DeserializeDailyRetentionFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<BackupDay>> daysOfTheMonth = default;
             foreach (var property in element.EnumerateObject())
             {

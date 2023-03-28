@@ -30,6 +30,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static VideoResolution DeserializeVideoResolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> width = default;
             Optional<float> height = default;
             foreach (var property in element.EnumerateObject())

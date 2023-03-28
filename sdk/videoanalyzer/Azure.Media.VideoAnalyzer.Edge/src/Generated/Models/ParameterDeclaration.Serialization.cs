@@ -34,6 +34,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static ParameterDeclaration DeserializeParameterDeclaration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             ParameterType type = default;
             Optional<string> description = default;

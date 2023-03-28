@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static Nfs3Target DeserializeNfs3Target(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> target = default;
             Optional<string> usageModel = default;
             foreach (var property in element.EnumerateObject())

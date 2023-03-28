@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     {
         internal static MobileNetworkListResult DeserializeMobileNetworkListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MobileNetworkData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

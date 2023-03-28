@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static OSFamilyListResult DeserializeOSFamilyListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<CloudServiceOSFamilyData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

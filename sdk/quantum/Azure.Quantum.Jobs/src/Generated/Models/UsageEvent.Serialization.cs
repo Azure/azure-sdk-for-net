@@ -14,6 +14,10 @@ namespace Azure.Quantum.Jobs.Models
     {
         internal static UsageEvent DeserializeUsageEvent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dimensionId = default;
             Optional<string> dimensionName = default;
             Optional<string> measureUnit = default;

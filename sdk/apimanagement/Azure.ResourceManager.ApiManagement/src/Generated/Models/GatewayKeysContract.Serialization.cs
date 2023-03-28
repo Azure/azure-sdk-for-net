@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static GatewayKeysContract DeserializeGatewayKeysContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primary = default;
             Optional<string> secondary = default;
             foreach (var property in element.EnumerateObject())

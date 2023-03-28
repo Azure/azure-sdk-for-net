@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Communication.Models
     {
         internal static CommunicationServiceKeys DeserializeCommunicationServiceKeys(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
             Optional<string> primaryConnectionString = default;

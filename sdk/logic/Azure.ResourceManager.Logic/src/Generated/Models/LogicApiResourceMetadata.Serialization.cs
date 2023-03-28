@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static LogicApiResourceMetadata DeserializeLogicApiResourceMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> source = default;
             Optional<string> brandColor = default;
             Optional<string> hideKey = default;

@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static AppPlatformSupportedBuildpackData DeserializeAppPlatformSupportedBuildpackData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SupportedBuildpackResourceProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

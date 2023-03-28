@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CdnManagedHttpsContent DeserializeCdnManagedHttpsContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CdnCertificateSource certificateSourceParameters = default;
             CertificateSource certificateSource = default;
             SecureDeliveryProtocolType protocolType = default;

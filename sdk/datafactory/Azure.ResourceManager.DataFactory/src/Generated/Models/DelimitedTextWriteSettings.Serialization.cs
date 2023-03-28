@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DelimitedTextWriteSettings DeserializeDelimitedTextWriteSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> quoteAllText = default;
             BinaryData fileExtension = default;
             Optional<BinaryData> maxRowsPerFile = default;

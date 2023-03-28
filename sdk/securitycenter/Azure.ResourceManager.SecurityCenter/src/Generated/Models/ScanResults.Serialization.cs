@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static ScanResults DeserializeScanResults(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SqlVulnerabilityAssessmentScanResult>> value = default;
             foreach (var property in element.EnumerateObject())
             {

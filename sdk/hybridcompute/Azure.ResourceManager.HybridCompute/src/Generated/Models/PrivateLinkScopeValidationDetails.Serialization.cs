@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         internal static PrivateLinkScopeValidationDetails DeserializePrivateLinkScopeValidationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<PublicNetworkAccessType> publicNetworkAccess = default;
             Optional<IReadOnlyList<ConnectionDetail>> connectionDetails = default;

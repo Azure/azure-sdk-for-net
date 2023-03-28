@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StoragePool.Models
     {
         internal static StoragePoolSkuInfo DeserializeStoragePoolSkuInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> apiVersion = default;
             Optional<string> resourceType = default;
             Optional<IReadOnlyList<StoragePoolSkuCapability>> capabilities = default;

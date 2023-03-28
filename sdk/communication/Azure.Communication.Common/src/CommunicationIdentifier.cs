@@ -10,6 +10,22 @@ namespace Azure.Communication
     /// <summary>Represents an identifier in Azure Communication Services.</summary>
     public abstract class CommunicationIdentifier : IEquatable<CommunicationIdentifier>
     {
+        internal const string Phone = "4:";
+        internal const string Bot = "28:";
+        internal const string BotPublicCloud = "28:orgid:";
+        internal const string BotDodCloud = "28:dod:";
+        internal const string BotDodCloudGlobal = "28:dod-global:";
+        internal const string BotGcchCloud = "28:gcch:";
+        internal const string BotGcchCloudGlobal = "28:gcch-global:";
+        internal const string TeamUserAnonymous = "8:teamsvisitor:";
+        internal const string TeamUserPublicCloud = "8:orgid:";
+        internal const string TeamUserDodCloud = "8:dod:";
+        internal const string TeamUserGcchCloud = "8:gcch:";
+        internal const string AcsUser = "8:acs:";
+        internal const string AcsUserDodCloud = "8:dod-acs:";
+        internal const string AcsUserGcchCloud = "8:gcch-acs:";
+        internal const string SpoolUser = "8:spool:";
+
         /// <summary>
         /// Returns the canonical string representation of the <see cref="CommunicationIdentifier"/>.
         /// You can use the <see cref="RawId"/> for encoding the identifier and then use it as a key in a database.
@@ -54,25 +70,34 @@ namespace Azure.Communication
         {
             Argument.AssertNotNullOrEmpty(rawId, nameof(rawId));
 
-            if (rawId.StartsWith("4:", StringComparison.OrdinalIgnoreCase))
+            if (rawId.StartsWith(Phone, StringComparison.OrdinalIgnoreCase))
             {
-                return new PhoneNumberIdentifier(rawId.Substring("4:".Length));
+                return new PhoneNumberIdentifier(rawId.Substring(Phone.Length));
             }
 
             var segments = rawId.Split(':');
-            if (segments.Length < 3)
-                return new UnknownIdentifier(rawId);
+            if (segments.Length != 3)
+            {
+                return segments.Length == 2 && rawId.StartsWith(Bot, StringComparison.OrdinalIgnoreCase)
+                    ? new MicrosoftBotIdentifier(segments[1], false, CommunicationCloudEnvironment.Public)
+                    : new UnknownIdentifier(rawId);
+            }
 
             var prefix = $"{segments[0]}:{segments[1]}:";
-            var suffix = rawId.Substring(prefix.Length);
+            var suffix = segments[2];
 
             return prefix switch
             {
-                "8:teamsvisitor:" => new MicrosoftTeamsUserIdentifier(suffix, true),
-                "8:orgid:" => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Public),
-                "8:dod:" => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Dod),
-                "8:gcch:" => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Gcch),
-                "8:acs:" or "8:spool:" or "8:dod-acs:" or "8:gcch-acs:" => new CommunicationUserIdentifier(rawId),
+                TeamUserAnonymous => new MicrosoftTeamsUserIdentifier(suffix, true),
+                TeamUserPublicCloud => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Public),
+                TeamUserDodCloud => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Dod),
+                TeamUserGcchCloud => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Gcch),
+                AcsUser or SpoolUser or AcsUserDodCloud or AcsUserGcchCloud => new CommunicationUserIdentifier(rawId),
+                BotGcchCloudGlobal => new MicrosoftBotIdentifier(suffix, false, CommunicationCloudEnvironment.Gcch),
+                BotPublicCloud => new MicrosoftBotIdentifier(suffix, true, CommunicationCloudEnvironment.Public),
+                BotDodCloudGlobal => new MicrosoftBotIdentifier(suffix, false, CommunicationCloudEnvironment.Dod),
+                BotGcchCloud => new MicrosoftBotIdentifier(suffix, true, CommunicationCloudEnvironment.Gcch),
+                BotDodCloud => new MicrosoftBotIdentifier(suffix, true, CommunicationCloudEnvironment.Dod),
                 _ => new UnknownIdentifier(rawId),
             };
         }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -73,9 +74,10 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         };
 
-        private const int MaxSentenceCount = 3;
+        private const int AbstractiveSummarizationSentenceCount = 3;
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AbstractSummaryWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -93,6 +95,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AbstractSummaryBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -118,6 +121,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AbstractSummaryBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -135,13 +139,14 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AbstractSummaryBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
 
             AbstractSummaryOptions options = new AbstractSummaryOptions()
             {
-                MaxSentenceCount = MaxSentenceCount,
+                SentenceCount = AbstractiveSummarizationSentenceCount,
                 IncludeStatistics = true,
             };
 
@@ -154,10 +159,11 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Take the first page.
             AbstractSummaryResultCollection resultCollection = resultInPages.FirstOrDefault();
-            ValidateSummaryBatchResult(resultCollection, MaxSentenceCount, true);
+            ValidateSummaryBatchResult(resultCollection, true);
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AbstractSummaryBatchTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -175,13 +181,14 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AbstractSummaryBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
 
             AbstractSummaryOptions options = new AbstractSummaryOptions()
             {
-                MaxSentenceCount = MaxSentenceCount,
+                SentenceCount = AbstractiveSummarizationSentenceCount,
                 IncludeStatistics = true,
             };
 
@@ -194,21 +201,17 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Take the first page.
             AbstractSummaryResultCollection resultCollection = resultInPages.FirstOrDefault();
-            ValidateSummaryBatchResult(resultCollection, MaxSentenceCount, true);
+            ValidateSummaryBatchResult(resultCollection, true);
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32614")]
         public async Task AbstractSummaryBatchConvenienceWithAutoDetectedLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
 
-            AbstractSummaryOptions options = new()
-            {
-                AutoDetectionDefaultLanguage = "en"
-            };
-
-            AbstractSummaryOperation operation = await client.StartAbstractSummaryAsync(s_batchConvenienceDocuments, "en", options);
+            AbstractSummaryOperation operation = await client.StartAbstractSummaryAsync(s_batchConvenienceDocuments, "en");
             await operation.WaitForCompletionAsync();
             ValidateOperationProperties(operation);
 
@@ -221,6 +224,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32614")]
         public async Task AnalyzeOperationAbstractSummaryWithAutoDetectedLanguageTest()
         {
@@ -258,7 +262,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
         private void ValidateSummaryBatchResult(
             AbstractSummaryResultCollection results,
-            int? maxSentenceCount = default,
             bool includeStatistics = default,
             bool isLanguageAutoDetected = default)
         {
@@ -317,13 +320,9 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.That(summary.Text, Is.Not.Null.And.Not.Empty);
                     Assert.Less(summary.Text.Length, originalDocument.Length);
 
-                    if (maxSentenceCount is not null)
-                    {
-                        char[] separators = { '.', '!', '?' };
-                        string[] sentences = summary.Text.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-                        // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/34518
-                        // Assert.LessOrEqual(sentences.Count(), maxSentenceCount);
-                    }
+                    char[] separators = { '.', '!', '?' };
+                    string[] sentences = summary.Text.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+                    Assert.Greater(sentences.Length, 0);
 
                     Assert.IsNotNull(summary.Contexts);
                     Assert.Greater(summary.Contexts.Count, 0);

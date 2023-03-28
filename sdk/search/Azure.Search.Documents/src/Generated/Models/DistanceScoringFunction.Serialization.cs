@@ -33,6 +33,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static DistanceScoringFunction DeserializeDistanceScoringFunction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DistanceScoringParameters distance = default;
             string type = default;
             string fieldName = default;

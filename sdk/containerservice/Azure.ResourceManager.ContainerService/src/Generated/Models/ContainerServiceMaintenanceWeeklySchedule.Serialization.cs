@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceMaintenanceWeeklySchedule DeserializeContainerServiceMaintenanceWeeklySchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int intervalWeeks = default;
             ContainerServiceWeekDay dayOfWeek = default;
             foreach (var property in element.EnumerateObject())

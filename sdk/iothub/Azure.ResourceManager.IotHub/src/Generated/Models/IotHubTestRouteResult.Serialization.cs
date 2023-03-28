@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         internal static IotHubTestRouteResult DeserializeIotHubTestRouteResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IotHubTestResultStatus> result = default;
             Optional<IotHubTestRouteResultDetails> details = default;
             foreach (var property in element.EnumerateObject())

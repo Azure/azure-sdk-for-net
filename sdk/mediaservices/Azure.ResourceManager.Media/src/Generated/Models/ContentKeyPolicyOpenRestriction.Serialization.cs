@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ContentKeyPolicyOpenRestriction DeserializeContentKeyPolicyOpenRestriction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {

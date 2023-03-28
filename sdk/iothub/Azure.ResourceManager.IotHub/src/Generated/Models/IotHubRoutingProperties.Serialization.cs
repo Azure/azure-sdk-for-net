@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static IotHubRoutingProperties DeserializeIotHubRoutingProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RoutingEndpoints> endpoints = default;
             Optional<IList<RoutingRuleProperties>> routes = default;
             Optional<IotHubFallbackRouteProperties> fallbackRoute = default;

@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static AppPlatformBuildServiceAgentPoolData DeserializeAppPlatformBuildServiceAgentPoolData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformBuildServiceAgentPoolProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static AdhocBasedBackupTriggerContext DeserializeAdhocBasedBackupTriggerContext(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AdhocBasedBackupTaggingCriteria taggingCriteria = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())

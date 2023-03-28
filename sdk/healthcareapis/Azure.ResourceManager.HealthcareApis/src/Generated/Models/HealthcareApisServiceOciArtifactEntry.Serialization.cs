@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static HealthcareApisServiceOciArtifactEntry DeserializeHealthcareApisServiceOciArtifactEntry(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> loginServer = default;
             Optional<string> imageName = default;
             Optional<string> digest = default;

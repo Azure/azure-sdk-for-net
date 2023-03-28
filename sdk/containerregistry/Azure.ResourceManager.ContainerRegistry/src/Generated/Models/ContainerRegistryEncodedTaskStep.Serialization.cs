@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryEncodedTaskStep DeserializeContainerRegistryEncodedTaskStep(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string encodedTaskContent = default;
             Optional<string> encodedValuesContent = default;
             Optional<IList<ContainerRegistryTaskOverridableValue>> values = default;

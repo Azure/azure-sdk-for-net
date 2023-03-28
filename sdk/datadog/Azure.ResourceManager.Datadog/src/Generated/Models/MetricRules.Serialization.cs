@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static MetricRules DeserializeMetricRules(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<FilteringTag>> filteringTags = default;
             foreach (var property in element.EnumerateObject())
             {

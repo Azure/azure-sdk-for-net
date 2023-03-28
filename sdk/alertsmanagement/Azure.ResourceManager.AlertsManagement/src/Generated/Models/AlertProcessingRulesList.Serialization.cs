@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     {
         internal static AlertProcessingRulesList DeserializeAlertProcessingRulesList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<AlertProcessingRuleData>> value = default;
             foreach (var property in element.EnumerateObject())

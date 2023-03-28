@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static UnknownReferenceInputDataSource DeserializeUnknownReferenceInputDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

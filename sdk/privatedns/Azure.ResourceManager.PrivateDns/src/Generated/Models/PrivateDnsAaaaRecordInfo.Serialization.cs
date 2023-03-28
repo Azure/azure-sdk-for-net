@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.PrivateDns.Models
 
         internal static PrivateDnsAaaaRecordInfo DeserializePrivateDnsAaaaRecordInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IPAddress> ipv6Address = default;
             foreach (var property in element.EnumerateObject())
             {

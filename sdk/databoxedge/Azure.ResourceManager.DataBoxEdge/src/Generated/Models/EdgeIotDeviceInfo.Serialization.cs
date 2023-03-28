@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeIotDeviceInfo DeserializeEdgeIotDeviceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string deviceId = default;
             string iotHostHub = default;
             Optional<ResourceIdentifier> iotHostHubId = default;

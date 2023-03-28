@@ -53,6 +53,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static TypeConversionSettings DeserializeTypeConversionSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> allowDataTruncation = default;
             Optional<object> treatBooleanAsNumber = default;
             Optional<object> dateTimeFormat = default;

@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.PostgreSql
 
         internal static PostgreSqlPrivateLinkResourceData DeserializePostgreSqlPrivateLinkResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PostgreSqlPrivateLinkResourceProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static RequestHeaderMatchCondition DeserializeRequestHeaderMatchCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RequestHeaderMatchConditionType typeName = default;
             Optional<string> selector = default;
             RequestHeaderOperator @operator = default;

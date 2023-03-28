@@ -106,7 +106,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
         protected override async Task OnInitializingPartitionAsync(EventProcessorHostPartition partition, CancellationToken cancellationToken)
         {
             partition.ProcessorHost = this;
-            partition.EventProcessor = _processorFactory.CreateEventProcessor();
+            partition.EventProcessor = _processorFactory.CreatePartitionProcessor();
 
             // Since we are re-initializing this partition, any cached information we have about the partition will be incorrect.
             // Clear it out now, if there is any, we'll refresh it in ListCheckpointsAsync, which EventProcessor will call before starting to pump messages.

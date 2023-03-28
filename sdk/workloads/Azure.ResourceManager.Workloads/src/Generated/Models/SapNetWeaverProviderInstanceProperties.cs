@@ -32,8 +32,9 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="sapPasswordUri"> Gets or sets the key vault URI to secret with the SAP password. </param>
         /// <param name="sapClientId"> Gets or sets the SAP Client ID. </param>
         /// <param name="sapPortNumber"> Gets or sets the SAP HTTP port number. </param>
-        /// <param name="sapSslCertificateUri"> Gets or sets the blob URI to SSL certificate for the SAP system. </param>
-        internal SapNetWeaverProviderInstanceProperties(string providerType, string sapSid, string sapHostname, string sapInstanceNr, IList<string> sapHostFileEntries, string sapUsername, string sapPassword, Uri sapPasswordUri, string sapClientId, string sapPortNumber, Uri sapSslCertificateUri) : base(providerType)
+        /// <param name="sslCertificateUri"> Gets or sets the blob URI to SSL certificate for the SAP system. </param>
+        /// <param name="sslPreference"> Gets or sets certificate preference if secure communication is enabled. </param>
+        internal SapNetWeaverProviderInstanceProperties(string providerType, string sapSid, string sapHostname, string sapInstanceNr, IList<string> sapHostFileEntries, string sapUsername, string sapPassword, Uri sapPasswordUri, string sapClientId, string sapPortNumber, Uri sslCertificateUri, SslPreference? sslPreference) : base(providerType)
         {
             SapSid = sapSid;
             SapHostname = sapHostname;
@@ -44,7 +45,8 @@ namespace Azure.ResourceManager.Workloads.Models
             SapPasswordUri = sapPasswordUri;
             SapClientId = sapClientId;
             SapPortNumber = sapPortNumber;
-            SapSslCertificateUri = sapSslCertificateUri;
+            SslCertificateUri = sslCertificateUri;
+            SslPreference = sslPreference;
             ProviderType = providerType ?? "SapNetWeaver";
         }
 
@@ -67,6 +69,8 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Gets or sets the SAP HTTP port number. </summary>
         public string SapPortNumber { get; set; }
         /// <summary> Gets or sets the blob URI to SSL certificate for the SAP system. </summary>
-        public Uri SapSslCertificateUri { get; set; }
+        public Uri SslCertificateUri { get; set; }
+        /// <summary> Gets or sets certificate preference if secure communication is enabled. </summary>
+        public SslPreference? SslPreference { get; set; }
     }
 }

@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.OperationalInsights
                 foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartArray();
                     foreach (var item0 in item.Value)
                     {
@@ -72,6 +77,10 @@ namespace Azure.ResourceManager.OperationalInsights
 
         internal static LogAnalyticsQueryData DeserializeLogAnalyticsQueryData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -192,12 +201,19 @@ namespace Azure.ResourceManager.OperationalInsights
                             Dictionary<string, IList<string>> dictionary = new Dictionary<string, IList<string>>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                List<string> array = new List<string>();
-                                foreach (var item in property1.Value.EnumerateArray())
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
                                 {
-                                    array.Add(item.GetString());
+                                    dictionary.Add(property1.Name, null);
                                 }
-                                dictionary.Add(property1.Name, array);
+                                else
+                                {
+                                    List<string> array = new List<string>();
+                                    foreach (var item in property1.Value.EnumerateArray())
+                                    {
+                                        array.Add(item.GetString());
+                                    }
+                                    dictionary.Add(property1.Name, array);
+                                }
                             }
                             tags = dictionary;
                             continue;

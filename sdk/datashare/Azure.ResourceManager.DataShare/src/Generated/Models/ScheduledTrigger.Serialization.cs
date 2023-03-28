@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static ScheduledTrigger DeserializeScheduledTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TriggerKind kind = default;
             ResourceIdentifier id = default;
             string name = default;

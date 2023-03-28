@@ -1,7 +1,10 @@
 # Release History
 
-## 12.0.0-preview.32 (Unreleased)
+## 12.0.0-preview.33 (2023-03-28)
 - Added support for service version 2022-11-02.
+
+## 12.0.0-preview.32 (2023-03-24)
+- Bumped Azure.Core dependency from 1.28 and 1.30, fixing issue with headers being non-resilient to double dispose of the request.
 
 ## 12.0.0-preview.31 (2023-02-21)
 - This release contains bug fixes to improve quality.

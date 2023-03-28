@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
     {
         internal static LoadTestingOutboundEnvironmentEndpoint DeserializeLoadTestingOutboundEnvironmentEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> category = default;
             Optional<IReadOnlyList<LoadTestingEndpointDependency>> endpoints = default;
             foreach (var property in element.EnumerateObject())

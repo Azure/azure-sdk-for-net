@@ -53,6 +53,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static UnknownCopySink DeserializeUnknownCopySink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = "Unknown";
             Optional<object> writeBatchSize = default;
             Optional<object> writeBatchTimeout = default;

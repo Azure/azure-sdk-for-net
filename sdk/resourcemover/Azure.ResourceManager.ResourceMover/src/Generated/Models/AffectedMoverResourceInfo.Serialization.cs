@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
     {
         internal static AffectedMoverResourceInfo DeserializeAffectedMoverResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<ResourceIdentifier> sourceId = default;
             Optional<IReadOnlyList<AffectedMoverResourceInfo>> moveResources = default;

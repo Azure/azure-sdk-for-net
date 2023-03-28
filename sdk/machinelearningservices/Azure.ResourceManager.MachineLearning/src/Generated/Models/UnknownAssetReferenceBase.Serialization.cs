@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static UnknownAssetReferenceBase DeserializeUnknownAssetReferenceBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ReferenceType referenceType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

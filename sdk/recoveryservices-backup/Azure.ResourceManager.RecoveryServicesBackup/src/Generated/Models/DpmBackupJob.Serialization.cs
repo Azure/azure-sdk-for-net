@@ -109,6 +109,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static DpmBackupJob DeserializeDpmBackupJob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSpan> duration = default;
             Optional<string> dpmServerName = default;
             Optional<string> containerName = default;

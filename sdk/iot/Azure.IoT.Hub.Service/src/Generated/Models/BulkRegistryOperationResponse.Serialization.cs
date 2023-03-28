@@ -15,6 +15,10 @@ namespace Azure.IoT.Hub.Service.Models
     {
         internal static BulkRegistryOperationResponse DeserializeBulkRegistryOperationResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isSuccessful = default;
             Optional<IReadOnlyList<DeviceRegistryOperationError>> errors = default;
             Optional<IReadOnlyList<DeviceRegistryOperationWarning>> warnings = default;

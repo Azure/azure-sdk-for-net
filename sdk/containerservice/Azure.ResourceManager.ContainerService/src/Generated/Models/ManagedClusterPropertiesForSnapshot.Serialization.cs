@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static ManagedClusterPropertiesForSnapshot DeserializeManagedClusterPropertiesForSnapshot(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kubernetesVersion = default;
             Optional<ManagedClusterSku> sku = default;
             Optional<bool> enableRbac = default;

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static VirtualNetworksPropertiesInfraVnetProfileKubevirt DeserializeVirtualNetworksPropertiesInfraVnetProfileKubevirt(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vnetName = default;
             foreach (var property in element.EnumerateObject())
             {

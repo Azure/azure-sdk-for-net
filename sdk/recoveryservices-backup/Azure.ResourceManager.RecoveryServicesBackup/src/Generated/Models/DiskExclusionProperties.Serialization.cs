@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static DiskExclusionProperties DeserializeDiskExclusionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<int>> diskLunList = default;
             Optional<bool> isInclusionList = default;
             foreach (var property in element.EnumerateObject())
