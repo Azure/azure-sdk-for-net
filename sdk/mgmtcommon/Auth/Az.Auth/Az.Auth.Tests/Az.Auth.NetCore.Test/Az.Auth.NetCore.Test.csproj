@@ -8,7 +8,7 @@
   </PropertyGroup>
   
   <PropertyGroup>    
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <PropertyGroup>
     <ExcludeFromBuild>true</ExcludeFromBuild>

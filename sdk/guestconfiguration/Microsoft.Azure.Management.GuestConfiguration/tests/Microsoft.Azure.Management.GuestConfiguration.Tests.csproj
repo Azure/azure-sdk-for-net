@@ -2,7 +2,7 @@
   <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
     
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net6.0</TargetFrameworks>
     <TestProjectType>true</TestProjectType>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>

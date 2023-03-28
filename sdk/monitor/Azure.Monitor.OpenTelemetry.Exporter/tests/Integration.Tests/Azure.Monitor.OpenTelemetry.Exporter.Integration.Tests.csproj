@@ -17,7 +17,7 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <!--We would prefer to use the meta package "Microsoft.AspNetCore.App" here.
-    But this package targets NetCoreApp3.1, while all the dependent packages target NetStandard2.0.
+    But this package targets net6.0, while all the dependent packages target NetStandard2.0.
     To support net461 so we must reference the dependent packages.-->
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore" VersionOverride="[2.1.1,2.2)" />

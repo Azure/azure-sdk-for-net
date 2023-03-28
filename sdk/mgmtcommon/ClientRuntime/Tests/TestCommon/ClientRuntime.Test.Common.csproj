@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">  
   <PropertyGroup>
-    <TargetFrameworks>net452;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net452;net6.0</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
     <ExcludeFromTest>true</ExcludeFromTest>
@@ -17,7 +17,7 @@
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
     <PackageReference Include="System.Net.Http" Version="4.3.0" />
   </ItemGroup>
 

@@ -9,7 +9,7 @@
     <Description>EdgeGateway.Tests;</Description>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net6.0</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 

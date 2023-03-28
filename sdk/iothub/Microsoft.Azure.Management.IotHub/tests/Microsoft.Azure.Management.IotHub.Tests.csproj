@@ -13,7 +13,7 @@
     <ExcludeFromBuild>false</ExcludeFromBuild>
     <ExcludeFromTest>false</ExcludeFromTest>
     <OutputType>WinExe</OutputType>
-    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net6.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>

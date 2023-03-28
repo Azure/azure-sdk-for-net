@@ -7,7 +7,7 @@
     <PackageTags>Microsoft AutoRest ClientRuntime REST</PackageTags>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,7 +33,7 @@
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup> -->
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
     <PackageReference Include="System.Net.Http" Version="4.3.0" />
   </ItemGroup>
 

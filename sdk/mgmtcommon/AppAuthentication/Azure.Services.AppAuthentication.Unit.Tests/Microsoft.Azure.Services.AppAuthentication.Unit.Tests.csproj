@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>net472;net452;net461;netcoreapp3.1</TargetFrameworks>
+        <TargetFrameworks>net472;net452;net461;net6.0</TargetFrameworks>
     </PropertyGroup>
 	<PropertyGroup Condition="'$(TargetFramework)' == 'net472'">
 		<DefineConstants>net472;FullNetFx</DefineConstants>		

@@ -13,7 +13,7 @@
     <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net6.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.Azure.Management.Peering.csproj" />

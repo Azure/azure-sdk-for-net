@@ -10,7 +10,7 @@
     <Version>1.0.0</Version>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net6.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>

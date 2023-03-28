@@ -18,7 +18,7 @@
     <AssemblyOriginatorKeyFile>$(RepoEngPath)\AzSdkTestLibKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>net452;net461;netstandard2.0;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net452;net461;netstandard2.0;net6.0</TargetFrameworks>
   </PropertyGroup>
   
   <PropertyGroup Condition=" '$(VsIdeBuild)' == 'true' ">
@@ -60,7 +60,7 @@
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.3.7, 3.0.0)" Condition=" '$(ProjectRefApplicable)' != 'true' "/>
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.14.0, 4.0.0)" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="[5.1.2]" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
