@@ -107,6 +107,21 @@ namespace Azure.Core
             _stateLock = new AsyncLockWithValue<OperationState<T>>();
         }
 
+        // TEMP - for backcompat
+        public OperationInternal(
+            ClientDiagnostics clientDiagnostics,
+            IOperation<T> operation,
+            Response rawResponse,
+            string? operationTypeName = null,
+            IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
+            DelayStrategy? fallbackStrategy = null)
+            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
+        {
+            _operation = operation;
+            _rawResponse = rawResponse;
+            _stateLock = new AsyncLockWithValue<OperationState<T>>();
+        }
+
         private OperationInternal(OperationState<T> finalState)
             : base(finalState.RawResponse)
         {

@@ -17,6 +17,7 @@ namespace Azure.Core
         private readonly ClientDiagnostics _diagnostics;
         private readonly IReadOnlyDictionary<string, string>? _scopeAttributes;
         private readonly Delay? _strategy;
+        private readonly DelayStrategy? _fallbackStrategy;
         private readonly AsyncLockWithValue<Response> _responseLock;
 
         private readonly string _waitForCompletionResponseScopeName;
@@ -42,6 +43,18 @@ namespace Azure.Core
             _waitForCompletionScopeName = $"{operationTypeName}.WaitForCompletion";
             _scopeAttributes = scopeAttributes?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             _strategy = strategy;
+            _responseLock = new AsyncLockWithValue<Response>();
+        }
+
+        // TEMP - backcompat
+        protected OperationInternalBase(ClientDiagnostics clientDiagnostics, string operationTypeName, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null, DelayStrategy? fallbackStrategy = null)
+        {
+            _diagnostics = clientDiagnostics;
+            _updateStatusScopeName = $"{operationTypeName}.{nameof(UpdateStatus)}";
+            _waitForCompletionResponseScopeName = $"{operationTypeName}.{nameof(WaitForCompletionResponse)}";
+            _waitForCompletionScopeName = $"{operationTypeName}.WaitForCompletion";
+            _scopeAttributes = scopeAttributes?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            _fallbackStrategy = fallbackStrategy;
             _responseLock = new AsyncLockWithValue<Response>();
         }
 
