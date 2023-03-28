@@ -572,6 +572,21 @@ namespace Azure.AI.FormRecognizer.Models
             return new CurrencyValue(amount, symbol, currencyCode);
         }
 
+        /// <summary> Initializes a new instance of DocumentClassifierDetails. </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="description"> Document classifier description. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the document classifier was created. </param>
+        /// <param name="expiresOn"> Date and time (UTC) when the document classifier will expire. </param>
+        /// <param name="apiVersion"> API version used to create this document classifier. </param>
+        /// <param name="documentTypes"> List of document types to classify against. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentClassifierDetails"/> instance for mocking. </returns>
+        internal static DocumentClassifierDetails DocumentClassifierDetails(string classifierId = null, string description = null, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = null, string apiVersion = null, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes = null)
+        {
+            documentTypes ??= new Dictionary<string, ClassifierDocumentTypeDetails>();
+
+            return new DocumentClassifierDetails(classifierId, description, createdOn, expiresOn, apiVersion, documentTypes);
+        }
+
         /// <summary> Initializes a new instance of DocumentLanguage. </summary>
         /// <param name="locale"> Detected language.  Value may an ISO 639-1 language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;zh-Hans&quot;). </param>
         /// <param name="spans"> Location of the text elements in the concatenated content the language applies to. </param>

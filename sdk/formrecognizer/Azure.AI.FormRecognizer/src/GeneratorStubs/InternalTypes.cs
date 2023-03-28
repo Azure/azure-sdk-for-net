@@ -19,15 +19,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
     internal partial class AuthorizeCopyRequest { }
 
-    internal partial class AzureBlobContentSource { }
-
-    internal partial class AzureBlobFileListSource { }
-
     internal partial class BuildDocumentClassifierRequest { }
 
     internal partial class BuildDocumentModelRequest { }
-
-    internal partial class ClassifierDocumentTypeDetails { }
 
     internal partial class ClassifyDocumentRequest { }
 
@@ -56,8 +50,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     internal partial struct DocumentBarcodeKind { }
 
     internal partial class DocumentClassifierBuildOperationDetails { }
-
-    internal partial class DocumentClassifierDetails { }
 
     internal partial class DocumentFormula { }
 

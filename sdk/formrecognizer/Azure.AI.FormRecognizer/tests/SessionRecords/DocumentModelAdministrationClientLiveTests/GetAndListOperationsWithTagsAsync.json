@@ -1,23 +1,23 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels:build?api-version=2023-02-28-preview",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels:build?api-version=2023-02-28-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "187",
+        "Content-Length": "218",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-eda0d2abbad3a76e03191c1a106adc28-26b8e866998c5033-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "8424df99f78e61a702923f6b9fc53446",
+        "traceparent": "00-68fc6aee2e2ecfe57387f40a0181119e-3a409334519e4e92-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230326.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5f0a37be298dfb88ba51afe6130cae7a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "modelId": "870279568",
+        "modelId": "1922823521",
         "buildMode": "template",
         "azureBlobSource": {
-          "containerUrl": "Sanitized"
+          "containerUrl": "https://sanitized.blob.core.windows.net"
         },
         "tags": {
           "ordinary tag": "an ordinary tag",
@@ -26,466 +26,79 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "11b672ba-1b10-4c63-8b61-cc131e4d7f78",
+        "apim-request-id": "9fad9247-4b61-4d28-8566-ca12631f892e",
         "Content-Length": "0",
-        "Date": "Tue, 07 Mar 2023 04:39:18 GMT",
-        "operation-location": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/operations/31488204045_11b672ba-1b10-4c63-8b61-cc131e4d7f78?api-version=2023-02-28-preview",
+        "Date": "Mon, 27 Mar 2023 08:52:56 GMT",
+        "operation-location": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/operations/31486460825_9fad9247-4b61-4d28-8566-ca12631f892e?api-version=2023-02-28-preview",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "3485",
-        "x-ms-region": "West Europe"
+        "x-envoy-upstream-service-time": "2518",
+        "x-ms-region": "East US"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/operations?api-version=2023-02-28-preview",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/operations?api-version=2023-02-28-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-ea207d1d5f3e79ee90e5ad14f6fd032f-d38470a774f0dea8-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "01e395c0589c9978dc024b18d2751090",
+        "traceparent": "00-7b33013d965456adecf3c26aed44ef70-b2a18116975b8364-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230326.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9f23fe2caf88534dc8f848bb81568c2e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "8f59d5d7-f74e-441a-8a85-d6ae18592faa",
+        "apim-request-id": "2d3f3d11-148c-4048-b04a-647c36a4eb8d",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Mar 2023 04:39:19 GMT",
+        "Date": "Mon, 27 Mar 2023 08:52:58 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "927",
-        "x-ms-region": "West Europe"
+        "x-envoy-upstream-service-time": "721",
+        "x-ms-region": "East US"
       },
       "ResponseBody": {
         "value": [
           {
-            "operationId": "31488204045_11b672ba-1b10-4c63-8b61-cc131e4d7f78",
+            "operationId": "31486460825_9fad9247-4b61-4d28-8566-ca12631f892e",
             "kind": "documentModelBuild",
             "status": "running",
-            "createdDateTime": "2023-03-07T04:39:14Z",
-            "lastUpdatedDateTime": "2023-03-07T04:39:18Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/870279568?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:52:55Z",
+            "lastUpdatedDateTime": "2023-03-27T08:52:57Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1922823521?api-version=2023-02-28-preview",
             "tags": {
               "ordinary tag": "an ordinary tag",
               "crazy tag": "a CRAZY tag 123!@#$%^\u0026*()[]{}\\/?.,\u003C\u003E"
             }
           },
           {
-            "operationId": "31488204057_69ed37dd-9a2b-4d94-b875-55cc3bc51f27",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T04:39:03Z",
-            "lastUpdatedDateTime": "2023-03-07T04:39:10Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1099732266?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488204065_8755b771-befa-413d-bd21-bd1ea6156355",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T04:38:55Z",
-            "lastUpdatedDateTime": "2023-03-07T04:39:01Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/317682123?api-version=2023-02-28-preview",
-            "percentCompleted": 100,
-            "tags": {
-              "ordinary tag": "an ordinary tag",
-              "crazy tag": "a CRAZY tag 123!@#$%^\u0026*()[]{}\\/?.,\u003C\u003E"
-            }
-          },
-          {
-            "operationId": "31488204078_0535e477-0363-4ec8-9faa-9022b500ca28",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T04:38:42Z",
-            "lastUpdatedDateTime": "2023-03-07T04:38:49Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/780441259?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488204326_470404c5-5510-4f18-a341-10a4cc0eb891",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T04:34:33Z",
-            "lastUpdatedDateTime": "2023-03-07T04:34:40Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1826022951?api-version=2023-02-28-preview",
-            "percentCompleted": 100,
-            "tags": {
-              "ordinary tag": "an ordinary tag",
-              "crazy tag": "a CRAZY tag 123!@#$%^\u0026*()[]{}\\/?.,\u003C\u003E"
-            }
-          },
-          {
-            "operationId": "31488204340_bdb57fef-1be9-41fa-bfef-8c68bac93d66",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T04:34:19Z",
-            "lastUpdatedDateTime": "2023-03-07T04:34:27Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/972501450?api-version=2023-02-28-preview",
-            "percentCompleted": 100,
-            "tags": {
-              "ordinary tag": "an ordinary tag",
-              "crazy tag": "a CRAZY tag 123!@#$%^\u0026*()[]{}\\/?.,\u003C\u003E"
-            }
-          },
-          {
-            "operationId": "31488204638_def17306-0b78-447a-8426-231d47f46a0f",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T04:29:22Z",
-            "lastUpdatedDateTime": "2023-03-07T04:29:28Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/726311087?api-version=2023-02-28-preview",
-            "percentCompleted": 100,
-            "tags": {
-              "ordinary tag": "an ordinary tag",
-              "crazy tag": "a CRAZY tag 123!@#$%^\u0026*()[]{}\\/?.,\u003C\u003E"
-            }
-          },
-          {
-            "operationId": "31488205073_81523c31-5bbb-4c77-be80-9f9d6e78fefa",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T04:22:07Z",
-            "lastUpdatedDateTime": "2023-03-07T04:22:16Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/475534165?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488205210_3cf59da0-7308-4dbe-aa9b-1e5eca0cfb9f",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T04:19:50Z",
-            "lastUpdatedDateTime": "2023-03-07T04:19:57Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1329287542?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488205330_c5c2246d-0b6b-4342-ba8a-b147dd4d4cae",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T04:17:50Z",
-            "lastUpdatedDateTime": "2023-03-07T04:17:57Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/2146804264?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488209647_d9ce2070-4251-40be-950d-7090fa4628ab",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T03:05:52Z",
-            "lastUpdatedDateTime": "2023-03-07T03:05:59Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/2074685935?api-version=2023-02-28-preview",
-            "percentCompleted": 100,
-            "tags": {
-              "ordinary tag": "an ordinary tag",
-              "crazy tag": "a CRAZY tag 123!@#$%^\u0026*()[]{}\\/?.,\u003C\u003E"
-            }
-          },
-          {
-            "operationId": "31488209657_bbbcf305-51f4-419d-af5a-6fa429bd98c8",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T03:05:43Z",
-            "lastUpdatedDateTime": "2023-03-07T03:05:48Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/558528564?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488209664_1d2a2ddb-7ae5-490f-8d10-a8669598a6f0",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T03:05:36Z",
-            "lastUpdatedDateTime": "2023-03-07T03:05:42Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/788448372?api-version=2023-02-28-preview",
-            "percentCompleted": 100,
-            "tags": {
-              "ordinary tag": "an ordinary tag",
-              "crazy tag": "a CRAZY tag 123!@#$%^\u0026*()[]{}\\/?.,\u003C\u003E"
-            }
-          },
-          {
-            "operationId": "31488209675_65cfb067-7347-476f-b257-77ad57ce1916",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T03:05:25Z",
-            "lastUpdatedDateTime": "2023-03-07T03:05:31Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1657368393?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488210291_41e5b941-b960-4917-bd0a-4ade408bb857",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:55:09Z",
-            "lastUpdatedDateTime": "2023-03-07T02:55:14Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1020794151?api-version=2023-02-28-preview",
-            "percentCompleted": 100,
-            "tags": {
-              "ordinary tag": "an ordinary tag",
-              "crazy tag": "a CRAZY tag 123!@#$%^\u0026*()[]{}\\/?.,\u003C\u003E"
-            }
-          },
-          {
-            "operationId": "31488210300_7be9289d-f161-4111-9996-ea2a7bd03c64",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:55:00Z",
-            "lastUpdatedDateTime": "2023-03-07T02:55:05Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/611429334?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488210307_715356dc-271c-42a4-8d16-cb642ced06c5",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:54:53Z",
-            "lastUpdatedDateTime": "2023-03-07T02:54:58Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/115874991?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488210314_ac3c16a9-4629-4c9e-ac7d-434990eabc15",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:54:45Z",
-            "lastUpdatedDateTime": "2023-03-07T02:54:51Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/868615033?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488210321_04e5e620-3ad2-4259-bd25-0d86ac7b4339",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:54:38Z",
-            "lastUpdatedDateTime": "2023-03-07T02:54:44Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1257256185?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488210328_7c2a4bfd-d07c-4289-9c72-8aa72de138ec",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:54:32Z",
-            "lastUpdatedDateTime": "2023-03-07T02:54:37Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/721947187?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488210334_9fe44fa5-3bc9-4e77-8df5-6473d2aedc6f",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:54:26Z",
-            "lastUpdatedDateTime": "2023-03-07T02:54:31Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/2073916270?api-version=2023-02-28-preview",
-            "percentCompleted": 100,
-            "tags": {
-              "ordinary tag": "an ordinary tag",
-              "crazy tag": "a CRAZY tag 123!@#$%^\u0026*()[]{}\\/?.,\u003C\u003E"
-            }
-          },
-          {
-            "operationId": "31488210345_a8e5bbf8-0230-416f-ba7b-7d67290d7b96",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:54:15Z",
-            "lastUpdatedDateTime": "2023-03-07T02:54:22Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1702125497?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488210352_6ac16070-9615-423e-8915-93e29bab9461",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:54:08Z",
-            "lastUpdatedDateTime": "2023-03-07T02:54:13Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1162077726?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488210359_bf9c1998-77a3-45f1-984e-38ceff2eb688",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:54:01Z",
-            "lastUpdatedDateTime": "2023-03-07T02:54:06Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/198147591?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488210367_e0d7df58-06f5-4be0-9747-c057c92b1bc2",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:53:52Z",
-            "lastUpdatedDateTime": "2023-03-07T02:53:59Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/259316803?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488210376_495f27b4-089a-485a-8b30-b7298be865fa",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:53:44Z",
-            "lastUpdatedDateTime": "2023-03-07T02:53:51Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1521300857?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488212111_5edba48a-50d3-4494-8668-a9a913baf3e2",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:24:48Z",
-            "lastUpdatedDateTime": "2023-03-07T02:48:01Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/yax_chs_test3?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488213459_957d7415-cfcd-4deb-b7a3-ee050f6afa01",
+            "operationId": "31486460827_20477e5e-e315-4a0d-ae90-9bb63b13d2d3",
             "kind": "documentModelCopyTo",
             "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:02:20Z",
-            "lastUpdatedDateTime": "2023-03-07T02:02:21Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1315391804?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:52:53Z",
+            "lastUpdatedDateTime": "2023-03-27T08:52:53Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/725803124?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488213466_e0779797-73b5-4ad3-aa25-eb1b554f8545",
+            "operationId": "31486460832_cc4a4871-df66-456b-bc8d-4a010e7a5b5f",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:02:13Z",
-            "lastUpdatedDateTime": "2023-03-07T02:02:19Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/929091291?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:52:47Z",
+            "lastUpdatedDateTime": "2023-03-27T08:52:51Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1501101417?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488213468_47592167-b46d-4e03-8a4b-f20dfa425872",
-            "kind": "documentModelCopyTo",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:02:11Z",
-            "lastUpdatedDateTime": "2023-03-07T02:02:12Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1375374139?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488213475_a41d2868-1560-47e1-9adc-1c12751bb1bf",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:02:05Z",
-            "lastUpdatedDateTime": "2023-03-07T02:02:10Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/825800287?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488213481_31884cbe-d9a8-4c9b-9916-5743636a9cb9",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:01:58Z",
-            "lastUpdatedDateTime": "2023-03-07T02:02:04Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/882583185?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488213488_0c1886f1-02d8-4089-b57d-990e39c61117",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:01:52Z",
-            "lastUpdatedDateTime": "2023-03-07T02:01:57Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/692207711?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488213493_f0d66740-414c-4299-ad77-fe61843a758b",
-            "kind": "documentModelCopyTo",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:01:47Z",
-            "lastUpdatedDateTime": "2023-03-07T02:01:47Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/2065656132?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488213499_d636099f-9d3c-4f53-8c38-b7e4009a033e",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:01:40Z",
-            "lastUpdatedDateTime": "2023-03-07T02:01:45Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1887164161?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488213501_7543e96e-5f3a-4dd8-83ce-c27ccf341053",
-            "kind": "documentModelCopyTo",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:01:38Z",
-            "lastUpdatedDateTime": "2023-03-07T02:01:39Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/860616726?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488213508_cfda0716-29f0-4f64-bd2b-43b5e0a7ee26",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:01:31Z",
-            "lastUpdatedDateTime": "2023-03-07T02:01:37Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/54039144?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488213515_3aec6401-b455-4d84-a903-6a31ea4c8fe5",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:01:25Z",
-            "lastUpdatedDateTime": "2023-03-07T02:01:30Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1734163794?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488213521_11a0101e-6237-4b9e-8d29-3fdbcc4c54ec",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:01:18Z",
-            "lastUpdatedDateTime": "2023-03-07T02:01:24Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/920927673?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488213530_f342f288-96e9-4fb8-afec-1faf2a0c2eee",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:01:09Z",
-            "lastUpdatedDateTime": "2023-03-07T02:01:14Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/593458862?api-version=2023-02-28-preview",
-            "percentCompleted": 100,
-            "tags": {
-              "ordinary tag": "an ordinary tag",
-              "crazy tag": "a CRAZY tag 123!@#$%^\u0026*()[]{}\\/?.,\u003C\u003E"
-            }
-          },
-          {
-            "operationId": "31488213533_da12f81f-9b09-4006-ac87-be4c254fa74f",
-            "kind": "documentModelCopyTo",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:01:07Z",
-            "lastUpdatedDateTime": "2023-03-07T02:01:08Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1176412586?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488213540_0120230f-d57c-4fa6-8f0e-49ce11712d06",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:01:00Z",
-            "lastUpdatedDateTime": "2023-03-07T02:01:05Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1564776406?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488213542_b0e76522-93a7-46e7-b26c-1be71c2f6ae3",
+            "operationId": "31486460835_65c86073-3039-4cf5-b5bc-a0628b5890ed",
             "kind": "documentModelCompose",
             "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:00:57Z",
-            "lastUpdatedDateTime": "2023-03-07T02:00:58Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/226678834?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:52:45Z",
+            "lastUpdatedDateTime": "2023-03-27T08:52:45Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/34170883?api-version=2023-02-28-preview",
             "percentCompleted": 100,
             "tags": {
               "ordinary tag": "an ordinary tag",
@@ -493,39 +106,39 @@
             }
           },
           {
-            "operationId": "31488213550_e5f665af-7de7-4758-b156-42b83a3b681a",
+            "operationId": "31486460841_8780a820-7678-479e-92cc-9173583f5076",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:00:49Z",
-            "lastUpdatedDateTime": "2023-03-07T02:00:56Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/432385930?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:52:39Z",
+            "lastUpdatedDateTime": "2023-03-27T08:52:43Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1097561527?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488213557_5ccbaf62-d115-4837-aeb2-8cd68bad86f5",
+            "operationId": "31486460846_6dda9156-7985-4912-b3a4-9f209b3b6373",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:00:42Z",
-            "lastUpdatedDateTime": "2023-03-07T02:00:48Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/798259822?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:52:34Z",
+            "lastUpdatedDateTime": "2023-03-27T08:52:39Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1108042831?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488213566_6c13713b-e985-48a4-8def-7ef0976ed570",
+            "operationId": "31486460852_8c056aeb-c8f0-412b-8c50-2bd08638564b",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:00:34Z",
-            "lastUpdatedDateTime": "2023-03-07T02:00:41Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1056037558?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:52:28Z",
+            "lastUpdatedDateTime": "2023-03-27T08:52:32Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1634447960?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488213574_096890c3-c382-4ff6-9b4a-1662e5e6a61d",
+            "operationId": "31486460857_16d6ab27-bd3e-4cb2-b9d5-3e14e072e744",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-07T02:00:26Z",
-            "lastUpdatedDateTime": "2023-03-07T02:00:33Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1320809528?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:52:22Z",
+            "lastUpdatedDateTime": "2023-03-27T08:52:26Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1869178684?api-version=2023-02-28-preview",
             "percentCompleted": 100,
             "tags": {
               "ordinary tag": "an ordinary tag",
@@ -533,169 +146,156 @@
             }
           },
           {
-            "operationId": "31488214659_d554964f-decd-4cdf-bda1-a9130bf4405e",
+            "operationId": "31486460935_fc6716d5-3127-48b8-bc64-904e992ba6b3",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:42:21Z",
-            "lastUpdatedDateTime": "2023-03-07T01:59:32Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/450295455?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:51:05Z",
+            "lastUpdatedDateTime": "2023-03-27T08:51:08Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1096188842?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488214664_801bf269-addc-48b3-a452-f185ed2ab69f",
+            "operationId": "31486460940_8de1f8ba-b45d-4fec-a1cf-3fd59f1bc64f",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:42:16Z",
-            "lastUpdatedDateTime": "2023-03-07T01:42:20Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1018378773?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:51:00Z",
+            "lastUpdatedDateTime": "2023-03-27T08:51:04Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1556894183?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488214673_bc8a143a-0def-471a-9a21-e2587de2ea78",
+            "operationId": "31486460946_e236efaf-fbdc-4227-b1c0-a922fd8c4e40",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:42:07Z",
-            "lastUpdatedDateTime": "2023-03-07T01:42:12Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1100017548?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:50:53Z",
+            "lastUpdatedDateTime": "2023-03-27T08:50:58Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/647966093?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488214680_292eb14c-d607-48f4-89d3-12e7c39a5f2d",
+            "operationId": "31486460952_3566fa93-f5af-45af-944c-8634d069872f",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:42:00Z",
-            "lastUpdatedDateTime": "2023-03-07T01:42:05Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/930397740?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:50:47Z",
+            "lastUpdatedDateTime": "2023-03-27T08:50:51Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1012352023?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488214682_bf7b7dea-9fa2-4ef2-a366-cdd7de1108fe",
+            "operationId": "31486460954_03f6d04f-2186-4ef5-8421-87bf594e42a2",
             "kind": "documentModelCopyTo",
             "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:41:58Z",
-            "lastUpdatedDateTime": "2023-03-07T01:41:58Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1105768972?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:50:46Z",
+            "lastUpdatedDateTime": "2023-03-27T08:50:46Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/2009345432?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488214688_3bf06836-6f56-44ad-aef7-870e27380715",
+            "operationId": "31486460959_1335364b-ac70-4e3b-843d-cb64463f5db2",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:41:51Z",
-            "lastUpdatedDateTime": "2023-03-07T01:41:56Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/2026625929?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:50:41Z",
+            "lastUpdatedDateTime": "2023-03-27T08:50:45Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/258887944?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488214695_214d5703-fe93-49fc-b6d3-ff07a53033ae",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:41:44Z",
-            "lastUpdatedDateTime": "2023-03-07T01:41:49Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1777408665?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488214703_80bedab4-135d-4819-b7f2-63213aac6b44",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:41:37Z",
-            "lastUpdatedDateTime": "2023-03-07T01:41:42Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1486100394?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488214709_217621a7-ade7-47fc-a6e1-51ad944cc113",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:41:30Z",
-            "lastUpdatedDateTime": "2023-03-07T01:41:36Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1630816774?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488214711_fea4b5f8-9072-43fa-bd60-cfdce95d187f",
-            "kind": "documentModelCompose",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:41:28Z",
-            "lastUpdatedDateTime": "2023-03-07T01:41:29Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1280902943?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488214718_93a074df-b209-4f8b-af96-292b6486a440",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:41:22Z",
-            "lastUpdatedDateTime": "2023-03-07T01:41:27Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1562676764?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488214724_0be52219-d865-4bbe-8c78-258efb615c03",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:41:16Z",
-            "lastUpdatedDateTime": "2023-03-07T01:41:21Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/971367788?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488214729_ded81f72-c4e6-48cb-ba12-0a79ff1d396f",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:41:10Z",
-            "lastUpdatedDateTime": "2023-03-07T01:41:15Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/617489359?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488214736_d685218f-9df3-4517-acfe-a31762d3750c",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:41:04Z",
-            "lastUpdatedDateTime": "2023-03-07T01:41:09Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1286970120?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488214741_4855190a-6ee7-41e3-a435-3fab617f90b7",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:40:58Z",
-            "lastUpdatedDateTime": "2023-03-07T01:41:04Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1305721045?api-version=2023-02-28-preview",
-            "percentCompleted": 100,
-            "tags": {
-              "ordinary tag": "an ordinary tag",
-              "crazy tag": "a CRAZY tag 123!@#$%^\u0026*()[]{}\\/?.,\u003C\u003E"
-            }
-          },
-          {
-            "operationId": "31488214744_8d33b985-0bd9-4359-badd-e7c401697161",
+            "operationId": "31486460960_910aee9b-ebb2-4188-a405-ce9aa3af8fb9",
             "kind": "documentModelCopyTo",
             "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:40:56Z",
-            "lastUpdatedDateTime": "2023-03-07T01:40:56Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/433762515?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:50:39Z",
+            "lastUpdatedDateTime": "2023-03-27T08:50:40Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/107444056?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488214751_12154ee5-350f-4eca-9f7d-7569e20ef84c",
+            "operationId": "31486460967_56eddb36-150c-4d78-9094-40b11789a915",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:40:49Z",
-            "lastUpdatedDateTime": "2023-03-07T01:40:54Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/64187285?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:50:32Z",
+            "lastUpdatedDateTime": "2023-03-27T08:50:37Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1232845442?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488214753_6df12d68-2ee0-4f47-83a5-f9d38fc47b6f",
+            "operationId": "31486460969_e3af4c4d-c467-45f9-b23d-dc324e9ee34d",
             "kind": "documentModelCompose",
             "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:40:46Z",
-            "lastUpdatedDateTime": "2023-03-07T01:40:48Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/2069055052?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:50:30Z",
+            "lastUpdatedDateTime": "2023-03-27T08:50:31Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/479488026?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486460974_aac7d841-fd60-41bf-b95d-954e033a54cb",
+            "kind": "documentModelBuild",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T08:50:26Z",
+            "lastUpdatedDateTime": "2023-03-27T08:50:29Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/238275146?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486460979_cf66c3f5-8849-4aae-8d9d-e298b80decd3",
+            "kind": "documentModelBuild",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T08:50:20Z",
+            "lastUpdatedDateTime": "2023-03-27T08:50:25Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/263889387?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486460981_2fce7581-129f-4826-a7e3-1b88fb57bc6c",
+            "kind": "documentModelCompose",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T08:50:18Z",
+            "lastUpdatedDateTime": "2023-03-27T08:50:19Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1171913072?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486460986_ae9f055f-68e2-43d2-9b59-21becd225dbe",
+            "kind": "documentModelBuild",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T08:50:13Z",
+            "lastUpdatedDateTime": "2023-03-27T08:50:18Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/218607124?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486460991_897f1c42-99ce-487b-9f6f-9b2095f88e5b",
+            "kind": "documentModelBuild",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T08:50:08Z",
+            "lastUpdatedDateTime": "2023-03-27T08:50:12Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/130644793?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486460995_bebb9587-02b5-464b-9aee-18bc21a73156",
+            "kind": "documentModelBuild",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T08:50:05Z",
+            "lastUpdatedDateTime": "2023-03-27T08:50:08Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/962231732?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486461000_a6e483e5-058d-40f2-a3af-87d44ba9338a",
+            "kind": "documentModelBuild",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T08:50:00Z",
+            "lastUpdatedDateTime": "2023-03-27T08:50:04Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/2032162412?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486461018_1ccaa10e-e0a2-418e-85e4-648426264136",
+            "kind": "documentModelBuild",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T08:49:42Z",
+            "lastUpdatedDateTime": "2023-03-27T08:49:46Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/2144578316?api-version=2023-02-28-preview",
             "percentCompleted": 100,
             "tags": {
               "ordinary tag": "an ordinary tag",
@@ -703,39 +303,12 @@
             }
           },
           {
-            "operationId": "31488214761_d789bb50-4542-43b5-a87f-45227385ec8b",
+            "operationId": "31486461037_f73f8b5b-35fe-4a56-b812-30cd12c44ab8",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:40:38Z",
-            "lastUpdatedDateTime": "2023-03-07T01:40:45Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/831641177?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488214768_39b32808-ef89-4209-9ace-b3ce653b7e5a",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:40:32Z",
-            "lastUpdatedDateTime": "2023-03-07T01:40:37Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1264223301?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488214776_01498302-c06b-49ca-b7bc-419786971545",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:40:23Z",
-            "lastUpdatedDateTime": "2023-03-07T01:40:30Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/2040977191?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488214784_375abb8f-ec89-46d1-9b45-0003407e0879",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:40:15Z",
-            "lastUpdatedDateTime": "2023-03-07T01:40:22Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/440590044?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:49:22Z",
+            "lastUpdatedDateTime": "2023-03-27T08:49:27Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/347556161?api-version=2023-02-28-preview",
             "percentCompleted": 100,
             "tags": {
               "ordinary tag": "an ordinary tag",
@@ -743,473 +316,43 @@
             }
           },
           {
-            "operationId": "31488216532_6d7902d2-95dc-4b6e-92a5-ef50ec37dc6c",
+            "operationId": "31486461093_72e8ec2b-2087-4aad-98a9-a7c1ee805e24",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:11:08Z",
-            "lastUpdatedDateTime": "2023-03-07T01:40:05Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/2060267547?api-version=2023-02-28-preview",
-            "percentCompleted": 100
+            "createdDateTime": "2023-03-27T08:48:27Z",
+            "lastUpdatedDateTime": "2023-03-27T08:48:30Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/139574877?api-version=2023-02-28-preview",
+            "percentCompleted": 100,
+            "tags": {
+              "ordinary tag": "an ordinary tag",
+              "crazy tag": "a CRAZY tag 123!@#$%^\u0026*()[]{}\\/?.,\u003C\u003E"
+            }
           },
           {
-            "operationId": "31488216537_01bd7bd6-9803-43e0-bccb-4d7d9ca154c5",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:11:02Z",
-            "lastUpdatedDateTime": "2023-03-07T01:11:07Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1149441634?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216545_509fb7f8-c7bb-46fc-9b22-c14cf9b0452e",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:10:54Z",
-            "lastUpdatedDateTime": "2023-03-07T01:11:00Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/128870190?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216552_94567308-4210-42be-b8de-f96cf4fe0b72",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:10:47Z",
-            "lastUpdatedDateTime": "2023-03-07T01:10:53Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1327721105?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216554_e8444be0-a5ac-4109-ae0d-d217f2a69f9f",
+            "operationId": "31486461095_3e7151ba-1a88-4f43-b7db-bbf1965f245b",
             "kind": "documentModelCopyTo",
             "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:10:45Z",
-            "lastUpdatedDateTime": "2023-03-07T01:10:46Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1236335702?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:48:25Z",
+            "lastUpdatedDateTime": "2023-03-27T08:48:25Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/271278437?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488216561_34bb49d1-6c0f-4826-ba92-c71b9d14fc1d",
+            "operationId": "31486461099_8b491b49-b2b7-4c60-ae12-737a5ee6e19f",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:10:38Z",
-            "lastUpdatedDateTime": "2023-03-07T01:10:43Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/645291880?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:48:20Z",
+            "lastUpdatedDateTime": "2023-03-27T08:48:24Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/526725163?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488216568_c36241e6-b7a7-4970-b380-3bbf240be1b6",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:10:31Z",
-            "lastUpdatedDateTime": "2023-03-07T01:10:37Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/357205570?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216576_6cab53fd-5a2c-47f2-8fd1-8bdf7b5b1f03",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:10:24Z",
-            "lastUpdatedDateTime": "2023-03-07T01:10:29Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1325690702?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216582_b5d4905d-a399-4119-ae62-97cb5d1d387f",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:10:17Z",
-            "lastUpdatedDateTime": "2023-03-07T01:10:22Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/52240525?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216585_11db25ac-3c6e-4ece-8ab3-69b4eb976c44",
+            "operationId": "31486461101_27dec16f-c424-46ff-bd10-731f08d62323",
             "kind": "documentModelCompose",
             "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:10:15Z",
-            "lastUpdatedDateTime": "2023-03-07T01:10:15Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/826946746?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216591_42a2c404-4a2d-462c-9d62-ea985a08b5d2",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:10:08Z",
-            "lastUpdatedDateTime": "2023-03-07T01:10:14Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1740341831?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216598_5a169419-9f4e-4bb8-b724-04a43d72e344",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:10:02Z",
-            "lastUpdatedDateTime": "2023-03-07T01:10:07Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1107012611?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216603_84a816a1-7308-44e2-82ad-0b3e53b0da62",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:09:56Z",
-            "lastUpdatedDateTime": "2023-03-07T01:10:01Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/592226846?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216610_04ac17e6-338c-4490-bf31-4cd287403684",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:09:50Z",
-            "lastUpdatedDateTime": "2023-03-07T01:09:55Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/741770617?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216621_0755e019-ac55-4401-b9a5-931521717753",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:09:39Z",
-            "lastUpdatedDateTime": "2023-03-07T01:09:43Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1316840435?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216630_eee8a2ed-b3bf-4884-b65f-34ca9cc7f453",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:09:29Z",
-            "lastUpdatedDateTime": "2023-03-07T01:09:33Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/2003115845?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216640_99b8002d-0854-460f-aeec-5f4d002577d1",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:09:20Z",
-            "lastUpdatedDateTime": "2023-03-07T01:09:25Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1338576691?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216647_bf51de42-fd17-416a-8d70-817e543504df",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:09:13Z",
-            "lastUpdatedDateTime": "2023-03-07T01:09:18Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/115603972?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216658_1bed537e-77c6-4f2f-a8c8-0bacc3935456",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:09:02Z",
-            "lastUpdatedDateTime": "2023-03-07T01:09:07Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/704965162?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216668_730ffcae-e86b-4edd-ad4a-00e84addc4a9",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:08:52Z",
-            "lastUpdatedDateTime": "2023-03-07T01:08:57Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/107323199?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216707_017f3a5c-9311-47ed-9dcf-45eeff95f263",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:08:12Z",
-            "lastUpdatedDateTime": "2023-03-07T01:08:18Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/400289957?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216720_74d685a2-db5a-4dcc-a71f-0531979c5639",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:08:00Z",
-            "lastUpdatedDateTime": "2023-03-07T01:08:05Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1760251373?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216731_2d537d14-e197-4826-a718-a373f556adcc",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:07:49Z",
-            "lastUpdatedDateTime": "2023-03-07T01:07:53Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/29336463?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216742_f73d546b-3f77-4b22-992e-dcd1e3974102",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:07:37Z",
-            "lastUpdatedDateTime": "2023-03-07T01:07:44Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1561133220?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216755_2902b183-df5a-442a-967b-f52a42911ae2",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:07:25Z",
-            "lastUpdatedDateTime": "2023-03-07T01:07:31Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/200188121?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216767_afbc947c-b73e-4976-8f13-efe38f5bdc80",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:07:12Z",
-            "lastUpdatedDateTime": "2023-03-07T01:07:19Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/534465537?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216856_af783b22-aff3-47e6-b571-3f2f3f3b6d2c",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:05:43Z",
-            "lastUpdatedDateTime": "2023-03-07T01:05:47Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1386876443?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216866_f9597f62-5f66-4e3d-8887-75891ea487c1",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:05:34Z",
-            "lastUpdatedDateTime": "2023-03-07T01:05:38Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/242623875?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216875_4a31653c-1cb1-47fb-aef1-e9712feb1fdc",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:05:24Z",
-            "lastUpdatedDateTime": "2023-03-07T01:05:29Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1250203363?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216884_196d5511-2a1f-49d0-bca6-f7ac14823462",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:05:16Z",
-            "lastUpdatedDateTime": "2023-03-07T01:05:23Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/851572593?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216896_46cbfcbc-68c0-4eb4-8352-d29a0fd0526e",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:05:03Z",
-            "lastUpdatedDateTime": "2023-03-07T01:05:10Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1221933755?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          }
-        ],
-        "nextLink": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/operations?api-version=2023-02-28-preview\u0026nextLink=2!228!MDAwMTI1IXN1YnNjcmlwdGlvbnMvZTYyYTJhMmFiZDUwNGRhOGE0OTQ0NzE1MmFmYTg0OGQvb3BlcmF0aW9ucy8zMTQ4ODIxNjkwOV9hNDBiY2EwNC0yNjdkLTQ3NGEtOWIwMi1hNTAxYzc4MDI2MTYvb3BlcmF0aW9uSW5mby5qc29uITAwMDAyOCE5OTk5LTEyLTMxVDIzOjU5OjU5Ljk5OTk5OTlaIQ--"
-      }
-    },
-    {
-      "RequestUri": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/operations?api-version=2023-02-28-preview\u0026nextLink=2!228!MDAwMTI1IXN1YnNjcmlwdGlvbnMvZTYyYTJhMmFiZDUwNGRhOGE0OTQ0NzE1MmFmYTg0OGQvb3BlcmF0aW9ucy8zMTQ4ODIxNjkwOV9hNDBiY2EwNC0yNjdkLTQ3NGEtOWIwMi1hNTAxYzc4MDI2MTYvb3BlcmF0aW9uSW5mby5qc29uITAwMDAyOCE5OTk5LTEyLTMxVDIzOjU5OjU5Ljk5OTk5OTlaIQ--",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-726bf535c77183b714b6c571b4f5439c-7e19f6555dcb2c0b-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "85f8268d8f43aa3f29404216de29026e",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "3e0c5e15-5886-4e0a-a321-8cf2b6171d37",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Mar 2023 04:39:20 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "663",
-        "x-ms-region": "West Europe"
-      },
-      "ResponseBody": {
-        "value": [
-          {
-            "operationId": "31488216909_a40bca04-267d-474a-9b02-a501c7802616",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:04:50Z",
-            "lastUpdatedDateTime": "2023-03-07T01:04:57Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/414539364?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216953_9a7de3df-345f-45b3-bf26-5c10680b72dd",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:04:06Z",
-            "lastUpdatedDateTime": "2023-03-07T01:04:12Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1558749034?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216970_d25e0646-fae5-4c3c-9e27-645869e919f2",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:03:50Z",
-            "lastUpdatedDateTime": "2023-03-07T01:03:59Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/592420439?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216981_e021a99d-16b1-45b2-b6c1-94eb96cf05aa",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:03:38Z",
-            "lastUpdatedDateTime": "2023-03-07T01:03:43Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/640896778?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488216995_3a3b3e26-c751-474b-bd07-65816a1e5e9c",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:03:25Z",
-            "lastUpdatedDateTime": "2023-03-07T01:03:29Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/733894255?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488217013_a8b67f09-16e0-44fb-93dc-ed3cefd3c3b4",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:03:07Z",
-            "lastUpdatedDateTime": "2023-03-07T01:03:16Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/260122046?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488217030_34a5ffc4-7dcb-499f-a46d-8c23d8f91826",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-07T01:02:49Z",
-            "lastUpdatedDateTime": "2023-03-07T01:02:59Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1585081246?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488229437_66e80c92-3a32-4ffa-b858-36a068806434",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-06T21:36:02Z",
-            "lastUpdatedDateTime": "2023-03-06T22:13:31Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/yaxliu_chs_bugbash_0306?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488229526_178f82d3-d449-404f-bc31-6566acaba0ea",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-06T21:34:33Z",
-            "lastUpdatedDateTime": "2023-03-06T22:09:31Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/chs_bugbash_0306_2?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488552486_d58556a9-0dfa-4fa9-a046-aa01cd7cc497",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:51:54Z",
-            "lastUpdatedDateTime": "2023-03-03T03:51:59Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/959580039?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488552489_88189d40-3e3b-4684-a76f-fc51885ced27",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:51:50Z",
-            "lastUpdatedDateTime": "2023-03-03T03:51:55Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1269091002?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488552493_81df3b66-73e8-49a9-b6d9-f65e2c068938",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:51:46Z",
-            "lastUpdatedDateTime": "2023-03-03T03:51:52Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/120357328?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488552497_18b58f68-6b61-49c2-8fe1-e532812f5893",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:51:43Z",
-            "lastUpdatedDateTime": "2023-03-03T03:51:48Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/516557579?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488552501_8f9003c8-d3fc-422f-bd50-62a7e579472e",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:51:38Z",
-            "lastUpdatedDateTime": "2023-03-03T03:51:43Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/961619649?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488552505_2e1be903-b343-4305-91d5-c56e8f1a79e6",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:51:34Z",
-            "lastUpdatedDateTime": "2023-03-03T03:51:40Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/610938145?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488552509_d28d1fc4-618c-4091-8c5c-54efefbf5c8c",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:51:31Z",
-            "lastUpdatedDateTime": "2023-03-03T03:51:36Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/243357544?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488552513_d341cae2-6ecb-429b-803b-cb579a753ef4",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:51:27Z",
-            "lastUpdatedDateTime": "2023-03-03T03:51:32Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/44746047?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488552517_e58da76e-a41c-4d88-94ab-a975d1b56cc9",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:51:22Z",
-            "lastUpdatedDateTime": "2023-03-03T03:51:28Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1349229065?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:48:18Z",
+            "lastUpdatedDateTime": "2023-03-27T08:48:19Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/61411722?api-version=2023-02-28-preview",
             "percentCompleted": 100,
             "tags": {
               "ordinary tag": "an ordinary tag",
@@ -1217,39 +360,39 @@
             }
           },
           {
-            "operationId": "31488552521_bbe34355-6958-4d4b-801c-4e9ad1156fd2",
+            "operationId": "31486461107_fbc71bca-2be4-4ae5-9c62-2a715e06a129",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:51:19Z",
-            "lastUpdatedDateTime": "2023-03-03T03:51:24Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1196322798?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:48:13Z",
+            "lastUpdatedDateTime": "2023-03-27T08:48:18Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/2040872213?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552525_4fb23968-c8b2-4f9a-9072-c027385c0602",
+            "operationId": "31486461111_d4cda314-1fde-41d8-81dd-61c5760abfb3",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:51:15Z",
-            "lastUpdatedDateTime": "2023-03-03T03:51:20Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1383567124?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:48:08Z",
+            "lastUpdatedDateTime": "2023-03-27T08:48:12Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/2055748085?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552529_bea5aa5d-fe64-4984-9df4-3c4fcf21d9e9",
+            "operationId": "31486461117_c753ccb8-4b6c-4694-90dc-e8f727b3782a",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:51:11Z",
-            "lastUpdatedDateTime": "2023-03-03T03:51:16Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1040954442?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:48:03Z",
+            "lastUpdatedDateTime": "2023-03-27T08:48:07Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/76456765?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552532_57f4a1df-38ff-40de-af4b-1ce779af43e6",
+            "operationId": "31486461122_13cff650-bd78-4294-92ea-a88857167588",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:51:07Z",
-            "lastUpdatedDateTime": "2023-03-03T03:51:12Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1202332929?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:47:57Z",
+            "lastUpdatedDateTime": "2023-03-27T08:48:01Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1281283919?api-version=2023-02-28-preview",
             "percentCompleted": 100,
             "tags": {
               "ordinary tag": "an ordinary tag",
@@ -1257,102 +400,165 @@
             }
           },
           {
-            "operationId": "31488552533_2f3b1071-a0e0-4cda-9903-f1639334c20d",
+            "operationId": "31486461832_f712e993-8586-4ef6-894b-3c7baaaa8ebb",
+            "kind": "documentModelBuild",
+            "status": "running",
+            "createdDateTime": "2023-03-27T08:36:08Z",
+            "lastUpdatedDateTime": "2023-03-27T08:52:36Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/2041848958?api-version=2023-02-28-preview",
+            "percentCompleted": 19
+          },
+          {
+            "operationId": "31486461836_93e26dc3-d986-4769-ac8d-b2dcd18e938f",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:51:07Z",
-            "lastUpdatedDateTime": "2023-03-03T04:22:58Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1244341892?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:36:04Z",
+            "lastUpdatedDateTime": "2023-03-27T08:36:07Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/661267925?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552537_fc0acb05-e91f-42db-8397-53c8ddf2fa0a",
+            "operationId": "31486461841_030bbbfb-0d57-4c77-899e-9c0b868981b1",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:51:03Z",
-            "lastUpdatedDateTime": "2023-03-03T03:51:08Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/469145833?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:35:59Z",
+            "lastUpdatedDateTime": "2023-03-27T08:36:03Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1607355970?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552541_69030eaf-c318-46da-91fc-04149ff072b5",
+            "operationId": "31486461846_3ce86dd0-1974-4225-a9bd-65f858cff47b",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:50:59Z",
-            "lastUpdatedDateTime": "2023-03-03T03:51:04Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1197207755?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:35:54Z",
+            "lastUpdatedDateTime": "2023-03-27T08:35:57Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/488573750?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552544_c3b7345e-4414-45db-939e-66c9580c7c5e",
+            "operationId": "31486461853_6817b331-3c41-466e-8740-5056ab7637b2",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:50:55Z",
-            "lastUpdatedDateTime": "2023-03-03T03:51:00Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/2091241702?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:35:47Z",
+            "lastUpdatedDateTime": "2023-03-27T08:35:51Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/647391555?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552548_709905a2-e656-4ee6-9308-8d6414c2be44",
-            "kind": "documentModelBuild",
+            "operationId": "31486461855_398f333c-f437-4561-ace3-90abaeb8c609",
+            "kind": "documentModelCopyTo",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:50:51Z",
-            "lastUpdatedDateTime": "2023-03-03T03:50:57Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/720491209?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:35:45Z",
+            "lastUpdatedDateTime": "2023-03-27T08:35:45Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1850984595?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552552_a6daf038-707d-4a55-a82f-70a7dc95c71f",
+            "operationId": "31486461859_ff43b81c-a321-451c-a45b-1dd978ea6888",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:50:48Z",
-            "lastUpdatedDateTime": "2023-03-03T03:50:53Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1038366756?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:35:40Z",
+            "lastUpdatedDateTime": "2023-03-27T08:35:44Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/2141649365?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552556_27e373d7-8111-443d-bbc4-a4145f8627c6",
-            "kind": "documentModelBuild",
+            "operationId": "31486461861_be43c7e2-bf6a-49ee-8ecd-572ced4b5acf",
+            "kind": "documentModelCopyTo",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:50:44Z",
-            "lastUpdatedDateTime": "2023-03-03T03:50:50Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/808235875?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:35:39Z",
+            "lastUpdatedDateTime": "2023-03-27T08:35:39Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1962207634?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552560_13dd4224-495c-4c8b-a8ae-1547c2cfb930",
+            "operationId": "31486461868_19795b38-6f78-4136-b57e-c60b2d944c2d",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:50:40Z",
-            "lastUpdatedDateTime": "2023-03-03T03:50:45Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/503933339?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:35:31Z",
+            "lastUpdatedDateTime": "2023-03-27T08:35:37Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/975634185?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552563_d9d7e9fe-ae97-49cb-9e26-3d6933188858",
-            "kind": "documentModelBuild",
+            "operationId": "31486461870_89267b55-a580-40c3-b332-efd4e309269d",
+            "kind": "documentModelCompose",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:50:36Z",
-            "lastUpdatedDateTime": "2023-03-03T03:50:41Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1115807851?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:35:29Z",
+            "lastUpdatedDateTime": "2023-03-27T08:35:30Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1315877467?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552567_c493d54f-71a3-493b-9a65-3cc9489b3ab8",
+            "operationId": "31486461876_90ce2ae3-040e-4c18-bffc-d21173bed8c8",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:50:32Z",
-            "lastUpdatedDateTime": "2023-03-03T03:50:38Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/671905350?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:35:24Z",
+            "lastUpdatedDateTime": "2023-03-27T08:35:28Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/2031624480?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552571_6ace8d73-f8ef-4319-87d5-16f13526c191",
+            "operationId": "31486461881_a351ea45-d220-4a49-8e4e-c3c7a176ad85",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:50:28Z",
-            "lastUpdatedDateTime": "2023-03-03T03:50:33Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1805246621?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:35:19Z",
+            "lastUpdatedDateTime": "2023-03-27T08:35:23Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/893135642?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486461882_0dfb964a-384a-41b5-b077-545bf70766ff",
+            "kind": "documentModelCompose",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T08:35:17Z",
+            "lastUpdatedDateTime": "2023-03-27T08:35:18Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1769569274?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486461887_9fdd7818-5ffd-48aa-adda-bcd138d821f8",
+            "kind": "documentModelBuild",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T08:35:12Z",
+            "lastUpdatedDateTime": "2023-03-27T08:35:17Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1053403758?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486461892_0463ff36-938f-43b4-b374-68ff72904bd6",
+            "kind": "documentModelBuild",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T08:35:07Z",
+            "lastUpdatedDateTime": "2023-03-27T08:35:11Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1402976862?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486461898_7eef8572-5488-457c-b7ec-6ee0b02d6331",
+            "kind": "documentModelBuild",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T08:35:02Z",
+            "lastUpdatedDateTime": "2023-03-27T08:35:06Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/671980287?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486461903_3f8cc687-4b28-46b3-a550-12a7beba0bf1",
+            "kind": "documentModelBuild",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T08:34:57Z",
+            "lastUpdatedDateTime": "2023-03-27T08:35:01Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1285023030?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486461922_8c349c6b-0155-45cb-a330-0dd108dbae84",
+            "kind": "documentModelBuild",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T08:34:37Z",
+            "lastUpdatedDateTime": "2023-03-27T08:34:42Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/246120243?api-version=2023-02-28-preview",
             "percentCompleted": 100,
             "tags": {
               "ordinary tag": "an ordinary tag",
@@ -1360,39 +566,12 @@
             }
           },
           {
-            "operationId": "31488552575_eede6d32-47c1-4d46-904a-9bb043515ad4",
+            "operationId": "31486461944_e79800cd-b74f-471b-9471-b90a68423bf5",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:50:24Z",
-            "lastUpdatedDateTime": "2023-03-03T03:50:29Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1645657417?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488552579_b1e56488-270e-43db-bfa7-1714af59578f",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:50:21Z",
-            "lastUpdatedDateTime": "2023-03-03T03:50:26Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/292406884?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488552583_13f405e5-e272-49e9-9b6d-b574f9e48001",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:50:17Z",
-            "lastUpdatedDateTime": "2023-03-03T03:50:22Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1807246760?api-version=2023-02-28-preview",
-            "percentCompleted": 100
-          },
-          {
-            "operationId": "31488552586_b90b98e4-e07e-41e4-a0a6-3a8a1283198a",
-            "kind": "documentModelBuild",
-            "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:50:13Z",
-            "lastUpdatedDateTime": "2023-03-03T03:50:18Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1343450023?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:34:16Z",
+            "lastUpdatedDateTime": "2023-03-27T08:34:20Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1390122484?api-version=2023-02-28-preview",
             "percentCompleted": 100,
             "tags": {
               "ordinary tag": "an ordinary tag",
@@ -1400,348 +579,456 @@
             }
           },
           {
-            "operationId": "31488552587_5480ed1e-76b1-468a-847d-d1bf6404bc0d",
+            "operationId": "31486461952_e5324cb0-9d3a-462e-9ba9-a39c274edb13",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:50:13Z",
-            "lastUpdatedDateTime": "2023-03-03T04:19:08Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1624162832?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:34:07Z",
+            "lastUpdatedDateTime": "2023-03-27T08:34:10Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1730856196?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552591_ca574559-65f8-4cae-8511-34517baf64ad",
+            "operationId": "31486461959_fe6da3a8-7967-4f83-a5a3-dad3e42c0fb3",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:50:09Z",
-            "lastUpdatedDateTime": "2023-03-03T03:50:14Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/947324736?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:34:00Z",
+            "lastUpdatedDateTime": "2023-03-27T08:34:03Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1349267875?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552595_d3524c2a-92d0-4331-8532-9fd3fbab0a9a",
+            "operationId": "31486461971_e9eaffe6-8ea3-4911-ab89-da391169dcc7",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:50:05Z",
-            "lastUpdatedDateTime": "2023-03-03T03:50:10Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1143444933?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:33:48Z",
+            "lastUpdatedDateTime": "2023-03-27T08:33:52Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/98608949?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552598_5c726f6f-e2cc-4e8b-8957-d180fb69a7ac",
+            "operationId": "31486461976_3fa36d22-d03d-4a1c-a661-0f722bca244e",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:50:01Z",
-            "lastUpdatedDateTime": "2023-03-03T03:50:06Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1743177083?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:33:43Z",
+            "lastUpdatedDateTime": "2023-03-27T08:33:48Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1960539593?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552602_f1cdd47b-5b17-4933-9d9f-6ebc27e841e1",
+            "operationId": "31486461986_450b205c-6d49-4a9c-a1d5-9f2e9d1b237d",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:49:57Z",
-            "lastUpdatedDateTime": "2023-03-03T03:50:02Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/974832979?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:33:33Z",
+            "lastUpdatedDateTime": "2023-03-27T08:33:37Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/399841908?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552606_ea28cddb-9014-4526-8451-03451175ad7f",
+            "operationId": "31486461991_5c61af16-b0e6-4ae9-bcbb-03fde160bb22",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:49:53Z",
-            "lastUpdatedDateTime": "2023-03-03T03:49:59Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/885732522?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:33:28Z",
+            "lastUpdatedDateTime": "2023-03-27T08:33:32Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/32612544?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552610_af6d8281-cb23-4b88-b42c-858000630d16",
+            "operationId": "31486462008_fa6f4eef-1c60-4a75-bb5d-d63bce6fbf51",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:49:50Z",
-            "lastUpdatedDateTime": "2023-03-03T03:49:55Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1353139647?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:33:12Z",
+            "lastUpdatedDateTime": "2023-03-27T08:33:16Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1354319509?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552614_f48658cf-4064-44a9-bb9d-4c31d9bdc5e2",
+            "operationId": "31486462017_431771a6-211d-46c8-b5dc-46105b231932",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:49:46Z",
-            "lastUpdatedDateTime": "2023-03-03T03:49:51Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/878511376?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:33:02Z",
+            "lastUpdatedDateTime": "2023-03-27T08:33:06Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/196582891?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552618_f8e0101f-f7c9-4d86-a1ac-db09cc44be07",
+            "operationId": "31486462033_a43e296c-fe3e-46a9-94f6-97e38691f122",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:49:42Z",
-            "lastUpdatedDateTime": "2023-03-03T03:49:46Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1583565096?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:32:46Z",
+            "lastUpdatedDateTime": "2023-03-27T08:32:50Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/656589241?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552621_40d56d3f-851e-404b-bb28-30968c08c620",
+            "operationId": "31486462048_6e5a4b42-9c6a-4467-99ec-36d6acd28599",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:49:38Z",
-            "lastUpdatedDateTime": "2023-03-03T03:49:43Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/2016767187?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:32:31Z",
+            "lastUpdatedDateTime": "2023-03-27T08:32:35Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/102517768?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552626_b3af38d9-d9b6-42de-9384-93f1527d8d5e",
+            "operationId": "31486462057_99775ba3-1f6d-44ab-9b0e-150493e84f3f",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:49:34Z",
-            "lastUpdatedDateTime": "2023-03-03T03:49:38Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1830669095?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:32:23Z",
+            "lastUpdatedDateTime": "2023-03-27T08:32:26Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/2005807053?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552629_22757374-bd71-4c01-aaa1-9728d3ffd471",
+            "operationId": "31486462066_13f991e9-ef62-4d03-a5b9-394503d4bc4d",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:49:30Z",
-            "lastUpdatedDateTime": "2023-03-03T03:49:34Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/650018879?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:32:14Z",
+            "lastUpdatedDateTime": "2023-03-27T08:32:18Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/791130303?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552633_b61f7d27-2f44-448e-b72a-1aeb03fdfe44",
+            "operationId": "31486462075_927c379f-c2a3-4494-80fb-eeb67b7f32a8",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:49:27Z",
-            "lastUpdatedDateTime": "2023-03-03T03:49:31Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1586227102?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:32:04Z",
+            "lastUpdatedDateTime": "2023-03-27T08:32:06Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1354620918?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552637_6dbef796-3339-4a97-8962-42b8008bd81b",
+            "operationId": "31486462082_8ffb0ba1-150f-414c-bd36-4d379f015afb",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:49:23Z",
-            "lastUpdatedDateTime": "2023-03-03T03:49:28Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/308879017?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:31:57Z",
+            "lastUpdatedDateTime": "2023-03-27T08:32:00Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/856779458?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552641_22166c36-9e07-4e98-82d7-e51e0418ac0f",
+            "operationId": "31486462090_2575f4fa-cfba-4246-aefc-0b398486d46f",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:49:19Z",
-            "lastUpdatedDateTime": "2023-03-03T03:49:24Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1086773871?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:31:49Z",
+            "lastUpdatedDateTime": "2023-03-27T08:31:53Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/795072708?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552645_e08a50f4-bd17-420c-9651-48570c203f06",
+            "operationId": "31486462095_a3357304-934a-4676-9980-1fd30f802756",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:49:15Z",
-            "lastUpdatedDateTime": "2023-03-03T03:49:20Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1391954434?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:31:45Z",
+            "lastUpdatedDateTime": "2023-03-27T08:31:48Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1715394643?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552652_df5d1add-6831-4525-812f-37f056ff2361",
+            "operationId": "31486462104_3e0632d6-e1d8-4d7a-81e6-64372e0f0962",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:49:07Z",
-            "lastUpdatedDateTime": "2023-03-03T03:49:13Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/891818477?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:31:35Z",
+            "lastUpdatedDateTime": "2023-03-27T08:31:40Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1740357167?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552656_ce0c259b-e2b9-4496-8658-22de14ebf43a",
+            "operationId": "31486462110_e28cfd8a-bd0b-4fe5-b0eb-8598e559de9f",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:49:04Z",
-            "lastUpdatedDateTime": "2023-03-03T03:49:09Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/299408037?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:31:30Z",
+            "lastUpdatedDateTime": "2023-03-27T08:31:34Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/2088702968?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552660_d6b58c48-01b2-4e2e-9972-85126a1fc93e",
+            "operationId": "31486462122_0602d5f7-1acf-47ca-9f7b-1a31e7a44a48",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:49:00Z",
-            "lastUpdatedDateTime": "2023-03-03T03:49:04Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/476458340?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:31:17Z",
+            "lastUpdatedDateTime": "2023-03-27T08:31:23Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/357080704?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552664_a2d241cc-0d22-4e99-bbf8-a25cf6826932",
+            "operationId": "31486462131_3d48b580-a600-49c7-b569-304fcebfac94",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:48:56Z",
-            "lastUpdatedDateTime": "2023-03-03T03:49:01Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/731145261?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:31:09Z",
+            "lastUpdatedDateTime": "2023-03-27T08:31:13Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1728480473?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552668_c1f08873-ffe3-463e-894f-33889fc6f3ee",
+            "operationId": "31486462139_f66e4899-af44-4be0-8919-e18d418b3183",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:48:51Z",
-            "lastUpdatedDateTime": "2023-03-03T03:48:57Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1427539533?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:31:00Z",
+            "lastUpdatedDateTime": "2023-03-27T08:31:03Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/925975809?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552672_a1489e4b-c741-4af9-8322-797a3cb701c9",
+            "operationId": "31486462148_0a50b33f-5dc7-4b14-bb6d-ce6ca4e3b776",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:48:47Z",
-            "lastUpdatedDateTime": "2023-03-03T03:48:53Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1621176580?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:30:52Z",
+            "lastUpdatedDateTime": "2023-03-27T08:30:55Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/78240011?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552687_df1a339a-fa16-4e20-99d0-fa24830425a9",
+            "operationId": "31486462158_0b11872a-5c87-4303-ae5d-97eceb313e0e",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:48:32Z",
-            "lastUpdatedDateTime": "2023-03-03T03:48:37Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/851311177?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:30:41Z",
+            "lastUpdatedDateTime": "2023-03-27T08:30:46Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1850165307?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552691_3e22f086-80a7-4c30-98aa-976e5a3cf330",
+            "operationId": "31486462169_dff65b58-8005-459b-8d2e-8b705b74f76b",
             "kind": "documentModelBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:48:29Z",
-            "lastUpdatedDateTime": "2023-03-03T03:48:33Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1495530839?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:30:31Z",
+            "lastUpdatedDateTime": "2023-03-27T08:30:36Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/216641199?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552694_f4dec690-737e-4ae1-8813-2c28958adbb5",
-            "kind": "documentModelBuild",
+            "operationId": "31486462275_20118105-d374-425b-acf3-5ea431ee276e",
+            "kind": "documentClassifierBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:48:25Z",
-            "lastUpdatedDateTime": "2023-03-03T03:48:30Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1517461136?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:28:44Z",
+            "lastUpdatedDateTime": "2023-03-27T08:29:17Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentClassifiers/1220944964?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552699_9fe54478-dfa6-417a-a872-ad8e38e7cfc9",
-            "kind": "documentModelBuild",
+            "operationId": "31486462310_6496ce0f-3c2b-4522-b40b-a425c8c8cb8f",
+            "kind": "documentClassifierBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:48:21Z",
-            "lastUpdatedDateTime": "2023-03-03T03:48:26Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/881630899?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:28:09Z",
+            "lastUpdatedDateTime": "2023-03-27T08:28:42Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentClassifiers/1594916474?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552702_8cd8eeb1-9119-4eab-b5bf-5b937b7a7b99",
-            "kind": "documentModelBuild",
+            "operationId": "31486463696_8237095a-fd2b-4a08-904b-4be1d5f8c2f4",
+            "kind": "documentClassifierBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:48:17Z",
-            "lastUpdatedDateTime": "2023-03-03T03:48:22Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/350425998?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:05:04Z",
+            "lastUpdatedDateTime": "2023-03-27T08:05:25Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentClassifiers/1047249699?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552706_3c28e621-fea0-429a-836f-c1eb1a1c6913",
-            "kind": "documentModelBuild",
+            "operationId": "31486463720_29d3a4f8-a450-4a1e-bbc3-ec0b541a6f6c",
+            "kind": "documentClassifierBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:48:13Z",
-            "lastUpdatedDateTime": "2023-03-03T03:48:18Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1172765918?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:04:40Z",
+            "lastUpdatedDateTime": "2023-03-27T08:05:03Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentClassifiers/953925988?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552717_b366e85e-50e0-4df8-9050-c4bbf80e770c",
-            "kind": "documentModelBuild",
+            "operationId": "31486463818_137f32da-f9a6-4ce2-ba6a-a6d625fff44a",
+            "kind": "documentClassifierBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:48:03Z",
-            "lastUpdatedDateTime": "2023-03-03T03:48:08Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1081192579?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:03:02Z",
+            "lastUpdatedDateTime": "2023-03-27T08:03:30Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentClassifiers/1335332063?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552720_af2cf83d-49a0-4114-9686-30ed27c40624",
-            "kind": "documentModelBuild",
+            "operationId": "31486463850_522acffd-e80a-4b6a-af91-833b4eca3756",
+            "kind": "documentClassifierBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:47:59Z",
-            "lastUpdatedDateTime": "2023-03-03T03:48:05Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/806658209?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T08:02:29Z",
+            "lastUpdatedDateTime": "2023-03-27T08:03:00Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentClassifiers/1999285912?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552724_ddec846c-0717-4d55-8ebd-2a3aa49e6339",
-            "kind": "documentModelBuild",
+            "operationId": "31486464303_217cc7d5-0eca-47ba-b1ef-6bc0e7cc967a",
+            "kind": "documentClassifierBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:47:55Z",
-            "lastUpdatedDateTime": "2023-03-03T03:48:00Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/257724624?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T07:54:56Z",
+            "lastUpdatedDateTime": "2023-03-27T07:55:24Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentClassifiers/890033905?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552730_0e29259f-c13a-4f53-b2a4-5857379d7256",
-            "kind": "documentModelBuild",
+            "operationId": "31486464367_b7e33ade-05b7-40f7-b91d-636a9dfbe671",
+            "kind": "documentClassifierBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:47:50Z",
-            "lastUpdatedDateTime": "2023-03-03T03:47:56Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/489208061?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T07:53:53Z",
+            "lastUpdatedDateTime": "2023-03-27T07:54:22Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentClassifiers/1814663389?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552735_4b2485e8-8b29-4fbb-a152-f20937505b69",
-            "kind": "documentModelBuild",
+            "operationId": "31486464445_245f9806-54c8-43aa-9dfd-e1cd512b4626",
+            "kind": "documentClassifierBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:47:44Z",
-            "lastUpdatedDateTime": "2023-03-03T03:47:53Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1187829501?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T07:52:35Z",
+            "lastUpdatedDateTime": "2023-03-27T07:52:52Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentClassifiers/1742020488?api-version=2023-02-28-preview",
             "percentCompleted": 100
           },
           {
-            "operationId": "31488552741_dbcf1b5b-b40a-4818-a299-57287577e391",
-            "kind": "documentModelBuild",
+            "operationId": "31486464480_6347c385-525b-4617-bb10-018b0e8c0b9c",
+            "kind": "documentClassifierBuild",
             "status": "succeeded",
-            "createdDateTime": "2023-03-03T03:47:39Z",
-            "lastUpdatedDateTime": "2023-03-03T03:47:47Z",
-            "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1277579998?api-version=2023-02-28-preview",
+            "createdDateTime": "2023-03-27T07:51:59Z",
+            "lastUpdatedDateTime": "2023-03-27T07:52:34Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentClassifiers/2134937706?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486464612_662ebed2-257c-495c-a098-11154f7116bc",
+            "kind": "documentClassifierBuild",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T07:49:48Z",
+            "lastUpdatedDateTime": "2023-03-27T07:50:02Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentClassifiers/1840049440?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486464646_b45d317a-5b65-4977-bf12-1ed4c745e49a",
+            "kind": "documentClassifierBuild",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T07:49:13Z",
+            "lastUpdatedDateTime": "2023-03-27T07:49:47Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentClassifiers/136255622?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486464847_a687a44c-17b3-4a32-91cf-3324af991759",
+            "kind": "documentClassifierBuild",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T07:45:53Z",
+            "lastUpdatedDateTime": "2023-03-27T07:46:08Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentClassifiers/236589516?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486464864_5d81dd6c-7b35-4d32-9f9f-fbddf94513ad",
+            "kind": "documentClassifierBuild",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T07:45:35Z",
+            "lastUpdatedDateTime": "2023-03-27T07:45:52Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentClassifiers/654677856?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486467654_1eb3fda6-c6ee-4f5d-9a68-f636b3a9de53",
+            "kind": "documentClassifierBuild",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T06:59:05Z",
+            "lastUpdatedDateTime": "2023-03-27T06:59:21Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentClassifiers/1653237670?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486468211_5158a7f8-36b5-4961-a6c5-d6483e2f4495",
+            "kind": "documentClassifierBuild",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T06:49:49Z",
+            "lastUpdatedDateTime": "2023-03-27T06:50:05Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentClassifiers/360040260?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486468247_06b40c5d-2dce-4a84-8f08-174343eedbd6",
+            "kind": "documentClassifierBuild",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T06:49:13Z",
+            "lastUpdatedDateTime": "2023-03-27T06:49:28Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentClassifiers/1052113348?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486468762_7b78bb6c-8c37-46d7-afd2-d4cd438f98fb",
+            "kind": "documentClassifierBuild",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T06:40:37Z",
+            "lastUpdatedDateTime": "2023-03-27T06:40:55Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentClassifiers/672471877?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486468880_d3c7f89c-5856-4267-96cf-3c3479aa1229",
+            "kind": "documentClassifierBuild",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T06:38:39Z",
+            "lastUpdatedDateTime": "2023-03-27T06:38:56Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentClassifiers/1180574373?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486468958_6ff58f63-95c9-4781-a06a-20a548fc25fe",
+            "kind": "documentClassifierBuild",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T06:37:22Z",
+            "lastUpdatedDateTime": "2023-03-27T06:37:39Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentClassifiers/1337231341?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486469136_016e5371-52f0-47a7-98b4-640020ed7f47",
+            "kind": "documentClassifierBuild",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T06:34:23Z",
+            "lastUpdatedDateTime": "2023-03-27T06:34:39Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentClassifiers/264602656?api-version=2023-02-28-preview",
+            "percentCompleted": 100
+          },
+          {
+            "operationId": "31486469154_527ba874-8c72-4c39-9c04-18d0e1629169",
+            "kind": "documentClassifierBuild",
+            "status": "succeeded",
+            "createdDateTime": "2023-03-27T06:34:05Z",
+            "lastUpdatedDateTime": "2023-03-27T06:34:22Z",
+            "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentClassifiers/128637396?api-version=2023-02-28-preview",
             "percentCompleted": 100
           }
         ]
       }
     },
     {
-      "RequestUri": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/operations/31488204045_11b672ba-1b10-4c63-8b61-cc131e4d7f78?api-version=2023-02-28-preview",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/operations/31486460825_9fad9247-4b61-4d28-8566-ca12631f892e?api-version=2023-02-28-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-b4fd294787b780b973aa57b86100185c-f092d74e3ac5d745-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "27088ed89c7e41f3668ba88cab8f8f8c",
+        "traceparent": "00-6108d30391e97a472cb96789b0473bd0-1c6e95d0802a9f4a-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230326.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3210f85feb026ad3003d25a7ed236d59",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "bce8b26e-99ac-47b5-a71c-8392555e738d",
+        "apim-request-id": "b3816366-3d2a-4a9e-8cb1-f3962c2a799e",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Mar 2023 04:39:20 GMT",
+        "Date": "Mon, 27 Mar 2023 08:53:00 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "15",
-        "x-ms-region": "West Europe"
+        "x-envoy-upstream-service-time": "23",
+        "x-ms-region": "East US"
       },
       "ResponseBody": {
-        "operationId": "31488204045_11b672ba-1b10-4c63-8b61-cc131e4d7f78",
+        "operationId": "31486460825_9fad9247-4b61-4d28-8566-ca12631f892e",
         "kind": "documentModelBuild",
         "status": "succeeded",
-        "createdDateTime": "2023-03-07T04:39:14Z",
-        "lastUpdatedDateTime": "2023-03-07T04:39:20Z",
-        "resourceLocation": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/870279568?api-version=2023-02-28-preview",
+        "createdDateTime": "2023-03-27T08:52:55Z",
+        "lastUpdatedDateTime": "2023-03-27T08:52:59Z",
+        "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1922823521?api-version=2023-02-28-preview",
         "percentCompleted": 100,
         "result": {
           "docTypes": {
-            "870279568": {
+            "1922823521": {
               "fieldSchema": {
                 "Merchant": {
                   "type": "string"
@@ -1813,9 +1100,9 @@
               }
             }
           },
-          "modelId": "870279568",
-          "createdDateTime": "2023-03-07T04:39:20Z",
-          "expirationDateTime": "2025-03-06T04:39:20Z",
+          "modelId": "1922823521",
+          "createdDateTime": "2023-03-27T08:52:59Z",
+          "expirationDateTime": "2025-03-26T08:52:59Z",
           "apiVersion": "2023-02-28-preview",
           "tags": {
             "ordinary tag": "an ordinary tag",
@@ -1829,26 +1116,26 @@
       }
     },
     {
-      "RequestUri": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/870279568?api-version=2023-02-28-preview",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/1922823521?api-version=2023-02-28-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-bbddbd43271c047e7f4a2a0cd151d66c-c1c13df2d154d373-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "79ddaf82afcc30035639d75c1562bab2",
+        "traceparent": "00-3e28c797c85aab95733263653d170849-28195f8673e0f68f-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230326.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2aa1f0b1879c0ed9eab69695e0cd7a64",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
-        "apim-request-id": "b533aaef-f857-4e21-93d4-59b29c6e50d8",
+        "apim-request-id": "915be534-09b4-492f-add4-014c5dca0211",
         "Content-Length": "0",
-        "Date": "Tue, 07 Mar 2023 04:39:20 GMT",
+        "Date": "Mon, 27 Mar 2023 08:53:00 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "69",
-        "x-ms-region": "West Europe"
+        "x-envoy-upstream-service-time": "62",
+        "x-ms-region": "East US"
       },
       "ResponseBody": null
     }
@@ -1856,7 +1143,7 @@
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
     "FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL": "https://sanitized.blob.core.windows.net",
-    "FORM_RECOGNIZER_ENDPOINT": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/",
-    "RandomSeed": "1863983190"
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/",
+    "RandomSeed": "1960109379"
   }
 }

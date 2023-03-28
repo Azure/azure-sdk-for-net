@@ -110,7 +110,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             ServiceClient = new DocumentAnalysisRestClient(Diagnostics, pipeline, endpoint, options.VersionString);
         }
 
-        #region Build
+        #region Build Document Model
         /// <summary>
         /// Build a custom document analysis model from a collection of documents in an Azure Blob Storage container.
         /// </summary>
@@ -287,7 +287,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 throw;
             }
         }
-        #endregion Build
+        #endregion Build Document Model
 
         #region Management Ops
 
@@ -671,7 +671,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         #endregion
 
-        #region Copy
+        #region Copy Document Model
         /// <summary>
         /// Copy a custom model stored in this resource (the source) to the user specified
         /// target Form Recognizer resource.
@@ -834,9 +834,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        #endregion Copy
+        #endregion Copy Document Model
 
-        #region Composed Model
+        #region Compose Document Model
 
         /// <summary>
         /// Composes a model from a collection of existing models.
@@ -959,6 +959,158 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         internal static List<ComponentDocumentModelDetails> ConvertToComponentModelDetails(IEnumerable<string> componentModelIds)
             => componentModelIds.Select((modelId) => new ComponentDocumentModelDetails(modelId)).ToList();
 
-        #endregion Composed Model
+        #endregion Compose Document Model
+
+        #region Classifiers
+
+        /// <summary>
+        /// Builds a document classifier from training data stored in an Azure Blob Storage container.
+        /// </summary>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documentTypes">
+        /// A mapping to the training data of each document type supported by the classifier. Keys are the names of the document types, and
+        /// values are used to locate the training files stored in an Azure Blob Storage container.
+        /// </param>
+        /// <param name="classifierId">A unique ID for your classifier. If not specified, a classifier ID will be created for you.</param>
+        /// <param name="description">An optional classifier description.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="BuildDocumentClassifierOperation"/> to wait on this long-running operation. Its Value upon successful
+        /// completion will contain meta-data about the created document classifier.
+        /// </returns>
+        public virtual BuildDocumentClassifierOperation BuildDocumentClassifier(WaitUntil waitUntil, IDictionary<string, ClassifierDocumentTypeDetails> documentTypes, string classifierId = default, string description = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documentTypes, nameof(documentTypes));
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(BuildDocumentClassifier)}");
+            scope.Start();
+
+            try
+            {
+                classifierId ??= Guid.NewGuid().ToString();
+                var request = new BuildDocumentClassifierRequest(classifierId, documentTypes)
+                {
+                    Description = description
+                };
+
+                var response = ServiceClient.DocumentClassifiersBuildClassifier(request, cancellationToken);
+                var operation = new BuildDocumentClassifierOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Builds a document classifier from training data stored in an Azure Blob Storage container.
+        /// </summary>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documentTypes">
+        /// A mapping to the training data of each document type supported by the classifier. Keys are the names of the document types, and
+        /// values are used to locate the training files stored in an Azure Blob Storage container.
+        /// </param>
+        /// <param name="classifierId">A unique ID for your classifier. If not specified, a classifier ID will be created for you.</param>
+        /// <param name="description">An optional classifier description.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="BuildDocumentClassifierOperation"/> to wait on this long-running operation. Its Value upon successful
+        /// completion will contain meta-data about the created document classifier.
+        /// </returns>
+        public virtual async Task<BuildDocumentClassifierOperation> BuildDocumentClassifierAsync(WaitUntil waitUntil, IDictionary<string, ClassifierDocumentTypeDetails> documentTypes, string classifierId = default, string description = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documentTypes, nameof(documentTypes));
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(BuildDocumentClassifier)}");
+            scope.Start();
+
+            try
+            {
+                classifierId ??= Guid.NewGuid().ToString();
+                var request = new BuildDocumentClassifierRequest(classifierId, documentTypes)
+                {
+                    Description = description
+                };
+
+                var response = await ServiceClient.DocumentClassifiersBuildClassifierAsync(request, cancellationToken).ConfigureAwait(false);
+                var operation = new BuildDocumentClassifierOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes the document classifier with the specified classifier ID.
+        /// </summary>
+        /// <param name="classifierId">The ID of the document classifier to delete.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
+        public virtual Response DeleteDocumentClassifier(string classifierId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(DeleteDocumentClassifier)}");
+            scope.Start();
+
+            try
+            {
+                return ServiceClient.DocumentClassifiersDeleteClassifier(classifierId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes the document classifier with the specified classifier ID.
+        /// </summary>
+        /// <param name="classifierId">The ID of the document classifier to delete.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
+        public virtual async Task<Response> DeleteDocumentClassifierAsync(string classifierId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(DeleteDocumentClassifier)}");
+            scope.Start();
+
+            try
+            {
+                return await ServiceClient.DocumentClassifiersDeleteClassifierAsync(classifierId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        #endregion Classifiers
     }
 }

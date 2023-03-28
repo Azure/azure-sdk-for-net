@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    internal partial class ClassifierDocumentTypeDetails : IUtf8JsonSerializable
+    public partial class ClassifierDocumentTypeDetails : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -55,7 +55,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    azureBlobFileListSource = AzureBlobFileListSource.DeserializeAzureBlobFileListSource(property.Value);
+                    azureBlobFileListSource = DocumentAnalysis.AzureBlobFileListSource.DeserializeAzureBlobFileListSource(property.Value);
                     continue;
                 }
             }

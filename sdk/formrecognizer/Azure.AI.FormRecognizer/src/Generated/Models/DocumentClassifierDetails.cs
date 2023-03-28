@@ -12,54 +12,48 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Document classifier info. </summary>
-    internal partial class DocumentClassifierDetails
+    public partial class DocumentClassifierDetails
     {
         /// <summary> Initializes a new instance of DocumentClassifierDetails. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
-        /// <param name="createdDateTime"> Date and time (UTC) when the document classifier was created. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the document classifier was created. </param>
         /// <param name="apiVersion"> API version used to create this document classifier. </param>
-        /// <param name="docTypes"> List of document types to classify against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/>, <paramref name="apiVersion"/> or <paramref name="docTypes"/> is null. </exception>
-        internal DocumentClassifierDetails(string classifierId, DateTimeOffset createdDateTime, string apiVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes)
+        /// <param name="documentTypes"> List of document types to classify against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/>, <paramref name="apiVersion"/> or <paramref name="documentTypes"/> is null. </exception>
+        internal DocumentClassifierDetails(string classifierId, DateTimeOffset createdOn, string apiVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes)
         {
             Argument.AssertNotNull(classifierId, nameof(classifierId));
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-            Argument.AssertNotNull(docTypes, nameof(docTypes));
+            Argument.AssertNotNull(documentTypes, nameof(documentTypes));
 
             ClassifierId = classifierId;
-            CreatedDateTime = createdDateTime;
+            CreatedOn = createdOn;
             ApiVersion = apiVersion;
-            DocTypes = docTypes;
+            DocumentTypes = documentTypes;
         }
 
         /// <summary> Initializes a new instance of DocumentClassifierDetails. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="description"> Document classifier description. </param>
-        /// <param name="createdDateTime"> Date and time (UTC) when the document classifier was created. </param>
-        /// <param name="expirationDateTime"> Date and time (UTC) when the document classifier will expire. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the document classifier was created. </param>
+        /// <param name="expiresOn"> Date and time (UTC) when the document classifier will expire. </param>
         /// <param name="apiVersion"> API version used to create this document classifier. </param>
-        /// <param name="docTypes"> List of document types to classify against. </param>
-        internal DocumentClassifierDetails(string classifierId, string description, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string apiVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes)
+        /// <param name="documentTypes"> List of document types to classify against. </param>
+        internal DocumentClassifierDetails(string classifierId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, string apiVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes)
         {
             ClassifierId = classifierId;
             Description = description;
-            CreatedDateTime = createdDateTime;
-            ExpirationDateTime = expirationDateTime;
+            CreatedOn = createdOn;
+            ExpiresOn = expiresOn;
             ApiVersion = apiVersion;
-            DocTypes = docTypes;
+            DocumentTypes = documentTypes;
         }
 
         /// <summary> Unique document classifier name. </summary>
         public string ClassifierId { get; }
         /// <summary> Document classifier description. </summary>
         public string Description { get; }
-        /// <summary> Date and time (UTC) when the document classifier was created. </summary>
-        public DateTimeOffset CreatedDateTime { get; }
-        /// <summary> Date and time (UTC) when the document classifier will expire. </summary>
-        public DateTimeOffset? ExpirationDateTime { get; }
         /// <summary> API version used to create this document classifier. </summary>
         public string ApiVersion { get; }
-        /// <summary> List of document types to classify against. </summary>
-        public IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> DocTypes { get; }
     }
 }

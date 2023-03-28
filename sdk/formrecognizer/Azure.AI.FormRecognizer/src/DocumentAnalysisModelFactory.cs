@@ -13,15 +13,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// </summary>
     public static class DocumentAnalysisModelFactory
     {
-        /// <summary> Initializes a new instance of ResourceDetails. </summary>
-        /// <param name="customDocumentModelCount"> Number of custom models in the current resource. </param>
-        /// <param name="customDocumentModelLimit"> Maximum number of custom models supported in the current resource. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.ResourceDetails"/> instance for mocking. </returns>
-        public static ResourceDetails ResourceDetails(int customDocumentModelCount = default, int customDocumentModelLimit = default)
-        {
-            return new ResourceDetails(customDocumentModelCount, customDocumentModelLimit);
-        }
-
         /// <summary> Initializes a new instance of AddressValue. </summary>
         /// <param name="houseNumber"> House or building number. </param>
         /// <param name="poBox"> Post office box number. </param>
@@ -105,6 +96,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             fieldConfidence ??= new Dictionary<string, float>();
 
             return new DocumentTypeDetails(description, buildMode, fieldSchema, fieldConfidence);
+        }
+
+        /// <summary> Initializes a new instance of DocumentClassifierDetails. </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="description"> Document classifier description. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the document classifier was created. </param>
+        /// <param name="expiresOn"> Date and time (UTC) when the document classifier will expire. </param>
+        /// <param name="apiVersion"> API version used to create this document classifier. </param>
+        /// <param name="documentTypes"> List of document types to classify against. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentClassifierDetails"/> instance for mocking. </returns>
+        public static DocumentClassifierDetails DocumentClassifierDetails(string classifierId = null, string description = null, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = null, string apiVersion = null, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes = null)
+        {
+            documentTypes ??= new Dictionary<string, ClassifierDocumentTypeDetails>();
+
+            return new DocumentClassifierDetails(classifierId, description, createdOn, expiresOn, apiVersion, documentTypes);
         }
 
         /// <summary> Initializes a new instance of DocumentField. </summary>
@@ -529,6 +535,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             tags ??= new Dictionary<string, string>();
 
             return new OperationSummary(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion: null, tags);
+        }
+
+        /// <summary> Initializes a new instance of ResourceDetails. </summary>
+        /// <param name="customDocumentModelCount"> Number of custom models in the current resource. </param>
+        /// <param name="customDocumentModelLimit"> Maximum number of custom models supported in the current resource. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.ResourceDetails"/> instance for mocking. </returns>
+        public static ResourceDetails ResourceDetails(int customDocumentModelCount = default, int customDocumentModelLimit = default)
+        {
+            return new ResourceDetails(customDocumentModelCount, customDocumentModelLimit);
         }
     }
 }

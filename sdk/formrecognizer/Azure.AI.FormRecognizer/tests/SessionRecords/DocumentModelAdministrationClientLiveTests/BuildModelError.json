@@ -1,35 +1,35 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels:build?api-version=2023-02-28-preview",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels:build?api-version=2023-02-28-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "94",
+        "Content-Length": "124",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-c33d2ddfb0f4928eadb12688cae8c37d-3d19200606185876-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230302.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "dcdf243aa3419d1bf82461ff5510a957",
+        "traceparent": "00-dd1bf1b7925e585987b0f80eb0311f11-c9e84f9dbf0a6090-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230326.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "00e1cc4044a521b6d4452862fc39c6d9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "modelId": "1161487183",
+        "modelId": "2110243683",
         "buildMode": "template",
         "azureBlobSource": {
-          "containerUrl": "Sanitized"
+          "containerUrl": "https://sanitized.blob.core.windows.net"
         }
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "8ddd38db-96f1-401a-8602-cefc87d8ff1f",
+        "apim-request-id": "b451bba5-6f96-411f-bb88-c597ea3547d4",
         "Content-Type": "application/json",
-        "Date": "Fri, 03 Mar 2023 03:43:31 GMT",
+        "Date": "Mon, 27 Mar 2023 08:36:03 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "10",
-        "x-ms-region": "West Europe"
+        "x-envoy-upstream-service-time": "44",
+        "x-ms-region": "East US"
       },
       "ResponseBody": {
         "error": {
@@ -45,7 +45,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/",
-    "RandomSeed": "1766341777"
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/",
+    "RandomSeed": "1490766282"
   }
 }

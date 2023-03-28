@@ -11,13 +11,13 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    internal partial class AzureBlobFileListSource : IUtf8JsonSerializable
+    public partial class AzureBlobFileListSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("containerUrl"u8);
-            writer.WriteStringValue(ContainerUrl.AbsoluteUri);
+            writer.WriteStringValue(ContainerUri.AbsoluteUri);
             writer.WritePropertyName("fileList"u8);
             writer.WriteStringValue(FileList);
             writer.WriteEndObject();

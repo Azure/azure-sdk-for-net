@@ -8,12 +8,8 @@
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Training data source. </summary>
-    internal partial class ClassifierDocumentTypeDetails
+    public partial class ClassifierDocumentTypeDetails
     {
-        /// <summary> Initializes a new instance of ClassifierDocumentTypeDetails. </summary>
-        public ClassifierDocumentTypeDetails()
-        {
-        }
 
         /// <summary> Initializes a new instance of ClassifierDocumentTypeDetails. </summary>
         /// <param name="azureBlobSource"> Azure Blob Storage location containing the training data. </param>
@@ -23,10 +19,5 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             AzureBlobSource = azureBlobSource;
             AzureBlobFileListSource = azureBlobFileListSource;
         }
-
-        /// <summary> Azure Blob Storage location containing the training data. </summary>
-        public AzureBlobContentSource AzureBlobSource { get; set; }
-        /// <summary> Azure Blob Storage file list specifying the training data. </summary>
-        public AzureBlobFileListSource AzureBlobFileListSource { get; set; }
     }
 }

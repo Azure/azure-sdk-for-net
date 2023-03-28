@@ -11,24 +11,19 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> File list in Azure Blob Storage. </summary>
-    internal partial class AzureBlobFileListSource
+    public partial class AzureBlobFileListSource
     {
         /// <summary> Initializes a new instance of AzureBlobFileListSource. </summary>
-        /// <param name="containerUrl"> Azure Blob Storage container URL. </param>
+        /// <param name="containerUri"> Azure Blob Storage container URL. </param>
         /// <param name="fileList"> Path to a JSONL file within the container specifying a subset of documents for training. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerUrl"/> or <paramref name="fileList"/> is null. </exception>
-        public AzureBlobFileListSource(Uri containerUrl, string fileList)
+        /// <exception cref="ArgumentNullException"> <paramref name="containerUri"/> or <paramref name="fileList"/> is null. </exception>
+        public AzureBlobFileListSource(Uri containerUri, string fileList)
         {
-            Argument.AssertNotNull(containerUrl, nameof(containerUrl));
+            Argument.AssertNotNull(containerUri, nameof(containerUri));
             Argument.AssertNotNull(fileList, nameof(fileList));
 
-            ContainerUrl = containerUrl;
+            ContainerUri = containerUri;
             FileList = fileList;
         }
-
-        /// <summary> Azure Blob Storage container URL. </summary>
-        public Uri ContainerUrl { get; set; }
-        /// <summary> Path to a JSONL file within the container specifying a subset of documents for training. </summary>
-        public string FileList { get; set; }
     }
 }

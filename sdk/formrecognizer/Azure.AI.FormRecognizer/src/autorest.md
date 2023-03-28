@@ -5,7 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 batch:
   - tag: release_2_1
-  - tag: 2022-02-28-preview
+  - tag: 2023-02-28-preview
 ```
 
 ### AutoRest Configuration
@@ -97,13 +97,13 @@ directive:
       $["x-accessibility"] = "internal"
 ```
 
-### Release 2022-02-28-preview
+### Release 2023-02-28-preview
 
-These settings apply only when `--tag=2022-02-28-preview` is specified on the command line.
+These settings apply only when `--tag=2023-02-28-preview` is specified on the command line.
 
-``` yaml $(tag) == '2022-02-28-preview'
-input-file:
-  - https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAACAGGXZS7CK5XBG35C6YRTQWZAV26DQ
+``` yaml $(tag) == '2023-02-28-preview'
+require:
+  - https://github.com/Azure/azure-rest-api-specs/blob/543f1920ac96303cc244d60e1c12f0b56fc646db/specification/cognitiveservices/data-plane/FormRecognizer/readme.md
 
 generation1-convenience-client: true
 suppress-abstract-base-class: OperationDetails
