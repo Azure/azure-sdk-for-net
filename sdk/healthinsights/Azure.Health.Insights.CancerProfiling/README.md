@@ -1,10 +1,11 @@
 # Azure Cognitive Services Health Insights Cancer Profiling client library for .NET
 
-<!-- [Health Insights](https://review.learn.microsoft.com/en-us/azure/cognitive-services/health-decision-support/overview?branch=main) is an Azure Applied AI Service built with the Azure Cognitive Services Framework, that leverages multiple Cognitive Services, Healthcare API services and other Azure resources.
-The [Cancer Profiling model](https://review.learn.microsoft.com/en-us/azure/cognitive-services/health-decision-support/oncophenotype/overview?branch=main) receives clinical records of oncology patients and outputs cancer staging, such as clinical stage TNM categories and pathologic stage TNM categories as well as tumor site, histology. -->
+[Health Insights](https://review.learn.microsoft.com/azure/azure-health-insights/?branch=release-azure-health-insights) is an Azure Applied AI Service built with the Azure Cognitive Services Framework, that leverages multiple Cognitive Services, Healthcare API services and other Azure resources.
 
-[Health Insights] is an Azure Applied AI Service built with the Azure Cognitive Services Framework, that leverages multiple Cognitive Services, Healthcare API services and other Azure resources.
-The [Cancer Profiling model] receives clinical records of oncology patients and outputs cancer staging, such as clinical stage TNM categories and pathologic stage TNM categories as well as tumor site, histology.
+The [Cancer Profiling model][cancer_profiling_docs] receives clinical records of oncology patients and outputs cancer staging, such as clinical stage TNM categories and pathologic stage TNM categories as well as tumor site, histology.
+
+[Source code][cancer_profiling_client_src] | [Package (NuGet)][cancer_profiling_client_nuget_package] | [API reference documentation][cancer_profiling_api_documentation] | [Product documentation][product_docs]
+
 
 ## Getting started
 
@@ -29,9 +30,7 @@ This table shows the relationship between SDK versions and supported API version
 
 ### Authenticate the client
 
-You can find the endpoint for your Health Insights service resource using the
-[Azure Portal](https://ms.portal.azure.com/#create/Microsoft.CognitiveServicesHealthInsights)
-or [Azure CLI](https://learn.microsoft.com/cli/azure/):
+You can find the endpoint for your Health Insights service resource using the [Azure Portal][azure_portal] or [Azure CLI][azure_cli]
 
 ```bash
 # Get the endpoint for the Health Insights service resource
@@ -58,18 +57,12 @@ var credential = new AzureKeyCredential(apiKey);
 var client = new CancerProfilingClient(new Uri(endpoint), credential);
 ```
 
-### Long-Running Operations
-
-For large documents which take a long time to execute, these operations are implemented as [**long-running operations**][dotnet_lro]. Long-running operations consist of an initial request sent to the service to start an operation, followed by polling the service at intervals to determine whether the operation has completed or failed, and if it has succeeded, to get the result.
-
-For long running operations in the Azure SDK, the client exposes a `Start<operation-name>` method that returns an `Operation<T>` or a `PageableOperation<T>`.  You can use the extension method `WaitForCompletionAsync()` to wait for the operation to complete and obtain its result.  A sample code snippet is provided to illustrate using long-running operations [below](#run-multiple-actions-asynchronously).
-
 ## Key concepts
 The Cancer Profiling model allows you to infer cancer attributes such as tumor site, histology, clinical stage TNM categories and pathologic stage TNM categories from unstructured clinical documents.
 
 ## Examples
 
-- [Infer Cancer Profiling](#cancer-profiling)
+- [Infer Cancer Profiling][samples_location]
 
 ### Cancer Profiling
 
@@ -140,14 +133,9 @@ To learn more about other logging mechanisms see [Diagnostics Samples][logging].
 
 ## Next steps
 
-<!-- These code samples show common scenario operations with the Azure health Insights Cancer Profiling library. More samples can be found under the [samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/healthinsights/Azure.Health.Insights.CancerProfiling/tests/Samples/) directory.
+## Additional documentation
 
-- Infer Cancer Profile: [Sample_InferCancerProfile.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/healthinsights/Azure.Health.Insights.CancerProfiling/tests/Samples/Sample_InferCancerProfile.cs) -->
-
-
-### Additional documentation
-
-<!-- For more extensive documentation on Azure Health Insights Cancer Profiling, see the [Cancer Profiling documentation](https://review.learn.microsoft.com/en-us/azure/cognitive-services/health-decision-support/oncophenotype/overview?branch=main) on docs.microsoft.com. -->
+For more extensive documentation on Azure Health Insights Cancer Profiling, see the [Cancer Profiling documentation][cancer_profiling_docs] on docs.microsoft.com.
 
 ## Contributing
 
@@ -158,18 +146,20 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
 <!-- LINKS -->
-[cancer_profiling_client_class]:
- <!-- https://github.com/Azure/azure-sdk-for-net/tree/main/
-sdk/healthinsights/Azure.Health.Insights.CancerProfiling/src/Generated/CancerProfilingClient.cs -->
-
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md
-[cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
+[cancer_profiling_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.CancerProfiling/src/
+[cancer_profiling_client_nuget_package]: https://www.nuget.org/packages/
+[cancer_profiling_api_documentation]: https://review.learn.microsoft.com/rest/api/cognitiveservices/healthinsights/onco-phenotype?branch=healthin202303
+[cancer_profiling_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.CancerProfiling/src/Generated/CancerProfilingClient.cs
+[samples_location]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.CancerProfiling/samples
 [logging]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/samples/Diagnostics.md
 [azure_cli]: https://docs.microsoft.com/cli/azure
-[azure_sub]: https://azure.microsoft.com/free/dotnet/
+[azure_sub
+]: https://azure.microsoft.com/free/dotnet/
 [nuget]: https://www.nuget.org/
-[azure_portal]: https://portal.azure.com
+[azure_portal]: https://ms.portal.azure.com/#create/Microsoft.CognitiveServicesHealthInsights
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
+[cancer_profiling_docs]: https://review.learn.microsoft.com/azure/cognitive-services/health-decision-support/oncophenotype/overview?branch=main
+[product_docs]:https://review.learn.microsoft.com/azure/cognitive-services/health-decision-support/oncophenotype/?branch=main
