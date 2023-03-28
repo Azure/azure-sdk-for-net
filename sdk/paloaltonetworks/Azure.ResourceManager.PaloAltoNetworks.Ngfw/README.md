@@ -1,6 +1,6 @@
 # Microsoft Azure PaloAltoNetworks.Ngfw management client library for .NET
 
-The Azure Native Paloaltonetworks’ Next Generation Firewall enables customers to discover Palo Alto Networks’ NGFirewall in the Azure portal and consume it in their virtual networks (a.k.a Azure VNets and Azure virtual Wan hubs). It enables secure application access, inspects all traffic, and helps enforce least-privileged access – all while detecting and preventing advanced threats.
+The Azure Native Paloaltonetworks' Next Generation Firewall enables customers to discover Palo Alto Networks' NGFirewall in the Azure portal and consume it in their virtual networks (a.k.a Azure VNets and Azure virtual Wan hubs). It enables secure application access, inspects all traffic, and helps enforce least-privileged access – all while detecting and preventing advanced threats.
 This library supports managing Azure Paloaltonetworks CloudNGFW resources.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
