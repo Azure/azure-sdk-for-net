@@ -1,7 +1,6 @@
 # Release History
 
 ## 1.0.0-beta.1 (Unreleased)
-Expected release date - 2023-04-18
 
 ### General New Features
 
