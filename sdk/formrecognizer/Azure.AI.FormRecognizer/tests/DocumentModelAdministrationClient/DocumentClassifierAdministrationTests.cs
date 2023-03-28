@@ -36,6 +36,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
+        public void GetDocumentClassifierValidatesArguments()
+        {
+            var client = CreateInstrumentedClient();
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.GetDocumentClassifierAsync(classifierId: null));
+            Assert.ThrowsAsync<ArgumentException>(async () => await client.GetDocumentClassifierAsync(classifierId: string.Empty));
+
+            Assert.Throws<ArgumentNullException>(() => client.GetDocumentClassifier(classifierId: null));
+            Assert.Throws<ArgumentException>(() => client.GetDocumentClassifier(classifierId: string.Empty));
+        }
+
+        [Test]
         public void DeleteDocumentClassifierValidatesArguments()
         {
             var client = CreateInstrumentedClient();

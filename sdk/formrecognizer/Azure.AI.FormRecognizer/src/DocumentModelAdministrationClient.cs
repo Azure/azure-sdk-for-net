@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// properties.
     /// </summary>
     /// <remarks>
-    /// This client only works with <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31"/> and up.
+    /// This client only works with <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31"/> and newer.
     /// If you want to use a lower version, please use the <see cref="Training.FormTrainingClient"/>.
     /// </remarks>
     public class DocumentModelAdministrationClient
@@ -392,7 +392,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary>
-        /// Gets a collection of items describing the models available on this Cognitive Services Account.
+        /// Gets a collection of items describing the models available on this Form Recognizer resource.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="DocumentModelSummary"/> items.</returns>
@@ -436,7 +436,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary>
-        /// Gets a collection of items describing the models available on this Cognitive Services Account.
+        /// Gets a collection of items describing the models available on this Form Recognizer resource.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="DocumentModelSummary"/> items.</returns>
@@ -981,6 +981,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// A <see cref="BuildDocumentClassifierOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the created document classifier.
         /// </returns>
+        /// <remarks>
+        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview"/> and newer.
+        /// </remarks>
         public virtual BuildDocumentClassifierOperation BuildDocumentClassifier(WaitUntil waitUntil, IDictionary<string, ClassifierDocumentTypeDetails> documentTypes, string classifierId = default, string description = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documentTypes, nameof(documentTypes));
@@ -1031,6 +1034,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// A <see cref="BuildDocumentClassifierOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the created document classifier.
         /// </returns>
+        /// <remarks>
+        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview"/> and newer.
+        /// </remarks>
         public virtual async Task<BuildDocumentClassifierOperation> BuildDocumentClassifierAsync(WaitUntil waitUntil, IDictionary<string, ClassifierDocumentTypeDetails> documentTypes, string classifierId = default, string description = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documentTypes, nameof(documentTypes));
@@ -1064,11 +1070,166 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary>
+        /// Gets information about a document classifier, including the types of documents it can identify.
+        /// </summary>
+        /// <param name="classifierId">The ID of the classifier to retrieve.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentClassifierDetails"/> containing
+        /// information about the requested classifier.</returns>
+        /// <remarks>
+        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview"/> and newer.
+        /// </remarks>
+        public virtual Response<DocumentClassifierDetails> GetDocumentClassifier(string classifierId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetDocumentClassifier)}");
+            scope.Start();
+
+            try
+            {
+                Response<DocumentClassifierDetails> response = ServiceClient.DocumentClassifiersGetClassifier(classifierId, cancellationToken);
+                return Response.FromValue(response.Value, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets information about a document classifier, including the types of documents it can identify.
+        /// </summary>
+        /// <param name="classifierId">The ID of the classifier to retrieve.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentClassifierDetails"/> containing
+        /// information about the requested classifier.</returns>
+        /// <remarks>
+        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview"/> and newer.
+        /// </remarks>
+        public virtual async Task<Response<DocumentClassifierDetails>> GetDocumentClassifierAsync(string classifierId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetDocumentClassifier)}");
+            scope.Start();
+
+            try
+            {
+                Response<DocumentClassifierDetails> response = await ServiceClient.DocumentClassifiersGetClassifierAsync(classifierId, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a collection of items describing the document classifiers available on this Form Recognizer resource.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A collection of <see cref="DocumentClassifierDetails"/> items.</returns>
+        /// <remarks>
+        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview"/> and newer.
+        /// </remarks>
+        public virtual Pageable<DocumentClassifierDetails> GetDocumentClassifiers(CancellationToken cancellationToken = default)
+        {
+            Page<DocumentClassifierDetails> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetDocumentClassifiers)}");
+                scope.Start();
+
+                try
+                {
+                    Response<GetDocumentClassifiersResponse> response = ServiceClient.DocumentClassifiersListClassifiers(cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            Page<DocumentClassifierDetails> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetDocumentClassifiers)}");
+                scope.Start();
+
+                try
+                {
+                    Response<GetDocumentClassifiersResponse> response = ServiceClient.DocumentClassifiersListClassifiersNextPage(nextLink, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets a collection of items describing the document classifiers available on this Form Recognizer resource.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A collection of <see cref="DocumentClassifierDetails"/> items.</returns>
+        /// <remarks>
+        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview"/> and newer.
+        /// </remarks>
+        public virtual AsyncPageable<DocumentClassifierDetails> GetDocumentClassifiersAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<DocumentClassifierDetails>> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetDocumentClassifiers)}");
+                scope.Start();
+
+                try
+                {
+                    Response<GetDocumentClassifiersResponse> response = await ServiceClient.DocumentClassifiersListClassifiersAsync(cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            async Task<Page<DocumentClassifierDetails>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetDocumentClassifiers)}");
+                scope.Start();
+
+                try
+                {
+                    Response<GetDocumentClassifiersResponse> response = await ServiceClient.DocumentClassifiersListClassifiersNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
         /// Deletes the document classifier with the specified classifier ID.
         /// </summary>
         /// <param name="classifierId">The ID of the document classifier to delete.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
+        /// <remarks>
+        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview"/> and newer.
+        /// </remarks>
         public virtual Response DeleteDocumentClassifier(string classifierId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
@@ -1093,6 +1254,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="classifierId">The ID of the document classifier to delete.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
+        /// <remarks>
+        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview"/> and newer.
+        /// </remarks>
         public virtual async Task<Response> DeleteDocumentClassifierAsync(string classifierId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));

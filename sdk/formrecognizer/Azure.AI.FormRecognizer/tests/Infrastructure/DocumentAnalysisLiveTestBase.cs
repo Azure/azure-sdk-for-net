@@ -59,11 +59,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// <returns>The instrumented <see cref="DocumentAnalysisClient" />.</returns>
         protected DocumentAnalysisClient CreateDocumentAnalysisClient(out DocumentAnalysisClient nonInstrumentedClient, bool useTokenCredential = false, string apiKey = default)
         {
-            if (useTokenCredential)
-            {
-                Assert.Ignore();
-            }
-
             var endpoint = new Uri(TestEnvironment.Endpoint);
             var options = InstrumentClientOptions(new DocumentAnalysisClientOptions(_serviceVersion));
 

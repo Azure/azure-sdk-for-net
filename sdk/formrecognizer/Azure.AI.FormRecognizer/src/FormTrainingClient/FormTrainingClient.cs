@@ -18,8 +18,8 @@ namespace Azure.AI.FormRecognizer.Training
     /// properties.
     /// </summary>
     /// <remarks>
-    /// This client only works with <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and lower.
-    /// If you want to use a higher version, please use the <see cref="DocumentAnalysis.DocumentModelAdministrationClient"/>.
+    /// This client only works with <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and older.
+    /// If you want to use a newer version, please use the <see cref="DocumentAnalysis.DocumentModelAdministrationClient"/>.
     /// </remarks>
     public class FormTrainingClient
     {
@@ -128,7 +128,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="useTrainingLabels">If <c>true</c>, corresponding labeled files must exist in the blob container. If <c>false</c>, the model will be trained from forms only.</param>
         /// <param name="modelName">An optional, user-defined name to associate with the model.
         /// <remarks>
-        /// This property is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
+        /// This property is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and newer.
         /// </remarks>
         /// </param>
         /// <param name="trainingOptions">A set of options available for configuring the training request. For example, set a filter to apply
@@ -179,7 +179,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="useTrainingLabels">If <c>true</c>, corresponding labeled files must exist in the blob container. If <c>false</c>, the model will be trained from forms only.</param>
         /// <param name="modelName">An optional, user-defined name to associate with the model.
         /// <remarks>
-        /// This property is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
+        /// This property is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and newer.
         /// </remarks></param>
         /// <param name="trainingOptions">A set of options available for configuring the training request. For example, set a filter to apply
         /// to the documents in the source path for training.</param>
@@ -318,7 +318,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="modelName">An optional, user-defined name to associate with the model.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
-        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and newer.
         /// </remarks>
         /// <returns>
         /// <para>A <see cref="CreateComposedModelOperation"/> to wait on this long-running operation. Its Value upon successful
@@ -359,7 +359,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="modelName">An optional, user-defined name to associate with the model.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
-        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and newer.
         /// </remarks>
         /// <returns>
         /// <para>A <see cref="CreateComposedModelOperation"/> to wait on this long-running operation. Its Value upon successful
