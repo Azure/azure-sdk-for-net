@@ -403,8 +403,8 @@ namespace Azure.Core
     public abstract partial class Delay
     {
         protected Delay(System.TimeSpan? maxDelay = default(System.TimeSpan?), double jitterFactor = 0.2) { }
-        public static Azure.Core.Delay CreateExponentialDelayStrategy(System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?)) { throw null; }
-        public static Azure.Core.Delay CreateFixedDelayStrategy(System.TimeSpan? delay = default(System.TimeSpan?)) { throw null; }
+        public static Azure.Core.Delay CreateExponentialDelay(System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?)) { throw null; }
+        public static Azure.Core.Delay CreateFixedDelay(System.TimeSpan? delay = default(System.TimeSpan?)) { throw null; }
         public System.TimeSpan GetNextDelay(Azure.Response? response, int retryNumber, System.TimeSpan? serverDelayHint, System.Collections.Generic.IDictionary<string, object?> context) { throw null; }
         public System.Threading.Tasks.ValueTask<System.TimeSpan> GetNextDelayAsync(Azure.Response? response, int retryNumber, System.TimeSpan? serverDelayHint, System.Collections.Generic.IDictionary<string, object?> context) { throw null; }
         protected abstract System.TimeSpan GetNextDelayCore(Azure.Response? response, int retryNumber, System.Collections.Generic.IDictionary<string, object?> context);

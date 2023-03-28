@@ -16,7 +16,7 @@ namespace Azure.Core.Tests.DelayStrategies
         [TestCase(3)]
         public void DefaultFixedDelay(int count)
         {
-            var strategy = Delay.CreateFixedDelayStrategy();
+            var strategy = Delay.CreateFixedDelay();
             TimeSpan total = TimeSpan.Zero;
             TimeSpan expected = TimeSpan.FromSeconds(0.8 * count);
 

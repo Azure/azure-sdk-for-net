@@ -32,7 +32,7 @@ namespace Azure.Core.Pipeline
         public RetryPolicy(int maxRetries = 3, Delay? delayStrategy = default)
         {
             _maxRetries = maxRetries;
-            _delayStrategy = delayStrategy ?? Delay.CreateExponentialDelayStrategy();
+            _delayStrategy = delayStrategy ?? Delay.CreateExponentialDelay();
         }
 
         /// <summary>

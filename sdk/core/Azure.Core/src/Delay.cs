@@ -41,7 +41,7 @@ namespace Azure.Core
         /// <param name="initialDelay"></param>
         /// <param name="maxDelay"></param>
         /// <returns></returns>
-        public static Delay CreateExponentialDelayStrategy(
+        public static Delay CreateExponentialDelay(
             TimeSpan? initialDelay = default,
             TimeSpan? maxDelay = default)
         {
@@ -53,7 +53,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="delay"></param>
         /// <returns></returns>
-        public static Delay CreateFixedDelayStrategy(
+        public static Delay CreateFixedDelay(
             TimeSpan? delay = default)
         {
             return new FixedDelay(delay ?? TimeSpan.FromSeconds(0.8));
