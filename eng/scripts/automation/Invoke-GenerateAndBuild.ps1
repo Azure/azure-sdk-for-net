@@ -22,7 +22,7 @@ $downloadUrlPrefix = $inputJson.installInstructionInput.downloadUrlPrefix
 $autorestConfig = $inputJson.autorestConfig
 
 $autorestConfig = $inputJson.autorestConfig
-$relatedCadlProjectFolder = $inputJson.relatedCadlProjectFolder
+$relatedTypeSpecProjectFolder = $inputJson.relatedTypeSpecProjectFolder
 
 $autorestConfigYaml = ""
 if ($autorestConfig) {
@@ -69,8 +69,8 @@ if ($readmeFile) {
   Invoke-GenerateAndBuildSDK -readmeAbsolutePath $readme -sdkRootPath $sdkPath -autorestConfigYaml "$autorestConfigYaml" -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
 }
 
-if ($relatedCadlProjectFolder) {
-  $typespecFolder = Resolve-Path (Join-Path $swaggerDir $relatedCadlProjectFolder)
+if ($relatedTypeSpecProjectFolder) {
+  $typespecFolder = Resolve-Path (Join-Path $swaggerDir $relatedTypeSpecProjectFolder)
   $newPackageOutput = "newPackageOutput.json"
 
   $tspConfigYaml = Get-Content -Path (Join-Path "$typespecFolder" "tspconfig.yaml") -Raw
@@ -92,16 +92,16 @@ if ($relatedCadlProjectFolder) {
   }
   $projectFolder = (Join-Path $sdkPath "sdk" $service $namespace)
   $specRoot = $swaggerDir
-  if ((-Not $relatedCadlProjectFolder.Contains("specification")) -And $swaggerDir.Contains("specification"))
+  if ((-Not $relatedTypeSpecProjectFolder.Contains("specification")) -And $swaggerDir.Contains("specification"))
   {
-    $relatedCadlProjectFolder = "specification/$relatedCadlProjectFolder"
+    $relatedTypeSpecProjectFolder = "specification/$relatedTypeSpecProjectFolder"
     $specRoot = Split-Path $specRoot
   }
   New-TypeSpecPackageFolder `
       -service $service `
       -namespace $namespace `
       -sdkPath $sdkPath `
-      -relatedTypeSpecProjectFolder $relatedCadlProjectFolder `
+      -relatedTypeSpecProjectFolder $relatedTypeSpecProjectFolder `
       -specRoot $specRoot `
       -outputJsonFile $newpackageoutput
   $newPackageOutputJson = Get-Content $newPackageOutput -Raw | ConvertFrom-Json
