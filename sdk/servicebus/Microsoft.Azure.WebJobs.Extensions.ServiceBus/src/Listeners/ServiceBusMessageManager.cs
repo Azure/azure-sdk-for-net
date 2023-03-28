@@ -11,7 +11,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 	/// This class manages a queue of Service Bus messages using a minimum and maximum batch size. This class is NOT thread safe.
 	/// Concurrency must be managed by the class using this message manager.
 	/// </summary>
-	internal class ServiceBusMessageManager : IDisposable
+	internal class ServiceBusMessageManager
 	{
 		private int _maxBatchSize;
 		private int _minBatchSize;
@@ -80,11 +80,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 				}
 			}
 			return messagesToReturn;
-		}
-
-		public void Dispose()
-		{
-			GC.SuppressFinalize(this);
 		}
 	}
 }

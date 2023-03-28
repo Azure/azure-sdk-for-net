@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.Diagnostics;
 using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Administration;
@@ -45,6 +46,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private Task _backgroundCacheMonitoringTask;
         private readonly SemaphoreSlim _cachedEventsGuard = new SemaphoreSlim(1, 1);
         private CancellationTokenSource _backgroundCacheMonitoringCts;
+        private ServiceBusMessageManager _cachedMessagesManager;
 
         // internal for testing
         internal volatile bool Disposed;
@@ -148,6 +150,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
             _details = new Lazy<string>(() => $"namespace='{_client.Value?.FullyQualifiedNamespace}', entityPath='{_entityPath}', singleDispatch='{_singleDispatch}', " +
                 $"isSessionsEnabled='{_isSessionsEnabled}', functionId='{_functionId}'");
+
+            _cachedMessagesManager = new(options.MaxMessageBatchSize, options.MinMessageBatchSize);
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
@@ -512,6 +516,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     }
                     else
                     {
+                        // TODO semaphore and check if there are events in storage, don't close the receiver if we're just waiting
+                        // what if we lose the session?
                         // Close the session and release the session lock after draining all messages for the accepted session.
                         if (_isSessionsEnabled)
                         {
@@ -563,9 +569,77 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             return messages;
         }
 
-        private void MonitorCache()
+        private async Task MonitorCache(CancellationTokenSource backgroundCancellationTokenSource)
         {
+            var acquiredSemaphore = false;
+            try
+            {
+                var currentCycle = ValueStopwatch.StartNew();
 
+                // Wait max wait time after starting this task before checking the number of events.
+                while (currentCycle.GetElapsedTime() < _serviceBusOptions.MaxWaitTime && !backgroundCancellationTokenSource.Token.IsCancellationRequested)
+                {
+                    var remainingTime = GetRemainingTime(currentCycle.GetElapsedTime());
+                    await Task.Delay(remainingTime, backgroundCancellationTokenSource.Token).ConfigureAwait(false);
+                }
+
+                if (!_cachedEventsGuard.Wait(0, backgroundCancellationTokenSource.Token))
+                {
+                    await _cachedEventsGuard.WaitAsync(backgroundCancellationTokenSource.Token).ConfigureAwait(false);
+                }
+                acquiredSemaphore = true;
+
+                // Since max wait time has passed, pull all events out of the cache and invoke the function on it.
+                var triggerEvents = _cachedMessagesManager.TryGetBatchofEventsWithCached(allowPartialBatch: true);
+
+                if (triggerEvents.Length > 0)
+                {
+                    var details = GetOperationDetails(_mostRecentPartitionContext, "MaxWaitTimeElapsed");
+                    _logger.LogDebug($"Partition Processor has waited MaxWaitTime since last invocation and is attempting to invoke function on all held events ({details})");
+
+                    await TriggerExecute(triggerEvents, _mostRecentPartitionContext, backgroundCancellationTokenSource.Token).ConfigureAwait(false);
+                    await CheckpointAsync(triggerEvents.Last(), _mostRecentPartitionContext).ConfigureAwait(false);
+                }
+                else
+                {
+                    var details = GetOperationDetails(_mostRecentPartitionContext, "MaxWaitTimeElapsed");
+                    _logger.LogDebug($"Partition Processor has waited MaxWaitTime since last invocation but there are no events still being held ({details})");
+                }
+
+                // After one wait cycle, cancel and null the background task cancellation token source. It can be assumed that there will never be more than the
+                // minimum batch size number of events in the cache. The monitoring cycle will be restarted by the process events handler if needed.
+                backgroundCancellationTokenSource.Cancel();
+                backgroundCancellationTokenSource.Dispose();
+                _cachedEventsBackgroundTaskCts = null;
+            }
+            catch (TaskCanceledException)
+            {
+                // If this monitoring cycle was canceled, then null the background task cancellation token source and dispose the cancellation token.
+                backgroundCancellationTokenSource.Dispose();
+                _cachedEventsBackgroundTaskCts = null;
+            }
+            finally
+            {
+                if (acquiredSemaphore)
+                {
+                    _cachedEventsGuard.Release();
+                }
+            }
+        }
+
+        private TimeSpan GetRemainingTime(TimeSpan elapsed)
+        {
+            if ((_serviceBusOptions.MaxWaitTime == Timeout.InfiniteTimeSpan) || (_serviceBusOptions.MaxWaitTime == TimeSpan.Zero) || (elapsed == TimeSpan.Zero))
+            {
+                return _serviceBusOptions.MaxWaitTime;
+            }
+
+            if (elapsed >= _serviceBusOptions.MaxWaitTime)
+            {
+                return TimeSpan.Zero;
+            }
+
+            return TimeSpan.FromMilliseconds(_serviceBusOptions.MaxWaitTime.TotalMilliseconds - elapsed.TotalMilliseconds);
         }
 
         private void ThrowIfDisposed()
