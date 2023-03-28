@@ -1,28 +1,27 @@
-﻿#region Snippet:Sample_Header_Policy
-using System;
-using Azure.Core;
+﻿using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Tests.Samples
 {
+    #region Snippet:Sample_Header_Policy
     public class AuxiliaryPoilcy : HttpPipelineSynchronousPolicy
     {
-        private static String AUTHORIZATION_AUXILIARY_HEADER = "x-ms-authorization-auxiliary";
-        private string Token { get; set; }
+        private static string AUTHORIZATION_AUXILIARY_HEADER = "x-ms-authorization-auxiliary";
+        string _token;
 
         public AuxiliaryPoilcy(string token)
         {
-            Token = token;
+            _token = token;
         }
 
         public override void OnSendingRequest(HttpMessage message)
         {
-            string token = "Bearer " + Token;
+            string token = "Bearer " + _token;
             if (!message.Request.Headers.TryGetValue(AUTHORIZATION_AUXILIARY_HEADER, out _))
             {
                 message.Request.Headers.Add(AUTHORIZATION_AUXILIARY_HEADER, token);
             }
         }
     }
+    #endregion
 }
-#endregion

@@ -6,7 +6,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Network;
 ```
 
 Indorder to test for multi tenant, you will need to setup service principal for another tenant.
@@ -22,29 +21,22 @@ Following code uses Virtual Network Peering to demonstrate how to authenticate a
 ***Create a pipeline policy***
 
 ```C# Snippet:Sample_Header_Policy
-using System;
-using Azure.Core;
-using Azure.Core.Pipeline;
-
-namespace Azure.ResourceManager.Tests.Samples
+public class AuxiliaryPoilcy : HttpPipelineSynchronousPolicy
 {
-    public class AuxiliaryPoilcy : HttpPipelineSynchronousPolicy
+    private static string AUTHORIZATION_AUXILIARY_HEADER = "x-ms-authorization-auxiliary";
+    string _token;
+
+    public AuxiliaryPoilcy(string token)
     {
-        private static String AUTHORIZATION_AUXILIARY_HEADER = "x-ms-authorization-auxiliary";
-        private string Token { get; set; }
+        _token = token;
+    }
 
-        public AuxiliaryPoilcy(string token)
+    public override void OnSendingRequest(HttpMessage message)
+    {
+        string token = "Bearer " + _token;
+        if (!message.Request.Headers.TryGetValue(AUTHORIZATION_AUXILIARY_HEADER, out _))
         {
-            Token = token;
-        }
-
-        public override void OnSendingRequest(HttpMessage message)
-        {
-            string token = "Bearer " + Token;
-            if (!message.Request.Headers.TryGetValue(AUTHORIZATION_AUXILIARY_HEADER, out _))
-            {
-                message.Request.Headers.Add(AUTHORIZATION_AUXILIARY_HEADER, token);
-            }
+            message.Request.Headers.Add(AUTHORIZATION_AUXILIARY_HEADER, token);
         }
     }
 }
@@ -52,45 +44,21 @@ namespace Azure.ResourceManager.Tests.Samples
 
 ***Authenticate the client and add token to the header***
 
-```C# Snippet:MultiTenant_CreateVirtualNetworkPeering
+```C# Snippet:Enable_Cross_Tenant_Authentication
 string clientId = Environment.GetEnvironmentVariable("CLIENT_ID");
 string clientSecret = Environment.GetEnvironmentVariable("CLIENT_SECRET");
 string tenantId01 = Environment.GetEnvironmentVariable("TENANT_ID_01");
 string tenantId02 = Environment.GetEnvironmentVariable("TENANT_ID_02");
 string subscriptionId01 = Environment.GetEnvironmentVariable("SUBSCRIPTION_ID_01");
-string subscriptionId02 = Environment.GetEnvironmentVariable("SUBSCRIPTION_ID_02");
 
 // Prepare client and policy for tenant01
-var cred = new ClientSecretCredential(tenantId02, clientId, clientSecret);
-var token = (await cred.GetTokenAsync(new Azure.Core.TokenRequestContext(
+ClientSecretCredential credForTenant01 = new ClientSecretCredential(tenantId01, clientId, clientSecret);
+ClientSecretCredential credForTenant02 = new ClientSecretCredential(tenantId02, clientId, clientSecret);
+
+string token = (await credForTenant02.GetTokenAsync(new Azure.Core.TokenRequestContext(
         new[] { "https://management.azure.com/.default" }))).Token;
-var options = new ArmClientOptions();
-var headerPolicy = new AuxiliaryPoilcy(token);
+ArmClientOptions options = new ArmClientOptions();
+AuxiliaryPoilcy headerPolicy = new AuxiliaryPoilcy(token);
 options.AddPolicy(headerPolicy, HttpPipelinePosition.PerCall);
-var client = new ArmClient(new ClientSecretCredential(tenantId01, clientId, clientSecret), subscriptionId01, options);
-
-var rg = (await client.GetDefaultSubscriptionAsync().Result.GetResourceGroups().GetAsync("sdktestrg01")).Value;
-var vnet = (await rg.GetVirtualNetworks().GetAsync("sdktest01")).Value;
-var data = new VirtualNetworkPeeringData()
-{
-    RemoteVirtualNetworkId = new ResourceIdentifier("/subscriptions/<SUBSCRIPTION_ID_02>/resourceGroups/sdktestrg02/providers/Microsoft.Network/virtualNetworks/sdktest02")
-};
-var peer01 = (await vnet.GetVirtualNetworkPeerings().CreateOrUpdateAsync(WaitUntil.Completed, "peer001", data)).Value;
-
-// Prepare client and policy for tenant02
-cred = new ClientSecretCredential(tenantId01, clientId, clientSecret);
-token = (await cred.GetTokenAsync(new Azure.Core.TokenRequestContext(
-        new[] { "https://management.azure.com/.default" }))).Token;
-options = new ArmClientOptions();
-headerPolicy = new AuxiliaryPoilcy(token);
-options.AddPolicy(headerPolicy, HttpPipelinePosition.PerCall);
-client = new ArmClient(new ClientSecretCredential(tenantId02, clientId, clientSecret), subscriptionId02, options);
-
-rg = (await client.GetDefaultSubscriptionAsync().Result.GetResourceGroups().GetAsync("sdktestrg02")).Value;
-vnet = (await rg.GetVirtualNetworks().GetAsync("sdktest02")).Value;
-data = new VirtualNetworkPeeringData()
-{
-    RemoteVirtualNetworkId = new ResourceIdentifier("/subscriptions/<SUBSCRIPTION_ID_01>/resourceGroups/sdktestrg01/providers/Microsoft.Network/virtualNetworks/sdktest01")
-};
-var peer02 = (await vnet.GetVirtualNetworkPeerings().CreateOrUpdateAsync(WaitUntil.Completed, "peer002", data)).Value;
+ArmClient client = new ArmClient(credForTenant01, subscriptionId01, options);
 ```
