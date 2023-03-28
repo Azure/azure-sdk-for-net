@@ -68,7 +68,7 @@ SecretClientOptions options = new SecretClientOptions()
 
 Another scenario where it may be helpful to use a custom retry policy is when you need to customize the delay behavior, but don't need to adjust the logic used to determine whether a request should be retried or not. In this case, it isn't necessary to create a custom `RetryPolicy` class - instead, you can pass in a `DelayStrategy` into the `RetryPolicy` constructor.  In the below example, we create a customized exponential delay strategy that uses different jitter factors from the default values. We then pass the strategy into the `RetryPolicy` constructor and set the constructed policy in our options.
 ```C# Snippet:CustomizeExponentialDelay
-var strategy = DelayStrategy.CreateExponentialDelayStrategy(minJitterFactor: 0, maxJitterFactor: 1);
+var strategy = DelayStrategy.CreateExponentialDelayStrategy();
 SecretClientOptions options = new SecretClientOptions()
 {
     RetryPolicy = new RetryPolicy(delayStrategy: strategy)

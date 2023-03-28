@@ -29,9 +29,9 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="maxRetries"></param>
         /// <param name="delayStrategy">The delay strategy to use</param>
-        public RetryPolicy(int? maxRetries = default, DelayStrategy? delayStrategy = default)
+        public RetryPolicy(int maxRetries = 3, DelayStrategy? delayStrategy = default)
         {
-            _maxRetries = maxRetries ?? 3;
+            _maxRetries = maxRetries;
             _delayStrategy = delayStrategy ?? DelayStrategy.CreateExponentialDelayStrategy();
         }
 

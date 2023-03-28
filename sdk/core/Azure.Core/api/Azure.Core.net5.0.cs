@@ -402,7 +402,7 @@ namespace Azure.Core
     }
     public abstract partial class DelayStrategy
     {
-        protected DelayStrategy(System.TimeSpan? maxDelay = default(System.TimeSpan?), double minJitterFactor = 0.8, double maxJitterFactor = 1.2) { }
+        protected DelayStrategy(System.TimeSpan? maxDelay = default(System.TimeSpan?), double jitterFactor = 0.2) { }
         public static Azure.Core.DelayStrategy CreateExponentialDelayStrategy(System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?)) { throw null; }
         public static Azure.Core.DelayStrategy CreateFixedDelayStrategy(System.TimeSpan? delay = default(System.TimeSpan?)) { throw null; }
         public System.TimeSpan GetNextDelay(Azure.Response? response, int retryNumber, System.TimeSpan? serverDelayHint, System.Collections.Generic.IDictionary<string, object?> context) { throw null; }
@@ -1040,7 +1040,7 @@ namespace Azure.Core.Pipeline
     }
     public partial class RetryPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {
-        public RetryPolicy(int? maxRetries = default(int?), Azure.Core.DelayStrategy? delayStrategy = null) { }
+        public RetryPolicy(int maxRetries = 3, Azure.Core.DelayStrategy? delayStrategy = null) { }
         protected Azure.Core.DelayStrategy DelayStrategy { get { throw null; } }
         protected static System.Collections.Generic.IDictionary<string, object?>? GetDelayContext(Azure.Core.HttpMessage message) { throw null; }
         protected virtual System.TimeSpan GetNextDelay(Azure.Core.HttpMessage message) { throw null; }
