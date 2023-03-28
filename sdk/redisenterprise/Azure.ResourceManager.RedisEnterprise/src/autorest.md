@@ -65,6 +65,11 @@ rename-mapping:
   Persistence.aofEnabled: IsAofEnabled
   Persistence.rdbEnabled: IsRdbEnabled
   Protocol.Plaintext: PlainText
+  ForceUnlinkParameters.ids: -|arm-id
+  ClusterPropertiesEncryptionCustomerManagedKeyEncryptionKeyIdentity.userAssignedIdentityResourceId: -|arm-id
+  LinkedDatabase.id: -|arm-id
+  OperationStatus.id: -|arm-id
+  RegionSkuDetail.resourceType: -|resource-type
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -72,8 +77,9 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
-  'UserAssignedIdentityResourceId': 'arm-id'
-  'ResourceType': 'resource-type'
+
+# mgmt-debug:
+#   show-serialized-names: true
 
 rename-rules:
   CPU: Cpu
@@ -111,9 +117,6 @@ directive:
     where: $.definitions
     transform: >
       $.OperationStatus.properties.error['x-ms-client-name'] = 'ErrorResponse';
-      $.LinkedDatabase.properties.id['x-ms-format'] = 'arm-id';
-      $.ForceUnlinkParameters.properties.ids.items['x-ms-format'] = 'arm-id';
-      $.OperationStatus.properties.id['x-ms-format'] = 'arm-id';
       $.OperationStatus.properties.startTime['format'] = 'date-time';
       $.OperationStatus.properties.endTime['format'] = 'date-time';
 
