@@ -3,7 +3,6 @@
 
 using System;
 using System.Buffers;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
@@ -447,8 +446,6 @@ namespace Azure.Containers.ContainerRegistry
 
             // Otherwise, upload in multiple chunks.
             byte[] buffer = ArrayPool<byte>.Shared.Rent(chunkSize);
-            long chunkCount = 0;
-            long blobLength = 0;
             using SHA256 sha256 = SHA256.Create();
 
             try
@@ -457,10 +454,11 @@ namespace Azure.Containers.ContainerRegistry
                 int bytesRead = async ?
                     await content.ReadAsync(buffer, 0, chunkSize, cancellationToken).ConfigureAwait(false) :
                     content.Read(buffer, 0, chunkSize);
+                long bytesSent = 0;
 
                 while (bytesRead > 0)
                 {
-                    var contentRange = GetContentRange(chunkCount * chunkSize, bytesRead);
+                    string contentRange = GetContentRange(bytesSent, bytesRead);
                     location = uploadChunkResult?.Headers.Location ?? location;
 
                     // Incrementally compute hash for digest.
@@ -473,8 +471,7 @@ namespace Azure.Containers.ContainerRegistry
                             _blobRestClient.UploadChunk(location, chunk, contentRange, bytesRead.ToString(CultureInfo.InvariantCulture), cancellationToken);
                     }
 
-                    blobLength += bytesRead;
-                    chunkCount++;
+                    bytesSent += bytesRead;
 
                     // Read next chunk into buffer
                     bytesRead = async ?
@@ -485,7 +482,7 @@ namespace Azure.Containers.ContainerRegistry
                 // Complete hash computation.
                 sha256.TransformFinalBlock(buffer, 0, 0);
 
-                return new ChunkedUploadResult(BlobHelper.FormatDigest(sha256.Hash), uploadChunkResult.Headers.Location, blobLength);
+                return new ChunkedUploadResult(BlobHelper.FormatDigest(sha256.Hash), uploadChunkResult.Headers.Location, bytesSent);
             }
             finally
             {
@@ -507,7 +504,7 @@ namespace Azure.Containers.ContainerRegistry
             return FormattableString.Invariant($"{offset}-{endRange}");
         }
 
-        private static long GetBlobSizeFromContentRange(string contentRange)
+        private static long GetBlobLengthFromContentRange(string contentRange)
         {
             string size = contentRange.Split('/')[1];
             return long.Parse(size, CultureInfo.InvariantCulture);
@@ -933,45 +930,59 @@ namespace Azure.Containers.ContainerRegistry
         private async Task<Response> DownloadBlobToInternalAsync(string digest, Stream destination, DownloadBlobToOptions options, bool async, CancellationToken cancellationToken)
         {
             byte[] buffer = ArrayPool<byte>.Shared.Rent(options.MaxChunkSize);
-            long bytesDownloaded = 0;
             using SHA256 sha256 = SHA256.Create();
-            long? blobSize = default;
+
+            long blobBytes = 0;
+            long? blobLength = default;
 
             try
             {
                 Response result = null;
+
                 do
                 {
-                    int chunkSize = blobSize.HasValue ?
-                        (int)Math.Min(blobSize.Value - bytesDownloaded, options.MaxChunkSize) :
+                    // Request a chunk
+                    long requestLength = blobLength.HasValue ?
+                        (int)Math.Min(blobLength.Value - blobBytes, options.MaxChunkSize) :
                         options.MaxChunkSize;
-                    HttpRange range = new HttpRange(bytesDownloaded, chunkSize);
+                    string requestRange = new HttpRange(blobBytes, requestLength).ToString();
 
-                    var chunkResult = async ?
-                        await _blobRestClient.GetChunkAsync(_repositoryName, digest, range.ToString(), cancellationToken).ConfigureAwait(false) :
-                        _blobRestClient.GetChunk(_repositoryName, digest, range.ToString(), cancellationToken);
+                    var getChunkResponse = async ?
+                        await _blobRestClient.GetChunkAsync(_repositoryName, digest, requestRange, cancellationToken).ConfigureAwait(false) :
+                        _blobRestClient.GetChunk(_repositoryName, digest, requestRange, cancellationToken);
 
-                    blobSize ??= GetBlobSizeFromContentRange(chunkResult.Headers.ContentRange);
-                    chunkSize = (int)chunkResult.Headers.ContentLength.Value;
+                    blobLength ??= GetBlobLengthFromContentRange(getChunkResponse.Headers.ContentRange);
 
+                    int chunkLength = (int)getChunkResponse.Headers.ContentLength.Value;
+                    Stream responseStream = getChunkResponse.Value;
+
+                    // Read the response stream until all content is received.
+                    int chunkBytes = 0;
+                    do
+                    {
+                        chunkBytes += async ?
+                            await responseStream.ReadAsync(buffer, chunkBytes, chunkLength - chunkBytes, cancellationToken).ConfigureAwait(false) :
+                            responseStream.Read(buffer, chunkBytes, chunkLength - chunkBytes);
+                    }
+                    while (chunkBytes < chunkLength);
+
+                    // Incrementally compute hash for digest.
+                    sha256.TransformBlock(buffer, 0, chunkBytes, buffer, 0);
+
+                    // Write the data to the destination stream.
                     if (async)
                     {
-                        await chunkResult.Value.ReadAsync(buffer, 0, chunkSize, cancellationToken).ConfigureAwait(false);
-                        sha256.TransformBlock(buffer, 0, chunkSize, buffer, 0);
-                        await destination.WriteAsync(buffer, 0, chunkSize, cancellationToken).ConfigureAwait(false);
+                        await destination.WriteAsync(buffer, 0, chunkBytes, cancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
-                        chunkResult.Value.Read(buffer, 0, chunkSize);
-                        sha256.TransformBlock(buffer, 0, chunkSize, buffer, 0);
-                        destination.Write(buffer, 0, chunkSize);
+                        destination.Write(buffer, 0, chunkBytes);
                     }
 
-                    bytesDownloaded += chunkSize;
-
-                    result = chunkResult.GetRawResponse();
+                    blobBytes += chunkBytes;
+                    result = getChunkResponse.GetRawResponse();
                 }
-                while (bytesDownloaded < blobSize.Value);
+                while (blobBytes < blobLength.Value);
 
                 // Complete hash computation.
                 sha256.TransformFinalBlock(buffer, 0, 0);
