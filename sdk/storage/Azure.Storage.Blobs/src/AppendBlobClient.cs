@@ -30,7 +30,7 @@ namespace Azure.Storage.Blobs.Specialized
     ///
     /// Each block in an append blob can be a different size.
     /// Beginning with x-ms-version 2022-11-02, the maximum append size is 100 MB.
-    /// For previous version, the maximum append size is 4 MB.
+    /// For previous versions, the maximum append size is 4 MB.
     /// Append blobs can include up to 50,000 blocks.
     /// </summary>
     public class AppendBlobClient : BlobBaseClient
