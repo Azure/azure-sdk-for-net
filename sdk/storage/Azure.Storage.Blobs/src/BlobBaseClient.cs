@@ -3941,11 +3941,11 @@ namespace Azure.Storage.Blobs.Specialized
         #region CopyFromUri
         /// <summary>
         /// The Copy Blob From URL operation copies a blob to a destination within the storage account synchronously
-        /// for source blob sizes up to 256 MB. This API is available starting in version 2018-03-28.
+        /// for source blob sizes up to 256 MiB. This API is available starting in version 2018-03-28.
         /// The source for a Copy Blob From URL operation can be any committed block blob in any Azure storage account
         /// which is either public or authorized with a shared access signature.
         ///
-        /// The size of the source blob can be a maximum length of up to 256 MB.
+        /// The size of the source blob can be a maximum length of up to 256 MiB.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url">
@@ -3956,7 +3956,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI. The
         /// source blob must either be public or must be authorized via a shared access signature. If the
         /// source blob is public, no authorization is required to perform the operation. If the size of the
-        /// source blob is greater than 256 MB, the request will fail with 409 (Conflict). The blob type of
+        /// source blob is greater than 256 MiB, the request will fail with 409 (Conflict). The blob type of
         /// the source blob has to be block blob.
         /// </param>
         /// <param name="options">
@@ -3995,11 +3995,11 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The Copy Blob From URL operation copies a blob to a destination within the storage account synchronously
-        /// for source blob sizes up to 256 MB. This API is available starting in version 2018-03-28.
+        /// for source blob sizes up to 256 MiB. This API is available starting in version 2018-03-28.
         /// The source for a Copy Blob From URL operation can be any committed block blob in any Azure storage account
         /// which is either public or authorized with a shared access signature.
         ///
-        /// The size of the source blob can be a maximum length of up to 256 MB.
+        /// The size of the source blob can be a maximum length of up to 256 MiB.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url">
@@ -4010,7 +4010,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI. The
         /// source blob must either be public or must be authorized via a shared access signature. If the
         /// source blob is public, no authorization is required to perform the operation. If the size of the
-        /// source blob is greater than 256 MB, the request will fail with 409 (Conflict). The blob type of
+        /// source blob is greater than 256 MiB, the request will fail with 409 (Conflict). The blob type of
         /// the source blob has to be block blob.
         /// </param>
         /// <param name="options">
@@ -4049,11 +4049,11 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The Copy Blob From URL operation copies a blob to a destination within the storage account synchronously
-        /// for source blob sizes up to 256 MB. This API is available starting in version 2018-03-28.
+        /// for source blob sizes up to 256 MiB. This API is available starting in version 2018-03-28.
         /// The source for a Copy Blob From URL operation can be any committed block blob in any Azure storage account
         /// which is either public or authorized with a shared access signature.
         ///
-        /// The size of the source blob can be a maximum length of up to 256 MB.
+        /// The size of the source blob can be a maximum length of up to 256 MiB.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url">
@@ -4064,7 +4064,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI. The
         /// source blob must either be public or must be authorized via a shared access signature. If the
         /// source blob is public, no authorization is required to perform the operation. If the size of the
-        /// source blob is greater than 256 MB, the request will fail with 409 (Conflict). The blob type of
+        /// source blob is greater than 256 MiB, the request will fail with 409 (Conflict). The blob type of
         /// the source blob has to be block blob.
         /// </param>
         /// <param name="metadata">
