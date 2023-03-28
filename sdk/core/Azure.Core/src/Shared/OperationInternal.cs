@@ -66,33 +66,32 @@ namespace Azure.Core
         /// <param name="clientDiagnostics">Used for diagnostic scope and exception creation. This is expected to be the instance created during the construction of your main client.</param>
         /// <param name="operation">The long-running operation making use of this class. Passing "<c>this</c>" is expected.</param>
         /// <param name="rawResponse">
-        /// The initial value of <see cref="OperationInternalBase.RawResponse"/>. Usually, long-running operation objects can be instantiated in two ways:
-        /// <list type="bullet">
-        ///   <item>
-        ///   When calling a client's "<c>Start&lt;OperationName&gt;</c>" method, a service call is made to start the operation, and an <see cref="Operation"/> instance is returned.
-        ///   In this case, the response received from this service call can be passed here.
-        ///   </item>
-        ///   <item>
-        ///   When a user instantiates an <see cref="Operation"/> directly using a public constructor, there's no previous service call. In this case, passing <c>null</c> is expected.
-        ///   </item>
-        /// </list>
+        ///     The initial value of <see cref="OperationInternalBase.RawResponse"/>. Usually, long-running operation objects can be instantiated in two ways:
+        ///     <list type="bullet">
+        ///         <item>
+        ///             When calling a client's "<c>Start&lt;OperationName&gt;</c>" method, a service call is made to start the operation, and an <see cref="Operation"/> instance is returned.
+        ///             In this case, the response received from this service call can be passed here.
+        ///         </item>
+        ///         <item>
+        ///             When a user instantiates an <see cref="Operation"/> directly using a public constructor, there's no previous service call. In this case, passing <c>null</c> is expected.
+        ///         </item>
+        ///     </list>
         /// </param>
+        /// <param name="strategy">Optional delay strategy to use. Default is <see cref="FixedDelay"/>.</param>
         /// <param name="operationTypeName">
-        /// The type name of the long-running operation making use of this class. Used when creating diagnostic scopes. If left <c>null</c>, the type name will be inferred based on the
-        /// parameter <paramref name="operation"/>.
+        ///     The type name of the long-running operation making use of this class. Used when creating diagnostic scopes. If left <c>null</c>, the type name will be inferred based on the
+        ///     parameter <paramref name="operation"/>.
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
-        /// <param name="strategy">Optional delay strategy to use. Default is <see cref="FixedDelay"/>.</param>
-        public OperationInternal(
-            ClientDiagnostics clientDiagnostics,
+        public OperationInternal(ClientDiagnostics clientDiagnostics,
             IOperation operation,
             Response rawResponse,
+            Delay? strategy,
             string? operationTypeName = null,
-            IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            Delay? strategy = null)
+            IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null)
             :base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, strategy)
         {
-            _internalOperation = new OperationInternal<VoidValue>(clientDiagnostics, new OperationToOperationOfTProxy(operation), rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, strategy);
+            _internalOperation = new OperationInternal<VoidValue>(clientDiagnostics, new OperationToOperationOfTProxy(operation), rawResponse, strategy, operationTypeName ?? operation.GetType().Name, scopeAttributes);
         }
 
         // TEMP for back compat
