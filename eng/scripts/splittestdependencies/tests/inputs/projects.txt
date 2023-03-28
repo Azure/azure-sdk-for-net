@@ -37,6 +37,7 @@ $(RepoRoot)sdk\containerregistry\Azure.ResourceManager.ContainerRegistry\tests\A
 $(RepoRoot)sdk\containerservice\Azure.ResourceManager.ContainerService\tests\Azure.ResourceManager.ContainerService.Tests.csproj
 $(RepoRoot)sdk\core\Azure.Core.Amqp\tests\Azure.Core.Amqp.Tests.csproj
 $(RepoRoot)sdk\core\Azure.Core.Experimental\tests\Azure.Core.Experimental.Tests.csproj
+$(RepoRoot)sdk\core\Azure.Core.Experimental\tests\public\Azure.Core.Experimental.Tests.Public.csproj
 $(RepoRoot)sdk\core\Azure.Core.Experimental\tests\perf\Azure.Core.Experimental.Performance.csproj
 $(RepoRoot)sdk\core\Azure.Core.TestFramework\tests\Azure.Core.TestFramework.Tests.csproj
 $(RepoRoot)sdk\core\Azure.Core\tests\Azure.Core.Tests.csproj
