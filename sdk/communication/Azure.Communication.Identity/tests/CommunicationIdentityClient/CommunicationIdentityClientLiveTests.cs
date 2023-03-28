@@ -9,6 +9,7 @@ using Azure.Communication.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using static Azure.Communication.Identity.CommunicationIdentityClientOptions;
 
 namespace Azure.Communication.Identity.Tests
 {
@@ -215,7 +216,7 @@ namespace Azure.Communication.Identity.Tests
 
             CommunicationIdentityClient client = CreateClient();
             CommunicationUserIdentifier userIdentifier = await client.CreateUserAsync();
-            Response<AccessToken> accessToken = await client.GetTokenAsync(communicationUser: userIdentifier, scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn: tokenExpiresIn);
+            Response<AccessToken> accessToken = await client.GetTokenAsync(communicationUser: userIdentifier, scopes: new[] { CommunicationTokenScope.VoIP }, tokenExpiresIn: tokenExpiresIn);
 
             Assert.IsNotNull(accessToken.Value);
             Assert.IsFalse(string.IsNullOrWhiteSpace(accessToken.Value.Token));
@@ -240,7 +241,7 @@ namespace Azure.Communication.Identity.Tests
                 TimeSpan tokenExpiresIn = TokenCustomExpirationTimes[expiresIn];
                 CommunicationIdentityClient client = CreateClient();
                 CommunicationUserIdentifier userIdentifier = await client.CreateUserAsync();
-                Response<AccessToken> accessToken = await client.GetTokenAsync(communicationUser: userIdentifier, scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn: tokenExpiresIn);
+                Response<AccessToken> accessToken = await client.GetTokenAsync(communicationUser: userIdentifier, scopes: new[] { CommunicationTokenScope.VoIP }, tokenExpiresIn: tokenExpiresIn);
             }
             catch (RequestFailedException ex)
             {
@@ -260,7 +261,7 @@ namespace Azure.Communication.Identity.Tests
                 TimeSpan tokenExpiresIn = new TimeSpan(int.MaxValue / 20, 0, 0);
                 CommunicationIdentityClient client = CreateClient();
                 CommunicationUserIdentifier userIdentifier = await client.CreateUserAsync();
-                Response<AccessToken> accessToken = await client.GetTokenAsync(communicationUser: userIdentifier, scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn: tokenExpiresIn);
+                Response<AccessToken> accessToken = await client.GetTokenAsync(communicationUser: userIdentifier, scopes: new[] { CommunicationTokenScope.VoIP }, tokenExpiresIn: tokenExpiresIn);
             }
             catch (ArgumentOutOfRangeException ex)
             {
@@ -472,6 +473,40 @@ namespace Azure.Communication.Identity.Tests
                 Assert.NotNull(ex.Message);
                 Assert.True(ex.Message.Contains("400"));
                 Console.WriteLine(ex.Message);
+                return;
+            }
+            Assert.Fail("An exception should have been thrown.");
+        }
+
+        [Test]
+        [TestCase(ServiceVersion.V2021_03_07, TestName = "CreateIdentityWithServiceVersion_V2021_03_07")]
+        [TestCase(ServiceVersion.V2022_06_01, TestName = "CreateIdentityWithServiceVersion_V2022_06_01")]
+        [TestCase(ServiceVersion.V2022_10_01, TestName = "CreateIdentityWithServiceVersion_V2022_10_01")]
+        public async Task CreateIdentityWithDifferentServiceVersions(ServiceVersion version)
+        {
+            try
+            {
+                CommunicationIdentityClient client = CreateClient(default, version);
+                CommunicationUserIdentifier userResponse = await client.CreateUserAsync();
+                Assert.IsNotNull(userResponse);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+        }
+
+        [Test]
+        public void CreateClientWithIncorrectServiceVersionShouldThrow()
+        {
+            try
+            {
+                ServiceVersion invalidVersion = (ServiceVersion)(-1);
+                CommunicationIdentityClient client = CreateClient(default, invalidVersion);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Assert.NotNull(ex.Message);
                 return;
             }
             Assert.Fail("An exception should have been thrown.");

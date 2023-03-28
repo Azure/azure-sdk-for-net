@@ -3,18 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement;
-using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
@@ -85,9 +80,23 @@ namespace Azure.Storage.DataMovement.Blobs
         public override StorageResource GetChildStorageResource(string path)
         {
             // Recreate the blobName using the existing parent directory path
-            return new BlockBlobStorageResource(
-                _blobContainerClient.GetBlockBlobClient(System.IO.Path.Combine(_directoryPrefix, path)),
-                _options.ToBlockBlobStorageResourceOptions());
+            switch (_options.BlobType)
+            {
+                case BlobType.Block:
+                    return new BlockBlobStorageResource(
+                        _blobContainerClient.GetBlockBlobClient(System.IO.Path.Combine(_directoryPrefix, path)),
+                        _options.ToBlockBlobStorageResourceOptions());
+                case BlobType.Append:
+                    return new AppendBlobStorageResource(
+                        _blobContainerClient.GetAppendBlobClient(System.IO.Path.Combine(_directoryPrefix, path)),
+                        _options.ToAppendBlobStorageResourceOptions());
+                case BlobType.Page:
+                    return new PageBlobStorageResource(
+                        _blobContainerClient.GetPageBlobClient(System.IO.Path.Combine(_directoryPrefix, path)),
+                        _options.ToPageBlobStorageResourceOptions());
+                default:
+                    throw new ArgumentException("Invalid BlobType.");
+            }
         }
 
         /// <summary>
