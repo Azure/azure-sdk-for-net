@@ -50,8 +50,8 @@ try
 {
     var emailSendOperation = emailClient.Send(
         wait: WaitUntil.Completed,
-        senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-        recipientAddress: "<recipient email address>"
+        senderAddress: "<Send email address>", // The email address of the domain registered with the Communication Services resource
+        recipientAddress: "<recipient email address>",
         subject: "This is the subject",
         htmlContent: "<html><body>This is the html body</body></html>");
     Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
