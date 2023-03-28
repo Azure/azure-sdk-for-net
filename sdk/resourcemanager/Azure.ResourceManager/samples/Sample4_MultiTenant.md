@@ -8,15 +8,13 @@ using Azure.Core;
 using Azure.Identity;
 ```
 
-Indorder to test for multi tenant, you will need to setup service principal for another tenant.
+In order to test for multi-tenant, you will need to setup a service principal for another tenant.
 1. Enable multi tenant on your SPN.
 2. Add the redirect URL under the web (not single page application), e.g. https://www.microsoft.com
 3. Using following link to add SPN to tenant2:
     https://login.microsoftonline.com/<Tenant2_ID>/oauth2/authorize?client_id=<Client_ID>&response_type=code&redirect_uri=https%3A%2F%2Fwww.microsoft.com%2F
 4. Give enough permission for the SPN in both tenants/subscriptions.
 5. Set related environment variables to your machine.
-
-Following code uses Virtual Network Peering to demonstrate how to authenticate across tenants
 
 ***Create a pipeline policy***
 
