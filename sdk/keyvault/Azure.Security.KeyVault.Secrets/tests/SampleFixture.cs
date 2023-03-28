@@ -22,6 +22,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
     public partial class HelloWorld : SampleFixture { }
     public partial class BackupAndRestore : SampleFixture { }
     public partial class GetSecrets : SampleFixture { }
+    public partial class GetSecretIfExists : SampleFixture { }
     public partial class Snippets : SampleFixture { }
 #pragma warning restore SA1402 // File may only contain a single type
 }

@@ -78,7 +78,7 @@ namespace Azure.Security.KeyVault
         public HttpMessage CreateMessage(RequestMethod method, RequestContext context, params string[] path)
         {
             // See comment in CreateMessage overload above for future design consideration.
-            HttpMessage message = _pipeline.CreateMessage(context);
+            HttpMessage message = _pipeline.CreateMessage(context, DefaultResponseClassifier);
             Request request = message.Request;
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
@@ -294,7 +294,6 @@ namespace Azure.Security.KeyVault
 
         private async ValueTask SendRequestAsync(HttpMessage message, CancellationToken cancellationToken)
         {
-            message.ResponseClassifier ??= ResponseClassifier200201202204;
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
 
             if (message.ResponseClassifier.IsErrorResponse(message))
@@ -305,7 +304,6 @@ namespace Azure.Security.KeyVault
 
         private void SendRequest(HttpMessage message, CancellationToken cancellationToken)
         {
-            message.ResponseClassifier ??= ResponseClassifier200201202204;
             _pipeline.Send(message, cancellationToken);
 
             if (message.ResponseClassifier.IsErrorResponse(message))
@@ -314,8 +312,8 @@ namespace Azure.Security.KeyVault
             }
         }
 
-        private static ResponseClassifier s_responseClassifier200201202204;
-        private static ResponseClassifier ResponseClassifier200201202204 => s_responseClassifier200201202204 ??= new StatusCodeClassifier(stackalloc ushort[]
+        private static ResponseClassifier s_defaultResponseClassifier;
+        private static ResponseClassifier DefaultResponseClassifier => s_defaultResponseClassifier ??= new StatusCodeClassifier(stackalloc ushort[]
         {
             200,
             201,
