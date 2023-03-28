@@ -32,8 +32,7 @@ jobs:
           git clone --no-checkout --filter=tree:0 https://github.com/${{ github.repository }} .
           git sparse-checkout init
           git sparse-checkout set '.github'
-          # head_ref will be empty outside of pull request events, which will choose the repository default branch
-          git checkout ${{ github.head_ref }}
+          git checkout main
 
       # To run github-event-processor built from source, for testing purposes, uncomment everything
       # in between the Start/End-Build From Source comments and comment everything in between the
