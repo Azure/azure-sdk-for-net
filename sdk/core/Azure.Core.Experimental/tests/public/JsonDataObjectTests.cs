@@ -144,5 +144,11 @@ namespace Azure.Core.Tests.Public
 
             Assert.Throws<RuntimeBinderException>(() => data.Get("first"));
         }
+
+        [Test]
+        public void WillFail()
+        {
+            Assert.Fail("Intentional failure to show tests in this project will block the CI.");
+        }
     }
 }
