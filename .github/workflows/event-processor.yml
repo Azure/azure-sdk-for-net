@@ -29,14 +29,20 @@ jobs:
     name: Handle ${{ github.event_name }} ${{ github.event.action }} event
     runs-on: ubuntu-latest
     steps:
+      - name: 'Set Sparse Branch'
+        # Do not set the pull request branch on closed, because the branch may have been deleted and fail checkout
+        if: ${{ github.event_name != 'closed' }}
+        run: |
+          # head_ref will be empty outside of pull request events, which will choose the repository default branch
+          echo "TARGET_SPARSE_BRANCH=${{ github.head_ref }}" >> $GITHUB_ENV
+
       - name: 'Sparse Checkout'
         run: |
           set -ex
           git clone --no-checkout --filter=tree:0 https://github.com/${{ github.repository }} .
           git sparse-checkout init
           git sparse-checkout set '.github'
-          # head_ref will be empty outside of pull request events, which will choose the repository default branch
-          git checkout ${{ github.head_ref }}
+          git checkout ${{ env.TARGET_SPARSE_BRANCH }}
 
       - name: 'Az CLI login'
         if: ${{ github.event_name == 'issues' && github.event.action == 'opened' }}
