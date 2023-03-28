@@ -30,7 +30,7 @@ namespace Azure.Core.Tests.DelayStrategies
         public void SequentialPollingFollowsExpectedSequence(
             [Values(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)] int retries)
         {
-            var strategy = new SequentialDelayStrategy();
+            var strategy = new SequentialDelay();
             var expected = TimeSpan.FromSeconds(_expectedValues[retries - 1]);
             TimeSpan actual = TimeSpan.Zero;
             for (int i = 0; i < retries; i++)

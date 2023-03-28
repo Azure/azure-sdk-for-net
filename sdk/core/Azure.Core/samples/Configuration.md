@@ -29,7 +29,7 @@ internal class GlobalTimeoutRetryPolicy : RetryPolicy
 {
     private readonly TimeSpan _timeout;
 
-    public GlobalTimeoutRetryPolicy(int maxRetries, DelayStrategy delayStrategy, TimeSpan timeout) : base(maxRetries, delayStrategy)
+    public GlobalTimeoutRetryPolicy(int maxRetries, Delay delayStrategy, TimeSpan timeout) : base(maxRetries, delayStrategy)
     {
         _timeout = timeout;
     }
@@ -59,7 +59,7 @@ internal class GlobalTimeoutRetryPolicy : RetryPolicy
 Here is how we would configure the client to use the policy we just created.
 
 ```C# Snippet:SetGlobalTimeoutRetryPolicy
-var strategy = DelayStrategy.CreateFixedDelayStrategy(TimeSpan.FromSeconds(2));
+var strategy = Delay.CreateFixedDelayStrategy(TimeSpan.FromSeconds(2));
 SecretClientOptions options = new SecretClientOptions()
 {
     RetryPolicy = new GlobalTimeoutRetryPolicy(maxRetries: 4, delayStrategy: strategy, timeout: TimeSpan.FromSeconds(30))
@@ -68,7 +68,7 @@ SecretClientOptions options = new SecretClientOptions()
 
 Another scenario where it may be helpful to use a custom retry policy is when you need to customize the delay behavior, but don't need to adjust the logic used to determine whether a request should be retried or not. In this case, it isn't necessary to create a custom `RetryPolicy` class - instead, you can pass in a `DelayStrategy` into the `RetryPolicy` constructor.  In the below example, we create a customized exponential delay strategy that uses different jitter factors from the default values. We then pass the strategy into the `RetryPolicy` constructor and set the constructed policy in our options.
 ```C# Snippet:CustomizeExponentialDelay
-var strategy = DelayStrategy.CreateExponentialDelayStrategy();
+var strategy = Delay.CreateExponentialDelayStrategy();
 SecretClientOptions options = new SecretClientOptions()
 {
     RetryPolicy = new RetryPolicy(delayStrategy: strategy)

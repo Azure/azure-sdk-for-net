@@ -14,7 +14,7 @@ namespace Azure.Core
     /// Defaults to {1s, 1s, 1s, 2s, 4s, 8s, 16s, 32s}.
     /// </summary>
     /// <remarks>Polling interval always follows the given sequence.</remarks>
-    internal class SequentialDelayStrategy : Delay
+    internal class SequentialDelay : Delay
     {
         private static readonly TimeSpan[] _pollingSequence = new TimeSpan[]
         {
@@ -29,7 +29,7 @@ namespace Azure.Core
         };
         private static readonly TimeSpan _maxDelay = _pollingSequence[_pollingSequence.Length - 1];
 
-        public SequentialDelayStrategy() : base(_maxDelay, 0)
+        public SequentialDelay() : base(_maxDelay, 0)
         {
         }
 

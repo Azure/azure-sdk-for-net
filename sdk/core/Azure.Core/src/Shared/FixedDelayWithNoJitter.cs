@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Shared
 {
-    internal class FixedDelayWithNoJitterStrategy : Delay
+    internal class FixedDelayWithNoJitter : Delay
     {
         private static readonly TimeSpan DefaultDelay = TimeSpan.FromSeconds(1);
         private readonly TimeSpan _delay;
 
-        public FixedDelayWithNoJitterStrategy(TimeSpan? suggestedDelay = default) : base(suggestedDelay.HasValue ? Max(suggestedDelay.Value, DefaultDelay) : DefaultDelay, 0)
+        public FixedDelayWithNoJitter(TimeSpan? suggestedDelay = default) : base(suggestedDelay.HasValue ? Max(suggestedDelay.Value, DefaultDelay) : DefaultDelay, 0)
         {
             _delay = suggestedDelay.HasValue ? Max(suggestedDelay.Value, DefaultDelay) : DefaultDelay;
         }

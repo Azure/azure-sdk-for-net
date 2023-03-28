@@ -21,7 +21,7 @@ namespace Azure.Core
 
         public OperationPoller(Delay? strategy = null)
         {
-            _delayStrategy = strategy ?? new FixedDelayWithNoJitterStrategy();
+            _delayStrategy = strategy ?? new FixedDelayWithNoJitter();
         }
 
         public ValueTask<Response> WaitForCompletionResponseAsync(Operation operation, TimeSpan? delayHint, CancellationToken cancellationToken)
@@ -72,7 +72,7 @@ namespace Azure.Core
                     return operation.GetRawResponse();
                 }
 
-                var strategy = delayHint.HasValue ? new FixedDelayWithNoJitterStrategy(delayHint.Value) : _delayStrategy;
+                var strategy = delayHint.HasValue ? new FixedDelayWithNoJitter(delayHint.Value) : _delayStrategy;
 
                 await Delay(async, strategy.GetNextDelay(response, ++retryNumber, response.Headers.RetryAfter, context), cancellationToken).ConfigureAwait(false);
             }
@@ -90,7 +90,7 @@ namespace Azure.Core
                     return operation.RawResponse;
                 }
 
-                var strategy = delayHint.HasValue ? new FixedDelayWithNoJitterStrategy(delayHint.Value) : _delayStrategy;
+                var strategy = delayHint.HasValue ? new FixedDelayWithNoJitter(delayHint.Value) : _delayStrategy;
 
                 await Delay(async, strategy.GetNextDelay(response, ++retryNumber, response.Headers.RetryAfter, context), cancellationToken).ConfigureAwait(false);
             }

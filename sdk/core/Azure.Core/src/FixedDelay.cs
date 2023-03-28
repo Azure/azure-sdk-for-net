@@ -10,7 +10,7 @@ namespace Azure.Core
     /// <summary>
     ///
     /// </summary>
-    internal class FixedDelayStrategy : Delay
+    internal class FixedDelay : Delay
     {
         private readonly TimeSpan _delay;
 
@@ -18,7 +18,7 @@ namespace Azure.Core
         ///
         /// </summary>
         /// <param name="delay"></param>
-        public  FixedDelayStrategy(TimeSpan delay) : base(TimeSpan.FromMilliseconds(delay.TotalMilliseconds))
+        public  FixedDelay(TimeSpan delay) : base(TimeSpan.FromMilliseconds(delay.TotalMilliseconds))
         {
             _delay = delay;
         }

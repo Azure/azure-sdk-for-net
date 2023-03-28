@@ -22,7 +22,7 @@ namespace Azure.Core.Tests.DelayStrategies
                 new int[] { 500, 5000, 1250, 2000, 10000, 7500 },
                 new int[] { 500, 5000, 1250, 2000, 10000, 7500, 20000, 20000, 20000, 20000, 20000, 20000, 20000 })] int[] delayValues)
         {
-            var strategy = new SequentialDelayStrategy();
+            var strategy = new SequentialDelay();
             TimeSpan[] defaultDelays = strategy.GetType().GetField("_pollingSequence", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as TimeSpan[];
             TimeSpan actual = TimeSpan.Zero;
             int expected = 0;
@@ -48,7 +48,7 @@ namespace Azure.Core.Tests.DelayStrategies
                 new int[] { 1, 5, 2, 2, 10, 8 },
                 new int[] { 1, 5, 1, 2, 10, 8, 20, 20, 20, 20, 20, 20, 20 })] int[] delayValues)
         {
-            var strategy = new SequentialDelayStrategy();
+            var strategy = new SequentialDelay();
             TimeSpan[] defaultDelays = strategy.GetType().GetField("_pollingSequence", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as TimeSpan[];
             TimeSpan actual = TimeSpan.Zero;
             int expected = 0;
@@ -77,7 +77,7 @@ namespace Azure.Core.Tests.DelayStrategies
             var delay = TimeSpan.FromSeconds(1);
             TimeSpan actual = TimeSpan.Zero;
             TimeSpan? suggestion = suggestedWaitInMs.HasValue ? TimeSpan.FromMilliseconds(suggestedWaitInMs.Value) : null;
-            var strategy = new FixedDelayWithNoJitterStrategy(suggestion);
+            var strategy = new FixedDelayWithNoJitter(suggestion);
 
             int expected = 0;
             for (int i = 0; i < delayValues.Length; i++)
@@ -105,7 +105,7 @@ namespace Azure.Core.Tests.DelayStrategies
             TimeSpan actual = TimeSpan.Zero;
             TimeSpan? suggestion = suggestedWaitInSeconds.HasValue ? TimeSpan.FromSeconds(suggestedWaitInSeconds.Value) : null;
 
-            var strategy = new FixedDelayWithNoJitterStrategy(suggestion ?? delay);
+            var strategy = new FixedDelayWithNoJitter(suggestion ?? delay);
 
             int expected = 0;
             for (int i = 0; i < delayValues.Length; i++)

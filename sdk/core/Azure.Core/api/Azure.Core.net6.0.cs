@@ -149,10 +149,10 @@ namespace Azure
         protected Operation() { }
         public abstract bool HasValue { get; }
         public abstract T Value { get; }
-        public virtual Azure.Response<T> WaitForCompletion(Azure.Core.DelayStrategy delayStrategy, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.Response<T> WaitForCompletion(Azure.Core.Delay delayStrategy, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<T> WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<T> WaitForCompletion(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual System.Threading.Tasks.ValueTask<Azure.Response<T>> WaitForCompletionAsync(Azure.Core.DelayStrategy delayStrategy, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.ValueTask<Azure.Response<T>> WaitForCompletionAsync(Azure.Core.Delay delayStrategy, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Azure.Response<T>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Azure.Response<T>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -400,11 +400,11 @@ namespace Azure.Core
         public static bool operator !=(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class DelayStrategy
+    public abstract partial class Delay
     {
-        protected DelayStrategy(System.TimeSpan? maxDelay = default(System.TimeSpan?), double jitterFactor = 0.2) { }
-        public static Azure.Core.DelayStrategy CreateExponentialDelayStrategy(System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?)) { throw null; }
-        public static Azure.Core.DelayStrategy CreateFixedDelayStrategy(System.TimeSpan? delay = default(System.TimeSpan?)) { throw null; }
+        protected Delay(System.TimeSpan? maxDelay = default(System.TimeSpan?), double jitterFactor = 0.2) { }
+        public static Azure.Core.Delay CreateExponentialDelayStrategy(System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?)) { throw null; }
+        public static Azure.Core.Delay CreateFixedDelayStrategy(System.TimeSpan? delay = default(System.TimeSpan?)) { throw null; }
         public System.TimeSpan GetNextDelay(Azure.Response? response, int retryNumber, System.TimeSpan? serverDelayHint, System.Collections.Generic.IDictionary<string, object?> context) { throw null; }
         public System.Threading.Tasks.ValueTask<System.TimeSpan> GetNextDelayAsync(Azure.Response? response, int retryNumber, System.TimeSpan? serverDelayHint, System.Collections.Generic.IDictionary<string, object?> context) { throw null; }
         protected abstract System.TimeSpan GetNextDelayCore(Azure.Response? response, int retryNumber, System.Collections.Generic.IDictionary<string, object?> context);
@@ -1040,8 +1040,8 @@ namespace Azure.Core.Pipeline
     }
     public partial class RetryPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {
-        public RetryPolicy(int maxRetries = 3, Azure.Core.DelayStrategy? delayStrategy = null) { }
-        protected Azure.Core.DelayStrategy DelayStrategy { get { throw null; } }
+        public RetryPolicy(int maxRetries = 3, Azure.Core.Delay? delayStrategy = null) { }
+        protected Azure.Core.Delay DelayStrategy { get { throw null; } }
         protected static System.Collections.Generic.IDictionary<string, object?>? GetDelayContext(Azure.Core.HttpMessage message) { throw null; }
         protected virtual System.TimeSpan GetNextDelay(Azure.Core.HttpMessage message) { throw null; }
         protected virtual System.Threading.Tasks.ValueTask<System.TimeSpan> GetNextDelayAsync(Azure.Core.HttpMessage message) { throw null; }

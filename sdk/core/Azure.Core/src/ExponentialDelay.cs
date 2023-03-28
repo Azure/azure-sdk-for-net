@@ -11,7 +11,7 @@ namespace Azure.Core
     /// <summary>
     ///
     /// </summary>
-    internal class ExponentialDelayStrategy : Delay
+    internal class ExponentialDelay : Delay
     {
         private readonly TimeSpan _delay;
 
@@ -20,7 +20,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="delay"></param>
         /// <param name="maxDelay"></param>
-        public ExponentialDelayStrategy(
+        public ExponentialDelay(
             TimeSpan delay,
             TimeSpan maxDelay) : base(maxDelay)
         {

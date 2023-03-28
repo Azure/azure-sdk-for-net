@@ -82,7 +82,7 @@ namespace Azure.Core
         /// parameter <paramref name="operation"/>.
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
-        /// <param name="strategy">Optional delay strategy to use. Default is <see cref="FixedDelayStrategy"/>.</param>
+        /// <param name="strategy">Optional delay strategy to use. Default is <see cref="FixedDelay"/>.</param>
         public OperationInternal(
             ClientDiagnostics clientDiagnostics,
             IOperation operation,

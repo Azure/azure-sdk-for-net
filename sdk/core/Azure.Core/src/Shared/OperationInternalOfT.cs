@@ -92,7 +92,7 @@ namespace Azure.Core
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
         /// <param name="strategy">The fallback delay strategy when Retry-After header is not present.  When it is present, the longer of the two delays will be used.
-        /// Default is <see cref="FixedDelayStrategy"/>.</param>
+        /// Default is <see cref="FixedDelay"/>.</param>
         public OperationInternal(
             ClientDiagnostics clientDiagnostics,
             IOperation<T> operation,
@@ -217,7 +217,7 @@ namespace Azure.Core
 
         /// <summary>
         /// Periodically calls <see cref="OperationInternalBase.UpdateStatus(CancellationToken)"/> until the long-running operation completes. The interval
-        /// between calls is defined by the <see cref="FixedDelayStrategy"/>, which takes into account any retry-after header that is returned
+        /// between calls is defined by the <see cref="FixedDelay"/>, which takes into account any retry-after header that is returned
         /// from the server.
         /// <example>Usage example:
         /// <code>

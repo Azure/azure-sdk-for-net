@@ -13,7 +13,9 @@ namespace Azure.Core
     /// <summary>
     /// Strategy to control delay behavior.
     /// </summary>
+#pragma warning disable AZC0012 // Avoid single word type names
     public abstract class Delay
+#pragma warning restore AZC0012 // Avoid single word type names
     {
         private readonly Random _random = new ThreadSafeRandom();
         private readonly double _minJitterFactor;
@@ -43,7 +45,7 @@ namespace Azure.Core
             TimeSpan? initialDelay = default,
             TimeSpan? maxDelay = default)
         {
-            return new ExponentialDelayStrategy(initialDelay ?? TimeSpan.FromSeconds(0.8), maxDelay ?? TimeSpan.FromMinutes(1));
+            return new ExponentialDelay(initialDelay ?? TimeSpan.FromSeconds(0.8), maxDelay ?? TimeSpan.FromMinutes(1));
         }
 
         /// <summary>
@@ -54,7 +56,7 @@ namespace Azure.Core
         public static Delay CreateFixedDelayStrategy(
             TimeSpan? delay = default)
         {
-            return new FixedDelayStrategy(delay ?? TimeSpan.FromSeconds(0.8));
+            return new FixedDelay(delay ?? TimeSpan.FromSeconds(0.8));
         }
 
         /// <summary>

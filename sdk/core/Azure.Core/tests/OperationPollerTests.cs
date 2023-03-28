@@ -22,18 +22,18 @@ namespace Azure.Core.Tests.DelayStrategies
             var delayStrategy = poller.GetType().GetField("_delayStrategy", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(poller);
 
             Assert.IsNotNull(delayStrategy);
-            Assert.AreEqual(typeof(FixedDelayWithNoJitterStrategy), delayStrategy.GetType());
+            Assert.AreEqual(typeof(FixedDelayWithNoJitter), delayStrategy.GetType());
         }
 
         [Test]
         public void CanOverrideFallbackStrategy()
         {
-            SequentialDelayStrategy sequentialDelayStrategy = new SequentialDelayStrategy();
-            OperationPoller poller = new OperationPoller(sequentialDelayStrategy);
+            SequentialDelay sequentialDelay = new SequentialDelay();
+            OperationPoller poller = new OperationPoller(sequentialDelay);
             var delayStrategy = poller.GetType().GetField("_delayStrategy", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(poller);
 
             Assert.IsNotNull(delayStrategy);
-            Assert.AreEqual(typeof(SequentialDelayStrategy), delayStrategy.GetType());
+            Assert.AreEqual(typeof(SequentialDelay), delayStrategy.GetType());
         }
 
         [Test]

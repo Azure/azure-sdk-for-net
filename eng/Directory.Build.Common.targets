@@ -196,9 +196,13 @@
     <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)DelayStrategy.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ConstantDelayStrategy.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ExponentialDelayStrategy.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)RetryAfterDelayStrategy.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationPoller.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)SequentialDelayStrategy.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)FixedDelayWithNoJitterStrategy.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)SequentialDelay.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)FixedDelayWithNoJitter.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared/Core" />
