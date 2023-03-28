@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 
 namespace Azure.Core.Json
@@ -186,7 +187,16 @@ namespace Azure.Core.Json
                 return;
             }
 
-            writer.WriteStringValue(reader.ValueSpan);
+#if NET6_0_OR_GREATER
+            Span<byte> span = stackalloc byte[reader.ValueSpan.Length + 2];
+            span[0] = (byte)'"';
+            reader.ValueSpan.CopyTo(span.Slice(1));
+            span[span.Length - 1] = (byte)'"';
+            writer.WriteRawValue(span);
+#else
+            JsonEncodedText text = JsonEncodedText.Encode(reader.ValueSpan, JavaScriptEncoder.UnsafeRelaxedJsonEscaping);//, JavaScriptEncoder.Create(new UnicodeRange(32, 47)));
+            writer.WriteStringValue(text);
+#endif
             return;
         }
 
