@@ -35,8 +35,7 @@ jobs:
           git clone --no-checkout --filter=tree:0 https://github.com/${{ github.repository }} .
           git sparse-checkout init
           git sparse-checkout set '.github'
-          # head_ref will be empty outside of pull request events, which will choose the repository default branch
-          git checkout ${{ github.head_ref }}
+          git checkout main
 
       - name: 'Az CLI login'
         if: ${{ github.event_name == 'issues' && github.event.action == 'opened' }}
