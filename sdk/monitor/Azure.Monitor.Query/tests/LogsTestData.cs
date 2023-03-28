@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query;
+using NUnit.Framework;
 
 namespace Azure.Monitor.Query.Tests
 {
@@ -115,6 +116,7 @@ namespace Azure.Monitor.Query.Tests
 
             while (count == 0)
             {
+                TestContext.Progress.WriteLine("Delay - can't find table");
                 await Task.Delay(TimeSpan.FromSeconds(30));
                 count = await QueryCount(workspaceId);
             }
