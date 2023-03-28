@@ -73,31 +73,30 @@ var data = new
 
 Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Completed, RequestContent.Create(data));
 
-using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
-JsonElement jobResults = result.RootElement;
-foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
+dynamic jobResults = analyzeConversationOperation.Value.ToDynamic();
+foreach (dynamic task in jobResults.tasks.items)
 {
-    JsonElement results = task.GetProperty("results");
+    dynamic results = task.results;
 
     Console.WriteLine("Conversations:");
-    foreach (JsonElement conversation in results.GetProperty("conversations").EnumerateArray())
+    foreach (dynamic conversation in results.conversations)
     {
-        Console.WriteLine($"Conversation: #{conversation.GetProperty("id").GetString()}");
+        Console.WriteLine($"Conversation: #{conversation.id}");
         Console.WriteLine("Conversation Items:");
-        foreach (JsonElement conversationItem in conversation.GetProperty("conversationItems").EnumerateArray())
+        foreach (dynamic conversationItem in conversation.conversationItems)
         {
-            Console.WriteLine($"Conversation Item: #{conversationItem.GetProperty("id").GetString()}");
+            Console.WriteLine($"Conversation Item: #{conversationItem.id}");
 
-            Console.WriteLine($"Redacted Text: {conversationItem.GetProperty("redactedContent").GetProperty("text").GetString()}");
+            Console.WriteLine($"Redacted Text: {conversationItem.redactedContent.text}");
 
             Console.WriteLine("Entities:");
-            foreach (JsonElement entity in conversationItem.GetProperty("entities").EnumerateArray())
+            foreach (dynamic entity in conversationItem.entities)
             {
-                Console.WriteLine($"Text: {entity.GetProperty("text").GetString()}");
-                Console.WriteLine($"Offset: {entity.GetProperty("offset").GetInt32()}");
-                Console.WriteLine($"Category: {entity.GetProperty("category").GetString()}");
-                Console.WriteLine($"Confidence Score: {entity.GetProperty("confidenceScore").GetSingle()}");
-                Console.WriteLine($"Length: {entity.GetProperty("length").GetInt32()}");
+                Console.WriteLine($"Text: {entity.text}");
+                Console.WriteLine($"Offset: {entity.offset}");
+                Console.WriteLine($"Category: {entity.category}");
+                Console.WriteLine($"Confidence Score: {entity.confidenceScore}");
+                Console.WriteLine($"Length: {entity.length}");
                 Console.WriteLine();
             }
         }

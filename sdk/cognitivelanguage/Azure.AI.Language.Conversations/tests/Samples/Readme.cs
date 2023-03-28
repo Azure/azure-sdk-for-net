@@ -6,6 +6,7 @@ using Azure.Core.TestFramework;
 
 #region Snippet:ConversationAnalysisClient_Namespaces
 using Azure.Core;
+using Azure.Core.Dynamic;
 using Azure.AI.Language.Conversations;
 #endregion
 #region Snippet:ConversationAuthoringClient_Namespace

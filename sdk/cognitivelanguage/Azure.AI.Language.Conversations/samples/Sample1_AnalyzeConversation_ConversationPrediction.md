@@ -43,39 +43,39 @@ var data = new
 
 Response response = client.AnalyzeConversation(RequestContent.Create(data));
 
-using JsonDocument result = JsonDocument.Parse(response.ContentStream);
-JsonElement conversationalTaskResult = result.RootElement;
-JsonElement conversationPrediction = conversationalTaskResult.GetProperty("result").GetProperty("prediction");
+dynamic conversationalTaskResult = response.Content.ToDynamic();
+dynamic conversationPrediction = conversationalTaskResult.result.prediction;
 
-Console.WriteLine($"Top intent: {conversationPrediction.GetProperty("topIntent").GetString()}");
+Console.WriteLine($"Top intent: {conversationPrediction.topIntent}");
 
 Console.WriteLine("Intents:");
-foreach (JsonElement intent in conversationPrediction.GetProperty("intents").EnumerateArray())
+foreach (dynamic intent in conversationPrediction.intents)
 {
-    Console.WriteLine($"Category: {intent.GetProperty("category").GetString()}");
-    Console.WriteLine($"Confidence: {intent.GetProperty("confidenceScore").GetSingle()}");
+    Console.WriteLine($"Category: {intent.category}");
+    Console.WriteLine($"Confidence: {intent.confidenceScore}");
     Console.WriteLine();
 }
 
 Console.WriteLine("Entities:");
-foreach (JsonElement entity in conversationPrediction.GetProperty("entities").EnumerateArray())
+foreach (dynamic entity in conversationPrediction.entities)
 {
-    Console.WriteLine($"Category: {entity.GetProperty("category").GetString()}");
-    Console.WriteLine($"Text: {entity.GetProperty("text").GetString()}");
-    Console.WriteLine($"Offset: {entity.GetProperty("offset").GetInt32()}");
-    Console.WriteLine($"Length: {entity.GetProperty("length").GetInt32()}");
-    Console.WriteLine($"Confidence: {entity.GetProperty("confidenceScore").GetSingle()}");
+    Console.WriteLine($"Category: {entity.category}");
+    Console.WriteLine($"Text: {entity.text}");
+    Console.WriteLine($"Offset: {entity.offset}");
+    Console.WriteLine($"Length: {entity.length}");
+    Console.WriteLine($"Confidence: {entity.confidenceScore}");
     Console.WriteLine();
 
-    if (entity.TryGetProperty("resolutions", out JsonElement resolutions))
+    dynamic resolutions = entity.resolutions;
+    if (resolutions is not null)
     {
-        foreach (JsonElement resolution in resolutions.EnumerateArray())
+        foreach (dynamic resolution in resolutions)
         {
-            if (resolution.GetProperty("resolutionKind").GetString() == "DateTimeResolution")
+            if (resolution.resolutionKind == "DateTimeResolution")
             {
-                Console.WriteLine($"Datetime Sub Kind: {resolution.GetProperty("dateTimeSubKind").GetString()}");
-                Console.WriteLine($"Timex: {resolution.GetProperty("timex").GetString()}");
-                Console.WriteLine($"Value: {resolution.GetProperty("value").GetString()}");
+                Console.WriteLine($"Datetime Sub Kind: {resolution.dateTimeSubKind}");
+                Console.WriteLine($"Timex: {resolution.timex}");
+                Console.WriteLine($"Value: {resolution.value}");
                 Console.WriteLine();
             }
         }

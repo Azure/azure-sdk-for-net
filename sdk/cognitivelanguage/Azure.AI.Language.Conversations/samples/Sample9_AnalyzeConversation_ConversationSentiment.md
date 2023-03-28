@@ -60,25 +60,24 @@ var data = new
 
 Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Completed, RequestContent.Create(data));
 
-using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
-JsonElement jobResults = result.RootElement;
-foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
+dynamic jobResults = analyzeConversationOperation.Value.ToDynamic();
+foreach (dynamic task in jobResults.tasks.items)
 {
-    Console.WriteLine($"Task name: {task.GetProperty("taskName").GetString()}");
-    JsonElement results = task.GetProperty("results");
-    foreach (JsonElement conversation in results.GetProperty("conversations").EnumerateArray())
+    Console.WriteLine($"Task name: {task.taskName}");
+    dynamic results = task.results;
+    foreach (dynamic conversation in results.conversations)
     {
-        Console.WriteLine($"Conversation: #{conversation.GetProperty("id").GetString()}");
+        Console.WriteLine($"Conversation: #{conversation.id}");
         Console.WriteLine("Conversation Items:");
-        foreach (JsonElement conversationItem in conversation.GetProperty("conversationItems").EnumerateArray())
+        foreach (dynamic conversationItem in conversation.conversationItems)
         {
-            Console.WriteLine($"Conversation Item: #{conversationItem.GetProperty("id").GetString()}");
-            Console.WriteLine($"Sentiment: {conversationItem.GetProperty("sentiment").GetString()}");
+            Console.WriteLine($"Conversation Item: #{conversationItem.id}");
+            Console.WriteLine($"Sentiment: {conversationItem.sentiment}");
 
-            JsonElement confidenceScores = conversationItem.GetProperty("confidenceScores");
-            Console.WriteLine($"Positive: {confidenceScores.GetProperty("positive").GetSingle()}");
-            Console.WriteLine($"Neutral: {confidenceScores.GetProperty("neutral").GetSingle()}");
-            Console.WriteLine($"Negative: {confidenceScores.GetProperty("negative").GetSingle()}");
+            dynamic confidenceScores = conversationItem.confidenceScores;
+            Console.WriteLine($"Positive: {confidenceScores.positive}");
+            Console.WriteLine($"Neutral: {confidenceScores.neutral}");
+            Console.WriteLine($"Negative: {confidenceScores.negative}");
         }
         Console.WriteLine();
     }

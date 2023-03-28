@@ -44,6 +44,7 @@ Start by importing the namespace for the [`ConversationAnalysisClient`][conversa
 
 ```C# Snippet:ConversationAnalysisClient_Namespaces
 using Azure.Core;
+using Azure.Core.Dynamic;
 using Azure.AI.Language.Conversations;
 ```
 
@@ -162,39 +163,39 @@ var data = new
 
 Response response = client.AnalyzeConversation(RequestContent.Create(data));
 
-using JsonDocument result = JsonDocument.Parse(response.ContentStream);
-JsonElement conversationalTaskResult = result.RootElement;
-JsonElement conversationPrediction = conversationalTaskResult.GetProperty("result").GetProperty("prediction");
+dynamic conversationalTaskResult = response.Content.ToDynamic();
+dynamic conversationPrediction = conversationalTaskResult.result.prediction;
 
-Console.WriteLine($"Top intent: {conversationPrediction.GetProperty("topIntent").GetString()}");
+Console.WriteLine($"Top intent: {conversationPrediction.topIntent}");
 
 Console.WriteLine("Intents:");
-foreach (JsonElement intent in conversationPrediction.GetProperty("intents").EnumerateArray())
+foreach (dynamic intent in conversationPrediction.intents)
 {
-    Console.WriteLine($"Category: {intent.GetProperty("category").GetString()}");
-    Console.WriteLine($"Confidence: {intent.GetProperty("confidenceScore").GetSingle()}");
+    Console.WriteLine($"Category: {intent.category}");
+    Console.WriteLine($"Confidence: {intent.confidenceScore}");
     Console.WriteLine();
 }
 
 Console.WriteLine("Entities:");
-foreach (JsonElement entity in conversationPrediction.GetProperty("entities").EnumerateArray())
+foreach (dynamic entity in conversationPrediction.entities)
 {
-    Console.WriteLine($"Category: {entity.GetProperty("category").GetString()}");
-    Console.WriteLine($"Text: {entity.GetProperty("text").GetString()}");
-    Console.WriteLine($"Offset: {entity.GetProperty("offset").GetInt32()}");
-    Console.WriteLine($"Length: {entity.GetProperty("length").GetInt32()}");
-    Console.WriteLine($"Confidence: {entity.GetProperty("confidenceScore").GetSingle()}");
+    Console.WriteLine($"Category: {entity.category}");
+    Console.WriteLine($"Text: {entity.text}");
+    Console.WriteLine($"Offset: {entity.offset}");
+    Console.WriteLine($"Length: {entity.length}");
+    Console.WriteLine($"Confidence: {entity.confidenceScore}");
     Console.WriteLine();
 
-    if (entity.TryGetProperty("resolutions", out JsonElement resolutions))
+    dynamic resolutions = entity.resolutions;
+    if (resolutions is not null)
     {
-        foreach (JsonElement resolution in resolutions.EnumerateArray())
+        foreach (dynamic resolution in resolutions)
         {
-            if (resolution.GetProperty("resolutionKind").GetString() == "DateTimeResolution")
+            if (resolution.resolutionKind == "DateTimeResolution")
             {
-                Console.WriteLine($"Datetime Sub Kind: {resolution.GetProperty("dateTimeSubKind").GetString()}");
-                Console.WriteLine($"Timex: {resolution.GetProperty("timex").GetString()}");
-                Console.WriteLine($"Value: {resolution.GetProperty("value").GetString()}");
+                Console.WriteLine($"Datetime Sub Kind: {resolution.dateTimeSubKind}");
+                Console.WriteLine($"Timex: {resolution.timex}");
+                Console.WriteLine($"Value: {resolution.value}");
                 Console.WriteLine();
             }
         }
@@ -302,9 +303,8 @@ var data = new
 
 Response response = client.AnalyzeConversation(RequestContent.Create(data));
 
-using JsonDocument result = JsonDocument.Parse(response.ContentStream);
-JsonElement conversationalTaskResult = result.RootElement;
-JsonElement orchestrationPrediction = conversationalTaskResult.GetProperty("result").GetProperty("prediction");
+dynamic conversationalTaskResult = response.Content.ToDynamic();
+dynamic orchestrationPrediction = conversationalTaskResult.result.prediction;
 ```
 
 #### Question Answering prediction
@@ -312,18 +312,18 @@ JsonElement orchestrationPrediction = conversationalTaskResult.GetProperty("resu
 If your conversation was analyzed by Question Answering, it will include an intent - perhaps even the top intent - from which you can retrieve answers:
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionQnA
-string respondingProjectName = orchestrationPrediction.GetProperty("topIntent").GetString();
-JsonElement targetIntentResult = orchestrationPrediction.GetProperty("intents").GetProperty(respondingProjectName);
+string respondingProjectName = orchestrationPrediction.topIntent;
+dynamic targetIntentResult = orchestrationPrediction.intents[respondingProjectName];
 
-if (targetIntentResult.GetProperty("targetProjectKind").GetString() == "QuestionAnswering")
+if (targetIntentResult.targetProjectKind == "QuestionAnswering")
 {
     Console.WriteLine($"Top intent: {respondingProjectName}");
 
-    JsonElement questionAnsweringResponse = targetIntentResult.GetProperty("result");
+    dynamic questionAnsweringResponse = targetIntentResult.result;
     Console.WriteLine($"Question Answering Response:");
-    foreach (JsonElement answer in questionAnsweringResponse.GetProperty("answers").EnumerateArray())
+    foreach (dynamic answer in questionAnsweringResponse.answers)
     {
-        Console.WriteLine(answer.GetProperty("answer").GetString());
+        Console.WriteLine(answer.answer?.ToString());
     }
 }
 ```
@@ -402,20 +402,19 @@ var data = new
 
 Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Completed, RequestContent.Create(data));
 
-using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
-JsonElement jobResults = result.RootElement;
-foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
+dynamic jobResults = analyzeConversationOperation.Value.ToDynamic();
+foreach (dynamic task in jobResults.tasks.items)
 {
-    Console.WriteLine($"Task name: {task.GetProperty("taskName").GetString()}");
-    JsonElement results = task.GetProperty("results");
-    foreach (JsonElement conversation in results.GetProperty("conversations").EnumerateArray())
+    Console.WriteLine($"Task name: {task.taskName}");
+    dynamic results = task.results;
+    foreach (dynamic conversation in results.conversations)
     {
-        Console.WriteLine($"Conversation: #{conversation.GetProperty("id").GetString()}");
+        Console.WriteLine($"Conversation: #{conversation.id}");
         Console.WriteLine("Summaries:");
-        foreach (JsonElement summary in conversation.GetProperty("summaries").EnumerateArray())
+        foreach (dynamic summary in conversation.summaries)
         {
-            Console.WriteLine($"Text: {summary.GetProperty("text").GetString()}");
-            Console.WriteLine($"Aspect: {summary.GetProperty("aspect").GetString()}");
+            Console.WriteLine($"Text: {summary.text}");
+            Console.WriteLine($"Aspect: {summary.aspect}");
         }
         Console.WriteLine();
     }
@@ -484,31 +483,30 @@ var data = new
 
 Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Completed, RequestContent.Create(data));
 
-using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
-JsonElement jobResults = result.RootElement;
-foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
+dynamic jobResults = analyzeConversationOperation.Value.ToDynamic();
+foreach (dynamic task in jobResults.tasks.items)
 {
-    JsonElement results = task.GetProperty("results");
+    dynamic results = task.results;
 
     Console.WriteLine("Conversations:");
-    foreach (JsonElement conversation in results.GetProperty("conversations").EnumerateArray())
+    foreach (dynamic conversation in results.conversations)
     {
-        Console.WriteLine($"Conversation: #{conversation.GetProperty("id").GetString()}");
+        Console.WriteLine($"Conversation: #{conversation.id}");
         Console.WriteLine("Conversation Items:");
-        foreach (JsonElement conversationItem in conversation.GetProperty("conversationItems").EnumerateArray())
+        foreach (dynamic conversationItem in conversation.conversationItems)
         {
-            Console.WriteLine($"Conversation Item: #{conversationItem.GetProperty("id").GetString()}");
+            Console.WriteLine($"Conversation Item: #{conversationItem.id}");
 
-            Console.WriteLine($"Redacted Text: {conversationItem.GetProperty("redactedContent").GetProperty("text").GetString()}");
+            Console.WriteLine($"Redacted Text: {conversationItem.redactedContent.text}");
 
             Console.WriteLine("Entities:");
-            foreach (JsonElement entity in conversationItem.GetProperty("entities").EnumerateArray())
+            foreach (dynamic entity in conversationItem.entities)
             {
-                Console.WriteLine($"Text: {entity.GetProperty("text").GetString()}");
-                Console.WriteLine($"Offset: {entity.GetProperty("offset").GetInt32()}");
-                Console.WriteLine($"Category: {entity.GetProperty("category").GetString()}");
-                Console.WriteLine($"Confidence Score: {entity.GetProperty("confidenceScore").GetSingle()}");
-                Console.WriteLine($"Length: {entity.GetProperty("length").GetInt32()}");
+                Console.WriteLine($"Text: {entity.text}");
+                Console.WriteLine($"Offset: {entity.offset}");
+                Console.WriteLine($"Category: {entity.category}");
+                Console.WriteLine($"Confidence Score: {entity.confidenceScore}");
+                Console.WriteLine($"Length: {entity.length}");
                 Console.WriteLine();
             }
         }

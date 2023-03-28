@@ -3,10 +3,10 @@
 
 using System;
 using System.IO;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.Core;
+using Azure.Core.Dynamic;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -34,8 +34,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 #endif
 
             // Get the resultUrl from the response, which contains the exported project.
-            using JsonDocument doc = JsonDocument.Parse(exportOperation.Value.ToStream());
-            string resultUrl = doc.RootElement.GetProperty("resultUrl").GetString();
+            dynamic result = exportOperation.Value.ToDynamic();
+            string resultUrl = result.resultUrl;
 
             // Use the client pipeline to create and send a request to download the raw URL.
             RequestUriBuilder builder = new RequestUriBuilder();
@@ -76,8 +76,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Operation<BinaryData> exportOperation = await client.ExportProjectAsync(WaitUntil.Completed, projectName);
 
             // Get the resultUrl from the response, which contains the exported project.
-            using JsonDocument doc = JsonDocument.Parse(exportOperation.Value.ToStream());
-            string resultUrl = doc.RootElement.GetProperty("resultUrl").GetString();
+            dynamic result = exportOperation.Value.ToDynamic();
+            string resultUrl = result.resultUrl;
 
             // Use the client pipeline to create and send a request to download the raw URL.
             RequestUriBuilder builder = new RequestUriBuilder();
