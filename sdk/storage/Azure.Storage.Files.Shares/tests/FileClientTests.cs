@@ -4382,6 +4382,19 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(0, handles.Count);
         }
 
+        [Test]
+        [PlaybackOnly("Not possible to make this test live")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2023_01_03)]
+        public async Task ListHandles_AccessRights()
+        {
+            ShareServiceClient serviceClient = SharesClientBuilder.GetServiceClient_SharedKey();
+            ShareClient shareClient = serviceClient.GetShareClient("myshare");
+            ShareDirectoryClient directoryClient = shareClient.GetDirectoryClient("directory");
+            ShareFileClient fileClient = directoryClient.GetFileClient("file");
+            IList<ShareFileHandle> handles = await fileClient.GetHandlesAsync().ToListAsync();
+            Assert.AreEqual(ShareFileHandleAccessRights.Write, handles[0].AccessRights);
+        }
+
         [RecordedTest]
         public async Task ForceCloseHandles_Min()
         {

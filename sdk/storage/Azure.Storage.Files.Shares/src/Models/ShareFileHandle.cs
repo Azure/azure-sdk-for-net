@@ -52,16 +52,21 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         public string ClientIp { get; }
 
-        /// <summary> Initializes a new instance of ShareFileHandle. </summary>
-        /// <param name="handleId"> XSMB service handle ID. </param>
-        /// <param name="path"> File or directory name including full path starting from share root. </param>
-        /// <param name="fileId"> FileId uniquely identifies the file or directory. </param>
-        /// <param name="parentId"> ParentId uniquely identifies the parent directory of the object. </param>
-        /// <param name="sessionId"> SMB session ID in context of which the file handle was opened. </param>
-        /// <param name="clientIp"> Client IP that opened the handle. </param>
-        /// <param name="openedOn"> Time when the session that previously opened the handle has last been reconnected. (UTC). </param>
-        /// <param name="lastReconnectedOn"> Time handle was last connected to (UTC). </param>
-        internal ShareFileHandle(string handleId, string path, string fileId, string parentId, string sessionId, string clientIp, DateTimeOffset? openedOn, DateTimeOffset? lastReconnectedOn)
+        /// <summary>
+        /// Access rights of the handle.
+        /// </summary>
+        public ShareFileHandleAccessRights? AccessRights { get; }
+
+        internal ShareFileHandle(
+            string handleId,
+            string path,
+            string fileId,
+            string parentId,
+            string sessionId,
+            string clientIp,
+            DateTimeOffset? openedOn,
+            DateTimeOffset? lastReconnectedOn,
+            ShareFileHandleAccessRights? accessRights)
         {
             HandleId = handleId;
             Path = path;
@@ -71,45 +76,7 @@ namespace Azure.Storage.Files.Shares.Models
             ClientIp = clientIp;
             OpenedOn = openedOn;
             LastReconnectedOn = lastReconnectedOn;
-        }
-
-        /// <summary> Initializes a new instance of ShareFileHandle. </summary>
-        /// <param name="handleId"> XSMB service handle ID. </param>
-        /// <param name="path"> File or directory name including full path starting from share root. </param>
-        /// <param name="fileId"> FileId uniquely identifies the file or directory. </param>
-        /// <param name="sessionId"> SMB session ID in context of which the file handle was opened. </param>
-        /// <param name="clientIp"> Client IP that opened the handle. </param>
-        /// <param name="openedOn"> Time when the session that previously opened the handle has last been reconnected. (UTC). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="handleId"/>, <paramref name="path"/>, <paramref name="fileId"/>, <paramref name="sessionId"/> or <paramref name="clientIp"/> is null. </exception>
-        internal ShareFileHandle(string handleId, string path, string fileId, string sessionId, string clientIp, DateTimeOffset? openedOn)
-        {
-            if (handleId == null)
-            {
-                throw new ArgumentNullException(nameof(handleId));
-            }
-            if (path == null)
-            {
-                throw new ArgumentNullException(nameof(path));
-            }
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
-            if (sessionId == null)
-            {
-                throw new ArgumentNullException(nameof(sessionId));
-            }
-            if (clientIp == null)
-            {
-                throw new ArgumentNullException(nameof(clientIp));
-            }
-
-            HandleId = handleId;
-            Path = path;
-            FileId = fileId;
-            SessionId = sessionId;
-            ClientIp = clientIp;
-            OpenedOn = openedOn;
+            AccessRights = accessRights;
         }
     }
 }

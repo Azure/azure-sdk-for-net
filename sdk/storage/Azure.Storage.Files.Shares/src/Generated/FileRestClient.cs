@@ -40,7 +40,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="fileRangeWriteFromUrl"> Only update is supported: - Update: Writes the bytes downloaded from the source url into the specified range. </param>
         /// <param name="allowSourceTrailingDot"> If true, the trailing dot will not be trimmed from the source URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/>, <paramref name="version"/> or <paramref name="fileRangeWriteFromUrl"/> is null. </exception>
-        public FileRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, bool? allowTrailingDot = null, string version = "2022-11-02", ShareTokenIntent? fileRequestIntent = null, string fileRangeWriteFromUrl = "update", bool? allowSourceTrailingDot = null)
+        public FileRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, bool? allowTrailingDot = null, string version = "2023-01-03", ShareTokenIntent? fileRequestIntent = null, string fileRangeWriteFromUrl = "update", bool? allowSourceTrailingDot = null)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));

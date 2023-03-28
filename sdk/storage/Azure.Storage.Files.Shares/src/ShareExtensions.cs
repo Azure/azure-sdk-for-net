@@ -224,7 +224,36 @@ namespace Azure.Storage.Files.Shares
                 sessionId: handleItem.SessionId,
                 clientIp: handleItem.ClientIp,
                 openedOn: handleItem.OpenTime,
-                lastReconnectedOn: handleItem.LastReconnectTime);
+                lastReconnectedOn: handleItem.LastReconnectTime,
+                accessRights: handleItem.AccessRightList.ToShareFileHandleAccessRight());
+        }
+
+        internal static ShareFileHandleAccessRights? ToShareFileHandleAccessRight(this IReadOnlyList<AccessRight> accessRightList)
+        {
+            if (accessRightList == null)
+            {
+                return null;
+            }
+
+            ShareFileHandleAccessRights accessRights = 0;
+
+            foreach (AccessRight accessRight in accessRightList)
+            {
+                if (accessRight == AccessRight.Read)
+                {
+                    accessRights |= ShareFileHandleAccessRights.Read;
+                }
+                else if (accessRight == AccessRight.Write)
+                {
+                    accessRights |= ShareFileHandleAccessRights.Write;
+                }
+                else if (accessRight == AccessRight.Delete)
+                {
+                    accessRights |= ShareFileHandleAccessRights.Delete;
+                }
+            }
+
+            return accessRights;
         }
 
         internal static StorageClosedHandlesSegment ToStorageClosedHandlesSegment(this ResponseWithHeaders<DirectoryForceCloseHandlesHeaders> response)
