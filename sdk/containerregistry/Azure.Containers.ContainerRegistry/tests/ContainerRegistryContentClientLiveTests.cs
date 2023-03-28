@@ -562,8 +562,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await client.DeleteBlobAsync(digest);
         }
 
-        [RecordedTest]
-        public async Task CanDownloadBlobToStream_Large()
+        [LiveOnly]
+        public async Task CanDownloadBlobToStream_MultipleChunks()
         {
             // Download a blob that is larger than the max chunk size.
             int blobSize = 6 * 1024 * 1024;
