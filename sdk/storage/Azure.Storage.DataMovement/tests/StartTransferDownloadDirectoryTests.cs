@@ -111,7 +111,7 @@ namespace Azure.Storage.DataMovement.Tests
                 // (prefix folder path) + (the blob name without the blob folder prefix)
                 string destinationName = destinationFiles[i].Substring(destinationLocalPath.Length + 1);
                 string sourceBlobNameNoPrefix = blobNames[i].Substring(sourceBlobPrefix.Length + 1);
-                Assert.AreEqual(destinationName, sourceBlobNameNoPrefix.Replace("/", "\\"));
+                Assert.AreEqual(destinationName.Replace('\\', '/'), sourceBlobNameNoPrefix);
 
                 // Verify Download
                 string fullSourcePath = Path.Combine(sourceFilePrefix, sourceBlobNameNoPrefix);
