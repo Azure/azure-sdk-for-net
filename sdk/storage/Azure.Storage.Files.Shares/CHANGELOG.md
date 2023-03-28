@@ -1,9 +1,12 @@
 # Release History
 
-## 12.14.0-beta.1 (Unreleased)
+## 12.14.0-beta.1 (2023-03-28)
 - Added support for service version 2022-11-02.
 - Added support OAuth.
 - Added support for Trailing Dot.
+
+## 12.13.1 (2023-03-24)
+- Bumped Azure.Core dependency from 1.28 and 1.30, fixing issue with headers being non-resilient to double dispose of the request.
 
 ## 12.13.0 (2023-02-21)
 - Includes all features from 12.13.0-beta.1.

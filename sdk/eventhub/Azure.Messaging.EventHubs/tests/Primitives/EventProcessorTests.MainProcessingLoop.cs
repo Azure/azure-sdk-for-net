@@ -581,7 +581,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(mockConnection.Object);
 
             mockProcessor
-                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()))
                 .Returns(mockConsumer.Object);
 
             mockProcessor
@@ -712,7 +712,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(mockConnection.Object);
 
             mockProcessor
-                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()))
                 .Returns(Mock.Of<TransportConsumer>());
 
             mockProcessor
@@ -834,7 +834,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(mockConnection.Object);
 
             mockProcessor
-                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()))
                 .Callback(() => startCompletionSource.TrySetResult(true))
                 .Returns(Mock.Of<TransportConsumer>());
 
@@ -964,7 +964,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(mockConnection.Object);
 
             mockProcessor
-                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()))
                 .Returns(mockConsumer.Object);
 
             mockProcessor
@@ -1046,7 +1046,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(mockConnection.Object);
 
             mockProcessor
-                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()))
                 .Returns(mockConsumer.Object);
 
             mockProcessor
@@ -1124,7 +1124,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(mockConnection.Object);
 
             mockProcessor
-                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()))
                 .Returns(Mock.Of<TransportConsumer>())
                 .Callback(() =>
                 {
@@ -1148,7 +1148,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
             mockProcessor
-                .Verify(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), expectedStartingPosition, It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()),
+                .Verify(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), expectedStartingPosition, It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()),
                 Times.Once);
 
             await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
@@ -1199,7 +1199,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(mockConnection.Object);
 
             mockProcessor
-                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()))
                 .Returns(Mock.Of<TransportConsumer>())
                 .Callback(() =>
                 {
@@ -1313,7 +1313,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(mockConnection.Object);
 
             mockProcessor
-                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()))
                 .Returns(mockConsumer.Object);
 
             mockProcessor
@@ -1403,7 +1403,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(mockConnection.Object);
 
             mockProcessor
-                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()))
                 .Returns(Mock.Of<TransportConsumer>());
 
             mockProcessor
@@ -1496,7 +1496,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(mockConnection.Object);
 
             mockProcessor
-                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()))
                 .Returns(Mock.Of<TransportConsumer>());
 
             mockProcessor
@@ -1609,7 +1609,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(mockConnection.Object);
 
             mockProcessor
-                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()))
                 .Returns(Mock.Of<TransportConsumer>())
                 .Callback(() => startCompletionSource.TrySetResult(true));
 
@@ -1718,7 +1718,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(mockConnection.Object);
 
             mockProcessor
-                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()))
                 .Returns(Mock.Of<TransportConsumer>())
                 .Callback(() => startCompletionSource.TrySetResult(true));
 
@@ -1812,7 +1812,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(mockConnection.Object);
 
             mockProcessor
-                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()))
                 .Returns(mockConsumer.Object);
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
@@ -1904,7 +1904,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(mockConnection.Object);
 
             mockProcessor
-                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()))
                 .Returns(mockConsumer.Object);
 
             mockProcessor
@@ -2001,7 +2001,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(mockConnection.Object);
 
             mockProcessor
-                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()))
                 .Returns(mockConsumer.Object);
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
@@ -2081,7 +2081,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(mockConnection.Object);
 
             mockProcessor
-                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()))
                 .Returns(mockConsumer.Object);
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
@@ -2175,7 +2175,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(mockConnection.Object);
 
             mockProcessor
-                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()))
                 .Returns(mockConsumer.Object);
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
@@ -2262,7 +2262,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(mockConnection.Object);
 
             mockProcessor
-                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()))
                 .Returns(mockConsumer.Object);
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
@@ -2356,7 +2356,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(mockConnection.Object);
 
             mockProcessor
-                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()))
                 .Returns(mockConsumer.Object);
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);

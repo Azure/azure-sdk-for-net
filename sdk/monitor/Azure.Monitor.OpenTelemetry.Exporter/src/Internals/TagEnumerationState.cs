@@ -79,7 +79,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 if (activityTag.Value is Array array)
                 {
-                    AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object>(activityTag.Key, array.ToCommaDelimitedString()));
+                    AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object?>(activityTag.Key, array.ToCommaDelimitedString()));
                     continue;
                 }
 
