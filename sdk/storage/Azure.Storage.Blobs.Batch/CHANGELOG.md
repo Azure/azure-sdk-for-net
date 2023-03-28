@@ -4,6 +4,9 @@
 - Added support for service version 2022-11-02.
 - `BlobBatch` is made explicitly resilient to multiple dispose
 
+## 12.12.1 (2023-03-24)
+- Bumped Azure.Core dependency from 1.28 and 1.30, fixing issue with headers being non-resilient to double dispose of the request.
+
 ## 12.12.0 (2023-02-21)
 - Includes all features from 12.12.0-beta.1.
 
