@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ClientEncryptionKeyGetPropertiesResource> resource = default;
+            Optional<CosmosDBSqlClientEncryptionKeyProperties> resource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            resource = ClientEncryptionKeyGetPropertiesResource.DeserializeClientEncryptionKeyGetPropertiesResource(property0.Value);
+                            resource = CosmosDBSqlClientEncryptionKeyProperties.DeserializeCosmosDBSqlClientEncryptionKeyProperties(property0.Value);
                             continue;
                         }
                     }

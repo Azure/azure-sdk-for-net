@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="resource"></param>
-        internal ClientEncryptionKeyGetResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ClientEncryptionKeyGetPropertiesResource resource) : base(id, name, resourceType, systemData)
+        internal ClientEncryptionKeyGetResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CosmosDBSqlClientEncryptionKeyProperties resource) : base(id, name, resourceType, systemData)
         {
             Resource = resource;
         }
 
         /// <summary> Gets or sets the resource. </summary>
-        public ClientEncryptionKeyGetPropertiesResource Resource { get; set; }
+        public CosmosDBSqlClientEncryptionKeyProperties Resource { get; set; }
     }
 }

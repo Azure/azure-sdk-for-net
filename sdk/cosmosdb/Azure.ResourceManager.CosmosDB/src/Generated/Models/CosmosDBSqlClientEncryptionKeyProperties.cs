@@ -10,15 +10,15 @@ using Azure;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The ClientEncryptionKeyGetPropertiesResource. </summary>
-    public partial class ClientEncryptionKeyGetPropertiesResource : CosmosDBSqlClientEncryptionKeyResource
+    /// <summary> The CosmosDBSqlClientEncryptionKeyProperties. </summary>
+    public partial class CosmosDBSqlClientEncryptionKeyProperties : CosmosDBSqlClientEncryptionKeyResource
     {
-        /// <summary> Initializes a new instance of ClientEncryptionKeyGetPropertiesResource. </summary>
-        public ClientEncryptionKeyGetPropertiesResource()
+        /// <summary> Initializes a new instance of CosmosDBSqlClientEncryptionKeyProperties. </summary>
+        public CosmosDBSqlClientEncryptionKeyProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ClientEncryptionKeyGetPropertiesResource. </summary>
+        /// <summary> Initializes a new instance of CosmosDBSqlClientEncryptionKeyProperties. </summary>
         /// <param name="id"> Name of the ClientEncryptionKey. </param>
         /// <param name="encryptionAlgorithm"> Encryption algorithm that will be used along with this client encryption key to encrypt/decrypt data. </param>
         /// <param name="wrappedDataEncryptionKey"> Wrapped (encrypted) form of the key represented as a byte array. </param>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ClientEncryptionKeyGetPropertiesResource(string id, string encryptionAlgorithm, byte[] wrappedDataEncryptionKey, KeyWrapMetadata keyWrapMetadata, string rid, float? timestamp, ETag? etag) : base(id, encryptionAlgorithm, wrappedDataEncryptionKey, keyWrapMetadata)
+        internal CosmosDBSqlClientEncryptionKeyProperties(string id, string encryptionAlgorithm, byte[] wrappedDataEncryptionKey, KeyWrapMetadata keyWrapMetadata, string rid, float? timestamp, ETag? etag) : base(id, encryptionAlgorithm, wrappedDataEncryptionKey, keyWrapMetadata)
         {
             Rid = rid;
             Timestamp = timestamp;

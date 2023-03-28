@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ClientEncryptionKeyGetPropertiesResource : IUtf8JsonSerializable
+    public partial class CosmosDBSqlClientEncryptionKeyProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteEndObject();
         }
 
-        internal static ClientEncryptionKeyGetPropertiesResource DeserializeClientEncryptionKeyGetPropertiesResource(JsonElement element)
+        internal static CosmosDBSqlClientEncryptionKeyProperties DeserializeCosmosDBSqlClientEncryptionKeyProperties(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ClientEncryptionKeyGetPropertiesResource(id.Value, encryptionAlgorithm.Value, wrappedDataEncryptionKey.Value, keyWrapMetadata.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new CosmosDBSqlClientEncryptionKeyProperties(id.Value, encryptionAlgorithm.Value, wrappedDataEncryptionKey.Value, keyWrapMetadata.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
         }
     }
 }
