@@ -278,6 +278,8 @@ namespace Azure.ResourceManager.Monitor
         public string Description { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.DataCollectionRuleAssociationMetadata Metadata { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public string MetadataProvisionedBy { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.DataCollectionRuleAssociationProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class DataCollectionRuleAssociationResource : Azure.ResourceManager.ArmResource
