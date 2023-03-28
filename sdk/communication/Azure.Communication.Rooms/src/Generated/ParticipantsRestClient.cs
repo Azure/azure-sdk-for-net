@@ -193,5 +193,82 @@ namespace Azure.Communication.Rooms
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
+
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string roomId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get participants in a room. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="roomId"> The id of the room to get participants from. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="roomId"/> is null. </exception>
+        public async Task<Response<ParticipantsCollection>> ListNextPageAsync(string nextLink, string roomId, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (roomId == null)
+            {
+                throw new ArgumentNullException(nameof(roomId));
+            }
+
+            using var message = CreateListNextPageRequest(nextLink, roomId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ParticipantsCollection value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ParticipantsCollection.DeserializeParticipantsCollection(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Get participants in a room. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="roomId"> The id of the room to get participants from. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="roomId"/> is null. </exception>
+        public Response<ParticipantsCollection> ListNextPage(string nextLink, string roomId, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (roomId == null)
+            {
+                throw new ArgumentNullException(nameof(roomId));
+            }
+
+            using var message = CreateListNextPageRequest(nextLink, roomId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ParticipantsCollection value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ParticipantsCollection.DeserializeParticipantsCollection(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
     }
 }

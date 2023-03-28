@@ -11,20 +11,14 @@ namespace Azure.Communication.Rooms
     public partial class RoomParticipant
     {
         /// <summary> Initializes a new instance of RoomParticipant. </summary>
-        /// <param name="communicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="communicationIdentifier"/> is null. </exception>
-        public RoomParticipant(CommunicationIdentifier communicationIdentifier)
+        /// <param name="rawId"> Raw ID representation of the communication identifier. Please refer to the following document for additional information on Raw ID. &lt;br&gt; https://learn.microsoft.com/azure/communication-services/concepts/identifiers?pivots=programming-language-rest#raw-id-representation. </param>
+        /// <param name="role"> The role of a room participant. The default value is Attendee. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="rawId"/> is null. </exception>
+        internal RoomParticipant(string rawId, ParticipantRole role)
         {
-            Argument.CheckNotNull(communicationIdentifier, nameof(communicationIdentifier));
-            CommunicationIdentifier = communicationIdentifier;
-        }
-
-        /// <summary> Initializes a new instance of RoomParticipant. </summary>
-        /// <param name="communicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
-        /// <param name="role"> Role Name. </param>
-        public RoomParticipant(CommunicationIdentifier communicationIdentifier, ParticipantRole role)
-        {
-            CommunicationIdentifier = communicationIdentifier;
+            Argument.AssertNotNull(rawId, nameof(rawId));
+            CommunicationIdentifier = CommunicationIdentifier.FromRawId(rawId);
+            RawId = rawId;
             Role = role;
         }
 
@@ -32,7 +26,7 @@ namespace Azure.Communication.Rooms
         public CommunicationIdentifier CommunicationIdentifier { get;}
 
         /// <summary> Role Name. </summary>
-        public ParticipantRole? Role { get; set; }
+        public ParticipantRole Role { get; }
 
         /// <summary> Raw ID representation of the communication identifier. Please refer to the following document for additional information on Raw ID. &lt;br&gt; https://learn.microsoft.com/azure/communication-services/concepts/identifiers?pivots=programming-language-rest#raw-id-representation. </summary>
         internal string RawId { get; }

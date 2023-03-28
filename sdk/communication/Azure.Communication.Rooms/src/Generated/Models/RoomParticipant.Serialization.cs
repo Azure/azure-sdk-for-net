@@ -19,7 +19,7 @@ namespace Azure.Communication.Rooms
                 return null;
             }
             string rawId = default;
-            ParticipantRole? role = default;
+            ParticipantRole role = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rawId"u8))
@@ -29,11 +29,6 @@ namespace Azure.Communication.Rooms
                 }
                 if (property.NameEquals("role"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        role = null;
-                        continue;
-                    }
                     role = new ParticipantRole(property.Value.GetString());
                     continue;
                 }

@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.Communication.Rooms
 {
     /// <summary> A collection of participants in a room. </summary>
-    public partial class ParticipantsCollection
+    internal partial class ParticipantsCollection
     {
         /// <summary> Initializes a new instance of ParticipantsCollection. </summary>
         /// <param name="value"> A collection of participants. </param>

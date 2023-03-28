@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Communication.Identity;
 using Azure.Communication.Rooms;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.Rooms.Tests
@@ -47,9 +48,11 @@ namespace Azure.Communication.Rooms.Tests
                 Assert.AreEqual(validUntil, createCommunicationRoom.ValidUntil);
 
                 // List All Rooms
-                Response<RoomsCollection> listRoomResponse = await roomsClient.ListRoomsAsync();
-                RoomsCollection listCommunicationRooms = listRoomResponse.Value;
-
+                AsyncPageable<CommunicationRoom> allRooms = roomsClient.GetRoomsAsync();
+                await foreach (CommunicationRoom room in allRooms)
+                {
+                    Console.WriteLine($" Room {room.Id} createdAt {room.CreatedAt}, valid from {room.ValidFrom} to {room.ValidUntil}.");
+                }
                 // TODO: we should check that the list of retrieved rooms should not have count of 0;
 
                 // Update Room
@@ -89,11 +92,11 @@ namespace Azure.Communication.Rooms.Tests
 
             try
             {
-                RoomParticipant participant1 = new RoomParticipant(communicationUser1, ParticipantRole.Presenter);
-                RoomParticipant participant2 = new RoomParticipant(communicationUser2);
-                RoomParticipant participant3 = new RoomParticipant(communicationUser3, ParticipantRole.Consumer);
+                InvitedRoomParticipant participant1 = new InvitedRoomParticipant(communicationUser1) { Role = ParticipantRole.Presenter };
+                InvitedRoomParticipant participant2 = new InvitedRoomParticipant(communicationUser2);
+                InvitedRoomParticipant participant3 = new InvitedRoomParticipant(communicationUser3) { Role = ParticipantRole.Consumer };
 
-                List<RoomParticipant> createRoomParticipants = new List<RoomParticipant>
+                List<InvitedRoomParticipant> createRoomParticipants = new List<InvitedRoomParticipant>
                 {
                     participant1,
                     participant2
@@ -118,9 +121,11 @@ namespace Azure.Communication.Rooms.Tests
                 Assert.AreEqual(validUntil, createCommunicationRoom.ValidUntil);
 
                 // List All Rooms
-                Response<RoomsCollection> listRoomResponse = await roomsClient.ListRoomsAsync();
-                RoomsCollection listCommunicationRooms = listRoomResponse.Value;
-
+                AsyncPageable<CommunicationRoom> allRooms = roomsClient.GetRoomsAsync();
+                await foreach (CommunicationRoom room in allRooms)
+                {
+                    Console.WriteLine($" Room {room.Id} createdAt {room.CreatedAt}, valid from {room.ValidFrom} to {room.ValidUntil}.");
+                }
                 // TODO: we should check that the list of retrieved rooms should not have count of 0;
 
                 // Update Room
@@ -162,16 +167,17 @@ namespace Azure.Communication.Rooms.Tests
 
             RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview);
 
-            RoomParticipant participant1 = new RoomParticipant(communicationUser1, ParticipantRole.Presenter);
-            RoomParticipant participant2 = new RoomParticipant(communicationUser2, ParticipantRole.Presenter);
-            RoomParticipant participant3 = new RoomParticipant(communicationUser3, ParticipantRole.Attendee);
+            InvitedRoomParticipant participant1 = new InvitedRoomParticipant(communicationUser1) { Role = ParticipantRole.Presenter };
+            InvitedRoomParticipant participant2 = new InvitedRoomParticipant(communicationUser2) { Role = ParticipantRole.Presenter };
+            InvitedRoomParticipant participant3 = new InvitedRoomParticipant(communicationUser3) { Role = ParticipantRole.Attendee };
 
             var validFrom = DateTime.UtcNow;
             var validUntil = validFrom.AddDays(1);
 
             try
             {
-                List<RoomParticipant> createRoomParticipants = new List<RoomParticipant>
+                // Create room with participants
+                List<InvitedRoomParticipant> createRoomParticipants = new List<InvitedRoomParticipant>
                 {
                     participant1,
                     participant2
@@ -183,30 +189,29 @@ namespace Azure.Communication.Rooms.Tests
                 Assert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
 
                 var createdRoomId = createCommunicationRoom.Id;
-                participant2 = new RoomParticipant(communicationUser1, ParticipantRole.Consumer);
+                participant2 = new InvitedRoomParticipant(communicationUser1);
 
                 // Upsert room participants
                 // participant2 updated from Presenter -> Consumer
                 // participant3 added to the list
-                List<RoomParticipant> toAddCommunicationUsers = new List<RoomParticipant>()
+                List<InvitedRoomParticipant> toUpsertCommunicationUsers = new List<InvitedRoomParticipant>()
                 {
                     participant2,
                     participant3
                 };
 
-                Response<object> addParticipantsResponse = await roomsClient.UpsertParticipantsAsync(createdRoomId, toAddCommunicationUsers);
-                Assert.AreEqual(200, addParticipantsResponse.GetRawResponse().Status);
+                Response<UpsertParticipantsResult> upsertParticipantsResponse = await roomsClient.UpsertParticipantsAsync(createdRoomId, toUpsertCommunicationUsers);
+                Assert.AreEqual(200, upsertParticipantsResponse.GetRawResponse().Status);
 
-                Response<ParticipantsCollection> getParticipantsResponse = await roomsClient.GetParticipantsAsync(createdRoomId);
-                ParticipantsCollection roomParticipantsResponse = getParticipantsResponse.Value;
-                List<RoomParticipant> upsertRoomParticipantsResult = roomParticipantsResponse.Value.ToList();
+                AsyncPageable<RoomParticipant> allParticipants = roomsClient.GetParticipantsAsync(createdRoomId);
+                List<RoomParticipant> upsertRoomParticipantsResult = await allParticipants.ToEnumerableAsync();
                 Assert.AreEqual(3, upsertRoomParticipantsResult.Count, "Expected Room participants count to be 3");
-                Assert.IsTrue(upsertRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier)), "Expected AddParticipants to contain user1");
-                Assert.IsTrue(upsertRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier)), "Expected AddParticipants to contain user2");
-                Assert.IsTrue(upsertRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier)), "Expected AddParticipants to contain user3");
-                Assert.IsTrue(upsertRoomParticipantsResult.Any(x => x.Role == ParticipantRole.Presenter), "Expected AddParticipants to contain Presenter");
-                Assert.IsTrue(upsertRoomParticipantsResult.Any(x => x.Role == ParticipantRole.Consumer), "Expected AddParticipants to contain Consumer");
-                Assert.IsTrue(upsertRoomParticipantsResult.Any(x => x.Role == ParticipantRole.Attendee), "Expected AddParticipants to contain Attendee");
+                Assert.IsTrue(upsertRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier)), "Expected UpsertParticipants to contain user1");
+                Assert.IsTrue(upsertRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier)), "Expected UpsertParticipants to contain user2");
+                Assert.IsTrue(upsertRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier)), "Expected UpsertParticipants to contain user3");
+                Assert.IsTrue(upsertRoomParticipantsResult.Any(x => x.Role == ParticipantRole.Presenter), "Expected UpsertParticipants to contain Presenter");
+                Assert.IsTrue(upsertRoomParticipantsResult.Any(x => x.Role == ParticipantRole.Consumer), "Expected UpsertParticipants to contain Consumer");
+                Assert.IsTrue(upsertRoomParticipantsResult.Any(x => x.Role == ParticipantRole.Attendee), "Expected UpsertParticipants to contain Attendee");
 
                 // Remove participants
                 List<CommunicationIdentifier> toRemoveCommunicationUsers = new List<CommunicationIdentifier>
@@ -215,7 +220,7 @@ namespace Azure.Communication.Rooms.Tests
                     communicationUser2
                 };
 
-                Response<object> removeParticipantsResponse = await roomsClient.RemoveParticipantsAsync(createdRoomId, toRemoveCommunicationUsers);
+                Response<RemoveParticipantsResult> removeParticipantsResponse = await roomsClient.RemoveParticipantsAsync(createdRoomId, toRemoveCommunicationUsers);
                 Assert.AreEqual(200, removeParticipantsResponse.GetRawResponse().Status);
 
                 Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
@@ -244,6 +249,7 @@ namespace Azure.Communication.Rooms.Tests
 
                 try
                 {
+                    // Create Room
                     Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(validFrom);
                     CommunicationRoom createCommunicationRoom = createRoomResponse.Value;
                     Assert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
@@ -251,6 +257,7 @@ namespace Azure.Communication.Rooms.Tests
 
                     var createdRoomId = createCommunicationRoom.Id;
 
+                    // Update Room
                     Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom, validUntil);
                     CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
                     Assert.AreEqual(createdRoomId, updateCommunicationRoom.Id);

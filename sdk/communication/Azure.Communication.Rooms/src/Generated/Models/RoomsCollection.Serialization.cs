@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Rooms
 {
-    public partial class RoomsCollection
+    internal partial class RoomsCollection
     {
         internal static RoomsCollection DeserializeRoomsCollection(JsonElement element)
         {

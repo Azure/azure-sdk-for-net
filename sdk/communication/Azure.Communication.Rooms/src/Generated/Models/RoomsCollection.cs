@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.Communication.Rooms
 {
     /// <summary> A collection of rooms. </summary>
-    public partial class RoomsCollection
+    internal partial class RoomsCollection
     {
         /// <summary> Initializes a new instance of RoomsCollection. </summary>
         /// <param name="value"> A collection of rooms. </param>
