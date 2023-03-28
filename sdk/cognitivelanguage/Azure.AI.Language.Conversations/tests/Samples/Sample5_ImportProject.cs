@@ -151,11 +151,11 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             await InstrumentOperation(trainOperation).WaitForCompletionAsync();
 #endif
 
-                // Deploy the model.
-                var deployData = new
-                {
-                    trainedModelLabel = "Sample5",
-                };
+            // Deploy the model.
+            var deployData = new
+            {
+                trainedModelLabel = "Sample5",
+            };
 
             Console.WriteLine($"Deploying project {projectName} to production...");
 #if SNIPPET
