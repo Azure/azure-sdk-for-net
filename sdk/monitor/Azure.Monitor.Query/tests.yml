@@ -5,4 +5,3 @@ extends:
     parameters:
       ServiceDirectory: monitor
       Project: Azure.Monitor.Query
-      TimeoutInMinutes: 120

@@ -43,7 +43,6 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQuery()
         {
-            TestContext.Progress.WriteLine("CanQuery");
             var client = CreateClient();
 
             var results = await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId,
@@ -73,11 +72,10 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryIntoPrimitiveString()
         {
-            TestContext.Progress.WriteLine("CanQueryIntoPrimitiveString");
             var client = CreateClient();
 
             var results = await client.QueryWorkspaceAsync<string>(TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} | distinct {LogsTestData.StringColumnName}, {LogsTestData.IntColumnName} | project {LogsTestData.StringColumnName} | order by {LogsTestData.StringColumnName} asc",
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.StringColumnName} | order by {LogsTestData.StringColumnName} asc",
                 _logsTestData.DataTimeRange);
 
             CollectionAssert.AreEqual(new[] {"a", "b", "c"}, results.Value);
@@ -86,7 +84,6 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryPartialSuccess()
         {
-            TestContext.Progress.WriteLine("CanQueryIntoPartialSuccess");
             var client = CreateClient();
 
             var results = await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId,
@@ -104,7 +101,6 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public void ThrowsOnQueryPartialSuccess()
         {
-            TestContext.Progress.WriteLine("ThrowsQueryIntoPrimitiveString");
             var client = CreateClient();
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(() => client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId,
@@ -117,7 +113,6 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryAdditionalWorkspace()
         {
-            TestContext.Progress.WriteLine("CanQueryAdditionalWorkspace");
             var client = CreateClient();
 
             var results = await client.QueryWorkspaceAsync<string>(TestEnvironment.WorkspaceId,
@@ -127,27 +122,23 @@ namespace Azure.Monitor.Query.Tests
                     AdditionalWorkspaces = { TestEnvironment.SecondaryWorkspaceId }
                 });
 
-            CollectionAssert.Contains(results.Value, "a");
-            CollectionAssert.Contains(results.Value, "b");
-            CollectionAssert.Contains(results.Value, "c");
+            CollectionAssert.AreEqual(new[] {"a", "a", "b", "b", "c", "c"}, results.Value);
         }
 
         [RecordedTest]
         public async Task CanQueryIntoPrimitiveInt()
         {
-            TestContext.Progress.WriteLine("CanQueryIntoPrimitiveInt");
             var client = CreateClient();
 
-            var results = await client.QueryWorkspaceAsync<int>(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | distinct {LogsTestData.StringColumnName}, {LogsTestData.IntColumnName} | count",
+            var results = await client.QueryWorkspaceAsync<int>(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | distinct * | count",
                 _logsTestData.DataTimeRange);
 
-            Assert.GreaterOrEqual(_logsTestData.TableA.Count, results.Value[0]);
+            Assert.AreEqual(_logsTestData.TableA.Count, results.Value[0]);
         }
 
         [RecordedTest]
         public async Task CanQueryIntoClass()
         {
-            TestContext.Progress.WriteLine("CanQueryIntoClass");
             var client = CreateClient();
 
             var results = await client.QueryWorkspaceAsync<TestModel>(TestEnvironment.WorkspaceId,
@@ -156,19 +147,21 @@ namespace Azure.Monitor.Query.Tests
                 $"order by Name asc",
                 _logsTestData.DataTimeRange);
 
-            Assert.IsTrue(results.Value.Contains(new TestModel() { Age = 1, Name = "a" }));
-            Assert.IsTrue(results.Value.Contains(new TestModel() { Age = 2, Name = "b" }));
-            Assert.IsTrue(results.Value.Contains(new TestModel() { Age = 3, Name = "c" }));
+            CollectionAssert.AreEqual(new[]
+            {
+                new TestModel() {Age = 1, Name = "a"},
+                new TestModel() {Age = 3, Name = "b"},
+                new TestModel() {Age = 1, Name = "c"}
+            }, results.Value);
         }
 
         [RecordedTest]
         public async Task CanQueryIntoDictionary()
         {
-            TestContext.Progress.WriteLine("CanQueryIntoDictionary");
             var client = CreateClient();
 
             var results = await client.QueryWorkspaceAsync<Dictionary<string, object>>(TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} | distinct {LogsTestData.StringColumnName}, {LogsTestData.IntColumnName} |" +
+                $"{_logsTestData.TableAName} | distinct * |" +
                 $"project-rename Name = {LogsTestData.StringColumnName}, Age = {LogsTestData.IntColumnName} |" +
                 $"project Name, Age |" +
                 $"order by Name asc",
@@ -177,19 +170,18 @@ namespace Azure.Monitor.Query.Tests
             CollectionAssert.AreEqual(new[]
             {
                 new Dictionary<string, object>() {{"Age", 1}, {"Name", "a"}},
-                new Dictionary<string, object>() {{"Age", 2}, {"Name", "b"}},
-                new Dictionary<string, object>() {{"Age", 3}, {"Name", "c"}}
+                new Dictionary<string, object>() {{"Age", 3}, {"Name", "b"}},
+                new Dictionary<string, object>() {{"Age", 1}, {"Name", "c"}}
             }, results.Value);
         }
 
         [RecordedTest]
         public async Task CanQueryIntoIDictionary()
         {
-            TestContext.Progress.WriteLine("CanQueryIntoIDictionary");
             var client = CreateClient();
 
-            Response<IReadOnlyList<IDictionary<string, object>>> results = await client.QueryWorkspaceAsync<IDictionary<string, object>>(TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} | distinct {LogsTestData.StringColumnName}, {LogsTestData.IntColumnName} |" +
+            var results = await client.QueryWorkspaceAsync<IDictionary<string, object>>(TestEnvironment.WorkspaceId,
+                $"{_logsTestData.TableAName} | distinct * |" +
                 $"project-rename Name = {LogsTestData.StringColumnName}, Age = {LogsTestData.IntColumnName} |" +
                 $"project Name, Age |" +
                 $"order by Name asc",
@@ -198,15 +190,14 @@ namespace Azure.Monitor.Query.Tests
             CollectionAssert.AreEqual(new[]
             {
                 new Dictionary<string, object>() {{"Age", 1}, {"Name", "a"}},
-                new Dictionary<string, object>() {{"Age", 2}, {"Name", "b"}},
-                new Dictionary<string, object>() {{"Age", 3}, {"Name", "c"}}
+                new Dictionary<string, object>() {{"Age", 3}, {"Name", "b"}},
+                new Dictionary<string, object>() {{"Age", 1}, {"Name", "c"}}
             }, results.Value);
         }
 
         [RecordedTest]
         public async Task CanQueryBatch()
         {
-            TestContext.Progress.WriteLine("CanQueryBatch");
             var client = CreateClient();
             LogsBatchQuery batch = new LogsBatchQuery();
             string id1 = batch.AddWorkspaceQuery(TestEnvironment.WorkspaceId, "Heartbeat", _logsTestData.DataTimeRange);
@@ -223,7 +214,6 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryBatchMixed()
         {
-            TestContext.Progress.WriteLine("CanQueryBatchMixed");
             var client = CreateClient();
             LogsBatchQuery batch = new LogsBatchQuery();
             string id1 = batch.AddWorkspaceQuery(TestEnvironment.WorkspaceId, "Heartbeat", _logsTestData.DataTimeRange);
@@ -249,7 +239,6 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryAllSupportedTypes()
         {
-            TestContext.Progress.WriteLine("CanQueryAllSupportedTypes");
             var client = CreateClient();
 
             Response<LogsQueryResult> results = await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId,
@@ -309,7 +298,6 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryAllSupportedTypesIntoModel()
         {
-            TestContext.Progress.WriteLine("CanQueryAllSupportedTypesIntoModel");
             var client = CreateClient();
 
             Response<IReadOnlyList<TestModelForTypes>> results = await client.QueryWorkspaceAsync<TestModelForTypes>(TestEnvironment.WorkspaceId,
@@ -344,7 +332,6 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryAllSupportedTypesIntoModelNullable()
         {
-            TestContext.Progress.WriteLine("CanQueryAllSupportedTypesIntoModelNullable");
             var client = CreateClient();
 
             Response<IReadOnlyList<TestModelForTypesNullable>> results = await client.QueryWorkspaceAsync<TestModelForTypesNullable>(TestEnvironment.WorkspaceId,
@@ -379,7 +366,6 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryAllSupportedTypesIntoModelNulls()
         {
-            TestContext.Progress.WriteLine("CanQueryAllSupportedTypesIntoModelNulls");
             var client = CreateClient();
 
             Response<IReadOnlyList<TestModelForTypesNullable>> results = await client.QueryWorkspaceAsync<TestModelForTypesNullable>(TestEnvironment.WorkspaceId,
@@ -414,7 +400,6 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryIntoPrimitive()
         {
-            TestContext.Progress.WriteLine("CanQueryIntoPrimitive");
             var client = CreateClient();
 
             Assert.AreEqual(DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00"), (await client.QueryWorkspaceAsync<DateTimeOffset>(TestEnvironment.WorkspaceId, $"datatable (DateTime: datetime) [ datetime(2015-12-31 23:59:59.9) ]", _logsTestData.DataTimeRange)).Value[0]);
@@ -431,7 +416,6 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryIntoNullablePrimitive()
         {
-            TestContext.Progress.WriteLine("CanQueryIntoNullablePrimitive");
             var client = CreateClient();
 
             Assert.IsNull((await client.QueryWorkspaceAsync<DateTimeOffset?>(TestEnvironment.WorkspaceId, $"datatable (DateTime: datetime) [ datetime(null) ]", _logsTestData.DataTimeRange)).Value[0]);
@@ -447,7 +431,6 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryIntoNullablePrimitiveNull()
         {
-            TestContext.Progress.WriteLine("CanQueryIntoNullablePrimitiveNull");
             var client = CreateClient();
 
             var results = await client.QueryWorkspaceAsync<DateTimeOffset?>(TestEnvironment.WorkspaceId, $"datatable (DateTime: datetime) [ datetime(null) ]", _logsTestData.DataTimeRange);
@@ -458,63 +441,50 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryWithTimespan()
         {
-            TestContext.Progress.WriteLine("CanQueryWithTimespan");
-            var timespan = TimeSpan.FromSeconds(5);
+            // Get the time of the second event and add a bit of buffer to it (events are 2d apart)
+            var minOffset = (DateTimeOffset)_logsTestData.TableA[1][LogsTestData.TimeGeneratedColumnNameSent];
+            var timespan = Recording.UtcNow - minOffset;
+            timespan = timespan.Add(TimeSpan.FromDays(1));
 
             var client = CreateClient();
-            // Empty check
             var results = await client.QueryWorkspaceAsync<DateTimeOffset>(
                 TestEnvironment.WorkspaceId,
                 $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
                 timespan);
 
-            Assert.AreEqual(0, results.Value.Count);
-
-            // Check if all rows in table were uploaded
-            // Get the time of the third event and add a bit of buffer to it (events are 2d apart)
-            var maxOffset = (DateTimeOffset)_logsTestData.TableA[2][LogsTestData.TimeGeneratedColumnNameSent];
-            timespan = Recording.UtcNow - maxOffset;
-            timespan = timespan.Add(TimeSpan.FromDays(7));
-
-            // Make sure there is some data in the range specified
-            results = await client.QueryWorkspaceAsync<DateTimeOffset>(
-                TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
-                timespan);
-
-            Assert.GreaterOrEqual(results.Value.Count, 3);
+            // We should get the second and the third events
+            Assert.AreEqual(2, results.Value.Count);
+            // TODO: Switch to querying DateTimeOffset
+            Assert.True(results.Value.All(r => r >= minOffset));
         }
 
         [RecordedTest]
         public async Task CanQueryBatchWithTimespan()
         {
-            TestContext.Progress.WriteLine("CanQueryBatchWithTimespan");
-            var timespan = TimeSpan.FromSeconds(5);
+            // Get the time of the second event and add a bit of buffer to it (events are 2d apart)
+            var minOffset = (DateTimeOffset)_logsTestData.TableA[1][LogsTestData.TimeGeneratedColumnNameSent];
+            var timespan = Recording.UtcNow - minOffset;
+            timespan = timespan.Add(TimeSpan.FromDays(1));
 
             var client = CreateClient();
-            // empty check
             LogsBatchQuery batch = new LogsBatchQuery();
-            string id1 = batch.AddWorkspaceQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}", timespan);
-
-            // check if all rows in table were uploaded
-            var maxOffset = (DateTimeOffset)_logsTestData.TableA[2][LogsTestData.TimeGeneratedColumnNameSent];
-            timespan = Recording.UtcNow - maxOffset;
-            timespan = timespan.Add(TimeSpan.FromDays(7));
+            string id1 = batch.AddWorkspaceQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}", _logsTestData.DataTimeRange);
             string id2 = batch.AddWorkspaceQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}", timespan);
-
             Response<LogsBatchQueryResultCollection> response = await client.QueryBatchAsync(batch);
 
             var result1 = response.Value.GetResult<DateTimeOffset>(id1);
             var result2 = response.Value.GetResult<DateTimeOffset>(id2);
 
-            Assert.AreEqual(0, result1.Count);
-            Assert.GreaterOrEqual(result2.Count, 3);
+            // All rows
+            Assert.AreEqual(3, result1.Count);
+            // Filtered by the timestamp
+            Assert.AreEqual(2, result2.Count);
+            Assert.True(result2.All(r => r >= minOffset));
         }
 
         [RecordedTest]
         public void ThrowsExceptionWhenQueryFails()
         {
-            TestContext.Progress.WriteLine("ThrowsExceptionWhenQueryFails");
             var client = CreateClient();
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId, "this won't work", _logsTestData.DataTimeRange));
 
@@ -525,7 +495,6 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task ThrowsExceptionWhenQueryFailsBatch()
         {
-            TestContext.Progress.WriteLine("ThrowsExceptionWhenQueryFailsBatch");
             var client = CreateClient();
 
             LogsBatchQuery batch = new LogsBatchQuery();
@@ -541,7 +510,6 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task ThrowsExceptionWhenPartialSuccess()
         {
-            TestContext.Progress.WriteLine("ThrowsExceptionWhenPartialSuccess");
             var client = CreateClient();
 
             LogsBatchQuery batch = new LogsBatchQuery();
@@ -557,7 +525,6 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task ThrowsExceptionWhenBatchQueryNotFound()
         {
-            TestContext.Progress.WriteLine("ThrowsExceptionWhenBatchQueryNotFound");
             var client = CreateClient();
 
             LogsBatchQuery batch = new LogsBatchQuery();
@@ -576,7 +543,6 @@ namespace Azure.Monitor.Query.Tests
         [TestCase(false)]
         public async Task CanQueryWithStatistics(bool include)
         {
-            TestContext.Progress.WriteLine("CanQueryWithStatistics");
             var client = CreateClient();
 
             var response = await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId, _logsTestData.TableAName, _logsTestData.DataTimeRange, options: new LogsQueryOptions()
@@ -600,7 +566,6 @@ namespace Azure.Monitor.Query.Tests
         [TestCase(false)]
         public async Task CanQueryWithVisualization(bool include)
         {
-            TestContext.Progress.WriteLine("CanQueryWithVisualization");
             var client = CreateClient();
 
             var response = await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId, "datatable (s: string, i: long) [ \"a\", 1, \"b\", 2, \"c\", 3 ] | render columnchart", _logsTestData.DataTimeRange, options: new LogsQueryOptions()
@@ -624,7 +589,6 @@ namespace Azure.Monitor.Query.Tests
         [TestCase(false)]
         public async Task CanQueryWithStatisticsBatch(bool include)
         {
-            TestContext.Progress.WriteLine("CanQueryWithStatisticsBatch");
             var client = CreateClient();
 
             LogsBatchQuery batch = new LogsBatchQuery();
@@ -649,7 +613,6 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanSetServiceTimeout()
         {
-            TestContext.Progress.WriteLine("CanSetServiceTimeout");
             var client = CreateClient();
 
             // Sometimes the service doesn't abort the query quickly enough
@@ -697,7 +660,6 @@ namespace Azure.Monitor.Query.Tests
         [TestCaseSource(nameof(Queries))]
         public async Task CanQueryWithFormattedQuery(FormattableStringWrapper query)
         {
-            TestContext.Progress.WriteLine("CanQueryWithFormattedQuery");
             var client = CreateClient();
 
             var response = await client.QueryWorkspaceAsync<bool>(TestEnvironment.WorkspaceId, LogsQueryClient.CreateQuery(query.Value), _logsTestData.DataTimeRange);

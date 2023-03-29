@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query;
-using NUnit.Framework;
 
 namespace Azure.Monitor.Query.Tests
 {
@@ -43,7 +42,7 @@ namespace Azure.Monitor.Query.Tests
 
         private string TableANameSent => nameof(TableA) + DataVersion + "_" + RetentionWindowStart.DayOfYear;
         public string TableAName => TableANameSent + "_CL";
-        public QueryTimeRange DataTimeRange => new QueryTimeRange(RetentionWindowStart, TimeSpan.FromDays(15));
+        public QueryTimeRange DataTimeRange => new QueryTimeRange(RetentionWindowStart, TimeSpan.FromDays(7));
 
         private readonly MonitorQueryTestEnvironment _testEnvironment;
 
@@ -52,7 +51,7 @@ namespace Azure.Monitor.Query.Tests
             _testEnvironment = test.TestEnvironment;
 
             var recordingUtcNow = DateTime.SpecifyKind(test.Recording.UtcNow.Date, DateTimeKind.Utc);
-            RetentionWindowStart = recordingUtcNow.AddDays(-14);
+            RetentionWindowStart = recordingUtcNow.AddDays(DayOfWeek.Monday - recordingUtcNow.DayOfWeek - 7);
 
             TableA = new()
             {
@@ -66,7 +65,7 @@ namespace Azure.Monitor.Query.Tests
                 },
                 new()
                 {
-                    { IntColumnNameSent, 2},
+                    { IntColumnNameSent, 3},
                     { StringColumnNameSent, "b"},
                     { BoolColumnNameSent, true},
                     { FloatColumnNameSent, 1.2f },
@@ -74,7 +73,7 @@ namespace Azure.Monitor.Query.Tests
                 },
                 new()
                 {
-                    { IntColumnNameSent, 3},
+                    { IntColumnNameSent, 1},
                     { StringColumnNameSent, "c"},
                     { BoolColumnNameSent, false},
                     { FloatColumnNameSent, 1.1f },
@@ -116,7 +115,6 @@ namespace Azure.Monitor.Query.Tests
 
             while (count == 0)
             {
-                TestContext.Progress.WriteLine("Delay - can't find table");
                 await Task.Delay(TimeSpan.FromSeconds(30));
                 count = await QueryCount(workspaceId);
             }
