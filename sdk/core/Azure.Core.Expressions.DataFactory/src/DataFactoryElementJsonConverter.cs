@@ -10,47 +10,47 @@ using System.Text.Json.Serialization;
 
 namespace Azure.Core.Expressions.DataFactory
 {
-    internal class DataFactoryExpressionJsonConverter : JsonConverter<object?>
+    internal class DataFactoryElementJsonConverter : JsonConverter<object?>
     {
         public override bool CanConvert(Type typeToConvert)
         {
-            return typeToConvert == typeof(DataFactoryExpression<string?>) ||
-                   typeToConvert == typeof(DataFactoryExpression<int?>) ||
-                   typeToConvert == typeof(DataFactoryExpression<int>) ||
-                   typeToConvert == typeof(DataFactoryExpression<double?>) ||
-                   typeToConvert == typeof(DataFactoryExpression<double>) ||
-                   typeToConvert == typeof(DataFactoryExpression<bool?>) ||
-                   typeToConvert == typeof(DataFactoryExpression<bool>) ||
-                   typeToConvert == typeof(DataFactoryExpression<DateTimeOffset?>) ||
-                   typeToConvert == typeof(DataFactoryExpression<DateTimeOffset>) ||
-                   typeToConvert == typeof(DataFactoryExpression<TimeSpan?>) ||
-                   typeToConvert == typeof(DataFactoryExpression<TimeSpan>) ||
-                   typeToConvert == typeof(DataFactoryExpression<Uri>) ||
-                   typeToConvert == typeof(DataFactoryExpression<IList<string>>) ||
-                   typeToConvert == typeof(DataFactoryExpression<IDictionary<string, string>>) ||
+            return typeToConvert == typeof(DataFactoryElement<string?>) ||
+                   typeToConvert == typeof(DataFactoryElement<int?>) ||
+                   typeToConvert == typeof(DataFactoryElement<int>) ||
+                   typeToConvert == typeof(DataFactoryElement<double?>) ||
+                   typeToConvert == typeof(DataFactoryElement<double>) ||
+                   typeToConvert == typeof(DataFactoryElement<bool?>) ||
+                   typeToConvert == typeof(DataFactoryElement<bool>) ||
+                   typeToConvert == typeof(DataFactoryElement<DateTimeOffset?>) ||
+                   typeToConvert == typeof(DataFactoryElement<DateTimeOffset>) ||
+                   typeToConvert == typeof(DataFactoryElement<TimeSpan?>) ||
+                   typeToConvert == typeof(DataFactoryElement<TimeSpan>) ||
+                   typeToConvert == typeof(DataFactoryElement<Uri>) ||
+                   typeToConvert == typeof(DataFactoryElement<IList<string>>) ||
+                   typeToConvert == typeof(DataFactoryElement<IDictionary<string, string>>) ||
                    TryGetGenericDataFactoryList(typeToConvert, out _);
         }
 
         public override object? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             using var document = JsonDocument.ParseValue(ref reader);
-            if (typeToConvert == typeof(DataFactoryExpression<string?>))
+            if (typeToConvert == typeof(DataFactoryElement<string?>))
                 return Deserialize<string>(document.RootElement);
-            if (typeToConvert == typeof(DataFactoryExpression<int?>) || typeToConvert == typeof(DataFactoryExpression<int>))
+            if (typeToConvert == typeof(DataFactoryElement<int?>) || typeToConvert == typeof(DataFactoryElement<int>))
                 return Deserialize<int>(document.RootElement);
-            if (typeToConvert == typeof(DataFactoryExpression<double?>) || typeToConvert == typeof(DataFactoryExpression<double>))
+            if (typeToConvert == typeof(DataFactoryElement<double?>) || typeToConvert == typeof(DataFactoryElement<double>))
                 return Deserialize<double>(document.RootElement);
-            if (typeToConvert == typeof(DataFactoryExpression<bool?>) || typeToConvert == typeof(DataFactoryExpression<bool>))
+            if (typeToConvert == typeof(DataFactoryElement<bool?>) || typeToConvert == typeof(DataFactoryElement<bool>))
                 return Deserialize<bool>(document.RootElement);
-            if (typeToConvert == typeof(DataFactoryExpression<DateTimeOffset?>) || typeToConvert == typeof(DataFactoryExpression<DateTimeOffset>))
+            if (typeToConvert == typeof(DataFactoryElement<DateTimeOffset?>) || typeToConvert == typeof(DataFactoryElement<DateTimeOffset>))
                 return Deserialize<DateTimeOffset>(document.RootElement);
-            if (typeToConvert == typeof(DataFactoryExpression<TimeSpan?>) || typeToConvert == typeof(DataFactoryExpression<TimeSpan>))
+            if (typeToConvert == typeof(DataFactoryElement<TimeSpan?>) || typeToConvert == typeof(DataFactoryElement<TimeSpan>))
                 return Deserialize<TimeSpan>(document.RootElement);
-            if (typeToConvert == typeof(DataFactoryExpression<Uri>))
+            if (typeToConvert == typeof(DataFactoryElement<Uri>))
                 return Deserialize<Uri>(document.RootElement);
-            if (typeToConvert == typeof(DataFactoryExpression<IList<string>>))
+            if (typeToConvert == typeof(DataFactoryElement<IList<string>>))
                 return Deserialize<IList<string>>(document.RootElement);
-            if (typeToConvert == typeof(DataFactoryExpression<IDictionary<string, string>>))
+            if (typeToConvert == typeof(DataFactoryElement<IDictionary<string, string>>))
                 return Deserialize<IDictionary<string, string>>(document.RootElement);
             if (TryGetGenericDataFactoryList(typeToConvert, out Type? genericListType))
             {
@@ -68,46 +68,46 @@ namespace Azure.Core.Expressions.DataFactory
                 case null:
                     writer.WriteNullValue();
                     break;
-                case DataFactoryExpression<string?> stringExpression:
+                case DataFactoryElement<string?> stringExpression:
                     Serialize(writer, stringExpression);
                     break;
-                case DataFactoryExpression<int> intExpression:
+                case DataFactoryElement<int> intExpression:
                     Serialize(writer, intExpression);
                     break;
-                case DataFactoryExpression<int?> nullableIntExpression:
+                case DataFactoryElement<int?> nullableIntExpression:
                     Serialize(writer, nullableIntExpression);
                     break;
-                case DataFactoryExpression<double> doubleExpression:
+                case DataFactoryElement<double> doubleExpression:
                     Serialize(writer, doubleExpression);
                     break;
-                case DataFactoryExpression<double?> nullableDoubleExpression:
+                case DataFactoryElement<double?> nullableDoubleExpression:
                     Serialize(writer, nullableDoubleExpression);
                     break;
-                case DataFactoryExpression<bool> boolExpression:
+                case DataFactoryElement<bool> boolExpression:
                     Serialize(writer, boolExpression);
                     break;
-                case DataFactoryExpression<bool?> nullableBoolExpression:
+                case DataFactoryElement<bool?> nullableBoolExpression:
                     Serialize(writer, nullableBoolExpression);
                     break;
-                case DataFactoryExpression<DateTimeOffset> dtoExpression:
+                case DataFactoryElement<DateTimeOffset> dtoExpression:
                     Serialize(writer, dtoExpression);
                     break;
-                case DataFactoryExpression<DateTimeOffset?> nullableDtoExpression:
+                case DataFactoryElement<DateTimeOffset?> nullableDtoExpression:
                     Serialize(writer, nullableDtoExpression);
                     break;
-                case DataFactoryExpression<TimeSpan> timespanExpression:
+                case DataFactoryElement<TimeSpan> timespanExpression:
                     Serialize(writer, timespanExpression);
                     break;
-                case DataFactoryExpression<TimeSpan?> nullableTimespanExpression:
+                case DataFactoryElement<TimeSpan?> nullableTimespanExpression:
                     Serialize(writer, nullableTimespanExpression);
                     break;
-                case DataFactoryExpression<Uri?> uriExpression:
+                case DataFactoryElement<Uri?> uriExpression:
                     Serialize(writer, uriExpression);
                     break;
-                case DataFactoryExpression<IList<string?>?> stringListExpression:
+                case DataFactoryElement<IList<string?>?> stringListExpression:
                     Serialize<IList<string?>?>(writer, stringListExpression);
                     break;
-                case DataFactoryExpression<IDictionary<string, string?>?> keyValuePairExpression:
+                case DataFactoryElement<IDictionary<string, string?>?> keyValuePairExpression:
                     Serialize(writer, keyValuePairExpression);
                     break;
                 default:
@@ -129,7 +129,7 @@ namespace Azure.Core.Expressions.DataFactory
 
         private static MethodInfo GetGenericSerializationMethod(Type typeToConvert, string methodName)
         {
-            return typeof(DataFactoryExpressionJsonConverter)
+            return typeof(DataFactoryElementJsonConverter)
                 .GetMethod(
                     methodName,
                     BindingFlags.Static | BindingFlags.NonPublic)!
@@ -140,7 +140,7 @@ namespace Azure.Core.Expressions.DataFactory
         {
             genericType = null;
 
-            if (!type.IsGenericType || type.GetGenericTypeDefinition() != typeof(DataFactoryExpression<>))
+            if (!type.IsGenericType || type.GetGenericTypeDefinition() != typeof(DataFactoryElement<>))
                 return false;
 
             Type firstGeneric = type.GenericTypeArguments[0];
@@ -161,11 +161,11 @@ namespace Azure.Core.Expressions.DataFactory
 
         private static bool IsGenericListType(Type type) => type == typeof(IList<>);
 
-        private static void Serialize<T>(Utf8JsonWriter writer, DataFactoryExpression<T?> expression)
+        private static void Serialize<T>(Utf8JsonWriter writer, DataFactoryElement<T?> element)
         {
-            if (expression.HasLiteral)
+            if (element.Kind == DataFactoryElementKind.Literal)
             {
-                switch (expression.Literal)
+                switch (element.Literal)
                 {
                     case TimeSpan timeSpan:
                         writer.WriteStringValue(timeSpan, "c");
@@ -191,28 +191,28 @@ namespace Azure.Core.Expressions.DataFactory
                         writer.WriteEndObject();
                         break;
                     default:
-                        writer.WriteObjectValue(expression.Literal!);
+                        writer.WriteObjectValue(element.Literal!);
                         break;
                 }
             }
             else
             {
-                SerializeExpression(writer, expression.Type!, expression.Expression!);
+                SerializeExpression(writer, element.Kind!, element.Expression!);
             }
         }
 
-        private static void SerializeGenericList<T>(Utf8JsonWriter writer, DataFactoryExpression<IList<T?>?> expression)
+        private static void SerializeGenericList<T>(Utf8JsonWriter writer, DataFactoryElement<IList<T?>?> element)
         {
-            if (expression.HasLiteral)
+            if (element.Kind == DataFactoryElementKind.Literal)
             {
-                if (expression.Literal == null)
+                if (element.Literal == null)
                 {
                     writer.WriteNullValue();
                     return;
                 }
 
                 writer.WriteStartArray();
-                foreach (T? elem in expression.Literal!)
+                foreach (T? elem in element.Literal!)
                 {
                     // underlying T must have a JsonConverter defined
                     JsonSerializer.Serialize(writer, elem!);
@@ -221,21 +221,21 @@ namespace Azure.Core.Expressions.DataFactory
             }
             else
             {
-                SerializeExpression(writer, expression.Type!, expression.Expression!);
+                SerializeExpression(writer, element.Kind, element.Expression!);
             }
         }
 
-        private static void SerializeExpression(Utf8JsonWriter writer, string type, string value)
+        private static void SerializeExpression(Utf8JsonWriter writer, DataFactoryElementKind kind, string value)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(type);
+            writer.WriteStringValue(kind.ToString());
             writer.WritePropertyName("value");
             writer.WriteStringValue(value);
             writer.WriteEndObject();
         }
 
-        private static DataFactoryExpression<IList<T?>> DeserializeGenericList<T>(JsonElement element)
+        private static DataFactoryElement<IList<T?>> DeserializeGenericList<T>(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Array)
             {
@@ -245,7 +245,7 @@ namespace Azure.Core.Expressions.DataFactory
                     list.Add(item.ValueKind == JsonValueKind.Null ? default : JsonSerializer.Deserialize<T>(item.GetRawText()!));
                 }
 
-                return new DataFactoryExpression<IList<T?>>(list);
+                return new DataFactoryElement<IList<T?>>(list);
             }
 
             if (element.ValueKind == JsonValueKind.Object)
@@ -256,7 +256,7 @@ namespace Azure.Core.Expressions.DataFactory
             throw new InvalidOperationException($"Cannot deserialize an {element.ValueKind} as a list.");
         }
 
-        internal static DataFactoryExpression<T?>? Deserialize<T>(JsonElement element)
+        internal static DataFactoryElement<T?>? Deserialize<T>(JsonElement element)
         {
             T? value = default;
 
@@ -281,7 +281,7 @@ namespace Azure.Core.Expressions.DataFactory
                     dictionary.Add(item.Name, item.Value.GetString()!);
                 }
 
-                return new DataFactoryExpression<T?>((T)(object)dictionary);
+                return new DataFactoryElement<T?>((T)(object)dictionary);
             }
 
             if (element.ValueKind == JsonValueKind.Array && typeof(T) == typeof(IList<string>))
@@ -292,32 +292,32 @@ namespace Azure.Core.Expressions.DataFactory
                     list.Add(item.ValueKind == JsonValueKind.Null ? default : JsonSerializer.Deserialize<string?>(item.GetRawText()!));
                 }
 
-                return new DataFactoryExpression<T?>((T)(object)list);
+                return new DataFactoryElement<T?>((T)(object)list);
             }
 
             if (typeof(T) == typeof(DateTimeOffset))
             {
-                return new DataFactoryExpression<T?>((T)(object)element.GetDateTimeOffset("O"));
+                return new DataFactoryElement<T?>((T)(object)element.GetDateTimeOffset("O"));
             }
 
             if (typeof(T) == typeof(TimeSpan) || typeof(T) == typeof(TimeSpan?))
             {
-                return new DataFactoryExpression<T?>((T)(object)element.GetTimeSpan("c"));
+                return new DataFactoryElement<T?>((T)(object)element.GetTimeSpan("c"));
             }
 
             if (typeof(T) == typeof(Uri))
             {
-                return new DataFactoryExpression<T?>((T)(object)new Uri(element.GetString()!));
+                return new DataFactoryElement<T?>((T)(object)new Uri(element.GetString()!));
             }
 
             var obj = element.GetObject();
             if (obj is not null)
                 value = (T)obj;
 
-            return new DataFactoryExpression<T?>(value);
+            return new DataFactoryElement<T?>(value);
         }
 
-        private static DataFactoryExpression<T> DeserializeExpression<T>(JsonElement element)
+        private static DataFactoryElement<T> DeserializeExpression<T>(JsonElement element)
         {
             string? expression = null;
             foreach (var property in element.EnumerateObject())
@@ -331,7 +331,7 @@ namespace Azure.Core.Expressions.DataFactory
 
             if (expression is null)
                 throw new InvalidOperationException("Could not be deserialized as an expression. Missing required parameter 'value'.");
-            return DataFactoryExpression<T>.FromExpression(expression);
+            return DataFactoryElement<T>.FromExpression(expression);
         }
     }
 }
