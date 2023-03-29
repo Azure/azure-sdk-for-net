@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Specifies the metric alert criteria for multiple resource that has multiple metric criteria. </summary>
+    /// <summary>
+    /// Specifies the metric alert criteria for multiple resource that has multiple metric criteria.
+    /// Serialized Name: MetricAlertMultipleResourceMultipleMetricCriteria
+    /// </summary>
     public partial class MetricAlertMultipleResourceMultipleMetricCriteria : MetricAlertCriteria
     {
         /// <summary> Initializes a new instance of MetricAlertMultipleResourceMultipleMetricCriteria. </summary>
@@ -22,10 +25,14 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MetricAlertMultipleResourceMultipleMetricCriteria. </summary>
-        /// <param name="odataType"> specifies the type of the alert criteria. </param>
+        /// <param name="odataType">
+        /// specifies the type of the alert criteria.
+        /// Serialized Name: MetricAlertCriteria.odata.type
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="allOf">
         /// the list of multiple metric criteria for this &apos;all of&apos; operation. 
+        /// Serialized Name: MetricAlertMultipleResourceMultipleMetricCriteria.allOf
         /// Please note <see cref="MultiMetricCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DynamicMetricCriteria"/> and <see cref="MetricCriteria"/>.
         /// </param>
@@ -37,6 +44,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary>
         /// the list of multiple metric criteria for this &apos;all of&apos; operation. 
+        /// Serialized Name: MetricAlertMultipleResourceMultipleMetricCriteria.allOf
         /// Please note <see cref="MultiMetricCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DynamicMetricCriteria"/> and <see cref="MetricCriteria"/>.
         /// </summary>

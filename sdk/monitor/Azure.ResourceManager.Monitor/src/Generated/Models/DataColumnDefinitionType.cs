@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The type of the column data. </summary>
+    /// <summary>
+    /// The type of the column data.
+    /// Serialized Name: KnownColumnDefinitionType
+    /// </summary>
     public readonly partial struct DataColumnDefinitionType : IEquatable<DataColumnDefinitionType>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string DatetimeValue = "datetime";
         private const string DynamicValue = "dynamic";
 
-        /// <summary> string. </summary>
+        /// <summary>
+        /// string
+        /// Serialized Name: KnownColumnDefinitionType.string
+        /// </summary>
         public static DataColumnDefinitionType String { get; } = new DataColumnDefinitionType(StringValue);
-        /// <summary> int. </summary>
+        /// <summary>
+        /// int
+        /// Serialized Name: KnownColumnDefinitionType.int
+        /// </summary>
         public static DataColumnDefinitionType Int { get; } = new DataColumnDefinitionType(IntValue);
-        /// <summary> long. </summary>
+        /// <summary>
+        /// long
+        /// Serialized Name: KnownColumnDefinitionType.long
+        /// </summary>
         public static DataColumnDefinitionType Long { get; } = new DataColumnDefinitionType(LongValue);
-        /// <summary> real. </summary>
+        /// <summary>
+        /// real
+        /// Serialized Name: KnownColumnDefinitionType.real
+        /// </summary>
         public static DataColumnDefinitionType Real { get; } = new DataColumnDefinitionType(RealValue);
-        /// <summary> boolean. </summary>
+        /// <summary>
+        /// boolean
+        /// Serialized Name: KnownColumnDefinitionType.boolean
+        /// </summary>
         public static DataColumnDefinitionType Boolean { get; } = new DataColumnDefinitionType(BooleanValue);
-        /// <summary> datetime. </summary>
+        /// <summary>
+        /// datetime
+        /// Serialized Name: KnownColumnDefinitionType.datetime
+        /// </summary>
         public static DataColumnDefinitionType Datetime { get; } = new DataColumnDefinitionType(DatetimeValue);
-        /// <summary> dynamic. </summary>
+        /// <summary>
+        /// dynamic
+        /// Serialized Name: KnownColumnDefinitionType.dynamic
+        /// </summary>
         public static DataColumnDefinitionType Dynamic { get; } = new DataColumnDefinitionType(DynamicValue);
         /// <summary> Determines if two <see cref="DataColumnDefinitionType"/> values are the same. </summary>
         public static bool operator ==(DataColumnDefinitionType left, DataColumnDefinitionType right) => left.Equals(right);

@@ -12,15 +12,33 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The result data of a query. </summary>
+    /// <summary>
+    /// The result data of a query.
+    /// Serialized Name: SubscriptionScopeMetric
+    /// </summary>
     public partial class SubscriptionMonitorMetric
     {
         /// <summary> Initializes a new instance of SubscriptionMonitorMetric. </summary>
-        /// <param name="id"> the metric Id. </param>
-        /// <param name="subscriptionScopeMetricType"> the resource type of the metric resource. </param>
-        /// <param name="name"> the name and the display name of the metric, i.e. it is localizable string. </param>
-        /// <param name="unit"> The unit of the metric. </param>
-        /// <param name="timeseries"> the time series returned when a data query is performed. </param>
+        /// <param name="id">
+        /// the metric Id.
+        /// Serialized Name: SubscriptionScopeMetric.id
+        /// </param>
+        /// <param name="subscriptionScopeMetricType">
+        /// the resource type of the metric resource.
+        /// Serialized Name: SubscriptionScopeMetric.type
+        /// </param>
+        /// <param name="name">
+        /// the name and the display name of the metric, i.e. it is localizable string.
+        /// Serialized Name: SubscriptionScopeMetric.name
+        /// </param>
+        /// <param name="unit">
+        /// The unit of the metric.
+        /// Serialized Name: SubscriptionScopeMetric.unit
+        /// </param>
+        /// <param name="timeseries">
+        /// the time series returned when a data query is performed.
+        /// Serialized Name: SubscriptionScopeMetric.timeseries
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="subscriptionScopeMetricType"/>, <paramref name="name"/> or <paramref name="timeseries"/> is null. </exception>
         internal SubscriptionMonitorMetric(string id, string subscriptionScopeMetricType, MonitorLocalizableString name, MonitorMetricUnit unit, IEnumerable<MonitorTimeSeriesElement> timeseries)
         {
@@ -37,14 +55,38 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of SubscriptionMonitorMetric. </summary>
-        /// <param name="id"> the metric Id. </param>
-        /// <param name="subscriptionScopeMetricType"> the resource type of the metric resource. </param>
-        /// <param name="name"> the name and the display name of the metric, i.e. it is localizable string. </param>
-        /// <param name="displayDescription"> Detailed description of this metric. </param>
-        /// <param name="errorCode"> &apos;Success&apos; or the error details on query failures for this metric. </param>
-        /// <param name="errorMessage"> Error message encountered querying this specific metric. </param>
-        /// <param name="unit"> The unit of the metric. </param>
-        /// <param name="timeseries"> the time series returned when a data query is performed. </param>
+        /// <param name="id">
+        /// the metric Id.
+        /// Serialized Name: SubscriptionScopeMetric.id
+        /// </param>
+        /// <param name="subscriptionScopeMetricType">
+        /// the resource type of the metric resource.
+        /// Serialized Name: SubscriptionScopeMetric.type
+        /// </param>
+        /// <param name="name">
+        /// the name and the display name of the metric, i.e. it is localizable string.
+        /// Serialized Name: SubscriptionScopeMetric.name
+        /// </param>
+        /// <param name="displayDescription">
+        /// Detailed description of this metric.
+        /// Serialized Name: SubscriptionScopeMetric.displayDescription
+        /// </param>
+        /// <param name="errorCode">
+        /// &apos;Success&apos; or the error details on query failures for this metric.
+        /// Serialized Name: SubscriptionScopeMetric.errorCode
+        /// </param>
+        /// <param name="errorMessage">
+        /// Error message encountered querying this specific metric.
+        /// Serialized Name: SubscriptionScopeMetric.errorMessage
+        /// </param>
+        /// <param name="unit">
+        /// The unit of the metric.
+        /// Serialized Name: SubscriptionScopeMetric.unit
+        /// </param>
+        /// <param name="timeseries">
+        /// the time series returned when a data query is performed.
+        /// Serialized Name: SubscriptionScopeMetric.timeseries
+        /// </param>
         internal SubscriptionMonitorMetric(string id, string subscriptionScopeMetricType, MonitorLocalizableString name, string displayDescription, string errorCode, string errorMessage, MonitorMetricUnit unit, IReadOnlyList<MonitorTimeSeriesElement> timeseries)
         {
             Id = id;
@@ -57,21 +99,45 @@ namespace Azure.ResourceManager.Monitor.Models
             Timeseries = timeseries;
         }
 
-        /// <summary> the metric Id. </summary>
+        /// <summary>
+        /// the metric Id.
+        /// Serialized Name: SubscriptionScopeMetric.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> the resource type of the metric resource. </summary>
+        /// <summary>
+        /// the resource type of the metric resource.
+        /// Serialized Name: SubscriptionScopeMetric.type
+        /// </summary>
         public string SubscriptionScopeMetricType { get; }
-        /// <summary> the name and the display name of the metric, i.e. it is localizable string. </summary>
+        /// <summary>
+        /// the name and the display name of the metric, i.e. it is localizable string.
+        /// Serialized Name: SubscriptionScopeMetric.name
+        /// </summary>
         public MonitorLocalizableString Name { get; }
-        /// <summary> Detailed description of this metric. </summary>
+        /// <summary>
+        /// Detailed description of this metric.
+        /// Serialized Name: SubscriptionScopeMetric.displayDescription
+        /// </summary>
         public string DisplayDescription { get; }
-        /// <summary> &apos;Success&apos; or the error details on query failures for this metric. </summary>
+        /// <summary>
+        /// &apos;Success&apos; or the error details on query failures for this metric.
+        /// Serialized Name: SubscriptionScopeMetric.errorCode
+        /// </summary>
         public string ErrorCode { get; }
-        /// <summary> Error message encountered querying this specific metric. </summary>
+        /// <summary>
+        /// Error message encountered querying this specific metric.
+        /// Serialized Name: SubscriptionScopeMetric.errorMessage
+        /// </summary>
         public string ErrorMessage { get; }
-        /// <summary> The unit of the metric. </summary>
+        /// <summary>
+        /// The unit of the metric.
+        /// Serialized Name: SubscriptionScopeMetric.unit
+        /// </summary>
         public MonitorMetricUnit Unit { get; }
-        /// <summary> the time series returned when a data query is performed. </summary>
+        /// <summary>
+        /// the time series returned when a data query is performed.
+        /// Serialized Name: SubscriptionScopeMetric.timeseries
+        /// </summary>
         public IReadOnlyList<MonitorTimeSeriesElement> Timeseries { get; }
     }
 }

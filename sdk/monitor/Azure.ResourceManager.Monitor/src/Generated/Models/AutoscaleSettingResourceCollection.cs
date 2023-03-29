@@ -13,11 +13,17 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Represents a collection of autoscale setting resources. </summary>
+    /// <summary>
+    /// Represents a collection of autoscale setting resources.
+    /// Serialized Name: AutoscaleSettingResourceCollection
+    /// </summary>
     internal partial class AutoscaleSettingResourceCollection
     {
         /// <summary> Initializes a new instance of AutoscaleSettingResourceCollection. </summary>
-        /// <param name="value"> the values for the autoscale setting resources. </param>
+        /// <param name="value">
+        /// the values for the autoscale setting resources.
+        /// Serialized Name: AutoscaleSettingResourceCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AutoscaleSettingResourceCollection(IEnumerable<AutoscaleSettingData> value)
         {
@@ -27,17 +33,29 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of AutoscaleSettingResourceCollection. </summary>
-        /// <param name="value"> the values for the autoscale setting resources. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <param name="value">
+        /// the values for the autoscale setting resources.
+        /// Serialized Name: AutoscaleSettingResourceCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to get the next set of results.
+        /// Serialized Name: AutoscaleSettingResourceCollection.nextLink
+        /// </param>
         internal AutoscaleSettingResourceCollection(IReadOnlyList<AutoscaleSettingData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> the values for the autoscale setting resources. </summary>
+        /// <summary>
+        /// the values for the autoscale setting resources.
+        /// Serialized Name: AutoscaleSettingResourceCollection.value
+        /// </summary>
         public IReadOnlyList<AutoscaleSettingData> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
+        /// <summary>
+        /// URL to get the next set of results.
+        /// Serialized Name: AutoscaleSettingResourceCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

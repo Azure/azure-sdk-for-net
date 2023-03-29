@@ -17,18 +17,35 @@ namespace Azure.ResourceManager.Monitor
     /// <summary>
     /// A class representing the MetricAlert data model.
     /// The metric alert resource.
+    /// Serialized Name: MetricAlertResource
     /// </summary>
     public partial class MetricAlertData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MetricAlertData. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="severity"> Alert severity {0, 1, 2, 3, 4}. </param>
-        /// <param name="isEnabled"> the flag that indicates whether the metric alert is enabled. </param>
-        /// <param name="scopes"> the list of resource id&apos;s that this metric alert is scoped to. </param>
-        /// <param name="evaluationFrequency"> how often the metric alert is evaluated represented in ISO 8601 duration format. </param>
-        /// <param name="windowSize"> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
+        /// <param name="severity">
+        /// Alert severity {0, 1, 2, 3, 4}
+        /// Serialized Name: MetricAlertResource.properties.severity
+        /// </param>
+        /// <param name="isEnabled">
+        /// the flag that indicates whether the metric alert is enabled.
+        /// Serialized Name: MetricAlertResource.properties.enabled
+        /// </param>
+        /// <param name="scopes">
+        /// the list of resource id&apos;s that this metric alert is scoped to.
+        /// Serialized Name: MetricAlertResource.properties.scopes
+        /// </param>
+        /// <param name="evaluationFrequency">
+        /// how often the metric alert is evaluated represented in ISO 8601 duration format.
+        /// Serialized Name: MetricAlertResource.properties.evaluationFrequency
+        /// </param>
+        /// <param name="windowSize">
+        /// the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold.
+        /// Serialized Name: MetricAlertResource.properties.windowSize
+        /// </param>
         /// <param name="criteria">
         /// defines the specific alert criteria information.
+        /// Serialized Name: MetricAlertResource.properties.criteria
         /// Please note <see cref="MetricAlertCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
         /// </param>
@@ -53,23 +70,60 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="description"> the description of the metric alert that will be included in the alert email. </param>
-        /// <param name="severity"> Alert severity {0, 1, 2, 3, 4}. </param>
-        /// <param name="isEnabled"> the flag that indicates whether the metric alert is enabled. </param>
-        /// <param name="scopes"> the list of resource id&apos;s that this metric alert is scoped to. </param>
-        /// <param name="evaluationFrequency"> how often the metric alert is evaluated represented in ISO 8601 duration format. </param>
-        /// <param name="windowSize"> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
-        /// <param name="targetResourceType"> the resource type of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </param>
-        /// <param name="targetResourceRegion"> the region of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </param>
+        /// <param name="description">
+        /// the description of the metric alert that will be included in the alert email.
+        /// Serialized Name: MetricAlertResource.properties.description
+        /// </param>
+        /// <param name="severity">
+        /// Alert severity {0, 1, 2, 3, 4}
+        /// Serialized Name: MetricAlertResource.properties.severity
+        /// </param>
+        /// <param name="isEnabled">
+        /// the flag that indicates whether the metric alert is enabled.
+        /// Serialized Name: MetricAlertResource.properties.enabled
+        /// </param>
+        /// <param name="scopes">
+        /// the list of resource id&apos;s that this metric alert is scoped to.
+        /// Serialized Name: MetricAlertResource.properties.scopes
+        /// </param>
+        /// <param name="evaluationFrequency">
+        /// how often the metric alert is evaluated represented in ISO 8601 duration format.
+        /// Serialized Name: MetricAlertResource.properties.evaluationFrequency
+        /// </param>
+        /// <param name="windowSize">
+        /// the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold.
+        /// Serialized Name: MetricAlertResource.properties.windowSize
+        /// </param>
+        /// <param name="targetResourceType">
+        /// the resource type of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource.
+        /// Serialized Name: MetricAlertResource.properties.targetResourceType
+        /// </param>
+        /// <param name="targetResourceRegion">
+        /// the region of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource.
+        /// Serialized Name: MetricAlertResource.properties.targetResourceRegion
+        /// </param>
         /// <param name="criteria">
         /// defines the specific alert criteria information.
+        /// Serialized Name: MetricAlertResource.properties.criteria
         /// Please note <see cref="MetricAlertCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
         /// </param>
-        /// <param name="isAutoMitigateEnabled"> the flag that indicates whether the alert should be auto resolved or not. The default is true. </param>
-        /// <param name="actions"> the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
-        /// <param name="lastUpdatedOn"> Last time the rule was updated in ISO8601 format. </param>
-        /// <param name="isMigrated"> the value indicating whether this alert rule is migrated. </param>
+        /// <param name="isAutoMitigateEnabled">
+        /// the flag that indicates whether the alert should be auto resolved or not. The default is true.
+        /// Serialized Name: MetricAlertResource.properties.autoMitigate
+        /// </param>
+        /// <param name="actions">
+        /// the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved.
+        /// Serialized Name: MetricAlertResource.properties.actions
+        /// </param>
+        /// <param name="lastUpdatedOn">
+        /// Last time the rule was updated in ISO8601 format.
+        /// Serialized Name: MetricAlertResource.properties.lastUpdatedTime
+        /// </param>
+        /// <param name="isMigrated">
+        /// the value indicating whether this alert rule is migrated.
+        /// Serialized Name: MetricAlertResource.properties.isMigrated
+        /// </param>
         internal MetricAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, int severity, bool isEnabled, IList<string> scopes, TimeSpan evaluationFrequency, TimeSpan windowSize, ResourceType? targetResourceType, AzureLocation? targetResourceRegion, MetricAlertCriteria criteria, bool? isAutoMitigateEnabled, IList<MetricAlertAction> actions, DateTimeOffset? lastUpdatedOn, bool? isMigrated) : base(id, name, resourceType, systemData, tags, location)
         {
             Description = description;
@@ -87,35 +141,72 @@ namespace Azure.ResourceManager.Monitor
             IsMigrated = isMigrated;
         }
 
-        /// <summary> the description of the metric alert that will be included in the alert email. </summary>
+        /// <summary>
+        /// the description of the metric alert that will be included in the alert email.
+        /// Serialized Name: MetricAlertResource.properties.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> Alert severity {0, 1, 2, 3, 4}. </summary>
+        /// <summary>
+        /// Alert severity {0, 1, 2, 3, 4}
+        /// Serialized Name: MetricAlertResource.properties.severity
+        /// </summary>
         public int Severity { get; set; }
-        /// <summary> the flag that indicates whether the metric alert is enabled. </summary>
+        /// <summary>
+        /// the flag that indicates whether the metric alert is enabled.
+        /// Serialized Name: MetricAlertResource.properties.enabled
+        /// </summary>
         public bool IsEnabled { get; set; }
-        /// <summary> the list of resource id&apos;s that this metric alert is scoped to. </summary>
+        /// <summary>
+        /// the list of resource id&apos;s that this metric alert is scoped to.
+        /// Serialized Name: MetricAlertResource.properties.scopes
+        /// </summary>
         public IList<string> Scopes { get; }
-        /// <summary> how often the metric alert is evaluated represented in ISO 8601 duration format. </summary>
+        /// <summary>
+        /// how often the metric alert is evaluated represented in ISO 8601 duration format.
+        /// Serialized Name: MetricAlertResource.properties.evaluationFrequency
+        /// </summary>
         public TimeSpan EvaluationFrequency { get; set; }
-        /// <summary> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </summary>
+        /// <summary>
+        /// the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold.
+        /// Serialized Name: MetricAlertResource.properties.windowSize
+        /// </summary>
         public TimeSpan WindowSize { get; set; }
-        /// <summary> the resource type of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </summary>
+        /// <summary>
+        /// the resource type of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource.
+        /// Serialized Name: MetricAlertResource.properties.targetResourceType
+        /// </summary>
         public ResourceType? TargetResourceType { get; set; }
-        /// <summary> the region of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </summary>
+        /// <summary>
+        /// the region of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource.
+        /// Serialized Name: MetricAlertResource.properties.targetResourceRegion
+        /// </summary>
         public AzureLocation? TargetResourceRegion { get; set; }
         /// <summary>
         /// defines the specific alert criteria information.
+        /// Serialized Name: MetricAlertResource.properties.criteria
         /// Please note <see cref="MetricAlertCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
         /// </summary>
         public MetricAlertCriteria Criteria { get; set; }
-        /// <summary> the flag that indicates whether the alert should be auto resolved or not. The default is true. </summary>
+        /// <summary>
+        /// the flag that indicates whether the alert should be auto resolved or not. The default is true.
+        /// Serialized Name: MetricAlertResource.properties.autoMitigate
+        /// </summary>
         public bool? IsAutoMitigateEnabled { get; set; }
-        /// <summary> the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </summary>
+        /// <summary>
+        /// the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved.
+        /// Serialized Name: MetricAlertResource.properties.actions
+        /// </summary>
         public IList<MetricAlertAction> Actions { get; }
-        /// <summary> Last time the rule was updated in ISO8601 format. </summary>
+        /// <summary>
+        /// Last time the rule was updated in ISO8601 format.
+        /// Serialized Name: MetricAlertResource.properties.lastUpdatedTime
+        /// </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
-        /// <summary> the value indicating whether this alert rule is migrated. </summary>
+        /// <summary>
+        /// the value indicating whether this alert rule is migrated.
+        /// Serialized Name: MetricAlertResource.properties.isMigrated
+        /// </summary>
         public bool? IsMigrated { get; }
     }
 }

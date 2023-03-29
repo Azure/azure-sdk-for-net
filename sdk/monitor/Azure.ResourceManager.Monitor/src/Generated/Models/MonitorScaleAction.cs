@@ -9,13 +9,25 @@ using System;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The parameters for the scaling action. </summary>
+    /// <summary>
+    /// The parameters for the scaling action.
+    /// Serialized Name: ScaleAction
+    /// </summary>
     public partial class MonitorScaleAction
     {
         /// <summary> Initializes a new instance of MonitorScaleAction. </summary>
-        /// <param name="direction"> the scale direction. Whether the scaling action increases or decreases the number of instances. </param>
-        /// <param name="scaleType"> the type of action that should occur when the scale rule fires. </param>
-        /// <param name="cooldown"> the amount of time to wait since the last scaling action before this action occurs. It must be between 1 week and 1 minute in ISO 8601 format. </param>
+        /// <param name="direction">
+        /// the scale direction. Whether the scaling action increases or decreases the number of instances.
+        /// Serialized Name: ScaleAction.direction
+        /// </param>
+        /// <param name="scaleType">
+        /// the type of action that should occur when the scale rule fires.
+        /// Serialized Name: ScaleAction.type
+        /// </param>
+        /// <param name="cooldown">
+        /// the amount of time to wait since the last scaling action before this action occurs. It must be between 1 week and 1 minute in ISO 8601 format.
+        /// Serialized Name: ScaleAction.cooldown
+        /// </param>
         public MonitorScaleAction(MonitorScaleDirection direction, MonitorScaleType scaleType, TimeSpan cooldown)
         {
             Direction = direction;
@@ -24,10 +36,22 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MonitorScaleAction. </summary>
-        /// <param name="direction"> the scale direction. Whether the scaling action increases or decreases the number of instances. </param>
-        /// <param name="scaleType"> the type of action that should occur when the scale rule fires. </param>
-        /// <param name="value"> the number of instances that are involved in the scaling action. This value must be 1 or greater. The default value is 1. </param>
-        /// <param name="cooldown"> the amount of time to wait since the last scaling action before this action occurs. It must be between 1 week and 1 minute in ISO 8601 format. </param>
+        /// <param name="direction">
+        /// the scale direction. Whether the scaling action increases or decreases the number of instances.
+        /// Serialized Name: ScaleAction.direction
+        /// </param>
+        /// <param name="scaleType">
+        /// the type of action that should occur when the scale rule fires.
+        /// Serialized Name: ScaleAction.type
+        /// </param>
+        /// <param name="value">
+        /// the number of instances that are involved in the scaling action. This value must be 1 or greater. The default value is 1.
+        /// Serialized Name: ScaleAction.value
+        /// </param>
+        /// <param name="cooldown">
+        /// the amount of time to wait since the last scaling action before this action occurs. It must be between 1 week and 1 minute in ISO 8601 format.
+        /// Serialized Name: ScaleAction.cooldown
+        /// </param>
         internal MonitorScaleAction(MonitorScaleDirection direction, MonitorScaleType scaleType, string value, TimeSpan cooldown)
         {
             Direction = direction;
@@ -36,13 +60,25 @@ namespace Azure.ResourceManager.Monitor.Models
             Cooldown = cooldown;
         }
 
-        /// <summary> the scale direction. Whether the scaling action increases or decreases the number of instances. </summary>
+        /// <summary>
+        /// the scale direction. Whether the scaling action increases or decreases the number of instances.
+        /// Serialized Name: ScaleAction.direction
+        /// </summary>
         public MonitorScaleDirection Direction { get; set; }
-        /// <summary> the type of action that should occur when the scale rule fires. </summary>
+        /// <summary>
+        /// the type of action that should occur when the scale rule fires.
+        /// Serialized Name: ScaleAction.type
+        /// </summary>
         public MonitorScaleType ScaleType { get; set; }
-        /// <summary> the number of instances that are involved in the scaling action. This value must be 1 or greater. The default value is 1. </summary>
+        /// <summary>
+        /// the number of instances that are involved in the scaling action. This value must be 1 or greater. The default value is 1.
+        /// Serialized Name: ScaleAction.value
+        /// </summary>
         public string Value { get; set; }
-        /// <summary> the amount of time to wait since the last scaling action before this action occurs. It must be between 1 week and 1 minute in ISO 8601 format. </summary>
+        /// <summary>
+        /// the amount of time to wait since the last scaling action before this action occurs. It must be between 1 week and 1 minute in ISO 8601 format.
+        /// Serialized Name: ScaleAction.cooldown
+        /// </summary>
         public TimeSpan Cooldown { get; set; }
     }
 }

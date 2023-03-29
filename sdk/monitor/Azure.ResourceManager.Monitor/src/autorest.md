@@ -258,8 +258,8 @@ rename-mapping:
   SubscriptionScopeMetricsRequestBodyParameters: SubscriptionResourceGetMonitorMetricsWithPostContent
   SubscriptionScopeMetric: SubscriptionMonitorMetric
   TimeSeriesElement: MonitorTimeSeriesElement
-  StorageBlobDestination.StorageAccountResourceId: -|arm-id
-  StorageTableDestination.StorageAccountResourceId: -|arm-id
+  StorageBlobDestination.storageAccountResourceId: -|arm-id
+  StorageTableDestination.storageAccountResourceId: -|arm-id
 
 directive:
   # remove operations because they are covered in resourcemanager we no longer need to generate them here, and they are causing duplicate schemas

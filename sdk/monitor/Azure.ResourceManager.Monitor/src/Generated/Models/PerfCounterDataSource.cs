@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary>
     /// Definition of which performance counters will be collected and how they will be collected by this data collection rule.
     /// Collected from both Windows and Linux machines where the counter is present.
+    /// Serialized Name: PerfCounterDataSource
     /// </summary>
     public partial class PerfCounterDataSource
     {
@@ -27,16 +28,22 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="streams">
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
+        /// Serialized Name: PerfCounterDataSource.streams
         /// </param>
-        /// <param name="samplingFrequencyInSeconds"> The number of seconds between consecutive counter measurements (samples). </param>
+        /// <param name="samplingFrequencyInSeconds">
+        /// The number of seconds between consecutive counter measurements (samples).
+        /// Serialized Name: PerfCounterDataSource.samplingFrequencyInSeconds
+        /// </param>
         /// <param name="counterSpecifiers">
         /// A list of specifier names of the performance counters you want to collect.
         /// Use a wildcard (*) to collect a counter for all instances.
         /// To get a list of performance counters on Windows, run the command &apos;typeperf&apos;.
+        /// Serialized Name: PerfCounterDataSource.counterSpecifiers
         /// </param>
         /// <param name="name">
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
+        /// Serialized Name: PerfCounterDataSource.name
         /// </param>
         internal PerfCounterDataSource(IList<PerfCounterDataSourceStream> streams, int? samplingFrequencyInSeconds, IList<string> counterSpecifiers, string name)
         {
@@ -49,19 +56,25 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary>
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
+        /// Serialized Name: PerfCounterDataSource.streams
         /// </summary>
         public IList<PerfCounterDataSourceStream> Streams { get; }
-        /// <summary> The number of seconds between consecutive counter measurements (samples). </summary>
+        /// <summary>
+        /// The number of seconds between consecutive counter measurements (samples).
+        /// Serialized Name: PerfCounterDataSource.samplingFrequencyInSeconds
+        /// </summary>
         public int? SamplingFrequencyInSeconds { get; set; }
         /// <summary>
         /// A list of specifier names of the performance counters you want to collect.
         /// Use a wildcard (*) to collect a counter for all instances.
         /// To get a list of performance counters on Windows, run the command &apos;typeperf&apos;.
+        /// Serialized Name: PerfCounterDataSource.counterSpecifiers
         /// </summary>
         public IList<string> CounterSpecifiers { get; }
         /// <summary>
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
+        /// Serialized Name: PerfCounterDataSource.name
         /// </summary>
         public string Name { get; set; }
     }

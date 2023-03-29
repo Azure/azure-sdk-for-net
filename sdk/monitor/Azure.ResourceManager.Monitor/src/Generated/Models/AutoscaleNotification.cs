@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Autoscale notification. </summary>
+    /// <summary>
+    /// Autoscale notification.
+    /// Serialized Name: AutoscaleNotification
+    /// </summary>
     public partial class AutoscaleNotification
     {
         /// <summary> Initializes a new instance of AutoscaleNotification. </summary>
@@ -21,9 +24,18 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of AutoscaleNotification. </summary>
-        /// <param name="operation"> the operation associated with the notification and its value must be &quot;scale&quot;. </param>
-        /// <param name="email"> the email notification. </param>
-        /// <param name="webhooks"> the collection of webhook notifications. </param>
+        /// <param name="operation">
+        /// the operation associated with the notification and its value must be &quot;scale&quot;
+        /// Serialized Name: AutoscaleNotification.operation
+        /// </param>
+        /// <param name="email">
+        /// the email notification.
+        /// Serialized Name: AutoscaleNotification.email
+        /// </param>
+        /// <param name="webhooks">
+        /// the collection of webhook notifications.
+        /// Serialized Name: AutoscaleNotification.webhooks
+        /// </param>
         internal AutoscaleNotification(MonitorOperationType operation, EmailNotification email, IList<WebhookNotification> webhooks)
         {
             Operation = operation;
@@ -31,11 +43,20 @@ namespace Azure.ResourceManager.Monitor.Models
             Webhooks = webhooks;
         }
 
-        /// <summary> the operation associated with the notification and its value must be &quot;scale&quot;. </summary>
+        /// <summary>
+        /// the operation associated with the notification and its value must be &quot;scale&quot;
+        /// Serialized Name: AutoscaleNotification.operation
+        /// </summary>
         public MonitorOperationType Operation { get; set; }
-        /// <summary> the email notification. </summary>
+        /// <summary>
+        /// the email notification.
+        /// Serialized Name: AutoscaleNotification.email
+        /// </summary>
         public EmailNotification Email { get; set; }
-        /// <summary> the collection of webhook notifications. </summary>
+        /// <summary>
+        /// the collection of webhook notifications.
+        /// Serialized Name: AutoscaleNotification.webhooks
+        /// </summary>
         public IList<WebhookNotification> Webhooks { get; }
     }
 }

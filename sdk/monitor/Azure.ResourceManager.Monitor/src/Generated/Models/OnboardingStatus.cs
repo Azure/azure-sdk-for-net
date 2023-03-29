@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The onboarding status for the resource. Note that, a higher level scope, e.g., resource group or subscription, is considered onboarded if at least one resource under it is onboarded. </summary>
+    /// <summary>
+    /// The onboarding status for the resource. Note that, a higher level scope, e.g., resource group or subscription, is considered onboarded if at least one resource under it is onboarded.
+    /// Serialized Name: OnboardingStatus
+    /// </summary>
     public readonly partial struct OnboardingStatus : IEquatable<OnboardingStatus>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string NotOnboardedValue = "notOnboarded";
         private const string UnknownValue = "unknown";
 
-        /// <summary> onboarded. </summary>
+        /// <summary>
+        /// onboarded
+        /// Serialized Name: OnboardingStatus.onboarded
+        /// </summary>
         public static OnboardingStatus Onboarded { get; } = new OnboardingStatus(OnboardedValue);
-        /// <summary> notOnboarded. </summary>
+        /// <summary>
+        /// notOnboarded
+        /// Serialized Name: OnboardingStatus.notOnboarded
+        /// </summary>
         public static OnboardingStatus NotOnboarded { get; } = new OnboardingStatus(NotOnboardedValue);
-        /// <summary> unknown. </summary>
+        /// <summary>
+        /// unknown
+        /// Serialized Name: OnboardingStatus.unknown
+        /// </summary>
         public static OnboardingStatus Unknown { get; } = new OnboardingStatus(UnknownValue);
         /// <summary> Determines if two <see cref="OnboardingStatus"/> values are the same. </summary>
         public static bool operator ==(OnboardingStatus left, OnboardingStatus right) => left.Equals(right);

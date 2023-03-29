@@ -12,13 +12,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Dimension splitting and filtering definition. </summary>
+    /// <summary>
+    /// Dimension splitting and filtering definition
+    /// Serialized Name: Dimension
+    /// </summary>
     public partial class MonitorDimension
     {
         /// <summary> Initializes a new instance of MonitorDimension. </summary>
-        /// <param name="name"> Name of the dimension. </param>
-        /// <param name="operator"> Operator for dimension values. </param>
-        /// <param name="values"> List of dimension values. </param>
+        /// <param name="name">
+        /// Name of the dimension
+        /// Serialized Name: Dimension.name
+        /// </param>
+        /// <param name="operator">
+        /// Operator for dimension values
+        /// Serialized Name: Dimension.operator
+        /// </param>
+        /// <param name="values">
+        /// List of dimension values
+        /// Serialized Name: Dimension.values
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="values"/> is null. </exception>
         public MonitorDimension(string name, MonitorDimensionOperator @operator, IEnumerable<string> values)
         {
@@ -31,9 +43,18 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MonitorDimension. </summary>
-        /// <param name="name"> Name of the dimension. </param>
-        /// <param name="operator"> Operator for dimension values. </param>
-        /// <param name="values"> List of dimension values. </param>
+        /// <param name="name">
+        /// Name of the dimension
+        /// Serialized Name: Dimension.name
+        /// </param>
+        /// <param name="operator">
+        /// Operator for dimension values
+        /// Serialized Name: Dimension.operator
+        /// </param>
+        /// <param name="values">
+        /// List of dimension values
+        /// Serialized Name: Dimension.values
+        /// </param>
         internal MonitorDimension(string name, MonitorDimensionOperator @operator, IList<string> values)
         {
             Name = name;
@@ -41,11 +62,20 @@ namespace Azure.ResourceManager.Monitor.Models
             Values = values;
         }
 
-        /// <summary> Name of the dimension. </summary>
+        /// <summary>
+        /// Name of the dimension
+        /// Serialized Name: Dimension.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Operator for dimension values. </summary>
+        /// <summary>
+        /// Operator for dimension values
+        /// Serialized Name: Dimension.operator
+        /// </summary>
         public MonitorDimensionOperator Operator { get; set; }
-        /// <summary> List of dimension values. </summary>
+        /// <summary>
+        /// List of dimension values
+        /// Serialized Name: Dimension.values
+        /// </summary>
         public IList<string> Values { get; }
     }
 }

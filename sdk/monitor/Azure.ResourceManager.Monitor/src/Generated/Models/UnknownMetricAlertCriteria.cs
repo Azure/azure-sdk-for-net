@@ -10,11 +10,17 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The UnknownMetricAlertCriteria. </summary>
+    /// <summary>
+    /// The UnknownMetricAlertCriteria.
+    /// Serialized Name: UnknownMetricAlertCriteria
+    /// </summary>
     internal partial class UnknownMetricAlertCriteria : MetricAlertCriteria
     {
         /// <summary> Initializes a new instance of UnknownMetricAlertCriteria. </summary>
-        /// <param name="odataType"> specifies the type of the alert criteria. </param>
+        /// <param name="odataType">
+        /// specifies the type of the alert criteria.
+        /// Serialized Name: MetricAlertCriteria.odata.type
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal UnknownMetricAlertCriteria(MonitorOdataType odataType, IDictionary<string, BinaryData> additionalProperties) : base(odataType, additionalProperties)
         {

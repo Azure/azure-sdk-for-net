@@ -7,21 +7,36 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Specifies the retention policy for the log. </summary>
+    /// <summary>
+    /// Specifies the retention policy for the log.
+    /// Serialized Name: RetentionPolicy
+    /// </summary>
     public partial class RetentionPolicy
     {
         /// <summary> Initializes a new instance of RetentionPolicy. </summary>
-        /// <param name="isEnabled"> a value indicating whether the retention policy is enabled. </param>
-        /// <param name="days"> the number of days for the retention in days. A value of 0 will retain the events indefinitely. </param>
+        /// <param name="isEnabled">
+        /// a value indicating whether the retention policy is enabled.
+        /// Serialized Name: RetentionPolicy.enabled
+        /// </param>
+        /// <param name="days">
+        /// the number of days for the retention in days. A value of 0 will retain the events indefinitely.
+        /// Serialized Name: RetentionPolicy.days
+        /// </param>
         public RetentionPolicy(bool isEnabled, int days)
         {
             IsEnabled = isEnabled;
             Days = days;
         }
 
-        /// <summary> a value indicating whether the retention policy is enabled. </summary>
+        /// <summary>
+        /// a value indicating whether the retention policy is enabled.
+        /// Serialized Name: RetentionPolicy.enabled
+        /// </summary>
         public bool IsEnabled { get; set; }
-        /// <summary> the number of days for the retention in days. A value of 0 will retain the events indefinitely. </summary>
+        /// <summary>
+        /// the number of days for the retention in days. A value of 0 will retain the events indefinitely.
+        /// Serialized Name: RetentionPolicy.days
+        /// </summary>
         public int Days { get; set; }
     }
 }

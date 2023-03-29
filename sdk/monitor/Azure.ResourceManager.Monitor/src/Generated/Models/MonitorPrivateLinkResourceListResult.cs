@@ -11,7 +11,10 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> A list of private link resources. </summary>
+    /// <summary>
+    /// A list of private link resources
+    /// Serialized Name: PrivateLinkResourceListResult
+    /// </summary>
     internal partial class MonitorPrivateLinkResourceListResult
     {
         /// <summary> Initializes a new instance of MonitorPrivateLinkResourceListResult. </summary>
@@ -21,13 +24,19 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MonitorPrivateLinkResourceListResult. </summary>
-        /// <param name="value"> Array of private link resources. </param>
+        /// <param name="value">
+        /// Array of private link resources
+        /// Serialized Name: PrivateLinkResourceListResult.value
+        /// </param>
         internal MonitorPrivateLinkResourceListResult(IReadOnlyList<MonitorPrivateLinkResourceData> value)
         {
             Value = value;
         }
 
-        /// <summary> Array of private link resources. </summary>
+        /// <summary>
+        /// Array of private link resources
+        /// Serialized Name: PrivateLinkResourceListResult.value
+        /// </summary>
         public IReadOnlyList<MonitorPrivateLinkResourceData> Value { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> specifies the type of the alert criteria. </summary>
+    /// <summary>
+    /// specifies the type of the alert criteria.
+    /// Serialized Name: Odatatype
+    /// </summary>
     internal readonly partial struct MonitorOdataType : IEquatable<MonitorOdataType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string MicrosoftAzureMonitorMultipleResourceMultipleMetricCriteriaValue = "Microsoft.Azure.Monitor.MultipleResourceMultipleMetricCriteria";
         private const string MicrosoftAzureMonitorWebtestLocationAvailabilityCriteriaValue = "Microsoft.Azure.Monitor.WebtestLocationAvailabilityCriteria";
 
-        /// <summary> Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria. </summary>
+        /// <summary>
+        /// Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria
+        /// Serialized Name: Odatatype.Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria
+        /// </summary>
         public static MonitorOdataType MicrosoftAzureMonitorSingleResourceMultipleMetricCriteria { get; } = new MonitorOdataType(MicrosoftAzureMonitorSingleResourceMultipleMetricCriteriaValue);
-        /// <summary> Microsoft.Azure.Monitor.MultipleResourceMultipleMetricCriteria. </summary>
+        /// <summary>
+        /// Microsoft.Azure.Monitor.MultipleResourceMultipleMetricCriteria
+        /// Serialized Name: Odatatype.Microsoft.Azure.Monitor.MultipleResourceMultipleMetricCriteria
+        /// </summary>
         public static MonitorOdataType MicrosoftAzureMonitorMultipleResourceMultipleMetricCriteria { get; } = new MonitorOdataType(MicrosoftAzureMonitorMultipleResourceMultipleMetricCriteriaValue);
-        /// <summary> Microsoft.Azure.Monitor.WebtestLocationAvailabilityCriteria. </summary>
+        /// <summary>
+        /// Microsoft.Azure.Monitor.WebtestLocationAvailabilityCriteria
+        /// Serialized Name: Odatatype.Microsoft.Azure.Monitor.WebtestLocationAvailabilityCriteria
+        /// </summary>
         public static MonitorOdataType MicrosoftAzureMonitorWebtestLocationAvailabilityCriteria { get; } = new MonitorOdataType(MicrosoftAzureMonitorWebtestLocationAvailabilityCriteriaValue);
         /// <summary> Determines if two <see cref="MonitorOdataType"/> values are the same. </summary>
         public static bool operator ==(MonitorOdataType left, MonitorOdataType right) => left.Equals(right);

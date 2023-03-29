@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The log files specific settings. </summary>
+    /// <summary>
+    /// The log files specific settings.
+    /// Serialized Name: LogFilesDataSourceSettings
+    /// </summary>
     internal partial class LogFilesDataSourceSettings : LogFileSettings
     {
         /// <summary> Initializes a new instance of LogFilesDataSourceSettings. </summary>
@@ -16,7 +19,10 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of LogFilesDataSourceSettings. </summary>
-        /// <param name="text"> Text settings. </param>
+        /// <param name="text">
+        /// Text settings
+        /// Serialized Name: LogFileSettings.text
+        /// </param>
         internal LogFilesDataSourceSettings(LogFileSettingsText text) : base(text)
         {
         }

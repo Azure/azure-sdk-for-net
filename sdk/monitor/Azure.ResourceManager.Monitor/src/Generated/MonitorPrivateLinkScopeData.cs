@@ -16,12 +16,16 @@ namespace Azure.ResourceManager.Monitor
     /// <summary>
     /// A class representing the MonitorPrivateLinkScope data model.
     /// An Azure Monitor PrivateLinkScope definition.
+    /// Serialized Name: AzureMonitorPrivateLinkScope
     /// </summary>
     public partial class MonitorPrivateLinkScopeData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MonitorPrivateLinkScopeData. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="accessModeSettings"> Access mode settings. </param>
+        /// <param name="accessModeSettings">
+        /// Access mode settings
+        /// Serialized Name: AzureMonitorPrivateLinkScope.properties.accessModeSettings
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accessModeSettings"/> is null. </exception>
         public MonitorPrivateLinkScopeData(AzureLocation location, MonitorPrivateLinkAccessModeSettings accessModeSettings) : base(location)
         {
@@ -38,9 +42,18 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
-        /// <param name="accessModeSettings"> Access mode settings. </param>
+        /// <param name="provisioningState">
+        /// Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed.
+        /// Serialized Name: AzureMonitorPrivateLinkScope.properties.provisioningState
+        /// </param>
+        /// <param name="privateEndpointConnections">
+        /// List of private endpoint connections.
+        /// Serialized Name: AzureMonitorPrivateLinkScope.properties.privateEndpointConnections
+        /// </param>
+        /// <param name="accessModeSettings">
+        /// Access mode settings
+        /// Serialized Name: AzureMonitorPrivateLinkScope.properties.accessModeSettings
+        /// </param>
         internal MonitorPrivateLinkScopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, IReadOnlyList<MonitorPrivateEndpointConnectionData> privateEndpointConnections, MonitorPrivateLinkAccessModeSettings accessModeSettings) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
@@ -48,11 +61,20 @@ namespace Azure.ResourceManager.Monitor
             AccessModeSettings = accessModeSettings;
         }
 
-        /// <summary> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </summary>
+        /// <summary>
+        /// Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed.
+        /// Serialized Name: AzureMonitorPrivateLinkScope.properties.provisioningState
+        /// </summary>
         public string ProvisioningState { get; }
-        /// <summary> List of private endpoint connections. </summary>
+        /// <summary>
+        /// List of private endpoint connections.
+        /// Serialized Name: AzureMonitorPrivateLinkScope.properties.privateEndpointConnections
+        /// </summary>
         public IReadOnlyList<MonitorPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
-        /// <summary> Access mode settings. </summary>
+        /// <summary>
+        /// Access mode settings
+        /// Serialized Name: AzureMonitorPrivateLinkScope.properties.accessModeSettings
+        /// </summary>
         public MonitorPrivateLinkAccessModeSettings AccessModeSettings { get; set; }
     }
 }

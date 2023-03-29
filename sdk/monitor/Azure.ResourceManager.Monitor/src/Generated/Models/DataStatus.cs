@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The status of VM Insights data from the resource. When reported as `present` the data array will contain information about the data containers to which data for the specified resource is being routed. </summary>
+    /// <summary>
+    /// The status of VM Insights data from the resource. When reported as `present` the data array will contain information about the data containers to which data for the specified resource is being routed.
+    /// Serialized Name: DataStatus
+    /// </summary>
     public readonly partial struct DataStatus : IEquatable<DataStatus>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string PresentValue = "present";
         private const string NotPresentValue = "notPresent";
 
-        /// <summary> present. </summary>
+        /// <summary>
+        /// present
+        /// Serialized Name: DataStatus.present
+        /// </summary>
         public static DataStatus Present { get; } = new DataStatus(PresentValue);
-        /// <summary> notPresent. </summary>
+        /// <summary>
+        /// notPresent
+        /// Serialized Name: DataStatus.notPresent
+        /// </summary>
         public static DataStatus NotPresent { get; } = new DataStatus(NotPresentValue);
         /// <summary> Determines if two <see cref="DataStatus"/> values are the same. </summary>
         public static bool operator ==(DataStatus left, DataStatus right) => left.Equals(right);

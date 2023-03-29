@@ -12,16 +12,26 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Definition of which custom log files will be collected by this data collection rule. </summary>
+    /// <summary>
+    /// Definition of which custom log files will be collected by this data collection rule
+    /// Serialized Name: LogFilesDataSource
+    /// </summary>
     public partial class LogFilesDataSource
     {
         /// <summary> Initializes a new instance of LogFilesDataSource. </summary>
         /// <param name="streams">
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data source
+        /// Serialized Name: LogFilesDataSource.streams
         /// </param>
-        /// <param name="filePatterns"> File Patterns where the log files are located. </param>
-        /// <param name="format"> The data format of the log files. </param>
+        /// <param name="filePatterns">
+        /// File Patterns where the log files are located
+        /// Serialized Name: LogFilesDataSource.filePatterns
+        /// </param>
+        /// <param name="format">
+        /// The data format of the log files
+        /// Serialized Name: LogFilesDataSource.format
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="streams"/> or <paramref name="filePatterns"/> is null. </exception>
         public LogFilesDataSource(IEnumerable<string> streams, IEnumerable<string> filePatterns, LogFilesDataSourceFormat format)
         {
@@ -37,13 +47,24 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="streams">
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data source
+        /// Serialized Name: LogFilesDataSource.streams
         /// </param>
-        /// <param name="filePatterns"> File Patterns where the log files are located. </param>
-        /// <param name="format"> The data format of the log files. </param>
-        /// <param name="settings"> The log files specific settings. </param>
+        /// <param name="filePatterns">
+        /// File Patterns where the log files are located
+        /// Serialized Name: LogFilesDataSource.filePatterns
+        /// </param>
+        /// <param name="format">
+        /// The data format of the log files
+        /// Serialized Name: LogFilesDataSource.format
+        /// </param>
+        /// <param name="settings">
+        /// The log files specific settings.
+        /// Serialized Name: LogFilesDataSource.settings
+        /// </param>
         /// <param name="name">
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
+        /// Serialized Name: LogFilesDataSource.name
         /// </param>
         internal LogFilesDataSource(IList<string> streams, IList<string> filePatterns, LogFilesDataSourceFormat format, LogFilesDataSourceSettings settings, string name)
         {
@@ -57,15 +78,28 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary>
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data source
+        /// Serialized Name: LogFilesDataSource.streams
         /// </summary>
         public IList<string> Streams { get; }
-        /// <summary> File Patterns where the log files are located. </summary>
+        /// <summary>
+        /// File Patterns where the log files are located
+        /// Serialized Name: LogFilesDataSource.filePatterns
+        /// </summary>
         public IList<string> FilePatterns { get; }
-        /// <summary> The data format of the log files. </summary>
+        /// <summary>
+        /// The data format of the log files
+        /// Serialized Name: LogFilesDataSource.format
+        /// </summary>
         public LogFilesDataSourceFormat Format { get; set; }
-        /// <summary> The log files specific settings. </summary>
+        /// <summary>
+        /// The log files specific settings.
+        /// Serialized Name: LogFilesDataSource.settings
+        /// </summary>
         internal LogFilesDataSourceSettings Settings { get; set; }
-        /// <summary> One of the supported timestamp formats. </summary>
+        /// <summary>
+        /// One of the supported timestamp formats
+        /// Serialized Name: LogFileTextSettings.recordStartTimestampFormat
+        /// </summary>
         public LogFileTextSettingsRecordStartTimestampFormat? TextRecordStartTimestampFormat
         {
             get => Settings is null ? default : Settings.TextRecordStartTimestampFormat;
@@ -87,6 +121,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary>
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
+        /// Serialized Name: LogFilesDataSource.name
         /// </summary>
         public string Name { get; set; }
     }

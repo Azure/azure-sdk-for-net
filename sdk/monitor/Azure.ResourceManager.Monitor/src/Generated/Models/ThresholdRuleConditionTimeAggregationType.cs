@@ -7,18 +7,36 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Aggregation operators allowed in a rule. </summary>
+    /// <summary>
+    /// Aggregation operators allowed in a rule.
+    /// Serialized Name: TimeAggregationOperator
+    /// </summary>
     public enum ThresholdRuleConditionTimeAggregationType
     {
-        /// <summary> Average. </summary>
+        /// <summary>
+        /// Average
+        /// Serialized Name: TimeAggregationOperator.Average
+        /// </summary>
         Average,
-        /// <summary> Minimum. </summary>
+        /// <summary>
+        /// Minimum
+        /// Serialized Name: TimeAggregationOperator.Minimum
+        /// </summary>
         Minimum,
-        /// <summary> Maximum. </summary>
+        /// <summary>
+        /// Maximum
+        /// Serialized Name: TimeAggregationOperator.Maximum
+        /// </summary>
         Maximum,
-        /// <summary> Total. </summary>
+        /// <summary>
+        /// Total
+        /// Serialized Name: TimeAggregationOperator.Total
+        /// </summary>
         Total,
-        /// <summary> Last. </summary>
+        /// <summary>
+        /// Last
+        /// Serialized Name: TimeAggregationOperator.Last
+        /// </summary>
         Last
     }
 }

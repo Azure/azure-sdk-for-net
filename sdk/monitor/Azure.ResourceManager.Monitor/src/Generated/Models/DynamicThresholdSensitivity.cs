@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The extent of deviation required to trigger an alert. This will affect how tight the threshold is to the metric series pattern. </summary>
+    /// <summary>
+    /// The extent of deviation required to trigger an alert. This will affect how tight the threshold is to the metric series pattern.
+    /// Serialized Name: DynamicThresholdSensitivity
+    /// </summary>
     public readonly partial struct DynamicThresholdSensitivity : IEquatable<DynamicThresholdSensitivity>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string MediumValue = "Medium";
         private const string HighValue = "High";
 
-        /// <summary> Low. </summary>
+        /// <summary>
+        /// Low
+        /// Serialized Name: DynamicThresholdSensitivity.Low
+        /// </summary>
         public static DynamicThresholdSensitivity Low { get; } = new DynamicThresholdSensitivity(LowValue);
-        /// <summary> Medium. </summary>
+        /// <summary>
+        /// Medium
+        /// Serialized Name: DynamicThresholdSensitivity.Medium
+        /// </summary>
         public static DynamicThresholdSensitivity Medium { get; } = new DynamicThresholdSensitivity(MediumValue);
-        /// <summary> High. </summary>
+        /// <summary>
+        /// High
+        /// Serialized Name: DynamicThresholdSensitivity.High
+        /// </summary>
         public static DynamicThresholdSensitivity High { get; } = new DynamicThresholdSensitivity(HighValue);
         /// <summary> Determines if two <see cref="DynamicThresholdSensitivity"/> values are the same. </summary>
         public static bool operator ==(DynamicThresholdSensitivity left, DynamicThresholdSensitivity right) => left.Equals(right);

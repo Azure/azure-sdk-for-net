@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The scheduled query rule resource for patch operations. </summary>
+    /// <summary>
+    /// The scheduled query rule resource for patch operations.
+    /// Serialized Name: ScheduledQueryRuleResourcePatch
+    /// </summary>
     public partial class ScheduledQueryRulePatch
     {
         /// <summary> Initializes a new instance of ScheduledQueryRulePatch. </summary>
@@ -22,33 +25,75 @@ namespace Azure.ResourceManager.Monitor.Models
             TargetResourceTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Resource tags. </summary>
+        /// <summary>
+        /// Resource tags
+        /// Serialized Name: ScheduledQueryRuleResourcePatch.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The api-version used when creating this alert rule. </summary>
+        /// <summary>
+        /// The api-version used when creating this alert rule
+        /// Serialized Name: ScheduledQueryRuleResourcePatch.properties.createdWithApiVersion
+        /// </summary>
         public string CreatedWithApiVersion { get; }
-        /// <summary> True if alert rule is legacy Log Analytic rule. </summary>
+        /// <summary>
+        /// True if alert rule is legacy Log Analytic rule
+        /// Serialized Name: ScheduledQueryRuleResourcePatch.properties.isLegacyLogAnalyticsRule
+        /// </summary>
         public bool? IsLegacyLogAnalyticsRule { get; }
-        /// <summary> The description of the scheduled query rule. </summary>
+        /// <summary>
+        /// The description of the scheduled query rule.
+        /// Serialized Name: ScheduledQueryRuleResourcePatch.properties.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> The display name of the alert rule. </summary>
+        /// <summary>
+        /// The display name of the alert rule
+        /// Serialized Name: ScheduledQueryRuleResourcePatch.properties.displayName
+        /// </summary>
         public string DisplayName { get; set; }
-        /// <summary> Severity of the alert. Should be an integer between [0-4]. Value of 0 is severest. Relevant and required only for rules of the kind LogAlert. </summary>
+        /// <summary>
+        /// Severity of the alert. Should be an integer between [0-4]. Value of 0 is severest. Relevant and required only for rules of the kind LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResourcePatch.properties.severity
+        /// </summary>
         public AlertSeverity? Severity { get; set; }
-        /// <summary> The flag which indicates whether this scheduled query rule is enabled. Value should be true or false. </summary>
+        /// <summary>
+        /// The flag which indicates whether this scheduled query rule is enabled. Value should be true or false
+        /// Serialized Name: ScheduledQueryRuleResourcePatch.properties.enabled
+        /// </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> The list of resource id&apos;s that this scheduled query rule is scoped to. </summary>
+        /// <summary>
+        /// The list of resource id&apos;s that this scheduled query rule is scoped to.
+        /// Serialized Name: ScheduledQueryRuleResourcePatch.properties.scopes
+        /// </summary>
         public IList<string> Scopes { get; }
-        /// <summary> How often the scheduled query rule is evaluated represented in ISO 8601 duration format. Relevant and required only for rules of the kind LogAlert. </summary>
+        /// <summary>
+        /// How often the scheduled query rule is evaluated represented in ISO 8601 duration format. Relevant and required only for rules of the kind LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResourcePatch.properties.evaluationFrequency
+        /// </summary>
         public TimeSpan? EvaluationFrequency { get; set; }
-        /// <summary> The period of time (in ISO 8601 duration format) on which the Alert query will be executed (bin size). Relevant and required only for rules of the kind LogAlert. </summary>
+        /// <summary>
+        /// The period of time (in ISO 8601 duration format) on which the Alert query will be executed (bin size). Relevant and required only for rules of the kind LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResourcePatch.properties.windowSize
+        /// </summary>
         public TimeSpan? WindowSize { get; set; }
-        /// <summary> If specified then overrides the query time range (default is WindowSize*NumberOfEvaluationPeriods). Relevant only for rules of the kind LogAlert. </summary>
+        /// <summary>
+        /// If specified then overrides the query time range (default is WindowSize*NumberOfEvaluationPeriods). Relevant only for rules of the kind LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResourcePatch.properties.overrideQueryTimeRange
+        /// </summary>
         public TimeSpan? OverrideQueryTimeRange { get; set; }
-        /// <summary> List of resource type of the target resource(s) on which the alert is created/updated. For example if the scope is a resource group and targetResourceTypes is Microsoft.Compute/virtualMachines, then a different alert will be fired for each virtual machine in the resource group which meet the alert criteria. Relevant only for rules of the kind LogAlert. </summary>
+        /// <summary>
+        /// List of resource type of the target resource(s) on which the alert is created/updated. For example if the scope is a resource group and targetResourceTypes is Microsoft.Compute/virtualMachines, then a different alert will be fired for each virtual machine in the resource group which meet the alert criteria. Relevant only for rules of the kind LogAlert
+        /// Serialized Name: ScheduledQueryRuleResourcePatch.properties.targetResourceTypes
+        /// </summary>
         public IList<string> TargetResourceTypes { get; }
-        /// <summary> The rule criteria that defines the conditions of the scheduled query rule. </summary>
+        /// <summary>
+        /// The rule criteria that defines the conditions of the scheduled query rule.
+        /// Serialized Name: ScheduledQueryRuleResourcePatch.properties.criteria
+        /// </summary>
         internal ScheduledQueryRuleCriteria Criteria { get; set; }
-        /// <summary> A list of conditions to evaluate against the specified scopes. </summary>
+        /// <summary>
+        /// A list of conditions to evaluate against the specified scopes
+        /// Serialized Name: ScheduledQueryRuleCriteria.allOf
+        /// </summary>
         public IList<ScheduledQueryRuleCondition> CriteriaAllOf
         {
             get
@@ -59,17 +104,35 @@ namespace Azure.ResourceManager.Monitor.Models
             }
         }
 
-        /// <summary> Mute actions for the chosen period of time (in ISO 8601 duration format) after the alert is fired. Relevant only for rules of the kind LogAlert. </summary>
+        /// <summary>
+        /// Mute actions for the chosen period of time (in ISO 8601 duration format) after the alert is fired. Relevant only for rules of the kind LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResourcePatch.properties.muteActionsDuration
+        /// </summary>
         public TimeSpan? MuteActionsDuration { get; set; }
-        /// <summary> Actions to invoke when the alert fires. </summary>
+        /// <summary>
+        /// Actions to invoke when the alert fires.
+        /// Serialized Name: ScheduledQueryRuleResourcePatch.properties.actions
+        /// </summary>
         public ScheduledQueryRuleActions Actions { get; set; }
-        /// <summary> The flag which indicates whether this scheduled query rule has been configured to be stored in the customer&apos;s storage. The default is false. </summary>
+        /// <summary>
+        /// The flag which indicates whether this scheduled query rule has been configured to be stored in the customer&apos;s storage. The default is false.
+        /// Serialized Name: ScheduledQueryRuleResourcePatch.properties.isWorkspaceAlertsStorageConfigured
+        /// </summary>
         public bool? IsWorkspaceAlertsStorageConfigured { get; }
-        /// <summary> The flag which indicates whether this scheduled query rule should be stored in the customer&apos;s storage. The default is false. Relevant only for rules of the kind LogAlert. </summary>
+        /// <summary>
+        /// The flag which indicates whether this scheduled query rule should be stored in the customer&apos;s storage. The default is false. Relevant only for rules of the kind LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResourcePatch.properties.checkWorkspaceAlertsStorageConfigured
+        /// </summary>
         public bool? CheckWorkspaceAlertsStorageConfigured { get; set; }
-        /// <summary> The flag which indicates whether the provided query should be validated or not. The default is false. Relevant only for rules of the kind LogAlert. </summary>
+        /// <summary>
+        /// The flag which indicates whether the provided query should be validated or not. The default is false. Relevant only for rules of the kind LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResourcePatch.properties.skipQueryValidation
+        /// </summary>
         public bool? SkipQueryValidation { get; set; }
-        /// <summary> The flag that indicates whether the alert should be automatically resolved or not. The default is true. Relevant only for rules of the kind LogAlert. </summary>
+        /// <summary>
+        /// The flag that indicates whether the alert should be automatically resolved or not. The default is true. Relevant only for rules of the kind LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResourcePatch.properties.autoMitigate
+        /// </summary>
         public bool? AutoMitigate { get; set; }
     }
 }

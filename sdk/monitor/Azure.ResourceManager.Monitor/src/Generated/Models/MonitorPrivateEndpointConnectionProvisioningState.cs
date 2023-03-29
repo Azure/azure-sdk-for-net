@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The current provisioning state. </summary>
+    /// <summary>
+    /// The current provisioning state.
+    /// Serialized Name: PrivateEndpointConnectionProvisioningState
+    /// </summary>
     public readonly partial struct MonitorPrivateEndpointConnectionProvisioningState : IEquatable<MonitorPrivateEndpointConnectionProvisioningState>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string DeletingValue = "Deleting";
         private const string FailedValue = "Failed";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Succeeded
+        /// </summary>
         public static MonitorPrivateEndpointConnectionProvisioningState Succeeded { get; } = new MonitorPrivateEndpointConnectionProvisioningState(SucceededValue);
-        /// <summary> Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Creating
+        /// </summary>
         public static MonitorPrivateEndpointConnectionProvisioningState Creating { get; } = new MonitorPrivateEndpointConnectionProvisioningState(CreatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Deleting
+        /// </summary>
         public static MonitorPrivateEndpointConnectionProvisioningState Deleting { get; } = new MonitorPrivateEndpointConnectionProvisioningState(DeletingValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Failed
+        /// </summary>
         public static MonitorPrivateEndpointConnectionProvisioningState Failed { get; } = new MonitorPrivateEndpointConnectionProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="MonitorPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(MonitorPrivateEndpointConnectionProvisioningState left, MonitorPrivateEndpointConnectionProvisioningState right) => left.Equals(right);

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags on a PrivateLinkScope instance. </summary>
+    /// <summary>
+    /// A container holding only the Tags for a resource, allowing the user to update the tags on a PrivateLinkScope instance.
+    /// Serialized Name: TagsResource
+    /// </summary>
     public partial class MonitorPrivateLinkScopePatch
     {
         /// <summary> Initializes a new instance of MonitorPrivateLinkScopePatch. </summary>
@@ -19,7 +22,10 @@ namespace Azure.ResourceManager.Monitor.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Resource tags. </summary>
+        /// <summary>
+        /// Resource tags
+        /// Serialized Name: TagsResource.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

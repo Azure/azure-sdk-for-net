@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> An alert incident indicates the activation status of an alert rule. </summary>
+    /// <summary>
+    /// An alert incident indicates the activation status of an alert rule.
+    /// Serialized Name: Incident
+    /// </summary>
     public partial class MonitorIncident
     {
         /// <summary> Initializes a new instance of MonitorIncident. </summary>
@@ -18,11 +21,26 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MonitorIncident. </summary>
-        /// <param name="name"> Incident name. </param>
-        /// <param name="ruleName"> Rule name that is associated with the incident. </param>
-        /// <param name="isActive"> A boolean to indicate whether the incident is active or resolved. </param>
-        /// <param name="activatedOn"> The time at which the incident was activated in ISO8601 format. </param>
-        /// <param name="resolvedOn"> The time at which the incident was resolved in ISO8601 format. If null, it means the incident is still active. </param>
+        /// <param name="name">
+        /// Incident name.
+        /// Serialized Name: Incident.name
+        /// </param>
+        /// <param name="ruleName">
+        /// Rule name that is associated with the incident.
+        /// Serialized Name: Incident.ruleName
+        /// </param>
+        /// <param name="isActive">
+        /// A boolean to indicate whether the incident is active or resolved.
+        /// Serialized Name: Incident.isActive
+        /// </param>
+        /// <param name="activatedOn">
+        /// The time at which the incident was activated in ISO8601 format.
+        /// Serialized Name: Incident.activatedTime
+        /// </param>
+        /// <param name="resolvedOn">
+        /// The time at which the incident was resolved in ISO8601 format. If null, it means the incident is still active.
+        /// Serialized Name: Incident.resolvedTime
+        /// </param>
         internal MonitorIncident(string name, string ruleName, bool? isActive, DateTimeOffset? activatedOn, DateTimeOffset? resolvedOn)
         {
             Name = name;
@@ -32,15 +50,30 @@ namespace Azure.ResourceManager.Monitor.Models
             ResolvedOn = resolvedOn;
         }
 
-        /// <summary> Incident name. </summary>
+        /// <summary>
+        /// Incident name.
+        /// Serialized Name: Incident.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> Rule name that is associated with the incident. </summary>
+        /// <summary>
+        /// Rule name that is associated with the incident.
+        /// Serialized Name: Incident.ruleName
+        /// </summary>
         public string RuleName { get; }
-        /// <summary> A boolean to indicate whether the incident is active or resolved. </summary>
+        /// <summary>
+        /// A boolean to indicate whether the incident is active or resolved.
+        /// Serialized Name: Incident.isActive
+        /// </summary>
         public bool? IsActive { get; }
-        /// <summary> The time at which the incident was activated in ISO8601 format. </summary>
+        /// <summary>
+        /// The time at which the incident was activated in ISO8601 format.
+        /// Serialized Name: Incident.activatedTime
+        /// </summary>
         public DateTimeOffset? ActivatedOn { get; }
-        /// <summary> The time at which the incident was resolved in ISO8601 format. If null, it means the incident is still active. </summary>
+        /// <summary>
+        /// The time at which the incident was resolved in ISO8601 format. If null, it means the incident is still active.
+        /// Serialized Name: Incident.resolvedTime
+        /// </summary>
         public DateTimeOffset? ResolvedOn { get; }
     }
 }

@@ -9,21 +9,39 @@ using System;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Part of MultiTenantDiagnosticSettings. Specifies the settings for a particular metric. </summary>
+    /// <summary>
+    /// Part of MultiTenantDiagnosticSettings. Specifies the settings for a particular metric.
+    /// Serialized Name: MetricSettings
+    /// </summary>
     public partial class MetricSettings
     {
         /// <summary> Initializes a new instance of MetricSettings. </summary>
-        /// <param name="isEnabled"> a value indicating whether this category is enabled. </param>
+        /// <param name="isEnabled">
+        /// a value indicating whether this category is enabled.
+        /// Serialized Name: MetricSettings.enabled
+        /// </param>
         public MetricSettings(bool isEnabled)
         {
             IsEnabled = isEnabled;
         }
 
         /// <summary> Initializes a new instance of MetricSettings. </summary>
-        /// <param name="timeGrain"> the timegrain of the metric in ISO8601 format. </param>
-        /// <param name="category"> Name of a Diagnostic Metric category for a resource type this setting is applied to. To obtain the list of Diagnostic metric categories for a resource, first perform a GET diagnostic settings operation. </param>
-        /// <param name="isEnabled"> a value indicating whether this category is enabled. </param>
-        /// <param name="retentionPolicy"> the retention policy for this category. </param>
+        /// <param name="timeGrain">
+        /// the timegrain of the metric in ISO8601 format.
+        /// Serialized Name: MetricSettings.timeGrain
+        /// </param>
+        /// <param name="category">
+        /// Name of a Diagnostic Metric category for a resource type this setting is applied to. To obtain the list of Diagnostic metric categories for a resource, first perform a GET diagnostic settings operation.
+        /// Serialized Name: MetricSettings.category
+        /// </param>
+        /// <param name="isEnabled">
+        /// a value indicating whether this category is enabled.
+        /// Serialized Name: MetricSettings.enabled
+        /// </param>
+        /// <param name="retentionPolicy">
+        /// the retention policy for this category.
+        /// Serialized Name: MetricSettings.retentionPolicy
+        /// </param>
         internal MetricSettings(TimeSpan? timeGrain, string category, bool isEnabled, RetentionPolicy retentionPolicy)
         {
             TimeGrain = timeGrain;
@@ -32,13 +50,25 @@ namespace Azure.ResourceManager.Monitor.Models
             RetentionPolicy = retentionPolicy;
         }
 
-        /// <summary> the timegrain of the metric in ISO8601 format. </summary>
+        /// <summary>
+        /// the timegrain of the metric in ISO8601 format.
+        /// Serialized Name: MetricSettings.timeGrain
+        /// </summary>
         public TimeSpan? TimeGrain { get; set; }
-        /// <summary> Name of a Diagnostic Metric category for a resource type this setting is applied to. To obtain the list of Diagnostic metric categories for a resource, first perform a GET diagnostic settings operation. </summary>
+        /// <summary>
+        /// Name of a Diagnostic Metric category for a resource type this setting is applied to. To obtain the list of Diagnostic metric categories for a resource, first perform a GET diagnostic settings operation.
+        /// Serialized Name: MetricSettings.category
+        /// </summary>
         public string Category { get; set; }
-        /// <summary> a value indicating whether this category is enabled. </summary>
+        /// <summary>
+        /// a value indicating whether this category is enabled.
+        /// Serialized Name: MetricSettings.enabled
+        /// </summary>
         public bool IsEnabled { get; set; }
-        /// <summary> the retention policy for this category. </summary>
+        /// <summary>
+        /// the retention policy for this category.
+        /// Serialized Name: MetricSettings.retentionPolicy
+        /// </summary>
         public RetentionPolicy RetentionPolicy { get; set; }
     }
 }

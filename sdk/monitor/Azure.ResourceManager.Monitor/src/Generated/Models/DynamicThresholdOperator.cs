@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The operator used to compare the metric value against the threshold. </summary>
+    /// <summary>
+    /// The operator used to compare the metric value against the threshold.
+    /// Serialized Name: DynamicThresholdOperator
+    /// </summary>
     public readonly partial struct DynamicThresholdOperator : IEquatable<DynamicThresholdOperator>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string LessThanValue = "LessThan";
         private const string GreaterOrLessThanValue = "GreaterOrLessThan";
 
-        /// <summary> GreaterThan. </summary>
+        /// <summary>
+        /// GreaterThan
+        /// Serialized Name: DynamicThresholdOperator.GreaterThan
+        /// </summary>
         public static DynamicThresholdOperator GreaterThan { get; } = new DynamicThresholdOperator(GreaterThanValue);
-        /// <summary> LessThan. </summary>
+        /// <summary>
+        /// LessThan
+        /// Serialized Name: DynamicThresholdOperator.LessThan
+        /// </summary>
         public static DynamicThresholdOperator LessThan { get; } = new DynamicThresholdOperator(LessThanValue);
-        /// <summary> GreaterOrLessThan. </summary>
+        /// <summary>
+        /// GreaterOrLessThan
+        /// Serialized Name: DynamicThresholdOperator.GreaterOrLessThan
+        /// </summary>
         public static DynamicThresholdOperator GreaterOrLessThan { get; } = new DynamicThresholdOperator(GreaterOrLessThanValue);
         /// <summary> Determines if two <see cref="DynamicThresholdOperator"/> values are the same. </summary>
         public static bool operator ==(DynamicThresholdOperator left, DynamicThresholdOperator right) => left.Equals(right);

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> A condition of the scheduled query rule. </summary>
+    /// <summary>
+    /// A condition of the scheduled query rule.
+    /// Serialized Name: Condition
+    /// </summary>
     public partial class ScheduledQueryRuleCondition
     {
         /// <summary> Initializes a new instance of ScheduledQueryRuleCondition. </summary>
@@ -20,15 +23,42 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of ScheduledQueryRuleCondition. </summary>
-        /// <param name="query"> Log query alert. </param>
-        /// <param name="timeAggregation"> Aggregation type. Relevant and required only for rules of the kind LogAlert. </param>
-        /// <param name="metricMeasureColumn"> The column containing the metric measure number. Relevant only for rules of the kind LogAlert. </param>
-        /// <param name="resourceIdColumn"> The column containing the resource id. The content of the column must be a uri formatted as resource id. Relevant only for rules of the kind LogAlert. </param>
-        /// <param name="dimensions"> List of Dimensions conditions. </param>
-        /// <param name="operator"> The criteria operator. Relevant and required only for rules of the kind LogAlert. </param>
-        /// <param name="threshold"> the criteria threshold value that activates the alert. Relevant and required only for rules of the kind LogAlert. </param>
-        /// <param name="failingPeriods"> The minimum number of violations required within the selected lookback time window required to raise an alert. Relevant only for rules of the kind LogAlert. </param>
-        /// <param name="metricName"> The name of the metric to be sent. Relevant and required only for rules of the kind LogToMetric. </param>
+        /// <param name="query">
+        /// Log query alert
+        /// Serialized Name: Condition.query
+        /// </param>
+        /// <param name="timeAggregation">
+        /// Aggregation type. Relevant and required only for rules of the kind LogAlert.
+        /// Serialized Name: Condition.timeAggregation
+        /// </param>
+        /// <param name="metricMeasureColumn">
+        /// The column containing the metric measure number. Relevant only for rules of the kind LogAlert.
+        /// Serialized Name: Condition.metricMeasureColumn
+        /// </param>
+        /// <param name="resourceIdColumn">
+        /// The column containing the resource id. The content of the column must be a uri formatted as resource id. Relevant only for rules of the kind LogAlert.
+        /// Serialized Name: Condition.resourceIdColumn
+        /// </param>
+        /// <param name="dimensions">
+        /// List of Dimensions conditions
+        /// Serialized Name: Condition.dimensions
+        /// </param>
+        /// <param name="operator">
+        /// The criteria operator. Relevant and required only for rules of the kind LogAlert.
+        /// Serialized Name: Condition.operator
+        /// </param>
+        /// <param name="threshold">
+        /// the criteria threshold value that activates the alert. Relevant and required only for rules of the kind LogAlert.
+        /// Serialized Name: Condition.threshold
+        /// </param>
+        /// <param name="failingPeriods">
+        /// The minimum number of violations required within the selected lookback time window required to raise an alert. Relevant only for rules of the kind LogAlert.
+        /// Serialized Name: Condition.failingPeriods
+        /// </param>
+        /// <param name="metricName">
+        /// The name of the metric to be sent. Relevant and required only for rules of the kind LogToMetric.
+        /// Serialized Name: Condition.metricName
+        /// </param>
         internal ScheduledQueryRuleCondition(string query, ScheduledQueryRuleTimeAggregationType? timeAggregation, string metricMeasureColumn, string resourceIdColumn, IList<MonitorDimension> dimensions, MonitorConditionOperator? @operator, double? threshold, ConditionFailingPeriods failingPeriods, string metricName)
         {
             Query = query;
@@ -42,23 +72,50 @@ namespace Azure.ResourceManager.Monitor.Models
             MetricName = metricName;
         }
 
-        /// <summary> Log query alert. </summary>
+        /// <summary>
+        /// Log query alert
+        /// Serialized Name: Condition.query
+        /// </summary>
         public string Query { get; set; }
-        /// <summary> Aggregation type. Relevant and required only for rules of the kind LogAlert. </summary>
+        /// <summary>
+        /// Aggregation type. Relevant and required only for rules of the kind LogAlert.
+        /// Serialized Name: Condition.timeAggregation
+        /// </summary>
         public ScheduledQueryRuleTimeAggregationType? TimeAggregation { get; set; }
-        /// <summary> The column containing the metric measure number. Relevant only for rules of the kind LogAlert. </summary>
+        /// <summary>
+        /// The column containing the metric measure number. Relevant only for rules of the kind LogAlert.
+        /// Serialized Name: Condition.metricMeasureColumn
+        /// </summary>
         public string MetricMeasureColumn { get; set; }
-        /// <summary> The column containing the resource id. The content of the column must be a uri formatted as resource id. Relevant only for rules of the kind LogAlert. </summary>
+        /// <summary>
+        /// The column containing the resource id. The content of the column must be a uri formatted as resource id. Relevant only for rules of the kind LogAlert.
+        /// Serialized Name: Condition.resourceIdColumn
+        /// </summary>
         public string ResourceIdColumn { get; set; }
-        /// <summary> List of Dimensions conditions. </summary>
+        /// <summary>
+        /// List of Dimensions conditions
+        /// Serialized Name: Condition.dimensions
+        /// </summary>
         public IList<MonitorDimension> Dimensions { get; }
-        /// <summary> The criteria operator. Relevant and required only for rules of the kind LogAlert. </summary>
+        /// <summary>
+        /// The criteria operator. Relevant and required only for rules of the kind LogAlert.
+        /// Serialized Name: Condition.operator
+        /// </summary>
         public MonitorConditionOperator? Operator { get; set; }
-        /// <summary> the criteria threshold value that activates the alert. Relevant and required only for rules of the kind LogAlert. </summary>
+        /// <summary>
+        /// the criteria threshold value that activates the alert. Relevant and required only for rules of the kind LogAlert.
+        /// Serialized Name: Condition.threshold
+        /// </summary>
         public double? Threshold { get; set; }
-        /// <summary> The minimum number of violations required within the selected lookback time window required to raise an alert. Relevant only for rules of the kind LogAlert. </summary>
+        /// <summary>
+        /// The minimum number of violations required within the selected lookback time window required to raise an alert. Relevant only for rules of the kind LogAlert.
+        /// Serialized Name: Condition.failingPeriods
+        /// </summary>
         public ConditionFailingPeriods FailingPeriods { get; set; }
-        /// <summary> The name of the metric to be sent. Relevant and required only for rules of the kind LogToMetric. </summary>
+        /// <summary>
+        /// The name of the metric to be sent. Relevant and required only for rules of the kind LogToMetric.
+        /// Serialized Name: Condition.metricName
+        /// </summary>
         public string MetricName { get; set; }
     }
 }

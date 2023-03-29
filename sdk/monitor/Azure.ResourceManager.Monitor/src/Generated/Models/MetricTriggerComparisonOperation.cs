@@ -7,20 +7,41 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> the operator that is used to compare the metric data and the threshold. </summary>
+    /// <summary>
+    /// the operator that is used to compare the metric data and the threshold.
+    /// Serialized Name: ComparisonOperationType
+    /// </summary>
     public enum MetricTriggerComparisonOperation
     {
-        /// <summary> Equals. </summary>
+        /// <summary>
+        /// Equals
+        /// Serialized Name: ComparisonOperationType.Equals
+        /// </summary>
         EqualsValue,
-        /// <summary> NotEquals. </summary>
+        /// <summary>
+        /// NotEquals
+        /// Serialized Name: ComparisonOperationType.NotEquals
+        /// </summary>
         NotEquals,
-        /// <summary> GreaterThan. </summary>
+        /// <summary>
+        /// GreaterThan
+        /// Serialized Name: ComparisonOperationType.GreaterThan
+        /// </summary>
         GreaterThan,
-        /// <summary> GreaterThanOrEqual. </summary>
+        /// <summary>
+        /// GreaterThanOrEqual
+        /// Serialized Name: ComparisonOperationType.GreaterThanOrEqual
+        /// </summary>
         GreaterThanOrEqual,
-        /// <summary> LessThan. </summary>
+        /// <summary>
+        /// LessThan
+        /// Serialized Name: ComparisonOperationType.LessThan
+        /// </summary>
         LessThan,
-        /// <summary> LessThanOrEqual. </summary>
+        /// <summary>
+        /// LessThanOrEqual
+        /// Serialized Name: ComparisonOperationType.LessThanOrEqual
+        /// </summary>
         LessThanOrEqual
     }
 }

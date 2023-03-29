@@ -13,11 +13,17 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Describes the list of Azure Monitor PrivateLinkScope resources. </summary>
+    /// <summary>
+    /// Describes the list of Azure Monitor PrivateLinkScope resources.
+    /// Serialized Name: AzureMonitorPrivateLinkScopeListResult
+    /// </summary>
     internal partial class AzureMonitorPrivateLinkScopeListResult
     {
         /// <summary> Initializes a new instance of AzureMonitorPrivateLinkScopeListResult. </summary>
-        /// <param name="value"> List of Azure Monitor PrivateLinkScope definitions. </param>
+        /// <param name="value">
+        /// List of Azure Monitor PrivateLinkScope definitions.
+        /// Serialized Name: AzureMonitorPrivateLinkScopeListResult.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AzureMonitorPrivateLinkScopeListResult(IEnumerable<MonitorPrivateLinkScopeData> value)
         {
@@ -27,17 +33,29 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of AzureMonitorPrivateLinkScopeListResult. </summary>
-        /// <param name="value"> List of Azure Monitor PrivateLinkScope definitions. </param>
-        /// <param name="nextLink"> The URI to get the next set of Azure Monitor PrivateLinkScope definitions if too many PrivateLinkScopes where returned in the result set. </param>
+        /// <param name="value">
+        /// List of Azure Monitor PrivateLinkScope definitions.
+        /// Serialized Name: AzureMonitorPrivateLinkScopeListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URI to get the next set of Azure Monitor PrivateLinkScope definitions if too many PrivateLinkScopes where returned in the result set.
+        /// Serialized Name: AzureMonitorPrivateLinkScopeListResult.nextLink
+        /// </param>
         internal AzureMonitorPrivateLinkScopeListResult(IReadOnlyList<MonitorPrivateLinkScopeData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of Azure Monitor PrivateLinkScope definitions. </summary>
+        /// <summary>
+        /// List of Azure Monitor PrivateLinkScope definitions.
+        /// Serialized Name: AzureMonitorPrivateLinkScopeListResult.value
+        /// </summary>
         public IReadOnlyList<MonitorPrivateLinkScopeData> Value { get; }
-        /// <summary> The URI to get the next set of Azure Monitor PrivateLinkScope definitions if too many PrivateLinkScopes where returned in the result set. </summary>
+        /// <summary>
+        /// The URI to get the next set of Azure Monitor PrivateLinkScope definitions if too many PrivateLinkScopes where returned in the result set.
+        /// Serialized Name: AzureMonitorPrivateLinkScopeListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

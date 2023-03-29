@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The type of the diagnostic settings category. </summary>
+    /// <summary>
+    /// The type of the diagnostic settings category.
+    /// Serialized Name: CategoryType
+    /// </summary>
     public readonly partial struct MonitorCategoryType : IEquatable<MonitorCategoryType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string MetricsValue = "Metrics";
         private const string LogsValue = "Logs";
 
-        /// <summary> Metrics. </summary>
+        /// <summary>
+        /// Metrics
+        /// Serialized Name: CategoryType.Metrics
+        /// </summary>
         public static MonitorCategoryType Metrics { get; } = new MonitorCategoryType(MetricsValue);
-        /// <summary> Logs. </summary>
+        /// <summary>
+        /// Logs
+        /// Serialized Name: CategoryType.Logs
+        /// </summary>
         public static MonitorCategoryType Logs { get; } = new MonitorCategoryType(LogsValue);
         /// <summary> Determines if two <see cref="MonitorCategoryType"/> values are the same. </summary>
         public static bool operator ==(MonitorCategoryType left, MonitorCategoryType right) => left.Equals(right);

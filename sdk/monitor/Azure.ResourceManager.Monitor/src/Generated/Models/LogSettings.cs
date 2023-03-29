@@ -7,21 +7,39 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Part of MultiTenantDiagnosticSettings. Specifies the settings for a particular log. </summary>
+    /// <summary>
+    /// Part of MultiTenantDiagnosticSettings. Specifies the settings for a particular log.
+    /// Serialized Name: LogSettings
+    /// </summary>
     public partial class LogSettings
     {
         /// <summary> Initializes a new instance of LogSettings. </summary>
-        /// <param name="isEnabled"> a value indicating whether this log is enabled. </param>
+        /// <param name="isEnabled">
+        /// a value indicating whether this log is enabled.
+        /// Serialized Name: LogSettings.enabled
+        /// </param>
         public LogSettings(bool isEnabled)
         {
             IsEnabled = isEnabled;
         }
 
         /// <summary> Initializes a new instance of LogSettings. </summary>
-        /// <param name="category"> Name of a Diagnostic Log category for a resource type this setting is applied to. To obtain the list of Diagnostic Log categories for a resource, first perform a GET diagnostic settings operation. </param>
-        /// <param name="categoryGroup"> Name of a Diagnostic Log category group for a resource type this setting is applied to. To obtain the list of Diagnostic Log categories for a resource, first perform a GET diagnostic settings operation. </param>
-        /// <param name="isEnabled"> a value indicating whether this log is enabled. </param>
-        /// <param name="retentionPolicy"> the retention policy for this log. </param>
+        /// <param name="category">
+        /// Name of a Diagnostic Log category for a resource type this setting is applied to. To obtain the list of Diagnostic Log categories for a resource, first perform a GET diagnostic settings operation.
+        /// Serialized Name: LogSettings.category
+        /// </param>
+        /// <param name="categoryGroup">
+        /// Name of a Diagnostic Log category group for a resource type this setting is applied to. To obtain the list of Diagnostic Log categories for a resource, first perform a GET diagnostic settings operation.
+        /// Serialized Name: LogSettings.categoryGroup
+        /// </param>
+        /// <param name="isEnabled">
+        /// a value indicating whether this log is enabled.
+        /// Serialized Name: LogSettings.enabled
+        /// </param>
+        /// <param name="retentionPolicy">
+        /// the retention policy for this log.
+        /// Serialized Name: LogSettings.retentionPolicy
+        /// </param>
         internal LogSettings(string category, string categoryGroup, bool isEnabled, RetentionPolicy retentionPolicy)
         {
             Category = category;
@@ -30,13 +48,25 @@ namespace Azure.ResourceManager.Monitor.Models
             RetentionPolicy = retentionPolicy;
         }
 
-        /// <summary> Name of a Diagnostic Log category for a resource type this setting is applied to. To obtain the list of Diagnostic Log categories for a resource, first perform a GET diagnostic settings operation. </summary>
+        /// <summary>
+        /// Name of a Diagnostic Log category for a resource type this setting is applied to. To obtain the list of Diagnostic Log categories for a resource, first perform a GET diagnostic settings operation.
+        /// Serialized Name: LogSettings.category
+        /// </summary>
         public string Category { get; set; }
-        /// <summary> Name of a Diagnostic Log category group for a resource type this setting is applied to. To obtain the list of Diagnostic Log categories for a resource, first perform a GET diagnostic settings operation. </summary>
+        /// <summary>
+        /// Name of a Diagnostic Log category group for a resource type this setting is applied to. To obtain the list of Diagnostic Log categories for a resource, first perform a GET diagnostic settings operation.
+        /// Serialized Name: LogSettings.categoryGroup
+        /// </summary>
         public string CategoryGroup { get; set; }
-        /// <summary> a value indicating whether this log is enabled. </summary>
+        /// <summary>
+        /// a value indicating whether this log is enabled.
+        /// Serialized Name: LogSettings.enabled
+        /// </summary>
         public bool IsEnabled { get; set; }
-        /// <summary> the retention policy for this log. </summary>
+        /// <summary>
+        /// the retention policy for this log.
+        /// Serialized Name: LogSettings.retentionPolicy
+        /// </summary>
         public RetentionPolicy RetentionPolicy { get; set; }
     }
 }

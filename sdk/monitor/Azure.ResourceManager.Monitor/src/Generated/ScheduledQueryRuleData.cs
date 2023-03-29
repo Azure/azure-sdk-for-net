@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Monitor
     /// <summary>
     /// A class representing the ScheduledQueryRule data model.
     /// The scheduled query rule resource.
+    /// Serialized Name: ScheduledQueryRuleResource
     /// </summary>
     public partial class ScheduledQueryRuleData : TrackedResourceData
     {
@@ -35,26 +36,86 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="kind"> Indicates the type of scheduled query rule. The default is LogAlert. </param>
-        /// <param name="etag"> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="createdWithApiVersion"> The api-version used when creating this alert rule. </param>
-        /// <param name="isLegacyLogAnalyticsRule"> True if alert rule is legacy Log Analytic rule. </param>
-        /// <param name="description"> The description of the scheduled query rule. </param>
-        /// <param name="displayName"> The display name of the alert rule. </param>
-        /// <param name="severity"> Severity of the alert. Should be an integer between [0-4]. Value of 0 is severest. Relevant and required only for rules of the kind LogAlert. </param>
-        /// <param name="isEnabled"> The flag which indicates whether this scheduled query rule is enabled. Value should be true or false. </param>
-        /// <param name="scopes"> The list of resource id&apos;s that this scheduled query rule is scoped to. </param>
-        /// <param name="evaluationFrequency"> How often the scheduled query rule is evaluated represented in ISO 8601 duration format. Relevant and required only for rules of the kind LogAlert. </param>
-        /// <param name="windowSize"> The period of time (in ISO 8601 duration format) on which the Alert query will be executed (bin size). Relevant and required only for rules of the kind LogAlert. </param>
-        /// <param name="overrideQueryTimeRange"> If specified then overrides the query time range (default is WindowSize*NumberOfEvaluationPeriods). Relevant only for rules of the kind LogAlert. </param>
-        /// <param name="targetResourceTypes"> List of resource type of the target resource(s) on which the alert is created/updated. For example if the scope is a resource group and targetResourceTypes is Microsoft.Compute/virtualMachines, then a different alert will be fired for each virtual machine in the resource group which meet the alert criteria. Relevant only for rules of the kind LogAlert. </param>
-        /// <param name="criteria"> The rule criteria that defines the conditions of the scheduled query rule. </param>
-        /// <param name="muteActionsDuration"> Mute actions for the chosen period of time (in ISO 8601 duration format) after the alert is fired. Relevant only for rules of the kind LogAlert. </param>
-        /// <param name="actions"> Actions to invoke when the alert fires. </param>
-        /// <param name="isWorkspaceAlertsStorageConfigured"> The flag which indicates whether this scheduled query rule has been configured to be stored in the customer&apos;s storage. The default is false. </param>
-        /// <param name="checkWorkspaceAlertsStorageConfigured"> The flag which indicates whether this scheduled query rule should be stored in the customer&apos;s storage. The default is false. Relevant only for rules of the kind LogAlert. </param>
-        /// <param name="skipQueryValidation"> The flag which indicates whether the provided query should be validated or not. The default is false. Relevant only for rules of the kind LogAlert. </param>
-        /// <param name="autoMitigate"> The flag that indicates whether the alert should be automatically resolved or not. The default is true. Relevant only for rules of the kind LogAlert. </param>
+        /// <param name="kind">
+        /// Indicates the type of scheduled query rule. The default is LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResource.kind
+        /// </param>
+        /// <param name="etag">
+        /// The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. 
+        /// Serialized Name: ScheduledQueryRuleResource.etag
+        /// </param>
+        /// <param name="createdWithApiVersion">
+        /// The api-version used when creating this alert rule
+        /// Serialized Name: ScheduledQueryRuleResource.properties.createdWithApiVersion
+        /// </param>
+        /// <param name="isLegacyLogAnalyticsRule">
+        /// True if alert rule is legacy Log Analytic rule
+        /// Serialized Name: ScheduledQueryRuleResource.properties.isLegacyLogAnalyticsRule
+        /// </param>
+        /// <param name="description">
+        /// The description of the scheduled query rule.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.description
+        /// </param>
+        /// <param name="displayName">
+        /// The display name of the alert rule
+        /// Serialized Name: ScheduledQueryRuleResource.properties.displayName
+        /// </param>
+        /// <param name="severity">
+        /// Severity of the alert. Should be an integer between [0-4]. Value of 0 is severest. Relevant and required only for rules of the kind LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.severity
+        /// </param>
+        /// <param name="isEnabled">
+        /// The flag which indicates whether this scheduled query rule is enabled. Value should be true or false
+        /// Serialized Name: ScheduledQueryRuleResource.properties.enabled
+        /// </param>
+        /// <param name="scopes">
+        /// The list of resource id&apos;s that this scheduled query rule is scoped to.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.scopes
+        /// </param>
+        /// <param name="evaluationFrequency">
+        /// How often the scheduled query rule is evaluated represented in ISO 8601 duration format. Relevant and required only for rules of the kind LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.evaluationFrequency
+        /// </param>
+        /// <param name="windowSize">
+        /// The period of time (in ISO 8601 duration format) on which the Alert query will be executed (bin size). Relevant and required only for rules of the kind LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.windowSize
+        /// </param>
+        /// <param name="overrideQueryTimeRange">
+        /// If specified then overrides the query time range (default is WindowSize*NumberOfEvaluationPeriods). Relevant only for rules of the kind LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.overrideQueryTimeRange
+        /// </param>
+        /// <param name="targetResourceTypes">
+        /// List of resource type of the target resource(s) on which the alert is created/updated. For example if the scope is a resource group and targetResourceTypes is Microsoft.Compute/virtualMachines, then a different alert will be fired for each virtual machine in the resource group which meet the alert criteria. Relevant only for rules of the kind LogAlert
+        /// Serialized Name: ScheduledQueryRuleResource.properties.targetResourceTypes
+        /// </param>
+        /// <param name="criteria">
+        /// The rule criteria that defines the conditions of the scheduled query rule.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.criteria
+        /// </param>
+        /// <param name="muteActionsDuration">
+        /// Mute actions for the chosen period of time (in ISO 8601 duration format) after the alert is fired. Relevant only for rules of the kind LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.muteActionsDuration
+        /// </param>
+        /// <param name="actions">
+        /// Actions to invoke when the alert fires.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.actions
+        /// </param>
+        /// <param name="isWorkspaceAlertsStorageConfigured">
+        /// The flag which indicates whether this scheduled query rule has been configured to be stored in the customer&apos;s storage. The default is false.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.isWorkspaceAlertsStorageConfigured
+        /// </param>
+        /// <param name="checkWorkspaceAlertsStorageConfigured">
+        /// The flag which indicates whether this scheduled query rule should be stored in the customer&apos;s storage. The default is false. Relevant only for rules of the kind LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.checkWorkspaceAlertsStorageConfigured
+        /// </param>
+        /// <param name="skipQueryValidation">
+        /// The flag which indicates whether the provided query should be validated or not. The default is false. Relevant only for rules of the kind LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.skipQueryValidation
+        /// </param>
+        /// <param name="autoMitigate">
+        /// The flag that indicates whether the alert should be automatically resolved or not. The default is true. Relevant only for rules of the kind LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.autoMitigate
+        /// </param>
         internal ScheduledQueryRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ScheduledQueryRuleKind? kind, ETag? etag, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, AlertSeverity? severity, bool? isEnabled, IList<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, TimeSpan? overrideQueryTimeRange, IList<string> targetResourceTypes, ScheduledQueryRuleCriteria criteria, TimeSpan? muteActionsDuration, ScheduledQueryRuleActions actions, bool? isWorkspaceAlertsStorageConfigured, bool? checkWorkspaceAlertsStorageConfigured, bool? skipQueryValidation, bool? autoMitigate) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
@@ -79,35 +140,80 @@ namespace Azure.ResourceManager.Monitor
             AutoMitigate = autoMitigate;
         }
 
-        /// <summary> Indicates the type of scheduled query rule. The default is LogAlert. </summary>
+        /// <summary>
+        /// Indicates the type of scheduled query rule. The default is LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResource.kind
+        /// </summary>
         public ScheduledQueryRuleKind? Kind { get; set; }
-        /// <summary> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
+        /// <summary>
+        /// The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. 
+        /// Serialized Name: ScheduledQueryRuleResource.etag
+        /// </summary>
         public ETag? ETag { get; }
-        /// <summary> The api-version used when creating this alert rule. </summary>
+        /// <summary>
+        /// The api-version used when creating this alert rule
+        /// Serialized Name: ScheduledQueryRuleResource.properties.createdWithApiVersion
+        /// </summary>
         public string CreatedWithApiVersion { get; }
-        /// <summary> True if alert rule is legacy Log Analytic rule. </summary>
+        /// <summary>
+        /// True if alert rule is legacy Log Analytic rule
+        /// Serialized Name: ScheduledQueryRuleResource.properties.isLegacyLogAnalyticsRule
+        /// </summary>
         public bool? IsLegacyLogAnalyticsRule { get; }
-        /// <summary> The description of the scheduled query rule. </summary>
+        /// <summary>
+        /// The description of the scheduled query rule.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> The display name of the alert rule. </summary>
+        /// <summary>
+        /// The display name of the alert rule
+        /// Serialized Name: ScheduledQueryRuleResource.properties.displayName
+        /// </summary>
         public string DisplayName { get; set; }
-        /// <summary> Severity of the alert. Should be an integer between [0-4]. Value of 0 is severest. Relevant and required only for rules of the kind LogAlert. </summary>
+        /// <summary>
+        /// Severity of the alert. Should be an integer between [0-4]. Value of 0 is severest. Relevant and required only for rules of the kind LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.severity
+        /// </summary>
         public AlertSeverity? Severity { get; set; }
-        /// <summary> The flag which indicates whether this scheduled query rule is enabled. Value should be true or false. </summary>
+        /// <summary>
+        /// The flag which indicates whether this scheduled query rule is enabled. Value should be true or false
+        /// Serialized Name: ScheduledQueryRuleResource.properties.enabled
+        /// </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> The list of resource id&apos;s that this scheduled query rule is scoped to. </summary>
+        /// <summary>
+        /// The list of resource id&apos;s that this scheduled query rule is scoped to.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.scopes
+        /// </summary>
         public IList<string> Scopes { get; }
-        /// <summary> How often the scheduled query rule is evaluated represented in ISO 8601 duration format. Relevant and required only for rules of the kind LogAlert. </summary>
+        /// <summary>
+        /// How often the scheduled query rule is evaluated represented in ISO 8601 duration format. Relevant and required only for rules of the kind LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.evaluationFrequency
+        /// </summary>
         public TimeSpan? EvaluationFrequency { get; set; }
-        /// <summary> The period of time (in ISO 8601 duration format) on which the Alert query will be executed (bin size). Relevant and required only for rules of the kind LogAlert. </summary>
+        /// <summary>
+        /// The period of time (in ISO 8601 duration format) on which the Alert query will be executed (bin size). Relevant and required only for rules of the kind LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.windowSize
+        /// </summary>
         public TimeSpan? WindowSize { get; set; }
-        /// <summary> If specified then overrides the query time range (default is WindowSize*NumberOfEvaluationPeriods). Relevant only for rules of the kind LogAlert. </summary>
+        /// <summary>
+        /// If specified then overrides the query time range (default is WindowSize*NumberOfEvaluationPeriods). Relevant only for rules of the kind LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.overrideQueryTimeRange
+        /// </summary>
         public TimeSpan? OverrideQueryTimeRange { get; set; }
-        /// <summary> List of resource type of the target resource(s) on which the alert is created/updated. For example if the scope is a resource group and targetResourceTypes is Microsoft.Compute/virtualMachines, then a different alert will be fired for each virtual machine in the resource group which meet the alert criteria. Relevant only for rules of the kind LogAlert. </summary>
+        /// <summary>
+        /// List of resource type of the target resource(s) on which the alert is created/updated. For example if the scope is a resource group and targetResourceTypes is Microsoft.Compute/virtualMachines, then a different alert will be fired for each virtual machine in the resource group which meet the alert criteria. Relevant only for rules of the kind LogAlert
+        /// Serialized Name: ScheduledQueryRuleResource.properties.targetResourceTypes
+        /// </summary>
         public IList<string> TargetResourceTypes { get; }
-        /// <summary> The rule criteria that defines the conditions of the scheduled query rule. </summary>
+        /// <summary>
+        /// The rule criteria that defines the conditions of the scheduled query rule.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.criteria
+        /// </summary>
         internal ScheduledQueryRuleCriteria Criteria { get; set; }
-        /// <summary> A list of conditions to evaluate against the specified scopes. </summary>
+        /// <summary>
+        /// A list of conditions to evaluate against the specified scopes
+        /// Serialized Name: ScheduledQueryRuleCriteria.allOf
+        /// </summary>
         public IList<ScheduledQueryRuleCondition> CriteriaAllOf
         {
             get
@@ -118,17 +224,35 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Mute actions for the chosen period of time (in ISO 8601 duration format) after the alert is fired. Relevant only for rules of the kind LogAlert. </summary>
+        /// <summary>
+        /// Mute actions for the chosen period of time (in ISO 8601 duration format) after the alert is fired. Relevant only for rules of the kind LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.muteActionsDuration
+        /// </summary>
         public TimeSpan? MuteActionsDuration { get; set; }
-        /// <summary> Actions to invoke when the alert fires. </summary>
+        /// <summary>
+        /// Actions to invoke when the alert fires.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.actions
+        /// </summary>
         public ScheduledQueryRuleActions Actions { get; set; }
-        /// <summary> The flag which indicates whether this scheduled query rule has been configured to be stored in the customer&apos;s storage. The default is false. </summary>
+        /// <summary>
+        /// The flag which indicates whether this scheduled query rule has been configured to be stored in the customer&apos;s storage. The default is false.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.isWorkspaceAlertsStorageConfigured
+        /// </summary>
         public bool? IsWorkspaceAlertsStorageConfigured { get; }
-        /// <summary> The flag which indicates whether this scheduled query rule should be stored in the customer&apos;s storage. The default is false. Relevant only for rules of the kind LogAlert. </summary>
+        /// <summary>
+        /// The flag which indicates whether this scheduled query rule should be stored in the customer&apos;s storage. The default is false. Relevant only for rules of the kind LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.checkWorkspaceAlertsStorageConfigured
+        /// </summary>
         public bool? CheckWorkspaceAlertsStorageConfigured { get; set; }
-        /// <summary> The flag which indicates whether the provided query should be validated or not. The default is false. Relevant only for rules of the kind LogAlert. </summary>
+        /// <summary>
+        /// The flag which indicates whether the provided query should be validated or not. The default is false. Relevant only for rules of the kind LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.skipQueryValidation
+        /// </summary>
         public bool? SkipQueryValidation { get; set; }
-        /// <summary> The flag that indicates whether the alert should be automatically resolved or not. The default is true. Relevant only for rules of the kind LogAlert. </summary>
+        /// <summary>
+        /// The flag that indicates whether the alert should be automatically resolved or not. The default is true. Relevant only for rules of the kind LogAlert.
+        /// Serialized Name: ScheduledQueryRuleResource.properties.autoMitigate
+        /// </summary>
         public bool? AutoMitigate { get; set; }
     }
 }

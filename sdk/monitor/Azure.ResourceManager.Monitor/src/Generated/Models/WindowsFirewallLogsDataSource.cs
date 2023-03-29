@@ -12,11 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Enables Firewall logs to be collected by this data collection rule. </summary>
+    /// <summary>
+    /// Enables Firewall logs to be collected by this data collection rule.
+    /// Serialized Name: WindowsFirewallLogsDataSource
+    /// </summary>
     public partial class WindowsFirewallLogsDataSource
     {
         /// <summary> Initializes a new instance of WindowsFirewallLogsDataSource. </summary>
-        /// <param name="streams"> Firewall logs streams. </param>
+        /// <param name="streams">
+        /// Firewall logs streams
+        /// Serialized Name: WindowsFirewallLogsDataSource.streams
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="streams"/> is null. </exception>
         public WindowsFirewallLogsDataSource(IEnumerable<string> streams)
         {
@@ -26,10 +32,14 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of WindowsFirewallLogsDataSource. </summary>
-        /// <param name="streams"> Firewall logs streams. </param>
+        /// <param name="streams">
+        /// Firewall logs streams
+        /// Serialized Name: WindowsFirewallLogsDataSource.streams
+        /// </param>
         /// <param name="name">
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
+        /// Serialized Name: WindowsFirewallLogsDataSource.name
         /// </param>
         internal WindowsFirewallLogsDataSource(IList<string> streams, string name)
         {
@@ -37,11 +47,15 @@ namespace Azure.ResourceManager.Monitor.Models
             Name = name;
         }
 
-        /// <summary> Firewall logs streams. </summary>
+        /// <summary>
+        /// Firewall logs streams
+        /// Serialized Name: WindowsFirewallLogsDataSource.streams
+        /// </summary>
         public IList<string> Streams { get; }
         /// <summary>
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
+        /// Serialized Name: WindowsFirewallLogsDataSource.name
         /// </summary>
         public string Name { get; set; }
     }

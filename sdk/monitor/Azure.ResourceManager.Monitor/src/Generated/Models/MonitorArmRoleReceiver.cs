@@ -10,12 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> An arm role receiver. </summary>
+    /// <summary>
+    /// An arm role receiver.
+    /// Serialized Name: ArmRoleReceiver
+    /// </summary>
     public partial class MonitorArmRoleReceiver
     {
         /// <summary> Initializes a new instance of MonitorArmRoleReceiver. </summary>
-        /// <param name="name"> The name of the arm role receiver. Names must be unique across all receivers within an action group. </param>
-        /// <param name="roleId"> The arm role id. </param>
+        /// <param name="name">
+        /// The name of the arm role receiver. Names must be unique across all receivers within an action group.
+        /// Serialized Name: ArmRoleReceiver.name
+        /// </param>
+        /// <param name="roleId">
+        /// The arm role id.
+        /// Serialized Name: ArmRoleReceiver.roleId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="roleId"/> is null. </exception>
         public MonitorArmRoleReceiver(string name, string roleId)
         {
@@ -27,9 +36,18 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MonitorArmRoleReceiver. </summary>
-        /// <param name="name"> The name of the arm role receiver. Names must be unique across all receivers within an action group. </param>
-        /// <param name="roleId"> The arm role id. </param>
-        /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
+        /// <param name="name">
+        /// The name of the arm role receiver. Names must be unique across all receivers within an action group.
+        /// Serialized Name: ArmRoleReceiver.name
+        /// </param>
+        /// <param name="roleId">
+        /// The arm role id.
+        /// Serialized Name: ArmRoleReceiver.roleId
+        /// </param>
+        /// <param name="useCommonAlertSchema">
+        /// Indicates whether to use common alert schema.
+        /// Serialized Name: ArmRoleReceiver.useCommonAlertSchema
+        /// </param>
         internal MonitorArmRoleReceiver(string name, string roleId, bool? useCommonAlertSchema)
         {
             Name = name;
@@ -37,11 +55,20 @@ namespace Azure.ResourceManager.Monitor.Models
             UseCommonAlertSchema = useCommonAlertSchema;
         }
 
-        /// <summary> The name of the arm role receiver. Names must be unique across all receivers within an action group. </summary>
+        /// <summary>
+        /// The name of the arm role receiver. Names must be unique across all receivers within an action group.
+        /// Serialized Name: ArmRoleReceiver.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The arm role id. </summary>
+        /// <summary>
+        /// The arm role id.
+        /// Serialized Name: ArmRoleReceiver.roleId
+        /// </summary>
         public string RoleId { get; set; }
-        /// <summary> Indicates whether to use common alert schema. </summary>
+        /// <summary>
+        /// Indicates whether to use common alert schema.
+        /// Serialized Name: ArmRoleReceiver.useCommonAlertSchema
+        /// </summary>
         public bool? UseCommonAlertSchema { get; set; }
     }
 }

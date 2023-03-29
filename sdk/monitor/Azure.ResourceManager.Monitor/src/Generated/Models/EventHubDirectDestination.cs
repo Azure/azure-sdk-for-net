@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The EventHubDirectDestination. </summary>
+    /// <summary>
+    /// The EventHubDirectDestination.
+    /// Serialized Name: EventHubDirectDestination
+    /// </summary>
     public partial class EventHubDirectDestination
     {
         /// <summary> Initializes a new instance of EventHubDirectDestination. </summary>
@@ -16,10 +19,14 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of EventHubDirectDestination. </summary>
-        /// <param name="eventHubResourceId"> The resource ID of the event hub. </param>
+        /// <param name="eventHubResourceId">
+        /// The resource ID of the event hub.
+        /// Serialized Name: EventHubDirectDestination.eventHubResourceId
+        /// </param>
         /// <param name="name">
         /// A friendly name for the destination. 
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
+        /// Serialized Name: EventHubDirectDestination.name
         /// </param>
         internal EventHubDirectDestination(string eventHubResourceId, string name)
         {
@@ -27,11 +34,15 @@ namespace Azure.ResourceManager.Monitor.Models
             Name = name;
         }
 
-        /// <summary> The resource ID of the event hub. </summary>
+        /// <summary>
+        /// The resource ID of the event hub.
+        /// Serialized Name: EventHubDirectDestination.eventHubResourceId
+        /// </summary>
         public string EventHubResourceId { get; set; }
         /// <summary>
         /// A friendly name for the destination. 
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
+        /// Serialized Name: EventHubDirectDestination.name
         /// </summary>
         public string Name { get; set; }
     }

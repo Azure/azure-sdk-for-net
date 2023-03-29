@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> An Activity Log Alert rule object for the body of patch operations. </summary>
+    /// <summary>
+    /// An Activity Log Alert rule object for the body of patch operations.
+    /// Serialized Name: AlertRulePatchObject
+    /// </summary>
     public partial class ActivityLogAlertPatch
     {
         /// <summary> Initializes a new instance of ActivityLogAlertPatch. </summary>
@@ -19,9 +22,15 @@ namespace Azure.ResourceManager.Monitor.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> The resource tags. </summary>
+        /// <summary>
+        /// The resource tags
+        /// Serialized Name: AlertRulePatchObject.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </summary>
+        /// <summary>
+        /// Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated.
+        /// Serialized Name: AlertRulePatchObject.properties.enabled
+        /// </summary>
         public bool? IsEnabled { get; set; }
     }
 }

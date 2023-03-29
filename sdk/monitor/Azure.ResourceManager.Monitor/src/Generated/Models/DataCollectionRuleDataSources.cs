@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary>
     /// The specification of data sources. 
     /// This property is optional and can be omitted if the rule is meant to be used via direct calls to the provisioned endpoint.
+    /// Serialized Name: DataCollectionRuleDataSources
     /// </summary>
     public partial class DataCollectionRuleDataSources : DataSourcesSpec
     {
@@ -21,16 +22,46 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of DataCollectionRuleDataSources. </summary>
-        /// <param name="performanceCounters"> The list of performance counter data source configurations. </param>
-        /// <param name="windowsEventLogs"> The list of Windows Event Log data source configurations. </param>
-        /// <param name="syslog"> The list of Syslog data source configurations. </param>
-        /// <param name="extensions"> The list of Azure VM extension data source configurations. </param>
-        /// <param name="logFiles"> The list of Log files source configurations. </param>
-        /// <param name="iisLogs"> The list of IIS logs source configurations. </param>
-        /// <param name="windowsFirewallLogs"> The list of Windows Firewall logs source configurations. </param>
-        /// <param name="prometheusForwarder"> The list of Prometheus forwarder data source configurations. </param>
-        /// <param name="platformTelemetry"> The list of platform telemetry configurations. </param>
-        /// <param name="dataImports"> Specifications of pull based data sources. </param>
+        /// <param name="performanceCounters">
+        /// The list of performance counter data source configurations.
+        /// Serialized Name: DataSourcesSpec.performanceCounters
+        /// </param>
+        /// <param name="windowsEventLogs">
+        /// The list of Windows Event Log data source configurations.
+        /// Serialized Name: DataSourcesSpec.windowsEventLogs
+        /// </param>
+        /// <param name="syslog">
+        /// The list of Syslog data source configurations.
+        /// Serialized Name: DataSourcesSpec.syslog
+        /// </param>
+        /// <param name="extensions">
+        /// The list of Azure VM extension data source configurations.
+        /// Serialized Name: DataSourcesSpec.extensions
+        /// </param>
+        /// <param name="logFiles">
+        /// The list of Log files source configurations.
+        /// Serialized Name: DataSourcesSpec.logFiles
+        /// </param>
+        /// <param name="iisLogs">
+        /// The list of IIS logs source configurations.
+        /// Serialized Name: DataSourcesSpec.iisLogs
+        /// </param>
+        /// <param name="windowsFirewallLogs">
+        /// The list of Windows Firewall logs source configurations.
+        /// Serialized Name: DataSourcesSpec.windowsFirewallLogs
+        /// </param>
+        /// <param name="prometheusForwarder">
+        /// The list of Prometheus forwarder data source configurations.
+        /// Serialized Name: DataSourcesSpec.prometheusForwarder
+        /// </param>
+        /// <param name="platformTelemetry">
+        /// The list of platform telemetry configurations
+        /// Serialized Name: DataSourcesSpec.platformTelemetry
+        /// </param>
+        /// <param name="dataImports">
+        /// Specifications of pull based data sources
+        /// Serialized Name: DataSourcesSpec.dataImports
+        /// </param>
         internal DataCollectionRuleDataSources(IList<PerfCounterDataSource> performanceCounters, IList<WindowsEventLogDataSource> windowsEventLogs, IList<SyslogDataSource> syslog, IList<ExtensionDataSource> extensions, IList<LogFilesDataSource> logFiles, IList<IisLogsDataSource> iisLogs, IList<WindowsFirewallLogsDataSource> windowsFirewallLogs, IList<PrometheusForwarderDataSource> prometheusForwarder, IList<PlatformTelemetryDataSource> platformTelemetry, DataSourcesSpecDataImports dataImports) : base(performanceCounters, windowsEventLogs, syslog, extensions, logFiles, iisLogs, windowsFirewallLogs, prometheusForwarder, platformTelemetry, dataImports)
         {
         }

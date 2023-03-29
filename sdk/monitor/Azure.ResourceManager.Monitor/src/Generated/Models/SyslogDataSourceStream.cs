@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The SyslogDataSourceStream. </summary>
+    /// <summary>
+    /// The SyslogDataSourceStream.
+    /// Serialized Name: KnownSyslogDataSourceStreams
+    /// </summary>
     public readonly partial struct SyslogDataSourceStream : IEquatable<SyslogDataSourceStream>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         private const string MicrosoftSyslogValue = "Microsoft-Syslog";
 
-        /// <summary> Microsoft-Syslog. </summary>
+        /// <summary>
+        /// Microsoft-Syslog
+        /// Serialized Name: KnownSyslogDataSourceStreams.Microsoft-Syslog
+        /// </summary>
         public static SyslogDataSourceStream MicrosoftSyslog { get; } = new SyslogDataSourceStream(MicrosoftSyslogValue);
         /// <summary> Determines if two <see cref="SyslogDataSourceStream"/> values are the same. </summary>
         public static bool operator ==(SyslogDataSourceStream left, SyslogDataSourceStream right) => left.Equals(right);

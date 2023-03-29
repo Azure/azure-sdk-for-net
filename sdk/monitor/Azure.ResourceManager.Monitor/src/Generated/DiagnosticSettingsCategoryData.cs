@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Monitor
     /// <summary>
     /// A class representing the DiagnosticSettingsCategory data model.
     /// The diagnostic settings category resource.
+    /// Serialized Name: DiagnosticSettingsCategoryResource
     /// </summary>
     public partial class DiagnosticSettingsCategoryData : ResourceData
     {
@@ -29,17 +30,29 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="categoryType"> The type of the diagnostic settings category. </param>
-        /// <param name="categoryGroups"> the collection of what category groups are supported. </param>
+        /// <param name="categoryType">
+        /// The type of the diagnostic settings category.
+        /// Serialized Name: DiagnosticSettingsCategoryResource.properties.categoryType
+        /// </param>
+        /// <param name="categoryGroups">
+        /// the collection of what category groups are supported.
+        /// Serialized Name: DiagnosticSettingsCategoryResource.properties.categoryGroups
+        /// </param>
         internal DiagnosticSettingsCategoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MonitorCategoryType? categoryType, IList<string> categoryGroups) : base(id, name, resourceType, systemData)
         {
             CategoryType = categoryType;
             CategoryGroups = categoryGroups;
         }
 
-        /// <summary> The type of the diagnostic settings category. </summary>
+        /// <summary>
+        /// The type of the diagnostic settings category.
+        /// Serialized Name: DiagnosticSettingsCategoryResource.properties.categoryType
+        /// </summary>
         public MonitorCategoryType? CategoryType { get; set; }
-        /// <summary> the collection of what category groups are supported. </summary>
+        /// <summary>
+        /// the collection of what category groups are supported.
+        /// Serialized Name: DiagnosticSettingsCategoryResource.properties.categoryGroups
+        /// </summary>
         public IList<string> CategoryGroups { get; }
     }
 }

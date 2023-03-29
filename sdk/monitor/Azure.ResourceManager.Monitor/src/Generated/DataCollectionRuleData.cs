@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Monitor
     /// <summary>
     /// A class representing the DataCollectionRule data model.
     /// Definition of ARM tracked top level resource.
+    /// Serialized Name: DataCollectionRuleResource
     /// </summary>
     public partial class DataCollectionRuleData : TrackedResourceData
     {
@@ -34,21 +35,55 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="kind"> The kind of the resource. </param>
-        /// <param name="identity"> Managed service identity of the resource. </param>
-        /// <param name="etag"> Resource entity tag (ETag). </param>
-        /// <param name="description"> Description of the data collection rule. </param>
-        /// <param name="immutableId"> The immutable ID of this data collection rule. This property is READ-ONLY. </param>
-        /// <param name="dataCollectionEndpointId"> The resource ID of the data collection endpoint that this rule can be used with. </param>
-        /// <param name="metadata"> Metadata about the resource. </param>
-        /// <param name="streamDeclarations"> Declaration of custom streams used in this rule. </param>
+        /// <param name="kind">
+        /// The kind of the resource.
+        /// Serialized Name: DataCollectionRuleResource.kind
+        /// </param>
+        /// <param name="identity">
+        /// Managed service identity of the resource.
+        /// Serialized Name: DataCollectionRuleResource.identity
+        /// </param>
+        /// <param name="etag">
+        /// Resource entity tag (ETag).
+        /// Serialized Name: DataCollectionRuleResource.etag
+        /// </param>
+        /// <param name="description">
+        /// Description of the data collection rule.
+        /// Serialized Name: DataCollectionRuleResource.properties.description
+        /// </param>
+        /// <param name="immutableId">
+        /// The immutable ID of this data collection rule. This property is READ-ONLY.
+        /// Serialized Name: DataCollectionRuleResource.properties.immutableId
+        /// </param>
+        /// <param name="dataCollectionEndpointId">
+        /// The resource ID of the data collection endpoint that this rule can be used with.
+        /// Serialized Name: DataCollectionRuleResource.properties.dataCollectionEndpointId
+        /// </param>
+        /// <param name="metadata">
+        /// Metadata about the resource
+        /// Serialized Name: DataCollectionRuleResource.properties.metadata
+        /// </param>
+        /// <param name="streamDeclarations">
+        /// Declaration of custom streams used in this rule.
+        /// Serialized Name: DataCollectionRuleResource.properties.streamDeclarations
+        /// </param>
         /// <param name="dataSources">
         /// The specification of data sources. 
         /// This property is optional and can be omitted if the rule is meant to be used via direct calls to the provisioned endpoint.
+        /// Serialized Name: DataCollectionRuleResource.properties.dataSources
         /// </param>
-        /// <param name="destinations"> The specification of destinations. </param>
-        /// <param name="dataFlows"> The specification of data flows. </param>
-        /// <param name="provisioningState"> The resource provisioning state. </param>
+        /// <param name="destinations">
+        /// The specification of destinations.
+        /// Serialized Name: DataCollectionRuleResource.properties.destinations
+        /// </param>
+        /// <param name="dataFlows">
+        /// The specification of data flows.
+        /// Serialized Name: DataCollectionRuleResource.properties.dataFlows
+        /// </param>
+        /// <param name="provisioningState">
+        /// The resource provisioning state.
+        /// Serialized Name: DataCollectionRuleResource.properties.provisioningState
+        /// </param>
         internal DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionRuleResourceKind? kind, ManagedServiceIdentity identity, ETag? etag, string description, string immutableId, ResourceIdentifier dataCollectionEndpointId, DataCollectionRuleMetadata metadata, IDictionary<string, DataStreamDeclaration> streamDeclarations, DataCollectionRuleDataSources dataSources, DataCollectionRuleDestinations destinations, IList<DataFlow> dataFlows, DataCollectionRuleProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
@@ -65,32 +100,66 @@ namespace Azure.ResourceManager.Monitor
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> The kind of the resource. </summary>
+        /// <summary>
+        /// The kind of the resource.
+        /// Serialized Name: DataCollectionRuleResource.kind
+        /// </summary>
         public DataCollectionRuleResourceKind? Kind { get; set; }
-        /// <summary> Managed service identity of the resource. </summary>
+        /// <summary>
+        /// Managed service identity of the resource.
+        /// Serialized Name: DataCollectionRuleResource.identity
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Resource entity tag (ETag). </summary>
+        /// <summary>
+        /// Resource entity tag (ETag).
+        /// Serialized Name: DataCollectionRuleResource.etag
+        /// </summary>
         public ETag? ETag { get; }
-        /// <summary> Description of the data collection rule. </summary>
+        /// <summary>
+        /// Description of the data collection rule.
+        /// Serialized Name: DataCollectionRuleResource.properties.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> The immutable ID of this data collection rule. This property is READ-ONLY. </summary>
+        /// <summary>
+        /// The immutable ID of this data collection rule. This property is READ-ONLY.
+        /// Serialized Name: DataCollectionRuleResource.properties.immutableId
+        /// </summary>
         public string ImmutableId { get; }
-        /// <summary> The resource ID of the data collection endpoint that this rule can be used with. </summary>
+        /// <summary>
+        /// The resource ID of the data collection endpoint that this rule can be used with.
+        /// Serialized Name: DataCollectionRuleResource.properties.dataCollectionEndpointId
+        /// </summary>
         public ResourceIdentifier DataCollectionEndpointId { get; set; }
-        /// <summary> Metadata about the resource. </summary>
+        /// <summary>
+        /// Metadata about the resource
+        /// Serialized Name: DataCollectionRuleResource.properties.metadata
+        /// </summary>
         public DataCollectionRuleMetadata Metadata { get; }
-        /// <summary> Declaration of custom streams used in this rule. </summary>
+        /// <summary>
+        /// Declaration of custom streams used in this rule.
+        /// Serialized Name: DataCollectionRuleResource.properties.streamDeclarations
+        /// </summary>
         public IDictionary<string, DataStreamDeclaration> StreamDeclarations { get; }
         /// <summary>
         /// The specification of data sources. 
         /// This property is optional and can be omitted if the rule is meant to be used via direct calls to the provisioned endpoint.
+        /// Serialized Name: DataCollectionRuleResource.properties.dataSources
         /// </summary>
         public DataCollectionRuleDataSources DataSources { get; set; }
-        /// <summary> The specification of destinations. </summary>
+        /// <summary>
+        /// The specification of destinations.
+        /// Serialized Name: DataCollectionRuleResource.properties.destinations
+        /// </summary>
         public DataCollectionRuleDestinations Destinations { get; set; }
-        /// <summary> The specification of data flows. </summary>
+        /// <summary>
+        /// The specification of data flows.
+        /// Serialized Name: DataCollectionRuleResource.properties.dataFlows
+        /// </summary>
         public IList<DataFlow> DataFlows { get; }
-        /// <summary> The resource provisioning state. </summary>
+        /// <summary>
+        /// The resource provisioning state.
+        /// Serialized Name: DataCollectionRuleResource.properties.provisioningState
+        /// </summary>
         public DataCollectionRuleProvisioningState? ProvisioningState { get; }
     }
 }

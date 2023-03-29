@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary>
     /// Definition of which syslog data will be collected and how it will be collected.
     /// Only collected from Linux machines.
+    /// Serialized Name: SyslogDataSource
     /// </summary>
     public partial class SyslogDataSource
     {
@@ -28,12 +29,20 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="streams">
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
+        /// Serialized Name: SyslogDataSource.streams
         /// </param>
-        /// <param name="facilityNames"> The list of facility names. </param>
-        /// <param name="logLevels"> The log levels to collect. </param>
+        /// <param name="facilityNames">
+        /// The list of facility names.
+        /// Serialized Name: SyslogDataSource.facilityNames
+        /// </param>
+        /// <param name="logLevels">
+        /// The log levels to collect.
+        /// Serialized Name: SyslogDataSource.logLevels
+        /// </param>
         /// <param name="name">
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
+        /// Serialized Name: SyslogDataSource.name
         /// </param>
         internal SyslogDataSource(IList<SyslogDataSourceStream> streams, IList<SyslogDataSourceFacilityName> facilityNames, IList<SyslogDataSourceLogLevel> logLevels, string name)
         {
@@ -46,15 +55,23 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary>
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
+        /// Serialized Name: SyslogDataSource.streams
         /// </summary>
         public IList<SyslogDataSourceStream> Streams { get; }
-        /// <summary> The list of facility names. </summary>
+        /// <summary>
+        /// The list of facility names.
+        /// Serialized Name: SyslogDataSource.facilityNames
+        /// </summary>
         public IList<SyslogDataSourceFacilityName> FacilityNames { get; }
-        /// <summary> The log levels to collect. </summary>
+        /// <summary>
+        /// The log levels to collect.
+        /// Serialized Name: SyslogDataSource.logLevels
+        /// </summary>
         public IList<SyslogDataSourceLogLevel> LogLevels { get; }
         /// <summary>
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
+        /// Serialized Name: SyslogDataSource.name
         /// </summary>
         public string Name { get; set; }
     }

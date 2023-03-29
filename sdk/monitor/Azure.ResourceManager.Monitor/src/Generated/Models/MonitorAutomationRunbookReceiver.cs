@@ -10,14 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The Azure Automation Runbook notification receiver. </summary>
+    /// <summary>
+    /// The Azure Automation Runbook notification receiver.
+    /// Serialized Name: AutomationRunbookReceiver
+    /// </summary>
     public partial class MonitorAutomationRunbookReceiver
     {
         /// <summary> Initializes a new instance of MonitorAutomationRunbookReceiver. </summary>
-        /// <param name="automationAccountId"> The Azure automation account Id which holds this runbook and authenticate to Azure resource. </param>
-        /// <param name="runbookName"> The name for this runbook. </param>
-        /// <param name="webhookResourceId"> The resource id for webhook linked to this runbook. </param>
-        /// <param name="isGlobalRunbook"> Indicates whether this instance is global runbook. </param>
+        /// <param name="automationAccountId">
+        /// The Azure automation account Id which holds this runbook and authenticate to Azure resource.
+        /// Serialized Name: AutomationRunbookReceiver.automationAccountId
+        /// </param>
+        /// <param name="runbookName">
+        /// The name for this runbook.
+        /// Serialized Name: AutomationRunbookReceiver.runbookName
+        /// </param>
+        /// <param name="webhookResourceId">
+        /// The resource id for webhook linked to this runbook.
+        /// Serialized Name: AutomationRunbookReceiver.webhookResourceId
+        /// </param>
+        /// <param name="isGlobalRunbook">
+        /// Indicates whether this instance is global runbook.
+        /// Serialized Name: AutomationRunbookReceiver.isGlobalRunbook
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="automationAccountId"/>, <paramref name="runbookName"/> or <paramref name="webhookResourceId"/> is null. </exception>
         public MonitorAutomationRunbookReceiver(ResourceIdentifier automationAccountId, string runbookName, ResourceIdentifier webhookResourceId, bool isGlobalRunbook)
         {
@@ -32,13 +47,34 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MonitorAutomationRunbookReceiver. </summary>
-        /// <param name="automationAccountId"> The Azure automation account Id which holds this runbook and authenticate to Azure resource. </param>
-        /// <param name="runbookName"> The name for this runbook. </param>
-        /// <param name="webhookResourceId"> The resource id for webhook linked to this runbook. </param>
-        /// <param name="isGlobalRunbook"> Indicates whether this instance is global runbook. </param>
-        /// <param name="name"> Indicates name of the webhook. </param>
-        /// <param name="serviceUri"> The URI where webhooks should be sent. </param>
-        /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
+        /// <param name="automationAccountId">
+        /// The Azure automation account Id which holds this runbook and authenticate to Azure resource.
+        /// Serialized Name: AutomationRunbookReceiver.automationAccountId
+        /// </param>
+        /// <param name="runbookName">
+        /// The name for this runbook.
+        /// Serialized Name: AutomationRunbookReceiver.runbookName
+        /// </param>
+        /// <param name="webhookResourceId">
+        /// The resource id for webhook linked to this runbook.
+        /// Serialized Name: AutomationRunbookReceiver.webhookResourceId
+        /// </param>
+        /// <param name="isGlobalRunbook">
+        /// Indicates whether this instance is global runbook.
+        /// Serialized Name: AutomationRunbookReceiver.isGlobalRunbook
+        /// </param>
+        /// <param name="name">
+        /// Indicates name of the webhook.
+        /// Serialized Name: AutomationRunbookReceiver.name
+        /// </param>
+        /// <param name="serviceUri">
+        /// The URI where webhooks should be sent.
+        /// Serialized Name: AutomationRunbookReceiver.serviceUri
+        /// </param>
+        /// <param name="useCommonAlertSchema">
+        /// Indicates whether to use common alert schema.
+        /// Serialized Name: AutomationRunbookReceiver.useCommonAlertSchema
+        /// </param>
         internal MonitorAutomationRunbookReceiver(ResourceIdentifier automationAccountId, string runbookName, ResourceIdentifier webhookResourceId, bool isGlobalRunbook, string name, Uri serviceUri, bool? useCommonAlertSchema)
         {
             AutomationAccountId = automationAccountId;
@@ -50,19 +86,40 @@ namespace Azure.ResourceManager.Monitor.Models
             UseCommonAlertSchema = useCommonAlertSchema;
         }
 
-        /// <summary> The Azure automation account Id which holds this runbook and authenticate to Azure resource. </summary>
+        /// <summary>
+        /// The Azure automation account Id which holds this runbook and authenticate to Azure resource.
+        /// Serialized Name: AutomationRunbookReceiver.automationAccountId
+        /// </summary>
         public ResourceIdentifier AutomationAccountId { get; set; }
-        /// <summary> The name for this runbook. </summary>
+        /// <summary>
+        /// The name for this runbook.
+        /// Serialized Name: AutomationRunbookReceiver.runbookName
+        /// </summary>
         public string RunbookName { get; set; }
-        /// <summary> The resource id for webhook linked to this runbook. </summary>
+        /// <summary>
+        /// The resource id for webhook linked to this runbook.
+        /// Serialized Name: AutomationRunbookReceiver.webhookResourceId
+        /// </summary>
         public ResourceIdentifier WebhookResourceId { get; set; }
-        /// <summary> Indicates whether this instance is global runbook. </summary>
+        /// <summary>
+        /// Indicates whether this instance is global runbook.
+        /// Serialized Name: AutomationRunbookReceiver.isGlobalRunbook
+        /// </summary>
         public bool IsGlobalRunbook { get; set; }
-        /// <summary> Indicates name of the webhook. </summary>
+        /// <summary>
+        /// Indicates name of the webhook.
+        /// Serialized Name: AutomationRunbookReceiver.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The URI where webhooks should be sent. </summary>
+        /// <summary>
+        /// The URI where webhooks should be sent.
+        /// Serialized Name: AutomationRunbookReceiver.serviceUri
+        /// </summary>
         public Uri ServiceUri { get; set; }
-        /// <summary> Indicates whether to use common alert schema. </summary>
+        /// <summary>
+        /// Indicates whether to use common alert schema.
+        /// Serialized Name: AutomationRunbookReceiver.useCommonAlertSchema
+        /// </summary>
         public bool? UseCommonAlertSchema { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> the criteria time aggregation types. </summary>
+    /// <summary>
+    /// the criteria time aggregation types.
+    /// Serialized Name: AggregationTypeEnum
+    /// </summary>
     public readonly partial struct MetricCriteriaTimeAggregationType : IEquatable<MetricCriteriaTimeAggregationType>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string MaximumValue = "Maximum";
         private const string TotalValue = "Total";
 
-        /// <summary> Average. </summary>
+        /// <summary>
+        /// Average
+        /// Serialized Name: AggregationTypeEnum.Average
+        /// </summary>
         public static MetricCriteriaTimeAggregationType Average { get; } = new MetricCriteriaTimeAggregationType(AverageValue);
-        /// <summary> Count. </summary>
+        /// <summary>
+        /// Count
+        /// Serialized Name: AggregationTypeEnum.Count
+        /// </summary>
         public static MetricCriteriaTimeAggregationType Count { get; } = new MetricCriteriaTimeAggregationType(CountValue);
-        /// <summary> Minimum. </summary>
+        /// <summary>
+        /// Minimum
+        /// Serialized Name: AggregationTypeEnum.Minimum
+        /// </summary>
         public static MetricCriteriaTimeAggregationType Minimum { get; } = new MetricCriteriaTimeAggregationType(MinimumValue);
-        /// <summary> Maximum. </summary>
+        /// <summary>
+        /// Maximum
+        /// Serialized Name: AggregationTypeEnum.Maximum
+        /// </summary>
         public static MetricCriteriaTimeAggregationType Maximum { get; } = new MetricCriteriaTimeAggregationType(MaximumValue);
-        /// <summary> Total. </summary>
+        /// <summary>
+        /// Total
+        /// Serialized Name: AggregationTypeEnum.Total
+        /// </summary>
         public static MetricCriteriaTimeAggregationType Total { get; } = new MetricCriteriaTimeAggregationType(TotalValue);
         /// <summary> Determines if two <see cref="MetricCriteriaTimeAggregationType"/> values are the same. </summary>
         public static bool operator ==(MetricCriteriaTimeAggregationType left, MetricCriteriaTimeAggregationType right) => left.Equals(right);

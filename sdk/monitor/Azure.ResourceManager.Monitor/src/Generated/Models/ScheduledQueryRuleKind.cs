@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Indicates the type of scheduled query rule. The default is LogAlert. </summary>
+    /// <summary>
+    /// Indicates the type of scheduled query rule. The default is LogAlert.
+    /// Serialized Name: Kind
+    /// </summary>
     public readonly partial struct ScheduledQueryRuleKind : IEquatable<ScheduledQueryRuleKind>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string LogAlertValue = "LogAlert";
         private const string LogToMetricValue = "LogToMetric";
 
-        /// <summary> LogAlert. </summary>
+        /// <summary>
+        /// LogAlert
+        /// Serialized Name: Kind.LogAlert
+        /// </summary>
         public static ScheduledQueryRuleKind LogAlert { get; } = new ScheduledQueryRuleKind(LogAlertValue);
-        /// <summary> LogToMetric. </summary>
+        /// <summary>
+        /// LogToMetric
+        /// Serialized Name: Kind.LogToMetric
+        /// </summary>
         public static ScheduledQueryRuleKind LogToMetric { get; } = new ScheduledQueryRuleKind(LogToMetricValue);
         /// <summary> Determines if two <see cref="ScheduledQueryRuleKind"/> values are the same. </summary>
         public static bool operator ==(ScheduledQueryRuleKind left, ScheduledQueryRuleKind right) => left.Equals(right);

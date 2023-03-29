@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Query parameters can also be specified in the body, specifying the same parameter in both the body and query parameters will result in an error. </summary>
+    /// <summary>
+    /// Query parameters can also be specified in the body, specifying the same parameter in both the body and query parameters will result in an error.
+    /// Serialized Name: SubscriptionScopeMetricsRequestBodyParameters
+    /// </summary>
     public partial class SubscriptionResourceGetMonitorMetricsWithPostContent
     {
         /// <summary> Initializes a new instance of SubscriptionResourceGetMonitorMetricsWithPostContent. </summary>
@@ -17,37 +20,69 @@ namespace Azure.ResourceManager.Monitor.Models
         {
         }
 
-        /// <summary> The timespan of the query. It is a string with the following format &apos;startDateTime_ISO/endDateTime_ISO&apos;. </summary>
+        /// <summary>
+        /// The timespan of the query. It is a string with the following format &apos;startDateTime_ISO/endDateTime_ISO&apos;.
+        /// Serialized Name: SubscriptionScopeMetricsRequestBodyParameters.timespan
+        /// </summary>
         public TimeSpan? Timespan { get; set; }
-        /// <summary> The interval (i.e. timegrain) of the query. </summary>
+        /// <summary>
+        /// The interval (i.e. timegrain) of the query.
+        /// Serialized Name: SubscriptionScopeMetricsRequestBodyParameters.interval
+        /// </summary>
         public TimeSpan? Interval { get; set; }
-        /// <summary> The names of the metrics (comma separated) to retrieve. </summary>
+        /// <summary>
+        /// The names of the metrics (comma separated) to retrieve.
+        /// Serialized Name: SubscriptionScopeMetricsRequestBodyParameters.metricNames
+        /// </summary>
         public string MetricNames { get; set; }
-        /// <summary> The list of aggregation types (comma separated) to retrieve. </summary>
+        /// <summary>
+        /// The list of aggregation types (comma separated) to retrieve.
+        /// Serialized Name: SubscriptionScopeMetricsRequestBodyParameters.aggregation
+        /// </summary>
         public string Aggregation { get; set; }
-        /// <summary> The **$filter** is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’**&lt;br&gt;- Return all time series where A = a1&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘*’ and C eq ‘*’**. </summary>
+        /// <summary>
+        /// The **$filter** is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’**&lt;br&gt;- Return all time series where A = a1&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘*’ and C eq ‘*’**.
+        /// Serialized Name: SubscriptionScopeMetricsRequestBodyParameters.filter
+        /// </summary>
         public string Filter { get; set; }
         /// <summary>
         /// The maximum number of records to retrieve.
         /// Valid only if $filter is specified.
         /// Defaults to 10.
+        /// Serialized Name: SubscriptionScopeMetricsRequestBodyParameters.top
         /// </summary>
         public int? Top { get; set; }
         /// <summary>
         /// The aggregation to use for sorting results and the direction of the sort.
         /// Only one order can be specified.
         /// Examples: sum asc.
+        /// Serialized Name: SubscriptionScopeMetricsRequestBodyParameters.orderBy
         /// </summary>
         public string OrderBy { get; set; }
-        /// <summary> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like &apos;City eq Seattle or City eq Tacoma&apos; but don&apos;t want to see separate values for each city, you can specify &apos;RollUpBy=City&apos; to see the results for Seattle and Tacoma rolled up into one timeseries. </summary>
+        /// <summary>
+        /// Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like &apos;City eq Seattle or City eq Tacoma&apos; but don&apos;t want to see separate values for each city, you can specify &apos;RollUpBy=City&apos; to see the results for Seattle and Tacoma rolled up into one timeseries.
+        /// Serialized Name: SubscriptionScopeMetricsRequestBodyParameters.rollUpBy
+        /// </summary>
         public string RollUpBy { get; set; }
-        /// <summary> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation&apos;s description for details. </summary>
+        /// <summary>
+        /// Reduces the set of data collected. The syntax allowed depends on the operation. See the operation&apos;s description for details.
+        /// Serialized Name: SubscriptionScopeMetricsRequestBodyParameters.resultType
+        /// </summary>
         public MonitorMetricResultType? ResultType { get; set; }
-        /// <summary> Metric namespace where the metrics you want reside. </summary>
+        /// <summary>
+        /// Metric namespace where the metrics you want reside.
+        /// Serialized Name: SubscriptionScopeMetricsRequestBodyParameters.metricNamespace
+        /// </summary>
         public string MetricNamespace { get; set; }
-        /// <summary> When set to true, if the timespan passed in is not supported by this metric, the API will return the result using the closest supported timespan. When set to false, an error is returned for invalid timespan parameters. Defaults to false. </summary>
+        /// <summary>
+        /// When set to true, if the timespan passed in is not supported by this metric, the API will return the result using the closest supported timespan. When set to false, an error is returned for invalid timespan parameters. Defaults to false.
+        /// Serialized Name: SubscriptionScopeMetricsRequestBodyParameters.autoAdjustTimegrain
+        /// </summary>
         public bool? AutoAdjustTimegrain { get; set; }
-        /// <summary> When set to false, invalid filter parameter values will be ignored. When set to true, an error is returned for invalid filter parameters. Defaults to true. </summary>
+        /// <summary>
+        /// When set to false, invalid filter parameter values will be ignored. When set to true, an error is returned for invalid filter parameters. Defaults to true.
+        /// Serialized Name: SubscriptionScopeMetricsRequestBodyParameters.validateDimensions
+        /// </summary>
         public bool? ValidateDimensions { get; set; }
     }
 }

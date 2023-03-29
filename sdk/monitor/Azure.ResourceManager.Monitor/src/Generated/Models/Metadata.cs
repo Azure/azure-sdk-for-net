@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Metadata about the resource. </summary>
+    /// <summary>
+    /// Metadata about the resource
+    /// Serialized Name: Metadata
+    /// </summary>
     public partial class Metadata
     {
         /// <summary> Initializes a new instance of Metadata. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of Metadata. </summary>
-        /// <param name="provisionedBy"> Azure offering managing this resource on-behalf-of customer. </param>
-        /// <param name="provisionedByResourceId"> Resource Id of azure offering managing this resource on-behalf-of customer. </param>
+        /// <param name="provisionedBy">
+        /// Azure offering managing this resource on-behalf-of customer.
+        /// Serialized Name: Metadata.provisionedBy
+        /// </param>
+        /// <param name="provisionedByResourceId">
+        /// Resource Id of azure offering managing this resource on-behalf-of customer.
+        /// Serialized Name: Metadata.provisionedByResourceId
+        /// </param>
         internal Metadata(string provisionedBy, string provisionedByResourceId)
         {
             ProvisionedBy = provisionedBy;
             ProvisionedByResourceId = provisionedByResourceId;
         }
 
-        /// <summary> Azure offering managing this resource on-behalf-of customer. </summary>
+        /// <summary>
+        /// Azure offering managing this resource on-behalf-of customer.
+        /// Serialized Name: Metadata.provisionedBy
+        /// </summary>
         public string ProvisionedBy { get; }
-        /// <summary> Resource Id of azure offering managing this resource on-behalf-of customer. </summary>
+        /// <summary>
+        /// Resource Id of azure offering managing this resource on-behalf-of customer.
+        /// Serialized Name: Metadata.provisionedByResourceId
+        /// </summary>
         public string ProvisionedByResourceId { get; }
     }
 }

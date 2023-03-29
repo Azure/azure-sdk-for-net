@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> How the data that is collected should be combined over time. </summary>
+    /// <summary>
+    /// How the data that is collected should be combined over time.
+    /// Serialized Name: ManagementEventAggregationCondition
+    /// </summary>
     public partial class ManagementEventAggregationCondition
     {
         /// <summary> Initializes a new instance of ManagementEventAggregationCondition. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of ManagementEventAggregationCondition. </summary>
-        /// <param name="operator"> the condition operator. </param>
-        /// <param name="threshold"> The threshold value that activates the alert. </param>
-        /// <param name="windowSize"> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. If specified then it must be between 5 minutes and 1 day. </param>
+        /// <param name="operator">
+        /// the condition operator.
+        /// Serialized Name: ManagementEventAggregationCondition.operator
+        /// </param>
+        /// <param name="threshold">
+        /// The threshold value that activates the alert.
+        /// Serialized Name: ManagementEventAggregationCondition.threshold
+        /// </param>
+        /// <param name="windowSize">
+        /// the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. If specified then it must be between 5 minutes and 1 day.
+        /// Serialized Name: ManagementEventAggregationCondition.windowSize
+        /// </param>
         internal ManagementEventAggregationCondition(MonitorConditionOperator? @operator, double? threshold, TimeSpan? windowSize)
         {
             Operator = @operator;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.Monitor.Models
             WindowSize = windowSize;
         }
 
-        /// <summary> the condition operator. </summary>
+        /// <summary>
+        /// the condition operator.
+        /// Serialized Name: ManagementEventAggregationCondition.operator
+        /// </summary>
         public MonitorConditionOperator? Operator { get; set; }
-        /// <summary> The threshold value that activates the alert. </summary>
+        /// <summary>
+        /// The threshold value that activates the alert.
+        /// Serialized Name: ManagementEventAggregationCondition.threshold
+        /// </summary>
         public double? Threshold { get; set; }
-        /// <summary> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. If specified then it must be between 5 minutes and 1 day. </summary>
+        /// <summary>
+        /// the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. If specified then it must be between 5 minutes and 1 day.
+        /// Serialized Name: ManagementEventAggregationCondition.windowSize
+        /// </summary>
         public TimeSpan? WindowSize { get; set; }
     }
 }

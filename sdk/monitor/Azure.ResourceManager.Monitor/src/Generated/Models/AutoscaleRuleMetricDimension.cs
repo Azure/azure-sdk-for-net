@@ -12,13 +12,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Specifies an auto scale rule metric dimension. </summary>
+    /// <summary>
+    /// Specifies an auto scale rule metric dimension.
+    /// Serialized Name: ScaleRuleMetricDimension
+    /// </summary>
     public partial class AutoscaleRuleMetricDimension
     {
         /// <summary> Initializes a new instance of AutoscaleRuleMetricDimension. </summary>
-        /// <param name="dimensionName"> Name of the dimension. </param>
-        /// <param name="operator"> the dimension operator. Only &apos;Equals&apos; and &apos;NotEquals&apos; are supported. &apos;Equals&apos; being equal to any of the values. &apos;NotEquals&apos; being not equal to all of the values. </param>
-        /// <param name="values"> list of dimension values. For example: [&quot;App1&quot;,&quot;App2&quot;]. </param>
+        /// <param name="dimensionName">
+        /// Name of the dimension.
+        /// Serialized Name: ScaleRuleMetricDimension.DimensionName
+        /// </param>
+        /// <param name="operator">
+        /// the dimension operator. Only &apos;Equals&apos; and &apos;NotEquals&apos; are supported. &apos;Equals&apos; being equal to any of the values. &apos;NotEquals&apos; being not equal to all of the values
+        /// Serialized Name: ScaleRuleMetricDimension.Operator
+        /// </param>
+        /// <param name="values">
+        /// list of dimension values. For example: [&quot;App1&quot;,&quot;App2&quot;].
+        /// Serialized Name: ScaleRuleMetricDimension.Values
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionName"/> or <paramref name="values"/> is null. </exception>
         public AutoscaleRuleMetricDimension(string dimensionName, ScaleRuleMetricDimensionOperationType @operator, IEnumerable<string> values)
         {
@@ -31,9 +43,18 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of AutoscaleRuleMetricDimension. </summary>
-        /// <param name="dimensionName"> Name of the dimension. </param>
-        /// <param name="operator"> the dimension operator. Only &apos;Equals&apos; and &apos;NotEquals&apos; are supported. &apos;Equals&apos; being equal to any of the values. &apos;NotEquals&apos; being not equal to all of the values. </param>
-        /// <param name="values"> list of dimension values. For example: [&quot;App1&quot;,&quot;App2&quot;]. </param>
+        /// <param name="dimensionName">
+        /// Name of the dimension.
+        /// Serialized Name: ScaleRuleMetricDimension.DimensionName
+        /// </param>
+        /// <param name="operator">
+        /// the dimension operator. Only &apos;Equals&apos; and &apos;NotEquals&apos; are supported. &apos;Equals&apos; being equal to any of the values. &apos;NotEquals&apos; being not equal to all of the values
+        /// Serialized Name: ScaleRuleMetricDimension.Operator
+        /// </param>
+        /// <param name="values">
+        /// list of dimension values. For example: [&quot;App1&quot;,&quot;App2&quot;].
+        /// Serialized Name: ScaleRuleMetricDimension.Values
+        /// </param>
         internal AutoscaleRuleMetricDimension(string dimensionName, ScaleRuleMetricDimensionOperationType @operator, IList<string> values)
         {
             DimensionName = dimensionName;
@@ -41,11 +62,20 @@ namespace Azure.ResourceManager.Monitor.Models
             Values = values;
         }
 
-        /// <summary> Name of the dimension. </summary>
+        /// <summary>
+        /// Name of the dimension.
+        /// Serialized Name: ScaleRuleMetricDimension.DimensionName
+        /// </summary>
         public string DimensionName { get; set; }
-        /// <summary> the dimension operator. Only &apos;Equals&apos; and &apos;NotEquals&apos; are supported. &apos;Equals&apos; being equal to any of the values. &apos;NotEquals&apos; being not equal to all of the values. </summary>
+        /// <summary>
+        /// the dimension operator. Only &apos;Equals&apos; and &apos;NotEquals&apos; are supported. &apos;Equals&apos; being equal to any of the values. &apos;NotEquals&apos; being not equal to all of the values
+        /// Serialized Name: ScaleRuleMetricDimension.Operator
+        /// </summary>
         public ScaleRuleMetricDimensionOperationType Operator { get; set; }
-        /// <summary> list of dimension values. For example: [&quot;App1&quot;,&quot;App2&quot;]. </summary>
+        /// <summary>
+        /// list of dimension values. For example: [&quot;App1&quot;,&quot;App2&quot;].
+        /// Serialized Name: ScaleRuleMetricDimension.Values
+        /// </summary>
         public IList<string> Values { get; }
     }
 }

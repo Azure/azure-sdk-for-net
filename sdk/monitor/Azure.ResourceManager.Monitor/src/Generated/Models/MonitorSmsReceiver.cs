@@ -10,13 +10,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> An SMS receiver. </summary>
+    /// <summary>
+    /// An SMS receiver.
+    /// Serialized Name: SmsReceiver
+    /// </summary>
     public partial class MonitorSmsReceiver
     {
         /// <summary> Initializes a new instance of MonitorSmsReceiver. </summary>
-        /// <param name="name"> The name of the SMS receiver. Names must be unique across all receivers within an action group. </param>
-        /// <param name="countryCode"> The country code of the SMS receiver. </param>
-        /// <param name="phoneNumber"> The phone number of the SMS receiver. </param>
+        /// <param name="name">
+        /// The name of the SMS receiver. Names must be unique across all receivers within an action group.
+        /// Serialized Name: SmsReceiver.name
+        /// </param>
+        /// <param name="countryCode">
+        /// The country code of the SMS receiver.
+        /// Serialized Name: SmsReceiver.countryCode
+        /// </param>
+        /// <param name="phoneNumber">
+        /// The phone number of the SMS receiver.
+        /// Serialized Name: SmsReceiver.phoneNumber
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="countryCode"/> or <paramref name="phoneNumber"/> is null. </exception>
         public MonitorSmsReceiver(string name, string countryCode, string phoneNumber)
         {
@@ -30,10 +42,22 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MonitorSmsReceiver. </summary>
-        /// <param name="name"> The name of the SMS receiver. Names must be unique across all receivers within an action group. </param>
-        /// <param name="countryCode"> The country code of the SMS receiver. </param>
-        /// <param name="phoneNumber"> The phone number of the SMS receiver. </param>
-        /// <param name="status"> The status of the receiver. </param>
+        /// <param name="name">
+        /// The name of the SMS receiver. Names must be unique across all receivers within an action group.
+        /// Serialized Name: SmsReceiver.name
+        /// </param>
+        /// <param name="countryCode">
+        /// The country code of the SMS receiver.
+        /// Serialized Name: SmsReceiver.countryCode
+        /// </param>
+        /// <param name="phoneNumber">
+        /// The phone number of the SMS receiver.
+        /// Serialized Name: SmsReceiver.phoneNumber
+        /// </param>
+        /// <param name="status">
+        /// The status of the receiver.
+        /// Serialized Name: SmsReceiver.status
+        /// </param>
         internal MonitorSmsReceiver(string name, string countryCode, string phoneNumber, MonitorReceiverStatus? status)
         {
             Name = name;
@@ -42,13 +66,25 @@ namespace Azure.ResourceManager.Monitor.Models
             Status = status;
         }
 
-        /// <summary> The name of the SMS receiver. Names must be unique across all receivers within an action group. </summary>
+        /// <summary>
+        /// The name of the SMS receiver. Names must be unique across all receivers within an action group.
+        /// Serialized Name: SmsReceiver.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The country code of the SMS receiver. </summary>
+        /// <summary>
+        /// The country code of the SMS receiver.
+        /// Serialized Name: SmsReceiver.countryCode
+        /// </summary>
         public string CountryCode { get; set; }
-        /// <summary> The phone number of the SMS receiver. </summary>
+        /// <summary>
+        /// The phone number of the SMS receiver.
+        /// Serialized Name: SmsReceiver.phoneNumber
+        /// </summary>
         public string PhoneNumber { get; set; }
-        /// <summary> The status of the receiver. </summary>
+        /// <summary>
+        /// The status of the receiver.
+        /// Serialized Name: SmsReceiver.status
+        /// </summary>
         public MonitorReceiverStatus? Status { get; }
     }
 }

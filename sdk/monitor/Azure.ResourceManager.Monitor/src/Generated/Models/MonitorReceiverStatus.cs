@@ -7,14 +7,26 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Indicates the status of the receiver. Receivers that are not Enabled will not receive any communications. </summary>
+    /// <summary>
+    /// Indicates the status of the receiver. Receivers that are not Enabled will not receive any communications.
+    /// Serialized Name: ReceiverStatus
+    /// </summary>
     public enum MonitorReceiverStatus
     {
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: ReceiverStatus.NotSpecified
+        /// </summary>
         NotSpecified,
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: ReceiverStatus.Enabled
+        /// </summary>
         Enabled,
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: ReceiverStatus.Disabled
+        /// </summary>
         Disabled
     }
 }

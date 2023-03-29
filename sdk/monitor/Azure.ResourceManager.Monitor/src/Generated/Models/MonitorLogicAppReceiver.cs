@@ -10,13 +10,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> A logic app receiver. </summary>
+    /// <summary>
+    /// A logic app receiver.
+    /// Serialized Name: LogicAppReceiver
+    /// </summary>
     public partial class MonitorLogicAppReceiver
     {
         /// <summary> Initializes a new instance of MonitorLogicAppReceiver. </summary>
-        /// <param name="name"> The name of the logic app receiver. Names must be unique across all receivers within an action group. </param>
-        /// <param name="resourceId"> The azure resource id of the logic app receiver. </param>
-        /// <param name="callbackUri"> The callback url where http request sent to. </param>
+        /// <param name="name">
+        /// The name of the logic app receiver. Names must be unique across all receivers within an action group.
+        /// Serialized Name: LogicAppReceiver.name
+        /// </param>
+        /// <param name="resourceId">
+        /// The azure resource id of the logic app receiver.
+        /// Serialized Name: LogicAppReceiver.resourceId
+        /// </param>
+        /// <param name="callbackUri">
+        /// The callback url where http request sent to.
+        /// Serialized Name: LogicAppReceiver.callbackUrl
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="resourceId"/> or <paramref name="callbackUri"/> is null. </exception>
         public MonitorLogicAppReceiver(string name, ResourceIdentifier resourceId, Uri callbackUri)
         {
@@ -30,10 +42,22 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MonitorLogicAppReceiver. </summary>
-        /// <param name="name"> The name of the logic app receiver. Names must be unique across all receivers within an action group. </param>
-        /// <param name="resourceId"> The azure resource id of the logic app receiver. </param>
-        /// <param name="callbackUri"> The callback url where http request sent to. </param>
-        /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
+        /// <param name="name">
+        /// The name of the logic app receiver. Names must be unique across all receivers within an action group.
+        /// Serialized Name: LogicAppReceiver.name
+        /// </param>
+        /// <param name="resourceId">
+        /// The azure resource id of the logic app receiver.
+        /// Serialized Name: LogicAppReceiver.resourceId
+        /// </param>
+        /// <param name="callbackUri">
+        /// The callback url where http request sent to.
+        /// Serialized Name: LogicAppReceiver.callbackUrl
+        /// </param>
+        /// <param name="useCommonAlertSchema">
+        /// Indicates whether to use common alert schema.
+        /// Serialized Name: LogicAppReceiver.useCommonAlertSchema
+        /// </param>
         internal MonitorLogicAppReceiver(string name, ResourceIdentifier resourceId, Uri callbackUri, bool? useCommonAlertSchema)
         {
             Name = name;
@@ -42,13 +66,25 @@ namespace Azure.ResourceManager.Monitor.Models
             UseCommonAlertSchema = useCommonAlertSchema;
         }
 
-        /// <summary> The name of the logic app receiver. Names must be unique across all receivers within an action group. </summary>
+        /// <summary>
+        /// The name of the logic app receiver. Names must be unique across all receivers within an action group.
+        /// Serialized Name: LogicAppReceiver.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The azure resource id of the logic app receiver. </summary>
+        /// <summary>
+        /// The azure resource id of the logic app receiver.
+        /// Serialized Name: LogicAppReceiver.resourceId
+        /// </summary>
         public ResourceIdentifier ResourceId { get; set; }
-        /// <summary> The callback url where http request sent to. </summary>
+        /// <summary>
+        /// The callback url where http request sent to.
+        /// Serialized Name: LogicAppReceiver.callbackUrl
+        /// </summary>
         public Uri CallbackUri { get; set; }
-        /// <summary> Indicates whether to use common alert schema. </summary>
+        /// <summary>
+        /// Indicates whether to use common alert schema.
+        /// Serialized Name: LogicAppReceiver.useCommonAlertSchema
+        /// </summary>
         public bool? UseCommonAlertSchema { get; set; }
     }
 }

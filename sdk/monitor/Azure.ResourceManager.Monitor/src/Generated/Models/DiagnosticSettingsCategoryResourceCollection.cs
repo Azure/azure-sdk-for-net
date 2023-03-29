@@ -11,7 +11,10 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Represents a collection of diagnostic setting category resources. </summary>
+    /// <summary>
+    /// Represents a collection of diagnostic setting category resources.
+    /// Serialized Name: DiagnosticSettingsCategoryResourceCollection
+    /// </summary>
     internal partial class DiagnosticSettingsCategoryResourceCollection
     {
         /// <summary> Initializes a new instance of DiagnosticSettingsCategoryResourceCollection. </summary>
@@ -21,13 +24,19 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of DiagnosticSettingsCategoryResourceCollection. </summary>
-        /// <param name="value"> The collection of diagnostic settings category resources. </param>
+        /// <param name="value">
+        /// The collection of diagnostic settings category resources.
+        /// Serialized Name: DiagnosticSettingsCategoryResourceCollection.value
+        /// </param>
         internal DiagnosticSettingsCategoryResourceCollection(IReadOnlyList<DiagnosticSettingsCategoryData> value)
         {
             Value = value;
         }
 
-        /// <summary> The collection of diagnostic settings category resources. </summary>
+        /// <summary>
+        /// The collection of diagnostic settings category resources.
+        /// Serialized Name: DiagnosticSettingsCategoryResourceCollection.value
+        /// </summary>
         public IReadOnlyList<DiagnosticSettingsCategoryData> Value { get; }
     }
 }

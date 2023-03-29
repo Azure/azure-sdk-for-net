@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The ResultType. </summary>
+    /// <summary>
+    /// The ResultType.
+    /// Serialized Name: ResultType
+    /// </summary>
     internal enum ResultType
     {
-        /// <summary> Data. </summary>
+        /// <summary>
+        /// Data
+        /// Serialized Name: ResultType.Data
+        /// </summary>
         Data,
-        /// <summary> Metadata. </summary>
+        /// <summary>
+        /// Metadata
+        /// Serialized Name: ResultType.Metadata
+        /// </summary>
         Metadata
     }
 }

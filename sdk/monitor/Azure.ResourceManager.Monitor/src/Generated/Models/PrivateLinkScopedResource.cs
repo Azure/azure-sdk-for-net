@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The PrivateLinkScopedResource. </summary>
+    /// <summary>
+    /// The PrivateLinkScopedResource.
+    /// Serialized Name: PrivateLinkScopedResource
+    /// </summary>
     public partial class PrivateLinkScopedResource
     {
         /// <summary> Initializes a new instance of PrivateLinkScopedResource. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of PrivateLinkScopedResource. </summary>
-        /// <param name="resourceId"> The resourceId of the Azure Monitor Private Link Scope Scoped Resource through which this DCE is associated with a Azure Monitor Private Link Scope. </param>
-        /// <param name="scopeId"> The immutableId of the Azure Monitor Private Link Scope Resource to which the association is. </param>
+        /// <param name="resourceId">
+        /// The resourceId of the Azure Monitor Private Link Scope Scoped Resource through which this DCE is associated with a Azure Monitor Private Link Scope.
+        /// Serialized Name: PrivateLinkScopedResource.resourceId
+        /// </param>
+        /// <param name="scopeId">
+        /// The immutableId of the Azure Monitor Private Link Scope Resource to which the association is.
+        /// Serialized Name: PrivateLinkScopedResource.scopeId
+        /// </param>
         internal PrivateLinkScopedResource(string resourceId, string scopeId)
         {
             ResourceId = resourceId;
             ScopeId = scopeId;
         }
 
-        /// <summary> The resourceId of the Azure Monitor Private Link Scope Scoped Resource through which this DCE is associated with a Azure Monitor Private Link Scope. </summary>
+        /// <summary>
+        /// The resourceId of the Azure Monitor Private Link Scope Scoped Resource through which this DCE is associated with a Azure Monitor Private Link Scope.
+        /// Serialized Name: PrivateLinkScopedResource.resourceId
+        /// </summary>
         public string ResourceId { get; }
-        /// <summary> The immutableId of the Azure Monitor Private Link Scope Resource to which the association is. </summary>
+        /// <summary>
+        /// The immutableId of the Azure Monitor Private Link Scope Resource to which the association is.
+        /// Serialized Name: PrivateLinkScopedResource.scopeId
+        /// </summary>
         public string ScopeId { get; }
     }
 }

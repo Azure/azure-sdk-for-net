@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> An action group object for the body of patch operations. </summary>
+    /// <summary>
+    /// An action group object for the body of patch operations.
+    /// Serialized Name: ActionGroupPatchBody
+    /// </summary>
     public partial class ActionGroupPatch
     {
         /// <summary> Initializes a new instance of ActionGroupPatch. </summary>
@@ -19,9 +22,15 @@ namespace Azure.ResourceManager.Monitor.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Resource tags. </summary>
+        /// <summary>
+        /// Resource tags
+        /// Serialized Name: ActionGroupPatchBody.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Indicates whether this action group is enabled. If an action group is not enabled, then none of its actions will be activated. </summary>
+        /// <summary>
+        /// Indicates whether this action group is enabled. If an action group is not enabled, then none of its actions will be activated.
+        /// Serialized Name: ActionGroupPatchBody.properties.enabled
+        /// </summary>
         public bool? IsEnabled { get; set; }
     }
 }

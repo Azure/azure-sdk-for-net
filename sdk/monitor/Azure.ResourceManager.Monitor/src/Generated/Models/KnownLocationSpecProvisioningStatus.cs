@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The resource provisioning state in this location. </summary>
+    /// <summary>
+    /// The resource provisioning state in this location.
+    /// Serialized Name: KnownLocationSpecProvisioningStatus
+    /// </summary>
     public readonly partial struct KnownLocationSpecProvisioningStatus : IEquatable<KnownLocationSpecProvisioningStatus>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string CanceledValue = "Canceled";
         private const string FailedValue = "Failed";
 
-        /// <summary> Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: KnownLocationSpecProvisioningStatus.Creating
+        /// </summary>
         public static KnownLocationSpecProvisioningStatus Creating { get; } = new KnownLocationSpecProvisioningStatus(CreatingValue);
-        /// <summary> Updating. </summary>
+        /// <summary>
+        /// Updating
+        /// Serialized Name: KnownLocationSpecProvisioningStatus.Updating
+        /// </summary>
         public static KnownLocationSpecProvisioningStatus Updating { get; } = new KnownLocationSpecProvisioningStatus(UpdatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: KnownLocationSpecProvisioningStatus.Deleting
+        /// </summary>
         public static KnownLocationSpecProvisioningStatus Deleting { get; } = new KnownLocationSpecProvisioningStatus(DeletingValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: KnownLocationSpecProvisioningStatus.Succeeded
+        /// </summary>
         public static KnownLocationSpecProvisioningStatus Succeeded { get; } = new KnownLocationSpecProvisioningStatus(SucceededValue);
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: KnownLocationSpecProvisioningStatus.Canceled
+        /// </summary>
         public static KnownLocationSpecProvisioningStatus Canceled { get; } = new KnownLocationSpecProvisioningStatus(CanceledValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: KnownLocationSpecProvisioningStatus.Failed
+        /// </summary>
         public static KnownLocationSpecProvisioningStatus Failed { get; } = new KnownLocationSpecProvisioningStatus(FailedValue);
         /// <summary> Determines if two <see cref="KnownLocationSpecProvisioningStatus"/> values are the same. </summary>
         public static bool operator ==(KnownLocationSpecProvisioningStatus left, KnownLocationSpecProvisioningStatus right) => left.Equals(right);

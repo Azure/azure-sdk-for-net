@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> the dimension operator. Only &apos;Equals&apos; and &apos;NotEquals&apos; are supported. &apos;Equals&apos; being equal to any of the values. &apos;NotEquals&apos; being not equal to all of the values. </summary>
+    /// <summary>
+    /// the dimension operator. Only &apos;Equals&apos; and &apos;NotEquals&apos; are supported. &apos;Equals&apos; being equal to any of the values. &apos;NotEquals&apos; being not equal to all of the values
+    /// Serialized Name: ScaleRuleMetricDimensionOperationType
+    /// </summary>
     public readonly partial struct ScaleRuleMetricDimensionOperationType : IEquatable<ScaleRuleMetricDimensionOperationType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string EqualsValueValue = "Equals";
         private const string NotEqualsValue = "NotEquals";
 
-        /// <summary> Equals. </summary>
+        /// <summary>
+        /// Equals
+        /// Serialized Name: ScaleRuleMetricDimensionOperationType.Equals
+        /// </summary>
         public static ScaleRuleMetricDimensionOperationType EqualsValue { get; } = new ScaleRuleMetricDimensionOperationType(EqualsValueValue);
-        /// <summary> NotEquals. </summary>
+        /// <summary>
+        /// NotEquals
+        /// Serialized Name: ScaleRuleMetricDimensionOperationType.NotEquals
+        /// </summary>
         public static ScaleRuleMetricDimensionOperationType NotEquals { get; } = new ScaleRuleMetricDimensionOperationType(NotEqualsValue);
         /// <summary> Determines if two <see cref="ScaleRuleMetricDimensionOperationType"/> values are the same. </summary>
         public static bool operator ==(ScaleRuleMetricDimensionOperationType left, ScaleRuleMetricDimensionOperationType right) => left.Equals(right);

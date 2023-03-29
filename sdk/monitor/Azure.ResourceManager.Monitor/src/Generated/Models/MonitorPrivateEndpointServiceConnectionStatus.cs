@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The private endpoint connection status. </summary>
+    /// <summary>
+    /// The private endpoint connection status.
+    /// Serialized Name: PrivateEndpointServiceConnectionStatus
+    /// </summary>
     public readonly partial struct MonitorPrivateEndpointServiceConnectionStatus : IEquatable<MonitorPrivateEndpointServiceConnectionStatus>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
 
-        /// <summary> Pending. </summary>
+        /// <summary>
+        /// Pending
+        /// Serialized Name: PrivateEndpointServiceConnectionStatus.Pending
+        /// </summary>
         public static MonitorPrivateEndpointServiceConnectionStatus Pending { get; } = new MonitorPrivateEndpointServiceConnectionStatus(PendingValue);
-        /// <summary> Approved. </summary>
+        /// <summary>
+        /// Approved
+        /// Serialized Name: PrivateEndpointServiceConnectionStatus.Approved
+        /// </summary>
         public static MonitorPrivateEndpointServiceConnectionStatus Approved { get; } = new MonitorPrivateEndpointServiceConnectionStatus(ApprovedValue);
-        /// <summary> Rejected. </summary>
+        /// <summary>
+        /// Rejected
+        /// Serialized Name: PrivateEndpointServiceConnectionStatus.Rejected
+        /// </summary>
         public static MonitorPrivateEndpointServiceConnectionStatus Rejected { get; } = new MonitorPrivateEndpointServiceConnectionStatus(RejectedValue);
         /// <summary> Determines if two <see cref="MonitorPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(MonitorPrivateEndpointServiceConnectionStatus left, MonitorPrivateEndpointServiceConnectionStatus right) => left.Equals(right);

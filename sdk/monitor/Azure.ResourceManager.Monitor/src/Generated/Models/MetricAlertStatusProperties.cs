@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> An alert status properties. </summary>
+    /// <summary>
+    /// An alert status properties.
+    /// Serialized Name: MetricAlertStatusProperties
+    /// </summary>
     public partial class MetricAlertStatusProperties
     {
         /// <summary> Initializes a new instance of MetricAlertStatusProperties. </summary>
@@ -21,9 +24,18 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MetricAlertStatusProperties. </summary>
-        /// <param name="dimensions"> An object describing the type of the dimensions. </param>
-        /// <param name="status"> status value. </param>
-        /// <param name="timestamp"> UTC time when the status was checked. </param>
+        /// <param name="dimensions">
+        /// An object describing the type of the dimensions.
+        /// Serialized Name: MetricAlertStatusProperties.dimensions
+        /// </param>
+        /// <param name="status">
+        /// status value
+        /// Serialized Name: MetricAlertStatusProperties.status
+        /// </param>
+        /// <param name="timestamp">
+        /// UTC time when the status was checked.
+        /// Serialized Name: MetricAlertStatusProperties.timestamp
+        /// </param>
         internal MetricAlertStatusProperties(IReadOnlyDictionary<string, string> dimensions, string status, DateTimeOffset? timestamp)
         {
             Dimensions = dimensions;
@@ -31,11 +43,20 @@ namespace Azure.ResourceManager.Monitor.Models
             Timestamp = timestamp;
         }
 
-        /// <summary> An object describing the type of the dimensions. </summary>
+        /// <summary>
+        /// An object describing the type of the dimensions.
+        /// Serialized Name: MetricAlertStatusProperties.dimensions
+        /// </summary>
         public IReadOnlyDictionary<string, string> Dimensions { get; }
-        /// <summary> status value. </summary>
+        /// <summary>
+        /// status value
+        /// Serialized Name: MetricAlertStatusProperties.status
+        /// </summary>
         public string Status { get; }
-        /// <summary> UTC time when the status was checked. </summary>
+        /// <summary>
+        /// UTC time when the status was checked.
+        /// Serialized Name: MetricAlertStatusProperties.timestamp
+        /// </summary>
         public DateTimeOffset? Timestamp { get; }
     }
 }

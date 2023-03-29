@@ -7,20 +7,41 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> time aggregation type. How the data that is collected should be combined over time. The default value is Average. </summary>
+    /// <summary>
+    /// time aggregation type. How the data that is collected should be combined over time. The default value is Average.
+    /// Serialized Name: TimeAggregationType
+    /// </summary>
     public enum MetricTriggerTimeAggregationType
     {
-        /// <summary> Average. </summary>
+        /// <summary>
+        /// Average
+        /// Serialized Name: TimeAggregationType.Average
+        /// </summary>
         Average,
-        /// <summary> Minimum. </summary>
+        /// <summary>
+        /// Minimum
+        /// Serialized Name: TimeAggregationType.Minimum
+        /// </summary>
         Minimum,
-        /// <summary> Maximum. </summary>
+        /// <summary>
+        /// Maximum
+        /// Serialized Name: TimeAggregationType.Maximum
+        /// </summary>
         Maximum,
-        /// <summary> Total. </summary>
+        /// <summary>
+        /// Total
+        /// Serialized Name: TimeAggregationType.Total
+        /// </summary>
         Total,
-        /// <summary> Count. </summary>
+        /// <summary>
+        /// Count
+        /// Serialized Name: TimeAggregationType.Count
+        /// </summary>
         Count,
-        /// <summary> Last. </summary>
+        /// <summary>
+        /// Last
+        /// Serialized Name: TimeAggregationType.Last
+        /// </summary>
         Last
     }
 }

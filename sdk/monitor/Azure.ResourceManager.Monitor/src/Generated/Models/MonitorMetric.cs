@@ -12,15 +12,33 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The result data of a query. </summary>
+    /// <summary>
+    /// The result data of a query.
+    /// Serialized Name: Metric
+    /// </summary>
     internal partial class MonitorMetric
     {
         /// <summary> Initializes a new instance of MonitorMetric. </summary>
-        /// <param name="id"> the metric Id. </param>
-        /// <param name="metricType"> the resource type of the metric resource. </param>
-        /// <param name="name"> the name and the display name of the metric, i.e. it is localizable string. </param>
-        /// <param name="unit"> The unit of the metric. </param>
-        /// <param name="timeseries"> the time series returned when a data query is performed. </param>
+        /// <param name="id">
+        /// the metric Id.
+        /// Serialized Name: Metric.id
+        /// </param>
+        /// <param name="metricType">
+        /// the resource type of the metric resource.
+        /// Serialized Name: Metric.type
+        /// </param>
+        /// <param name="name">
+        /// the name and the display name of the metric, i.e. it is localizable string.
+        /// Serialized Name: Metric.name
+        /// </param>
+        /// <param name="unit">
+        /// The unit of the metric.
+        /// Serialized Name: Metric.unit
+        /// </param>
+        /// <param name="timeseries">
+        /// the time series returned when a data query is performed.
+        /// Serialized Name: Metric.timeseries
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="metricType"/>, <paramref name="name"/> or <paramref name="timeseries"/> is null. </exception>
         internal MonitorMetric(string id, string metricType, MonitorLocalizableString name, Unit unit, IEnumerable<MonitorTimeSeriesElement> timeseries)
         {
@@ -37,14 +55,38 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MonitorMetric. </summary>
-        /// <param name="id"> the metric Id. </param>
-        /// <param name="metricType"> the resource type of the metric resource. </param>
-        /// <param name="name"> the name and the display name of the metric, i.e. it is localizable string. </param>
-        /// <param name="displayDescription"> Detailed description of this metric. </param>
-        /// <param name="errorCode"> &apos;Success&apos; or the error details on query failures for this metric. </param>
-        /// <param name="errorMessage"> Error message encountered querying this specific metric. </param>
-        /// <param name="unit"> The unit of the metric. </param>
-        /// <param name="timeseries"> the time series returned when a data query is performed. </param>
+        /// <param name="id">
+        /// the metric Id.
+        /// Serialized Name: Metric.id
+        /// </param>
+        /// <param name="metricType">
+        /// the resource type of the metric resource.
+        /// Serialized Name: Metric.type
+        /// </param>
+        /// <param name="name">
+        /// the name and the display name of the metric, i.e. it is localizable string.
+        /// Serialized Name: Metric.name
+        /// </param>
+        /// <param name="displayDescription">
+        /// Detailed description of this metric.
+        /// Serialized Name: Metric.displayDescription
+        /// </param>
+        /// <param name="errorCode">
+        /// &apos;Success&apos; or the error details on query failures for this metric.
+        /// Serialized Name: Metric.errorCode
+        /// </param>
+        /// <param name="errorMessage">
+        /// Error message encountered querying this specific metric.
+        /// Serialized Name: Metric.errorMessage
+        /// </param>
+        /// <param name="unit">
+        /// The unit of the metric.
+        /// Serialized Name: Metric.unit
+        /// </param>
+        /// <param name="timeseries">
+        /// the time series returned when a data query is performed.
+        /// Serialized Name: Metric.timeseries
+        /// </param>
         internal MonitorMetric(string id, string metricType, MonitorLocalizableString name, string displayDescription, string errorCode, string errorMessage, Unit unit, IReadOnlyList<MonitorTimeSeriesElement> timeseries)
         {
             Id = id;
@@ -57,21 +99,45 @@ namespace Azure.ResourceManager.Monitor.Models
             Timeseries = timeseries;
         }
 
-        /// <summary> the metric Id. </summary>
+        /// <summary>
+        /// the metric Id.
+        /// Serialized Name: Metric.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> the resource type of the metric resource. </summary>
+        /// <summary>
+        /// the resource type of the metric resource.
+        /// Serialized Name: Metric.type
+        /// </summary>
         public string MetricType { get; }
-        /// <summary> the name and the display name of the metric, i.e. it is localizable string. </summary>
+        /// <summary>
+        /// the name and the display name of the metric, i.e. it is localizable string.
+        /// Serialized Name: Metric.name
+        /// </summary>
         public MonitorLocalizableString Name { get; }
-        /// <summary> Detailed description of this metric. </summary>
+        /// <summary>
+        /// Detailed description of this metric.
+        /// Serialized Name: Metric.displayDescription
+        /// </summary>
         public string DisplayDescription { get; }
-        /// <summary> &apos;Success&apos; or the error details on query failures for this metric. </summary>
+        /// <summary>
+        /// &apos;Success&apos; or the error details on query failures for this metric.
+        /// Serialized Name: Metric.errorCode
+        /// </summary>
         public string ErrorCode { get; }
-        /// <summary> Error message encountered querying this specific metric. </summary>
+        /// <summary>
+        /// Error message encountered querying this specific metric.
+        /// Serialized Name: Metric.errorMessage
+        /// </summary>
         public string ErrorMessage { get; }
-        /// <summary> The unit of the metric. </summary>
+        /// <summary>
+        /// The unit of the metric.
+        /// Serialized Name: Metric.unit
+        /// </summary>
         public Unit Unit { get; }
-        /// <summary> the time series returned when a data query is performed. </summary>
+        /// <summary>
+        /// the time series returned when a data query is performed.
+        /// Serialized Name: Metric.timeseries
+        /// </summary>
         public IReadOnlyList<MonitorTimeSeriesElement> Timeseries { get; }
     }
 }

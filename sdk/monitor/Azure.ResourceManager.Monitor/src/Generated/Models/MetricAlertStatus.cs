@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> An alert status. </summary>
+    /// <summary>
+    /// An alert status.
+    /// Serialized Name: MetricAlertStatus
+    /// </summary>
     public partial class MetricAlertStatus : ResourceData
     {
         /// <summary> Initializes a new instance of MetricAlertStatus. </summary>
@@ -23,13 +26,19 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The alert status properties of the metric alert status. </param>
+        /// <param name="properties">
+        /// The alert status properties of the metric alert status.
+        /// Serialized Name: MetricAlertStatus.properties
+        /// </param>
         internal MetricAlertStatus(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MetricAlertStatusProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary> The alert status properties of the metric alert status. </summary>
+        /// <summary>
+        /// The alert status properties of the metric alert status.
+        /// Serialized Name: MetricAlertStatus.properties
+        /// </summary>
         public MetricAlertStatusProperties Properties { get; }
     }
 }

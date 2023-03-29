@@ -10,12 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> A webhook receiver. </summary>
+    /// <summary>
+    /// A webhook receiver.
+    /// Serialized Name: WebhookReceiver
+    /// </summary>
     public partial class MonitorWebhookReceiver
     {
         /// <summary> Initializes a new instance of MonitorWebhookReceiver. </summary>
-        /// <param name="name"> The name of the webhook receiver. Names must be unique across all receivers within an action group. </param>
-        /// <param name="serviceUri"> The URI where webhooks should be sent. </param>
+        /// <param name="name">
+        /// The name of the webhook receiver. Names must be unique across all receivers within an action group.
+        /// Serialized Name: WebhookReceiver.name
+        /// </param>
+        /// <param name="serviceUri">
+        /// The URI where webhooks should be sent.
+        /// Serialized Name: WebhookReceiver.serviceUri
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="serviceUri"/> is null. </exception>
         public MonitorWebhookReceiver(string name, Uri serviceUri)
         {
@@ -27,13 +36,34 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MonitorWebhookReceiver. </summary>
-        /// <param name="name"> The name of the webhook receiver. Names must be unique across all receivers within an action group. </param>
-        /// <param name="serviceUri"> The URI where webhooks should be sent. </param>
-        /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
-        /// <param name="useAadAuth"> Indicates whether or not use AAD authentication. </param>
-        /// <param name="objectId"> Indicates the webhook app object Id for aad auth. </param>
-        /// <param name="identifierUri"> Indicates the identifier uri for aad auth. </param>
-        /// <param name="tenantId"> Indicates the tenant id for aad auth. </param>
+        /// <param name="name">
+        /// The name of the webhook receiver. Names must be unique across all receivers within an action group.
+        /// Serialized Name: WebhookReceiver.name
+        /// </param>
+        /// <param name="serviceUri">
+        /// The URI where webhooks should be sent.
+        /// Serialized Name: WebhookReceiver.serviceUri
+        /// </param>
+        /// <param name="useCommonAlertSchema">
+        /// Indicates whether to use common alert schema.
+        /// Serialized Name: WebhookReceiver.useCommonAlertSchema
+        /// </param>
+        /// <param name="useAadAuth">
+        /// Indicates whether or not use AAD authentication.
+        /// Serialized Name: WebhookReceiver.useAadAuth
+        /// </param>
+        /// <param name="objectId">
+        /// Indicates the webhook app object Id for aad auth.
+        /// Serialized Name: WebhookReceiver.objectId
+        /// </param>
+        /// <param name="identifierUri">
+        /// Indicates the identifier uri for aad auth.
+        /// Serialized Name: WebhookReceiver.identifierUri
+        /// </param>
+        /// <param name="tenantId">
+        /// Indicates the tenant id for aad auth.
+        /// Serialized Name: WebhookReceiver.tenantId
+        /// </param>
         internal MonitorWebhookReceiver(string name, Uri serviceUri, bool? useCommonAlertSchema, bool? useAadAuth, string objectId, Uri identifierUri, Guid? tenantId)
         {
             Name = name;
@@ -45,19 +75,40 @@ namespace Azure.ResourceManager.Monitor.Models
             TenantId = tenantId;
         }
 
-        /// <summary> The name of the webhook receiver. Names must be unique across all receivers within an action group. </summary>
+        /// <summary>
+        /// The name of the webhook receiver. Names must be unique across all receivers within an action group.
+        /// Serialized Name: WebhookReceiver.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The URI where webhooks should be sent. </summary>
+        /// <summary>
+        /// The URI where webhooks should be sent.
+        /// Serialized Name: WebhookReceiver.serviceUri
+        /// </summary>
         public Uri ServiceUri { get; set; }
-        /// <summary> Indicates whether to use common alert schema. </summary>
+        /// <summary>
+        /// Indicates whether to use common alert schema.
+        /// Serialized Name: WebhookReceiver.useCommonAlertSchema
+        /// </summary>
         public bool? UseCommonAlertSchema { get; set; }
-        /// <summary> Indicates whether or not use AAD authentication. </summary>
+        /// <summary>
+        /// Indicates whether or not use AAD authentication.
+        /// Serialized Name: WebhookReceiver.useAadAuth
+        /// </summary>
         public bool? UseAadAuth { get; set; }
-        /// <summary> Indicates the webhook app object Id for aad auth. </summary>
+        /// <summary>
+        /// Indicates the webhook app object Id for aad auth.
+        /// Serialized Name: WebhookReceiver.objectId
+        /// </summary>
         public string ObjectId { get; set; }
-        /// <summary> Indicates the identifier uri for aad auth. </summary>
+        /// <summary>
+        /// Indicates the identifier uri for aad auth.
+        /// Serialized Name: WebhookReceiver.identifierUri
+        /// </summary>
         public Uri IdentifierUri { get; set; }
-        /// <summary> Indicates the tenant id for aad auth. </summary>
+        /// <summary>
+        /// Indicates the tenant id for aad auth.
+        /// Serialized Name: WebhookReceiver.tenantId
+        /// </summary>
         public Guid? TenantId { get; set; }
     }
 }

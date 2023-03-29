@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Definition of ARM tracked top level resource properties for update operation. </summary>
+    /// <summary>
+    /// Definition of ARM tracked top level resource properties for update operation.
+    /// Serialized Name: ResourceForUpdate
+    /// </summary>
     public partial class ResourceForUpdate
     {
         /// <summary> Initializes a new instance of ResourceForUpdate. </summary>
@@ -20,9 +23,15 @@ namespace Azure.ResourceManager.Monitor.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Resource tags. </summary>
+        /// <summary>
+        /// Resource tags.
+        /// Serialized Name: ResourceForUpdate.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Managed Service Identity. </summary>
+        /// <summary>
+        /// Managed Service Identity.
+        /// Serialized Name: ResourceForUpdate.identity
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

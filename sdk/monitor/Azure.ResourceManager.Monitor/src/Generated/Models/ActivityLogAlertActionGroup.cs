@@ -11,11 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> A pointer to an Azure Action Group. </summary>
+    /// <summary>
+    /// A pointer to an Azure Action Group.
+    /// Serialized Name: ActivityLogAlertActionGroup
+    /// </summary>
     public partial class ActivityLogAlertActionGroup
     {
         /// <summary> Initializes a new instance of ActivityLogAlertActionGroup. </summary>
-        /// <param name="actionGroupId"> The resource ID of the Action Group. This cannot be null or empty. </param>
+        /// <param name="actionGroupId">
+        /// The resource ID of the Action Group. This cannot be null or empty.
+        /// Serialized Name: ActivityLogAlertActionGroup.actionGroupId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupId"/> is null. </exception>
         public ActivityLogAlertActionGroup(ResourceIdentifier actionGroupId)
         {
@@ -26,17 +32,29 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of ActivityLogAlertActionGroup. </summary>
-        /// <param name="actionGroupId"> The resource ID of the Action Group. This cannot be null or empty. </param>
-        /// <param name="webhookProperties"> the dictionary of custom properties to include with the post operation. These data are appended to the webhook payload. </param>
+        /// <param name="actionGroupId">
+        /// The resource ID of the Action Group. This cannot be null or empty.
+        /// Serialized Name: ActivityLogAlertActionGroup.actionGroupId
+        /// </param>
+        /// <param name="webhookProperties">
+        /// the dictionary of custom properties to include with the post operation. These data are appended to the webhook payload.
+        /// Serialized Name: ActivityLogAlertActionGroup.webhookProperties
+        /// </param>
         internal ActivityLogAlertActionGroup(ResourceIdentifier actionGroupId, IDictionary<string, string> webhookProperties)
         {
             ActionGroupId = actionGroupId;
             WebhookProperties = webhookProperties;
         }
 
-        /// <summary> The resource ID of the Action Group. This cannot be null or empty. </summary>
+        /// <summary>
+        /// The resource ID of the Action Group. This cannot be null or empty.
+        /// Serialized Name: ActivityLogAlertActionGroup.actionGroupId
+        /// </summary>
         public ResourceIdentifier ActionGroupId { get; set; }
-        /// <summary> the dictionary of custom properties to include with the post operation. These data are appended to the webhook payload. </summary>
+        /// <summary>
+        /// the dictionary of custom properties to include with the post operation. These data are appended to the webhook payload.
+        /// Serialized Name: ActivityLogAlertActionGroup.webhookProperties
+        /// </summary>
         public IDictionary<string, string> WebhookProperties { get; }
     }
 }

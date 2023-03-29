@@ -11,7 +11,10 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Represents a collection of scheduled query rule resources. </summary>
+    /// <summary>
+    /// Represents a collection of scheduled query rule resources.
+    /// Serialized Name: ScheduledQueryRuleResourceCollection
+    /// </summary>
     internal partial class ScheduledQueryRuleResourceCollection
     {
         /// <summary> Initializes a new instance of ScheduledQueryRuleResourceCollection. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of ScheduledQueryRuleResourceCollection. </summary>
-        /// <param name="value"> The values for the scheduled query rule resources. </param>
-        /// <param name="nextLink"> Provides the link to retrieve the next set of elements. </param>
+        /// <param name="value">
+        /// The values for the scheduled query rule resources.
+        /// Serialized Name: ScheduledQueryRuleResourceCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Provides the link to retrieve the next set of elements.
+        /// Serialized Name: ScheduledQueryRuleResourceCollection.nextLink
+        /// </param>
         internal ScheduledQueryRuleResourceCollection(IReadOnlyList<ScheduledQueryRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The values for the scheduled query rule resources. </summary>
+        /// <summary>
+        /// The values for the scheduled query rule resources.
+        /// Serialized Name: ScheduledQueryRuleResourceCollection.value
+        /// </summary>
         public IReadOnlyList<ScheduledQueryRuleData> Value { get; }
-        /// <summary> Provides the link to retrieve the next set of elements. </summary>
+        /// <summary>
+        /// Provides the link to retrieve the next set of elements.
+        /// Serialized Name: ScheduledQueryRuleResourceCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

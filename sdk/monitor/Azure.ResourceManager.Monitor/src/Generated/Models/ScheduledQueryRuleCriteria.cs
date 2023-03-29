@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The rule criteria that defines the conditions of the scheduled query rule. </summary>
+    /// <summary>
+    /// The rule criteria that defines the conditions of the scheduled query rule.
+    /// Serialized Name: ScheduledQueryRuleCriteria
+    /// </summary>
     internal partial class ScheduledQueryRuleCriteria
     {
         /// <summary> Initializes a new instance of ScheduledQueryRuleCriteria. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of ScheduledQueryRuleCriteria. </summary>
-        /// <param name="allOf"> A list of conditions to evaluate against the specified scopes. </param>
+        /// <param name="allOf">
+        /// A list of conditions to evaluate against the specified scopes
+        /// Serialized Name: ScheduledQueryRuleCriteria.allOf
+        /// </param>
         internal ScheduledQueryRuleCriteria(IList<ScheduledQueryRuleCondition> allOf)
         {
             AllOf = allOf;
         }
 
-        /// <summary> A list of conditions to evaluate against the specified scopes. </summary>
+        /// <summary>
+        /// A list of conditions to evaluate against the specified scopes
+        /// Serialized Name: ScheduledQueryRuleCriteria.allOf
+        /// </summary>
         public IList<ScheduledQueryRuleCondition> AllOf { get; }
     }
 }

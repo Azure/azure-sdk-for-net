@@ -10,15 +10,33 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> An Itsm receiver. </summary>
+    /// <summary>
+    /// An Itsm receiver.
+    /// Serialized Name: ItsmReceiver
+    /// </summary>
     public partial class MonitorItsmReceiver
     {
         /// <summary> Initializes a new instance of MonitorItsmReceiver. </summary>
-        /// <param name="name"> The name of the Itsm receiver. Names must be unique across all receivers within an action group. </param>
-        /// <param name="workspaceId"> OMS LA instance identifier. </param>
-        /// <param name="connectionId"> Unique identification of ITSM connection among multiple defined in above workspace. </param>
-        /// <param name="ticketConfiguration"> JSON blob for the configurations of the ITSM action. CreateMultipleWorkItems option will be part of this blob as well. </param>
-        /// <param name="region"> Region in which workspace resides. Supported values:&apos;centralindia&apos;,&apos;japaneast&apos;,&apos;southeastasia&apos;,&apos;australiasoutheast&apos;,&apos;uksouth&apos;,&apos;westcentralus&apos;,&apos;canadacentral&apos;,&apos;eastus&apos;,&apos;westeurope&apos;. </param>
+        /// <param name="name">
+        /// The name of the Itsm receiver. Names must be unique across all receivers within an action group.
+        /// Serialized Name: ItsmReceiver.name
+        /// </param>
+        /// <param name="workspaceId">
+        /// OMS LA instance identifier.
+        /// Serialized Name: ItsmReceiver.workspaceId
+        /// </param>
+        /// <param name="connectionId">
+        /// Unique identification of ITSM connection among multiple defined in above workspace.
+        /// Serialized Name: ItsmReceiver.connectionId
+        /// </param>
+        /// <param name="ticketConfiguration">
+        /// JSON blob for the configurations of the ITSM action. CreateMultipleWorkItems option will be part of this blob as well.
+        /// Serialized Name: ItsmReceiver.ticketConfiguration
+        /// </param>
+        /// <param name="region">
+        /// Region in which workspace resides. Supported values:&apos;centralindia&apos;,&apos;japaneast&apos;,&apos;southeastasia&apos;,&apos;australiasoutheast&apos;,&apos;uksouth&apos;,&apos;westcentralus&apos;,&apos;canadacentral&apos;,&apos;eastus&apos;,&apos;westeurope&apos;
+        /// Serialized Name: ItsmReceiver.region
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="workspaceId"/>, <paramref name="connectionId"/> or <paramref name="ticketConfiguration"/> is null. </exception>
         public MonitorItsmReceiver(string name, string workspaceId, string connectionId, string ticketConfiguration, AzureLocation region)
         {
@@ -34,15 +52,30 @@ namespace Azure.ResourceManager.Monitor.Models
             Region = region;
         }
 
-        /// <summary> The name of the Itsm receiver. Names must be unique across all receivers within an action group. </summary>
+        /// <summary>
+        /// The name of the Itsm receiver. Names must be unique across all receivers within an action group.
+        /// Serialized Name: ItsmReceiver.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> OMS LA instance identifier. </summary>
+        /// <summary>
+        /// OMS LA instance identifier.
+        /// Serialized Name: ItsmReceiver.workspaceId
+        /// </summary>
         public string WorkspaceId { get; set; }
-        /// <summary> Unique identification of ITSM connection among multiple defined in above workspace. </summary>
+        /// <summary>
+        /// Unique identification of ITSM connection among multiple defined in above workspace.
+        /// Serialized Name: ItsmReceiver.connectionId
+        /// </summary>
         public string ConnectionId { get; set; }
-        /// <summary> JSON blob for the configurations of the ITSM action. CreateMultipleWorkItems option will be part of this blob as well. </summary>
+        /// <summary>
+        /// JSON blob for the configurations of the ITSM action. CreateMultipleWorkItems option will be part of this blob as well.
+        /// Serialized Name: ItsmReceiver.ticketConfiguration
+        /// </summary>
         public string TicketConfiguration { get; set; }
-        /// <summary> Region in which workspace resides. Supported values:&apos;centralindia&apos;,&apos;japaneast&apos;,&apos;southeastasia&apos;,&apos;australiasoutheast&apos;,&apos;uksouth&apos;,&apos;westcentralus&apos;,&apos;canadacentral&apos;,&apos;eastus&apos;,&apos;westeurope&apos;. </summary>
+        /// <summary>
+        /// Region in which workspace resides. Supported values:&apos;centralindia&apos;,&apos;japaneast&apos;,&apos;southeastasia&apos;,&apos;australiasoutheast&apos;,&apos;uksouth&apos;,&apos;westcentralus&apos;,&apos;canadacentral&apos;,&apos;eastus&apos;,&apos;westeurope&apos;
+        /// Serialized Name: ItsmReceiver.region
+        /// </summary>
         public AzureLocation Region { get; set; }
     }
 }

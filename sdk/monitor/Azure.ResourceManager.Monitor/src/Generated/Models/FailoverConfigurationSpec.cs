@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The FailoverConfigurationSpec. </summary>
+    /// <summary>
+    /// The FailoverConfigurationSpec.
+    /// Serialized Name: FailoverConfigurationSpec
+    /// </summary>
     public partial class FailoverConfigurationSpec
     {
         /// <summary> Initializes a new instance of FailoverConfigurationSpec. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of FailoverConfigurationSpec. </summary>
-        /// <param name="activeLocation"> Active location where data flow will occur. </param>
-        /// <param name="locations"> Locations that are configured for failover. </param>
+        /// <param name="activeLocation">
+        /// Active location where data flow will occur.
+        /// Serialized Name: FailoverConfigurationSpec.activeLocation
+        /// </param>
+        /// <param name="locations">
+        /// Locations that are configured for failover.
+        /// Serialized Name: FailoverConfigurationSpec.locations
+        /// </param>
         internal FailoverConfigurationSpec(string activeLocation, IReadOnlyList<LocationSpec> locations)
         {
             ActiveLocation = activeLocation;
             Locations = locations;
         }
 
-        /// <summary> Active location where data flow will occur. </summary>
+        /// <summary>
+        /// Active location where data flow will occur.
+        /// Serialized Name: FailoverConfigurationSpec.activeLocation
+        /// </summary>
         public string ActiveLocation { get; }
-        /// <summary> Locations that are configured for failover. </summary>
+        /// <summary>
+        /// Locations that are configured for failover.
+        /// Serialized Name: FailoverConfigurationSpec.locations
+        /// </summary>
         public IReadOnlyList<LocationSpec> Locations { get; }
     }
 }

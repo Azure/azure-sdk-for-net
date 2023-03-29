@@ -11,13 +11,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Specifies the metric alert rule criteria for a web test resource. </summary>
+    /// <summary>
+    /// Specifies the metric alert rule criteria for a web test resource.
+    /// Serialized Name: WebtestLocationAvailabilityCriteria
+    /// </summary>
     public partial class WebtestLocationAvailabilityCriteria : MetricAlertCriteria
     {
         /// <summary> Initializes a new instance of WebtestLocationAvailabilityCriteria. </summary>
-        /// <param name="webTestId"> The Application Insights web test Id. </param>
-        /// <param name="componentId"> The Application Insights resource Id. </param>
-        /// <param name="failedLocationCount"> The number of failed locations. </param>
+        /// <param name="webTestId">
+        /// The Application Insights web test Id.
+        /// Serialized Name: WebtestLocationAvailabilityCriteria.webTestId
+        /// </param>
+        /// <param name="componentId">
+        /// The Application Insights resource Id.
+        /// Serialized Name: WebtestLocationAvailabilityCriteria.componentId
+        /// </param>
+        /// <param name="failedLocationCount">
+        /// The number of failed locations.
+        /// Serialized Name: WebtestLocationAvailabilityCriteria.failedLocationCount
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="webTestId"/> or <paramref name="componentId"/> is null. </exception>
         public WebtestLocationAvailabilityCriteria(ResourceIdentifier webTestId, ResourceIdentifier componentId, float failedLocationCount)
         {
@@ -31,11 +43,23 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of WebtestLocationAvailabilityCriteria. </summary>
-        /// <param name="odataType"> specifies the type of the alert criteria. </param>
+        /// <param name="odataType">
+        /// specifies the type of the alert criteria.
+        /// Serialized Name: MetricAlertCriteria.odata.type
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="webTestId"> The Application Insights web test Id. </param>
-        /// <param name="componentId"> The Application Insights resource Id. </param>
-        /// <param name="failedLocationCount"> The number of failed locations. </param>
+        /// <param name="webTestId">
+        /// The Application Insights web test Id.
+        /// Serialized Name: WebtestLocationAvailabilityCriteria.webTestId
+        /// </param>
+        /// <param name="componentId">
+        /// The Application Insights resource Id.
+        /// Serialized Name: WebtestLocationAvailabilityCriteria.componentId
+        /// </param>
+        /// <param name="failedLocationCount">
+        /// The number of failed locations.
+        /// Serialized Name: WebtestLocationAvailabilityCriteria.failedLocationCount
+        /// </param>
         internal WebtestLocationAvailabilityCriteria(MonitorOdataType odataType, IDictionary<string, BinaryData> additionalProperties, ResourceIdentifier webTestId, ResourceIdentifier componentId, float failedLocationCount) : base(odataType, additionalProperties)
         {
             WebTestId = webTestId;
@@ -44,11 +68,20 @@ namespace Azure.ResourceManager.Monitor.Models
             OdataType = odataType;
         }
 
-        /// <summary> The Application Insights web test Id. </summary>
+        /// <summary>
+        /// The Application Insights web test Id.
+        /// Serialized Name: WebtestLocationAvailabilityCriteria.webTestId
+        /// </summary>
         public ResourceIdentifier WebTestId { get; set; }
-        /// <summary> The Application Insights resource Id. </summary>
+        /// <summary>
+        /// The Application Insights resource Id.
+        /// Serialized Name: WebtestLocationAvailabilityCriteria.componentId
+        /// </summary>
         public ResourceIdentifier ComponentId { get; set; }
-        /// <summary> The number of failed locations. </summary>
+        /// <summary>
+        /// The number of failed locations.
+        /// Serialized Name: WebtestLocationAvailabilityCriteria.failedLocationCount
+        /// </summary>
         public float FailedLocationCount { get; set; }
     }
 }

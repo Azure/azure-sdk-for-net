@@ -13,11 +13,17 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> A pageable list of resources. </summary>
+    /// <summary>
+    /// A pageable list of resources.
+    /// Serialized Name: DataCollectionEndpointResourceListResult
+    /// </summary>
     internal partial class DataCollectionEndpointResourceListResult
     {
         /// <summary> Initializes a new instance of DataCollectionEndpointResourceListResult. </summary>
-        /// <param name="value"> A list of resources. </param>
+        /// <param name="value">
+        /// A list of resources.
+        /// Serialized Name: DataCollectionEndpointResourceListResult.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataCollectionEndpointResourceListResult(IEnumerable<DataCollectionEndpointData> value)
         {
@@ -27,17 +33,29 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of DataCollectionEndpointResourceListResult. </summary>
-        /// <param name="value"> A list of resources. </param>
-        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        /// <param name="value">
+        /// A list of resources.
+        /// Serialized Name: DataCollectionEndpointResourceListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to use for getting the next set of results.
+        /// Serialized Name: DataCollectionEndpointResourceListResult.nextLink
+        /// </param>
         internal DataCollectionEndpointResourceListResult(IReadOnlyList<DataCollectionEndpointData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> A list of resources. </summary>
+        /// <summary>
+        /// A list of resources.
+        /// Serialized Name: DataCollectionEndpointResourceListResult.value
+        /// </summary>
         public IReadOnlyList<DataCollectionEndpointData> Value { get; }
-        /// <summary> The URL to use for getting the next set of results. </summary>
+        /// <summary>
+        /// The URL to use for getting the next set of results.
+        /// Serialized Name: DataCollectionEndpointResourceListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

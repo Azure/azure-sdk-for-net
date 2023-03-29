@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The DataFlowStream. </summary>
+    /// <summary>
+    /// The DataFlowStream.
+    /// Serialized Name: KnownDataFlowStreams
+    /// </summary>
     public readonly partial struct DataFlowStream : IEquatable<DataFlowStream>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string MicrosoftSyslogValue = "Microsoft-Syslog";
         private const string MicrosoftWindowsEventValue = "Microsoft-WindowsEvent";
 
-        /// <summary> Microsoft-Event. </summary>
+        /// <summary>
+        /// Microsoft-Event
+        /// Serialized Name: KnownDataFlowStreams.Microsoft-Event
+        /// </summary>
         public static DataFlowStream MicrosoftEvent { get; } = new DataFlowStream(MicrosoftEventValue);
-        /// <summary> Microsoft-InsightsMetrics. </summary>
+        /// <summary>
+        /// Microsoft-InsightsMetrics
+        /// Serialized Name: KnownDataFlowStreams.Microsoft-InsightsMetrics
+        /// </summary>
         public static DataFlowStream MicrosoftInsightsMetrics { get; } = new DataFlowStream(MicrosoftInsightsMetricsValue);
-        /// <summary> Microsoft-Perf. </summary>
+        /// <summary>
+        /// Microsoft-Perf
+        /// Serialized Name: KnownDataFlowStreams.Microsoft-Perf
+        /// </summary>
         public static DataFlowStream MicrosoftPerf { get; } = new DataFlowStream(MicrosoftPerfValue);
-        /// <summary> Microsoft-Syslog. </summary>
+        /// <summary>
+        /// Microsoft-Syslog
+        /// Serialized Name: KnownDataFlowStreams.Microsoft-Syslog
+        /// </summary>
         public static DataFlowStream MicrosoftSyslog { get; } = new DataFlowStream(MicrosoftSyslogValue);
-        /// <summary> Microsoft-WindowsEvent. </summary>
+        /// <summary>
+        /// Microsoft-WindowsEvent
+        /// Serialized Name: KnownDataFlowStreams.Microsoft-WindowsEvent
+        /// </summary>
         public static DataFlowStream MicrosoftWindowsEvent { get; } = new DataFlowStream(MicrosoftWindowsEventValue);
         /// <summary> Determines if two <see cref="DataFlowStream"/> values are the same. </summary>
         public static bool operator ==(DataFlowStream left, DataFlowStream right) => left.Equals(right);

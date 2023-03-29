@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The KnownPrometheusForwarderDataSourceStream. </summary>
+    /// <summary>
+    /// The KnownPrometheusForwarderDataSourceStream.
+    /// Serialized Name: KnownPrometheusForwarderDataSourceStreams
+    /// </summary>
     public readonly partial struct KnownPrometheusForwarderDataSourceStream : IEquatable<KnownPrometheusForwarderDataSourceStream>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         private const string MicrosoftPrometheusMetricsValue = "Microsoft-PrometheusMetrics";
 
-        /// <summary> Microsoft-PrometheusMetrics. </summary>
+        /// <summary>
+        /// Microsoft-PrometheusMetrics
+        /// Serialized Name: KnownPrometheusForwarderDataSourceStreams.Microsoft-PrometheusMetrics
+        /// </summary>
         public static KnownPrometheusForwarderDataSourceStream MicrosoftPrometheusMetrics { get; } = new KnownPrometheusForwarderDataSourceStream(MicrosoftPrometheusMetricsValue);
         /// <summary> Determines if two <see cref="KnownPrometheusForwarderDataSourceStream"/> values are the same. </summary>
         public static bool operator ==(KnownPrometheusForwarderDataSourceStream left, KnownPrometheusForwarderDataSourceStream right) => left.Equals(right);

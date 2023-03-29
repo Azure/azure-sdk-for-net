@@ -11,11 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The details of the test notification results. </summary>
+    /// <summary>
+    /// The details of the test notification results.
+    /// Serialized Name: TestNotificationDetailsResponse
+    /// </summary>
     public partial class NotificationStatus
     {
         /// <summary> Initializes a new instance of NotificationStatus. </summary>
-        /// <param name="state"> The overall state. </param>
+        /// <param name="state">
+        /// The overall state
+        /// Serialized Name: TestNotificationDetailsResponse.state
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="state"/> is null. </exception>
         internal NotificationStatus(string state)
         {
@@ -26,11 +32,26 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of NotificationStatus. </summary>
-        /// <param name="context"> The context info. </param>
-        /// <param name="state"> The overall state. </param>
-        /// <param name="completedOn"> The completed time. </param>
-        /// <param name="createdOn"> The created time. </param>
-        /// <param name="actionDetails"> The list of action detail. </param>
+        /// <param name="context">
+        /// The context info
+        /// Serialized Name: TestNotificationDetailsResponse.context
+        /// </param>
+        /// <param name="state">
+        /// The overall state
+        /// Serialized Name: TestNotificationDetailsResponse.state
+        /// </param>
+        /// <param name="completedOn">
+        /// The completed time
+        /// Serialized Name: TestNotificationDetailsResponse.completedTime
+        /// </param>
+        /// <param name="createdOn">
+        /// The created time
+        /// Serialized Name: TestNotificationDetailsResponse.createdTime
+        /// </param>
+        /// <param name="actionDetails">
+        /// The list of action detail
+        /// Serialized Name: TestNotificationDetailsResponse.actionDetails
+        /// </param>
         internal NotificationStatus(NotificationContext context, string state, DateTimeOffset? completedOn, DateTimeOffset? createdOn, IReadOnlyList<NotificationActionDetail> actionDetails)
         {
             Context = context;
@@ -40,15 +61,30 @@ namespace Azure.ResourceManager.Monitor.Models
             ActionDetails = actionDetails;
         }
 
-        /// <summary> The context info. </summary>
+        /// <summary>
+        /// The context info
+        /// Serialized Name: TestNotificationDetailsResponse.context
+        /// </summary>
         public NotificationContext Context { get; }
-        /// <summary> The overall state. </summary>
+        /// <summary>
+        /// The overall state
+        /// Serialized Name: TestNotificationDetailsResponse.state
+        /// </summary>
         public string State { get; }
-        /// <summary> The completed time. </summary>
+        /// <summary>
+        /// The completed time
+        /// Serialized Name: TestNotificationDetailsResponse.completedTime
+        /// </summary>
         public DateTimeOffset? CompletedOn { get; }
-        /// <summary> The created time. </summary>
+        /// <summary>
+        /// The created time
+        /// Serialized Name: TestNotificationDetailsResponse.createdTime
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> The list of action detail. </summary>
+        /// <summary>
+        /// The list of action detail
+        /// Serialized Name: TestNotificationDetailsResponse.actionDetails
+        /// </summary>
         public IReadOnlyList<NotificationActionDetail> ActionDetails { get; }
     }
 }

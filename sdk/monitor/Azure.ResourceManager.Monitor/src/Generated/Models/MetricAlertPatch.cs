@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The metric alert resource for patch operations. </summary>
+    /// <summary>
+    /// The metric alert resource for patch operations.
+    /// Serialized Name: MetricAlertResourcePatch
+    /// </summary>
     public partial class MetricAlertPatch
     {
         /// <summary> Initializes a new instance of MetricAlertPatch. </summary>
@@ -22,37 +25,77 @@ namespace Azure.ResourceManager.Monitor.Models
             Actions = new ChangeTrackingList<MetricAlertAction>();
         }
 
-        /// <summary> Resource tags. </summary>
+        /// <summary>
+        /// Resource tags
+        /// Serialized Name: MetricAlertResourcePatch.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> the description of the metric alert that will be included in the alert email. </summary>
+        /// <summary>
+        /// the description of the metric alert that will be included in the alert email.
+        /// Serialized Name: MetricAlertResourcePatch.properties.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> Alert severity {0, 1, 2, 3, 4}. </summary>
+        /// <summary>
+        /// Alert severity {0, 1, 2, 3, 4}
+        /// Serialized Name: MetricAlertResourcePatch.properties.severity
+        /// </summary>
         public int? Severity { get; set; }
-        /// <summary> the flag that indicates whether the metric alert is enabled. </summary>
+        /// <summary>
+        /// the flag that indicates whether the metric alert is enabled.
+        /// Serialized Name: MetricAlertResourcePatch.properties.enabled
+        /// </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> the list of resource id&apos;s that this metric alert is scoped to. </summary>
+        /// <summary>
+        /// the list of resource id&apos;s that this metric alert is scoped to.
+        /// Serialized Name: MetricAlertResourcePatch.properties.scopes
+        /// </summary>
         public IList<string> Scopes { get; }
-        /// <summary> how often the metric alert is evaluated represented in ISO 8601 duration format. </summary>
+        /// <summary>
+        /// how often the metric alert is evaluated represented in ISO 8601 duration format.
+        /// Serialized Name: MetricAlertResourcePatch.properties.evaluationFrequency
+        /// </summary>
         public TimeSpan? EvaluationFrequency { get; set; }
-        /// <summary> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </summary>
+        /// <summary>
+        /// the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold.
+        /// Serialized Name: MetricAlertResourcePatch.properties.windowSize
+        /// </summary>
         public TimeSpan? WindowSize { get; set; }
-        /// <summary> the resource type of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </summary>
+        /// <summary>
+        /// the resource type of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria.
+        /// Serialized Name: MetricAlertResourcePatch.properties.targetResourceType
+        /// </summary>
         public ResourceType? TargetResourceType { get; set; }
-        /// <summary> the region of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </summary>
+        /// <summary>
+        /// the region of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria.
+        /// Serialized Name: MetricAlertResourcePatch.properties.targetResourceRegion
+        /// </summary>
         public AzureLocation? TargetResourceRegion { get; set; }
         /// <summary>
         /// defines the specific alert criteria information.
+        /// Serialized Name: MetricAlertResourcePatch.properties.criteria
         /// Please note <see cref="MetricAlertCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
         /// </summary>
         public MetricAlertCriteria Criteria { get; set; }
-        /// <summary> the flag that indicates whether the alert should be auto resolved or not. The default is true. </summary>
+        /// <summary>
+        /// the flag that indicates whether the alert should be auto resolved or not. The default is true.
+        /// Serialized Name: MetricAlertResourcePatch.properties.autoMitigate
+        /// </summary>
         public bool? IsAutoMitigateEnabled { get; set; }
-        /// <summary> the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </summary>
+        /// <summary>
+        /// the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved.
+        /// Serialized Name: MetricAlertResourcePatch.properties.actions
+        /// </summary>
         public IList<MetricAlertAction> Actions { get; }
-        /// <summary> Last time the rule was updated in ISO8601 format. </summary>
+        /// <summary>
+        /// Last time the rule was updated in ISO8601 format.
+        /// Serialized Name: MetricAlertResourcePatch.properties.lastUpdatedTime
+        /// </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
-        /// <summary> the value indicating whether this alert rule is migrated. </summary>
+        /// <summary>
+        /// the value indicating whether this alert rule is migrated.
+        /// Serialized Name: MetricAlertResourcePatch.properties.isMigrated
+        /// </summary>
         public bool? IsMigrated { get; }
     }
 }

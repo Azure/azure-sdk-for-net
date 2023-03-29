@@ -9,15 +9,33 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The UnknownRuleDataSource. </summary>
+    /// <summary>
+    /// The UnknownRuleDataSource.
+    /// Serialized Name: UnknownRuleDataSource
+    /// </summary>
     internal partial class UnknownRuleDataSource : RuleDataSource
     {
         /// <summary> Initializes a new instance of UnknownRuleDataSource. </summary>
-        /// <param name="odataType"> specifies the type of data source. There are two types of rule data sources: RuleMetricDataSource and RuleManagementEventDataSource. </param>
-        /// <param name="resourceId"> the resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </param>
-        /// <param name="legacyResourceId"> the legacy resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </param>
-        /// <param name="resourceLocation"> the location of the resource. </param>
-        /// <param name="metricNamespace"> the namespace of the metric. </param>
+        /// <param name="odataType">
+        /// specifies the type of data source. There are two types of rule data sources: RuleMetricDataSource and RuleManagementEventDataSource
+        /// Serialized Name: RuleDataSource.odata.type
+        /// </param>
+        /// <param name="resourceId">
+        /// the resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule.
+        /// Serialized Name: RuleDataSource.resourceUri
+        /// </param>
+        /// <param name="legacyResourceId">
+        /// the legacy resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule.
+        /// Serialized Name: RuleDataSource.legacyResourceId
+        /// </param>
+        /// <param name="resourceLocation">
+        /// the location of the resource.
+        /// Serialized Name: RuleDataSource.resourceLocation
+        /// </param>
+        /// <param name="metricNamespace">
+        /// the namespace of the metric.
+        /// Serialized Name: RuleDataSource.metricNamespace
+        /// </param>
         internal UnknownRuleDataSource(string odataType, ResourceIdentifier resourceId, ResourceIdentifier legacyResourceId, string resourceLocation, string metricNamespace) : base(odataType, resourceId, legacyResourceId, resourceLocation, metricNamespace)
         {
             OdataType = odataType ?? "Unknown";

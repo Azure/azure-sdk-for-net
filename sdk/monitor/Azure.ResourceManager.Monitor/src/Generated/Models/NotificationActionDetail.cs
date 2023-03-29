@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The action detail. </summary>
+    /// <summary>
+    /// The action detail
+    /// Serialized Name: ActionDetail
+    /// </summary>
     public partial class NotificationActionDetail
     {
         /// <summary> Initializes a new instance of NotificationActionDetail. </summary>
@@ -18,12 +21,30 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of NotificationActionDetail. </summary>
-        /// <param name="mechanismType"> The mechanism type. </param>
-        /// <param name="name"> The name of the action. </param>
-        /// <param name="status"> The status of the action. </param>
-        /// <param name="subState"> The substatus of the action. </param>
-        /// <param name="sendOn"> The send time. </param>
-        /// <param name="detail"> The detail of the friendly error message. </param>
+        /// <param name="mechanismType">
+        /// The mechanism type
+        /// Serialized Name: ActionDetail.MechanismType
+        /// </param>
+        /// <param name="name">
+        /// The name of the action
+        /// Serialized Name: ActionDetail.Name
+        /// </param>
+        /// <param name="status">
+        /// The status of the action
+        /// Serialized Name: ActionDetail.Status
+        /// </param>
+        /// <param name="subState">
+        /// The substatus of the action
+        /// Serialized Name: ActionDetail.SubState
+        /// </param>
+        /// <param name="sendOn">
+        /// The send time
+        /// Serialized Name: ActionDetail.SendTime
+        /// </param>
+        /// <param name="detail">
+        /// The detail of the friendly error message
+        /// Serialized Name: ActionDetail.Detail
+        /// </param>
         internal NotificationActionDetail(string mechanismType, string name, string status, string subState, DateTimeOffset? sendOn, string detail)
         {
             MechanismType = mechanismType;
@@ -34,17 +55,35 @@ namespace Azure.ResourceManager.Monitor.Models
             Detail = detail;
         }
 
-        /// <summary> The mechanism type. </summary>
+        /// <summary>
+        /// The mechanism type
+        /// Serialized Name: ActionDetail.MechanismType
+        /// </summary>
         public string MechanismType { get; }
-        /// <summary> The name of the action. </summary>
+        /// <summary>
+        /// The name of the action
+        /// Serialized Name: ActionDetail.Name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The status of the action. </summary>
+        /// <summary>
+        /// The status of the action
+        /// Serialized Name: ActionDetail.Status
+        /// </summary>
         public string Status { get; }
-        /// <summary> The substatus of the action. </summary>
+        /// <summary>
+        /// The substatus of the action
+        /// Serialized Name: ActionDetail.SubState
+        /// </summary>
         public string SubState { get; }
-        /// <summary> The send time. </summary>
+        /// <summary>
+        /// The send time
+        /// Serialized Name: ActionDetail.SendTime
+        /// </summary>
         public DateTimeOffset? SendOn { get; }
-        /// <summary> The detail of the friendly error message. </summary>
+        /// <summary>
+        /// The detail of the friendly error message
+        /// Serialized Name: ActionDetail.Detail
+        /// </summary>
         public string Detail { get; }
     }
 }

@@ -11,11 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The request body which contain contact detail metadata. </summary>
+    /// <summary>
+    /// The request body which contain contact detail metadata
+    /// Serialized Name: NotificationRequestBody
+    /// </summary>
     public partial class NotificationContent
     {
         /// <summary> Initializes a new instance of NotificationContent. </summary>
-        /// <param name="alertType"> The value of the supported alert type. Supported alert type values are: servicehealth, metricstaticthreshold, metricsdynamicthreshold, logalertv2, smartalert, webtestalert, logalertv1numresult, logalertv1metricmeasurement, resourcehealth, activitylog, actualcostbudget, forecastedbudget. </param>
+        /// <param name="alertType">
+        /// The value of the supported alert type. Supported alert type values are: servicehealth, metricstaticthreshold, metricsdynamicthreshold, logalertv2, smartalert, webtestalert, logalertv1numresult, logalertv1metricmeasurement, resourcehealth, activitylog, actualcostbudget, forecastedbudget
+        /// Serialized Name: NotificationRequestBody.alertType
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertType"/> is null. </exception>
         public NotificationContent(string alertType)
         {
@@ -35,29 +41,65 @@ namespace Azure.ResourceManager.Monitor.Models
             EventHubReceivers = new ChangeTrackingList<MonitorEventHubReceiver>();
         }
 
-        /// <summary> The value of the supported alert type. Supported alert type values are: servicehealth, metricstaticthreshold, metricsdynamicthreshold, logalertv2, smartalert, webtestalert, logalertv1numresult, logalertv1metricmeasurement, resourcehealth, activitylog, actualcostbudget, forecastedbudget. </summary>
+        /// <summary>
+        /// The value of the supported alert type. Supported alert type values are: servicehealth, metricstaticthreshold, metricsdynamicthreshold, logalertv2, smartalert, webtestalert, logalertv1numresult, logalertv1metricmeasurement, resourcehealth, activitylog, actualcostbudget, forecastedbudget
+        /// Serialized Name: NotificationRequestBody.alertType
+        /// </summary>
         public string AlertType { get; }
-        /// <summary> The list of email receivers that are part of this action group. </summary>
+        /// <summary>
+        /// The list of email receivers that are part of this action group.
+        /// Serialized Name: NotificationRequestBody.emailReceivers
+        /// </summary>
         public IList<MonitorEmailReceiver> EmailReceivers { get; }
-        /// <summary> The list of SMS receivers that are part of this action group. </summary>
+        /// <summary>
+        /// The list of SMS receivers that are part of this action group.
+        /// Serialized Name: NotificationRequestBody.smsReceivers
+        /// </summary>
         public IList<MonitorSmsReceiver> SmsReceivers { get; }
-        /// <summary> The list of webhook receivers that are part of this action group. </summary>
+        /// <summary>
+        /// The list of webhook receivers that are part of this action group.
+        /// Serialized Name: NotificationRequestBody.webhookReceivers
+        /// </summary>
         public IList<MonitorWebhookReceiver> WebhookReceivers { get; }
-        /// <summary> The list of ITSM receivers that are part of this action group. </summary>
+        /// <summary>
+        /// The list of ITSM receivers that are part of this action group.
+        /// Serialized Name: NotificationRequestBody.itsmReceivers
+        /// </summary>
         public IList<MonitorItsmReceiver> ItsmReceivers { get; }
-        /// <summary> The list of AzureAppPush receivers that are part of this action group. </summary>
+        /// <summary>
+        /// The list of AzureAppPush receivers that are part of this action group.
+        /// Serialized Name: NotificationRequestBody.azureAppPushReceivers
+        /// </summary>
         public IList<MonitorAzureAppPushReceiver> AzureAppPushReceivers { get; }
-        /// <summary> The list of AutomationRunbook receivers that are part of this action group. </summary>
+        /// <summary>
+        /// The list of AutomationRunbook receivers that are part of this action group.
+        /// Serialized Name: NotificationRequestBody.automationRunbookReceivers
+        /// </summary>
         public IList<MonitorAutomationRunbookReceiver> AutomationRunbookReceivers { get; }
-        /// <summary> The list of voice receivers that are part of this action group. </summary>
+        /// <summary>
+        /// The list of voice receivers that are part of this action group.
+        /// Serialized Name: NotificationRequestBody.voiceReceivers
+        /// </summary>
         public IList<MonitorVoiceReceiver> VoiceReceivers { get; }
-        /// <summary> The list of logic app receivers that are part of this action group. </summary>
+        /// <summary>
+        /// The list of logic app receivers that are part of this action group.
+        /// Serialized Name: NotificationRequestBody.logicAppReceivers
+        /// </summary>
         public IList<MonitorLogicAppReceiver> LogicAppReceivers { get; }
-        /// <summary> The list of azure function receivers that are part of this action group. </summary>
+        /// <summary>
+        /// The list of azure function receivers that are part of this action group.
+        /// Serialized Name: NotificationRequestBody.azureFunctionReceivers
+        /// </summary>
         public IList<MonitorAzureFunctionReceiver> AzureFunctionReceivers { get; }
-        /// <summary> The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported. </summary>
+        /// <summary>
+        /// The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported.
+        /// Serialized Name: NotificationRequestBody.armRoleReceivers
+        /// </summary>
         public IList<MonitorArmRoleReceiver> ArmRoleReceivers { get; }
-        /// <summary> The list of event hub receivers that are part of this action group. </summary>
+        /// <summary>
+        /// The list of event hub receivers that are part of this action group.
+        /// Serialized Name: NotificationRequestBody.eventHubReceivers
+        /// </summary>
         public IList<MonitorEventHubReceiver> EventHubReceivers { get; }
     }
 }

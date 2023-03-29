@@ -9,7 +9,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The LocationSpec. </summary>
+    /// <summary>
+    /// The LocationSpec.
+    /// Serialized Name: LocationSpec
+    /// </summary>
     public partial class LocationSpec
     {
         /// <summary> Initializes a new instance of LocationSpec. </summary>
@@ -18,17 +21,29 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of LocationSpec. </summary>
-        /// <param name="location"> Name of location. </param>
-        /// <param name="provisioningStatus"> The resource provisioning state in this location. </param>
+        /// <param name="location">
+        /// Name of location.
+        /// Serialized Name: LocationSpec.location
+        /// </param>
+        /// <param name="provisioningStatus">
+        /// The resource provisioning state in this location.
+        /// Serialized Name: LocationSpec.provisioningStatus
+        /// </param>
         internal LocationSpec(AzureLocation? location, KnownLocationSpecProvisioningStatus? provisioningStatus)
         {
             Location = location;
             ProvisioningStatus = provisioningStatus;
         }
 
-        /// <summary> Name of location. </summary>
+        /// <summary>
+        /// Name of location.
+        /// Serialized Name: LocationSpec.location
+        /// </summary>
         public AzureLocation? Location { get; }
-        /// <summary> The resource provisioning state in this location. </summary>
+        /// <summary>
+        /// The resource provisioning state in this location.
+        /// Serialized Name: LocationSpec.provisioningStatus
+        /// </summary>
         public KnownLocationSpecProvisioningStatus? ProvisioningStatus { get; }
     }
 }

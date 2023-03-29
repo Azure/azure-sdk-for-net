@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The SyslogDataSourceFacilityName. </summary>
+    /// <summary>
+    /// The SyslogDataSourceFacilityName.
+    /// Serialized Name: KnownSyslogDataSourceFacilityNames
+    /// </summary>
     public readonly partial struct SyslogDataSourceFacilityName : IEquatable<SyslogDataSourceFacilityName>
     {
         private readonly string _value;
@@ -44,47 +47,110 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string Local7Value = "local7";
         private const string AsteriskValue = "*";
 
-        /// <summary> auth. </summary>
+        /// <summary>
+        /// auth
+        /// Serialized Name: KnownSyslogDataSourceFacilityNames.auth
+        /// </summary>
         public static SyslogDataSourceFacilityName Auth { get; } = new SyslogDataSourceFacilityName(AuthValue);
-        /// <summary> authpriv. </summary>
+        /// <summary>
+        /// authpriv
+        /// Serialized Name: KnownSyslogDataSourceFacilityNames.authpriv
+        /// </summary>
         public static SyslogDataSourceFacilityName Authpriv { get; } = new SyslogDataSourceFacilityName(AuthprivValue);
-        /// <summary> cron. </summary>
+        /// <summary>
+        /// cron
+        /// Serialized Name: KnownSyslogDataSourceFacilityNames.cron
+        /// </summary>
         public static SyslogDataSourceFacilityName Cron { get; } = new SyslogDataSourceFacilityName(CronValue);
-        /// <summary> daemon. </summary>
+        /// <summary>
+        /// daemon
+        /// Serialized Name: KnownSyslogDataSourceFacilityNames.daemon
+        /// </summary>
         public static SyslogDataSourceFacilityName Daemon { get; } = new SyslogDataSourceFacilityName(DaemonValue);
-        /// <summary> kern. </summary>
+        /// <summary>
+        /// kern
+        /// Serialized Name: KnownSyslogDataSourceFacilityNames.kern
+        /// </summary>
         public static SyslogDataSourceFacilityName Kern { get; } = new SyslogDataSourceFacilityName(KernValue);
-        /// <summary> lpr. </summary>
+        /// <summary>
+        /// lpr
+        /// Serialized Name: KnownSyslogDataSourceFacilityNames.lpr
+        /// </summary>
         public static SyslogDataSourceFacilityName Lpr { get; } = new SyslogDataSourceFacilityName(LprValue);
-        /// <summary> mail. </summary>
+        /// <summary>
+        /// mail
+        /// Serialized Name: KnownSyslogDataSourceFacilityNames.mail
+        /// </summary>
         public static SyslogDataSourceFacilityName Mail { get; } = new SyslogDataSourceFacilityName(MailValue);
-        /// <summary> mark. </summary>
+        /// <summary>
+        /// mark
+        /// Serialized Name: KnownSyslogDataSourceFacilityNames.mark
+        /// </summary>
         public static SyslogDataSourceFacilityName Mark { get; } = new SyslogDataSourceFacilityName(MarkValue);
-        /// <summary> news. </summary>
+        /// <summary>
+        /// news
+        /// Serialized Name: KnownSyslogDataSourceFacilityNames.news
+        /// </summary>
         public static SyslogDataSourceFacilityName News { get; } = new SyslogDataSourceFacilityName(NewsValue);
-        /// <summary> syslog. </summary>
+        /// <summary>
+        /// syslog
+        /// Serialized Name: KnownSyslogDataSourceFacilityNames.syslog
+        /// </summary>
         public static SyslogDataSourceFacilityName Syslog { get; } = new SyslogDataSourceFacilityName(SyslogValue);
-        /// <summary> user. </summary>
+        /// <summary>
+        /// user
+        /// Serialized Name: KnownSyslogDataSourceFacilityNames.user
+        /// </summary>
         public static SyslogDataSourceFacilityName User { get; } = new SyslogDataSourceFacilityName(UserValue);
-        /// <summary> uucp. </summary>
+        /// <summary>
+        /// uucp
+        /// Serialized Name: KnownSyslogDataSourceFacilityNames.uucp
+        /// </summary>
         public static SyslogDataSourceFacilityName Uucp { get; } = new SyslogDataSourceFacilityName(UucpValue);
-        /// <summary> local0. </summary>
+        /// <summary>
+        /// local0
+        /// Serialized Name: KnownSyslogDataSourceFacilityNames.local0
+        /// </summary>
         public static SyslogDataSourceFacilityName Local0 { get; } = new SyslogDataSourceFacilityName(Local0Value);
-        /// <summary> local1. </summary>
+        /// <summary>
+        /// local1
+        /// Serialized Name: KnownSyslogDataSourceFacilityNames.local1
+        /// </summary>
         public static SyslogDataSourceFacilityName Local1 { get; } = new SyslogDataSourceFacilityName(Local1Value);
-        /// <summary> local2. </summary>
+        /// <summary>
+        /// local2
+        /// Serialized Name: KnownSyslogDataSourceFacilityNames.local2
+        /// </summary>
         public static SyslogDataSourceFacilityName Local2 { get; } = new SyslogDataSourceFacilityName(Local2Value);
-        /// <summary> local3. </summary>
+        /// <summary>
+        /// local3
+        /// Serialized Name: KnownSyslogDataSourceFacilityNames.local3
+        /// </summary>
         public static SyslogDataSourceFacilityName Local3 { get; } = new SyslogDataSourceFacilityName(Local3Value);
-        /// <summary> local4. </summary>
+        /// <summary>
+        /// local4
+        /// Serialized Name: KnownSyslogDataSourceFacilityNames.local4
+        /// </summary>
         public static SyslogDataSourceFacilityName Local4 { get; } = new SyslogDataSourceFacilityName(Local4Value);
-        /// <summary> local5. </summary>
+        /// <summary>
+        /// local5
+        /// Serialized Name: KnownSyslogDataSourceFacilityNames.local5
+        /// </summary>
         public static SyslogDataSourceFacilityName Local5 { get; } = new SyslogDataSourceFacilityName(Local5Value);
-        /// <summary> local6. </summary>
+        /// <summary>
+        /// local6
+        /// Serialized Name: KnownSyslogDataSourceFacilityNames.local6
+        /// </summary>
         public static SyslogDataSourceFacilityName Local6 { get; } = new SyslogDataSourceFacilityName(Local6Value);
-        /// <summary> local7. </summary>
+        /// <summary>
+        /// local7
+        /// Serialized Name: KnownSyslogDataSourceFacilityNames.local7
+        /// </summary>
         public static SyslogDataSourceFacilityName Local7 { get; } = new SyslogDataSourceFacilityName(Local7Value);
-        /// <summary> *. </summary>
+        /// <summary>
+        /// *
+        /// Serialized Name: KnownSyslogDataSourceFacilityNames.*
+        /// </summary>
         public static SyslogDataSourceFacilityName Asterisk { get; } = new SyslogDataSourceFacilityName(AsteriskValue);
         /// <summary> Determines if two <see cref="SyslogDataSourceFacilityName"/> values are the same. </summary>
         public static bool operator ==(SyslogDataSourceFacilityName left, SyslogDataSourceFacilityName right) => left.Equals(right);

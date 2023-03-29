@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The List incidents operation response. </summary>
+    /// <summary>
+    /// The List incidents operation response.
+    /// Serialized Name: IncidentListResult
+    /// </summary>
     internal partial class IncidentListResult
     {
         /// <summary> Initializes a new instance of IncidentListResult. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of IncidentListResult. </summary>
-        /// <param name="value"> the incident collection. </param>
+        /// <param name="value">
+        /// the incident collection.
+        /// Serialized Name: IncidentListResult.value
+        /// </param>
         internal IncidentListResult(IReadOnlyList<MonitorIncident> value)
         {
             Value = value;
         }
 
-        /// <summary> the incident collection. </summary>
+        /// <summary>
+        /// the incident collection.
+        /// Serialized Name: IncidentListResult.value
+        /// </summary>
         public IReadOnlyList<MonitorIncident> Value { get; }
     }
 }

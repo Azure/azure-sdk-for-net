@@ -10,14 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> An Event hub receiver. </summary>
+    /// <summary>
+    /// An Event hub receiver.
+    /// Serialized Name: EventHubReceiver
+    /// </summary>
     public partial class MonitorEventHubReceiver
     {
         /// <summary> Initializes a new instance of MonitorEventHubReceiver. </summary>
-        /// <param name="name"> The name of the Event hub receiver. Names must be unique across all receivers within an action group. </param>
-        /// <param name="eventHubNameSpace"> The Event Hub namespace. </param>
-        /// <param name="eventHubName"> The name of the specific Event Hub queue. </param>
-        /// <param name="subscriptionId"> The Id for the subscription containing this event hub. </param>
+        /// <param name="name">
+        /// The name of the Event hub receiver. Names must be unique across all receivers within an action group.
+        /// Serialized Name: EventHubReceiver.name
+        /// </param>
+        /// <param name="eventHubNameSpace">
+        /// The Event Hub namespace
+        /// Serialized Name: EventHubReceiver.eventHubNameSpace
+        /// </param>
+        /// <param name="eventHubName">
+        /// The name of the specific Event Hub queue
+        /// Serialized Name: EventHubReceiver.eventHubName
+        /// </param>
+        /// <param name="subscriptionId">
+        /// The Id for the subscription containing this event hub
+        /// Serialized Name: EventHubReceiver.subscriptionId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="eventHubNameSpace"/>, <paramref name="eventHubName"/> or <paramref name="subscriptionId"/> is null. </exception>
         public MonitorEventHubReceiver(string name, string eventHubNameSpace, string eventHubName, string subscriptionId)
         {
@@ -33,12 +48,30 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MonitorEventHubReceiver. </summary>
-        /// <param name="name"> The name of the Event hub receiver. Names must be unique across all receivers within an action group. </param>
-        /// <param name="eventHubNameSpace"> The Event Hub namespace. </param>
-        /// <param name="eventHubName"> The name of the specific Event Hub queue. </param>
-        /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
-        /// <param name="tenantId"> The tenant Id for the subscription containing this event hub. </param>
-        /// <param name="subscriptionId"> The Id for the subscription containing this event hub. </param>
+        /// <param name="name">
+        /// The name of the Event hub receiver. Names must be unique across all receivers within an action group.
+        /// Serialized Name: EventHubReceiver.name
+        /// </param>
+        /// <param name="eventHubNameSpace">
+        /// The Event Hub namespace
+        /// Serialized Name: EventHubReceiver.eventHubNameSpace
+        /// </param>
+        /// <param name="eventHubName">
+        /// The name of the specific Event Hub queue
+        /// Serialized Name: EventHubReceiver.eventHubName
+        /// </param>
+        /// <param name="useCommonAlertSchema">
+        /// Indicates whether to use common alert schema.
+        /// Serialized Name: EventHubReceiver.useCommonAlertSchema
+        /// </param>
+        /// <param name="tenantId">
+        /// The tenant Id for the subscription containing this event hub
+        /// Serialized Name: EventHubReceiver.tenantId
+        /// </param>
+        /// <param name="subscriptionId">
+        /// The Id for the subscription containing this event hub
+        /// Serialized Name: EventHubReceiver.subscriptionId
+        /// </param>
         internal MonitorEventHubReceiver(string name, string eventHubNameSpace, string eventHubName, bool? useCommonAlertSchema, Guid? tenantId, string subscriptionId)
         {
             Name = name;
@@ -49,17 +82,35 @@ namespace Azure.ResourceManager.Monitor.Models
             SubscriptionId = subscriptionId;
         }
 
-        /// <summary> The name of the Event hub receiver. Names must be unique across all receivers within an action group. </summary>
+        /// <summary>
+        /// The name of the Event hub receiver. Names must be unique across all receivers within an action group.
+        /// Serialized Name: EventHubReceiver.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The Event Hub namespace. </summary>
+        /// <summary>
+        /// The Event Hub namespace
+        /// Serialized Name: EventHubReceiver.eventHubNameSpace
+        /// </summary>
         public string EventHubNameSpace { get; set; }
-        /// <summary> The name of the specific Event Hub queue. </summary>
+        /// <summary>
+        /// The name of the specific Event Hub queue
+        /// Serialized Name: EventHubReceiver.eventHubName
+        /// </summary>
         public string EventHubName { get; set; }
-        /// <summary> Indicates whether to use common alert schema. </summary>
+        /// <summary>
+        /// Indicates whether to use common alert schema.
+        /// Serialized Name: EventHubReceiver.useCommonAlertSchema
+        /// </summary>
         public bool? UseCommonAlertSchema { get; set; }
-        /// <summary> The tenant Id for the subscription containing this event hub. </summary>
+        /// <summary>
+        /// The tenant Id for the subscription containing this event hub
+        /// Serialized Name: EventHubReceiver.tenantId
+        /// </summary>
         public Guid? TenantId { get; set; }
-        /// <summary> The Id for the subscription containing this event hub. </summary>
+        /// <summary>
+        /// The Id for the subscription containing this event hub
+        /// Serialized Name: EventHubReceiver.subscriptionId
+        /// </summary>
         public string SubscriptionId { get; set; }
     }
 }

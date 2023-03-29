@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Information about a container with data for a given resource. </summary>
+    /// <summary>
+    /// Information about a container with data for a given resource.
+    /// Serialized Name: DataContainer
+    /// </summary>
     public partial class DataContainer
     {
         /// <summary> Initializes a new instance of DataContainer. </summary>
-        /// <param name="workspace"> Log Analytics workspace information. </param>
+        /// <param name="workspace">
+        /// Log Analytics workspace information.
+        /// Serialized Name: DataContainer.workspace
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspace"/> is null. </exception>
         internal DataContainer(DataContainerWorkspace workspace)
         {
@@ -23,7 +29,10 @@ namespace Azure.ResourceManager.Monitor.Models
             Workspace = workspace;
         }
 
-        /// <summary> Log Analytics workspace information. </summary>
+        /// <summary>
+        /// Log Analytics workspace information.
+        /// Serialized Name: DataContainer.workspace
+        /// </summary>
         public DataContainerWorkspace Workspace { get; }
     }
 }

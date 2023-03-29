@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Definition of the network rules. </summary>
+    /// <summary>
+    /// Definition of the network rules.
+    /// Serialized Name: NetworkRuleSet
+    /// </summary>
     internal partial class NetworkRuleSet
     {
         /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
-        /// <param name="publicNetworkAccess"> The configuration to set whether network access from public internet to the endpoints are allowed. </param>
+        /// <param name="publicNetworkAccess">
+        /// The configuration to set whether network access from public internet to the endpoints are allowed.
+        /// Serialized Name: NetworkRuleSet.publicNetworkAccess
+        /// </param>
         internal NetworkRuleSet(MonitorPublicNetworkAccess? publicNetworkAccess)
         {
             PublicNetworkAccess = publicNetworkAccess;
         }
 
-        /// <summary> The configuration to set whether network access from public internet to the endpoints are allowed. </summary>
+        /// <summary>
+        /// The configuration to set whether network access from public internet to the endpoints are allowed.
+        /// Serialized Name: NetworkRuleSet.publicNetworkAccess
+        /// </summary>
         public MonitorPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

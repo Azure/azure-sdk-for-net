@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Monitor
     /// <summary>
     /// A class representing the VmInsightsOnboardingStatus data model.
     /// VM Insights onboarding status for a resource.
+    /// Serialized Name: VMInsightsOnboardingStatus
     /// </summary>
     public partial class VmInsightsOnboardingStatusData : ResourceData
     {
@@ -29,10 +30,22 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="resourceId"> Azure Resource Manager identifier of the resource whose onboarding status is being represented. </param>
-        /// <param name="onboardingStatus"> The onboarding status for the resource. Note that, a higher level scope, e.g., resource group or subscription, is considered onboarded if at least one resource under it is onboarded. </param>
-        /// <param name="dataStatus"> The status of VM Insights data from the resource. When reported as `present` the data array will contain information about the data containers to which data for the specified resource is being routed. </param>
-        /// <param name="data"> Containers that currently store VM Insights data for the specified resource. </param>
+        /// <param name="resourceId">
+        /// Azure Resource Manager identifier of the resource whose onboarding status is being represented.
+        /// Serialized Name: VMInsightsOnboardingStatus.properties.resourceId
+        /// </param>
+        /// <param name="onboardingStatus">
+        /// The onboarding status for the resource. Note that, a higher level scope, e.g., resource group or subscription, is considered onboarded if at least one resource under it is onboarded.
+        /// Serialized Name: VMInsightsOnboardingStatus.properties.onboardingStatus
+        /// </param>
+        /// <param name="dataStatus">
+        /// The status of VM Insights data from the resource. When reported as `present` the data array will contain information about the data containers to which data for the specified resource is being routed.
+        /// Serialized Name: VMInsightsOnboardingStatus.properties.dataStatus
+        /// </param>
+        /// <param name="data">
+        /// Containers that currently store VM Insights data for the specified resource.
+        /// Serialized Name: VMInsightsOnboardingStatus.properties.data
+        /// </param>
         internal VmInsightsOnboardingStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier resourceId, OnboardingStatus? onboardingStatus, DataStatus? dataStatus, IReadOnlyList<DataContainer> data) : base(id, name, resourceType, systemData)
         {
             ResourceId = resourceId;
@@ -41,13 +54,25 @@ namespace Azure.ResourceManager.Monitor
             Data = data;
         }
 
-        /// <summary> Azure Resource Manager identifier of the resource whose onboarding status is being represented. </summary>
+        /// <summary>
+        /// Azure Resource Manager identifier of the resource whose onboarding status is being represented.
+        /// Serialized Name: VMInsightsOnboardingStatus.properties.resourceId
+        /// </summary>
         public ResourceIdentifier ResourceId { get; }
-        /// <summary> The onboarding status for the resource. Note that, a higher level scope, e.g., resource group or subscription, is considered onboarded if at least one resource under it is onboarded. </summary>
+        /// <summary>
+        /// The onboarding status for the resource. Note that, a higher level scope, e.g., resource group or subscription, is considered onboarded if at least one resource under it is onboarded.
+        /// Serialized Name: VMInsightsOnboardingStatus.properties.onboardingStatus
+        /// </summary>
         public OnboardingStatus? OnboardingStatus { get; }
-        /// <summary> The status of VM Insights data from the resource. When reported as `present` the data array will contain information about the data containers to which data for the specified resource is being routed. </summary>
+        /// <summary>
+        /// The status of VM Insights data from the resource. When reported as `present` the data array will contain information about the data containers to which data for the specified resource is being routed.
+        /// Serialized Name: VMInsightsOnboardingStatus.properties.dataStatus
+        /// </summary>
         public DataStatus? DataStatus { get; }
-        /// <summary> Containers that currently store VM Insights data for the specified resource. </summary>
+        /// <summary>
+        /// Containers that currently store VM Insights data for the specified resource.
+        /// Serialized Name: VMInsightsOnboardingStatus.properties.data
+        /// </summary>
         public IReadOnlyList<DataContainer> Data { get; }
     }
 }

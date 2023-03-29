@@ -10,13 +10,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> A voice receiver. </summary>
+    /// <summary>
+    /// A voice receiver.
+    /// Serialized Name: VoiceReceiver
+    /// </summary>
     public partial class MonitorVoiceReceiver
     {
         /// <summary> Initializes a new instance of MonitorVoiceReceiver. </summary>
-        /// <param name="name"> The name of the voice receiver. Names must be unique across all receivers within an action group. </param>
-        /// <param name="countryCode"> The country code of the voice receiver. </param>
-        /// <param name="phoneNumber"> The phone number of the voice receiver. </param>
+        /// <param name="name">
+        /// The name of the voice receiver. Names must be unique across all receivers within an action group.
+        /// Serialized Name: VoiceReceiver.name
+        /// </param>
+        /// <param name="countryCode">
+        /// The country code of the voice receiver.
+        /// Serialized Name: VoiceReceiver.countryCode
+        /// </param>
+        /// <param name="phoneNumber">
+        /// The phone number of the voice receiver.
+        /// Serialized Name: VoiceReceiver.phoneNumber
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="countryCode"/> or <paramref name="phoneNumber"/> is null. </exception>
         public MonitorVoiceReceiver(string name, string countryCode, string phoneNumber)
         {
@@ -29,11 +41,20 @@ namespace Azure.ResourceManager.Monitor.Models
             PhoneNumber = phoneNumber;
         }
 
-        /// <summary> The name of the voice receiver. Names must be unique across all receivers within an action group. </summary>
+        /// <summary>
+        /// The name of the voice receiver. Names must be unique across all receivers within an action group.
+        /// Serialized Name: VoiceReceiver.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The country code of the voice receiver. </summary>
+        /// <summary>
+        /// The country code of the voice receiver.
+        /// Serialized Name: VoiceReceiver.countryCode
+        /// </summary>
         public string CountryCode { get; set; }
-        /// <summary> The phone number of the voice receiver. </summary>
+        /// <summary>
+        /// The phone number of the voice receiver.
+        /// Serialized Name: VoiceReceiver.phoneNumber
+        /// </summary>
         public string PhoneNumber { get; set; }
     }
 }

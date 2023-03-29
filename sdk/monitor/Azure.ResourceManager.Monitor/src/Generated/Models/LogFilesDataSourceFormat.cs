@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The data format of the log files. </summary>
+    /// <summary>
+    /// The data format of the log files
+    /// Serialized Name: KnownLogFilesDataSourceFormat
+    /// </summary>
     public readonly partial struct LogFilesDataSourceFormat : IEquatable<LogFilesDataSourceFormat>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         private const string TextValue = "text";
 
-        /// <summary> text. </summary>
+        /// <summary>
+        /// text
+        /// Serialized Name: KnownLogFilesDataSourceFormat.text
+        /// </summary>
         public static LogFilesDataSourceFormat Text { get; } = new LogFilesDataSourceFormat(TextValue);
         /// <summary> Determines if two <see cref="LogFilesDataSourceFormat"/> values are the same. </summary>
         public static bool operator ==(LogFilesDataSourceFormat left, LogFilesDataSourceFormat right) => left.Equals(right);

@@ -12,11 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> A collection of event categories. Currently possible values are: Administrative, Security, ServiceHealth, Alert, Recommendation, Policy. </summary>
+    /// <summary>
+    /// A collection of event categories. Currently possible values are: Administrative, Security, ServiceHealth, Alert, Recommendation, Policy.
+    /// Serialized Name: EventCategoryCollection
+    /// </summary>
     internal partial class EventCategoryCollection
     {
         /// <summary> Initializes a new instance of EventCategoryCollection. </summary>
-        /// <param name="value"> the list that includes the Azure event categories. </param>
+        /// <param name="value">
+        /// the list that includes the Azure event categories.
+        /// Serialized Name: EventCategoryCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal EventCategoryCollection(IEnumerable<MonitorLocalizableString> value)
         {
@@ -26,13 +32,19 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of EventCategoryCollection. </summary>
-        /// <param name="value"> the list that includes the Azure event categories. </param>
+        /// <param name="value">
+        /// the list that includes the Azure event categories.
+        /// Serialized Name: EventCategoryCollection.value
+        /// </param>
         internal EventCategoryCollection(IReadOnlyList<MonitorLocalizableString> value)
         {
             Value = value;
         }
 
-        /// <summary> the list that includes the Azure event categories. </summary>
+        /// <summary>
+        /// the list that includes the Azure event categories.
+        /// Serialized Name: EventCategoryCollection.value
+        /// </summary>
         public IReadOnlyList<MonitorLocalizableString> Value { get; }
     }
 }

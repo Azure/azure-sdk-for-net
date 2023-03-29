@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Aggregation type. Relevant and required only for rules of the kind LogAlert. </summary>
+    /// <summary>
+    /// Aggregation type. Relevant and required only for rules of the kind LogAlert.
+    /// Serialized Name: TimeAggregation
+    /// </summary>
     public readonly partial struct ScheduledQueryRuleTimeAggregationType : IEquatable<ScheduledQueryRuleTimeAggregationType>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string MaximumValue = "Maximum";
         private const string TotalValue = "Total";
 
-        /// <summary> Count. </summary>
+        /// <summary>
+        /// Count
+        /// Serialized Name: TimeAggregation.Count
+        /// </summary>
         public static ScheduledQueryRuleTimeAggregationType Count { get; } = new ScheduledQueryRuleTimeAggregationType(CountValue);
-        /// <summary> Average. </summary>
+        /// <summary>
+        /// Average
+        /// Serialized Name: TimeAggregation.Average
+        /// </summary>
         public static ScheduledQueryRuleTimeAggregationType Average { get; } = new ScheduledQueryRuleTimeAggregationType(AverageValue);
-        /// <summary> Minimum. </summary>
+        /// <summary>
+        /// Minimum
+        /// Serialized Name: TimeAggregation.Minimum
+        /// </summary>
         public static ScheduledQueryRuleTimeAggregationType Minimum { get; } = new ScheduledQueryRuleTimeAggregationType(MinimumValue);
-        /// <summary> Maximum. </summary>
+        /// <summary>
+        /// Maximum
+        /// Serialized Name: TimeAggregation.Maximum
+        /// </summary>
         public static ScheduledQueryRuleTimeAggregationType Maximum { get; } = new ScheduledQueryRuleTimeAggregationType(MaximumValue);
-        /// <summary> Total. </summary>
+        /// <summary>
+        /// Total
+        /// Serialized Name: TimeAggregation.Total
+        /// </summary>
         public static ScheduledQueryRuleTimeAggregationType Total { get; } = new ScheduledQueryRuleTimeAggregationType(TotalValue);
         /// <summary> Determines if two <see cref="ScheduledQueryRuleTimeAggregationType"/> values are the same. </summary>
         public static bool operator ==(ScheduledQueryRuleTimeAggregationType left, ScheduledQueryRuleTimeAggregationType right) => left.Equals(right);

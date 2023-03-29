@@ -10,17 +10,41 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The UnknownMultiMetricCriteria. </summary>
+    /// <summary>
+    /// The UnknownMultiMetricCriteria.
+    /// Serialized Name: UnknownMultiMetricCriteria
+    /// </summary>
     internal partial class UnknownMultiMetricCriteria : MultiMetricCriteria
     {
         /// <summary> Initializes a new instance of UnknownMultiMetricCriteria. </summary>
-        /// <param name="criterionType"> Specifies the type of threshold criteria. </param>
-        /// <param name="name"> Name of the criteria. </param>
-        /// <param name="metricName"> Name of the metric. </param>
-        /// <param name="metricNamespace"> Namespace of the metric. </param>
-        /// <param name="timeAggregation"> the criteria time aggregation types. </param>
-        /// <param name="dimensions"> List of dimension conditions. </param>
-        /// <param name="skipMetricValidation"> Allows creating an alert rule on a custom metric that isn&apos;t yet emitted, by causing the metric validation to be skipped. </param>
+        /// <param name="criterionType">
+        /// Specifies the type of threshold criteria
+        /// Serialized Name: MultiMetricCriteria.criterionType
+        /// </param>
+        /// <param name="name">
+        /// Name of the criteria.
+        /// Serialized Name: MultiMetricCriteria.name
+        /// </param>
+        /// <param name="metricName">
+        /// Name of the metric.
+        /// Serialized Name: MultiMetricCriteria.metricName
+        /// </param>
+        /// <param name="metricNamespace">
+        /// Namespace of the metric.
+        /// Serialized Name: MultiMetricCriteria.metricNamespace
+        /// </param>
+        /// <param name="timeAggregation">
+        /// the criteria time aggregation types.
+        /// Serialized Name: MultiMetricCriteria.timeAggregation
+        /// </param>
+        /// <param name="dimensions">
+        /// List of dimension conditions.
+        /// Serialized Name: MultiMetricCriteria.dimensions
+        /// </param>
+        /// <param name="skipMetricValidation">
+        /// Allows creating an alert rule on a custom metric that isn&apos;t yet emitted, by causing the metric validation to be skipped.
+        /// Serialized Name: MultiMetricCriteria.skipMetricValidation
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal UnknownMultiMetricCriteria(CriterionType criterionType, string name, string metricName, string metricNamespace, MetricCriteriaTimeAggregationType timeAggregation, IList<MetricDimension> dimensions, bool? skipMetricValidation, IDictionary<string, BinaryData> additionalProperties) : base(criterionType, name, metricName, metricNamespace, timeAggregation, dimensions, skipMetricValidation, additionalProperties)
         {

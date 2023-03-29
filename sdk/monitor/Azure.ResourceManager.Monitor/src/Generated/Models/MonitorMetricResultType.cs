@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation&apos;s description for details. </summary>
+    /// <summary>
+    /// Reduces the set of data collected. The syntax allowed depends on the operation. See the operation&apos;s description for details.
+    /// Serialized Name: MetricResultType
+    /// </summary>
     public readonly partial struct MonitorMetricResultType : IEquatable<MonitorMetricResultType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string DataValue = "Data";
         private const string MetadataValue = "Metadata";
 
-        /// <summary> Data. </summary>
+        /// <summary>
+        /// Data
+        /// Serialized Name: MetricResultType.Data
+        /// </summary>
         public static MonitorMetricResultType Data { get; } = new MonitorMetricResultType(DataValue);
-        /// <summary> Metadata. </summary>
+        /// <summary>
+        /// Metadata
+        /// Serialized Name: MetricResultType.Metadata
+        /// </summary>
         public static MonitorMetricResultType Metadata { get; } = new MonitorMetricResultType(MetadataValue);
         /// <summary> Determines if two <see cref="MonitorMetricResultType"/> values are the same. </summary>
         public static bool operator ==(MonitorMetricResultType left, MonitorMetricResultType right) => left.Equals(right);

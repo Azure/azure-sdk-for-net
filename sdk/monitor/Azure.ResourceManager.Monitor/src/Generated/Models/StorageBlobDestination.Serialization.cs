@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             Optional<string> containerName = default;
-            Optional<string> storageAccountResourceId = default;
+            Optional<ResourceIdentifier> storageAccountResourceId = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -51,7 +51,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("storageAccountResourceId"u8))
                 {
-                    storageAccountResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    storageAccountResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))

@@ -9,28 +9,46 @@ using System;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The parameters for enabling predictive autoscale. </summary>
+    /// <summary>
+    /// The parameters for enabling predictive autoscale.
+    /// Serialized Name: PredictiveAutoscalePolicy
+    /// </summary>
     public partial class PredictiveAutoscalePolicy
     {
         /// <summary> Initializes a new instance of PredictiveAutoscalePolicy. </summary>
-        /// <param name="scaleMode"> the predictive autoscale mode. </param>
+        /// <param name="scaleMode">
+        /// the predictive autoscale mode
+        /// Serialized Name: PredictiveAutoscalePolicy.scaleMode
+        /// </param>
         public PredictiveAutoscalePolicy(PredictiveAutoscalePolicyScaleMode scaleMode)
         {
             ScaleMode = scaleMode;
         }
 
         /// <summary> Initializes a new instance of PredictiveAutoscalePolicy. </summary>
-        /// <param name="scaleMode"> the predictive autoscale mode. </param>
-        /// <param name="scaleLookAheadTime"> the amount of time to specify by which instances are launched in advance. It must be between 1 minute and 60 minutes in ISO 8601 format. </param>
+        /// <param name="scaleMode">
+        /// the predictive autoscale mode
+        /// Serialized Name: PredictiveAutoscalePolicy.scaleMode
+        /// </param>
+        /// <param name="scaleLookAheadTime">
+        /// the amount of time to specify by which instances are launched in advance. It must be between 1 minute and 60 minutes in ISO 8601 format.
+        /// Serialized Name: PredictiveAutoscalePolicy.scaleLookAheadTime
+        /// </param>
         internal PredictiveAutoscalePolicy(PredictiveAutoscalePolicyScaleMode scaleMode, TimeSpan? scaleLookAheadTime)
         {
             ScaleMode = scaleMode;
             ScaleLookAheadTime = scaleLookAheadTime;
         }
 
-        /// <summary> the predictive autoscale mode. </summary>
+        /// <summary>
+        /// the predictive autoscale mode
+        /// Serialized Name: PredictiveAutoscalePolicy.scaleMode
+        /// </summary>
         public PredictiveAutoscalePolicyScaleMode ScaleMode { get; set; }
-        /// <summary> the amount of time to specify by which instances are launched in advance. It must be between 1 minute and 60 minutes in ISO 8601 format. </summary>
+        /// <summary>
+        /// the amount of time to specify by which instances are launched in advance. It must be between 1 minute and 60 minutes in ISO 8601 format.
+        /// Serialized Name: PredictiveAutoscalePolicy.scaleLookAheadTime
+        /// </summary>
         public TimeSpan? ScaleLookAheadTime { get; set; }
     }
 }

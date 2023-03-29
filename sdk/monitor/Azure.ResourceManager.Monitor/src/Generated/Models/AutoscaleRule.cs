@@ -10,12 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> A rule that provide the triggers and parameters for the scaling action. </summary>
+    /// <summary>
+    /// A rule that provide the triggers and parameters for the scaling action.
+    /// Serialized Name: ScaleRule
+    /// </summary>
     public partial class AutoscaleRule
     {
         /// <summary> Initializes a new instance of AutoscaleRule. </summary>
-        /// <param name="metricTrigger"> the trigger that results in a scaling action. </param>
-        /// <param name="scaleAction"> the parameters for the scaling action. </param>
+        /// <param name="metricTrigger">
+        /// the trigger that results in a scaling action.
+        /// Serialized Name: ScaleRule.metricTrigger
+        /// </param>
+        /// <param name="scaleAction">
+        /// the parameters for the scaling action.
+        /// Serialized Name: ScaleRule.scaleAction
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metricTrigger"/> or <paramref name="scaleAction"/> is null. </exception>
         public AutoscaleRule(MetricTrigger metricTrigger, MonitorScaleAction scaleAction)
         {
@@ -26,9 +35,15 @@ namespace Azure.ResourceManager.Monitor.Models
             ScaleAction = scaleAction;
         }
 
-        /// <summary> the trigger that results in a scaling action. </summary>
+        /// <summary>
+        /// the trigger that results in a scaling action.
+        /// Serialized Name: ScaleRule.metricTrigger
+        /// </summary>
         public MetricTrigger MetricTrigger { get; set; }
-        /// <summary> the parameters for the scaling action. </summary>
+        /// <summary>
+        /// the parameters for the scaling action.
+        /// Serialized Name: ScaleRule.scaleAction
+        /// </summary>
         public MonitorScaleAction ScaleAction { get; set; }
     }
 }

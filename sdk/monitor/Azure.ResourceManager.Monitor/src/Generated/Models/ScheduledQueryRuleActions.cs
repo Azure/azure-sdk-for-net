@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Actions to invoke when the alert fires. </summary>
+    /// <summary>
+    /// Actions to invoke when the alert fires.
+    /// Serialized Name: Actions
+    /// </summary>
     public partial class ScheduledQueryRuleActions
     {
         /// <summary> Initializes a new instance of ScheduledQueryRuleActions. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of ScheduledQueryRuleActions. </summary>
-        /// <param name="actionGroups"> Action Group resource Ids to invoke when the alert fires. </param>
-        /// <param name="customProperties"> The properties of an alert payload. </param>
+        /// <param name="actionGroups">
+        /// Action Group resource Ids to invoke when the alert fires.
+        /// Serialized Name: Actions.actionGroups
+        /// </param>
+        /// <param name="customProperties">
+        /// The properties of an alert payload.
+        /// Serialized Name: Actions.customProperties
+        /// </param>
         internal ScheduledQueryRuleActions(IList<string> actionGroups, IDictionary<string, string> customProperties)
         {
             ActionGroups = actionGroups;
             CustomProperties = customProperties;
         }
 
-        /// <summary> Action Group resource Ids to invoke when the alert fires. </summary>
+        /// <summary>
+        /// Action Group resource Ids to invoke when the alert fires.
+        /// Serialized Name: Actions.actionGroups
+        /// </summary>
         public IList<string> ActionGroups { get; }
-        /// <summary> The properties of an alert payload. </summary>
+        /// <summary>
+        /// The properties of an alert payload.
+        /// Serialized Name: Actions.customProperties
+        /// </summary>
         public IDictionary<string, string> CustomProperties { get; }
     }
 }

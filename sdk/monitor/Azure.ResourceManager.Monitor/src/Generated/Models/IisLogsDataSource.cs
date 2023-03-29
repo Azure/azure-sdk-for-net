@@ -12,11 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Enables IIS logs to be collected by this data collection rule. </summary>
+    /// <summary>
+    /// Enables IIS logs to be collected by this data collection rule.
+    /// Serialized Name: IisLogsDataSource
+    /// </summary>
     public partial class IisLogsDataSource
     {
         /// <summary> Initializes a new instance of IisLogsDataSource. </summary>
-        /// <param name="streams"> IIS streams. </param>
+        /// <param name="streams">
+        /// IIS streams
+        /// Serialized Name: IisLogsDataSource.streams
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="streams"/> is null. </exception>
         public IisLogsDataSource(IEnumerable<string> streams)
         {
@@ -27,11 +33,18 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of IisLogsDataSource. </summary>
-        /// <param name="streams"> IIS streams. </param>
-        /// <param name="logDirectories"> Absolute paths file location. </param>
+        /// <param name="streams">
+        /// IIS streams
+        /// Serialized Name: IisLogsDataSource.streams
+        /// </param>
+        /// <param name="logDirectories">
+        /// Absolute paths file location
+        /// Serialized Name: IisLogsDataSource.logDirectories
+        /// </param>
         /// <param name="name">
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
+        /// Serialized Name: IisLogsDataSource.name
         /// </param>
         internal IisLogsDataSource(IList<string> streams, IList<string> logDirectories, string name)
         {
@@ -40,13 +53,20 @@ namespace Azure.ResourceManager.Monitor.Models
             Name = name;
         }
 
-        /// <summary> IIS streams. </summary>
+        /// <summary>
+        /// IIS streams
+        /// Serialized Name: IisLogsDataSource.streams
+        /// </summary>
         public IList<string> Streams { get; }
-        /// <summary> Absolute paths file location. </summary>
+        /// <summary>
+        /// Absolute paths file location
+        /// Serialized Name: IisLogsDataSource.logDirectories
+        /// </summary>
         public IList<string> LogDirectories { get; }
         /// <summary>
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
+        /// Serialized Name: IisLogsDataSource.name
         /// </summary>
         public string Name { get; set; }
     }

@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The response to a metrics query. </summary>
+    /// <summary>
+    /// The response to a metrics query.
+    /// Serialized Name: PredictiveResponse
+    /// </summary>
     public partial class AutoscaleSettingPredicativeResult
     {
         /// <summary> Initializes a new instance of AutoscaleSettingPredicativeResult. </summary>
@@ -21,11 +24,26 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of AutoscaleSettingPredicativeResult. </summary>
-        /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </param>
-        /// <param name="interval"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
-        /// <param name="metricName"> The metrics being queried. </param>
-        /// <param name="targetResourceId"> resource of the predictive metric. </param>
-        /// <param name="data"> the value of the collection. </param>
+        /// <param name="timespan">
+        /// The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested.
+        /// Serialized Name: PredictiveResponse.timespan
+        /// </param>
+        /// <param name="interval">
+        /// The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made.
+        /// Serialized Name: PredictiveResponse.interval
+        /// </param>
+        /// <param name="metricName">
+        /// The metrics being queried
+        /// Serialized Name: PredictiveResponse.metricName
+        /// </param>
+        /// <param name="targetResourceId">
+        /// resource of the predictive metric.
+        /// Serialized Name: PredictiveResponse.targetResourceId
+        /// </param>
+        /// <param name="data">
+        /// the value of the collection.
+        /// Serialized Name: PredictiveResponse.data
+        /// </param>
         internal AutoscaleSettingPredicativeResult(string timespan, TimeSpan? interval, string metricName, ResourceIdentifier targetResourceId, IReadOnlyList<PredictiveValue> data)
         {
             Timespan = timespan;
@@ -35,15 +53,30 @@ namespace Azure.ResourceManager.Monitor.Models
             Data = data;
         }
 
-        /// <summary> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </summary>
+        /// <summary>
+        /// The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested.
+        /// Serialized Name: PredictiveResponse.timespan
+        /// </summary>
         public string Timespan { get; }
-        /// <summary> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </summary>
+        /// <summary>
+        /// The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made.
+        /// Serialized Name: PredictiveResponse.interval
+        /// </summary>
         public TimeSpan? Interval { get; }
-        /// <summary> The metrics being queried. </summary>
+        /// <summary>
+        /// The metrics being queried
+        /// Serialized Name: PredictiveResponse.metricName
+        /// </summary>
         public string MetricName { get; }
-        /// <summary> resource of the predictive metric. </summary>
+        /// <summary>
+        /// resource of the predictive metric.
+        /// Serialized Name: PredictiveResponse.targetResourceId
+        /// </summary>
         public ResourceIdentifier TargetResourceId { get; }
-        /// <summary> the value of the collection. </summary>
+        /// <summary>
+        /// the value of the collection.
+        /// Serialized Name: PredictiveResponse.data
+        /// </summary>
         public IReadOnlyList<PredictiveValue> Data { get; }
     }
 }

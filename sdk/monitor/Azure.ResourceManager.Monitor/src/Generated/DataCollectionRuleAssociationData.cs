@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Monitor
     /// <summary>
     /// A class representing the DataCollectionRuleAssociation data model.
     /// Definition of generic ARM proxy resource.
+    /// Serialized Name: DataCollectionRuleAssociationProxyOnlyResource
     /// </summary>
     public partial class DataCollectionRuleAssociationData : ResourceData
     {
@@ -28,12 +29,30 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> Resource entity tag (ETag). </param>
-        /// <param name="description"> Description of the association. </param>
-        /// <param name="dataCollectionRuleId"> The resource ID of the data collection rule that is to be associated. </param>
-        /// <param name="dataCollectionEndpointId"> The resource ID of the data collection endpoint that is to be associated. </param>
-        /// <param name="provisioningState"> The resource provisioning state. </param>
-        /// <param name="metadata"> Metadata about the resource. </param>
+        /// <param name="etag">
+        /// Resource entity tag (ETag).
+        /// Serialized Name: DataCollectionRuleAssociationProxyOnlyResource.etag
+        /// </param>
+        /// <param name="description">
+        /// Description of the association.
+        /// Serialized Name: DataCollectionRuleAssociationProxyOnlyResource.properties.description
+        /// </param>
+        /// <param name="dataCollectionRuleId">
+        /// The resource ID of the data collection rule that is to be associated.
+        /// Serialized Name: DataCollectionRuleAssociationProxyOnlyResource.properties.dataCollectionRuleId
+        /// </param>
+        /// <param name="dataCollectionEndpointId">
+        /// The resource ID of the data collection endpoint that is to be associated.
+        /// Serialized Name: DataCollectionRuleAssociationProxyOnlyResource.properties.dataCollectionEndpointId
+        /// </param>
+        /// <param name="provisioningState">
+        /// The resource provisioning state.
+        /// Serialized Name: DataCollectionRuleAssociationProxyOnlyResource.properties.provisioningState
+        /// </param>
+        /// <param name="metadata">
+        /// Metadata about the resource
+        /// Serialized Name: DataCollectionRuleAssociationProxyOnlyResource.properties.metadata
+        /// </param>
         internal DataCollectionRuleAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string description, ResourceIdentifier dataCollectionRuleId, ResourceIdentifier dataCollectionEndpointId, DataCollectionRuleAssociationProvisioningState? provisioningState, DataCollectionRuleAssociationMetadata metadata) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
@@ -44,17 +63,35 @@ namespace Azure.ResourceManager.Monitor
             Metadata = metadata;
         }
 
-        /// <summary> Resource entity tag (ETag). </summary>
+        /// <summary>
+        /// Resource entity tag (ETag).
+        /// Serialized Name: DataCollectionRuleAssociationProxyOnlyResource.etag
+        /// </summary>
         public ETag? ETag { get; }
-        /// <summary> Description of the association. </summary>
+        /// <summary>
+        /// Description of the association.
+        /// Serialized Name: DataCollectionRuleAssociationProxyOnlyResource.properties.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> The resource ID of the data collection rule that is to be associated. </summary>
+        /// <summary>
+        /// The resource ID of the data collection rule that is to be associated.
+        /// Serialized Name: DataCollectionRuleAssociationProxyOnlyResource.properties.dataCollectionRuleId
+        /// </summary>
         public ResourceIdentifier DataCollectionRuleId { get; set; }
-        /// <summary> The resource ID of the data collection endpoint that is to be associated. </summary>
+        /// <summary>
+        /// The resource ID of the data collection endpoint that is to be associated.
+        /// Serialized Name: DataCollectionRuleAssociationProxyOnlyResource.properties.dataCollectionEndpointId
+        /// </summary>
         public ResourceIdentifier DataCollectionEndpointId { get; set; }
-        /// <summary> The resource provisioning state. </summary>
+        /// <summary>
+        /// The resource provisioning state.
+        /// Serialized Name: DataCollectionRuleAssociationProxyOnlyResource.properties.provisioningState
+        /// </summary>
         public DataCollectionRuleAssociationProvisioningState? ProvisioningState { get; }
-        /// <summary> Metadata about the resource. </summary>
+        /// <summary>
+        /// Metadata about the resource
+        /// Serialized Name: DataCollectionRuleAssociationProxyOnlyResource.properties.metadata
+        /// </summary>
         public DataCollectionRuleAssociationMetadata Metadata { get; }
     }
 }

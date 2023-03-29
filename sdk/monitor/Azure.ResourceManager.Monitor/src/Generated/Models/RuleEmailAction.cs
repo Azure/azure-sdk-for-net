@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Specifies the action to send email when the rule condition is evaluated. The discriminator is always RuleEmailAction in this case. </summary>
+    /// <summary>
+    /// Specifies the action to send email when the rule condition is evaluated. The discriminator is always RuleEmailAction in this case.
+    /// Serialized Name: RuleEmailAction
+    /// </summary>
     public partial class RuleEmailAction : AlertRuleAction
     {
         /// <summary> Initializes a new instance of RuleEmailAction. </summary>
@@ -21,9 +24,18 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of RuleEmailAction. </summary>
-        /// <param name="odataType"> specifies the type of the action. There are two types of actions: RuleEmailAction and RuleWebhookAction. </param>
-        /// <param name="sendToServiceOwners"> Whether the administrators (service and co-administrators) of the service should be notified when the alert is activated. </param>
-        /// <param name="customEmails"> the list of administrator&apos;s custom email addresses to notify of the activation of the alert. </param>
+        /// <param name="odataType">
+        /// specifies the type of the action. There are two types of actions: RuleEmailAction and RuleWebhookAction.
+        /// Serialized Name: RuleAction.odata.type
+        /// </param>
+        /// <param name="sendToServiceOwners">
+        /// Whether the administrators (service and co-administrators) of the service should be notified when the alert is activated.
+        /// Serialized Name: RuleEmailAction.sendToServiceOwners
+        /// </param>
+        /// <param name="customEmails">
+        /// the list of administrator&apos;s custom email addresses to notify of the activation of the alert.
+        /// Serialized Name: RuleEmailAction.customEmails
+        /// </param>
         internal RuleEmailAction(string odataType, bool? sendToServiceOwners, IList<string> customEmails) : base(odataType)
         {
             SendToServiceOwners = sendToServiceOwners;
@@ -31,9 +43,15 @@ namespace Azure.ResourceManager.Monitor.Models
             OdataType = odataType ?? "Microsoft.Azure.Management.Insights.Models.RuleEmailAction";
         }
 
-        /// <summary> Whether the administrators (service and co-administrators) of the service should be notified when the alert is activated. </summary>
+        /// <summary>
+        /// Whether the administrators (service and co-administrators) of the service should be notified when the alert is activated.
+        /// Serialized Name: RuleEmailAction.sendToServiceOwners
+        /// </summary>
         public bool? SendToServiceOwners { get; set; }
-        /// <summary> the list of administrator&apos;s custom email addresses to notify of the activation of the alert. </summary>
+        /// <summary>
+        /// the list of administrator&apos;s custom email addresses to notify of the activation of the alert.
+        /// Serialized Name: RuleEmailAction.customEmails
+        /// </summary>
         public IList<string> CustomEmails { get; }
     }
 }

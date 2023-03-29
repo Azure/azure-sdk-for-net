@@ -12,11 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Definition of platform telemetry data source configuration. </summary>
+    /// <summary>
+    /// Definition of platform telemetry data source configuration
+    /// Serialized Name: PlatformTelemetryDataSource
+    /// </summary>
     public partial class PlatformTelemetryDataSource
     {
         /// <summary> Initializes a new instance of PlatformTelemetryDataSource. </summary>
-        /// <param name="streams"> List of platform telemetry streams to collect. </param>
+        /// <param name="streams">
+        /// List of platform telemetry streams to collect
+        /// Serialized Name: PlatformTelemetryDataSource.streams
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="streams"/> is null. </exception>
         public PlatformTelemetryDataSource(IEnumerable<string> streams)
         {
@@ -26,10 +32,14 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of PlatformTelemetryDataSource. </summary>
-        /// <param name="streams"> List of platform telemetry streams to collect. </param>
+        /// <param name="streams">
+        /// List of platform telemetry streams to collect
+        /// Serialized Name: PlatformTelemetryDataSource.streams
+        /// </param>
         /// <param name="name">
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
+        /// Serialized Name: PlatformTelemetryDataSource.name
         /// </param>
         internal PlatformTelemetryDataSource(IList<string> streams, string name)
         {
@@ -37,11 +47,15 @@ namespace Azure.ResourceManager.Monitor.Models
             Name = name;
         }
 
-        /// <summary> List of platform telemetry streams to collect. </summary>
+        /// <summary>
+        /// List of platform telemetry streams to collect
+        /// Serialized Name: PlatformTelemetryDataSource.streams
+        /// </summary>
         public IList<string> Streams { get; }
         /// <summary>
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
+        /// Serialized Name: PlatformTelemetryDataSource.name
         /// </summary>
         public string Name { get; set; }
     }

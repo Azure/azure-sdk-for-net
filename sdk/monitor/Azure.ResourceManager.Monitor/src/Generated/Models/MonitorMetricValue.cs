@@ -9,23 +9,47 @@ using System;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Represents a metric value. </summary>
+    /// <summary>
+    /// Represents a metric value.
+    /// Serialized Name: MetricValue
+    /// </summary>
     public partial class MonitorMetricValue
     {
         /// <summary> Initializes a new instance of MonitorMetricValue. </summary>
-        /// <param name="timeStamp"> the timestamp for the metric value in ISO 8601 format. </param>
+        /// <param name="timeStamp">
+        /// the timestamp for the metric value in ISO 8601 format.
+        /// Serialized Name: MetricValue.timeStamp
+        /// </param>
         internal MonitorMetricValue(DateTimeOffset timeStamp)
         {
             TimeStamp = timeStamp;
         }
 
         /// <summary> Initializes a new instance of MonitorMetricValue. </summary>
-        /// <param name="timeStamp"> the timestamp for the metric value in ISO 8601 format. </param>
-        /// <param name="average"> the average value in the time range. </param>
-        /// <param name="minimum"> the least value in the time range. </param>
-        /// <param name="maximum"> the greatest value in the time range. </param>
-        /// <param name="total"> the sum of all of the values in the time range. </param>
-        /// <param name="count"> the number of samples in the time range. Can be used to determine the number of values that contributed to the average value. </param>
+        /// <param name="timeStamp">
+        /// the timestamp for the metric value in ISO 8601 format.
+        /// Serialized Name: MetricValue.timeStamp
+        /// </param>
+        /// <param name="average">
+        /// the average value in the time range.
+        /// Serialized Name: MetricValue.average
+        /// </param>
+        /// <param name="minimum">
+        /// the least value in the time range.
+        /// Serialized Name: MetricValue.minimum
+        /// </param>
+        /// <param name="maximum">
+        /// the greatest value in the time range.
+        /// Serialized Name: MetricValue.maximum
+        /// </param>
+        /// <param name="total">
+        /// the sum of all of the values in the time range.
+        /// Serialized Name: MetricValue.total
+        /// </param>
+        /// <param name="count">
+        /// the number of samples in the time range. Can be used to determine the number of values that contributed to the average value.
+        /// Serialized Name: MetricValue.count
+        /// </param>
         internal MonitorMetricValue(DateTimeOffset timeStamp, double? average, double? minimum, double? maximum, double? total, double? count)
         {
             TimeStamp = timeStamp;
@@ -36,17 +60,35 @@ namespace Azure.ResourceManager.Monitor.Models
             Count = count;
         }
 
-        /// <summary> the timestamp for the metric value in ISO 8601 format. </summary>
+        /// <summary>
+        /// the timestamp for the metric value in ISO 8601 format.
+        /// Serialized Name: MetricValue.timeStamp
+        /// </summary>
         public DateTimeOffset TimeStamp { get; }
-        /// <summary> the average value in the time range. </summary>
+        /// <summary>
+        /// the average value in the time range.
+        /// Serialized Name: MetricValue.average
+        /// </summary>
         public double? Average { get; }
-        /// <summary> the least value in the time range. </summary>
+        /// <summary>
+        /// the least value in the time range.
+        /// Serialized Name: MetricValue.minimum
+        /// </summary>
         public double? Minimum { get; }
-        /// <summary> the greatest value in the time range. </summary>
+        /// <summary>
+        /// the greatest value in the time range.
+        /// Serialized Name: MetricValue.maximum
+        /// </summary>
         public double? Maximum { get; }
-        /// <summary> the sum of all of the values in the time range. </summary>
+        /// <summary>
+        /// the sum of all of the values in the time range.
+        /// Serialized Name: MetricValue.total
+        /// </summary>
         public double? Total { get; }
-        /// <summary> the number of samples in the time range. Can be used to determine the number of values that contributed to the average value. </summary>
+        /// <summary>
+        /// the number of samples in the time range. Can be used to determine the number of values that contributed to the average value.
+        /// Serialized Name: MetricValue.count
+        /// </summary>
         public double? Count { get; }
     }
 }

@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary>
     /// Definition of which Windows Event Log events will be collected and how they will be collected.
     /// Only collected from Windows machines.
+    /// Serialized Name: WindowsEventLogDataSource
     /// </summary>
     public partial class WindowsEventLogDataSource
     {
@@ -27,11 +28,16 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="streams">
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
+        /// Serialized Name: WindowsEventLogDataSource.streams
         /// </param>
-        /// <param name="xPathQueries"> A list of Windows Event Log queries in XPATH format. </param>
+        /// <param name="xPathQueries">
+        /// A list of Windows Event Log queries in XPATH format.
+        /// Serialized Name: WindowsEventLogDataSource.xPathQueries
+        /// </param>
         /// <param name="name">
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
+        /// Serialized Name: WindowsEventLogDataSource.name
         /// </param>
         internal WindowsEventLogDataSource(IList<WindowsEventLogDataSourceStream> streams, IList<string> xPathQueries, string name)
         {
@@ -43,13 +49,18 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary>
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
+        /// Serialized Name: WindowsEventLogDataSource.streams
         /// </summary>
         public IList<WindowsEventLogDataSourceStream> Streams { get; }
-        /// <summary> A list of Windows Event Log queries in XPATH format. </summary>
+        /// <summary>
+        /// A list of Windows Event Log queries in XPATH format.
+        /// Serialized Name: WindowsEventLogDataSource.xPathQueries
+        /// </summary>
         public IList<string> XPathQueries { get; }
         /// <summary>
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
+        /// Serialized Name: WindowsEventLogDataSource.name
         /// </summary>
         public string Name { get; set; }
     }

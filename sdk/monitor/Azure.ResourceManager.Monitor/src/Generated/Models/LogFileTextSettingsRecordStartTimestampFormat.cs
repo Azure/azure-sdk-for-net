@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> One of the supported timestamp formats. </summary>
+    /// <summary>
+    /// One of the supported timestamp formats
+    /// Serialized Name: KnownLogFileTextSettingsRecordStartTimestampFormat
+    /// </summary>
     public readonly partial struct LogFileTextSettingsRecordStartTimestampFormat : IEquatable<LogFileTextSettingsRecordStartTimestampFormat>
     {
         private readonly string _value;
@@ -32,23 +35,50 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string DdMmmYyyyHhMmSsZzzValue = "dd/MMM/yyyy:HH:mm:ss zzz";
         private const string YyyyMmDdTHHMmSsKValue = "yyyy-MM-ddTHH:mm:ssK";
 
-        /// <summary> ISO 8601. </summary>
+        /// <summary>
+        /// ISO 8601
+        /// Serialized Name: KnownLogFileTextSettingsRecordStartTimestampFormat.ISO 8601
+        /// </summary>
         public static LogFileTextSettingsRecordStartTimestampFormat ISO8601 { get; } = new LogFileTextSettingsRecordStartTimestampFormat(ISO8601Value);
-        /// <summary> YYYY-MM-DD HH:MM:SS. </summary>
+        /// <summary>
+        /// YYYY-MM-DD HH:MM:SS
+        /// Serialized Name: KnownLogFileTextSettingsRecordStartTimestampFormat.YYYY-MM-DD HH:MM:SS
+        /// </summary>
         public static LogFileTextSettingsRecordStartTimestampFormat YyyyMmDdHhMmSs { get; } = new LogFileTextSettingsRecordStartTimestampFormat(YyyyMmDdHhMmSsValue);
-        /// <summary> M/D/YYYY HH:MM:SS AM/PM. </summary>
+        /// <summary>
+        /// M/D/YYYY HH:MM:SS AM/PM
+        /// Serialized Name: KnownLogFileTextSettingsRecordStartTimestampFormat.M/D/YYYY HH:MM:SS AM/PM
+        /// </summary>
         public static LogFileTextSettingsRecordStartTimestampFormat MDYyyyHhMmSsAMPM { get; } = new LogFileTextSettingsRecordStartTimestampFormat(MDYyyyHhMmSsAMPMValue);
-        /// <summary> Mon DD, YYYY HH:MM:SS. </summary>
+        /// <summary>
+        /// Mon DD, YYYY HH:MM:SS
+        /// Serialized Name: KnownLogFileTextSettingsRecordStartTimestampFormat.Mon DD, YYYY HH:MM:SS
+        /// </summary>
         public static LogFileTextSettingsRecordStartTimestampFormat MonDdYyyyHhMmSs { get; } = new LogFileTextSettingsRecordStartTimestampFormat(MonDdYyyyHhMmSsValue);
-        /// <summary> yyMMdd HH:mm:ss. </summary>
+        /// <summary>
+        /// yyMMdd HH:mm:ss
+        /// Serialized Name: KnownLogFileTextSettingsRecordStartTimestampFormat.yyMMdd HH:mm:ss
+        /// </summary>
         public static LogFileTextSettingsRecordStartTimestampFormat YyMMddHhMmSs { get; } = new LogFileTextSettingsRecordStartTimestampFormat(YyMMddHhMmSsValue);
-        /// <summary> ddMMyy HH:mm:ss. </summary>
+        /// <summary>
+        /// ddMMyy HH:mm:ss
+        /// Serialized Name: KnownLogFileTextSettingsRecordStartTimestampFormat.ddMMyy HH:mm:ss
+        /// </summary>
         public static LogFileTextSettingsRecordStartTimestampFormat DdMMyyHhMmSs { get; } = new LogFileTextSettingsRecordStartTimestampFormat(DdMMyyHhMmSsValue);
-        /// <summary> MMM d hh:mm:ss. </summary>
+        /// <summary>
+        /// MMM d hh:mm:ss
+        /// Serialized Name: KnownLogFileTextSettingsRecordStartTimestampFormat.MMM d hh:mm:ss
+        /// </summary>
         public static LogFileTextSettingsRecordStartTimestampFormat MmmDHhMmSs { get; } = new LogFileTextSettingsRecordStartTimestampFormat(MmmDHhMmSsValue);
-        /// <summary> dd/MMM/yyyy:HH:mm:ss zzz. </summary>
+        /// <summary>
+        /// dd/MMM/yyyy:HH:mm:ss zzz
+        /// Serialized Name: KnownLogFileTextSettingsRecordStartTimestampFormat.dd/MMM/yyyy:HH:mm:ss zzz
+        /// </summary>
         public static LogFileTextSettingsRecordStartTimestampFormat DdMmmYyyyHhMmSsZzz { get; } = new LogFileTextSettingsRecordStartTimestampFormat(DdMmmYyyyHhMmSsZzzValue);
-        /// <summary> yyyy-MM-ddTHH:mm:ssK. </summary>
+        /// <summary>
+        /// yyyy-MM-ddTHH:mm:ssK
+        /// Serialized Name: KnownLogFileTextSettingsRecordStartTimestampFormat.yyyy-MM-ddTHH:mm:ssK
+        /// </summary>
         public static LogFileTextSettingsRecordStartTimestampFormat YyyyMmDdTHHMmSsK { get; } = new LogFileTextSettingsRecordStartTimestampFormat(YyyyMmDdTHHMmSsKValue);
         /// <summary> Determines if two <see cref="LogFileTextSettingsRecordStartTimestampFormat"/> values are the same. </summary>
         public static bool operator ==(LogFileTextSettingsRecordStartTimestampFormat left, LogFileTextSettingsRecordStartTimestampFormat right) => left.Equals(right);

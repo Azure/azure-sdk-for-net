@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Describes a receiver that should be resubscribed. </summary>
+    /// <summary>
+    /// Describes a receiver that should be resubscribed.
+    /// Serialized Name: EnableRequest
+    /// </summary>
     public partial class ActionGroupEnableContent
     {
         /// <summary> Initializes a new instance of ActionGroupEnableContent. </summary>
-        /// <param name="receiverName"> The name of the receiver to resubscribe. </param>
+        /// <param name="receiverName">
+        /// The name of the receiver to resubscribe.
+        /// Serialized Name: EnableRequest.receiverName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receiverName"/> is null. </exception>
         public ActionGroupEnableContent(string receiverName)
         {
@@ -23,7 +29,10 @@ namespace Azure.ResourceManager.Monitor.Models
             ReceiverName = receiverName;
         }
 
-        /// <summary> The name of the receiver to resubscribe. </summary>
+        /// <summary>
+        /// The name of the receiver to resubscribe.
+        /// Serialized Name: EnableRequest.receiverName
+        /// </summary>
         public string ReceiverName { get; }
     }
 }

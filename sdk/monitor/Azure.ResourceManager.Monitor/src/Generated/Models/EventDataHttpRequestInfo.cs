@@ -10,7 +10,10 @@ using System.Net;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The Http request info. </summary>
+    /// <summary>
+    /// The Http request info.
+    /// Serialized Name: HttpRequestInfo
+    /// </summary>
     public partial class EventDataHttpRequestInfo
     {
         /// <summary> Initializes a new instance of EventDataHttpRequestInfo. </summary>
@@ -19,10 +22,22 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of EventDataHttpRequestInfo. </summary>
-        /// <param name="clientRequestId"> the client request id. </param>
-        /// <param name="clientIPAddress"> the client Ip Address. </param>
-        /// <param name="method"> the Http request method. </param>
-        /// <param name="uri"> the Uri. </param>
+        /// <param name="clientRequestId">
+        /// the client request id.
+        /// Serialized Name: HttpRequestInfo.clientRequestId
+        /// </param>
+        /// <param name="clientIPAddress">
+        /// the client Ip Address
+        /// Serialized Name: HttpRequestInfo.clientIpAddress
+        /// </param>
+        /// <param name="method">
+        /// the Http request method.
+        /// Serialized Name: HttpRequestInfo.method
+        /// </param>
+        /// <param name="uri">
+        /// the Uri.
+        /// Serialized Name: HttpRequestInfo.uri
+        /// </param>
         internal EventDataHttpRequestInfo(string clientRequestId, IPAddress clientIPAddress, string method, Uri uri)
         {
             ClientRequestId = clientRequestId;
@@ -31,13 +46,25 @@ namespace Azure.ResourceManager.Monitor.Models
             Uri = uri;
         }
 
-        /// <summary> the client request id. </summary>
+        /// <summary>
+        /// the client request id.
+        /// Serialized Name: HttpRequestInfo.clientRequestId
+        /// </summary>
         public string ClientRequestId { get; }
-        /// <summary> the client Ip Address. </summary>
+        /// <summary>
+        /// the client Ip Address
+        /// Serialized Name: HttpRequestInfo.clientIpAddress
+        /// </summary>
         public IPAddress ClientIPAddress { get; }
-        /// <summary> the Http request method. </summary>
+        /// <summary>
+        /// the Http request method.
+        /// Serialized Name: HttpRequestInfo.method
+        /// </summary>
         public string Method { get; }
-        /// <summary> the Uri. </summary>
+        /// <summary>
+        /// the Uri.
+        /// Serialized Name: HttpRequestInfo.uri
+        /// </summary>
         public Uri Uri { get; }
     }
 }

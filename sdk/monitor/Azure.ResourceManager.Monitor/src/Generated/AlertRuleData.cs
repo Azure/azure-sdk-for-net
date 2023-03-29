@@ -16,15 +16,23 @@ namespace Azure.ResourceManager.Monitor
     /// <summary>
     /// A class representing the AlertRule data model.
     /// The alert rule resource.
+    /// Serialized Name: AlertRuleResource
     /// </summary>
     public partial class AlertRuleData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AlertRuleData. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="alertRuleName"> the name of the alert rule. </param>
-        /// <param name="isEnabled"> the flag that indicates whether the alert rule is enabled. </param>
+        /// <param name="alertRuleName">
+        /// the name of the alert rule.
+        /// Serialized Name: AlertRuleResource.properties.name
+        /// </param>
+        /// <param name="isEnabled">
+        /// the flag that indicates whether the alert rule is enabled.
+        /// Serialized Name: AlertRuleResource.properties.isEnabled
+        /// </param>
         /// <param name="condition">
         /// the condition that results in the alert rule being activated.
+        /// Serialized Name: AlertRuleResource.properties.condition
         /// Please note <see cref="AlertRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/> and <see cref="ThresholdRuleCondition"/>.
         /// </param>
@@ -47,26 +55,44 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="alertRuleName"> the name of the alert rule. </param>
-        /// <param name="description"> the description of the alert rule that will be included in the alert email. </param>
-        /// <param name="provisioningState"> the provisioning state. </param>
-        /// <param name="isEnabled"> the flag that indicates whether the alert rule is enabled. </param>
+        /// <param name="alertRuleName">
+        /// the name of the alert rule.
+        /// Serialized Name: AlertRuleResource.properties.name
+        /// </param>
+        /// <param name="description">
+        /// the description of the alert rule that will be included in the alert email.
+        /// Serialized Name: AlertRuleResource.properties.description
+        /// </param>
+        /// <param name="provisioningState">
+        /// the provisioning state.
+        /// Serialized Name: AlertRuleResource.properties.provisioningState
+        /// </param>
+        /// <param name="isEnabled">
+        /// the flag that indicates whether the alert rule is enabled.
+        /// Serialized Name: AlertRuleResource.properties.isEnabled
+        /// </param>
         /// <param name="condition">
         /// the condition that results in the alert rule being activated.
+        /// Serialized Name: AlertRuleResource.properties.condition
         /// Please note <see cref="AlertRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/> and <see cref="ThresholdRuleCondition"/>.
         /// </param>
         /// <param name="action">
         /// action that is performed when the alert rule becomes active, and when an alert condition is resolved.
+        /// Serialized Name: AlertRuleResource.properties.action
         /// Please note <see cref="AlertRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RuleEmailAction"/> and <see cref="RuleWebhookAction"/>.
         /// </param>
         /// <param name="actions">
         /// the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved.
+        /// Serialized Name: AlertRuleResource.properties.actions
         /// Please note <see cref="AlertRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RuleEmailAction"/> and <see cref="RuleWebhookAction"/>.
         /// </param>
-        /// <param name="lastUpdatedOn"> Last time the rule was updated in ISO8601 format. </param>
+        /// <param name="lastUpdatedOn">
+        /// Last time the rule was updated in ISO8601 format.
+        /// Serialized Name: AlertRuleResource.properties.lastUpdatedTime
+        /// </param>
         internal AlertRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string alertRuleName, string description, string provisioningState, bool isEnabled, AlertRuleCondition condition, AlertRuleAction action, IList<AlertRuleAction> actions, DateTimeOffset? lastUpdatedOn) : base(id, name, resourceType, systemData, tags, location)
         {
             AlertRuleName = alertRuleName;
@@ -79,33 +105,51 @@ namespace Azure.ResourceManager.Monitor
             LastUpdatedOn = lastUpdatedOn;
         }
 
-        /// <summary> the name of the alert rule. </summary>
+        /// <summary>
+        /// the name of the alert rule.
+        /// Serialized Name: AlertRuleResource.properties.name
+        /// </summary>
         public string AlertRuleName { get; set; }
-        /// <summary> the description of the alert rule that will be included in the alert email. </summary>
+        /// <summary>
+        /// the description of the alert rule that will be included in the alert email.
+        /// Serialized Name: AlertRuleResource.properties.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> the provisioning state. </summary>
+        /// <summary>
+        /// the provisioning state.
+        /// Serialized Name: AlertRuleResource.properties.provisioningState
+        /// </summary>
         public string ProvisioningState { get; set; }
-        /// <summary> the flag that indicates whether the alert rule is enabled. </summary>
+        /// <summary>
+        /// the flag that indicates whether the alert rule is enabled.
+        /// Serialized Name: AlertRuleResource.properties.isEnabled
+        /// </summary>
         public bool IsEnabled { get; set; }
         /// <summary>
         /// the condition that results in the alert rule being activated.
+        /// Serialized Name: AlertRuleResource.properties.condition
         /// Please note <see cref="AlertRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/> and <see cref="ThresholdRuleCondition"/>.
         /// </summary>
         public AlertRuleCondition Condition { get; set; }
         /// <summary>
         /// action that is performed when the alert rule becomes active, and when an alert condition is resolved.
+        /// Serialized Name: AlertRuleResource.properties.action
         /// Please note <see cref="AlertRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RuleEmailAction"/> and <see cref="RuleWebhookAction"/>.
         /// </summary>
         public AlertRuleAction Action { get; set; }
         /// <summary>
         /// the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved.
+        /// Serialized Name: AlertRuleResource.properties.actions
         /// Please note <see cref="AlertRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RuleEmailAction"/> and <see cref="RuleWebhookAction"/>.
         /// </summary>
         public IList<AlertRuleAction> Actions { get; }
-        /// <summary> Last time the rule was updated in ISO8601 format. </summary>
+        /// <summary>
+        /// Last time the rule was updated in ISO8601 format.
+        /// Serialized Name: AlertRuleResource.properties.lastUpdatedTime
+        /// </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
     }
 }

@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Monitor
     /// <summary>
     /// A class representing the ActivityLogAlert data model.
     /// An Activity Log Alert rule resource.
+    /// Serialized Name: ActivityLogAlertResource
     /// </summary>
     public partial class ActivityLogAlertData : TrackedResourceData
     {
@@ -32,11 +33,26 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="scopes"> A list of resource IDs that will be used as prefixes. The alert will only apply to Activity Log events with resource IDs that fall under one of these prefixes. This list must include at least one item. </param>
-        /// <param name="condition"> The condition that will cause this alert to activate. </param>
-        /// <param name="actions"> The actions that will activate when the condition is met. </param>
-        /// <param name="isEnabled"> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </param>
-        /// <param name="description"> A description of this Activity Log Alert rule. </param>
+        /// <param name="scopes">
+        /// A list of resource IDs that will be used as prefixes. The alert will only apply to Activity Log events with resource IDs that fall under one of these prefixes. This list must include at least one item.
+        /// Serialized Name: ActivityLogAlertResource.properties.scopes
+        /// </param>
+        /// <param name="condition">
+        /// The condition that will cause this alert to activate.
+        /// Serialized Name: ActivityLogAlertResource.properties.condition
+        /// </param>
+        /// <param name="actions">
+        /// The actions that will activate when the condition is met.
+        /// Serialized Name: ActivityLogAlertResource.properties.actions
+        /// </param>
+        /// <param name="isEnabled">
+        /// Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated.
+        /// Serialized Name: ActivityLogAlertResource.properties.enabled
+        /// </param>
+        /// <param name="description">
+        /// A description of this Activity Log Alert rule.
+        /// Serialized Name: ActivityLogAlertResource.properties.description
+        /// </param>
         internal ActivityLogAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> scopes, AlertRuleAllOfCondition condition, ActionList actions, bool? isEnabled, string description) : base(id, name, resourceType, systemData, tags, location)
         {
             Scopes = scopes;
@@ -46,20 +62,35 @@ namespace Azure.ResourceManager.Monitor
             Description = description;
         }
 
-        /// <summary> A list of resource IDs that will be used as prefixes. The alert will only apply to Activity Log events with resource IDs that fall under one of these prefixes. This list must include at least one item. </summary>
+        /// <summary>
+        /// A list of resource IDs that will be used as prefixes. The alert will only apply to Activity Log events with resource IDs that fall under one of these prefixes. This list must include at least one item.
+        /// Serialized Name: ActivityLogAlertResource.properties.scopes
+        /// </summary>
         public IList<string> Scopes { get; }
-        /// <summary> The condition that will cause this alert to activate. </summary>
+        /// <summary>
+        /// The condition that will cause this alert to activate.
+        /// Serialized Name: ActivityLogAlertResource.properties.condition
+        /// </summary>
         internal AlertRuleAllOfCondition Condition { get; set; }
-        /// <summary> The list of Activity Log Alert rule conditions. </summary>
+        /// <summary>
+        /// The list of Activity Log Alert rule conditions.
+        /// Serialized Name: AlertRuleAllOfCondition.allOf
+        /// </summary>
         public IList<ActivityLogAlertAnyOfOrLeafCondition> ConditionAllOf
         {
             get => Condition is null ? default : Condition.AllOf;
             set => Condition = new AlertRuleAllOfCondition(value);
         }
 
-        /// <summary> The actions that will activate when the condition is met. </summary>
+        /// <summary>
+        /// The actions that will activate when the condition is met.
+        /// Serialized Name: ActivityLogAlertResource.properties.actions
+        /// </summary>
         internal ActionList Actions { get; set; }
-        /// <summary> The list of the Action Groups. </summary>
+        /// <summary>
+        /// The list of the Action Groups.
+        /// Serialized Name: ActionList.actionGroups
+        /// </summary>
         public IList<ActivityLogAlertActionGroup> ActionsActionGroups
         {
             get
@@ -70,9 +101,15 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </summary>
+        /// <summary>
+        /// Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated.
+        /// Serialized Name: ActivityLogAlertResource.properties.enabled
+        /// </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> A description of this Activity Log Alert rule. </summary>
+        /// <summary>
+        /// A description of this Activity Log Alert rule.
+        /// Serialized Name: ActivityLogAlertResource.properties.description
+        /// </summary>
         public string Description { get; set; }
     }
 }

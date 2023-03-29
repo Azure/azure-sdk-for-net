@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The EventHubDataSource. </summary>
+    /// <summary>
+    /// The EventHubDataSource.
+    /// Serialized Name: EventHubDataSource
+    /// </summary>
     public partial class EventHubDataSource
     {
         /// <summary> Initializes a new instance of EventHubDataSource. </summary>
@@ -19,9 +22,16 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name">
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
+        /// Serialized Name: EventHubDataSource.name
         /// </param>
-        /// <param name="consumerGroup"> Event Hub consumer group name. </param>
-        /// <param name="stream"> The stream to collect from EventHub. </param>
+        /// <param name="consumerGroup">
+        /// Event Hub consumer group name
+        /// Serialized Name: EventHubDataSource.consumerGroup
+        /// </param>
+        /// <param name="stream">
+        /// The stream to collect from EventHub
+        /// Serialized Name: EventHubDataSource.stream
+        /// </param>
         internal EventHubDataSource(string name, string consumerGroup, string stream)
         {
             Name = name;
@@ -32,11 +42,18 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary>
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
+        /// Serialized Name: EventHubDataSource.name
         /// </summary>
         public string Name { get; set; }
-        /// <summary> Event Hub consumer group name. </summary>
+        /// <summary>
+        /// Event Hub consumer group name
+        /// Serialized Name: EventHubDataSource.consumerGroup
+        /// </summary>
         public string ConsumerGroup { get; set; }
-        /// <summary> The stream to collect from EventHub. </summary>
+        /// <summary>
+        /// The stream to collect from EventHub
+        /// Serialized Name: EventHubDataSource.stream
+        /// </summary>
         public string Stream { get; set; }
     }
 }

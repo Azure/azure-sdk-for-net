@@ -12,13 +12,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Specifies a metric dimension. </summary>
+    /// <summary>
+    /// Specifies a metric dimension.
+    /// Serialized Name: MetricDimension
+    /// </summary>
     public partial class MetricDimension
     {
         /// <summary> Initializes a new instance of MetricDimension. </summary>
-        /// <param name="name"> Name of the dimension. </param>
-        /// <param name="operator"> the dimension operator. Only &apos;Include&apos; and &apos;Exclude&apos; are supported. </param>
-        /// <param name="values"> list of dimension values. </param>
+        /// <param name="name">
+        /// Name of the dimension.
+        /// Serialized Name: MetricDimension.name
+        /// </param>
+        /// <param name="operator">
+        /// the dimension operator. Only &apos;Include&apos; and &apos;Exclude&apos; are supported
+        /// Serialized Name: MetricDimension.operator
+        /// </param>
+        /// <param name="values">
+        /// list of dimension values.
+        /// Serialized Name: MetricDimension.values
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="operator"/> or <paramref name="values"/> is null. </exception>
         public MetricDimension(string name, string @operator, IEnumerable<string> values)
         {
@@ -32,9 +44,18 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MetricDimension. </summary>
-        /// <param name="name"> Name of the dimension. </param>
-        /// <param name="operator"> the dimension operator. Only &apos;Include&apos; and &apos;Exclude&apos; are supported. </param>
-        /// <param name="values"> list of dimension values. </param>
+        /// <param name="name">
+        /// Name of the dimension.
+        /// Serialized Name: MetricDimension.name
+        /// </param>
+        /// <param name="operator">
+        /// the dimension operator. Only &apos;Include&apos; and &apos;Exclude&apos; are supported
+        /// Serialized Name: MetricDimension.operator
+        /// </param>
+        /// <param name="values">
+        /// list of dimension values.
+        /// Serialized Name: MetricDimension.values
+        /// </param>
         internal MetricDimension(string name, string @operator, IList<string> values)
         {
             Name = name;
@@ -42,11 +63,20 @@ namespace Azure.ResourceManager.Monitor.Models
             Values = values;
         }
 
-        /// <summary> Name of the dimension. </summary>
+        /// <summary>
+        /// Name of the dimension.
+        /// Serialized Name: MetricDimension.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> the dimension operator. Only &apos;Include&apos; and &apos;Exclude&apos; are supported. </summary>
+        /// <summary>
+        /// the dimension operator. Only &apos;Include&apos; and &apos;Exclude&apos; are supported
+        /// Serialized Name: MetricDimension.operator
+        /// </summary>
         public string Operator { get; set; }
-        /// <summary> list of dimension values. </summary>
+        /// <summary>
+        /// list of dimension values.
+        /// Serialized Name: MetricDimension.values
+        /// </summary>
         public IList<string> Values { get; }
     }
 }

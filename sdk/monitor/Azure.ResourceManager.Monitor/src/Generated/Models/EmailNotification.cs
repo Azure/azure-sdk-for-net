@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Email notification of an autoscale event. </summary>
+    /// <summary>
+    /// Email notification of an autoscale event.
+    /// Serialized Name: EmailNotification
+    /// </summary>
     public partial class EmailNotification
     {
         /// <summary> Initializes a new instance of EmailNotification. </summary>
@@ -20,9 +23,18 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of EmailNotification. </summary>
-        /// <param name="sendToSubscriptionAdministrator"> a value indicating whether to send email to subscription administrator. </param>
-        /// <param name="sendToSubscriptionCoAdministrators"> a value indicating whether to send email to subscription co-administrators. </param>
-        /// <param name="customEmails"> the custom e-mails list. This value can be null or empty, in which case this attribute will be ignored. </param>
+        /// <param name="sendToSubscriptionAdministrator">
+        /// a value indicating whether to send email to subscription administrator.
+        /// Serialized Name: EmailNotification.sendToSubscriptionAdministrator
+        /// </param>
+        /// <param name="sendToSubscriptionCoAdministrators">
+        /// a value indicating whether to send email to subscription co-administrators.
+        /// Serialized Name: EmailNotification.sendToSubscriptionCoAdministrators
+        /// </param>
+        /// <param name="customEmails">
+        /// the custom e-mails list. This value can be null or empty, in which case this attribute will be ignored.
+        /// Serialized Name: EmailNotification.customEmails
+        /// </param>
         internal EmailNotification(bool? sendToSubscriptionAdministrator, bool? sendToSubscriptionCoAdministrators, IList<string> customEmails)
         {
             SendToSubscriptionAdministrator = sendToSubscriptionAdministrator;
@@ -30,11 +42,20 @@ namespace Azure.ResourceManager.Monitor.Models
             CustomEmails = customEmails;
         }
 
-        /// <summary> a value indicating whether to send email to subscription administrator. </summary>
+        /// <summary>
+        /// a value indicating whether to send email to subscription administrator.
+        /// Serialized Name: EmailNotification.sendToSubscriptionAdministrator
+        /// </summary>
         public bool? SendToSubscriptionAdministrator { get; set; }
-        /// <summary> a value indicating whether to send email to subscription co-administrators. </summary>
+        /// <summary>
+        /// a value indicating whether to send email to subscription co-administrators.
+        /// Serialized Name: EmailNotification.sendToSubscriptionCoAdministrators
+        /// </summary>
         public bool? SendToSubscriptionCoAdministrators { get; set; }
-        /// <summary> the custom e-mails list. This value can be null or empty, in which case this attribute will be ignored. </summary>
+        /// <summary>
+        /// the custom e-mails list. This value can be null or empty, in which case this attribute will be ignored.
+        /// Serialized Name: EmailNotification.customEmails
+        /// </summary>
         public IList<string> CustomEmails { get; }
     }
 }
