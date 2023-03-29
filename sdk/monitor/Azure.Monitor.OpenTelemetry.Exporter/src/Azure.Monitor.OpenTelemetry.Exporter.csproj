@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>An OpenTelemetry .NET exporter that exports to Azure Monitor</Description>
     <AssemblyTitle>AzureMonitor OpenTelemetry Exporter</AssemblyTitle>
-    <Version>1.0.0-beta.9</Version>
+    <Version>1.0.0-beta.10</Version>
     <PackageTags>Azure Monitor OpenTelemetry Exporter ApplicationInsights</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
@@ -23,11 +23,5 @@
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared" />
   </ItemGroup>
-
-  <PropertyGroup>
-    <!-- TODO: As part of release process, this PropertyGroup can be removed once RP is approved for namespace
-      https://github.com/Azure/azure-sdk-for-net/issues/17155 -->
-    <NoWarn>$(NoWarn);AZC0001</NoWarn>
-  </PropertyGroup>
 
 </Project>

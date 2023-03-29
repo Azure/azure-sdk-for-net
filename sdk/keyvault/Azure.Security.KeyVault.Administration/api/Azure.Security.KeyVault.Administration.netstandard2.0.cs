@@ -63,6 +63,7 @@ namespace Azure.Security.KeyVault.Administration
         public static Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition KeyVaultRoleDefinition(string id = null, string name = null, Azure.Security.KeyVault.Administration.KeyVaultRoleDefinitionType? type = default(Azure.Security.KeyVault.Administration.KeyVaultRoleDefinitionType?), string roleName = null, string description = null, Azure.Security.KeyVault.Administration.KeyVaultRoleType? roleType = default(Azure.Security.KeyVault.Administration.KeyVaultRoleType?), System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Administration.KeyVaultPermission> permissions = null, System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Administration.KeyVaultRoleScope> assignableScopes = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition KeyVaultRoleDefinition(string id, string name, Azure.Security.KeyVault.Administration.KeyVaultRoleDefinitionType? type, string roleName, string description, Azure.Security.KeyVault.Administration.KeyVaultRoleType? roleType, System.Collections.Generic.IList<Azure.Security.KeyVault.Administration.KeyVaultPermission> permissions, System.Collections.Generic.IList<Azure.Security.KeyVault.Administration.KeyVaultRoleScope> assignableScopes) { throw null; }
+        public static Azure.Security.KeyVault.Administration.KeyVaultSetting KeyVaultSetting(string name = null, string content = null, Azure.Security.KeyVault.Administration.KeyVaultSettingType? settingType = default(Azure.Security.KeyVault.Administration.KeyVaultSettingType?)) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultRestoreOperation RestoreOperation(Azure.Response response, Azure.Security.KeyVault.Administration.KeyVaultBackupClient client, string id, System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string errorMessage = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultRestoreResult RestoreResult(System.DateTimeOffset startTime, System.DateTimeOffset endTime) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment RoleAssignment(string id, string name, string type, Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties properties) { throw null; }
@@ -292,9 +293,8 @@ namespace Azure.Security.KeyVault.Administration
     {
         public KeyVaultSetting(string name, bool value) { }
         public string Name { get { throw null; } }
-        public Azure.Security.KeyVault.Administration.SettingType? Type { get { throw null; } }
-        public bool AsBoolean() { throw null; }
-        public string AsString() { throw null; }
+        public Azure.Security.KeyVault.Administration.KeyVaultSettingType? SettingType { get { throw null; } }
+        public Azure.Security.KeyVault.Administration.KeyVaultSettingValue Value { get { throw null; } }
         public override string ToString() { throw null; }
     }
     public partial class KeyVaultSettingsClient
@@ -311,20 +311,28 @@ namespace Azure.Security.KeyVault.Administration
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultSetting>> UpdateSettingAsync(Azure.Security.KeyVault.Administration.KeyVaultSetting setting, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SettingType : System.IEquatable<Azure.Security.KeyVault.Administration.SettingType>
+    public readonly partial struct KeyVaultSettingType : System.IEquatable<Azure.Security.KeyVault.Administration.KeyVaultSettingType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SettingType(string value) { throw null; }
-        public static Azure.Security.KeyVault.Administration.SettingType Boolean { get { throw null; } }
-        public bool Equals(Azure.Security.KeyVault.Administration.SettingType other) { throw null; }
+        public KeyVaultSettingType(string value) { throw null; }
+        public static Azure.Security.KeyVault.Administration.KeyVaultSettingType Boolean { get { throw null; } }
+        public bool Equals(Azure.Security.KeyVault.Administration.KeyVaultSettingType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Security.KeyVault.Administration.SettingType left, Azure.Security.KeyVault.Administration.SettingType right) { throw null; }
-        public static implicit operator Azure.Security.KeyVault.Administration.SettingType (string value) { throw null; }
-        public static bool operator !=(Azure.Security.KeyVault.Administration.SettingType left, Azure.Security.KeyVault.Administration.SettingType right) { throw null; }
+        public static bool operator ==(Azure.Security.KeyVault.Administration.KeyVaultSettingType left, Azure.Security.KeyVault.Administration.KeyVaultSettingType right) { throw null; }
+        public static implicit operator Azure.Security.KeyVault.Administration.KeyVaultSettingType (string value) { throw null; }
+        public static bool operator !=(Azure.Security.KeyVault.Administration.KeyVaultSettingType left, Azure.Security.KeyVault.Administration.KeyVaultSettingType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KeyVaultSettingValue
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public bool AsBoolean() { throw null; }
         public override string ToString() { throw null; }
     }
 }

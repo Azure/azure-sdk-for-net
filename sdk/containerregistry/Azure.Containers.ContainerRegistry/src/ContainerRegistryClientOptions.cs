@@ -20,11 +20,6 @@ namespace Azure.Containers.ContainerRegistry
         public ContainerRegistryAudience? Audience { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum chunk size for blob uploads and downloads.  If not set, this value defaults to 4MB.
-        /// </summary>
-        public int? MaxChunkSize { get; set; }
-
-        /// <summary>
         /// Create an instance of the options for configuring request sent to the Container Registry service.
         /// </summary>
         /// <param name="version"></param>

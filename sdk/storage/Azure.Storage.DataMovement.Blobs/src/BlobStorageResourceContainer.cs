@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
@@ -58,7 +57,23 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="path">The path to the storage resource.</param>
         public override StorageResource GetChildStorageResource(string path)
         {
-            return new BlockBlobStorageResource(_blobContainerClient.GetBlockBlobClient(string.Join("/", path)));
+            switch (_options.BlobType)
+            {
+                case BlobType.Block:
+                    return new BlockBlobStorageResource(
+                        _blobContainerClient.GetBlockBlobClient(string.Join("/", path)),
+                        _options.ToBlockBlobStorageResourceOptions());
+                case BlobType.Append:
+                    return new AppendBlobStorageResource(
+                        _blobContainerClient.GetAppendBlobClient(string.Join("/", path)),
+                        _options.ToAppendBlobStorageResourceOptions());
+                case BlobType.Page:
+                    return new PageBlobStorageResource(
+                        _blobContainerClient.GetPageBlobClient(string.Join("/", path)),
+                        _options.ToPageBlobStorageResourceOptions());
+                default:
+                    throw new ArgumentException("Invalid BlobType.");
+            }
         }
 
         /// <summary>

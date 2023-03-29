@@ -84,7 +84,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                         {
                             var content = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
                             var request = JsonSerializer.Deserialize<ConnectEventRequest>(content);
-                            eventRequest = new ConnectEventRequest(context, request.Claims, request.Query, request.Subprotocols, request.ClientCertificates);
+                            eventRequest = new ConnectEventRequest(context, request.Claims, request.Query, request.Subprotocols, request.ClientCertificates, request.Headers);
                             break;
                         }
                     case RequestType.Disconnected:

@@ -8,7 +8,17 @@
 
 ### Bugs Fixed
 
+- Changed the approach that the event processor uses to validate permissions on startup to ensure that it does not interrupt other processors already running by temporarily asserting ownership of a partition.
+
 ### Other Changes
+
+- Enhanced the log emitted when an event processor begins reading from a partition to report whether the offset chosen was based on a checkpoint or default value.
+
+## 5.8.1 (2023-03-09)
+
+### Bugs Fixed
+
+- Fix null reference exception when using the `EventProcessorClient`.
 
 ## 5.8.0 (2023-03-07)
 

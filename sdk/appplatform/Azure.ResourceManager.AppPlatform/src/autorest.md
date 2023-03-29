@@ -131,7 +131,7 @@ rename-mapping:
   CustomDomainResourceProvisioningState: AppPlatformCustomDomainProvisioningState
   ServiceResource: AppPlatformService
   ClusterResourceProperties: AppPlatformServiceProperties
-  ClusterResourceProperties.serviceId: -|uuid
+  ClusterResourceProperties.serviceId: ServiceInstanceId
   ClusterResourceProperties.zoneRedundant: IsZoneRedundant
   NetworkProfile: AppPlatformServiceNetworkProfile
   PowerState: AppPlatformServicePowerState

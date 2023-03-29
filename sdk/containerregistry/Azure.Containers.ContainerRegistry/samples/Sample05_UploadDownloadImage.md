@@ -12,16 +12,13 @@ Create a `ContainerRegistryBlobClient` for the registry, passing the repository,
 
 ```C# Snippet:ContainerRegistry_Samples_CreateBlobClient
 // Get the service endpoint from the environment
-Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+Uri endpoint = new(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
 string repository = "sample-oci-image";
 string tag = "demo";
 
-// Create a new ContainerRegistryBlobClient
-ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
-{
-    Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
-});
+// Create a new ContainerRegistryContentClient
+ContainerRegistryContentClient client = new(endpoint, repository, new DefaultAzureCredential());
 ```
 
 ## Upload an OCI Image
@@ -31,34 +28,34 @@ In this sample, the manifest is updated with information about each file associa
 
 ```C# Snippet:ContainerRegistry_Samples_UploadOciImageAsync
 // Create a manifest to list files in this image
-OciImageManifest manifest = new();
+OciImageManifest manifest = new(schemaVersion: 2);
 
 // Upload a config file
 BinaryData config = BinaryData.FromString("Sample config");
-UploadBlobResult uploadConfigResult = await client.UploadBlobAsync(config);
+UploadRegistryBlobResult uploadConfigResult = await client.UploadBlobAsync(config);
 
 // Update manifest with config info
-manifest.Config = new OciBlobDescriptor()
+manifest.Configuration = new OciDescriptor()
 {
     Digest = uploadConfigResult.Digest,
-    SizeInBytes = config.ToMemory().Length,
+    SizeInBytes = uploadConfigResult.SizeInBytes,
     MediaType = "application/vnd.oci.image.config.v1+json"
 };
 
 // Upload a layer file
 BinaryData layer = BinaryData.FromString("Sample layer");
-UploadBlobResult uploadLayerResult = await client.UploadBlobAsync(layer);
+UploadRegistryBlobResult uploadLayerResult = await client.UploadBlobAsync(layer);
 
 // Update manifest with layer info
-manifest.Layers.Add(new OciBlobDescriptor()
+manifest.Layers.Add(new OciDescriptor()
 {
     Digest = uploadLayerResult.Digest,
-    SizeInBytes = layer.ToMemory().Length,
+    SizeInBytes = uploadLayerResult.SizeInBytes,
     MediaType = "application/vnd.oci.image.layer.v1.tar"
 });
 
 // Finally, upload the manifest file
-await client.UploadManifestAsync(manifest, tag);
+await client.SetManifestAsync(manifest, tag);
 ```
 
 ## Download an OCI Image
@@ -68,17 +65,17 @@ The manifest describes the files that will need to be downloaded to pull the ful
 
 ```C# Snippet:ContainerRegistry_Samples_DownloadOciImageAsync
 // Download the manifest to obtain the list of files in the image
-DownloadManifestResult result = await client.DownloadManifestAsync(tag);
-OciImageManifest manifest = result.AsOciManifest();
+GetManifestResult result = await client.GetManifestAsync(tag);
+OciImageManifest manifest = result.Manifest.ToObjectFromJson<OciImageManifest>();
 
 string manifestFile = Path.Combine(path, "manifest.json");
 using (FileStream stream = File.Create(manifestFile))
 {
-    await result.Content.ToStream().CopyToAsync(stream);
+    await result.Manifest.ToStream().CopyToAsync(stream);
 }
 
 // Download and write out the config
-DownloadBlobResult configBlob = await client.DownloadBlobAsync(manifest.Config.Digest);
+DownloadRegistryBlobResult configBlob = await client.DownloadBlobContentAsync(manifest.Configuration.Digest);
 
 string configFile = Path.Combine(path, "config.json");
 using (FileStream stream = File.Create(configFile))
@@ -87,12 +84,12 @@ using (FileStream stream = File.Create(configFile))
 }
 
 // Download and write out the layers
-foreach (OciBlobDescriptor layer in manifest.Layers)
+foreach (OciDescriptor layerInfo in manifest.Layers)
 {
-    string layerFile = Path.Combine(path, TrimSha(layer.Digest));
+    string layerFile = Path.Combine(path, TrimSha(layerInfo.Digest));
     using (FileStream stream = File.Create(layerFile))
     {
-        await client.DownloadBlobToAsync(layer.Digest, stream);
+        await client.DownloadBlobToAsync(layerInfo.Digest, stream);
     }
 }
 
@@ -134,7 +131,7 @@ var manifestList = new
 
 // Finally, upload the manifest file
 BinaryData content = BinaryData.FromObjectAsJson(manifestList);
-await client.UploadManifestAsync(content, tag: "sample", ManifestMediaType.DockerManifestList);
+await client.SetManifestAsync(content, tag: "sample", ManifestMediaType.DockerManifestList);
 ```
 
 ## Download a custom manifest
@@ -142,12 +139,7 @@ await client.UploadManifestAsync(content, tag: "sample", ManifestMediaType.Docke
 To download a manifest of an unknown type, pass possible values to the list of acceptable media types.  The media type of the manifest is returned on the `DownloadManifestResult`.
 
 ```C# Snippet:ContainerRegistry_Samples_DownloadCustomManifestAsync
-// Pass multiple media types if the media type of the manifest to download is unknown
-List<ManifestMediaType> mediaTypes = new() {
-    "application/vnd.docker.distribution.manifest.list.v2+json",
-    "application/vnd.oci.image.index.v1+json" };
-
-DownloadManifestResult result = await client.DownloadManifestAsync("sample", mediaTypes);
+GetManifestResult result = await client.GetManifestAsync("sample");
 
 if (result.MediaType == "application/vnd.docker.distribution.manifest.list.v2+json")
 {
@@ -156,5 +148,28 @@ if (result.MediaType == "application/vnd.docker.distribution.manifest.list.v2+js
 else if (result.MediaType == "application/vnd.oci.image.index.v1+json")
 {
     Console.WriteLine("Manifest is an OCI index.");
+}
+```
+
+## Delete a manifest
+
+A manifest can be deleted as shown below.  It is also possible to delete a full image using the `ContainerRegistryClient` as shown in [Sample 2: Delete Image](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/containerregistry/Azure.Containers.ContainerRegistry/samples/Sample02b_DeleteImagesAsync.md).
+
+```C# Snippet:ContainerRegistry_Samples_DeleteManifest
+GetManifestResult manifestResult = await client.GetManifestAsync(tag);
+await client.DeleteManifestAsync(manifestResult.Digest);
+```
+
+## Delete a blob
+
+A blob can be deleted as shown below.  It is also possible to delete a full image using the `ContainerRegistryClient` as shown in [Sample 2: Delete Image](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/containerregistry/Azure.Containers.ContainerRegistry/samples/Sample02b_DeleteImagesAsync.md).
+
+```C# Snippet:ContainerRegistry_Samples_DeleteBlob
+GetManifestResult result = await client.GetManifestAsync(tag);
+OciImageManifest manifest = result.Manifest.ToObjectFromJson<OciImageManifest>();
+
+foreach (OciDescriptor layerInfo in manifest.Layers)
+{
+    await client.DeleteBlobAsync(layerInfo.Digest);
 }
 ```

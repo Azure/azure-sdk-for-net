@@ -15,12 +15,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
 
         public static void Main()
         {
-            Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_STATSBEAT_DISABLED", "true");
-            var credential = new DefaultAzureCredential();
+            // To use AAD, setup your desired credential and provide to the demo class.
+            // var credential = new DefaultAzureCredential();
+            // using var traceDemo = new TraceDemo(ConnectionString, credential);
 
             using var traceDemo = new TraceDemo(ConnectionString);
-            using var metricDemo = new MetricDemo(ConnectionString);
             traceDemo.GenerateTraces();
+
+            using var metricDemo = new MetricDemo(ConnectionString);
             metricDemo.GenerateMetrics();
 
             using var logDemo = new LogDemo(ConnectionString);

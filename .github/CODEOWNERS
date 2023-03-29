@@ -195,7 +195,7 @@
 #/<NotInRepo>/                                                     @swmachan
 
 # PRLabel: %Cognitive - Translator
-/sdk/translation/                                                  @mshaban-msft
+/sdk/translation/                                                  @mikeymcz @cpoulain @joseharriaga
 
 # ServiceLabel: %Cognitive - Speech %Service Attention
 #/<NotInRepo>/                                                     @robch @oscholz
@@ -234,10 +234,10 @@
 /sdk/communication/Azure.Communication.Chat/                       @LuChen-Microsoft
 
 # PRLabel: %Communication - Common
-/sdk/communication/Azure.Communication.Common/                     @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @ostoliarova-msft @mjafferi-msft
+/sdk/communication/Azure.Communication.Common/                     @Azure/acs-identity-sdk @AikoBB @maximrytych-ms @mjafferi-msft
 
 # PRLabel: %Communication - Identity
-/sdk/communication/Azure.Communication.Identity/                   @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @ostoliarova-msft @mjafferi-msft
+/sdk/communication/Azure.Communication.Identity/                   @Azure/acs-identity-sdk @AikoBB @maximrytych-ms @mjafferi-msft
 
 # PRLabel: %Communication - Network Traversal
 /sdk/communication/Azure.Communication.NetworkTraversal/           @ajpeacock0 @nathpete-msft
@@ -591,6 +591,9 @@
 # PRLabel: %Mixed Reality
 /sdk/objectanchors/                                                @crtreasu @rgarcia @JoshLove-msft
 
+# PRLabel: %Open AI
+/sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash
+
 # PRLabel: %Operational Insights
 # ServiceLabel: %Operational Insights %Service Attention
 /sdk/operationalinsights/Microsoft.Azure.Ope*/                     @omziv @anatse @raronen @ischrei @danhadari @AzmonLogA
@@ -687,10 +690,10 @@
 #/<NotInRepo>/                                                     @azureSQLGitHub
 
 # PRLabel: %Storage
-/sdk/storage*                                                      @seanmcc-msft @amnguye @jaschrep-msft @tg-msft
+/sdk/storage*                                                      @seanmcc-msft @amnguye @jaschrep-msft @schaabs @tg-msft
 
 # PRLabel: %Storage
-/sdk/storage/Azure.Storage.*/                                      @seanmcc-msft @amnguye @jaschrep-msft @tg-msft
+/sdk/storage/Azure.Storage.*/                                      @seanmcc-msft @amnguye @jaschrep-msft @schaabs @tg-msft
 
 # PRLabel: %Storage
 /sdk/storage/Microsoft.Azure.WebJobs.*/                            @seanmcc-msft @amnguye @jaschrep-msft @tg-msft @fabiocav @mathewc
