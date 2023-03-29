@@ -1138,5 +1138,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             return new ManagedIntegrationRuntime(type, description, additionalProperties, state, managedVirtualNetwork, computeProperties, ssisProperties);
         }
+
+        /// <summary> Initializes a new instance of ManagedVirtualNetworkReference. </summary>
+        /// <param name="type"> Managed Virtual Network reference type. </param>
+        /// <param name="referenceName"> Reference ManagedVirtualNetwork name. </param>
+        /// <returns> A new <see cref="Models.ManagedVirtualNetworkReference"/> instance for mocking. </returns>
+        public static ManagedVirtualNetworkReference ManagedVirtualNetworkReference(string type = null, string referenceName = null)
+        {
+            return new ManagedVirtualNetworkReference(type, referenceName);
+        }
     }
 }

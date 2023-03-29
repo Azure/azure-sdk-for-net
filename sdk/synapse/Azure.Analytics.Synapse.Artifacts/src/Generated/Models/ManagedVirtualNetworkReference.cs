@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Managed Virtual Network reference type. </summary>
-        public string Type { get; set; }
+        public string Type { get; }
         /// <summary> Reference ManagedVirtualNetwork name. </summary>
         public string ReferenceName { get; set; }
     }
