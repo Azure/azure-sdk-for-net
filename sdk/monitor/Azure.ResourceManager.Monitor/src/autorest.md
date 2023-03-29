@@ -15,6 +15,8 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+mgmt-debug:
+  show-serialized-names: true
 
 format-by-name-rules:
   "tenantId": "uuid"
@@ -256,6 +258,8 @@ rename-mapping:
   SubscriptionScopeMetricsRequestBodyParameters: SubscriptionResourceGetMonitorMetricsWithPostContent
   SubscriptionScopeMetric: SubscriptionMonitorMetric
   TimeSeriesElement: MonitorTimeSeriesElement
+  StorageBlobDestination.StorageAccountResourceId: -|arm-id
+  StorageTableDestination.StorageAccountResourceId: -|arm-id
 
 directive:
   # remove operations because they are covered in resourcemanager we no longer need to generate them here, and they are causing duplicate schemas
