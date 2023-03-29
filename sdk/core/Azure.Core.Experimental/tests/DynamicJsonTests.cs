@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using Azure.Core.Dynamic;
 using NUnit.Framework;
 
@@ -223,6 +224,25 @@ namespace Azure.Core.Experimental.Tests
 
             Assert.IsNull((CustomType)jsonData[0]);
             Assert.IsNull((int?)jsonData[0]);
+        }
+
+        [Test]
+        public void CanEnumerateArrayWithProperCasing()
+        {
+            dynamic jsonData = GetDynamicJson("""{"array":[{"foo":"a"},{"foo":"b"}]}""", DynamicJsonNameMapping.PascalCaseGetters);
+
+            IEnumerable ary = (IEnumerable)jsonData.Array;
+            IEnumerator e = ary.GetEnumerator();
+
+            Assert.IsTrue(e.MoveNext());
+            dynamic item = (dynamic)e.Current;
+            Assert.AreEqual("a", (string)item.Foo);
+
+            Assert.IsTrue(e.MoveNext());
+            item = (dynamic)e.Current;
+            Assert.AreEqual("b", (string)item.Foo);
+
+            Assert.IsFalse(e.MoveNext());
         }
 
         [Test]
@@ -711,9 +731,9 @@ namespace Azure.Core.Experimental.Tests
         }
 
         #region Helpers
-        internal static dynamic GetDynamicJson(string json)
+        internal static dynamic GetDynamicJson(string json, DynamicJsonNameMapping propertyNameCasing = default)
         {
-            return new BinaryData(json).ToDynamic();
+            return new BinaryData(json).ToDynamic(propertyNameCasing);
         }
 
         internal class CustomType

@@ -100,7 +100,7 @@ namespace Azure.Core.Dynamic
         {
             return _element.ValueKind switch
             {
-                JsonValueKind.Array => new ArrayEnumerator(_element.EnumerateArray()),
+                JsonValueKind.Array => new ArrayEnumerator(_element.EnumerateArray(), _options),
                 JsonValueKind.Object => new ObjectEnumerator(_element.EnumerateObject()),
                 _ => throw new InvalidOperationException($"Unable to enumerate JSON element."),
             };
