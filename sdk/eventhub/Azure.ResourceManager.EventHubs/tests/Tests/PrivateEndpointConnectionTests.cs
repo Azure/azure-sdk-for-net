@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
         private ResourceGroupResource _resourceGroup;
         private EventHubsNamespaceResource _eventHubNamespace;
         private EventHubsPrivateEndpointConnectionCollection _privateEndpointConnectionCollection { get => _eventHubNamespace.GetEventHubsPrivateEndpointConnections(); }
-        public PrivateEndpointConnectionTests(bool async) : base(async)
+        public PrivateEndpointConnectionTests(bool async) : base(async)//, RecordedTestMode.Record)
         {
         }
 
@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
         }
 
         [Test]
-        [RecordedTest]
         public async Task GetAllPrivateEndpointConnection()
         {
             PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();
@@ -71,7 +70,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
             VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnections[0]);
         }
         [Test]
-        [RecordedTest]
         public async Task PrivateEndpointConnectionDelete()
         {
             await CreatePrivateEndpoint();
@@ -94,6 +92,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
         protected async Task<PrivateEndpointResource> CreatePrivateEndpoint()
         {
             var vnetName = Recording.GenerateAssetName("vnet-");
+            var peName = Recording.GenerateAssetName("pe-");
+            var pecName = Recording.GenerateAssetName("pec");
             var vnet = new VirtualNetworkData()
             {
                 Location = AzureLocation.WestUS2,
@@ -106,17 +106,31 @@ namespace Azure.ResourceManager.EventHubs.Tests
             vnet.AddressPrefixes.Add("10.0.0.0/16");
             vnet.DhcpOptionsDnsServers.Add("10.1.1.1");
             vnet.DhcpOptionsDnsServers.Add("10.1.2.4");
-            VirtualNetworkResource virtualNetwork = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet)).Value;
-
-            var name = Recording.GenerateAssetName("pe-");
+            //VirtualNetworkResource virtualNetwork = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet)).Value;
+            ResourceIdentifier subnetID;
+            if (Mode == RecordedTestMode.Playback)
+            {
+                subnetID = SubnetResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, vnetName, "default");
+            }
+            else
+            {
+                using (Recording.DisableRecording())
+                {
+                    VirtualNetworkResource vnetResource = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet)).Value;
+                    var subnetCollection = vnetResource.GetSubnets();
+                    //SubnetResource subnetResource = (await subnetCollection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName2, subnetData)).Value;
+                    subnetID = vnetResource.Data.Subnets[0].Id;
+                }
+            };
+            //var name = Recording.GenerateAssetName("pe-");
             var privateEndpointData = new PrivateEndpointData
             {
                 Location = AzureLocation.WestUS2,
-                Subnet = virtualNetwork.Data.Subnets[0],
+                Subnet = new SubnetData() { Id = subnetID },
                 ManualPrivateLinkServiceConnections = {
                     new NetworkPrivateLinkServiceConnection
                     {
-                        Name = Recording.GenerateAssetName("pec"),
+                        Name = pecName,
                         // TODO: externalize or create the service on-demand, like virtual network
                         //PrivateLinkServiceId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{resourceGroup.Data.Name}/providers/Microsoft.Storage/storageAccounts/{storageAccount.Name}",
                         PrivateLinkServiceId = _eventHubNamespace.Id,
@@ -127,7 +141,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 },
             };
 
-            return (await _resourceGroup.GetPrivateEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, name, privateEndpointData)).Value;
+            return (await _resourceGroup.GetPrivateEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, peName, privateEndpointData)).Value;
         }
 
         private void VerifyPrivateEndpointConnections(NetworkPrivateLinkServiceConnection expectedValue, EventHubsPrivateEndpointConnectionResource actualValue)

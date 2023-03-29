@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         private ResourceIdentifier _databaseAccountIdentifier;
         private CosmosDBAccountResource _databaseAccount;
 
-        public PrivateEndpointConnectionTests(bool isAsync) : base(isAsync)
+        public PrivateEndpointConnectionTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -59,7 +59,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         [Test]
-        [RecordedTest]
         public async Task PrivateEndpointConnectionCreateAndUpdate()
         {
             // ID and name of source private endpoint connection is different from the private connection returned by service
@@ -85,7 +84,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         [Test]
-        [RecordedTest]
         public async Task PrivateEndpointConnectionList()
         {
             var privateEndpoint = await CreatePrivateEndpoint();
@@ -97,7 +95,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         [Test]
-        [RecordedTest]
         public async Task PrivateEndpointConnectionDelete()
         {
             await CreatePrivateEndpoint();
@@ -117,6 +114,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         protected async Task<PrivateEndpointResource> CreatePrivateEndpoint()
         {
             var vnetName = Recording.GenerateAssetName("vnet-");
+            var name = Recording.GenerateAssetName("pe-");
+            var pecName = Recording.GenerateAssetName("pec");
             var vnet = new VirtualNetworkData()
             {
                 Location = AzureLocation.WestUS,
@@ -129,17 +128,31 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             vnet.AddressPrefixes.Add("10.0.0.0/16");
             vnet.DhcpOptionsDnsServers.Add("10.1.1.1");
             vnet.DhcpOptionsDnsServers.Add("10.1.2.4");
-            VirtualNetworkResource virtualNetwork = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet)).Value;
-
-            var name = Recording.GenerateAssetName("pe-");
+            //VirtualNetworkResource virtualNetwork = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet)).Value;
+            ResourceIdentifier subnetID;
+            if (Mode == RecordedTestMode.Playback)
+            {
+                subnetID = SubnetResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, vnetName, "default");
+            }
+            else
+            {
+                using (Recording.DisableRecording())
+                {
+                    VirtualNetworkResource vnetResource = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet)).Value;
+                    var subnetCollection = vnetResource.GetSubnets();
+                    //SubnetResource subnetResource = (await subnetCollection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName2, subnetData)).Value;
+                    subnetID = vnetResource.Data.Subnets[0].Id;
+                }
+            };
+            //var name = Recording.GenerateAssetName("pe-");
             var privateEndpointData = new PrivateEndpointData
             {
                 Location = AzureLocation.WestUS,
-                Subnet = virtualNetwork.Data.Subnets[0],
+                Subnet = new SubnetData() { Id = subnetID },
                 ManualPrivateLinkServiceConnections = {
                     new NetworkPrivateLinkServiceConnection
                     {
-                        Name = Recording.GenerateAssetName("pec"),
+                        Name = pecName,
                         // TODO: externalize or create the service on-demand, like virtual network
                         //PrivateLinkServiceId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{resourceGroup.Data.Name}/providers/Microsoft.Storage/storageAccounts/{storageAccount.Name}",
                         PrivateLinkServiceId = _databaseAccountIdentifier,

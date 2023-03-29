@@ -144,8 +144,9 @@ namespace Azure.ResourceManager.NetApp.Tests
         public async Task UpdateVolume()
         {
             //create volume
-            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold);
+            string volumeName = Recording.GenerateAssetName("volumeName-");
             DefaultVirtualNetwork = await CreateVirtualNetwork();
+            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: volumeName);
             VerifyVolumeProperties(volumeResource1, true);
             volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value);
             //validate if created successfully
@@ -174,8 +175,9 @@ namespace Azure.ResourceManager.NetApp.Tests
         public async Task CreateDeleteVolume()
         {
             //create volume
+            string volumeName = Recording.GenerateAssetName("volumeName-");
             DefaultVirtualNetwork = await CreateVirtualNetwork();
-            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold);
+            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName);
             VerifyVolumeProperties(volumeResource1, true);
             volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value);
 
@@ -198,10 +200,10 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [Test]
-        [RecordedTest]
         public async Task CreateVolumePoolNotFound()
         {
             //Delete pool
+            string volumeName = Recording.GenerateAssetName("volumeName-");
             DefaultVirtualNetwork = await CreateVirtualNetwork();
             await _capacityPool.DeleteAsync(WaitUntil.Completed);
             if (Mode != RecordedTestMode.Playback)
@@ -209,17 +211,17 @@ namespace Azure.ResourceManager.NetApp.Tests
                 await Task.Delay(40000);
             }
             //create volume
-            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold); });
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName); });
             Assert.AreEqual(404, exception.Status);
         }
 
         [Test]
-        [RecordedTest]
         public async Task CreateVolumeWithProperties()
         {
             //create volume
+            string volumeName = Recording.GenerateAssetName("volumeName-");
             DefaultVirtualNetwork = await CreateVirtualNetwork();
-            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, exportPolicyRule: _defaultExportPolicyRule, protocolTypes: _defaultProtocolTypes);
+            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, exportPolicyRule: _defaultExportPolicyRule, protocolTypes: _defaultProtocolTypes, volumeName: volumeName);
             VerifyVolumeProperties(volumeResource1, true);
             volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value);
 
@@ -249,13 +251,13 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [Test]
-        [RecordedTest]
         public async Task DeletePooWithVolumePresent()
         {
             Console.WriteLine("TEST DeletePooWithVolumePresent");
             //create volume
+            string volumeName = Recording.GenerateAssetName("volumeName-");
             DefaultVirtualNetwork = await CreateVirtualNetwork();
-            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold);
+            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName);
             VerifyVolumeProperties(volumeResource1, true);
             volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value);
 
@@ -265,13 +267,13 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [Test]
-        [RecordedTest]
         public async Task GetVolumeByName()
         {
             Console.WriteLine("TEST GetVolumeByName");
             //create volume
+            string volumeName = Recording.GenerateAssetName("volumeName-");
             DefaultVirtualNetwork = await CreateVirtualNetwork();
-            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold);
+            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName);
             //validate if created successfully
             NetAppVolumeResource volumeResource2 = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
             VerifyVolumeProperties(volumeResource2, true);
@@ -318,11 +320,13 @@ namespace Azure.ResourceManager.NetApp.Tests
         [Test]
         public async Task ListVolumes()
         {
+            string volumeName = Recording.GenerateAssetName("volumeName-");
+            string volumeName2 = Recording.GenerateAssetName("volumeName-");
             DefaultVirtualNetwork = await CreateVirtualNetwork();
             //create volume1
-            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold);
+            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName);
             //create volume2
-            NetAppVolumeResource volumeResource2 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold);
+            NetAppVolumeResource volumeResource2 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName2);
 
             //validate if list is returned successfully
             List<NetAppVolumeResource> volumeList = await _volumeCollection.GetAllAsync().ToEnumerableAsync();
@@ -439,8 +443,12 @@ namespace Azure.ResourceManager.NetApp.Tests
         public async Task CreateDPVolume()
         {
             //create the source volume
+            string volumeName = Recording.GenerateAssetName("volumeName-");
+            string volumeName2 = Recording.GenerateAssetName("volumeName-");
+            string remoteRGName = Recording.GenerateAssetName(_resourceGroup.Id.Name + "-remote");
+            string remotevnetName = Recording.GenerateAssetName("vnet-");
             DefaultVirtualNetwork = await CreateVirtualNetwork();
-            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold);
+            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName);
             VerifyVolumeProperties(volumeResource1, true);
             volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value);
             if (Mode != RecordedTestMode.Playback)
@@ -449,10 +457,10 @@ namespace Azure.ResourceManager.NetApp.Tests
             }
             //create destination volume + resources
             //create remote resource Group
-            string remoteRGName = _resourceGroup.Id.Name + "-remote";
+            //string remoteRGName = _resourceGroup.Id.Name + "-remote";
             ResourceGroupResource remoteResourceGroup = await CreateResourceGroupAsync(remoteRGName, RemoteLocation);
             //create vnet
-            VirtualNetworkResource remoteVNet = await CreateVirtualNetwork(RemoteLocation, remoteResourceGroup);
+            VirtualNetworkResource remoteVNet = await CreateVirtualNetwork(RemoteLocation, remoteResourceGroup, remotevnetName);
 
             //Create NetAppAccount
             NetAppAccountCollection remoteNetAppAccountCollection = remoteResourceGroup.GetNetAppAccounts();
@@ -468,7 +476,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppReplicationObject replication = new(null, NetAppEndpointType.Destination, NetAppReplicationSchedule.TenMinutely, volumeResource1.Id, RemoteLocation);
             NetAppVolumeDataProtection dataProtectionProperties = new NetAppVolumeDataProtection(null, replication: replication, null);
             NetAppVolumeCollection remoteVolumeCollection = remoteCapacityPool.GetNetAppVolumes();
-            NetAppVolumeResource remoteVolume = await CreateVolume(RemoteLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeCollection: remoteVolumeCollection, dataProtection: dataProtectionProperties);
+            NetAppVolumeResource remoteVolume = await CreateVolume(RemoteLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeCollection: remoteVolumeCollection, dataProtection: dataProtectionProperties, volumeName: volumeName2);
             if (Mode != RecordedTestMode.Playback)
             {
                 await Task.Delay(10000);

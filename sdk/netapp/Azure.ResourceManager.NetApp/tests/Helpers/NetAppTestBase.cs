@@ -230,7 +230,15 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
         public async Task<ResourceGroupResource> CreateResourceGroupAsync(string name = "testNetAppDotNetSDKRG-", string location = "")
         {
             location = string.IsNullOrEmpty(location) ? DefaultLocationString : location;
-            string resourceGroupName = Recording.GenerateAssetName(name);
+            string resourceGroupName;
+            if (name == "testNetAppDotNetSDKRG-")
+            {
+                resourceGroupName = Recording.GenerateAssetName(name);
+            }
+            else
+            {
+                resourceGroupName = name;
+            }
             ArmOperation<ResourceGroupResource> operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 resourceGroupName,
@@ -306,7 +314,7 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             return volumeResource;
         }
 
-        public async Task<VirtualNetworkResource> CreateVirtualNetwork(string location = null, ResourceGroupResource resourceGroup = null)
+        public async Task<VirtualNetworkResource> CreateVirtualNetwork(string location = null, ResourceGroupResource resourceGroup = null, string vnetName = null)
         {
             if (string.IsNullOrWhiteSpace(location))
             {
@@ -317,7 +325,10 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
                 resourceGroup = _resourceGroup;
             }
             location ??= DefaultLocationString;
-            var vnetName = Recording.GenerateAssetName("vnet-");
+            if (vnetName == null)
+            {
+                vnetName = Recording.GenerateAssetName("vnet-");
+            };
             ServiceDelegation delegation =  new() { Name = "netAppVolumes", ServiceName = "Microsoft.Netapp/volumes" } ;
             var vnet = new VirtualNetworkData()
             {

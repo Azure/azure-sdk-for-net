@@ -21,8 +21,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
 {
     public class PostgreSqlFlexibleServerTests: PostgreSqlManagementTestBase
     {
-        public PostgreSqlFlexibleServerTests(bool isAsync)
-            : base(isAsync)
+        public PostgreSqlFlexibleServerTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -155,10 +154,10 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             Assert.AreEqual(PostgreSqlFlexibleServerPublicNetworkAccessState.Enabled, targetPublicServer.Data.Network.PublicNetworkAccess);
 
             // Create vnet and subnet
-            var (sourceVnet, sourceSubnet) = await CreateVirtualNetwork(sourceVnetName, sourceSubnetName, rg.Data.Name, rg.Data.Location);
+            var (vnetID, subnetID) = await CreateVirtualNetwork(sourceVnetName, sourceSubnetName, rg.Data.Name, rg.Data.Location);
 
             // Create private DNS zone and virtual link
-            var sourcePrivateDnsZone = await CreatePrivateDnsZone(sourcePrivateServerName, sourceVnet, rg.Data.Name);
+            var sourcePrivateDnsZone = await CreatePrivateDnsZone(sourcePrivateServerName, vnetID, rg.Data.Name);
 
             // Create private server
             var sourcePrivateServerOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, sourcePrivateServerName, new PostgreSqlFlexibleServerData(rg.Data.Location)
@@ -170,7 +169,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 StorageSizeInGB = 128,
                 Network = new PostgreSqlFlexibleServerNetwork()
                 {
-                    DelegatedSubnetResourceId = sourceSubnet.Id,
+                    DelegatedSubnetResourceId = subnetID,
                     PrivateDnsZoneArmResourceId = sourcePrivateDnsZone.Id,
                 },
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
@@ -192,7 +191,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             {
                 Network = new PostgreSqlFlexibleServerNetwork()
                 {
-                    DelegatedSubnetResourceId = sourceSubnet.Id,
+                    DelegatedSubnetResourceId = subnetID,
                     PrivateDnsZoneArmResourceId = sourcePrivateDnsZone.Id,
                 },
                 SourceServerResourceId = sourcePrivateServer.Id,
@@ -202,19 +201,19 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             var targetPrivateServer = targetPrivateServerOperation.Value;
 
             Assert.AreEqual(targetPrivateServerName, targetPrivateServer.Data.Name);
-            Assert.AreEqual(sourceSubnet.Id, targetPrivateServer.Data.Network.DelegatedSubnetResourceId);
+            Assert.AreEqual(subnetID, targetPrivateServer.Data.Network.DelegatedSubnetResourceId);
             Assert.AreEqual(sourcePrivateDnsZone.Id, targetPrivateServer.Data.Network.PrivateDnsZoneArmResourceId);
             Assert.AreEqual(PostgreSqlFlexibleServerPublicNetworkAccessState.Disabled, targetPrivateServer.Data.Network.PublicNetworkAccess);
 
             // Restore private server in different vnet
-            var (targetVnet, targetSubnet) = await CreateVirtualNetwork(targetVnetName, targetSubnetName, rg.Data.Name, rg.Data.Location);
-            var targetPrivateDnsZone = await CreatePrivateDnsZone(targetPrivateServerDiffName, targetVnet, rg.Data.Name);
+            var (targetVnetID, targetSubnetID) = await CreateVirtualNetwork(targetVnetName, targetSubnetName, rg.Data.Name, rg.Data.Location);
+            var targetPrivateDnsZone = await CreatePrivateDnsZone(targetPrivateServerDiffName, targetVnetID, rg.Data.Name);
 
             var targetPrivateServerDiffOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, targetPrivateServerDiffName, new PostgreSqlFlexibleServerData(rg.Data.Location)
             {
                 Network = new PostgreSqlFlexibleServerNetwork()
                 {
-                    DelegatedSubnetResourceId = targetSubnet.Id,
+                    DelegatedSubnetResourceId = targetSubnetID,
                     PrivateDnsZoneArmResourceId = targetPrivateDnsZone.Id,
                 },
                 SourceServerResourceId = sourcePrivateServer.Id,
@@ -224,13 +223,12 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             var targetPrivateServerDiff = targetPrivateServerDiffOperation.Value;
 
             Assert.AreEqual(targetPrivateServerDiffName, targetPrivateServerDiff.Data.Name);
-            Assert.AreEqual(targetSubnet.Id, targetPrivateServerDiff.Data.Network.DelegatedSubnetResourceId);
+            Assert.AreEqual(targetSubnetID, targetPrivateServerDiff.Data.Network.DelegatedSubnetResourceId);
             Assert.AreEqual(targetPrivateDnsZone.Id, targetPrivateServerDiff.Data.Network.PrivateDnsZoneArmResourceId);
             Assert.AreEqual(PostgreSqlFlexibleServerPublicNetworkAccessState.Disabled, targetPrivateServerDiff.Data.Network.PublicNetworkAccess);
         }
 
         [TestCase]
-        [RecordedTest]
         public async Task GeoRestore()
         {
             var sourcePublicServerName = Recording.GenerateAssetName("pgflexserver");
@@ -303,10 +301,10 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             Assert.AreEqual(PostgreSqlFlexibleServerPublicNetworkAccessState.Enabled, targetPublicServer.Data.Network.PublicNetworkAccess);
 
             // Create source vnet and subnet
-            var (sourceVnet, sourceSubnet) = await CreateVirtualNetwork(sourceVnetName, sourceSubnetName, rg.Data.Name, rg.Data.Location);
+            var (sourceVnetID, sourceSubnetID) = await CreateVirtualNetwork(sourceVnetName, sourceSubnetName, rg.Data.Name, rg.Data.Location);
 
             // Create source private DNS zone and virtual link
-            var sourcePrivateDnsZone = await CreatePrivateDnsZone(sourcePrivateServerName, sourceVnet, rg.Data.Name);
+            var sourcePrivateDnsZone = await CreatePrivateDnsZone(sourcePrivateServerName, sourceVnetID, rg.Data.Name);
 
             // Create private server
             var sourcePrivateServerOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, sourcePrivateServerName, new PostgreSqlFlexibleServerData(rg.Data.Location)
@@ -322,7 +320,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 },
                 Network = new PostgreSqlFlexibleServerNetwork()
                 {
-                    DelegatedSubnetResourceId = sourceSubnet.Id,
+                    DelegatedSubnetResourceId = sourceSubnetID,
                     PrivateDnsZoneArmResourceId = sourcePrivateDnsZone.Id,
                 },
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
@@ -334,10 +332,10 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             Assert.AreEqual(PostgreSqlFlexibleServerPublicNetworkAccessState.Disabled, sourcePrivateServer.Data.Network.PublicNetworkAccess);
 
             // Create target vnet and subnet in paired region
-            var (targetVnet, targetSubnet) = await CreateVirtualNetwork(targetVnetName, targetSubnetName, rg.Data.Name, targetLocation);
+            var (targetVnetID, targetSubnetID) = await CreateVirtualNetwork(targetVnetName, targetSubnetName, rg.Data.Name, targetLocation);
 
             // Create target private DNS zone and virtual link
-            var targetPrivateDnsZone = await CreatePrivateDnsZone(targetPrivateServerName, targetVnet, rg.Data.Name);
+            var targetPrivateDnsZone = await CreatePrivateDnsZone(targetPrivateServerName, targetVnetID, rg.Data.Name);
 
             // Geo-restore private server to paired region
             PostgreSqlFlexibleServerResource targetPrivateServer = null;
@@ -349,7 +347,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     {
                         Network = new PostgreSqlFlexibleServerNetwork()
                         {
-                            DelegatedSubnetResourceId = targetSubnet.Id,
+                            DelegatedSubnetResourceId = targetSubnetID,
                             PrivateDnsZoneArmResourceId = targetPrivateDnsZone.Id,
                         },
                         SourceServerResourceId = sourcePrivateServer.Id,
@@ -378,7 +376,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
 
             Assert.AreEqual(targetPrivateServerName, targetPrivateServer.Data.Name);
             Assert.AreEqual(targetLocation, targetPrivateServer.Data.Location);
-            Assert.AreEqual(targetSubnet.Id, targetPrivateServer.Data.Network.DelegatedSubnetResourceId);
+            Assert.AreEqual(targetSubnetID, targetPrivateServer.Data.Network.DelegatedSubnetResourceId);
             Assert.AreEqual(targetPrivateDnsZone.Id, targetPrivateServer.Data.Network.PrivateDnsZoneArmResourceId);
             Assert.AreEqual(PostgreSqlFlexibleServerPublicNetworkAccessState.Disabled, targetPrivateServer.Data.Network.PublicNetworkAccess);
         }
@@ -413,8 +411,8 @@ namespace Azure.ResourceManager.PostgreSql.Tests
 
             if (vnetEnabled)
             {
-                (vnet, sourceSubnet) = await CreateVirtualNetwork(vnetName, sourceSubnetName, rg.Data.Name, rg.Data.Location);
-                sourcePrivateDnsZone = await CreatePrivateDnsZone(sourceServerName, vnet, rg.Data.Name);
+                var (vnetID, sourceSubnetID) = await CreateVirtualNetwork(vnetName, sourceSubnetName, rg.Data.Name, rg.Data.Location);
+                sourcePrivateDnsZone = await CreatePrivateDnsZone(sourceServerName, vnetID, rg.Data.Name);
 
                 for (var i = 0; i < 2; ++i)
                 {
@@ -433,7 +431,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                         PrivateLinkServiceNetworkPolicy = VirtualNetworkPrivateLinkServiceNetworkPolicy.Enabled,
                     });
                     replicaSubnet[i] = replicaSubnetOperation.Value;
-                    replicaPrivateDnsZone[i] = await CreatePrivateDnsZone(replicaServerName[i], vnet, rg.Data.Name);
+                    replicaPrivateDnsZone[i] = await CreatePrivateDnsZone(replicaServerName[i], vnetID, rg.Data.Name);
                 }
             }
 

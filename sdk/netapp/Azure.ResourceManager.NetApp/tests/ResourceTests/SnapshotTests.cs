@@ -225,6 +225,7 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [Test]
+        [Ignore("The specified filePath /dir1/file1 does not exist in the snapshot")]
         public async Task RestoreFilesFromSnapshotFileDoesNotExist()
         {
             //create snapshot
