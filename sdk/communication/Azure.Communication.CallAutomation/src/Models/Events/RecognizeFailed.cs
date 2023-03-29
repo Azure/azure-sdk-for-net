@@ -10,8 +10,13 @@ namespace Azure.Communication.CallAutomation
     /// The Recognize failed event.
     /// </summary>
     [CodeGenModel("RecognizeFailed", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    public partial class RecognizeFailed : CallAutomationEventWithReasonCodeName
+    public partial class RecognizeFailed : CallAutomationEventBase
     {
+        /// <summary>
+        /// Reason code.
+        /// </summary>
+        public ReasonCode ReasonCode { get; internal set; }
+
         /// <summary> Initializes a new instance of RecognizeFailed. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>

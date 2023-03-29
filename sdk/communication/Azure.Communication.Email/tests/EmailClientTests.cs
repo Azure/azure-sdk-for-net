@@ -5,7 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 #nullable enable
@@ -226,12 +229,176 @@ namespace Azure.Communication.Email.Tests
             Assert.AreEqual((int)HttpStatusCode.BadRequest, exception?.Status);
         }
 
+        [Test]
+        [SyncOnly]
+        public void EmailSend_RestClientReturnsSucceeded_NoException()
+        {
+            EmailClient emailClient = CreateEmailClientWithMockedFinalStatus(HttpStatusCode.OK, EmailSendStatus.Succeeded);
+            var emailMessage = DefaultEmailMessage();
+
+            EmailSendOperation emailSendOperation = emailClient.Send(WaitUntil.Started, emailMessage);
+
+            while (true)
+            {
+                emailSendOperation.UpdateStatus();
+                if (emailSendOperation.HasCompleted)
+                {
+                    break;
+                }
+                Thread.Sleep(1000);
+            }
+
+            Assert.IsTrue(emailSendOperation.HasCompleted);
+            Assert.IsTrue(emailSendOperation.HasValue);
+            Assert.IsNotNull(emailSendOperation.Id);
+            Assert.AreEqual(EmailSendStatus.Succeeded, emailSendOperation.Value.Status);
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task EmailSend_RestClientReturnsSucceeded_NoExceptionAsync()
+        {
+            EmailClient emailClient = CreateEmailClientWithMockedFinalStatus(HttpStatusCode.OK, EmailSendStatus.Succeeded);
+            var emailMessage = DefaultEmailMessage();
+
+            EmailSendOperation emailSendOperation = await emailClient.SendAsync(WaitUntil.Started, emailMessage);
+
+            while (true)
+            {
+                await emailSendOperation.UpdateStatusAsync();
+                if (emailSendOperation.HasCompleted)
+                {
+                    break;
+                }
+                Thread.Sleep(1000);
+            }
+
+            Assert.IsTrue(emailSendOperation.HasCompleted);
+            Assert.IsTrue(emailSendOperation.HasValue);
+            Assert.IsNotNull(emailSendOperation.Id);
+            Assert.AreEqual(EmailSendStatus.Succeeded, emailSendOperation.Value.Status);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void EmailSend_RestClientReturnsFailed_ThrowsException()
+        {
+            EmailClient emailClient = CreateEmailClientWithMockedFinalStatus(HttpStatusCode.OK, EmailSendStatus.Failed);
+            var emailMessage = DefaultEmailMessage();
+
+            EmailSendOperation emailSendOperation = emailClient.Send(WaitUntil.Started, emailMessage);
+
+            RequestFailedException? exception = Assert.Throws<RequestFailedException>(() =>
+            {
+                while (true)
+                {
+                    emailSendOperation.UpdateStatus();
+                    if (emailSendOperation.HasCompleted)
+                    {
+                        break;
+                    }
+                    Thread.Sleep(1000);
+                }
+            });
+
+            Assert.AreEqual((int)HttpStatusCode.OK, exception?.Status);
+            Assert.IsTrue(emailSendOperation.HasCompleted);
+            Assert.IsFalse(emailSendOperation.HasValue);
+            Assert.IsNotNull(emailSendOperation.Id);
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task EmailSend_RestClientReturnsFailed_ThrowsExceptionAsync()
+        {
+            EmailClient emailClient = CreateEmailClientWithMockedFinalStatus(HttpStatusCode.OK, EmailSendStatus.Failed);
+            var emailMessage = DefaultEmailMessage();
+
+            EmailSendOperation emailSendOperation = await emailClient.SendAsync(WaitUntil.Started, emailMessage);
+
+            RequestFailedException? exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                while (true)
+                {
+                    await emailSendOperation.UpdateStatusAsync();
+                    if (emailSendOperation.HasCompleted)
+                    {
+                        break;
+                    }
+                    Thread.Sleep(1000);
+                }
+            });
+
+            Assert.AreEqual((int)HttpStatusCode.OK, exception?.Status);
+            Assert.IsTrue(emailSendOperation.HasCompleted);
+            Assert.IsFalse(emailSendOperation.HasValue);
+            Assert.IsNotNull(emailSendOperation.Id);
+        }
+
         private EmailClient CreateEmailClient(HttpStatusCode statusCode = HttpStatusCode.OK)
         {
             var mockResponse = new MockResponse((int)statusCode);
+
             var emailClientOptions = new EmailClientOptions
             {
                 Transport = new MockTransport(mockResponse, mockResponse, mockResponse, mockResponse)
+            };
+
+            return new EmailClient(ConnectionString, emailClientOptions);
+        }
+
+        private EmailClient CreateEmailClientWithMockedFinalStatus(HttpStatusCode finalStatusCode, EmailSendStatus finalEmailSendStatus)
+        {
+            var mockEmailSendResult = new
+            {
+                id = Guid.NewGuid().ToString(),
+                status = EmailSendStatus.Running.ToString(),
+            };
+            var mockSendMailResponse = new MockResponse((int)HttpStatusCode.Accepted);
+            mockSendMailResponse.SetContent(JsonConvert.SerializeObject(mockEmailSendResult))
+                .WithHeader("Content-Type", "application/json; charset=utf-8");
+
+            var mockIntermediateGetStatusResult = new
+            {
+                id = Guid.NewGuid().ToString(),
+                status = EmailSendStatus.Running.ToString(),
+            };
+            var mockIntermediateGetStatusResponse = new MockResponse((int)HttpStatusCode.OK);
+            mockIntermediateGetStatusResponse.SetContent(JsonConvert.SerializeObject(mockIntermediateGetStatusResult))
+                .WithHeader("Content-Type", "application/json; charset=utf-8");
+
+            string mockFinalGetStatusResult;
+            if (finalEmailSendStatus == EmailSendStatus.Succeeded)
+            {
+                var mockGetStatusResultObj = new
+                {
+                    id = Guid.NewGuid().ToString(),
+                    status = finalEmailSendStatus.ToString()
+                };
+                mockFinalGetStatusResult = JsonConvert.SerializeObject(mockGetStatusResultObj);
+            }
+            else
+            {
+                var mockGetStatusResultObj = new
+                {
+                    id = Guid.NewGuid().ToString(),
+                    status = finalEmailSendStatus.ToString(),
+                    error = new
+                    {
+                        code = "EmailFailed",
+                        message = "Invalid sender domain",
+                        target = "SenderAddress"
+                    }
+                };
+                mockFinalGetStatusResult = JsonConvert.SerializeObject(mockGetStatusResultObj);
+            }
+            var mockFinalGetStatusResponse = new MockResponse((int)finalStatusCode);
+            mockFinalGetStatusResponse.SetContent(mockFinalGetStatusResult)
+                .WithHeader("Content-Type", "application/json; charset=utf-8");
+
+            var emailClientOptions = new EmailClientOptions
+            {
+                Transport = new MockTransport(mockSendMailResponse, mockIntermediateGetStatusResponse, mockFinalGetStatusResponse, mockFinalGetStatusResponse)
             };
 
             return new EmailClient(ConnectionString, emailClientOptions);

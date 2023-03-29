@@ -19,14 +19,14 @@ namespace Azure.Communication.CallAutomation
         private readonly ClientDiagnostics _clientDiagnostics;
         internal CallConnectionRestClient RestClient { get; }
         internal CallMediaRestClient CallMediaRestClient { get; }
-        internal EventProcessor EventProcessor { get; }
+        internal CallAutomationEventProcessor EventProcessor { get; }
 
         /// <summary>
         /// The call connection id.
         /// </summary>
         public virtual string CallConnectionId { get; internal set; }
 
-        internal CallConnection(string callConnectionId, CallConnectionRestClient callConnectionRestClient, CallMediaRestClient callCallMediaRestClient, ClientDiagnostics clientDiagnostics, EventProcessor eventProcessor)
+        internal CallConnection(string callConnectionId, CallConnectionRestClient callConnectionRestClient, CallMediaRestClient callCallMediaRestClient, ClientDiagnostics clientDiagnostics, CallAutomationEventProcessor eventProcessor)
         {
             CallConnectionId = callConnectionId;
             RestClient = callConnectionRestClient;
@@ -587,13 +587,17 @@ namespace Azure.Communication.CallAutomation
                     request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
                 }
 
-                return await RestClient.RemoveParticipantAsync(
+                var response = await RestClient.RemoveParticipantAsync(
                     CallConnectionId,
                     request,
-                     repeatabilityHeaders.RepeatabilityRequestId,
-                     repeatabilityHeaders.GetRepeatabilityFirstSentString(),
-                    cancellationToken
-                    ).ConfigureAwait(false);
+                    repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    cancellationToken).ConfigureAwait(false);
+
+                var result = new RemoveParticipantResult(response);
+                result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
+
+                return Response.FromValue(result, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -645,13 +649,17 @@ namespace Azure.Communication.CallAutomation
                     options.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
                 }
 
-                return RestClient.RemoveParticipant(
-                     CallConnectionId,
-                     request,
-                     repeatabilityHeaders.RepeatabilityRequestId,
-                     repeatabilityHeaders.GetRepeatabilityFirstSentString(),
-                     cancellationToken
-                     );
+                var response = RestClient.RemoveParticipant(
+                    CallConnectionId,
+                    request,
+                    repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    cancellationToken);
+
+                var result = new RemoveParticipantResult(response);
+                result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
+
+                return Response.FromValue(result, response.GetRawResponse());
             }
             catch (Exception ex)
             {
