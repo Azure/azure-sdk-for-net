@@ -55,6 +55,6 @@ namespace Azure.Communication.Chat.Notifications.Models
         /// <summary>
         /// Property
         /// </summary>
-        public ReadOnlyDictionary<string, string> MetaData { get; }
+        public IReadOnlyDictionary<string, string> Metadata { get; }
     }
 }
