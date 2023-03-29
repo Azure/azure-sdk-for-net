@@ -1117,6 +1117,86 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
+    <member name="GetOperationDetailsAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetOperationDetailsAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+Response response = await client.GetOperationDetailsAsync("<snapshot>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>OperationDetails</c>:
+<code>{
+  id: string, # Required. The unique id of the operation.
+  status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Required. The current status of the operation
+  error: {
+    code: string, # Required. One of a server-defined set of error codes.
+    message: string, # Required. A human-readable representation of the error.
+    details: [ErrorDetail], # Optional. An array of details about specific errors that led to this reported error.
+    innererror: {
+      code: string, # Optional. One of a server-defined set of error codes.
+      innererror: InnerError, # Optional. An object containing more specific information than the current object about the error.
+    }, # Optional. An object containing more specific information than the current object about the error.
+  }, # Optional. An error, available when the status is `Failed`, describing why the operation failed.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetOperationDetails(String,RequestContext)">
+<example>
+This sample shows how to call GetOperationDetails with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+Response response = client.GetOperationDetails("<snapshot>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>OperationDetails</c>:
+<code>{
+  id: string, # Required. The unique id of the operation.
+  status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Required. The current status of the operation
+  error: {
+    code: string, # Required. One of a server-defined set of error codes.
+    message: string, # Required. A human-readable representation of the error.
+    details: [ErrorDetail], # Optional. An array of details about specific errors that led to this reported error.
+    innererror: {
+      code: string, # Optional. One of a server-defined set of error codes.
+      innererror: InnerError, # Optional. An object containing more specific information than the current object about the error.
+    }, # Optional. An object containing more specific information than the current object about the error.
+  }, # Optional. An error, available when the status is `Failed`, describing why the operation failed.
+}
+</code>
+
+</remarks>
+    </member>
     <member name="GetKeysAsync(String,String,String,RequestContext)">
 <example>
 This sample shows how to call GetKeysAsync and parse the result.

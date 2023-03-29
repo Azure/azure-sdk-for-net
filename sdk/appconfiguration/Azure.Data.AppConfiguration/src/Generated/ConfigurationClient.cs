@@ -621,6 +621,56 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
+        /// <summary> Gets the state of a long running operation. </summary>
+        /// <param name="snapshot"> Snapshot identifier for the long running operation. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetOperationDetailsAsync(String,RequestContext)']/*" />
+        internal virtual async Task<Response> GetOperationDetailsAsync(string snapshot, RequestContext context = null)
+        {
+            Argument.AssertNotNull(snapshot, nameof(snapshot));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetOperationDetails");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetOperationDetailsRequest(snapshot, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the state of a long running operation. </summary>
+        /// <param name="snapshot"> Snapshot identifier for the long running operation. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetOperationDetails(String,RequestContext)']/*" />
+        internal virtual Response GetOperationDetails(string snapshot, RequestContext context = null)
+        {
+            Argument.AssertNotNull(snapshot, nameof(snapshot));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetOperationDetails");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetOperationDetailsRequest(snapshot, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Gets a list of keys. </summary>
         /// <param name="name"> A filter for the name of the returned keys. </param>
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
@@ -1455,6 +1505,21 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
+            return message;
+        }
+
+        internal HttpMessage CreateGetOperationDetailsRequest(string snapshot, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/operations", false);
+            uri.AppendQuery("snapshot", snapshot, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
