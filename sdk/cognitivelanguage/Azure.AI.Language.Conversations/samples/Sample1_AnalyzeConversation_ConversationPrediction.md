@@ -66,10 +66,9 @@ foreach (dynamic entity in conversationPrediction.entities)
     Console.WriteLine($"Confidence: {entity.confidenceScore}");
     Console.WriteLine();
 
-    dynamic resolutions = entity.resolutions;
-    if (resolutions is not null)
+    if (entity.resolutions is not null)
     {
-        foreach (dynamic resolution in resolutions)
+        foreach (dynamic resolution in entity.resolutions)
         {
             if (resolution.resolutionKind == "DateTimeResolution")
             {
