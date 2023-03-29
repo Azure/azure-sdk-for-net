@@ -74,6 +74,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         private const string StringValue = "a";
         private const string ExpressionValue = "@{myExpression}";
         private const string SecureStringValue = "somestring";
+        private static readonly string MaskedSecureStringValue = new string('*', SecureStringValue.Length);
         private const string KeyVaultReferenceValue = "@Microsoft.KeyVault(SecretUri=https://myvault.vault.azure.net/secrets/mysecret/)";
 
         private static string TimeSpanJson = $"\"{TimeSpanValue.ToString()}\"";
@@ -188,8 +189,9 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void CreateAsSecureStringLiteral()
         {
-            var dfe = DataFactoryElement<string?>.FromLiteral(StringValue, true);
-            AssertStringDfe(dfe, new string('*', StringValue.Length), DataFactoryElementKind.SecureString);;
+            var dfe = DataFactoryElement<string?>.FromLiteral(SecureStringValue, true);
+            AssertStringDfe(dfe, MaskedSecureStringValue, DataFactoryElementKind.SecureString);;
+            Assert.AreEqual(SecureStringValue, dfe.Value);
         }
 
         [Test]
@@ -792,7 +794,8 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         {
             var doc = JsonDocument.Parse(SecureStringJson);
             var dfe = DataFactoryElementJsonConverter.Deserialize<string>(doc.RootElement)!;
-            AssertStringDfe(dfe, SecureStringValue, DataFactoryElementKind.SecureString);
+            Assert.AreEqual(SecureStringValue, dfe.Value);
+            AssertStringDfe(dfe, MaskedSecureStringValue, DataFactoryElementKind.SecureString);
         }
 
         private static void AssertExpressionDfe(DataFactoryElement<string?> dfe)
