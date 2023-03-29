@@ -77,6 +77,7 @@ trigger:
     - sdk/fluidrelay/Azure.ResourceManager.FluidRelay
     - sdk/frontdoor/Azure.ResourceManager.FrontDoor
     - sdk/grafana/Azure.ResourceManager.Grafana
+    - sdk/graphservices/Azure.ResourceManager.GraphServices
     - sdk/guestconfiguration/Azure.ResourceManager.GuestConfiguration
     - sdk/hdinsight/Azure.ResourceManager.HDInsight
     - sdk/healthbot/Azure.ResourceManager.HealthBot
@@ -240,6 +241,7 @@ pr:
     - sdk/fluidrelay/Azure.ResourceManager.FluidRelay
     - sdk/frontdoor/Azure.ResourceManager.FrontDoor
     - sdk/grafana/Azure.ResourceManager.Grafana
+    - sdk/graphservices/Azure.ResourceManager.GraphServices
     - sdk/guestconfiguration/Azure.ResourceManager.GuestConfiguration
     - sdk/hdinsight/Azure.ResourceManager.HDInsight
     - sdk/healthbot/Azure.ResourceManager.HealthBot
