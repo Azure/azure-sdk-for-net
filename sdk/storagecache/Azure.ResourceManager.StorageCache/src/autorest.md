@@ -9,7 +9,7 @@ generate-model-factory: false
 csharp: true
 library-name: StorageCache
 namespace: Azure.ResourceManager.StorageCache
-require: https://github.com/Azure/azure-rest-api-specs/blob/53b1affe357b3bfbb53721d0a2002382a046d3b0/specification/storagecache/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/10c740b7224771c889cfb92f128168f5a0568c26/specification/storagecache/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -66,6 +66,10 @@ rename-mapping:
   UsageModelsResult: StorageCacheUsageModelsResult
   UsernameSource: StorageCacheUsernameSourceType
   UsernameDownloadedType: StorageCacheUsernameDownloadedType
+  Nfs3Target.verificationTimer: VerificationDelayInSeconds
+  Nfs3Target.writeBackTimer: WriteBackDelayInSeconds
+  BlobNfsTarget.verificationTimer: VerificationDelayInSeconds
+  BlobNfsTarget.writeBackTimer: WriteBackDelayInSeconds  
 
 format-by-name-rules:
   'tenantId': 'uuid'

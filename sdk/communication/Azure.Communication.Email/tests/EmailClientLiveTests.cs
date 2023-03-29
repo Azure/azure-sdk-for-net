@@ -21,7 +21,9 @@ namespace Azure.Communication.Email.Tests
         [AsyncOnly]
         public async Task SendEmailAndWaitForExistingOperationAsync()
         {
-            EmailClient emailClient = CreateEmailClient();
+            var emailClient = new EmailClient(
+                TestEnvironment.CommunicationConnectionStringEmail,
+                CreateEmailClientOptionsWithCorrelationVectorLogs());
             EmailRecipients emailRecipients = GetRecipients(setTo: true, setCc: true, setBcc: true);
 
             EmailSendOperation emailSendOperation = await SendEmailAndWaitForExistingOperationAsync(emailClient, emailRecipients);
@@ -36,7 +38,9 @@ namespace Azure.Communication.Email.Tests
         [SyncOnly]
         public void SendEmailAndWaitForExistingOperation()
         {
-            EmailClient emailClient = CreateEmailClient();
+            var emailClient = new EmailClient(
+                TestEnvironment.CommunicationConnectionStringEmail,
+                CreateEmailClientOptionsWithCorrelationVectorLogs());
             EmailRecipients emailRecipients = GetRecipients(setTo: true, setCc: true, setBcc: true);
 
             EmailSendOperation emailSendOperation = SendEmailAndWaitForExistingOperation(emailClient, emailRecipients);

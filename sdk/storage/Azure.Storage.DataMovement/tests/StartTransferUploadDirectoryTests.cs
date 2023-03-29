@@ -123,9 +123,8 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
         [Test]
-        [LiveOnly]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         [TestCase(0, 10)]
         [TestCase(100, 10)]
         [TestCase(Constants.KB, 10)]
@@ -206,9 +205,8 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
         [Test]
-        [LiveOnly]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task LocalToBlockBlobDirectory_SmallChunks()
         {
             long blobSize = Constants.KB;
@@ -250,9 +248,8 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
         [Test]
-        [LiveOnly]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task DirectoryUpload_EmptyFolder()
         {
             // Arrange
@@ -295,9 +292,8 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
         [Test]
-        [LiveOnly]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task DirectoryUpload_SingleFile()
         {
             // Arrange
@@ -331,9 +327,8 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
         [Test]
-        [LiveOnly]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task DirectoryUpload_ManySubDirectories()
         {
             // Arrange
@@ -390,9 +385,8 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
         [Test]
-        [LiveOnly]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(3)]
@@ -433,9 +427,8 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
         [Test]
-        [LiveOnly]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task DirectoryUpload_EmptySubDirectories()
         {
             // Arrange
@@ -478,9 +471,8 @@ namespace Azure.Storage.DataMovement.Tests
 
         #region DirectoryUploadTests
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
         [Test]
-        [LiveOnly]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task DirectoryUpload_OverwriteTrue()
         {
             // Arrange
@@ -529,9 +521,8 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
         [Test]
-        [LiveOnly]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task DirectoryUpload_OverwriteFalse()
         {
             // Arrange
@@ -569,6 +560,58 @@ namespace Azure.Storage.DataMovement.Tests
                     files,
                     destinationPrefix: dirName,
                     waitTimeInSec: 10);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.StackTrace);
+            }
+            finally
+            {
+                Directory.Delete(folder, true);
+            }
+        }
+
+        [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [TestCase(BlobType.Block)]
+        [TestCase(BlobType.Append)]
+        [TestCase(BlobType.Page)]
+        public async Task DirectoryUpload_BlobType(BlobType blobType)
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
+
+            string dirName = GetNewBlobName();
+            string folder = CreateRandomDirectory(Path.GetTempPath());
+            try
+            {
+                string file1 = await CreateRandomFileAsync(folder);
+                string openSubfolder = CreateRandomDirectory(folder);
+                string file2 = await CreateRandomFileAsync(openSubfolder);
+                string destinationPrefix = "foo";
+
+                TransferManager transferManager = new TransferManager();
+
+                StorageResourceContainer sourceResource = new LocalDirectoryStorageResourceContainer(folder);
+                BlobStorageResourceContainerOptions options = new BlobStorageResourceContainerOptions()
+                {
+                    BlobType = blobType
+                };
+                StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(
+                    test.Container,
+                    destinationPrefix,
+                    options);
+
+                // Act
+                DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource);
+                await transfer.AwaitCompletion();
+
+                // Assert
+                AsyncPageable<BlobItem> blobs = test.Container.GetBlobsAsync(prefix: destinationPrefix);
+                await foreach (BlobItem blob in blobs)
+                {
+                    Assert.AreEqual(blob.Properties.BlobType, blobType);
+                }
             }
             catch (Exception ex)
             {
@@ -632,8 +675,8 @@ namespace Azure.Storage.DataMovement.Tests
                 options).ConfigureAwait(false);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
         [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_AwaitCompletion()
         {
             // Arrange
@@ -665,8 +708,9 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
         [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_AwaitCompletion_Failed()
         {
             // Arrange
@@ -705,8 +749,9 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
         [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_AwaitCompletion_Skipped()
         {
             // Arrange
@@ -746,8 +791,8 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
         [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_EnsureCompleted()
         {
             // Arrange
@@ -779,8 +824,9 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
         [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_EnsureCompleted_Failed()
         {
             // Arrange
@@ -819,8 +865,9 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
         [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_EnsureCompleted_Skipped()
         {
             // Arrange

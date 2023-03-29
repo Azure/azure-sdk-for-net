@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The ReservationRefundRequestProperties. </summary>
+    /// <summary> Properties needed for refund request including the session id from calculate refund, the scope, the reservation to be returned and the return reason. </summary>
     public partial class ReservationRefundRequestProperties
     {
         /// <summary> Initializes a new instance of ReservationRefundRequestProperties. </summary>

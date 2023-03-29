@@ -266,7 +266,7 @@ namespace Azure.Messaging.ServiceBus
         {
             foreach (ServiceBusMessage message in messages)
             {
-                _clientDiagnostics.InstrumentMessage(message.ApplicationProperties, DiagnosticProperty.MessageActivityName, out var _, out var _, out var _);
+                _clientDiagnostics.InstrumentMessage(message.ApplicationProperties, DiagnosticProperty.MessageActivityName, out var _, out var _);
             }
 
             // create a new scope for the specified operation
