@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> The container technology to be used. </summary>
-        public BatchVmContainerType ContainerType { get; set; }
+        public BatchVmContainerType ContainerType { get; }
         /// <summary> This is the full image reference, as would be specified to &quot;docker pull&quot;. An image will be sourced from the default Docker registry unless the image is fully qualified with an alternative registry. </summary>
         public IList<string> ContainerImageNames { get; }
         /// <summary> If any images must be downloaded from a private registry which requires credentials, then those credentials must be provided here. </summary>

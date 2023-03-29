@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> An array that contains the georeplication locations enabled for the Cosmos DB account. </summary>
         public IList<CosmosDBAccountLocation> Locations { get; }
         /// <summary> The offer type for the database. </summary>
-        public CosmosDBAccountOfferType DatabaseAccountOfferType { get; set; }
+        public CosmosDBAccountOfferType DatabaseAccountOfferType { get; }
         /// <summary> List of IpRules. </summary>
         public IList<CosmosDBIPAddressOrRange> IPRules { get; }
         /// <summary> Flag to indicate whether to enable/disable Virtual Network ACL rules. </summary>
