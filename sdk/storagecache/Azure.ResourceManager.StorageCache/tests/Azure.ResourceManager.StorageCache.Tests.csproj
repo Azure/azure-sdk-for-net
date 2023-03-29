@@ -2,4 +2,7 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.StorageCache.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\" />
+  </ItemGroup>
 </Project>
