@@ -170,6 +170,8 @@ namespace Azure.Containers.ContainerRegistry
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The result of the set manifest operation.</returns>
+        /// <exception cref="ArgumentNullException"> If <paramref name="manifest"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Response<SetManifestResult> SetManifest(BinaryData manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(manifest, nameof(manifest));
@@ -177,15 +179,6 @@ namespace Azure.Containers.ContainerRegistry
             return SetManifest(manifest.ToStream(), tag, mediaType, cancellationToken);
         }
 
-        /// <summary>
-        /// Sets a manifest.
-        /// </summary>
-        /// <param name="manifest">The <see cref="Stream"/> containing the serialized manifest to set.</param>
-        /// <param name="tag">A optional tag to assign to the artifact this manifest represents.</param>
-        /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
-        /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns>The result of the set manifest operation.</returns>
         internal virtual Response<SetManifestResult> SetManifest(Stream manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(manifest, nameof(manifest));
@@ -213,6 +206,8 @@ namespace Azure.Containers.ContainerRegistry
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The result of the set manifest operation.</returns>
+        /// <exception cref="ArgumentNullException"> If <paramref name="manifest"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response<SetManifestResult>> SetManifestAsync(OciImageManifest manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(manifest, nameof(manifest));
@@ -240,6 +235,8 @@ namespace Azure.Containers.ContainerRegistry
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The result of the set manifest operation.</returns>
+        /// <exception cref="ArgumentNullException"> If <paramref name="manifest"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response<SetManifestResult>> SetManifestAsync(BinaryData manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(manifest, nameof(manifest));
@@ -247,15 +244,6 @@ namespace Azure.Containers.ContainerRegistry
             return await SetManifestAsync(manifest.ToStream(), tag, mediaType, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Sets a manifest.
-        /// </summary>
-        /// <param name="manifest">The <see cref="Stream"/> containing the serialized manifest to set.</param>
-        /// <param name="tag">A optional tag to assign to the artifact this manifest represents.</param>
-        /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
-        /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns>The result of the set manifest operation.</returns>
         internal virtual async Task<Response<SetManifestResult>> SetManifestAsync(Stream manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(manifest, nameof(manifest));
@@ -294,7 +282,6 @@ namespace Azure.Containers.ContainerRegistry
         /// </summary>
         /// <param name="stream">The stream to copy.</param>
         /// <param name="async">Whether the method was called from an async method.</param>
-        /// <returns></returns>
         private static async Task<MemoryStream> CopyStreamAsync(Stream stream, bool async)
         {
             MemoryStream copy = new();
@@ -337,6 +324,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="content">The blob content.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The result of the blob upload.  The raw response associated with this result is the response from the final complete upload request.</returns>
+        /// <exception cref="ArgumentNullException"> If <paramref name="content"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Response<UploadRegistryBlobResult> UploadBlob(BinaryData content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -350,6 +339,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="content">The stream containing the blob data.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The result of the blob upload.  The raw response associated with this result is the response from the final complete upload request.</returns>
+        /// <exception cref="ArgumentNullException"> If <paramref name="content"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Response<UploadRegistryBlobResult> UploadBlob(Stream content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -383,6 +374,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="content">The blob content.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The result of the blob upload.  The raw response associated with this result is the response from the final complete upload request.</returns>
+        /// <exception cref="ArgumentNullException"> If <paramref name="content"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response<UploadRegistryBlobResult>> UploadBlobAsync(BinaryData content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -396,6 +389,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="content">The stream containing the blob data.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The result of the blob upload.  The raw response associated with this result is the response from the final complete upload request.</returns>
+        /// <exception cref="ArgumentNullException"> If <paramref name="content"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response<UploadRegistryBlobResult>> UploadBlobAsync(Stream content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -535,6 +530,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="tagOrDigest">The tag or digest of the manifest to get.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>The GET manifest result.</returns>
+        /// <exception cref="ArgumentNullException"> If <paramref name="tagOrDigest"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Response<GetManifestResult> GetManifest(string tagOrDigest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tagOrDigest, nameof(tagOrDigest));
@@ -577,6 +574,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="tagOrDigest">The tag or digest of the manifest to get.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>The manifest result.</returns>
+        /// <exception cref="ArgumentNullException"> If <paramref name="tagOrDigest"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response<GetManifestResult>> GetManifestAsync(string tagOrDigest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tagOrDigest, nameof(tagOrDigest));
@@ -642,13 +641,15 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>
         /// Download a container registry blob.
         /// This API is a prefered way to fetch blobs that can fit into memory.
-        /// The content is provided as <see cref="BinaryData"/> that provides a lightweight abstraction for a payload of bytes.
+        /// The content is provided as <see cref="BinaryData"/>, which provides a lightweight abstraction for a payload of bytes.
         /// It provides convenient helper methods to get out commonly used primitives, such as streams, strings, or bytes.
         /// To download a blob that does not fit in memory, consider using the <see cref="DownloadBlobTo(string, Stream, CancellationToken)"/> method instead.
         /// </summary>
         /// <param name="digest">The digest of the blob to download.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
+        /// <returns>The result of the download blob content operation.</returns>
+        /// <exception cref="ArgumentNullException"> If <paramref name="digest"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Response<DownloadRegistryBlobResult> DownloadBlobContent(string digest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
@@ -669,13 +670,15 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>
         /// Download a container registry blob.
         /// This API is a prefered way to fetch blobs that can fit into memory.
-        /// The content is provided as <see cref="BinaryData"/> that provides a lightweight abstraction for a payload of bytes.
+        /// The content is provided as <see cref="BinaryData"/>, which provides a lightweight abstraction for a payload of bytes.
         /// It provides convenient helper methods to get out commonly used primitives, such as streams, strings, or bytes.
         /// To download a blob that does not fit in memory, consider using the <see cref="DownloadBlobToAsync(string, Stream, CancellationToken)"/> method instead.
         /// </summary>
         /// <param name="digest">The digest of the blob to download.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
+        /// <returns>The result of the download blob content operation.</returns>
+        /// <exception cref="ArgumentNullException"> If <paramref name="digest"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response<DownloadRegistryBlobResult>> DownloadBlobContentAsync(string digest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
@@ -710,10 +713,31 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary>
+        /// Downloads a blob from the registry.
         /// </summary>
         /// <param name="digest">The digest of the blob to download.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
+        /// <returns>
+        /// A <see cref="Response{DownloadRegistryBlobStreamingResult}"/> describing the
+        /// downloaded blob.  <see cref="DownloadRegistryBlobStreamingResult.Content"/> contains
+        /// the blob's data.
+        /// </returns>
+        /// <remarks>
+        /// This API gives access directly to network stream that should be disposed after usage.
+        /// Consider the following alternatives:
+        /// <list type="bullet">
+        ///     <item>
+        ///         <term>DownloadContent</term>
+        ///         <description>as a prefered way of downloading small blobs that can fit into memory</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadTo</term>
+        ///         <description>to stream blob content to a path or a <see cref="Stream"/></description>
+        ///     </item>
+        /// </list>
+        /// </remarks>
+        /// <exception cref="ArgumentNullException"> If <paramref name="digest"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Response<DownloadRegistryBlobStreamingResult> DownloadBlobStreaming(string digest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
@@ -732,10 +756,31 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary>
+        /// Downloads a blob from the registry.
         /// </summary>
         /// <param name="digest">The digest of the blob to download.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
+        /// <returns>
+        /// A <see cref="Response{DownloadRegistryBlobStreamingResult}"/> describing the
+        /// downloaded blob.  <see cref="DownloadRegistryBlobStreamingResult.Content"/> contains
+        /// the blob's data.
+        /// </returns>
+        /// <remarks>
+        /// This API gives access directly to network stream that should be disposed after usage.
+        /// Consider the following alternatives:
+        /// <list type="bullet">
+        ///     <item>
+        ///         <term>DownloadContent</term>
+        ///         <description>as a prefered way of downloading small blobs that can fit into memory</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadTo</term>
+        ///         <description>to stream blob content to a path or a <see cref="Stream"/></description>
+        ///     </item>
+        /// </list>
+        /// </remarks>
+        /// <exception cref="ArgumentNullException"> If <paramref name="digest"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response<DownloadRegistryBlobStreamingResult>> DownloadBlobStreamingAsync(string digest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
@@ -775,12 +820,15 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary>
-        /// Download a blob to a passed-in destination stream.
+        /// Download a blob to a file specified by the path parameter.
         /// </summary>
         /// <param name="digest">The digest of the blob to download.</param>
         /// <param name="path">A file path to write the downloaded content to.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
+        /// <exception cref="ArgumentNullException"> If <paramref name="digest"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"> If <paramref name="path"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Response DownloadBlobTo(string digest, string path, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
@@ -789,14 +837,6 @@ namespace Azure.Containers.ContainerRegistry
             return DownloadBlobTo(digest, path, new DownloadBlobToOptions(DefaultChunkSize), cancellationToken);
         }
 
-        /// <summary>
-        /// Download a blob to a passed-in destination stream.
-        /// </summary>
-        /// <param name="digest">The digest of the blob to download.</param>
-        /// <param name="path">A file path to write the downloaded content to.</param>
-        /// <param name="options">Options to configure the operation behavior.</param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
         internal virtual Response DownloadBlobTo(string digest, string path, DownloadBlobToOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
@@ -814,6 +854,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="destination">Destination for the downloaded blob.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The response corresponding to the final GET blob chunk request.</returns>
+        /// <exception cref="ArgumentNullException"> If <paramref name="digest"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"> If <paramref name="destination"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Response DownloadBlobTo(string digest, Stream destination, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
@@ -822,14 +865,6 @@ namespace Azure.Containers.ContainerRegistry
             return DownloadBlobTo(digest, destination, new DownloadBlobToOptions(DefaultChunkSize), cancellationToken);
         }
 
-        /// <summary>
-        /// Download a blob to a passed-in destination stream.
-        /// </summary>
-        /// <param name="digest">The digest of the blob to download.</param>
-        /// <param name="destination">Destination for the downloaded blob.</param>
-        /// <param name="options">Options to configure the operation behavior.</param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
         internal virtual Response DownloadBlobTo(string digest, Stream destination, DownloadBlobToOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
@@ -850,13 +885,15 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary>
-        /// Download a blob to a passed-in destination stream.  This approach will download the blob
-        /// to the destination stream in sequential chunks of bytes.
+        /// Download a blob to a file specified by the path parameter.
         /// </summary>
         /// <param name="digest">The digest of the blob to download.</param>
         /// <param name="path">A file path to write the downloaded content to.</param>
         /// <param name="cancellationToken"> The cancellation token to use.</param>
         /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
+        /// <exception cref="ArgumentNullException"> If <paramref name="digest"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"> If <paramref name="path"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response> DownloadBlobToAsync(string digest, string path, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
@@ -865,15 +902,6 @@ namespace Azure.Containers.ContainerRegistry
             return await DownloadBlobToAsync(digest, path, new DownloadBlobToOptions(DefaultChunkSize), cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Download a blob to a passed-in destination stream.  This approach will download the blob
-        /// to the destination stream in sequential chunks of bytes.
-        /// </summary>
-        /// <param name="digest">The digest of the blob to download.</param>
-        /// <param name="path">A file path to write the downloaded content to.</param>
-        /// <param name="options">Options to configure the operation behavior.</param>
-        /// <param name="cancellationToken"> The cancellation token to use.</param>
-        /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
         internal virtual async Task<Response> DownloadBlobToAsync(string digest, string path, DownloadBlobToOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
@@ -892,6 +920,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="destination">Destination for the downloaded blob.</param>
         /// <param name="cancellationToken"> The cancellation token to use.</param>
         /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
+        /// <exception cref="ArgumentNullException"> If <paramref name="digest"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"> If <paramref name="destination"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response> DownloadBlobToAsync(string digest, Stream destination, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
@@ -900,15 +931,6 @@ namespace Azure.Containers.ContainerRegistry
             return await DownloadBlobToAsync(digest, destination, new DownloadBlobToOptions(DefaultChunkSize), cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Download a blob to a passed-in destination stream.  This approach will download the blob
-        /// to the destination stream in sequential chunks of bytes.
-        /// </summary>
-        /// <param name="digest">The digest of the blob to download.</param>
-        /// <param name="destination">Destination for the downloaded blob.</param>
-        /// <param name="options">Options to configure the operation behavior.</param>
-        /// <param name="cancellationToken"> The cancellation token to use.</param>
-        /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
         internal virtual async Task<Response> DownloadBlobToAsync(string digest, Stream destination, DownloadBlobToOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
@@ -1013,6 +1035,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest">The digest of the blob to delete.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The response received from the delete operation.</returns>
+        /// <exception cref="ArgumentNullException"> If <paramref name="digest"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Response DeleteBlob(string digest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
@@ -1037,6 +1061,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest">The digest of the blob to delete.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The response received from the delete operation.</returns>
+        /// <exception cref="ArgumentNullException"> If <paramref name="digest"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response> DeleteBlobAsync(string digest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
@@ -1061,6 +1087,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest">The digest of the manifest to delete.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The response received from the delete operation.</returns>
+        /// <exception cref="ArgumentNullException"> If <paramref name="digest"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Response DeleteManifest(string digest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
@@ -1084,6 +1112,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest">The digest of the manifest to delete.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The response received from the delete operation.</returns>
+        /// <exception cref="ArgumentNullException"> If <paramref name="digest"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response> DeleteManifestAsync(string digest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
