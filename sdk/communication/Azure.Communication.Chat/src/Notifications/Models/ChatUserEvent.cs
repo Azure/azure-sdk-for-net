@@ -11,11 +11,11 @@ namespace Azure.Communication.Chat.Notifications.Models
         internal ChatUserEvent(bool isRunningSynchronously, CancellationToken cancellationToken = default) : base(isRunningSynchronously, cancellationToken)
         {
         }
-        public string senderId { get; }
-        public string recipientMri { get; }
-        public string recipientId { get; }
-        public CommunicationIdentifier sender { get; }
-        public CommunicationIdentifier recipient { get; }
+        private string SenderId { get; }
+        private string RecipientMri { get; }
+        public string RecipientId { get; }
+        public CommunicationIdentifier Sender { get; }
+        public CommunicationIdentifier Recipient { get; }
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 

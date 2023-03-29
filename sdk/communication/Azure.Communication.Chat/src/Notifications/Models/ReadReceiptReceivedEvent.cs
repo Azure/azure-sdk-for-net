@@ -14,7 +14,7 @@ namespace Azure.Communication.Chat.Notifications.Models
 
         public string ChatMessageId { get; }
 
-        public DateTimeOffset? ReadOn { get; }
+        public DateTimeOffset ReadOn { get; }
     }
 }
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member

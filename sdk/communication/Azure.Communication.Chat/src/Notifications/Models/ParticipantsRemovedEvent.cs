@@ -19,7 +19,7 @@ namespace Azure.Communication.Chat.Notifications.Models
         /// <summary>
         /// Property
         /// </summary>
-        public DateTimeOffset? RemovedOn { get; }
+        public DateTimeOffset RemovedOn { get; }
 
         /// <summary>
         /// Property

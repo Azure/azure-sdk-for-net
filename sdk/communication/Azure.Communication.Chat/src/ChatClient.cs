@@ -40,12 +40,12 @@ namespace Azure.Communication.Chat
             add
             {
                 _chatMessageReceived += value;
-                _communicationSignalingClient.on(ChatEventType.ChatMessageReceived, value);
+                _communicationSignalingClient.on(value);
             }
             remove
             {
                 _chatMessageReceived -= value;
-                _communicationSignalingClient.on(ChatEventType.ChatMessageReceived, value);
+                _communicationSignalingClient.on(value);
             }
         }
         /// <summary>
@@ -105,6 +105,16 @@ namespace Azure.Communication.Chat
         /// EventHandler
         /// </summary>
         public event SyncAsyncEventHandler<ParticipantsRemovedEvent> ParticipantsRemoved;
+
+        /// <summary>
+        /// EventHandler
+        /// </summary>
+        public event SyncAsyncEventHandler<SyncAsyncEventArgs> RealTimeNotificationConnected;
+        /// <summary>
+        /// EventHandler
+        /// </summary>
+        public event SyncAsyncEventHandler<SyncAsyncEventArgs> RealTimeNotificationDisconnected;
+
         /// <summary> Initializes a new instance of <see cref="ChatClient"/>.</summary>
         /// <param name="endpoint">The uri for the Azure Communication Services Chat.</param>
         /// <param name="communicationTokenCredential">Instance of <see cref="CommunicationTokenCredential"/>.</param>

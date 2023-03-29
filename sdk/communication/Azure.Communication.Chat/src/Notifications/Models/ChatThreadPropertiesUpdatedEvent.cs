@@ -16,7 +16,7 @@ namespace Azure.Communication.Chat.Notifications.Models
 
         public ChatThreadProperties Properties { get; }
 
-        public DateTimeOffset? UpdatedOn { get; }
+        public DateTimeOffset UpdatedOn { get; }
 
         public ChatParticipant UpdatedBy { get; }
     }

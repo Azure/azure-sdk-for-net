@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading;
 
@@ -44,7 +45,7 @@ namespace Azure.Communication.Chat.Notifications.Models
         /// <summary>
         /// Property
         /// </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset CreatedOn { get; }
 
         /// <summary>
         /// Property
@@ -54,6 +55,6 @@ namespace Azure.Communication.Chat.Notifications.Models
         /// <summary>
         /// Property
         /// </summary>
-        public Dictionary<string, string> MetaData { get; } = new Dictionary<string, string>();
+        public ReadOnlyDictionary<string, string> MetaData { get; }
     }
 }

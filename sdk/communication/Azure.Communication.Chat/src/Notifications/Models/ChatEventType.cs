@@ -6,7 +6,7 @@ namespace Azure.Communication.Chat.Notifications.Models
     /// <summary>
     /// model class
     /// </summary>
-    public sealed class ChatEventType
+    internal sealed class ChatEventType
     {
         private ChatEventType(string value) { Value = value; }
         /// <summary>

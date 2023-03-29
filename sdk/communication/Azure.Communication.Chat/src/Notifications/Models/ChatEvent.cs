@@ -23,10 +23,5 @@ namespace Azure.Communication.Chat.Notifications.Models
         /// Chat Thread Id of the event.
         /// </summary>
         public string ThreadId { get; }
-
-        /// <summary>
-        /// Chat Thread Id of the event.
-        /// </summary>
-        public string GroupId { get; }
     }
 }
