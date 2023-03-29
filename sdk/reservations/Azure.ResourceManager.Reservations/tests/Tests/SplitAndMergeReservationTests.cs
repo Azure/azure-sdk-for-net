@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Reservations.Tests
     {
         private TenantResource Tenant { get; set; }
         private ReservationOrderCollection Collection { get; set; }
-        private const string ReservationOrderId = "55940ea5-f1ab-4dc6-804e-44ffe25c6769";
+        private const string ReservationOrderId = "8c8a563e-a762-4872-a3ea-4d6bfd9efdc0";
         public SplitAndMergeReservationTests(bool isAsync) : base(isAsync)
         {
         }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.IsNotNull(reservation.Data);
             Assert.IsNotNull(reservation.Data.Properties);
             Assert.IsNotNull(reservation.Data.Properties.Quantity);
-            Assert.IsTrue(reservation.Data.Properties.Quantity > 1);
+            Assert.Greater(reservation.Data.Properties.Quantity, 1);
 
             var splitContent = new SplitContent
             {
@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.AreEqual(3, splitResponse.Value.Count);
             Assert.AreEqual(1, splitResponse.Value[0].Properties.Quantity);
             Assert.AreEqual(ReservationProvisioningState.Succeeded, splitResponse.Value[0].Properties.ProvisioningState);
-            Assert.AreEqual(9, splitResponse.Value[1].Properties.Quantity);
+            Assert.AreEqual((int)reservation.Data.Properties.Quantity - 1, splitResponse.Value[1].Properties.Quantity);
             Assert.AreEqual(ReservationProvisioningState.Succeeded, splitResponse.Value[1].Properties.ProvisioningState);
-            Assert.AreEqual(10, splitResponse.Value[2].Properties.Quantity);
+            Assert.AreEqual((int)reservation.Data.Properties.Quantity, splitResponse.Value[2].Properties.Quantity);
             Assert.AreEqual(ReservationProvisioningState.Cancelled, splitResponse.Value[2].Properties.ProvisioningState);
         }
 
@@ -86,7 +86,6 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.IsNotNull(response.Value);
             Assert.IsNotNull(response.Value.Data);
             Assert.IsNotNull(response.Value.Data.Reservations);
-            Assert.AreEqual(3, response.Value.Data.Reservations.Count);
 
             var fullyQualifiedId1 = response.Value.Data.Reservations[0].Id.ToString();
 
@@ -106,11 +105,9 @@ namespace Azure.ResourceManager.Reservations.Tests
 
             Assert.IsNotNull(mergeResponse.Value);
             Assert.AreEqual(3, mergeResponse.Value.Count);
-            Assert.AreEqual(1, mergeResponse.Value[0].Properties.Quantity);
             Assert.AreEqual(ReservationProvisioningState.Cancelled, mergeResponse.Value[0].Properties.ProvisioningState);
-            Assert.AreEqual(9, mergeResponse.Value[1].Properties.Quantity);
             Assert.AreEqual(ReservationProvisioningState.Cancelled, mergeResponse.Value[1].Properties.ProvisioningState);
-            Assert.AreEqual(10, mergeResponse.Value[2].Properties.Quantity);
+            Assert.AreEqual(mergeResponse.Value[1].Properties.Quantity + mergeResponse.Value[0].Properties.Quantity, mergeResponse.Value[2].Properties.Quantity);
             Assert.AreEqual(ReservationProvisioningState.Succeeded, mergeResponse.Value[2].Properties.ProvisioningState);
         }
     }

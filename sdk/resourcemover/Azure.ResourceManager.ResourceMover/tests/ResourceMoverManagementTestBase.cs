@@ -54,26 +54,36 @@ namespace Azure.ResourceManager.ResourceMover.Tests
 
         protected async Task<VirtualNetworkResource> CreareVirtualNetwork(ResourceGroupResource rg, string vnetName)
         {
-            VirtualNetworkData virtualNetworkData = new VirtualNetworkData()
+            if (Mode == RecordedTestMode.Playback)
             {
-                Location = AzureLocation.EastUS,
-                Subnets =
+                var vnetId = VirtualNetworkResource.CreateResourceIdentifier(rg.Id.SubscriptionId, rg.Id.Name, vnetName);
+                return Client.GetVirtualNetworkResource(vnetId);
+            }
+            else
+            {
+                using (Recording.DisableRecording())
                 {
-                    new SubnetData()
+                    VirtualNetworkData virtualNetworkData = new VirtualNetworkData()
                     {
-                        Name = Recording.GenerateAssetName("Subnet-"),
-                        AddressPrefix = "10.0.0.0/24"
-                    }
-                },
-                AddressPrefixes = { "10.0.0.0/16" }
-            };
-            var lro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, virtualNetworkData);
-            return lro.Value;
+                        Location = AzureLocation.EastUS,
+                        Subnets =
+                        {
+                            new SubnetData()
+                            {
+                                Name = Recording.GenerateAssetName("Subnet-"),
+                                AddressPrefix = "10.0.0.0/24"
+                            }
+                        },
+                        AddressPrefixes = { "10.0.0.0/16" }
+                    };
+                    var lro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, virtualNetworkData);
+                    return lro.Value;
+                }
+            }
         }
 
-        protected async Task<MoverResource> CreateMoverResource(MoverResourceSetResource moverResourceSet, ResourceIdentifier vnetId, string moverResourceName)
+        protected async Task<MoverResource> CreateMoverResource(MoverResourceSetResource moverResourceSet, ResourceIdentifier vnetId, string moverResourceName, string targetVnetName)
         {
-            string targetVnetName = Recording.GenerateAssetName("targetVnet-");
             MoverResourceData input = new MoverResourceData
             {
                 Properties = new MoverResourceProperties(vnetId)

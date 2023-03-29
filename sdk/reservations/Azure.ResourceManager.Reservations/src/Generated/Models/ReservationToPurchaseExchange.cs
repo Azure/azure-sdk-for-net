@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Initializes a new instance of ReservationToPurchaseExchange. </summary>
-        /// <param name="reservationOrderId"> Fully qualified id of the ReservationOrder being purchased. </param>
-        /// <param name="reservationId"> Fully qualified id of the Reservation being purchased. This value is only guaranteed to be non-null if the purchase is successful. </param>
-        /// <param name="properties"></param>
-        /// <param name="billingCurrencyTotal"></param>
+        /// <param name="reservationOrderId"> Fully qualified id of the reservationOrder being purchased. </param>
+        /// <param name="reservationId"> Fully qualified id of the reservation being purchased. This value is only guaranteed to be non-null if the purchase is successful. </param>
+        /// <param name="properties"> The request for reservation purchase. </param>
+        /// <param name="billingCurrencyTotal"> Pricing information containing the amount and the currency code. </param>
         /// <param name="status"> Status of the individual operation. </param>
         internal ReservationToPurchaseExchange(ResourceIdentifier reservationOrderId, ResourceIdentifier reservationId, ReservationPurchaseContent properties, PurchasePrice billingCurrencyTotal, ReservationOperationStatus? status)
         {
@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.Reservations.Models
             Status = status;
         }
 
-        /// <summary> Fully qualified id of the ReservationOrder being purchased. </summary>
+        /// <summary> Fully qualified id of the reservationOrder being purchased. </summary>
         public ResourceIdentifier ReservationOrderId { get; }
-        /// <summary> Fully qualified id of the Reservation being purchased. This value is only guaranteed to be non-null if the purchase is successful. </summary>
+        /// <summary> Fully qualified id of the reservation being purchased. This value is only guaranteed to be non-null if the purchase is successful. </summary>
         public ResourceIdentifier ReservationId { get; }
-        /// <summary> Gets the properties. </summary>
+        /// <summary> The request for reservation purchase. </summary>
         public ReservationPurchaseContent Properties { get; }
-        /// <summary> Gets the billing currency total. </summary>
+        /// <summary> Pricing information containing the amount and the currency code. </summary>
         public PurchasePrice BillingCurrencyTotal { get; }
         /// <summary> Status of the individual operation. </summary>
         public ReservationOperationStatus? Status { get; }
