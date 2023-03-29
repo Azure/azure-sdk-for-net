@@ -101,6 +101,13 @@ namespace Azure.Data.AppConfiguration
                         ? await _client.GetOperationDetailsAsync(_snapshotName).ConfigureAwait(false)
                         : _client.GetOperationDetails(_snapshotName);
 
+                    // Get the latest snapshot - TODO is there a way to pull this from the operation details
+                    ConfigurationSettingsSnapshot updatedSnapshot = async
+                        ? await _client.GetSnapshotAsync(_snapshotName).ConfigureAwait(false)
+                        : _client.GetSnapshot(_snapshotName);
+
+                    _snapshot = updatedSnapshot;
+
                     JsonElement result = JsonDocument.Parse(update.ContentStream).RootElement;
                     var status = result.GetProperty("status");
 
@@ -109,7 +116,6 @@ namespace Azure.Data.AppConfiguration
                     if (_hasCompleted)
                     {
                         _hasValue = true;
-                        //_snapshot = update.; TODO: why doesn't the update return a snapshot object????
                     }
 
                     // Update raw response
@@ -132,7 +138,7 @@ namespace Azure.Data.AppConfiguration
                 return true;
             }
 
-            return false; // TODO
+            return false;
         }
     }
 }
