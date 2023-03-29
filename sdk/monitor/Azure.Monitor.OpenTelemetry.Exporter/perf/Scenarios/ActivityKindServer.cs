@@ -24,7 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Perf
          * dotnet run -c Release -f net7.0 --no-build --project <Path to this Project> ActivityKindServer --sync true
         */
         private const string ActivitySourceName = nameof(ActivityKindServer);
-        private readonly Batch<Activity> _activities;
+        private readonly Batch<Activity> _activityBatch;
         private readonly AzureMonitorTraceExporter _traceExporter;
 
         public ActivityKindServer(PerfOptions options) : base(options)
@@ -68,12 +68,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Perf
             activity?.SetTag(SemanticConventions.AttributeHttpUserAgent, "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0");
             activity?.SetTag(SemanticConventions.AttributeHttpStatusCode, 200);
 
-            _activities = new Batch<Activity>(new Activity[] { activity ?? new Activity("Placeholder") }, 1);
+            _activityBatch = new Batch<Activity>(new Activity[] { activity ?? new Activity("Placeholder") }, 1);
         }
 
         public override void Run(CancellationToken cancellationToken)
         {
-            var exportResult = _traceExporter.Export(_activities);
+            var exportResult = _traceExporter.Export(_activityBatch);
         }
 
         public override Task RunAsync(CancellationToken cancellationToken)
