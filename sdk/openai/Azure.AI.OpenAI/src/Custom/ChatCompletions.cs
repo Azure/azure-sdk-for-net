@@ -14,7 +14,7 @@ namespace Azure.AI.OpenAI
 {
     public partial class ChatCompletions
     {
-        internal int InternalCreatedSecondsAfterUnixEpoch { get; set; }
+        internal int InternalCreatedSecondsAfterUnixEpoch { get; }
 
         public DateTimeOffset Created => DateTimeOffset.FromUnixTimeSeconds(InternalCreatedSecondsAfterUnixEpoch);
     }
