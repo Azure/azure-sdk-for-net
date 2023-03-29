@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AssemblyName>SignatureComputationApp</AssemblyName>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
 </Project>

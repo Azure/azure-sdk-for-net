@@ -5,7 +5,7 @@
 azure-arm: true
 arm-core: true
 # clear-output-folder: true
-use: $(this-folder)/../../../../../autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/net6.0/
+use: $(this-folder)/../../../../../autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1/
 output-folder: $(this-folder)/../src/PsuedoGenerated/Resources
 title: ResourceManagementClient
 input-file:

@@ -37,7 +37,7 @@ The library is organized in these layers:
 
 On Windows, open a command prompt, navigate to the unit test folder, and run **dotnet test**. This will run tests for both .NET 4.5.2 and .NET Standard 1.4. 
 
-On Linux, open a command prompt, navigate to the unit test folder, and run **dotnet test -f net6.0**. This will run tests for .NET Standard 1.4. 
+On Linux, open a command prompt, navigate to the unit test folder, and run **dotnet test -f netcoreapp3.1**. This will run tests for .NET Standard 1.4. 
 
 **Integration Test Cases**
 
@@ -53,6 +53,6 @@ Before running these test cases, ensure that you
    
 On Windows, open a command prompt, navigate to the integration test folder, and run **dotnet test**. This will run tests for both .NET 4.5.2 and .NET Standard 1.4. 
 
-On Linux, open a command prompt, navigate to the integration test folder, and run **dotnet test -f net6.0**. This will run tests for .NET Standard 1.4. 
+On Linux, open a command prompt, navigate to the integration test folder, and run **dotnet test -f netcoreapp3.1**. This will run tests for .NET Standard 1.4. 
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fmgmtcommon%2FAppAuthentication%2FREADME.png)

@@ -3,9 +3,9 @@
 set -e
 base=`dirname {BASH_SOURCE[0]}`
 rootdir="$( cd "$base" && pwd )"
-netstd14="netstandard1.4"
+netstd20="netstandard2.0"
 #netcore11='netcoreapp3.1'
-netcore20='net6.0'
+net6='net6.0'
 ubuntu1404="ubuntu.14.04-x64"
 nugetOrgSource="https://api.nuget.org/v3/index.json"
 localNugetFeed="./tools/LocalNugetFeed"
@@ -16,17 +16,17 @@ restoreBuildCR() {
     echo "Restore ClientRuntime"
     dotnet restore src/SdkCommon/ClientRuntime.sln
 
-    echo "Build ClientRuntime for $net14"
+    echo "Build ClientRuntime for $netstd20"
     #dotnet restore src/SdkCommon/ClientRuntime/ClientRuntime/Microsoft.Rest.ClientRuntime.csproj
-    dotnet build src/SdkCommon/ClientRuntime/ClientRuntime/Microsoft.Rest.ClientRuntime.csproj -f $netstd14
-    dotnet build src/SdkCommon/ClientRuntime.Azure/ClientRuntime.Azure/Microsoft.Rest.ClientRuntime.Azure.csproj -f $netstd14
-    dotnet build src/SdkCommon/Auth/Az.Auth/Az.Authentication/Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj -f $netstd14
+    dotnet build src/SdkCommon/ClientRuntime/ClientRuntime/Microsoft.Rest.ClientRuntime.csproj -f $netstd20
+    dotnet build src/SdkCommon/ClientRuntime.Azure/ClientRuntime.Azure/Microsoft.Rest.ClientRuntime.Azure.csproj -f $netstd20
+    dotnet build src/SdkCommon/Auth/Az.Auth/Az.Authentication/Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj -f $netstd20
 
-    echo "Running ClientRuntime Tests $netcore20"
-    #dotnet test src/SdkCommon/ClientRuntime/ClientRuntime.Tests/Microsoft.Rest.ClientRuntime.Tests.csproj -f $netcore20
-    dotnet test src/SdkCommon/ClientRuntime/Tests/ClientRuntime.NetCore.Tests/ClientRuntime.NetCore.Tests.csproj -f $netcore20
-    dotnet test src/SdkCommon/ClientRuntime.Azure/Tests/CR.Azure.NetCore.Tests/CR.Azure.NetCore.Tests.csproj -f $netcore20
-    #dotnet test src/SdkCommon/Auth/Az.Auth/Az.Auth.Tests//ClientRuntime.Azure.Tests/Microsoft.Rest.ClientRuntime.Azure.Tests.csproj -f $netcore20
+    echo "Running ClientRuntime Tests $net6"
+    #dotnet test src/SdkCommon/ClientRuntime/ClientRuntime.Tests/Microsoft.Rest.ClientRuntime.Tests.csproj -f $net6
+    dotnet test src/SdkCommon/ClientRuntime/Tests/ClientRuntime.NetCore.Tests/ClientRuntime.NetCore.Tests.csproj -f $net6
+    dotnet test src/SdkCommon/ClientRuntime.Azure/Tests/CR.Azure.NetCore.Tests/CR.Azure.NetCore.Tests.csproj -f $net6
+    #dotnet test src/SdkCommon/Auth/Az.Auth/Az.Auth.Tests//ClientRuntime.Azure.Tests/Microsoft.Rest.ClientRuntime.Azure.Tests.csproj -f $net6
 }
 
 restoreBuildAzStack() {
@@ -44,9 +44,9 @@ restoreBuildAzStack() {
             if [ -d $childDir/*.Tests ]; then
                 testProj=($childDir/*.Tests/*.csproj)
                 if [ -f $testProj ]; then
-                    printf "Test ------ $testProj for framework $netcore20\n"
-                    #dotnet build $testProj -f $netcore20
-                    #dotnet test $testProj -f $netcore20
+                    printf "Test ------ $testProj for framework $net6\n"
+                    #dotnet build $testProj -f $net6
+                    #dotnet test $testProj -f $net6
                 fi
             fi
         fi
@@ -75,9 +75,9 @@ restoreBuildRepo() {
                         skipTest=$( skip_Rps $tp )
                         printf "$skipRp\n"
                         if [ "$skipTest" == "false" ]; then
-                            printf "Test ------ $tp for framework $netcore20\n"
-                            #dotnet build $tp -f $netcore20
-                            #dotnet test $tp -f $netcore20
+                            printf "Test ------ $tp for framework $net6\n"
+                            #dotnet build $tp -f $net6
+                            #dotnet test $tp -f $net6
                         fi
                     done
                 fi
@@ -98,8 +98,8 @@ restoreBuildCog() {
 
     if [ -d $cogMgmtDir/*.Tests ]; then
         cogMgmtTestProj=($cogMgmtDir/*.Tests/*.csproj)
-        printf "Test ------ $cogMgmtTestProj for framework $netcore20\n"
-        #dotnet test $cogMgmtTestProj -f $netcore20
+        printf "Test ------ $cogMgmtTestProj for framework $net6\n"
+        #dotnet test $cogMgmtTestProj -f $net6
     fi
 
 
@@ -114,8 +114,8 @@ restoreBuildCog() {
         fi
         if [ -d $cogDir/*.Tests ]; then
             cogDataTestProj=($cogDir/*.Tests/*.csproj)
-            printf "Test ------ $cogDataTestProj for framework $netcore20\n"
-            #dotnet test $cogDataTestProj -f $netcore20
+            printf "Test ------ $cogDataTestProj for framework $net6\n"
+            #dotnet test $cogDataTestProj -f $net6
         fi
     done
 }
@@ -142,7 +142,7 @@ restoreBuildKV() {
                     if [ "$kvTProj" == "false" ]; then
                         printf "KV TestProject ... $kvTestProj\n"
                         dotnet restore $kvTestProj -r $ubuntu1404
-                        #dotnet test $kvTestProj -f $netcore20
+                        #dotnet test $kvTestProj -f $net6
                     fi
             else
                 if [ -f $kvDir/*.csproj ]; then
@@ -150,7 +150,7 @@ restoreBuildKV() {
                     kvProj=$( skip_Rps $kvSdkProj )
                     if [ "$kvProj" == "false" ]; then
                         dotnet restore $kvSdkProj -r $ubuntu1404
-                        dotnet build $kvSdkProj -f $netstd14
+                        dotnet build $kvSdkProj -f $netstd20
                     fi
                 fi
             fi

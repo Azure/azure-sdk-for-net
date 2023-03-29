@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TestProjectType>true</TestProjectType>
   </PropertyGroup>
-  <ItemGroup Condition=" '$(TargetFramework)'=='net6.0' ">
+  <ItemGroup Condition=" '$(TargetFramework)'=='netcoreapp3.1' ">
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 
