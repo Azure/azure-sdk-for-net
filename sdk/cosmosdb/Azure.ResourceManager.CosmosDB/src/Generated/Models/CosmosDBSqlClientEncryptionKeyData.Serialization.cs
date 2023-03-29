@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    public partial class ClientEncryptionKeyGetResultData : IUtf8JsonSerializable
+    public partial class CosmosDBSqlClientEncryptionKeyData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB
             writer.WriteEndObject();
         }
 
-        internal static ClientEncryptionKeyGetResultData DeserializeClientEncryptionKeyGetResultData(JsonElement element)
+        internal static CosmosDBSqlClientEncryptionKeyData DeserializeCosmosDBSqlClientEncryptionKeyData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB
                     continue;
                 }
             }
-            return new ClientEncryptionKeyGetResultData(id, name, type, systemData.Value, resource.Value);
+            return new CosmosDBSqlClientEncryptionKeyData(id, name, type, systemData.Value, resource.Value);
         }
     }
 }

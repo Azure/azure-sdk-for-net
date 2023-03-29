@@ -151,7 +151,7 @@ rename-mapping:
   ClientEncryptionKeyResource: CosmosDBSqlClientEncryptionKeyResourceInfo
   ClientEncryptionPolicy: CosmosDBClientEncryptionPolicy
   ClientEncryptionIncludedPath: CosmosDBClientEncryptionIncludedPath
-  ClientEncryptionKeyGetResult: CosmosDBSqlClientEncryptionKey
+  ClientEncryptionKeyGetResults: CosmosDBSqlClientEncryptionKey
   DatabaseRestoreResource: DatabaseRestoreResourceInfo
   GremlinDatabaseRestoreResource: GremlinDatabaseRestoreResourceInfo
   GremlinDatabasePropertiesResource: ExtendedGremlinDatabaseResourceInfo

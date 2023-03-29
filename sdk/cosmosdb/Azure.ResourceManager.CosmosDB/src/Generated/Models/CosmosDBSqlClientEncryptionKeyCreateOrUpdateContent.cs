@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to create and update ClientEncryptionKey. </summary>
-    public partial class ClientEncryptionKeyGetResultCreateOrUpdateContent
+    public partial class CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ClientEncryptionKeyGetResultCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent. </summary>
         /// <param name="resource"> The standard JSON format of a ClientEncryptionKey. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public ClientEncryptionKeyGetResultCreateOrUpdateContent(CosmosDBSqlClientEncryptionKeyResourceInfo resource)
+        public CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent(CosmosDBSqlClientEncryptionKeyResourceInfo resource)
         {
             Argument.AssertNotNull(resource, nameof(resource));
 

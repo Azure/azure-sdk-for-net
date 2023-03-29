@@ -613,20 +613,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
         #endregion
 
-        #region ClientEncryptionKeyGetResultResource
+        #region CosmosDBSqlClientEncryptionKeyResource
         /// <summary>
-        /// Gets an object representing a <see cref="ClientEncryptionKeyGetResultResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ClientEncryptionKeyGetResultResource.CreateResourceIdentifier" /> to create a <see cref="ClientEncryptionKeyGetResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBSqlClientEncryptionKeyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBSqlClientEncryptionKeyResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlClientEncryptionKeyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClientEncryptionKeyGetResultResource" /> object. </returns>
-        public static ClientEncryptionKeyGetResultResource GetClientEncryptionKeyGetResultResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlClientEncryptionKeyResource" /> object. </returns>
+        public static CosmosDBSqlClientEncryptionKeyResource GetCosmosDBSqlClientEncryptionKeyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ClientEncryptionKeyGetResultResource.ValidateResourceId(id);
-                return new ClientEncryptionKeyGetResultResource(client, id);
+                CosmosDBSqlClientEncryptionKeyResource.ValidateResourceId(id);
+                return new CosmosDBSqlClientEncryptionKeyResource(client, id);
             }
             );
         }
