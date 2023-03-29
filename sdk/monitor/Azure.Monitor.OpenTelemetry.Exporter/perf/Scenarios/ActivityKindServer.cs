@@ -16,8 +16,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Perf
 {
     public class ActivityKindServer : PerfTest<PerfOptions>
     {
-        /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/perf/TemplateClientTest.cs to write perf test. */
-
+        // please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/perf/TemplateClientTest.cs to write perf test.
+        /* How to run
+         * Build
+            dotnet build -c Release -f <TargetFramework>
+         * Run
+         * dotnet run -c Release -f net7.0 --no-build --project <Path to this Project> ActivityKindServer --sync true
+        */
         private const string ActivitySourceName = nameof(ActivityKindServer);
         private readonly Batch<Activity> _activities;
         private readonly AzureMonitorTraceExporter _traceExporter;
