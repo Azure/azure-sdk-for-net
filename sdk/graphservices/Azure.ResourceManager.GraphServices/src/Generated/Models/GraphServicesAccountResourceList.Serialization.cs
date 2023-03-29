@@ -17,11 +17,15 @@ namespace Azure.ResourceManager.GraphServices.Models
     {
         internal static GraphServicesAccountResourceList DeserializeGraphServicesAccountResourceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> nextLink = default;
             Optional<IReadOnlyList<GraphServicesAccountResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +35,7 @@ namespace Azure.ResourceManager.GraphServices.Models
                     nextLink = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

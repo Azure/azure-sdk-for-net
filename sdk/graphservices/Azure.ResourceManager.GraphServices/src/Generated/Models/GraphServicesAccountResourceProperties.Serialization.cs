@@ -15,19 +15,23 @@ namespace Azure.ResourceManager.GraphServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("appId");
+            writer.WritePropertyName("appId"u8);
             writer.WriteStringValue(AppId);
             writer.WriteEndObject();
         }
 
         internal static GraphServicesAccountResourceProperties DeserializeGraphServicesAccountResourceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GraphServicesProvisioningState> provisioningState = default;
             string appId = default;
             Optional<string> billingPlanId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,12 +41,12 @@ namespace Azure.ResourceManager.GraphServices.Models
                     provisioningState = new GraphServicesProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("appId"))
+                if (property.NameEquals("appId"u8))
                 {
                     appId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("billingPlanId"))
+                if (property.NameEquals("billingPlanId"u8))
                 {
                     billingPlanId = property.Value.GetString();
                     continue;

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.GraphServices
 {
-    /// <summary> A class representing the GraphServicesAccountResource data model. </summary>
+    /// <summary>
+    /// A class representing the GraphServicesAccountResource data model.
+    /// Account details
+    /// </summary>
     public partial class GraphServicesAccountResourceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of GraphServicesAccountResourceData. </summary>
