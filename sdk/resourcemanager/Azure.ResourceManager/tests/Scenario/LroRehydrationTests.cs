@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Tests
     public class LroRehydrationTests : ResourceManagerTestBase
     {
         public LroRehydrationTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -29,8 +29,12 @@ namespace Azure.ResourceManager.Tests
             };
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             // The creation of a resource group is a fake LRO
-            var rgOp = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, rgName, new ResourceGroupData());
-            await rgOp.UpdateStatusAsync();
+            var orgData = new ResourceGroupData(AzureLocation.WestUS2);
+            orgData.Tags.ReplaceWith(tags);
+            var rgOp = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, rgName, orgData);
+            var temp = await rgOp.UpdateStatusAsync();
+            await rgOp.WaitForCompletionAsync();
+            temp = await rgOp.UpdateStatusAsync();
             //await rgOp.WaitForCompletionAsync();
             var rgOpId = rgOp.Id;
             var rg = rgOp.Value;
