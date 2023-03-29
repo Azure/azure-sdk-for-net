@@ -33,9 +33,9 @@ namespace Azure.Core.Expressions.DataFactory
         public static DataFactoryElementKind KeyVaultReference { get; } = new DataFactoryElementKind("KeyVaultReference");
 
         /// <summary>
-        /// Creates an instance of <see cref="ContentType"/>.
+        /// Creates an instance of <see cref="DataFactoryElementKind"/>.
         /// </summary>
-        /// <param name="kind">The content type string.</param>
+        /// <param name="kind">The element kind.</param>
         public DataFactoryElementKind(string kind)
         {
             Argument.AssertNotNull(kind, nameof(kind));
@@ -63,20 +63,20 @@ namespace Azure.Core.Expressions.DataFactory
             => _kind?.GetHashCode() ?? 0;
 
         /// <summary>
-        /// Compares equality of two <see cref="ContentType"/> instances.
+        /// Compares equality of two <see cref="DataFactoryElementKind"/> instances.
         /// </summary>
         /// <param name="left">The method to compare.</param>
         /// <param name="right">The method to compare against.</param>
-        /// <returns><c>true</c> if <see cref="ContentType"/> values are equal for <paramref name="left"/> and <paramref name="right"/>, otherwise <c>false</c>.</returns>
+        /// <returns><c>true</c> if <see cref="DataFactoryElementKind"/> values are equal for <paramref name="left"/> and <paramref name="right"/>, otherwise <c>false</c>.</returns>
         public static bool operator ==(DataFactoryElementKind left, DataFactoryElementKind right)
             => left.Equals(right);
 
         /// <summary>
-        /// Compares inequality of two <see cref="ContentType"/> instances.
+        /// Compares inequality of two <see cref="DataFactoryElementKind"/> instances.
         /// </summary>
         /// <param name="left">The method to compare.</param>
         /// <param name="right">The method to compare against.</param>
-        /// <returns><c>true</c> if <see cref="ContentType"/> values are equal for <paramref name="left"/> and <paramref name="right"/>, otherwise <c>false</c>.</returns>
+        /// <returns><c>true</c> if <see cref="DataFactoryElementKind"/> values are equal for <paramref name="left"/> and <paramref name="right"/>, otherwise <c>false</c>.</returns>
         public static bool operator !=(DataFactoryElementKind left, DataFactoryElementKind right)
             => !left.Equals(right);
 
