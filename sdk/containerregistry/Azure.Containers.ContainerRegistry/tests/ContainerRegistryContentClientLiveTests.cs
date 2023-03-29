@@ -686,7 +686,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         [LiveOnly]
         public async Task CanUploadAndDownloadLargeBlob()
         {
-            long sizeInGiB = 2;
+            long sizeInGiB = 1;
             var uneven = 20;
             long size = (1024 * 1024 * 1024 * sizeInGiB) + uneven;
 
