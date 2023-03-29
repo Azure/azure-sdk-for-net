@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
     public class PrivateEndpointConnectionTests : VaultOperationsTestsBase
     {
         public PrivateEndpointConnectionTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

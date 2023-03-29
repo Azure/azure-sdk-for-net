@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
 {
     public class PostgreSqlFlexibleServerTests: PostgreSqlManagementTestBase
     {
-        public PostgreSqlFlexibleServerTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public PostgreSqlFlexibleServerTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
