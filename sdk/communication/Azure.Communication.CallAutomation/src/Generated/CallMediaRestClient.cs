@@ -392,5 +392,79 @@ namespace Azure.Communication.CallAutomation
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
+
+        internal HttpMessage CreateSendDtmfRequest(string callConnectionId, SendDtmfRequestInternal sendDtmfRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":sendDtmf", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(sendDtmfRequest);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Send DTMF tones. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="sendDtmfRequest"> The sendDTMF request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfRequest"/> is null. </exception>
+        public async Task<Response> SendDtmfAsync(string callConnectionId, SendDtmfRequestInternal sendDtmfRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (sendDtmfRequest == null)
+            {
+                throw new ArgumentNullException(nameof(sendDtmfRequest));
+            }
+
+            using var message = CreateSendDtmfRequest(callConnectionId, sendDtmfRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Send DTMF tones. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="sendDtmfRequest"> The sendDTMF request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfRequest"/> is null. </exception>
+        public Response SendDtmf(string callConnectionId, SendDtmfRequestInternal sendDtmfRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (sendDtmfRequest == null)
+            {
+                throw new ArgumentNullException(nameof(sendDtmfRequest));
+            }
+
+            using var message = CreateSendDtmfRequest(callConnectionId, sendDtmfRequest);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
     }
 }

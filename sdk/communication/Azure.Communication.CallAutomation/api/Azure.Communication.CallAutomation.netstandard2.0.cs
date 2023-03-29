@@ -286,8 +286,10 @@ namespace Azure.Communication.CallAutomation
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.PlayResult>> PlayAsync(Azure.Communication.CallAutomation.PlaySource playSource, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> playTo, Azure.Communication.CallAutomation.PlayOptions playOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.PlayResult> PlayToAll(Azure.Communication.CallAutomation.PlaySource playSource, Azure.Communication.CallAutomation.PlayOptions playOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.PlayResult>> PlayToAllAsync(Azure.Communication.CallAutomation.PlaySource playSource, Azure.Communication.CallAutomation.PlayOptions playOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response StartContinuousDtmfRecognition(Azure.Communication.CallAutomation.ContinuousDtmfRecognitionOptions continuousDtmfOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.StartRecognizingResult> StartRecognizing(Azure.Communication.CallAutomation.CallMediaRecognizeOptions recognizeOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.StartRecognizingResult>> StartRecognizingAsync(Azure.Communication.CallAutomation.CallMediaRecognizeOptions recognizeOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response StopContinuousDtmfRecognition(Azure.Communication.CallAutomation.ContinuousDtmfRecognitionOptions continuousDtmfOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CallMediaRecognitionType : System.IEquatable<Azure.Communication.CallAutomation.CallMediaRecognitionType>
@@ -431,6 +433,11 @@ namespace Azure.Communication.CallAutomation
         public static bool operator ==(Azure.Communication.CallAutomation.ContentTransferOptions left, Azure.Communication.CallAutomation.ContentTransferOptions right) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static bool operator !=(Azure.Communication.CallAutomation.ContentTransferOptions left, Azure.Communication.CallAutomation.ContentTransferOptions right) { throw null; }
+    }
+    public partial class ContinuousDtmfRecognitionOptions
+    {
+        public ContinuousDtmfRecognitionOptions(Azure.Communication.CommunicationIdentifier targetParticipant) { }
+        public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
     }
     public partial class ContinuousDtmfRecognitionToneFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
@@ -970,10 +977,29 @@ namespace Azure.Communication.CallAutomation
         internal SendDtmfCompleted() { }
         public static Azure.Communication.CallAutomation.SendDtmfCompleted Deserialize(string content) { throw null; }
     }
+    public partial class SendDtmfEventResult
+    {
+        internal SendDtmfEventResult() { }
+        public Azure.Communication.CallAutomation.SendDtmfFailed FailureEvent { get { throw null; } }
+        public bool IsSuccessEvent { get { throw null; } }
+        public Azure.Communication.CallAutomation.SendDtmfCompleted SuccessEvent { get { throw null; } }
+    }
     public partial class SendDtmfFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal SendDtmfFailed() { }
         public static Azure.Communication.CallAutomation.SendDtmfFailed Deserialize(string content) { throw null; }
+    }
+    public partial class SendDtmfOptions
+    {
+        public SendDtmfOptions(Azure.Communication.CommunicationIdentifier targetParticipant, System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.DtmfTone> tones) { }
+        public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.DtmfTone> Tones { get { throw null; } set { } }
+    }
+    public partial class SendDtmfResult
+    {
+        internal SendDtmfResult() { }
+        public Azure.Communication.CallAutomation.SendDtmfEventResult WaitForEventProcessor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.SendDtmfEventResult> WaitForEventProcessorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ServerCallLocator : Azure.Communication.CallAutomation.CallLocator
     {
@@ -986,6 +1012,19 @@ namespace Azure.Communication.CallAutomation
     {
         public SsmlSource(string ssmlText) { }
         public string SsmlText { get { throw null; } }
+    }
+    public partial class StartContinuousDtmfRecognizingEventResult
+    {
+        internal StartContinuousDtmfRecognizingEventResult() { }
+        public Azure.Communication.CallAutomation.ContinuousDtmfRecognitionToneFailed FailureEvent { get { throw null; } }
+        public bool IsSuccessEvent { get { throw null; } }
+        public Azure.Communication.CallAutomation.ContinuousDtmfRecognitionToneReceived SuccessEvent { get { throw null; } }
+    }
+    public partial class StartContinuousDtmfRecognizingResult
+    {
+        internal StartContinuousDtmfRecognizingResult() { }
+        public Azure.Communication.CallAutomation.StartContinuousDtmfRecognizingEventResult WaitForEventProcessor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.StartContinuousDtmfRecognizingEventResult> WaitForEventProcessorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class StartRecognizingEventResult
     {

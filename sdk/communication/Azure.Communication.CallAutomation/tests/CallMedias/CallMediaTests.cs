@@ -68,88 +68,119 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
         private static readonly CallMediaRecognizeOptions _emptyRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 1);
 
+        private static readonly ContinuousDtmfRecognitionOptions _ContinuousDtmfRecognitionOptions = new(new CommunicationUserIdentifier("targetUserId"));
+
+        private static readonly SendDtmfOptions _sendDmtfOptions = new(new CommunicationUserIdentifier("targetUserId"),
+            new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound });
+
         private static CallMedia? _callMedia;
 
         [SetUp]
         public void Setup()
         {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(202);
-            _callMedia = callAutomationClient.GetCallConnection("callConnectionId").GetCallMedia();
             _fileSource.PlaySourceId = "playSourceId";
+        }
+
+        private CallMedia GetCallMedia(int responseCode)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(responseCode);
+            return callAutomationClient.GetCallConnection("callConnectionId").GetCallMedia();
         }
 
         [TestCaseSource(nameof(TestData_PlayOperationsAsync))]
         public async Task PlayOperationsAsync_Return202Accepted(Func<CallMedia, Task<Response<PlayResult>>> operation)
         {
-            if (_callMedia != null)
-            {
-                var result = await operation(_callMedia);
-                Assert.IsNotNull(result);
-                Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
-            }
+            _callMedia = GetCallMedia(202);
+            var result = await operation(_callMedia);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
         }
 
         [TestCaseSource(nameof(TestData_CancelOperationsAsync))]
         public async Task CancelOperationsAsync_Return202Accepted(Func<CallMedia, Task<Response<CancelAllMediaOperationsResult>>> operation)
         {
-            if (_callMedia != null)
-            {
-                var result = await operation(_callMedia);
-                Assert.IsNotNull(result);
-                Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
-            }
+            _callMedia = GetCallMedia(202);
+            var result = await operation(_callMedia);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
         }
 
         [TestCaseSource(nameof(TestData_RecognizeOperationsAsync))]
         public async Task RecognizeOperationsAsync_Return202Accepted(Func<CallMedia, Task<Response<StartRecognizingResult>>> operation)
         {
-            if (_callMedia != null)
-            {
-                var result = await operation(_callMedia);
-                Assert.IsNotNull(result);
-                Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
-            }
+            _callMedia = GetCallMedia(202);
+            var result = await operation(_callMedia);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
+        }
+
+        [TestCaseSource(nameof(TestData_SendDtmfOperationsAsync))]
+        public async Task SendDtmfOperationsAsync_Return202Accepted(Func<CallMedia, Task<Response<SendDtmfResult>>> operation)
+        {
+            _callMedia = GetCallMedia(202);
+            var result = await operation(_callMedia);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
         }
 
         [TestCaseSource(nameof(TestData_PlayOperations))]
         public void MediaOperations_Return202Accepted(Func<CallMedia, Response<PlayResult>> operation)
         {
-            if (_callMedia != null)
-            {
-                var result = operation(_callMedia);
-                Assert.IsNotNull(result);
-                Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
-            }
+            _callMedia = GetCallMedia(202);
+            var result = operation(_callMedia);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
         }
 
         [TestCaseSource(nameof(TestData_CancelOperations))]
         public void CancelOperations_Return202Accepted(Func<CallMedia, Response<CancelAllMediaOperationsResult>> operation)
         {
-            if (_callMedia != null)
-            {
-                var result = operation(_callMedia);
-                Assert.IsNotNull(result);
-                Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
-            }
+            _callMedia = GetCallMedia(202);
+            var result = operation(_callMedia);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
         }
 
         [TestCaseSource(nameof(TestData_RecognizeOperations))]
         public void RecognizeOperations_Return202Accepted(Func<CallMedia, Response<StartRecognizingResult>> operation)
         {
-            if (_callMedia != null)
-            {
-                var result = operation(_callMedia);
-                Assert.IsNotNull(result);
-                Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
-            }
+            _callMedia = GetCallMedia(202);
+            var result = operation(_callMedia);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
+        }
+
+        [TestCaseSource(nameof(TestData_SendDtmfOperations))]
+        public void SendDtmfOperations_Return202Accepted(Func<CallMedia, Response<SendDtmfResult>> operation)
+        {
+            _callMedia = GetCallMedia(202);
+            var result = operation(_callMedia);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
+        }
+
+        [TestCaseSource(nameof(TestData_StartContinuousRecognitionOperations))]
+        public void StartContinuousRecognizeOperations_Return200OK(Func<CallMedia, Response> operation)
+        {
+            _callMedia = GetCallMedia(200);
+            var result = operation(_callMedia);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_StopContinuousRecognitionOperations))]
+        public void StopContinuousRecognizeOperations_Return200OK(Func<CallMedia, Response> operation)
+        {
+            _callMedia = GetCallMedia(200);
+            var result = operation(_callMedia);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
         }
 
         [TestCaseSource(nameof(TestData_PlayOperationsAsync))]
         public void PlayOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response<PlayResult>>> operation)
         {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
-            _callMedia = callAutomationClient.GetCallConnection("callConnectionId").GetCallMedia();
-
+            _callMedia = GetCallMedia(404);
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
                 async () => await operation(_callMedia));
             Assert.NotNull(ex);
@@ -159,9 +190,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         [TestCaseSource(nameof(TestData_CancelOperationsAsync))]
         public void CancelOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response<CancelAllMediaOperationsResult>>> operation)
         {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
-            _callMedia = callAutomationClient.GetCallConnection("callConnectionId").GetCallMedia();
-
+            _callMedia = GetCallMedia(404);
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
                 async () => await operation(_callMedia));
             Assert.NotNull(ex);
@@ -171,9 +200,17 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         [TestCaseSource(nameof(TestData_RecognizeOperationsAsync))]
         public void RecognizeOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response<StartRecognizingResult>>> operation)
         {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
-            _callMedia = callAutomationClient.GetCallConnection("callConnectionId").GetCallMedia();
+            _callMedia = GetCallMedia(404);
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
+                async () => await operation(_callMedia));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
 
+        [TestCaseSource(nameof(TestData_SendDtmfOperationsAsync))]
+        public void SendDtmfOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response<SendDtmfResult>>> operation)
+        {
+            _callMedia = GetCallMedia(404);
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
                 async () => await operation(_callMedia));
             Assert.NotNull(ex);
@@ -183,9 +220,27 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         [TestCaseSource(nameof(TestData_PlayOperations))]
         public void PlayOperations_Return404NotFound(Func<CallMedia, Response<PlayResult>> operation)
         {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
-            _callMedia = callAutomationClient.GetCallConnection("callConnectionId").GetCallMedia();
+            _callMedia = GetCallMedia(404);
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(
+                () => operation(_callMedia));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
 
+        [TestCaseSource(nameof(TestData_RecognizeOperations))]
+        public void RecognizeOperations_Return404NotFound(Func<CallMedia, Response<RecognizeResult>> operation)
+        {
+            _callMedia = GetCallMedia(404);
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(
+                () => operation(_callMedia));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_SendDtmfOperations))]
+        public void SendDtmfOperations_Return404NotFound(Func<CallMedia, Response<SendDtmfResult>> operation)
+        {
+            _callMedia = GetCallMedia(404);
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(
                 () => operation(_callMedia));
             Assert.NotNull(ex);
@@ -195,9 +250,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         [TestCaseSource(nameof(TestData_CancelOperations))]
         public void CancelOperations_Return404NotFound(Func<CallMedia, Response<CancelAllMediaOperationsResult>> operation)
         {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
-            _callMedia = callAutomationClient.GetCallConnection("callConnectionId").GetCallMedia();
-
+            _callMedia = GetCallMedia(404);
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(
                 () => operation(_callMedia));
             Assert.NotNull(ex);
@@ -207,9 +260,28 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         [TestCaseSource(nameof(TestData_RecognizeOperations))]
         public void MediaOperations_Return404NotFound(Func<CallMedia, Response<StartRecognizingResult>> operation)
         {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
-            _callMedia = callAutomationClient.GetCallConnection("callConnectionId").GetCallMedia();
+            _callMedia = GetCallMedia(404);
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(
+                () => operation(_callMedia));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
 
+        [TestCaseSource(nameof(TestData_StartContinuousRecognitionOperations))]
+        public void StartContinuousRecognizeOperations_Return404NotFound(Func<CallMedia, Response> operation)
+        {
+            _callMedia = GetCallMedia(404);
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(
+                () => operation(_callMedia));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_StopContinuousRecognitionOperations))]
+
+        public void StopContinuousRecognizeOperations_Return404NotFound(Func<CallMedia, Response> operation)
+        {
+            _callMedia = GetCallMedia(404);
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(
                 () => operation(_callMedia));
             Assert.NotNull(ex);
@@ -318,6 +390,50 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 new Func<CallMedia, Response<StartRecognizingResult>>?[]
                 {
                    callMedia => callMedia.StartRecognizing(_emptyRecognizeOptions)
+                }
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_SendDtmfOperations()
+        {
+            return new[]
+            {
+                new Func<CallMedia, Response<SendDtmfResult>>?[]
+                {
+                   callMedia => callMedia.SendDtmf(_sendDmtfOptions)
+                }
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_SendDtmfOperationsAsync()
+        {
+            return new[]
+            {
+                new Func<CallMedia, Task<Response<SendDtmfResult>>>?[]
+                {
+                   callMedia => callMedia.SendDtmfAsync(_sendDmtfOptions)
+                }
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_StartContinuousRecognitionOperations()
+        {
+            return new[]
+            {
+                new Func<CallMedia, Response>?[]
+                {
+                   callMedia => callMedia.StartContinuousDtmfRecognition(_ContinuousDtmfRecognitionOptions)
+                }
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_StopContinuousRecognitionOperations()
+        {
+            return new[]
+            {
+                new Func<CallMedia, Response>?[]
+                {
+                   callMedia => callMedia.StopContinuousDtmfRecognition(_ContinuousDtmfRecognitionOptions)
                 }
             };
         }

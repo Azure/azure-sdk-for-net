@@ -9,10 +9,10 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The Recognize configurations specific for Continuous Dtmf.
     /// </summary>
-    public class ContinuousDtmfRecognizeOptions
+    public class ContinuousDtmfRecognitionOptions
     {
-        /// <summary> Initializes a new instance of ContinuousDtmfRecognizeOptions. </summary>
-        public ContinuousDtmfRecognizeOptions(CommunicationIdentifier targetParticipant)
+        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionOptions. </summary>
+        public ContinuousDtmfRecognitionOptions(CommunicationIdentifier targetParticipant)
         {
             TargetParticipant = targetParticipant;
         }
