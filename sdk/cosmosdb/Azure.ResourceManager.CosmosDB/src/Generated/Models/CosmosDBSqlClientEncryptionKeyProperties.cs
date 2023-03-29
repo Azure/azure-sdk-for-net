@@ -11,7 +11,7 @@ using Azure;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The CosmosDBSqlClientEncryptionKeyProperties. </summary>
-    public partial class CosmosDBSqlClientEncryptionKeyProperties : CosmosDBSqlClientEncryptionKeyResource
+    public partial class CosmosDBSqlClientEncryptionKeyProperties : CosmosDBSqlClientEncryptionKeyResourceInfo
     {
         /// <summary> Initializes a new instance of CosmosDBSqlClientEncryptionKeyProperties. </summary>
         public CosmosDBSqlClientEncryptionKeyProperties()
