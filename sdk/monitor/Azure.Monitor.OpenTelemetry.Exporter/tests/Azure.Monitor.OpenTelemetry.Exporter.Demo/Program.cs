@@ -11,7 +11,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
 {
     public class Program
     {
-        private const string ConnectionString = "InstrumentationKey=ebff0d7e-7643-4a6d-9597-a17fdea8e8bf;IngestionEndpoint=https://westus2-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus2.livediagnostics.monitor.azure.com/";
+        private const string ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
 
         public static void Main()
         {
