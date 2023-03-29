@@ -1947,21 +1947,7 @@ Schema for <c>MultivariateLastDetectionResult</c>:
     </member>
     <member name="GetMultivariateModelsAsync(Int32,Int32,RequestContext)">
 <example>
-This sample shows how to call GetMultivariateModelsAsync and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, credential);
-
-await foreach (var data in client.GetMultivariateModelsAsync())
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("modelId").ToString());
-    Console.WriteLine(result.GetProperty("createdTime").ToString());
-    Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
-}
-]]></code>
-This sample shows how to call GetMultivariateModelsAsync with all parameters, and how to parse the result.
+This sample shows how to call GetMultivariateModelsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -2053,21 +2039,7 @@ information.
     </member>
     <member name="GetMultivariateModels(Int32,Int32,RequestContext)">
 <example>
-This sample shows how to call GetMultivariateModels and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, credential);
-
-foreach (var data in client.GetMultivariateModels())
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("modelId").ToString());
-    Console.WriteLine(result.GetProperty("createdTime").ToString());
-    Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
-}
-]]></code>
-This sample shows how to call GetMultivariateModels with all parameters, and how to parse the result.
+This sample shows how to call GetMultivariateModels with required parameters and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
