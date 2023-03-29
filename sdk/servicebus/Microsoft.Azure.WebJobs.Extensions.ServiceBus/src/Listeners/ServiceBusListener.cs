@@ -443,81 +443,32 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         var receiveActions = new ServiceBusReceiveActions(receiver);
 
                         ServiceBusReceivedMessage[] messagesArray = messages.ToArray();
-                        ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateBatch(
+
+                        // Get set of messages to use for batch here.
+                        var messagesToReturn = new List<ServiceBusMessage>();
+
+                        if (messagesToReturn.Count > 0)
+                        {
+                            ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateBatch(
                             messagesArray,
                             messageActions,
                             receiveActions,
                             _client.Value);
 
-                        using DiagnosticScope scope = _clientDiagnostics.Value.CreateScope(
-                            _isSessionsEnabled ? Constants.ProcessSessionMessagesActivityName : Constants.ProcessMessagesActivityName,
-                            DiagnosticScope.ActivityKind.Consumer,
-                            MessagingDiagnosticOperation.Process);
-
-                        scope.SetMessageData(messagesArray);
-
-                        scope.Start();
-                        FunctionResult result = await _triggerExecutor.TryExecuteAsync(input.GetTriggerFunctionData(), cancellationToken).ConfigureAwait(false);
-                        if (result.Exception != null)
-                        {
-                            scope.Failed(result.Exception);
+                            ProcessMessagesInternal(messagesArray, cancellationTokenSource, input, receiver, receiveActions, messageActions);
                         }
-                        receiveActions.EndExecutionScope();
-
-                        var processedMessages = messagesArray.Concat(receiveActions.Messages.Keys);
-                        // Complete batch of messages only if the execution was successful
-                        if (_autoCompleteMessages && result.Succeeded)
+                        else
                         {
-                            List<Task> completeTasks = new List<Task>();
-                            foreach (ServiceBusReceivedMessage message in processedMessages)
-                            {
-                                // skip messages that were settled in the user's function
-                                if (input.MessageActions.SettledMessages.ContainsKey(message))
-                                {
-                                    continue;
-                                }
-
-                                // Pass CancellationToken.None to allow autocompletion to finish even when shutting down
-                                completeTasks.Add(receiver.CompleteMessageAsync(message, CancellationToken.None));
-                            }
-
-                            await Task.WhenAll(completeTasks).ConfigureAwait(false);
-                        }
-                        else if (!result.Succeeded)
-                        {
-                            // For failed executions, we abandon the messages regardless of the autoCompleteMessages configuration.
-                            // This matches the behavior that happens for single dispatch functions as the processor does the same thing
-                            // in the Service Bus SDK.
-
-                            List<Task> abandonTasks = new List<Task>();
-                            foreach (ServiceBusReceivedMessage message in processedMessages)
-                            {
-                                // skip messages that were settled in the user's function
-                                if (input.MessageActions.SettledMessages.ContainsKey(message))
-                                {
-                                    continue;
-                                }
-
-                                // Pass CancellationToken.None to allow abandon to finish even when shutting down
-                                abandonTasks.Add(receiver.AbandonMessageAsync(message, cancellationToken: CancellationToken.None));
-                            }
-
-                            await Task.WhenAll(abandonTasks).ConfigureAwait(false);
+                            // TODO - 
+                            // break?
                         }
 
-                        if (_isSessionsEnabled)
-                        {
-                            if (((ServiceBusSessionMessageActions)messageActions).ShouldReleaseSession)
-                            {
-                                // Use CancellationToken.None to attempt to close the receiver even when shutting down
-                                await receiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
-                            }
-                        }
+                        // Moved to process events
                     }
                     else
                     {
                         // TODO semaphore and check if there are events in storage, don't close the receiver if we're just waiting
-                        // what if we lose the session?
+                        // what if we lose the session? do we want to just not store events for sessions
                         // Close the session and release the session lock after draining all messages for the accepted session.
                         if (_isSessionsEnabled)
                         {
@@ -559,6 +510,79 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             }
         }
 
+        private async void ProcessMessagesInternal(ServiceBusReceivedMessage[] messagesArray,
+                                                   CancellationTokenSource cancellationTokenSource,
+                                                   ServiceBusTriggerInput input,
+                                                   ServiceBusReceiver receiver,
+                                                   ServiceBusReceiveActions receiveActions,
+                                                   ServiceBusMessageActions messageActions)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.Value.CreateScope(
+                            _isSessionsEnabled ? Constants.ProcessSessionMessagesActivityName : Constants.ProcessMessagesActivityName,
+                            DiagnosticScope.ActivityKind.Consumer,
+                            MessagingDiagnosticOperation.Process);
+
+            scope.SetMessageData(messagesArray);
+
+            scope.Start();
+            FunctionResult result = await _triggerExecutor.TryExecuteAsync(input.GetTriggerFunctionData(), cancellationTokenSource.Token).ConfigureAwait(false);
+            if (result.Exception != null)
+            {
+                scope.Failed(result.Exception);
+            }
+            receiveActions.EndExecutionScope();
+
+            var processedMessages = messagesArray.Concat(receiveActions.Messages.Keys);
+            // Complete batch of messages only if the execution was successful
+            if (_autoCompleteMessages && result.Succeeded)
+            {
+                List<Task> completeTasks = new List<Task>();
+                foreach (ServiceBusReceivedMessage message in processedMessages)
+                {
+                    // skip messages that were settled in the user's function
+                    if (input.MessageActions.SettledMessages.ContainsKey(message))
+                    {
+                        continue;
+                    }
+
+                    // Pass CancellationToken.None to allow autocompletion to finish even when shutting down
+                    completeTasks.Add(receiver.CompleteMessageAsync(message, CancellationToken.None));
+                }
+
+                await Task.WhenAll(completeTasks).ConfigureAwait(false);
+            }
+            else if (!result.Succeeded)
+            {
+                // For failed executions, we abandon the messages regardless of the autoCompleteMessages configuration.
+                // This matches the behavior that happens for single dispatch functions as the processor does the same thing
+                // in the Service Bus SDK.
+
+                List<Task> abandonTasks = new();
+                foreach (ServiceBusReceivedMessage message in processedMessages)
+                {
+                    // skip messages that were settled in the user's function
+                    if (input.MessageActions.SettledMessages.ContainsKey(message))
+                    {
+                        continue;
+                    }
+
+                    // Pass CancellationToken.None to allow abandon to finish even when shutting down
+                    abandonTasks.Add(receiver.AbandonMessageAsync(message, cancellationToken: CancellationToken.None));
+                }
+
+                await Task.WhenAll(abandonTasks).ConfigureAwait(false);
+            }
+
+            if (_isSessionsEnabled)
+            {
+                if (((ServiceBusSessionMessageActions)messageActions).ShouldReleaseSession)
+                {
+                    // Use CancellationToken.None to attempt to close the receiver even when shutting down
+                    await receiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                }
+            }
+        }
+
         private async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveMessages(ServiceBusReceiver receiver, TimeSpan? maxWaitTime, CancellationTokenSource cancellationTokenSource)
         {
             IReadOnlyList<ServiceBusReceivedMessage> messages = await receiver.ReceiveMessagesAsync(
@@ -594,11 +618,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
                 if (triggerEvents.Length > 0)
                 {
-                    var details = GetOperationDetails(_mostRecentPartitionContext, "MaxWaitTimeElapsed");
-                    _logger.LogDebug($"Partition Processor has waited MaxWaitTime since last invocation and is attempting to invoke function on all held events ({details})");
+                    // TODO: log
 
-                    await TriggerExecute(triggerEvents, _mostRecentPartitionContext, backgroundCancellationTokenSource.Token).ConfigureAwait(false);
-                    await CheckpointAsync(triggerEvents.Last(), _mostRecentPartitionContext).ConfigureAwait(false);
+                    ProcessMessagesInternal()
                 }
                 else
                 {
