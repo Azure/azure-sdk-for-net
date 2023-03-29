@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies additional settings to be applied when patch mode AutomaticByPlatform is selected in Windows patch settings. </summary>
-    internal partial class WindowsVmGuestPatchAutomaticByPlatformSettings
+    public partial class WindowsVmGuestPatchAutomaticByPlatformSettings
     {
         /// <summary> Initializes a new instance of WindowsVmGuestPatchAutomaticByPlatformSettings. </summary>
         public WindowsVmGuestPatchAutomaticByPlatformSettings()
@@ -17,12 +17,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of WindowsVmGuestPatchAutomaticByPlatformSettings. </summary>
         /// <param name="rebootSetting"> Specifies the reboot setting for all AutomaticByPlatform patch installation operations. </param>
-        internal WindowsVmGuestPatchAutomaticByPlatformSettings(WindowsVmGuestPatchAutomaticByPlatformRebootSetting? rebootSetting)
+        /// <param name="bypassPlatformSafetyChecksOnUserSchedule"> Enables customer to schedule patching without accidental upgrades. </param>
+        internal WindowsVmGuestPatchAutomaticByPlatformSettings(WindowsVmGuestPatchAutomaticByPlatformRebootSetting? rebootSetting, bool? bypassPlatformSafetyChecksOnUserSchedule)
         {
             RebootSetting = rebootSetting;
+            BypassPlatformSafetyChecksOnUserSchedule = bypassPlatformSafetyChecksOnUserSchedule;
         }
 
         /// <summary> Specifies the reboot setting for all AutomaticByPlatform patch installation operations. </summary>
         public WindowsVmGuestPatchAutomaticByPlatformRebootSetting? RebootSetting { get; set; }
+        /// <summary> Enables customer to schedule patching without accidental upgrades. </summary>
+        public bool? BypassPlatformSafetyChecksOnUserSchedule { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class LinuxVmGuestPatchAutomaticByPlatformSettings : IUtf8JsonSerializable
+    public partial class LinuxVmGuestPatchAutomaticByPlatformSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,12 +20,18 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("rebootSetting"u8);
                 writer.WriteStringValue(RebootSetting.Value.ToString());
             }
+            if (Optional.IsDefined(BypassPlatformSafetyChecksOnUserSchedule))
+            {
+                writer.WritePropertyName("bypassPlatformSafetyChecksOnUserSchedule"u8);
+                writer.WriteBooleanValue(BypassPlatformSafetyChecksOnUserSchedule.Value);
+            }
             writer.WriteEndObject();
         }
 
         internal static LinuxVmGuestPatchAutomaticByPlatformSettings DeserializeLinuxVmGuestPatchAutomaticByPlatformSettings(JsonElement element)
         {
             Optional<LinuxVmGuestPatchAutomaticByPlatformRebootSetting> rebootSetting = default;
+            Optional<bool> bypassPlatformSafetyChecksOnUserSchedule = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rebootSetting"u8))
@@ -38,8 +44,18 @@ namespace Azure.ResourceManager.Compute.Models
                     rebootSetting = new LinuxVmGuestPatchAutomaticByPlatformRebootSetting(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("bypassPlatformSafetyChecksOnUserSchedule"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    bypassPlatformSafetyChecksOnUserSchedule = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new LinuxVmGuestPatchAutomaticByPlatformSettings(Optional.ToNullable(rebootSetting));
+            return new LinuxVmGuestPatchAutomaticByPlatformSettings(Optional.ToNullable(rebootSetting), Optional.ToNullable(bypassPlatformSafetyChecksOnUserSchedule));
         }
     }
 }
