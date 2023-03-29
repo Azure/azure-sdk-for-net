@@ -19,11 +19,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteObjectValue(Type);
             if (Optional.IsDefined(Level))
             {
-                writer.WritePropertyName("level");
+                writer.WritePropertyName("level"u8);
                 writer.WriteObjectValue(Level);
             }
             foreach (var item in AdditionalProperties)
@@ -36,18 +36,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DatasetCompression DeserializeDatasetCompression(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             object type = default;
             Optional<object> level = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("level"))
+                if (property.NameEquals("level"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

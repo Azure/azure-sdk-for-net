@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Batch.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("osFamily");
+            writer.WritePropertyName("osFamily"u8);
             writer.WriteStringValue(OSFamily);
             if (Optional.IsDefined(OSVersion))
             {
-                writer.WritePropertyName("osVersion");
+                writer.WritePropertyName("osVersion"u8);
                 writer.WriteStringValue(OSVersion);
             }
             writer.WriteEndObject();
@@ -27,16 +27,20 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchCloudServiceConfiguration DeserializeBatchCloudServiceConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string osFamily = default;
             Optional<string> osVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("osFamily"))
+                if (property.NameEquals("osFamily"u8))
                 {
                     osFamily = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osVersion"))
+                if (property.NameEquals("osVersion"u8))
                 {
                     osVersion = property.Value.GetString();
                     continue;

@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("filterFileType");
+            writer.WritePropertyName("filterFileType"u8);
             writer.WriteStringValue(FilterFileType.ToSerialString());
-            writer.WritePropertyName("filterFilePath");
+            writer.WritePropertyName("filterFilePath"u8);
             writer.WriteStringValue(FilterFilePath);
             writer.WriteEndObject();
         }
 
         internal static FilterFileDetails DeserializeFilterFileDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FilterFileType filterFileType = default;
             string filterFilePath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("filterFileType"))
+                if (property.NameEquals("filterFileType"u8))
                 {
                     filterFileType = property.Value.GetString().ToFilterFileType();
                     continue;
                 }
-                if (property.NameEquals("filterFilePath"))
+                if (property.NameEquals("filterFilePath"u8))
                 {
                     filterFilePath = property.Value.GetString();
                     continue;

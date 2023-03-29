@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IPAddress))
             {
-                writer.WritePropertyName("ipAddress");
+                writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CassandraDataCenterSeedNode DeserializeCassandraDataCenterSeedNode(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ipAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
                     ipAddress = property.Value.GetString();
                     continue;

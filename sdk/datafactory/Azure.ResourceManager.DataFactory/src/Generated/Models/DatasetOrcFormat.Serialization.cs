@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetStorageFormatType);
             if (Optional.IsDefined(Serializer))
             {
-                writer.WritePropertyName("serializer");
+                writer.WritePropertyName("serializer"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Serializer);
 #else
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(Deserializer))
             {
-                writer.WritePropertyName("deserializer");
+                writer.WritePropertyName("deserializer"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Deserializer);
 #else
@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DatasetOrcFormat DeserializeDatasetOrcFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<BinaryData> serializer = default;
             Optional<BinaryData> deserializer = default;
@@ -58,12 +62,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serializer"))
+                if (property.NameEquals("serializer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     serializer = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("deserializer"))
+                if (property.NameEquals("deserializer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

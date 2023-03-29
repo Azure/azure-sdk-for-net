@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.LabServices
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(EnabledState))
             {
-                writer.WritePropertyName("enabledState");
+                writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(AvailableRegions))
             {
-                writer.WritePropertyName("availableRegions");
+                writer.WritePropertyName("availableRegions"u8);
                 writer.WriteStartArray();
                 foreach (var item in AvailableRegions)
                 {
@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.LabServices
 
         internal static LabVirtualMachineImageData DeserializeLabVirtualMachineImageData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -64,22 +68,22 @@ namespace Azure.ResourceManager.LabServices
             Optional<LabVirtualMachineImageOSState> osState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +93,7 @@ namespace Azure.ResourceManager.LabServices
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +102,7 @@ namespace Azure.ResourceManager.LabServices
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("enabledState"))
+                        if (property0.NameEquals("enabledState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -108,7 +112,7 @@ namespace Azure.ResourceManager.LabServices
                             enabledState = property0.Value.GetString().ToLabServicesEnableState();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -118,17 +122,17 @@ namespace Azure.ResourceManager.LabServices
                             provisioningState = property0.Value.GetString().ToLabServicesProvisioningState();
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("iconUrl"))
+                        if (property0.NameEquals("iconUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -138,12 +142,12 @@ namespace Azure.ResourceManager.LabServices
                             iconUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("author"))
+                        if (property0.NameEquals("author"u8))
                         {
                             author = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("osType"))
+                        if (property0.NameEquals("osType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -153,12 +157,12 @@ namespace Azure.ResourceManager.LabServices
                             osType = property0.Value.GetString().ToLabVirtualMachineImageOSType();
                             continue;
                         }
-                        if (property0.NameEquals("plan"))
+                        if (property0.NameEquals("plan"u8))
                         {
                             plan = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("termsStatus"))
+                        if (property0.NameEquals("termsStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -168,27 +172,27 @@ namespace Azure.ResourceManager.LabServices
                             termsStatus = property0.Value.GetString().ToLabServicesEnableState();
                             continue;
                         }
-                        if (property0.NameEquals("offer"))
+                        if (property0.NameEquals("offer"u8))
                         {
                             offer = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("publisher"))
+                        if (property0.NameEquals("publisher"u8))
                         {
                             publisher = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sku"))
+                        if (property0.NameEquals("sku"u8))
                         {
                             sku = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("version"))
+                        if (property0.NameEquals("version"u8))
                         {
                             version = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sharedGalleryId"))
+                        if (property0.NameEquals("sharedGalleryId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -198,7 +202,7 @@ namespace Azure.ResourceManager.LabServices
                             sharedGalleryId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("availableRegions"))
+                        if (property0.NameEquals("availableRegions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -213,7 +217,7 @@ namespace Azure.ResourceManager.LabServices
                             availableRegions = array;
                             continue;
                         }
-                        if (property0.NameEquals("osState"))
+                        if (property0.NameEquals("osState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

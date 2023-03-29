@@ -18,32 +18,32 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CommitmentPlanGuid))
             {
-                writer.WritePropertyName("commitmentPlanGuid");
+                writer.WritePropertyName("commitmentPlanGuid"u8);
                 writer.WriteStringValue(CommitmentPlanGuid.Value);
             }
             if (Optional.IsDefined(HostingModel))
             {
-                writer.WritePropertyName("hostingModel");
+                writer.WritePropertyName("hostingModel"u8);
                 writer.WriteStringValue(HostingModel.Value.ToString());
             }
             if (Optional.IsDefined(PlanType))
             {
-                writer.WritePropertyName("planType");
+                writer.WritePropertyName("planType"u8);
                 writer.WriteStringValue(PlanType);
             }
             if (Optional.IsDefined(Current))
             {
-                writer.WritePropertyName("current");
+                writer.WritePropertyName("current"u8);
                 writer.WriteObjectValue(Current);
             }
             if (Optional.IsDefined(AutoRenew))
             {
-                writer.WritePropertyName("autoRenew");
+                writer.WritePropertyName("autoRenew"u8);
                 writer.WriteBooleanValue(AutoRenew.Value);
             }
             if (Optional.IsDefined(Next))
             {
-                writer.WritePropertyName("next");
+                writer.WritePropertyName("next"u8);
                 writer.WriteObjectValue(Next);
             }
             writer.WriteEndObject();
@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CommitmentPlanProperties DeserializeCommitmentPlanProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CommitmentPlanProvisioningState> provisioningState = default;
             Optional<Guid> commitmentPlanGuid = default;
             Optional<ServiceAccountHostingModel> hostingModel = default;
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<CommitmentPeriod> last = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     provisioningState = new CommitmentPlanProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("commitmentPlanGuid"))
+                if (property.NameEquals("commitmentPlanGuid"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,7 +85,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     commitmentPlanGuid = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("hostingModel"))
+                if (property.NameEquals("hostingModel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,12 +95,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     hostingModel = new ServiceAccountHostingModel(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("planType"))
+                if (property.NameEquals("planType"u8))
                 {
                     planType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("current"))
+                if (property.NameEquals("current"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,7 +110,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     current = CommitmentPeriod.DeserializeCommitmentPeriod(property.Value);
                     continue;
                 }
-                if (property.NameEquals("autoRenew"))
+                if (property.NameEquals("autoRenew"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,7 +120,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     autoRenew = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("next"))
+                if (property.NameEquals("next"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,7 +130,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     next = CommitmentPeriod.DeserializeCommitmentPeriod(property.Value);
                     continue;
                 }
-                if (property.NameEquals("last"))
+                if (property.NameEquals("last"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

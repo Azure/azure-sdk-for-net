@@ -15,12 +15,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static TagResourceListResult DeserializeTagResourceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<TagResourceContractDetails>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     count = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.IotHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("key");
+            writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
-            writer.WritePropertyName("value");
+            writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            writer.WritePropertyName("endpointNames");
+            writer.WritePropertyName("endpointNames"u8);
             writer.WriteStartArray();
             foreach (var item in EndpointNames)
             {
@@ -32,22 +32,26 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static IotHubEnrichmentProperties DeserializeIotHubEnrichmentProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string key = default;
             string value = default;
             IList<string> endpointNames = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpointNames"))
+                if (property.NameEquals("endpointNames"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())

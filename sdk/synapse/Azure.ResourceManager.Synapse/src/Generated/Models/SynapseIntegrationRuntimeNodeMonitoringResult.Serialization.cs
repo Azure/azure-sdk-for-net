@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseIntegrationRuntimeNodeMonitoringResult DeserializeSynapseIntegrationRuntimeNodeMonitoringResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nodeName = default;
             Optional<int> availableMemoryInMB = default;
             Optional<int> cpuUtilization = default;
@@ -28,12 +32,12 @@ namespace Azure.ResourceManager.Synapse.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nodeName"))
+                if (property.NameEquals("nodeName"u8))
                 {
                     nodeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("availableMemoryInMB"))
+                if (property.NameEquals("availableMemoryInMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +47,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     availableMemoryInMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("cpuUtilization"))
+                if (property.NameEquals("cpuUtilization"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     cpuUtilization = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("concurrentJobsLimit"))
+                if (property.NameEquals("concurrentJobsLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +67,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     concurrentJobsLimit = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("concurrentJobsRunning"))
+                if (property.NameEquals("concurrentJobsRunning"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +77,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     concurrentJobsRunning = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentJobs"))
+                if (property.NameEquals("maxConcurrentJobs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +87,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     maxConcurrentJobs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sentBytes"))
+                if (property.NameEquals("sentBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +97,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     sentBytes = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("receivedBytes"))
+                if (property.NameEquals("receivedBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

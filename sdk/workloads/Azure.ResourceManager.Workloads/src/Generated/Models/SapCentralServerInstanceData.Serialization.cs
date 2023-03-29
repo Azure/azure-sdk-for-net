@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Workloads
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,28 +30,28 @@ namespace Azure.ResourceManager.Workloads
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(MessageServerProperties))
             {
-                writer.WritePropertyName("messageServerProperties");
+                writer.WritePropertyName("messageServerProperties"u8);
                 writer.WriteObjectValue(MessageServerProperties);
             }
             if (Optional.IsDefined(EnqueueServerProperties))
             {
-                writer.WritePropertyName("enqueueServerProperties");
+                writer.WritePropertyName("enqueueServerProperties"u8);
                 writer.WriteObjectValue(EnqueueServerProperties);
             }
             if (Optional.IsDefined(GatewayServerProperties))
             {
-                writer.WritePropertyName("gatewayServerProperties");
+                writer.WritePropertyName("gatewayServerProperties"u8);
                 writer.WriteObjectValue(GatewayServerProperties);
             }
             if (Optional.IsDefined(EnqueueReplicationServerProperties))
             {
-                writer.WritePropertyName("enqueueReplicationServerProperties");
+                writer.WritePropertyName("enqueueReplicationServerProperties"u8);
                 writer.WriteObjectValue(EnqueueReplicationServerProperties);
             }
             writer.WriteEndObject();
@@ -59,6 +60,10 @@ namespace Azure.ResourceManager.Workloads
 
         internal static SapCentralServerInstanceData DeserializeSapCentralServerInstanceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -73,6 +78,7 @@ namespace Azure.ResourceManager.Workloads
             Optional<EnqueueReplicationServerProperties> enqueueReplicationServerProperties = default;
             Optional<string> kernelVersion = default;
             Optional<string> kernelPatch = default;
+            Optional<SubResource> loadBalancerDetails = default;
             Optional<IReadOnlyList<CentralServerVmDetails>> vmDetails = default;
             Optional<SapVirtualInstanceStatus> status = default;
             Optional<SapHealthState> health = default;
@@ -80,7 +86,7 @@ namespace Azure.ResourceManager.Workloads
             Optional<SapVirtualInstanceError> errors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,27 +101,27 @@ namespace Azure.ResourceManager.Workloads
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -125,7 +131,7 @@ namespace Azure.ResourceManager.Workloads
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -134,12 +140,12 @@ namespace Azure.ResourceManager.Workloads
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("instanceNo"))
+                        if (property0.NameEquals("instanceNo"u8))
                         {
                             instanceNo = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("subnet"))
+                        if (property0.NameEquals("subnet"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -149,7 +155,7 @@ namespace Azure.ResourceManager.Workloads
                             subnet = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("messageServerProperties"))
+                        if (property0.NameEquals("messageServerProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -159,7 +165,7 @@ namespace Azure.ResourceManager.Workloads
                             messageServerProperties = MessageServerProperties.DeserializeMessageServerProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("enqueueServerProperties"))
+                        if (property0.NameEquals("enqueueServerProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -169,7 +175,7 @@ namespace Azure.ResourceManager.Workloads
                             enqueueServerProperties = EnqueueServerProperties.DeserializeEnqueueServerProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("gatewayServerProperties"))
+                        if (property0.NameEquals("gatewayServerProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -179,7 +185,7 @@ namespace Azure.ResourceManager.Workloads
                             gatewayServerProperties = GatewayServerProperties.DeserializeGatewayServerProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("enqueueReplicationServerProperties"))
+                        if (property0.NameEquals("enqueueReplicationServerProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -189,7 +195,7 @@ namespace Azure.ResourceManager.Workloads
                             enqueueReplicationServerProperties = EnqueueReplicationServerProperties.DeserializeEnqueueReplicationServerProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("kernelVersion"))
+                        if (property0.NameEquals("kernelVersion"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -199,7 +205,7 @@ namespace Azure.ResourceManager.Workloads
                             kernelVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("kernelPatch"))
+                        if (property0.NameEquals("kernelPatch"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -209,7 +215,17 @@ namespace Azure.ResourceManager.Workloads
                             kernelPatch = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("vmDetails"))
+                        if (property0.NameEquals("loadBalancerDetails"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            loadBalancerDetails = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("vmDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -224,7 +240,7 @@ namespace Azure.ResourceManager.Workloads
                             vmDetails = array;
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -234,7 +250,7 @@ namespace Azure.ResourceManager.Workloads
                             status = new SapVirtualInstanceStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("health"))
+                        if (property0.NameEquals("health"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -244,7 +260,7 @@ namespace Azure.ResourceManager.Workloads
                             health = new SapHealthState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -254,7 +270,7 @@ namespace Azure.ResourceManager.Workloads
                             provisioningState = new SapVirtualInstanceProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("errors"))
+                        if (property0.NameEquals("errors"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -268,7 +284,7 @@ namespace Azure.ResourceManager.Workloads
                     continue;
                 }
             }
-            return new SapCentralServerInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, instanceNo.Value, subnet.Value, messageServerProperties.Value, enqueueServerProperties.Value, gatewayServerProperties.Value, enqueueReplicationServerProperties.Value, kernelVersion.Value, kernelPatch.Value, Optional.ToList(vmDetails), Optional.ToNullable(status), Optional.ToNullable(health), Optional.ToNullable(provisioningState), errors.Value);
+            return new SapCentralServerInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, instanceNo.Value, subnet.Value, messageServerProperties.Value, enqueueServerProperties.Value, gatewayServerProperties.Value, enqueueReplicationServerProperties.Value, kernelVersion.Value, kernelPatch.Value, loadBalancerDetails, Optional.ToList(vmDetails), Optional.ToNullable(status), Optional.ToNullable(health), Optional.ToNullable(provisioningState), errors.Value);
         }
     }
 }

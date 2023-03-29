@@ -2,14 +2,12 @@
   <PropertyGroup>
     <Version>1.0.0</Version>
     <OutputType>Exe</OutputType>
-    <LangVersion>latest</LangVersion>
     <IsTestSupportProject>true</IsTestSupportProject>
     <IsStressProject>false</IsStressProject>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Memory.Data" />
-    <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.ApplicationInsights" />
     <PackageReference Include="CommandLineParser" />
   </ItemGroup>

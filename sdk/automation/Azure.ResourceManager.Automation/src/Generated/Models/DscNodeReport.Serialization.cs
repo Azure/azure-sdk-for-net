@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static DscNodeReport DeserializeDscNodeReport(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset?> endTime = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<DateTimeOffset?> startTime = default;
@@ -37,7 +41,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> rawErrors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +51,7 @@ namespace Azure.ResourceManager.Automation.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastModifiedTime"))
+                if (property.NameEquals("lastModifiedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +61,7 @@ namespace Azure.ResourceManager.Automation.Models
                     lastModifiedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,47 +71,47 @@ namespace Azure.ResourceManager.Automation.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reportId"))
+                if (property.NameEquals("reportId"u8))
                 {
                     reportId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("refreshMode"))
+                if (property.NameEquals("refreshMode"u8))
                 {
                     refreshMode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rebootRequested"))
+                if (property.NameEquals("rebootRequested"u8))
                 {
                     rebootRequested = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reportFormatVersion"))
+                if (property.NameEquals("reportFormatVersion"u8))
                 {
                     reportFormatVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("configurationVersion"))
+                if (property.NameEquals("configurationVersion"u8))
                 {
                     configurationVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,7 +126,7 @@ namespace Azure.ResourceManager.Automation.Models
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("resources"))
+                if (property.NameEquals("resources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -137,7 +141,7 @@ namespace Azure.ResourceManager.Automation.Models
                     resources = array;
                     continue;
                 }
-                if (property.NameEquals("metaConfiguration"))
+                if (property.NameEquals("metaConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -147,12 +151,12 @@ namespace Azure.ResourceManager.Automation.Models
                     metaConfiguration = DscMetaConfiguration.DeserializeDscMetaConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("hostName"))
+                if (property.NameEquals("hostName"u8))
                 {
                     hostName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("iPV4Addresses"))
+                if (property.NameEquals("iPV4Addresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -167,7 +171,7 @@ namespace Azure.ResourceManager.Automation.Models
                     ipV4Addresses = array;
                     continue;
                 }
-                if (property.NameEquals("iPV6Addresses"))
+                if (property.NameEquals("iPV6Addresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -182,7 +186,7 @@ namespace Azure.ResourceManager.Automation.Models
                     ipV6Addresses = array;
                     continue;
                 }
-                if (property.NameEquals("numberOfResources"))
+                if (property.NameEquals("numberOfResources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -192,7 +196,7 @@ namespace Azure.ResourceManager.Automation.Models
                     numberOfResources = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rawErrors"))
+                if (property.NameEquals("rawErrors"u8))
                 {
                     rawErrors = property.Value.GetString();
                     continue;

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(TimerTriggers))
             {
-                writer.WritePropertyName("timerTriggers");
+                writer.WritePropertyName("timerTriggers"u8);
                 writer.WriteStartArray();
                 foreach (var item in TimerTriggers)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             if (Optional.IsCollectionDefined(SourceTriggers))
             {
-                writer.WritePropertyName("sourceTriggers");
+                writer.WritePropertyName("sourceTriggers"u8);
                 writer.WriteStartArray();
                 foreach (var item in SourceTriggers)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             if (Optional.IsDefined(BaseImageTrigger))
             {
-                writer.WritePropertyName("baseImageTrigger");
+                writer.WritePropertyName("baseImageTrigger"u8);
                 writer.WriteObjectValue(BaseImageTrigger);
             }
             writer.WriteEndObject();
@@ -46,12 +46,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryTriggerProperties DeserializeContainerRegistryTriggerProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ContainerRegistryTimerTrigger>> timerTriggers = default;
             Optional<IList<ContainerRegistrySourceTrigger>> sourceTriggers = default;
             Optional<ContainerRegistryBaseImageTrigger> baseImageTrigger = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timerTriggers"))
+                if (property.NameEquals("timerTriggers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     timerTriggers = array;
                     continue;
                 }
-                if (property.NameEquals("sourceTriggers"))
+                if (property.NameEquals("sourceTriggers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,7 +85,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     sourceTriggers = array;
                     continue;
                 }
-                if (property.NameEquals("baseImageTrigger"))
+                if (property.NameEquals("baseImageTrigger"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

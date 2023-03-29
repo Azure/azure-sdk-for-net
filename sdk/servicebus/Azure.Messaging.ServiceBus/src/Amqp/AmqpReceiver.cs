@@ -6,12 +6,12 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.ExceptionServices;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 using Azure.Core;
 using Azure.Core.Diagnostics;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Primitives;
@@ -385,7 +385,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
                     }
 
-                    receivedMessages.Add(_messageConverter.AmqpMessageToSBMessage(message));
+                    receivedMessages.Add(_messageConverter.AmqpMessageToSBReceivedMessage(message));
                     message.Dispose();
                 }
 
@@ -476,10 +476,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout)
         {
             byte[] bufferForLockToken = ArrayPool<byte>.Shared.Rent(SizeOfGuidInBytes);
-            if (!MemoryMarshal.TryWrite(bufferForLockToken, ref lockToken))
-            {
-                lockToken.ToByteArray().AsSpan().CopyTo(bufferForLockToken);
-            }
+            GuidUtilities.WriteGuidToBuffer(lockToken, bufferForLockToken.AsSpan(0, SizeOfGuidInBytes));
 
             ArraySegment<byte> deliveryTag = new ArraySegment<byte>(bufferForLockToken, 0, SizeOfGuidInBytes);
             ReceivingAmqpLink receiveLink = null;
@@ -1001,7 +998,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                     var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
                     var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
-                    message = _messageConverter.AmqpMessageToSBMessage(amqpMessage, true);
+                    message = _messageConverter.AmqpMessageToSBReceivedMessage(amqpMessage, true);
                     messages.Add(message);
                 }
 
@@ -1311,7 +1308,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
                         var amqpMessage =
                             AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
-                        var message = _messageConverter.AmqpMessageToSBMessage(amqpMessage);
+                        var message = _messageConverter.AmqpMessageToSBReceivedMessage(amqpMessage);
                         if (entry.TryGetValue<Guid>(ManagementConstants.Properties.LockToken, out var lockToken))
                         {
                             message.LockTokenGuid = lockToken;

@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static DataContainer DeserializeDataContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataContainerWorkspace workspace = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("workspace"))
+                if (property.NameEquals("workspace"u8))
                 {
                     workspace = DataContainerWorkspace.DeserializeDataContainerWorkspace(property.Value);
                     continue;

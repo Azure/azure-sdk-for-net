@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(IssuerCertificateThumbprint))
             {
-                writer.WritePropertyName("issuerCertificateThumbprint");
+                writer.WritePropertyName("issuerCertificateThumbprint"u8);
                 writer.WriteStringValue(IssuerCertificateThumbprint);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static X509CertificateName DeserializeX509CertificateName(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> issuerCertificateThumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("issuerCertificateThumbprint"))
+                if (property.NameEquals("issuerCertificateThumbprint"u8))
                 {
                     issuerCertificateThumbprint = property.Value.GetString();
                     continue;

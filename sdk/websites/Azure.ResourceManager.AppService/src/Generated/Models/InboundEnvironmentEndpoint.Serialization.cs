@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static InboundEnvironmentEndpoint DeserializeInboundEnvironmentEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<IReadOnlyList<string>> endpoints = default;
             Optional<IReadOnlyList<string>> ports = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpoints"))
+                if (property.NameEquals("endpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
                     endpoints = array;
                     continue;
                 }
-                if (property.NameEquals("ports"))
+                if (property.NameEquals("ports"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MocGroup))
             {
-                writer.WritePropertyName("mocGroup");
+                writer.WritePropertyName("mocGroup"u8);
                 writer.WriteStringValue(MocGroup);
             }
             if (Optional.IsDefined(MocLocation))
             {
-                writer.WritePropertyName("mocLocation");
+                writer.WritePropertyName("mocLocation"u8);
                 writer.WriteStringValue(MocLocation);
             }
             if (Optional.IsDefined(MocStorageContainer))
             {
-                writer.WritePropertyName("mocStorageContainer");
+                writer.WritePropertyName("mocStorageContainer"u8);
                 writer.WriteStringValue(MocStorageContainer);
             }
             writer.WriteEndObject();
@@ -35,22 +35,26 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static StorageSpacesPropertiesHciStorageProfile DeserializeStorageSpacesPropertiesHciStorageProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> mocGroup = default;
             Optional<string> mocLocation = default;
             Optional<string> mocStorageContainer = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mocGroup"))
+                if (property.NameEquals("mocGroup"u8))
                 {
                     mocGroup = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mocLocation"))
+                if (property.NameEquals("mocLocation"u8))
                 {
                     mocLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mocStorageContainer"))
+                if (property.NameEquals("mocStorageContainer"u8))
                 {
                     mocStorageContainer = property.Value.GetString();
                     continue;

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ActionGroups))
             {
-                writer.WritePropertyName("actionGroups");
+                writer.WritePropertyName("actionGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in ActionGroups)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(CustomProperties))
             {
-                writer.WritePropertyName("customProperties");
+                writer.WritePropertyName("customProperties"u8);
                 writer.WriteStartObject();
                 foreach (var item in CustomProperties)
                 {
@@ -42,11 +42,15 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ScheduledQueryRuleActions DeserializeScheduledQueryRuleActions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> actionGroups = default;
             Optional<IDictionary<string, string>> customProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("actionGroups"))
+                if (property.NameEquals("actionGroups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     actionGroups = array;
                     continue;
                 }
-                if (property.NameEquals("customProperties"))
+                if (property.NameEquals("customProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

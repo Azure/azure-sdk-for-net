@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
@@ -14,21 +15,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private const int Version = 2;
 
-        internal static List<TelemetryItem> OtelToAzureMonitorMetrics(Batch<Metric> batch, AzureMonitorResource resource, string instrumentationKey)
+        internal static List<TelemetryItem> OtelToAzureMonitorMetrics(Batch<Metric> batch, AzureMonitorResource? resource, string instrumentationKey)
         {
             List<TelemetryItem> telemetryItems = new();
             foreach (var metric in batch)
             {
                 foreach (ref readonly var metricPoint in metric.GetMetricPoints())
                 {
-                    telemetryItems.Add(new TelemetryItem(metricPoint.EndTime.UtcDateTime, resource, instrumentationKey)
+                    try
                     {
-                        Data = new MonitorBase
+                        telemetryItems.Add(new TelemetryItem(metricPoint.EndTime.UtcDateTime, resource, instrumentationKey)
                         {
-                            BaseType = "MetricData",
-                            BaseData = new MetricsData(Version, metric, metricPoint)
-                        }
-                    });
+                            Data = new MonitorBase
+                            {
+                                BaseType = "MetricData",
+                                BaseData = new MetricsData(Version, metric, metricPoint)
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        // TODO: add additional information e.g. meter name etc.
+                        AzureMonitorExporterEventSource.Log.WriteError("FailedToConvertMetricPoint", ex);
+                    }
                 }
             }
 

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BaseRegularPriorityCount))
             {
-                writer.WritePropertyName("baseRegularPriorityCount");
+                writer.WritePropertyName("baseRegularPriorityCount"u8);
                 writer.WriteNumberValue(BaseRegularPriorityCount.Value);
             }
             if (Optional.IsDefined(RegularPriorityPercentageAboveBase))
             {
-                writer.WritePropertyName("regularPriorityPercentageAboveBase");
+                writer.WritePropertyName("regularPriorityPercentageAboveBase"u8);
                 writer.WriteNumberValue(RegularPriorityPercentageAboveBase.Value);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetPriorityMixPolicy DeserializeVirtualMachineScaleSetPriorityMixPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> baseRegularPriorityCount = default;
             Optional<int> regularPriorityPercentageAboveBase = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("baseRegularPriorityCount"))
+                if (property.NameEquals("baseRegularPriorityCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
                     baseRegularPriorityCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("regularPriorityPercentageAboveBase"))
+                if (property.NameEquals("regularPriorityPercentageAboveBase"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

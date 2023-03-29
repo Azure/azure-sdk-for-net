@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.Synapse.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CustomSetupBaseType);
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("componentName");
+            writer.WritePropertyName("componentName"u8);
             writer.WriteStringValue(ComponentName);
             if (Optional.IsDefined(LicenseKey))
             {
-                writer.WritePropertyName("licenseKey");
+                writer.WritePropertyName("licenseKey"u8);
                 writer.WriteObjectValue(LicenseKey);
             }
             writer.WriteEndObject();
@@ -32,17 +32,21 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseComponentSetup DeserializeSynapseComponentSetup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             string componentName = default;
             Optional<SynapseSecretBase> licenseKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,12 +55,12 @@ namespace Azure.ResourceManager.Synapse.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("componentName"))
+                        if (property0.NameEquals("componentName"u8))
                         {
                             componentName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("licenseKey"))
+                        if (property0.NameEquals("licenseKey"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

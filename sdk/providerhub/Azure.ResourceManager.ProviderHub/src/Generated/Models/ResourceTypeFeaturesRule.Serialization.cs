@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("requiredFeaturesPolicy");
+            writer.WritePropertyName("requiredFeaturesPolicy"u8);
             writer.WriteStringValue(RequiredFeaturesPolicy.ToString());
             writer.WriteEndObject();
         }
 
         internal static ResourceTypeFeaturesRule DeserializeResourceTypeFeaturesRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FeaturesPolicy requiredFeaturesPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("requiredFeaturesPolicy"))
+                if (property.NameEquals("requiredFeaturesPolicy"u8))
                 {
                     requiredFeaturesPolicy = new FeaturesPolicy(property.Value.GetString());
                     continue;

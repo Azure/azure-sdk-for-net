@@ -19,26 +19,26 @@ namespace Azure.ResourceManager.Dynatrace
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(SingleSignOnState))
             {
-                writer.WritePropertyName("singleSignOnState");
+                writer.WritePropertyName("singleSignOnState"u8);
                 writer.WriteStringValue(SingleSignOnState.Value.ToString());
             }
             if (Optional.IsDefined(EnterpriseAppId))
             {
-                writer.WritePropertyName("enterpriseAppId");
+                writer.WritePropertyName("enterpriseAppId"u8);
                 writer.WriteStringValue(EnterpriseAppId.Value);
             }
             if (Optional.IsDefined(SingleSignOnUri))
             {
-                writer.WritePropertyName("singleSignOnUrl");
+                writer.WritePropertyName("singleSignOnUrl"u8);
                 writer.WriteStringValue(SingleSignOnUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(AadDomains))
             {
-                writer.WritePropertyName("aadDomains");
+                writer.WritePropertyName("aadDomains"u8);
                 writer.WriteStartArray();
                 foreach (var item in AadDomains)
                 {
@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.Dynatrace
 
         internal static DynatraceSingleSignOnData DeserializeDynatraceSingleSignOnData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -63,22 +67,22 @@ namespace Azure.ResourceManager.Dynatrace
             Optional<DynatraceProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +92,7 @@ namespace Azure.ResourceManager.Dynatrace
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +101,7 @@ namespace Azure.ResourceManager.Dynatrace
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("singleSignOnState"))
+                        if (property0.NameEquals("singleSignOnState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -107,7 +111,7 @@ namespace Azure.ResourceManager.Dynatrace
                             singleSignOnState = new DynatraceSingleSignOnState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("enterpriseAppId"))
+                        if (property0.NameEquals("enterpriseAppId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -117,7 +121,7 @@ namespace Azure.ResourceManager.Dynatrace
                             enterpriseAppId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("singleSignOnUrl"))
+                        if (property0.NameEquals("singleSignOnUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -127,7 +131,7 @@ namespace Azure.ResourceManager.Dynatrace
                             singleSignOnUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("aadDomains"))
+                        if (property0.NameEquals("aadDomains"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -142,7 +146,7 @@ namespace Azure.ResourceManager.Dynatrace
                             aadDomains = array;
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

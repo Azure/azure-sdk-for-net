@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Headers))
             {
-                writer.WritePropertyName("headers");
+                writer.WritePropertyName("headers"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Headers);
 #else
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
             if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("uri");
+                writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(Method))
             {
-                writer.WritePropertyName("method");
+                writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
             }
             writer.WriteEndObject();
@@ -40,12 +40,16 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicWorkflowRequest DeserializeLogicWorkflowRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> headers = default;
             Optional<Uri> uri = default;
             Optional<string> method = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("headers"))
+                if (property.NameEquals("headers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.Logic.Models
                     headers = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("uri"))
+                if (property.NameEquals("uri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +69,7 @@ namespace Azure.ResourceManager.Logic.Models
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("method"))
+                if (property.NameEquals("method"u8))
                 {
                     method = property.Value.GetString();
                     continue;

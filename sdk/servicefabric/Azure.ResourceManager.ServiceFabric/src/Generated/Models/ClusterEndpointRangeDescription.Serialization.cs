@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("startPort");
+            writer.WritePropertyName("startPort"u8);
             writer.WriteNumberValue(StartPort);
-            writer.WritePropertyName("endPort");
+            writer.WritePropertyName("endPort"u8);
             writer.WriteNumberValue(EndPort);
             writer.WriteEndObject();
         }
 
         internal static ClusterEndpointRangeDescription DeserializeClusterEndpointRangeDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int startPort = default;
             int endPort = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("startPort"))
+                if (property.NameEquals("startPort"u8))
                 {
                     startPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("endPort"))
+                if (property.NameEquals("endPort"u8))
                 {
                     endPort = property.Value.GetInt32();
                     continue;

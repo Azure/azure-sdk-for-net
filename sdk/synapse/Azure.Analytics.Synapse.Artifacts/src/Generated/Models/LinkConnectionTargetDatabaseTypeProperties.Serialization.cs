@@ -20,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CrossTableTransaction))
             {
-                writer.WritePropertyName("crossTableTransaction");
+                writer.WritePropertyName("crossTableTransaction"u8);
                 writer.WriteBooleanValue(CrossTableTransaction.Value);
             }
             if (Optional.IsDefined(DropExistingTargetTableOnStart))
             {
-                writer.WritePropertyName("dropExistingTargetTableOnStart");
+                writer.WritePropertyName("dropExistingTargetTableOnStart"u8);
                 writer.WriteBooleanValue(DropExistingTargetTableOnStart.Value);
             }
             writer.WriteEndObject();
@@ -33,11 +33,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static LinkConnectionTargetDatabaseTypeProperties DeserializeLinkConnectionTargetDatabaseTypeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> crossTableTransaction = default;
             Optional<bool> dropExistingTargetTableOnStart = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("crossTableTransaction"))
+                if (property.NameEquals("crossTableTransaction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     crossTableTransaction = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("dropExistingTargetTableOnStart"))
+                if (property.NameEquals("dropExistingTargetTableOnStart"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

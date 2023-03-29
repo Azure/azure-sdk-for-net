@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("table");
+            writer.WritePropertyName("table"u8);
             writer.WriteStringValue(Table);
-            writer.WritePropertyName("filters");
+            writer.WritePropertyName("filters"u8);
             writer.WriteStartArray();
             foreach (var item in Filters)
             {

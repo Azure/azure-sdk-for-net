@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Level))
             {
-                writer.WritePropertyName("level");
+                writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToSerialString());
             }
             if (Optional.IsDefined(SasUri))
             {
-                writer.WritePropertyName("sasUrl");
+                writer.WritePropertyName("sasUrl"u8);
                 writer.WriteStringValue(SasUri.AbsoluteUri);
             }
             if (Optional.IsDefined(RetentionInDays))
             {
-                writer.WritePropertyName("retentionInDays");
+                writer.WritePropertyName("retentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);
             }
             writer.WriteEndObject();
@@ -36,12 +36,16 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceBlobStorageApplicationLogsConfig DeserializeAppServiceBlobStorageApplicationLogsConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WebAppLogLevel> level = default;
             Optional<Uri> sasUrl = default;
             Optional<int> retentionInDays = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("level"))
+                if (property.NameEquals("level"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
                     level = property.Value.GetString().ToWebAppLogLevel();
                     continue;
                 }
-                if (property.NameEquals("sasUrl"))
+                if (property.NameEquals("sasUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
                     sasUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("retentionInDays"))
+                if (property.NameEquals("retentionInDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

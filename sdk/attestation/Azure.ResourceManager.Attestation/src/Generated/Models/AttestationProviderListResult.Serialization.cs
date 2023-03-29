@@ -17,11 +17,15 @@ namespace Azure.ResourceManager.Attestation.Models
     {
         internal static AttestationProviderListResult DeserializeAttestationProviderListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SystemData> systemData = default;
             Optional<IReadOnlyList<AttestationProviderData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +35,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

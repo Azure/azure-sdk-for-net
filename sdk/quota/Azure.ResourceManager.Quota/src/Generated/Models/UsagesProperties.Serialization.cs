@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Quota.Models
     {
         internal static UsagesProperties DeserializeUsagesProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<UsagesObject> usages = default;
             Optional<string> unit = default;
             Optional<ResourceName> name = default;
@@ -24,7 +28,7 @@ namespace Azure.ResourceManager.Quota.Models
             Optional<BinaryData> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("usages"))
+                if (property.NameEquals("usages"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,12 +38,12 @@ namespace Azure.ResourceManager.Quota.Models
                     usages = UsagesObject.DeserializeUsagesObject(property.Value);
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     unit = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,17 +53,17 @@ namespace Azure.ResourceManager.Quota.Models
                     name = ResourceName.DeserializeResourceName(property.Value);
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("quotaPeriod"))
+                if (property.NameEquals("quotaPeriod"u8))
                 {
                     quotaPeriod = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isQuotaApplicable"))
+                if (property.NameEquals("isQuotaApplicable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +73,7 @@ namespace Azure.ResourceManager.Quota.Models
                     isQuotaApplicable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

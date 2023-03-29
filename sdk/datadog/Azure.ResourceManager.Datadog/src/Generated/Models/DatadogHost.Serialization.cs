@@ -15,18 +15,22 @@ namespace Azure.ResourceManager.Datadog.Models
     {
         internal static DatadogHost DeserializeDatadogHost(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<string>> aliases = default;
             Optional<IReadOnlyList<string>> apps = default;
             Optional<DatadogHostMetadata> meta = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("aliases"))
+                if (property.NameEquals("aliases"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     aliases = array;
                     continue;
                 }
-                if (property.NameEquals("apps"))
+                if (property.NameEquals("apps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     apps = array;
                     continue;
                 }
-                if (property.NameEquals("meta"))
+                if (property.NameEquals("meta"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

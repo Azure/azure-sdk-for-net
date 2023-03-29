@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SecretRef))
             {
-                writer.WritePropertyName("secretRef");
+                writer.WritePropertyName("secretRef"u8);
                 writer.WriteStringValue(SecretRef);
             }
             if (Optional.IsDefined(TriggerParameter))
             {
-                writer.WritePropertyName("triggerParameter");
+                writer.WritePropertyName("triggerParameter"u8);
                 writer.WriteStringValue(TriggerParameter);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppScaleRuleAuth DeserializeContainerAppScaleRuleAuth(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> secretRef = default;
             Optional<string> triggerParameter = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("secretRef"))
+                if (property.NameEquals("secretRef"u8))
                 {
                     secretRef = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("triggerParameter"))
+                if (property.NameEquals("triggerParameter"u8))
                 {
                     triggerParameter = property.Value.GetString();
                     continue;

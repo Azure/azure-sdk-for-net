@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Nginx.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Content))
             {
-                writer.WritePropertyName("content");
+                writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
             if (Optional.IsDefined(VirtualPath))
             {
-                writer.WritePropertyName("virtualPath");
+                writer.WritePropertyName("virtualPath"u8);
                 writer.WriteStringValue(VirtualPath);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.Nginx.Models
 
         internal static NginxConfigurationFile DeserializeNginxConfigurationFile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> content = default;
             Optional<string> virtualPath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("content"))
+                if (property.NameEquals("content"u8))
                 {
                     content = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("virtualPath"))
+                if (property.NameEquals("virtualPath"u8))
                 {
                     virtualPath = property.Value.GetString();
                     continue;

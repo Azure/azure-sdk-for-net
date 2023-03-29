@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Dns.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DnsPtrDomainName))
             {
-                writer.WritePropertyName("ptrdname");
+                writer.WritePropertyName("ptrdname"u8);
                 writer.WriteStringValue(DnsPtrDomainName);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.Dns.Models
 
         internal static DnsPtrRecordInfo DeserializeDnsPtrRecordInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ptrdname = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ptrdname"))
+                if (property.NameEquals("ptrdname"u8))
                 {
                     ptrdname = property.Value.GetString();
                     continue;

@@ -18,57 +18,57 @@ namespace Azure.ResourceManager.HybridData
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("status");
+            writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToSerialString());
-            writer.WritePropertyName("startTime");
+            writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartOn, "O");
             if (Optional.IsDefined(EndOn))
             {
-                writer.WritePropertyName("endTime");
+                writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
             if (Optional.IsDefined(Error))
             {
-                writer.WritePropertyName("error");
+                writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("isCancellable");
+            writer.WritePropertyName("isCancellable"u8);
             writer.WriteStringValue(IsCancellable.ToSerialString());
             if (Optional.IsDefined(BytesProcessed))
             {
-                writer.WritePropertyName("bytesProcessed");
+                writer.WritePropertyName("bytesProcessed"u8);
                 writer.WriteNumberValue(BytesProcessed.Value);
             }
             if (Optional.IsDefined(ItemsProcessed))
             {
-                writer.WritePropertyName("itemsProcessed");
+                writer.WritePropertyName("itemsProcessed"u8);
                 writer.WriteNumberValue(ItemsProcessed.Value);
             }
             if (Optional.IsDefined(TotalBytesToProcess))
             {
-                writer.WritePropertyName("totalBytesToProcess");
+                writer.WritePropertyName("totalBytesToProcess"u8);
                 writer.WriteNumberValue(TotalBytesToProcess.Value);
             }
             if (Optional.IsDefined(TotalItemsToProcess))
             {
-                writer.WritePropertyName("totalItemsToProcess");
+                writer.WritePropertyName("totalItemsToProcess"u8);
                 writer.WriteNumberValue(TotalItemsToProcess.Value);
             }
             if (Optional.IsDefined(Details))
             {
-                writer.WritePropertyName("details");
+                writer.WritePropertyName("details"u8);
                 writer.WriteObjectValue(Details);
             }
             if (Optional.IsDefined(DataSourceName))
             {
-                writer.WritePropertyName("dataSourceName");
+                writer.WritePropertyName("dataSourceName"u8);
                 writer.WriteStringValue(DataSourceName);
             }
             if (Optional.IsDefined(DataSinkName))
             {
-                writer.WritePropertyName("dataSinkName");
+                writer.WritePropertyName("dataSinkName"u8);
                 writer.WriteStringValue(DataSinkName);
             }
             writer.WriteEndObject();
@@ -77,6 +77,10 @@ namespace Azure.ResourceManager.HybridData
 
         internal static HybridDataJobData DeserializeHybridDataJobData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             HybridDataJobStatus status = default;
             DateTimeOffset startTime = default;
             Optional<DateTimeOffset> endTime = default;
@@ -95,17 +99,17 @@ namespace Azure.ResourceManager.HybridData
             Optional<string> dataSinkName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString().ToHybridDataJobStatus();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -115,7 +119,7 @@ namespace Azure.ResourceManager.HybridData
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -125,22 +129,22 @@ namespace Azure.ResourceManager.HybridData
                     error = HybridDataJobTopLevelError.DeserializeHybridDataJobTopLevelError(property.Value);
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -150,7 +154,7 @@ namespace Azure.ResourceManager.HybridData
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -159,12 +163,12 @@ namespace Azure.ResourceManager.HybridData
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("isCancellable"))
+                        if (property0.NameEquals("isCancellable"u8))
                         {
                             isCancellable = property0.Value.GetString().ToJobCancellationSetting();
                             continue;
                         }
-                        if (property0.NameEquals("bytesProcessed"))
+                        if (property0.NameEquals("bytesProcessed"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -174,7 +178,7 @@ namespace Azure.ResourceManager.HybridData
                             bytesProcessed = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("itemsProcessed"))
+                        if (property0.NameEquals("itemsProcessed"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -184,7 +188,7 @@ namespace Azure.ResourceManager.HybridData
                             itemsProcessed = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("totalBytesToProcess"))
+                        if (property0.NameEquals("totalBytesToProcess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -194,7 +198,7 @@ namespace Azure.ResourceManager.HybridData
                             totalBytesToProcess = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("totalItemsToProcess"))
+                        if (property0.NameEquals("totalItemsToProcess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -204,7 +208,7 @@ namespace Azure.ResourceManager.HybridData
                             totalItemsToProcess = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("details"))
+                        if (property0.NameEquals("details"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -214,12 +218,12 @@ namespace Azure.ResourceManager.HybridData
                             details = HybridDataJobDetails.DeserializeHybridDataJobDetails(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("dataSourceName"))
+                        if (property0.NameEquals("dataSourceName"u8))
                         {
                             dataSourceName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("dataSinkName"))
+                        if (property0.NameEquals("dataSinkName"u8))
                         {
                             dataSinkName = property0.Value.GetString();
                             continue;

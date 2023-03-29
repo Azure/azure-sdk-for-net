@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DeliveryRegion))
             {
-                writer.WritePropertyName("deliveryRegion");
+                writer.WritePropertyName("deliveryRegion"u8);
                 writer.WriteStringValue(DeliveryRegion);
             }
             if (Optional.IsCollectionDefined(IPv4Addresses))
             {
-                writer.WritePropertyName("ipv4Addresses");
+                writer.WritePropertyName("ipv4Addresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPv4Addresses)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsCollectionDefined(IPv6Addresses))
             {
-                writer.WritePropertyName("ipv6Addresses");
+                writer.WritePropertyName("ipv6Addresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPv6Addresses)
                 {
@@ -46,17 +46,21 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static IPAddressGroup DeserializeIPAddressGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> deliveryRegion = default;
             Optional<IList<CidrIPAddress>> ipv4Addresses = default;
             Optional<IList<CidrIPAddress>> ipv6Addresses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deliveryRegion"))
+                if (property.NameEquals("deliveryRegion"u8))
                 {
                     deliveryRegion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipv4Addresses"))
+                if (property.NameEquals("ipv4Addresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     ipv4Addresses = array;
                     continue;
                 }
-                if (property.NameEquals("ipv6Addresses"))
+                if (property.NameEquals("ipv6Addresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

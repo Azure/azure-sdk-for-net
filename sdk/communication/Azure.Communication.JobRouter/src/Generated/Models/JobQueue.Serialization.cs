@@ -18,28 +18,33 @@ namespace Azure.Communication.JobRouter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(DistributionPolicyId))
             {
-                writer.WritePropertyName("distributionPolicyId");
+                writer.WritePropertyName("distributionPolicyId"u8);
                 writer.WriteStringValue(DistributionPolicyId);
             }
             if (Optional.IsCollectionDefined(_labels))
             {
-                writer.WritePropertyName("labels");
+                writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
                 foreach (var item in _labels)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(ExceptionPolicyId))
             {
-                writer.WritePropertyName("exceptionPolicyId");
+                writer.WritePropertyName("exceptionPolicyId"u8);
                 writer.WriteStringValue(ExceptionPolicyId);
             }
             writer.WriteEndObject();
@@ -47,6 +52,10 @@ namespace Azure.Communication.JobRouter.Models
 
         internal static JobQueue DeserializeJobQueue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> distributionPolicyId = default;
@@ -54,22 +63,22 @@ namespace Azure.Communication.JobRouter.Models
             Optional<string> exceptionPolicyId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("distributionPolicyId"))
+                if (property.NameEquals("distributionPolicyId"u8))
                 {
                     distributionPolicyId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("labels"))
+                if (property.NameEquals("labels"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,12 +88,19 @@ namespace Azure.Communication.JobRouter.Models
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetObject());
+                        }
                     }
                     labels = dictionary;
                     continue;
                 }
-                if (property.NameEquals("exceptionPolicyId"))
+                if (property.NameEquals("exceptionPolicyId"u8))
                 {
                     exceptionPolicyId = property.Value.GetString();
                     continue;

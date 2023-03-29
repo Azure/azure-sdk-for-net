@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Peering.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WriteEndObject();
@@ -25,18 +25,22 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static PeeringSku DeserializePeeringSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<PeeringTier> tier = default;
             Optional<PeeringFamily> family = default;
             Optional<PeeringSize> size = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.Peering.Models
                     tier = new PeeringTier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("family"))
+                if (property.NameEquals("family"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.Peering.Models
                     family = new PeeringFamily(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("size"))
+                if (property.NameEquals("size"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

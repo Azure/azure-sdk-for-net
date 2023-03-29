@@ -21,7 +21,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             {
                 if (AssetDimensionsWrapper != null)
                 {
-                    writer.WritePropertyName("dimensions");
+                    writer.WritePropertyName("dimensions"u8);
                     writer.WriteObjectValue(AssetDimensionsWrapper);
                 }
                 else
@@ -33,7 +33,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             {
                 if (BoundingBoxCenterWrapper != null)
                 {
-                    writer.WritePropertyName("boundingBoxCenter");
+                    writer.WritePropertyName("boundingBoxCenter"u8);
                     writer.WriteObjectValue(BoundingBoxCenterWrapper);
                 }
                 else
@@ -41,13 +41,13 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     writer.WriteNull("boundingBoxCenter");
                 }
             }
-            writer.WritePropertyName("gravity");
+            writer.WritePropertyName("gravity"u8);
             writer.WriteObjectValue(GravityWrapper);
             if (Optional.IsCollectionDefined(KeyFrameIndexes))
             {
                 if (KeyFrameIndexes != null)
                 {
-                    writer.WritePropertyName("keyFrameIndexes");
+                    writer.WritePropertyName("keyFrameIndexes"u8);
                     writer.WriteStartArray();
                     foreach (var item in KeyFrameIndexes)
                     {
@@ -62,7 +62,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             }
             if (Optional.IsCollectionDefined(GroundTruthTrajectoryCameraPoses))
             {
-                writer.WritePropertyName("gtTrajectory");
+                writer.WritePropertyName("gtTrajectory"u8);
                 writer.WriteStartArray();
                 foreach (var item in GroundTruthTrajectoryCameraPoses)
                 {
@@ -74,7 +74,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             {
                 if (PrincipalAxisWrapper != null)
                 {
-                    writer.WritePropertyName("principalAxis");
+                    writer.WritePropertyName("principalAxis"u8);
                     writer.WriteObjectValue(PrincipalAxisWrapper);
                 }
                 else
@@ -82,18 +82,18 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     writer.WriteNull("principalAxis");
                 }
             }
-            writer.WritePropertyName("scale");
+            writer.WritePropertyName("scale"u8);
             writer.WriteNumberValue(Scale);
             if (Optional.IsDefined(DisableDetectScaleUnits))
             {
-                writer.WritePropertyName("disableDetectScaleUnits");
+                writer.WritePropertyName("disableDetectScaleUnits"u8);
                 writer.WriteBooleanValue(DisableDetectScaleUnits);
             }
             if (Optional.IsDefined(SupportingPlaneWrapper))
             {
                 if (SupportingPlaneWrapper != null)
                 {
-                    writer.WritePropertyName("supportingPlane");
+                    writer.WritePropertyName("supportingPlane"u8);
                     writer.WriteObjectValue(SupportingPlaneWrapper);
                 }
                 else
@@ -103,7 +103,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             }
             if (Optional.IsCollectionDefined(TestTrajectoryCameraPoses))
             {
-                writer.WritePropertyName("testTrajectory");
+                writer.WritePropertyName("testTrajectory"u8);
                 writer.WriteStartArray();
                 foreach (var item in TestTrajectoryCameraPoses)
                 {
@@ -116,6 +116,10 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
 
         internal static AssetConversionConfiguration DeserializeAssetConversionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Vector3> dimensions = default;
             Optional<Vector3> boundingBoxCenter = default;
             Vector3 gravity = default;
@@ -128,7 +132,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             Optional<IReadOnlyList<TrajectoryPose>> testTrajectory = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dimensions"))
+                if (property.NameEquals("dimensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -138,7 +142,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     dimensions = Vector3.DeserializeVector3(property.Value);
                     continue;
                 }
-                if (property.NameEquals("boundingBoxCenter"))
+                if (property.NameEquals("boundingBoxCenter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -148,12 +152,12 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     boundingBoxCenter = Vector3.DeserializeVector3(property.Value);
                     continue;
                 }
-                if (property.NameEquals("gravity"))
+                if (property.NameEquals("gravity"u8))
                 {
                     gravity = Vector3.DeserializeVector3(property.Value);
                     continue;
                 }
-                if (property.NameEquals("keyFrameIndexes"))
+                if (property.NameEquals("keyFrameIndexes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -168,7 +172,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     keyFrameIndexes = array;
                     continue;
                 }
-                if (property.NameEquals("gtTrajectory"))
+                if (property.NameEquals("gtTrajectory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -183,7 +187,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     gtTrajectory = array;
                     continue;
                 }
-                if (property.NameEquals("principalAxis"))
+                if (property.NameEquals("principalAxis"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -193,12 +197,12 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     principalAxis = Quaternion.DeserializeQuaternion(property.Value);
                     continue;
                 }
-                if (property.NameEquals("scale"))
+                if (property.NameEquals("scale"u8))
                 {
                     scale = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("disableDetectScaleUnits"))
+                if (property.NameEquals("disableDetectScaleUnits"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -208,7 +212,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     disableDetectScaleUnits = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("supportingPlane"))
+                if (property.NameEquals("supportingPlane"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -218,7 +222,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     supportingPlane = Vector4.DeserializeVector4(property.Value);
                     continue;
                 }
-                if (property.NameEquals("testTrajectory"))
+                if (property.NameEquals("testTrajectory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

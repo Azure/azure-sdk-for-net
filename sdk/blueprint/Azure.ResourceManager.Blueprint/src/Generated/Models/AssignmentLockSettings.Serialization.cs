@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Blueprint.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Mode))
             {
-                writer.WritePropertyName("mode");
+                writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ExcludedPrincipals))
             {
-                writer.WritePropertyName("excludedPrincipals");
+                writer.WritePropertyName("excludedPrincipals"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExcludedPrincipals)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
             if (Optional.IsCollectionDefined(ExcludedActions))
             {
-                writer.WritePropertyName("excludedActions");
+                writer.WritePropertyName("excludedActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExcludedActions)
                 {
@@ -46,12 +46,16 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static AssignmentLockSettings DeserializeAssignmentLockSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AssignmentLockMode> mode = default;
             Optional<IList<string>> excludedPrincipals = default;
             Optional<IList<string>> excludedActions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mode"))
+                if (property.NameEquals("mode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     mode = new AssignmentLockMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("excludedPrincipals"))
+                if (property.NameEquals("excludedPrincipals"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     excludedPrincipals = array;
                     continue;
                 }
-                if (property.NameEquals("excludedActions"))
+                if (property.NameEquals("excludedActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

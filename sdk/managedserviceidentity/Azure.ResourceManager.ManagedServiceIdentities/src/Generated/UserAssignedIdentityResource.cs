@@ -343,60 +343,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         }
 
         /// <summary>
-        /// Lists the associated resources for this identity.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/listAssociatedResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UserAssignedIdentities_ListAssociatedResources</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> OData filter expression to apply to the query. </param>
-        /// <param name="orderby"> OData orderBy expression to apply to the query. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="skiptoken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IdentityAssociatedResourceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IdentityAssociatedResourceData> GetAssociatedResourcesAsync(string filter = null, string orderby = null, int? top = null, int? skip = null, string skiptoken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _userAssignedIdentityRestClient.CreateListAssociatedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, top, skip, skiptoken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userAssignedIdentityRestClient.CreateListAssociatedResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, top, skip, skiptoken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IdentityAssociatedResourceData.DeserializeIdentityAssociatedResourceData, _userAssignedIdentityClientDiagnostics, Pipeline, "UserAssignedIdentityResource.GetAssociatedResources", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the associated resources for this identity.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/listAssociatedResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UserAssignedIdentities_ListAssociatedResources</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> OData filter expression to apply to the query. </param>
-        /// <param name="orderby"> OData orderBy expression to apply to the query. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="skiptoken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IdentityAssociatedResourceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IdentityAssociatedResourceData> GetAssociatedResources(string filter = null, string orderby = null, int? top = null, int? skip = null, string skiptoken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _userAssignedIdentityRestClient.CreateListAssociatedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, top, skip, skiptoken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userAssignedIdentityRestClient.CreateListAssociatedResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, top, skip, skiptoken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IdentityAssociatedResourceData.DeserializeIdentityAssociatedResourceData, _userAssignedIdentityClientDiagnostics, Pipeline, "UserAssignedIdentityResource.GetAssociatedResources", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>

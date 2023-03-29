@@ -14,17 +14,21 @@ namespace Azure.ResourceManager.Datadog.Models
     {
         internal static DatadogHostMetadata DeserializeDatadogHostMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> agentVersion = default;
             Optional<DatadogInstallMethod> installMethod = default;
             Optional<DatadogLogsAgent> logsAgent = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("agentVersion"))
+                if (property.NameEquals("agentVersion"u8))
                 {
                     agentVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("installMethod"))
+                if (property.NameEquals("installMethod"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     installMethod = DatadogInstallMethod.DeserializeDatadogInstallMethod(property.Value);
                     continue;
                 }
-                if (property.NameEquals("logsAgent"))
+                if (property.NameEquals("logsAgent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

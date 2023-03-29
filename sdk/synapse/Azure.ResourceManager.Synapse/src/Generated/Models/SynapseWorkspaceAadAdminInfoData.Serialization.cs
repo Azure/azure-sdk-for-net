@@ -17,26 +17,26 @@ namespace Azure.ResourceManager.Synapse
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(Login))
             {
-                writer.WritePropertyName("login");
+                writer.WritePropertyName("login"u8);
                 writer.WriteStringValue(Login);
             }
             if (Optional.IsDefined(AdministratorType))
             {
-                writer.WritePropertyName("administratorType");
+                writer.WritePropertyName("administratorType"u8);
                 writer.WriteStringValue(AdministratorType);
             }
             if (Optional.IsDefined(Sid))
             {
-                writer.WritePropertyName("sid");
+                writer.WritePropertyName("sid"u8);
                 writer.WriteStringValue(Sid);
             }
             writer.WriteEndObject();
@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseWorkspaceAadAdminInfoData DeserializeSynapseWorkspaceAadAdminInfoData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -55,22 +59,22 @@ namespace Azure.ResourceManager.Synapse
             Optional<string> sid = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +84,7 @@ namespace Azure.ResourceManager.Synapse
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +93,7 @@ namespace Azure.ResourceManager.Synapse
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("tenantId"))
+                        if (property0.NameEquals("tenantId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -99,17 +103,17 @@ namespace Azure.ResourceManager.Synapse
                             tenantId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("login"))
+                        if (property0.NameEquals("login"u8))
                         {
                             login = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("administratorType"))
+                        if (property0.NameEquals("administratorType"u8))
                         {
                             administratorType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sid"))
+                        if (property0.NameEquals("sid"u8))
                         {
                             sid = property0.Value.GetString();
                             continue;

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Paths))
             {
-                writer.WritePropertyName("paths");
+                writer.WritePropertyName("paths"u8);
                 writer.WriteStartArray();
                 foreach (var item in Paths)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBUniqueKey DeserializeCosmosDBUniqueKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> paths = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("paths"))
+                if (property.NameEquals("paths"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,11 +15,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InMageRcmApplianceSpecificDetails DeserializeInMageRcmApplianceSpecificDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<InMageRcmApplianceDetails>> appliances = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("appliances"))
+                if (property.NameEquals("appliances"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     appliances = array;
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

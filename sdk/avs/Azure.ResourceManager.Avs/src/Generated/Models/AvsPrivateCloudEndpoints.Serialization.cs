@@ -14,22 +14,26 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static AvsPrivateCloudEndpoints DeserializeAvsPrivateCloudEndpoints(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nsxtManager = default;
             Optional<string> vcsa = default;
             Optional<string> hcxCloudManager = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nsxtManager"))
+                if (property.NameEquals("nsxtManager"u8))
                 {
                     nsxtManager = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vcsa"))
+                if (property.NameEquals("vcsa"u8))
                 {
                     vcsa = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hcxCloudManager"))
+                if (property.NameEquals("hcxCloudManager"u8))
                 {
                     hcxCloudManager = property.Value.GetString();
                     continue;

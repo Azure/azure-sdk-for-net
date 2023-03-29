@@ -110,3 +110,17 @@ namespace Azure.Analytics.Purview.Scanning
         }
     }
 }
+namespace Microsoft.Extensions.Azure
+{
+    public static partial class PurviewScanningServiceClientBuilderExtensions
+    {
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions> AddPurviewClassificationRuleClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string classificationRuleName) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions> AddPurviewClassificationRuleClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Scanning.PurviewDataSourceClient, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions> AddPurviewDataSourceClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string dataSourceName) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Scanning.PurviewDataSourceClient, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions> AddPurviewDataSourceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Scanning.PurviewScanClient, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions> AddPurviewScanClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string dataSourceName, string scanName) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Scanning.PurviewScanClient, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions> AddPurviewScanClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions> AddPurviewScanningServiceClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions> AddPurviewScanningServiceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+    }
+}

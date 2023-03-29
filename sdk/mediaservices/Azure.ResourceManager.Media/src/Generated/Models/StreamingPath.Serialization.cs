@@ -15,22 +15,26 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static StreamingPath DeserializeStreamingPath(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             StreamingPolicyStreamingProtocol streamingProtocol = default;
             StreamingPathEncryptionScheme encryptionScheme = default;
             Optional<IReadOnlyList<string>> paths = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("streamingProtocol"))
+                if (property.NameEquals("streamingProtocol"u8))
                 {
                     streamingProtocol = new StreamingPolicyStreamingProtocol(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("encryptionScheme"))
+                if (property.NameEquals("encryptionScheme"u8))
                 {
                     encryptionScheme = new StreamingPathEncryptionScheme(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("paths"))
+                if (property.NameEquals("paths"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

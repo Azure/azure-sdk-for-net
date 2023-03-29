@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EndIP))
             {
-                writer.WritePropertyName("endIP");
+                writer.WritePropertyName("endIP"u8);
                 writer.WriteStringValue(EndIP);
             }
             if (Optional.IsDefined(StartIP))
             {
-                writer.WritePropertyName("startIP");
+                writer.WritePropertyName("startIP"u8);
                 writer.WriteStringValue(StartIP);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static VirtualNetworksPropertiesVmipPoolItem DeserializeVirtualNetworksPropertiesVmipPoolItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> endIP = default;
             Optional<string> startIP = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endIP"))
+                if (property.NameEquals("endIP"u8))
                 {
                     endIP = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startIP"))
+                if (property.NameEquals("startIP"u8))
                 {
                     startIP = property.Value.GetString();
                     continue;

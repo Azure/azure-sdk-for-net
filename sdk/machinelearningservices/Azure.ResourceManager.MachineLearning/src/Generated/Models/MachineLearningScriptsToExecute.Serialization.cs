@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StartupScript))
             {
-                writer.WritePropertyName("startupScript");
+                writer.WritePropertyName("startupScript"u8);
                 writer.WriteObjectValue(StartupScript);
             }
             if (Optional.IsDefined(CreationScript))
             {
-                writer.WritePropertyName("creationScript");
+                writer.WritePropertyName("creationScript"u8);
                 writer.WriteObjectValue(CreationScript);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningScriptsToExecute DeserializeMachineLearningScriptsToExecute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningScriptReference> startupScript = default;
             Optional<MachineLearningScriptReference> creationScript = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("startupScript"))
+                if (property.NameEquals("startupScript"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     startupScript = MachineLearningScriptReference.DeserializeMachineLearningScriptReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("creationScript"))
+                if (property.NameEquals("creationScript"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

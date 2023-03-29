@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToSerialString());
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Family))
             {
-                writer.WritePropertyName("family");
+                writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
             writer.WriteEndObject();
@@ -32,22 +32,26 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxSku DeserializeDataBoxSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataBoxSkuName name = default;
             Optional<string> displayName = default;
             Optional<string> family = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString().ToDataBoxSkuName();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("family"))
+                if (property.NameEquals("family"u8))
                 {
                     family = property.Value.GetString();
                     continue;

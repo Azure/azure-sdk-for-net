@@ -15,11 +15,15 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static Repositories DeserializeRepositories(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> repositories = default;
             Optional<string> link = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("repositories"))
+                if (property.NameEquals("repositories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +38,7 @@ namespace Azure.Containers.ContainerRegistry
                     repositories = array;
                     continue;
                 }
-                if (property.NameEquals("link"))
+                if (property.NameEquals("link"u8))
                 {
                     link = property.Value.GetString();
                     continue;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationRefundResponseProperties DeserializeReservationRefundResponseProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> sessionId = default;
             Optional<int> quantity = default;
             Optional<PurchasePrice> billingRefundAmount = default;
@@ -23,7 +27,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<ReservationRefundBillingInformation> billingInformation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sessionId"))
+                if (property.NameEquals("sessionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,7 +37,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     sessionId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("quantity"))
+                if (property.NameEquals("quantity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +47,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     quantity = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("billingRefundAmount"))
+                if (property.NameEquals("billingRefundAmount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     billingRefundAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
-                if (property.NameEquals("pricingRefundAmount"))
+                if (property.NameEquals("pricingRefundAmount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +67,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     pricingRefundAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
-                if (property.NameEquals("policyResult"))
+                if (property.NameEquals("policyResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +77,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     policyResult = RefundPolicyResult.DeserializeRefundPolicyResult(property.Value);
                     continue;
                 }
-                if (property.NameEquals("billingInformation"))
+                if (property.NameEquals("billingInformation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

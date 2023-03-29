@@ -15,11 +15,15 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static CapacityReservationInstanceView DeserializeCapacityReservationInstanceView(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CapacityReservationUtilization> utilizationInfo = default;
             Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("utilizationInfo"))
+                if (property.NameEquals("utilizationInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
                     utilizationInfo = CapacityReservationUtilization.DeserializeCapacityReservationUtilization(property.Value);
                     continue;
                 }
-                if (property.NameEquals("statuses"))
+                if (property.NameEquals("statuses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

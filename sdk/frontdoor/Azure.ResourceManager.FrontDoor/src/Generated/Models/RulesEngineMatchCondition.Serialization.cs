@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("rulesEngineMatchVariable");
+            writer.WritePropertyName("rulesEngineMatchVariable"u8);
             writer.WriteStringValue(RulesEngineMatchVariable.ToString());
             if (Optional.IsDefined(Selector))
             {
-                writer.WritePropertyName("selector");
+                writer.WritePropertyName("selector"u8);
                 writer.WriteStringValue(Selector);
             }
-            writer.WritePropertyName("rulesEngineOperator");
+            writer.WritePropertyName("rulesEngineOperator"u8);
             writer.WriteStringValue(RulesEngineOperator.ToString());
             if (Optional.IsDefined(IsNegateCondition))
             {
-                writer.WritePropertyName("negateCondition");
+                writer.WritePropertyName("negateCondition"u8);
                 writer.WriteBooleanValue(IsNegateCondition.Value);
             }
-            writer.WritePropertyName("rulesEngineMatchValue");
+            writer.WritePropertyName("rulesEngineMatchValue"u8);
             writer.WriteStartArray();
             foreach (var item in RulesEngineMatchValue)
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Transforms))
             {
-                writer.WritePropertyName("transforms");
+                writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
                 foreach (var item in Transforms)
                 {
@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static RulesEngineMatchCondition DeserializeRulesEngineMatchCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RulesEngineMatchVariable rulesEngineMatchVariable = default;
             Optional<string> selector = default;
             RulesEngineOperator rulesEngineOperator = default;
@@ -60,22 +64,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<IList<RulesEngineMatchTransform>> transforms = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rulesEngineMatchVariable"))
+                if (property.NameEquals("rulesEngineMatchVariable"u8))
                 {
                     rulesEngineMatchVariable = new RulesEngineMatchVariable(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("selector"))
+                if (property.NameEquals("selector"u8))
                 {
                     selector = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rulesEngineOperator"))
+                if (property.NameEquals("rulesEngineOperator"u8))
                 {
                     rulesEngineOperator = new RulesEngineOperator(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("negateCondition"))
+                if (property.NameEquals("negateCondition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +89,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     negateCondition = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("rulesEngineMatchValue"))
+                if (property.NameEquals("rulesEngineMatchValue"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -95,7 +99,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     rulesEngineMatchValue = array;
                     continue;
                 }
-                if (property.NameEquals("transforms"))
+                if (property.NameEquals("transforms"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

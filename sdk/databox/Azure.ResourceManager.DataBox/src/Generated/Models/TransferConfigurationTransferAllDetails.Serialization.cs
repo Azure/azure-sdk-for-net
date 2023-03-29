@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Include))
             {
-                writer.WritePropertyName("include");
+                writer.WritePropertyName("include"u8);
                 writer.WriteObjectValue(Include);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static TransferConfigurationTransferAllDetails DeserializeTransferConfigurationTransferAllDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TransferAllDetails> include = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("include"))
+                if (property.NameEquals("include"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

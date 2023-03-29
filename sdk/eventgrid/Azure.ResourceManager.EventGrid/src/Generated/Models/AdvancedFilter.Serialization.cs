@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.EventGrid.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("operatorType");
+            writer.WritePropertyName("operatorType"u8);
             writer.WriteStringValue(OperatorType.ToString());
             if (Optional.IsDefined(Key))
             {
-                writer.WritePropertyName("key");
+                writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
             writer.WriteEndObject();
@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static AdvancedFilter DeserializeAdvancedFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("operatorType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

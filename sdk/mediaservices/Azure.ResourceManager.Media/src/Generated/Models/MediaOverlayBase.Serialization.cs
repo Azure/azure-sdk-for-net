@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            writer.WritePropertyName("inputLabel");
+            writer.WritePropertyName("inputLabel"u8);
             writer.WriteStringValue(InputLabel);
             if (Optional.IsDefined(Start))
             {
-                writer.WritePropertyName("start");
+                writer.WritePropertyName("start"u8);
                 writer.WriteStringValue(Start.Value, "P");
             }
             if (Optional.IsDefined(End))
             {
-                writer.WritePropertyName("end");
+                writer.WritePropertyName("end"u8);
                 writer.WriteStringValue(End.Value, "P");
             }
             if (Optional.IsDefined(FadeInDuration))
             {
-                writer.WritePropertyName("fadeInDuration");
+                writer.WritePropertyName("fadeInDuration"u8);
                 writer.WriteStringValue(FadeInDuration.Value, "P");
             }
             if (Optional.IsDefined(FadeOutDuration))
             {
-                writer.WritePropertyName("fadeOutDuration");
+                writer.WritePropertyName("fadeOutDuration"u8);
                 writer.WriteStringValue(FadeOutDuration.Value, "P");
             }
             if (Optional.IsDefined(AudioGainLevel))
             {
-                writer.WritePropertyName("audioGainLevel");
+                writer.WritePropertyName("audioGainLevel"u8);
                 writer.WriteNumberValue(AudioGainLevel.Value);
             }
             writer.WriteEndObject();
@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaOverlayBase DeserializeMediaOverlayBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

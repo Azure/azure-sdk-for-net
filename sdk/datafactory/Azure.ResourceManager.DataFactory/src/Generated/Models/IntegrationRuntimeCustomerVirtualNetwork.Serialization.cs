@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SubnetId))
             {
-                writer.WritePropertyName("subnetId");
+                writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static IntegrationRuntimeCustomerVirtualNetwork DeserializeIntegrationRuntimeCustomerVirtualNetwork(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> subnetId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subnetId"))
+                if (property.NameEquals("subnetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

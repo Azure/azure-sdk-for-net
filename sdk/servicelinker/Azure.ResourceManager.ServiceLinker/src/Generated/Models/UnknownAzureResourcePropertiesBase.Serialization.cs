@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(AzureResourceType.ToString());
             writer.WriteEndObject();
         }
 
         internal static UnknownAzureResourcePropertiesBase DeserializeUnknownAzureResourcePropertiesBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AzureResourceType type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new AzureResourceType(property.Value.GetString());
                     continue;

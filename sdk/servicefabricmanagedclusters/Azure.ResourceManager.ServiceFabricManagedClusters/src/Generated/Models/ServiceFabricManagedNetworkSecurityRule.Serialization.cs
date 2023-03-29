@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("protocol");
+            writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
             if (Optional.IsCollectionDefined(SourceAddressPrefixes))
             {
-                writer.WritePropertyName("sourceAddressPrefixes");
+                writer.WritePropertyName("sourceAddressPrefixes"u8);
                 writer.WriteStartArray();
                 foreach (var item in SourceAddressPrefixes)
                 {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             if (Optional.IsCollectionDefined(DestinationAddressPrefixes))
             {
-                writer.WritePropertyName("destinationAddressPrefixes");
+                writer.WritePropertyName("destinationAddressPrefixes"u8);
                 writer.WriteStartArray();
                 foreach (var item in DestinationAddressPrefixes)
                 {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             if (Optional.IsCollectionDefined(SourcePortRanges))
             {
-                writer.WritePropertyName("sourcePortRanges");
+                writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();
                 foreach (var item in SourcePortRanges)
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             if (Optional.IsCollectionDefined(DestinationPortRanges))
             {
-                writer.WritePropertyName("destinationPortRanges");
+                writer.WritePropertyName("destinationPortRanges"u8);
                 writer.WriteStartArray();
                 foreach (var item in DestinationPortRanges)
                 {
@@ -67,35 +67,39 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             if (Optional.IsDefined(SourceAddressPrefix))
             {
-                writer.WritePropertyName("sourceAddressPrefix");
+                writer.WritePropertyName("sourceAddressPrefix"u8);
                 writer.WriteStringValue(SourceAddressPrefix);
             }
             if (Optional.IsDefined(DestinationAddressPrefix))
             {
-                writer.WritePropertyName("destinationAddressPrefix");
+                writer.WritePropertyName("destinationAddressPrefix"u8);
                 writer.WriteStringValue(DestinationAddressPrefix);
             }
             if (Optional.IsDefined(SourcePortRange))
             {
-                writer.WritePropertyName("sourcePortRange");
+                writer.WritePropertyName("sourcePortRange"u8);
                 writer.WriteStringValue(SourcePortRange);
             }
             if (Optional.IsDefined(DestinationPortRange))
             {
-                writer.WritePropertyName("destinationPortRange");
+                writer.WritePropertyName("destinationPortRange"u8);
                 writer.WriteStringValue(DestinationPortRange);
             }
-            writer.WritePropertyName("access");
+            writer.WritePropertyName("access"u8);
             writer.WriteStringValue(Access.ToString());
-            writer.WritePropertyName("priority");
+            writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
-            writer.WritePropertyName("direction");
+            writer.WritePropertyName("direction"u8);
             writer.WriteStringValue(Direction.ToString());
             writer.WriteEndObject();
         }
 
         internal static ServiceFabricManagedNetworkSecurityRule DeserializeServiceFabricManagedNetworkSecurityRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> description = default;
             ServiceFabricManagedNsgProtocol protocol = default;
@@ -112,22 +116,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ServiceFabricManagedNetworkSecurityRuleDirection direction = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protocol"))
+                if (property.NameEquals("protocol"u8))
                 {
                     protocol = new ServiceFabricManagedNsgProtocol(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceAddressPrefixes"))
+                if (property.NameEquals("sourceAddressPrefixes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -142,7 +146,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     sourceAddressPrefixes = array;
                     continue;
                 }
-                if (property.NameEquals("destinationAddressPrefixes"))
+                if (property.NameEquals("destinationAddressPrefixes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -157,7 +161,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     destinationAddressPrefixes = array;
                     continue;
                 }
-                if (property.NameEquals("sourcePortRanges"))
+                if (property.NameEquals("sourcePortRanges"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -172,7 +176,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     sourcePortRanges = array;
                     continue;
                 }
-                if (property.NameEquals("destinationPortRanges"))
+                if (property.NameEquals("destinationPortRanges"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -187,37 +191,37 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     destinationPortRanges = array;
                     continue;
                 }
-                if (property.NameEquals("sourceAddressPrefix"))
+                if (property.NameEquals("sourceAddressPrefix"u8))
                 {
                     sourceAddressPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("destinationAddressPrefix"))
+                if (property.NameEquals("destinationAddressPrefix"u8))
                 {
                     destinationAddressPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourcePortRange"))
+                if (property.NameEquals("sourcePortRange"u8))
                 {
                     sourcePortRange = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("destinationPortRange"))
+                if (property.NameEquals("destinationPortRange"u8))
                 {
                     destinationPortRange = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("access"))
+                if (property.NameEquals("access"u8))
                 {
                     access = new ServiceFabricManagedNetworkTrafficAccess(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("priority"))
+                if (property.NameEquals("priority"u8))
                 {
                     priority = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("direction"))
+                if (property.NameEquals("direction"u8))
                 {
                     direction = new ServiceFabricManagedNetworkSecurityRuleDirection(property.Value.GetString());
                     continue;

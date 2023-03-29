@@ -15,12 +15,16 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static IntegrationServiceEnvironmentSubnetNetworkHealth DeserializeIntegrationServiceEnvironmentSubnetNetworkHealth(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<IntegrationServiceEnvironmentNetworkDependency>> outboundNetworkDependencies = default;
             Optional<IntegrationServiceEnvironmentNetworkDependencyHealth> outboundNetworkHealth = default;
             IntegrationServiceEnvironmentNetworkEndPointAccessibilityState networkDependencyHealthState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("outboundNetworkDependencies"))
+                if (property.NameEquals("outboundNetworkDependencies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +39,7 @@ namespace Azure.ResourceManager.Logic.Models
                     outboundNetworkDependencies = array;
                     continue;
                 }
-                if (property.NameEquals("outboundNetworkHealth"))
+                if (property.NameEquals("outboundNetworkHealth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.Logic.Models
                     outboundNetworkHealth = IntegrationServiceEnvironmentNetworkDependencyHealth.DeserializeIntegrationServiceEnvironmentNetworkDependencyHealth(property.Value);
                     continue;
                 }
-                if (property.NameEquals("networkDependencyHealthState"))
+                if (property.NameEquals("networkDependencyHealthState"u8))
                 {
                     networkDependencyHealthState = new IntegrationServiceEnvironmentNetworkEndPointAccessibilityState(property.Value.GetString());
                     continue;

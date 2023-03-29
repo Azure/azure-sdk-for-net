@@ -15,10 +15,14 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static ShareInfoElement DeserializeShareInfoElement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> vmUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vmUri"))
+                if (property.NameEquals("vmUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Days))
             {
-                writer.WritePropertyName("days");
+                writer.WritePropertyName("days"u8);
                 writer.WriteNumberValue(Days.Value);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             writer.WriteEndObject();
@@ -31,12 +31,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryRetentionPolicy DeserializeContainerRegistryRetentionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> days = default;
             Optional<DateTimeOffset> lastUpdatedTime = default;
             Optional<ContainerRegistryPolicyStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("days"))
+                if (property.NameEquals("days"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     days = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("lastUpdatedTime"))
+                if (property.NameEquals("lastUpdatedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     lastUpdatedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VpnClientConnectionHealth DeserializeVpnClientConnectionHealth(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> totalIngressBytesTransferred = default;
             Optional<long> totalEgressBytesTransferred = default;
             Optional<int> vpnClientConnectionsCount = default;
             Optional<IReadOnlyList<string>> allocatedIPAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("totalIngressBytesTransferred"))
+                if (property.NameEquals("totalIngressBytesTransferred"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
                     totalIngressBytesTransferred = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalEgressBytesTransferred"))
+                if (property.NameEquals("totalEgressBytesTransferred"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
                     totalEgressBytesTransferred = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("vpnClientConnectionsCount"))
+                if (property.NameEquals("vpnClientConnectionsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
                     vpnClientConnectionsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("allocatedIpAddresses"))
+                if (property.NameEquals("allocatedIpAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

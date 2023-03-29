@@ -12,29 +12,5 @@ namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class ReservationRefundResult
     {
-        internal static ReservationRefundResult DeserializeReservationRefundResult(JsonElement element)
-        {
-            Optional<string> id = default;
-            Optional<ReservationRefundResponseProperties> properties = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    properties = ReservationRefundResponseProperties.DeserializeReservationRefundResponseProperties(property.Value);
-                    continue;
-                }
-            }
-            return new ReservationRefundResult(id.Value, properties.Value);
-        }
     }
 }

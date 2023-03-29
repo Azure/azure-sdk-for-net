@@ -15,23 +15,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static CriticalJobHistoryDetails DeserializeCriticalJobHistoryDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> jobName = default;
             Optional<string> jobId = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<string> jobStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobName"))
+                if (property.NameEquals("jobName"u8))
                 {
                     jobName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobId"))
+                if (property.NameEquals("jobId"u8))
                 {
                     jobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("jobStatus"))
+                if (property.NameEquals("jobStatus"u8))
                 {
                     jobStatus = property.Value.GetString();
                     continue;

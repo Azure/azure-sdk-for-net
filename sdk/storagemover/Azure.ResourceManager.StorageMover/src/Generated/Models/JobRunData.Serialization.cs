@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.StorageMover
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.StorageMover
 
         internal static JobRunData DeserializeJobRunData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -60,22 +64,22 @@ namespace Azure.ResourceManager.StorageMover
             Optional<StorageMoverProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +89,7 @@ namespace Azure.ResourceManager.StorageMover
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +98,7 @@ namespace Azure.ResourceManager.StorageMover
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.StorageMover
                             status = new JobRunStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("scanStatus"))
+                        if (property0.NameEquals("scanStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -114,12 +118,12 @@ namespace Azure.ResourceManager.StorageMover
                             scanStatus = new JobRunScanStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("agentName"))
+                        if (property0.NameEquals("agentName"u8))
                         {
                             agentName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("agentResourceId"))
+                        if (property0.NameEquals("agentResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -129,7 +133,7 @@ namespace Azure.ResourceManager.StorageMover
                             agentResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("executionStartTime"))
+                        if (property0.NameEquals("executionStartTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -139,7 +143,7 @@ namespace Azure.ResourceManager.StorageMover
                             executionStartTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("executionEndTime"))
+                        if (property0.NameEquals("executionEndTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -149,7 +153,7 @@ namespace Azure.ResourceManager.StorageMover
                             executionEndTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastStatusUpdate"))
+                        if (property0.NameEquals("lastStatusUpdate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -159,7 +163,7 @@ namespace Azure.ResourceManager.StorageMover
                             lastStatusUpdate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("itemsScanned"))
+                        if (property0.NameEquals("itemsScanned"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -169,7 +173,7 @@ namespace Azure.ResourceManager.StorageMover
                             itemsScanned = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("itemsExcluded"))
+                        if (property0.NameEquals("itemsExcluded"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -179,7 +183,7 @@ namespace Azure.ResourceManager.StorageMover
                             itemsExcluded = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("itemsUnsupported"))
+                        if (property0.NameEquals("itemsUnsupported"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -189,7 +193,7 @@ namespace Azure.ResourceManager.StorageMover
                             itemsUnsupported = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("itemsNoTransferNeeded"))
+                        if (property0.NameEquals("itemsNoTransferNeeded"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -199,7 +203,7 @@ namespace Azure.ResourceManager.StorageMover
                             itemsNoTransferNeeded = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("itemsFailed"))
+                        if (property0.NameEquals("itemsFailed"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -209,7 +213,7 @@ namespace Azure.ResourceManager.StorageMover
                             itemsFailed = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("itemsTransferred"))
+                        if (property0.NameEquals("itemsTransferred"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -219,7 +223,7 @@ namespace Azure.ResourceManager.StorageMover
                             itemsTransferred = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("bytesScanned"))
+                        if (property0.NameEquals("bytesScanned"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -229,7 +233,7 @@ namespace Azure.ResourceManager.StorageMover
                             bytesScanned = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("bytesExcluded"))
+                        if (property0.NameEquals("bytesExcluded"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -239,7 +243,7 @@ namespace Azure.ResourceManager.StorageMover
                             bytesExcluded = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("bytesUnsupported"))
+                        if (property0.NameEquals("bytesUnsupported"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -249,7 +253,7 @@ namespace Azure.ResourceManager.StorageMover
                             bytesUnsupported = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("bytesNoTransferNeeded"))
+                        if (property0.NameEquals("bytesNoTransferNeeded"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -259,7 +263,7 @@ namespace Azure.ResourceManager.StorageMover
                             bytesNoTransferNeeded = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("bytesFailed"))
+                        if (property0.NameEquals("bytesFailed"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -269,7 +273,7 @@ namespace Azure.ResourceManager.StorageMover
                             bytesFailed = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("bytesTransferred"))
+                        if (property0.NameEquals("bytesTransferred"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -279,12 +283,12 @@ namespace Azure.ResourceManager.StorageMover
                             bytesTransferred = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("sourceName"))
+                        if (property0.NameEquals("sourceName"u8))
                         {
                             sourceName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sourceResourceId"))
+                        if (property0.NameEquals("sourceResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -294,7 +298,7 @@ namespace Azure.ResourceManager.StorageMover
                             sourceResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("sourceProperties"))
+                        if (property0.NameEquals("sourceProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -304,12 +308,12 @@ namespace Azure.ResourceManager.StorageMover
                             sourceProperties = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("targetName"))
+                        if (property0.NameEquals("targetName"u8))
                         {
                             targetName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("targetResourceId"))
+                        if (property0.NameEquals("targetResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -319,7 +323,7 @@ namespace Azure.ResourceManager.StorageMover
                             targetResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("targetProperties"))
+                        if (property0.NameEquals("targetProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -329,7 +333,7 @@ namespace Azure.ResourceManager.StorageMover
                             targetProperties = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("jobDefinitionProperties"))
+                        if (property0.NameEquals("jobDefinitionProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -339,7 +343,7 @@ namespace Azure.ResourceManager.StorageMover
                             jobDefinitionProperties = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("error"))
+                        if (property0.NameEquals("error"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -349,7 +353,7 @@ namespace Azure.ResourceManager.StorageMover
                             error = JobRunError.DeserializeJobRunError(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

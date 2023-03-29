@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ConnectivityInformation DeserializeConnectivityInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ConnectivityHopInfo>> hops = default;
             Optional<NetworkConnectionStatus> connectionStatus = default;
             Optional<int> avgLatencyInMs = default;
@@ -24,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<int> probesFailed = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hops"))
+                if (property.NameEquals("hops"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
                     hops = array;
                     continue;
                 }
-                if (property.NameEquals("connectionStatus"))
+                if (property.NameEquals("connectionStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
                     connectionStatus = new NetworkConnectionStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("avgLatencyInMs"))
+                if (property.NameEquals("avgLatencyInMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
                     avgLatencyInMs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minLatencyInMs"))
+                if (property.NameEquals("minLatencyInMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +73,7 @@ namespace Azure.ResourceManager.Network.Models
                     minLatencyInMs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxLatencyInMs"))
+                if (property.NameEquals("maxLatencyInMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +83,7 @@ namespace Azure.ResourceManager.Network.Models
                     maxLatencyInMs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("probesSent"))
+                if (property.NameEquals("probesSent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
                     probesSent = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("probesFailed"))
+                if (property.NameEquals("probesFailed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

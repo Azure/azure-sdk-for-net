@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Sas))
             {
-                writer.WritePropertyName("sas");
+                writer.WritePropertyName("sas"u8);
                 writer.WriteStringValue(Sas);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static WorkspaceConnectionSharedAccessSignature DeserializeWorkspaceConnectionSharedAccessSignature(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sas = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sas"))
+                if (property.NameEquals("sas"u8))
                 {
                     sas = property.Value.GetString();
                     continue;

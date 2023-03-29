@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using Azure.Core;
 using System.Threading.Tasks;
 using System;
 using Azure.Core.Pipeline;
 using System.Net.Http.Headers;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -15,20 +14,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         // To prevent circular redirects, max redirect is set to 10.
         internal const int MaxRedirect = 10;
-        internal readonly TimeSpan DefaultCacheExpirationDuration = TimeSpan.FromHours(12);
+        internal readonly TimeSpan _defaultCacheExpirationDuration = TimeSpan.FromHours(12);
 
-        private readonly Cache<Uri> cache = new Cache<Uri>();
+        private readonly Cache<Uri> _cache = new Cache<Uri>();
 
         internal async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            if (message.TryGetProperty("redirectionComplete", out object isComplete) && (bool)isComplete)
+            if (message.TryGetProperty("redirectionComplete", out object? objValue)
+                && objValue != null
+                && objValue is bool isComplete
+                && isComplete)
             {
                 return;
             }
 
             Request request = message.Request;
 
-            if (cache.TryRead(out Uri redirectUri))
+            if (_cache.TryRead(out Uri? redirectUri))
             {
                 // Set up for the redirect
                 request.Uri.Reset(redirectUri);
@@ -75,10 +77,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     // if failed to read cache, use default
                     AzureMonitorExporterEventSource.Log.WriteWarning("ParseRedirectCacheFailed", "Failed to parse redirect cache, using default.");
-                    cacheExpirationDuration = DefaultCacheExpirationDuration;
+                    cacheExpirationDuration = _defaultCacheExpirationDuration;
                 }
 
-                cache.Set(redirectUri, cacheExpirationDuration);
+                _cache.Set(redirectUri, cacheExpirationDuration);
 
                 redirectCount++;
             }
@@ -89,13 +91,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private static bool TryGetRedirectUri(Response response, out Uri redirectUri)
         {
-            response.Headers.TryGetValue("Location", out string locationString);
+            response.Headers.TryGetValue("Location", out string? locationString);
             return Uri.TryCreate(locationString, UriKind.Absolute, out redirectUri);
         }
 
         private static bool TryGetRedirectCacheTimeSpan(Response response, out TimeSpan cacheExpirationDuration)
         {
-            response.Headers.TryGetValue("Cache-Control", out string cacheControlHeader);
+            response.Headers.TryGetValue("Cache-Control", out string? cacheControlHeader);
             if (CacheControlHeaderValue.TryParse(cacheControlHeader, out CacheControlHeaderValue cacheControlHeaderValue))
             {
                 cacheExpirationDuration = cacheControlHeaderValue?.MaxAge ?? default;
@@ -133,13 +135,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             private readonly object _lockObj = new object();
 
-            private T _cachedValue;
+            private T? _cachedValue;
 
             private DateTimeOffset _expiration = DateTimeOffset.MinValue;
 
-            public bool TryRead(out T cachedValue)
+            public bool TryRead([NotNullWhen(true)] out T? cachedValue)
             {
-                if (DateTimeOffset.UtcNow < _expiration)
+                if (DateTimeOffset.UtcNow < _expiration && _cachedValue != null)
                 {
                     cachedValue = _cachedValue;
                     return true;

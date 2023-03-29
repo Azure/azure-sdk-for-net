@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.TrafficManager.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Code))
             {
-                writer.WritePropertyName("code");
+                writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsCollectionDefined(Regions))
             {
-                writer.WritePropertyName("regions");
+                writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Regions)
                 {
@@ -41,22 +41,26 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         internal static TrafficManagerRegion DeserializeTrafficManagerRegion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> name = default;
             Optional<IList<TrafficManagerRegion>> regions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("regions"))
+                if (property.NameEquals("regions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

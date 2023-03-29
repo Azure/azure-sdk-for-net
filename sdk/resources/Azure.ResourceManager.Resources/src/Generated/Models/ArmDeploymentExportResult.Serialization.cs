@@ -15,10 +15,14 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ArmDeploymentExportResult DeserializeArmDeploymentExportResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> template = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("template"))
+                if (property.NameEquals("template"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

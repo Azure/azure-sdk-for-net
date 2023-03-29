@@ -14,11 +14,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static EndpointDetail DeserializeEndpointDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> port = default;
             Optional<string> region = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     port = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("region"))
+                if (property.NameEquals("region"u8))
                 {
                     region = property.Value.GetString();
                     continue;

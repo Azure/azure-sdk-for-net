@@ -20,32 +20,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AllowDataTruncation))
             {
-                writer.WritePropertyName("allowDataTruncation");
+                writer.WritePropertyName("allowDataTruncation"u8);
                 writer.WriteObjectValue(AllowDataTruncation);
             }
             if (Optional.IsDefined(TreatBooleanAsNumber))
             {
-                writer.WritePropertyName("treatBooleanAsNumber");
+                writer.WritePropertyName("treatBooleanAsNumber"u8);
                 writer.WriteObjectValue(TreatBooleanAsNumber);
             }
             if (Optional.IsDefined(DateTimeFormat))
             {
-                writer.WritePropertyName("dateTimeFormat");
+                writer.WritePropertyName("dateTimeFormat"u8);
                 writer.WriteObjectValue(DateTimeFormat);
             }
             if (Optional.IsDefined(DateTimeOffsetFormat))
             {
-                writer.WritePropertyName("dateTimeOffsetFormat");
+                writer.WritePropertyName("dateTimeOffsetFormat"u8);
                 writer.WriteObjectValue(DateTimeOffsetFormat);
             }
             if (Optional.IsDefined(TimeSpanFormat))
             {
-                writer.WritePropertyName("timeSpanFormat");
+                writer.WritePropertyName("timeSpanFormat"u8);
                 writer.WriteObjectValue(TimeSpanFormat);
             }
             if (Optional.IsDefined(Culture))
             {
-                writer.WritePropertyName("culture");
+                writer.WritePropertyName("culture"u8);
                 writer.WriteObjectValue(Culture);
             }
             writer.WriteEndObject();
@@ -53,6 +53,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static TypeConversionSettings DeserializeTypeConversionSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> allowDataTruncation = default;
             Optional<object> treatBooleanAsNumber = default;
             Optional<object> dateTimeFormat = default;
@@ -61,7 +65,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> culture = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowDataTruncation"))
+                if (property.NameEquals("allowDataTruncation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +75,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     allowDataTruncation = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("treatBooleanAsNumber"))
+                if (property.NameEquals("treatBooleanAsNumber"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,7 +85,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     treatBooleanAsNumber = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("dateTimeFormat"))
+                if (property.NameEquals("dateTimeFormat"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +95,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     dateTimeFormat = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("dateTimeOffsetFormat"))
+                if (property.NameEquals("dateTimeOffsetFormat"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +105,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     dateTimeOffsetFormat = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("timeSpanFormat"))
+                if (property.NameEquals("timeSpanFormat"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,7 +115,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     timeSpanFormat = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("culture"))
+                if (property.NameEquals("culture"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocationOptionsType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ExtendedLocationOptionsType);
             }
             if (Optional.IsDefined(SupportedPolicy))
             {
-                writer.WritePropertyName("supportedPolicy");
+                writer.WritePropertyName("supportedPolicy"u8);
                 writer.WriteStringValue(SupportedPolicy);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ExtendedLocationOptions DeserializeExtendedLocationOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<string> supportedPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportedPolicy"))
+                if (property.NameEquals("supportedPolicy"u8))
                 {
                     supportedPolicy = property.Value.GetString();
                     continue;

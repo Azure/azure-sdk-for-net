@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("action");
+            writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action);
-            writer.WritePropertyName("metrics");
+            writer.WritePropertyName("metrics"u8);
             writer.WriteStartArray();
             foreach (var item in Metrics)
             {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(RequiredFeatures))
             {
-                writer.WritePropertyName("requiredFeatures");
+                writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();
                 foreach (var item in RequiredFeatures)
                 {
@@ -40,17 +40,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ThrottlingRule DeserializeThrottlingRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string action = default;
             IList<ThrottlingMetric> metrics = default;
             Optional<IList<string>> requiredFeatures = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     action = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metrics"))
+                if (property.NameEquals("metrics"u8))
                 {
                     List<ThrottlingMetric> array = new List<ThrottlingMetric>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     metrics = array;
                     continue;
                 }
-                if (property.NameEquals("requiredFeatures"))
+                if (property.NameEquals("requiredFeatures"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

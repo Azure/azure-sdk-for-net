@@ -15,10 +15,14 @@ namespace Azure.Monitor.Query.Models
     {
         internal static MetricDefinitionCollection DeserializeMetricDefinitionCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<MetricDefinition> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<MetricDefinition> array = new List<MetricDefinition>();
                     foreach (var item in property.Value.EnumerateArray())

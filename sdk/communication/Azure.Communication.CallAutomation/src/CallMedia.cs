@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.CallAutomation.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -19,14 +18,14 @@ namespace Azure.Communication.CallAutomation
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         internal CallMediaRestClient CallMediaRestClient { get; }
-        internal EventProcessor EventProcessor { get; }
+        internal CallAutomationEventProcessor EventProcessor { get; }
 
         /// <summary>
         /// The call connection id.
         /// </summary>
         public virtual string CallConnectionId { get; internal set; }
 
-        internal CallMedia(string callConnectionId, CallMediaRestClient callCallMediaRestClient, ClientDiagnostics clientDiagnostics, EventProcessor eventProcessor)
+        internal CallMedia(string callConnectionId, CallMediaRestClient callCallMediaRestClient, ClientDiagnostics clientDiagnostics, CallAutomationEventProcessor eventProcessor)
         {
             CallConnectionId = callConnectionId;
             CallMediaRestClient = callCallMediaRestClient;
@@ -312,10 +311,16 @@ namespace Azure.Communication.CallAutomation
                 RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeChoiceOptions.TargetParticipant))
                 {
                     InterruptPrompt = recognizeChoiceOptions.InterruptPrompt,
+                    InitialSilenceTimeoutInSeconds = (int)recognizeChoiceOptions.InitialSilenceTimeout.TotalSeconds
                 };
 
                 recognizeChoiceOptions.RecognizeChoices
                     .ToList().ForEach(t => recognizeConfigurationsInternal.Choices.Add(t));
+
+                if (!String.IsNullOrEmpty(recognizeChoiceOptions.SpeechLanguage))
+                {
+                    recognizeConfigurationsInternal.SpeechLanguage = recognizeChoiceOptions.SpeechLanguage;
+                }
 
                 RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeChoiceOptions.InputType, recognizeConfigurationsInternal);
 

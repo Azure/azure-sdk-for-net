@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListAssetCreatedInADateRange()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/stable/2022-08-01/examples/assets-list-in-date-range.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/assets-list-in-date-range.json
             // this example is just showing the usage of "Assets_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Media.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListAssetOrderedByDate()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/stable/2022-08-01/examples/assets-list-by-date.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/assets-list-by-date.json
             // this example is just showing the usage of "Assets_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Media.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListAllAssets()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/stable/2022-08-01/examples/assets-list-all.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/assets-list-all.json
             // this example is just showing the usage of "Assets_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Media.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAnAssetByName()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/stable/2022-08-01/examples/assets-get-by-name.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/assets-get-by-name.json
             // this example is just showing the usage of "Assets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Media.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAnAssetByName()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/stable/2022-08-01/examples/assets-get-by-name.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/assets-get-by-name.json
             // this example is just showing the usage of "Assets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Media.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateAnAsset()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/stable/2022-08-01/examples/assets-create.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/assets-create.json
             // this example is just showing the usage of "Assets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
@@ -227,6 +227,48 @@ namespace Azure.ResourceManager.Media.Samples
             {
                 Description = "A documentary showing the ascent of Mount Logan",
                 StorageAccountName = "storage0",
+            };
+            ArmOperation<MediaAssetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, data);
+            MediaAssetResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            MediaAssetData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Create an Asset with encryption scope
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_CreateAnAssetWithEncryptionScope()
+        {
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/assets-create-with-encryption-scope.json
+            // this example is just showing the usage of "Assets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MediaServicesAccountResource created on azure
+            // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "contosorg";
+            string accountName = "contosomedia";
+            ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
+
+            // get the collection of this MediaAssetResource
+            MediaAssetCollection collection = mediaServicesAccount.GetMediaAssets();
+
+            // invoke the operation
+            string assetName = "ClimbingMountLogan";
+            MediaAssetData data = new MediaAssetData()
+            {
+                Description = "A documentary showing the ascent of Mount Logan",
+                StorageAccountName = "storage0",
+                EncryptionScope = "encryptionScope1",
             };
             ArmOperation<MediaAssetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, data);
             MediaAssetResource result = lro.Value;

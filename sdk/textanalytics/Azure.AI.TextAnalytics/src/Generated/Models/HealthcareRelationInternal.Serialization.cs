@@ -17,14 +17,14 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("relationType");
+            writer.WritePropertyName("relationType"u8);
             writer.WriteStringValue(RelationType.ToString());
             if (Optional.IsDefined(ConfidenceScore))
             {
-                writer.WritePropertyName("confidenceScore");
+                writer.WritePropertyName("confidenceScore"u8);
                 writer.WriteNumberValue(ConfidenceScore.Value);
             }
-            writer.WritePropertyName("entities");
+            writer.WritePropertyName("entities"u8);
             writer.WriteStartArray();
             foreach (var item in Entities)
             {
@@ -36,17 +36,21 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static HealthcareRelationInternal DeserializeHealthcareRelationInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             HealthcareEntityRelationType relationType = default;
             Optional<double> confidenceScore = default;
             IList<HealthcareRelationEntity> entities = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("relationType"))
+                if (property.NameEquals("relationType"u8))
                 {
                     relationType = new HealthcareEntityRelationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("confidenceScore"))
+                if (property.NameEquals("confidenceScore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.AI.TextAnalytics.Models
                     confidenceScore = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("entities"))
+                if (property.NameEquals("entities"u8))
                 {
                     List<HealthcareRelationEntity> array = new List<HealthcareRelationEntity>();
                     foreach (var item in property.Value.EnumerateArray())

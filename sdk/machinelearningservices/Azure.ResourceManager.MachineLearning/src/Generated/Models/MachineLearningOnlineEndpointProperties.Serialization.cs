@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Compute != null)
                 {
-                    writer.WritePropertyName("compute");
+                    writer.WritePropertyName("compute"u8);
                     writer.WriteStringValue(Compute);
                 }
                 else
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Traffic))
             {
                 if (Traffic != null)
                 {
-                    writer.WritePropertyName("traffic");
+                    writer.WritePropertyName("traffic"u8);
                     writer.WriteStartObject();
                     foreach (var item in Traffic)
                     {
@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("traffic");
                 }
             }
-            writer.WritePropertyName("authMode");
+            writer.WritePropertyName("authMode"u8);
             writer.WriteStringValue(AuthMode.ToString());
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
-                    writer.WritePropertyName("description");
+                    writer.WritePropertyName("description"u8);
                     writer.WriteStringValue(Description);
                 }
                 else
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Keys != null)
                 {
-                    writer.WritePropertyName("keys");
+                    writer.WritePropertyName("keys"u8);
                     writer.WriteObjectValue(Keys);
                 }
                 else
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties != null)
                 {
-                    writer.WritePropertyName("properties");
+                    writer.WritePropertyName("properties"u8);
                     writer.WriteStartObject();
                     foreach (var item in Properties)
                     {
@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningOnlineEndpointProperties DeserializeMachineLearningOnlineEndpointProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> compute = default;
             Optional<MachineLearningEndpointProvisioningState> provisioningState = default;
             Optional<MachineLearningPublicNetworkAccessType> publicNetworkAccess = default;
@@ -113,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<Uri> swaggerUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("compute"))
+                if (property.NameEquals("compute"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     compute = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     provisioningState = new MachineLearningEndpointProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("publicNetworkAccess"))
+                if (property.NameEquals("publicNetworkAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -143,7 +147,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     publicNetworkAccess = new MachineLearningPublicNetworkAccessType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("traffic"))
+                if (property.NameEquals("traffic"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -158,12 +162,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     traffic = dictionary;
                     continue;
                 }
-                if (property.NameEquals("authMode"))
+                if (property.NameEquals("authMode"u8))
                 {
                     authMode = new MachineLearningEndpointAuthMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -173,7 +177,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keys"))
+                if (property.NameEquals("keys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -183,7 +187,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     keys = MachineLearningEndpointAuthKeys.DeserializeMachineLearningEndpointAuthKeys(property.Value);
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -193,19 +197,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("scoringUri"))
+                if (property.NameEquals("scoringUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -215,7 +212,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     scoringUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("swaggerUri"))
+                if (property.NameEquals("swaggerUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

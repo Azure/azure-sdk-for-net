@@ -21,7 +21,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanConvertIntLeafPropertyToInt()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": 5 }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
             Assert.AreEqual(5, (int)data.value);
         }
 
@@ -35,7 +35,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanConvertIntLeafPropertyToDouble()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": 5 }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
             Assert.AreEqual(5d, (double)data.value);
         }
 
@@ -49,7 +49,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanConvertIntLeafPropertyToLong()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": 5 }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
             Assert.AreEqual((long)5, (long)data.value);
         }
 
@@ -57,7 +57,7 @@ namespace Azure.Core.Tests.Public
         public void CannotConvertIntLeafToString()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("5");
-            Assert.Throws<InvalidCastException>(
+            Assert.Throws<InvalidOperationException>(
                 () => { var s = (string)data; }
             );
         }
@@ -65,8 +65,8 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CannotConvertIntLeafPropertyToString()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": 5 }");
-            Assert.Throws<InvalidCastException>(
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
+            Assert.Throws<InvalidOperationException>(
                 () => { var s = (string)data.value; }
             );
         }
@@ -75,7 +75,7 @@ namespace Azure.Core.Tests.Public
         public void CannotConvertIntLeafToBoolean()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("5");
-            Assert.Throws<InvalidCastException>(
+            Assert.Throws<InvalidOperationException>(
                 () => { var b = (bool)data; }
             );
         }
@@ -83,8 +83,8 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CannotConvertIntLeafPropertyToBoolean()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": 5 }");
-            Assert.Throws<InvalidCastException>(
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
+            Assert.Throws<InvalidOperationException>(
                 () => { var b = (bool)data.value; }
             );
         }
@@ -105,7 +105,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CannotConvertIntLeafPropertyToModel()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": 5 }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
 
             // TODO: Throws JsonException - is that preferred over
             // InvalidOperationException?
@@ -131,7 +131,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CannotGetMemberOnLeafProperty()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": 5 }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
             Assert.Throws<InvalidOperationException>(
                 () => { var x = data.value.Property; }
             );
@@ -152,7 +152,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CannotSetMemberOnLeafProperty()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": 5 }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
             Assert.Throws<InvalidOperationException>(
                 () => { data.value.Property = "invalid"; }
             );
@@ -161,7 +161,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanSetLeafProperty()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": 5 }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
             data.value = 6;
             Assert.AreEqual(6, (int)data.value);
         }
@@ -169,7 +169,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanSetLeafPropertyToDifferentType()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": 5 }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
             data.value = "valid";
             Assert.AreEqual("valid", (string)data.value);
         }
@@ -194,7 +194,7 @@ namespace Azure.Core.Tests.Public
         {
             // TODO: Make exception messages consistent.
 
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": 5 }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
             Assert.Throws<InvalidOperationException>(
                 () => { var x = data.value["Property"]; }
             );
@@ -216,7 +216,7 @@ namespace Azure.Core.Tests.Public
         {
             // TODO: Make exception messages consistent.
 
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": 5 }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
             Assert.Throws<InvalidOperationException>(
                 () => { var x = data.value[0]; }
             );
@@ -242,7 +242,7 @@ namespace Azure.Core.Tests.Public
         {
             // TODO: Make exception messages consistent.
 
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": 5 }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
             Assert.Throws<InvalidOperationException>(
                 () => { data.value["Property"] = "invalid"; }
             );
@@ -264,7 +264,7 @@ namespace Azure.Core.Tests.Public
         {
             // TODO: Make exception messages consistent.
 
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": 5 }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
             Assert.Throws<InvalidOperationException>(
                 () => { data.value[0] = "invalid"; }
             );
@@ -289,7 +289,7 @@ namespace Azure.Core.Tests.Public
         {
             // TODO: This exception says "exepcted kind to be object" - improve this.
 
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": 5 }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
             Assert.Throws<InvalidOperationException>(
                 () => { foreach (var item in data.value) { } }
             );

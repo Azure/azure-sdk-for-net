@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Command))
             {
-                writer.WritePropertyName("command");
+                writer.WritePropertyName("command"u8);
                 writer.WriteStartArray();
                 foreach (var item in Command)
                 {
@@ -26,18 +26,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ProbeActionType.ToString());
             writer.WriteEndObject();
         }
 
         internal static AppInstanceExecAction DeserializeAppInstanceExecAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> command = default;
             ProbeActionType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("command"))
+                if (property.NameEquals("command"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     command = array;
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ProbeActionType(property.Value.GetString());
                     continue;

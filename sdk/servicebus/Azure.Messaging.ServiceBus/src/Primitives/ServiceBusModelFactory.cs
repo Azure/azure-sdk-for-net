@@ -11,6 +11,7 @@ using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
 using System.Globalization;
+using Azure.Core.Shared;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -131,7 +132,7 @@ namespace Azure.Messaging.ServiceBus
             amqpMessage.MessageAnnotations[AmqpMessageConstants.DeadLetterSourceName] = deadLetterSource;
             amqpMessage.MessageAnnotations[AmqpMessageConstants.EnqueueSequenceNumberName] = enqueuedSequenceNumber;
             amqpMessage.MessageAnnotations[AmqpMessageConstants.EnqueuedTimeUtcName] = enqueuedTime.UtcDateTime;
-            amqpMessage.MessageAnnotations[AmqpMessageConstants.MessageStateName] = serviceBusMessageState;
+            amqpMessage.MessageAnnotations[AmqpMessageConstants.MessageStateName] = (int)serviceBusMessageState;
 
             return new ServiceBusReceivedMessage(amqpMessage)
             {
@@ -425,7 +426,7 @@ namespace Azure.Messaging.ServiceBus
             batchOptions.MaxSizeInBytes ??= long.MaxValue;
 
             var transportBatch = new ListTransportBatch(batchOptions.MaxSizeInBytes.Value, batchSizeBytes, batchMessageStore, tryAddCallback);
-            return new ServiceBusMessageBatch(transportBatch, new EntityScopeFactory("mock", "mock"));
+            return new ServiceBusMessageBatch(transportBatch, new MessagingClientDiagnostics("mock", "mock", "mock", "mock", "mock"));
         }
 
         /// <summary>

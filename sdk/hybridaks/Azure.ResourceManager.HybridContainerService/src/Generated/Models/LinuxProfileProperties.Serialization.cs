@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AdminUsername))
             {
-                writer.WritePropertyName("adminUsername");
+                writer.WritePropertyName("adminUsername"u8);
                 writer.WriteStringValue(AdminUsername);
             }
             if (Optional.IsDefined(Ssh))
             {
-                writer.WritePropertyName("ssh");
+                writer.WritePropertyName("ssh"u8);
                 writer.WriteObjectValue(Ssh);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static LinuxProfileProperties DeserializeLinuxProfileProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> adminUsername = default;
             Optional<LinuxProfilePropertiesSsh> ssh = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("adminUsername"))
+                if (property.NameEquals("adminUsername"u8))
                 {
                     adminUsername = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ssh"))
+                if (property.NameEquals("ssh"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

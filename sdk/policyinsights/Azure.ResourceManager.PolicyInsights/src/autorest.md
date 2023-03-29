@@ -5,6 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
+generate-model-factory: false
 csharp: true
 library-name: PolicyInsights
 namespace: Azure.ResourceManager.PolicyInsights
@@ -18,12 +19,6 @@ modelerfour:
 
 request-path-to-parent:
   /providers/Microsoft.PolicyInsights/policyMetadata: /providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}
-
-partial-resources:
-  /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}: SubscriptionPolicySetDefinition
-  /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}: SubscriptionPolicyDefinition
-  /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}: SubscriptionPolicyAssignment
-  /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}: ResourceGroupPolicyAssignment
 
 override-operation-name:
   PolicyMetadata_List: GetAll
@@ -101,6 +96,7 @@ rename-mapping:
   Remediation: PolicyRemediation
   Attestation.properties.expiresOn: ExpireOn
   Attestation.properties.policyAssignmentId: -|arm-id
+  Attestation.properties.assessmentDate: AssessOn
   Remediation.properties.policyAssignmentId: -|arm-id
   CheckRestrictionsResult: CheckPolicyRestrictionsResult
   CheckRestrictionsRequest: CheckPolicyRestrictionsContent

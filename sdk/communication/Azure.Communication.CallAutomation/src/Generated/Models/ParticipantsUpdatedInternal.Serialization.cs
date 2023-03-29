@@ -15,44 +15,59 @@ namespace Azure.Communication.CallAutomation
     {
         internal static ParticipantsUpdatedInternal DeserializeParticipantsUpdatedInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
-            Optional<IReadOnlyList<AcsCallParticipantInternal>> participants = default;
+            Optional<IReadOnlyList<CallParticipantInternal>> participants = default;
+            Optional<int> sequenceNumber = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("callConnectionId"))
+                if (property.NameEquals("callConnectionId"u8))
                 {
                     callConnectionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverCallId"))
+                if (property.NameEquals("serverCallId"u8))
                 {
                     serverCallId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("correlationId"))
+                if (property.NameEquals("correlationId"u8))
                 {
                     correlationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("participants"))
+                if (property.NameEquals("participants"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AcsCallParticipantInternal> array = new List<AcsCallParticipantInternal>();
+                    List<CallParticipantInternal> array = new List<CallParticipantInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AcsCallParticipantInternal.DeserializeAcsCallParticipantInternal(item));
+                        array.Add(CallParticipantInternal.DeserializeCallParticipantInternal(item));
                     }
                     participants = array;
                     continue;
                 }
+                if (property.NameEquals("sequenceNumber"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sequenceNumber = property.Value.GetInt32();
+                    continue;
+                }
             }
-            return new ParticipantsUpdatedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, Optional.ToList(participants));
+            return new ParticipantsUpdatedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, Optional.ToList(participants), Optional.ToNullable(sequenceNumber));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Validation))
             {
-                writer.WritePropertyName("validation");
+                writer.WritePropertyName("validation"u8);
                 writer.WriteObjectValue(Validation);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static OpenApiConfiguration DeserializeOpenApiConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OpenApiValidation> validation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("validation"))
+                if (property.NameEquals("validation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         internal static AvailableLabServicesSku DeserializeAvailableLabServicesSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceType = default;
             Optional<string> name = default;
             Optional<AvailableLabServicesSkuTier> tier = default;
@@ -27,17 +31,17 @@ namespace Azure.ResourceManager.LabServices.Models
             Optional<IReadOnlyList<AvailableLabServicesSkuRestrictions>> restrictions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,17 +51,17 @@ namespace Azure.ResourceManager.LabServices.Models
                     tier = new AvailableLabServicesSkuTier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("size"))
+                if (property.NameEquals("size"u8))
                 {
                     size = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("family"))
+                if (property.NameEquals("family"u8))
                 {
                     family = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capacity"))
+                if (property.NameEquals("capacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +71,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     capacity = AvailableLabServicesSkuCapacity.DeserializeAvailableLabServicesSkuCapacity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +86,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     capabilities = array;
                     continue;
                 }
-                if (property.NameEquals("locations"))
+                if (property.NameEquals("locations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +101,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     locations = array;
                     continue;
                 }
-                if (property.NameEquals("costs"))
+                if (property.NameEquals("costs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,7 +116,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     costs = array;
                     continue;
                 }
-                if (property.NameEquals("restrictions"))
+                if (property.NameEquals("restrictions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

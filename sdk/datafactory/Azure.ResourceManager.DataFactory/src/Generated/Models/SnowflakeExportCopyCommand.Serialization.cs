@@ -19,11 +19,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AdditionalCopyOptions))
             {
-                writer.WritePropertyName("additionalCopyOptions");
+                writer.WritePropertyName("additionalCopyOptions"u8);
                 writer.WriteStartObject();
                 foreach (var item in AdditionalCopyOptions)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
@@ -34,11 +39,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsCollectionDefined(AdditionalFormatOptions))
             {
-                writer.WritePropertyName("additionalFormatOptions");
+                writer.WritePropertyName("additionalFormatOptions"u8);
                 writer.WriteStartObject();
                 foreach (var item in AdditionalFormatOptions)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
@@ -47,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ExportSettingsType);
             foreach (var item in AdditionalProperties)
             {
@@ -63,6 +73,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SnowflakeExportCopyCommand DeserializeSnowflakeExportCopyCommand(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, BinaryData>> additionalCopyOptions = default;
             Optional<IDictionary<string, BinaryData>> additionalFormatOptions = default;
             string type = default;
@@ -70,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("additionalCopyOptions"))
+                if (property.NameEquals("additionalCopyOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,12 +94,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
                     }
                     additionalCopyOptions = dictionary;
                     continue;
                 }
-                if (property.NameEquals("additionalFormatOptions"))
+                if (property.NameEquals("additionalFormatOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,12 +116,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
                     }
                     additionalFormatOptions = dictionary;
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

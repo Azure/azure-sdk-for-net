@@ -19,31 +19,31 @@ namespace Azure.ResourceManager.Synapse
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
             if (Optional.IsDefined(StorageEndpoint))
             {
-                writer.WritePropertyName("storageEndpoint");
+                writer.WritePropertyName("storageEndpoint"u8);
                 writer.WriteStringValue(StorageEndpoint);
             }
             if (Optional.IsDefined(StorageAccountAccessKey))
             {
-                writer.WritePropertyName("storageAccountAccessKey");
+                writer.WritePropertyName("storageAccountAccessKey"u8);
                 writer.WriteStringValue(StorageAccountAccessKey);
             }
             if (Optional.IsDefined(RetentionDays))
             {
-                writer.WritePropertyName("retentionDays");
+                writer.WritePropertyName("retentionDays"u8);
                 writer.WriteNumberValue(RetentionDays.Value);
             }
             if (Optional.IsCollectionDefined(AuditActionsAndGroups))
             {
-                writer.WritePropertyName("auditActionsAndGroups");
+                writer.WritePropertyName("auditActionsAndGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in AuditActionsAndGroups)
                 {
@@ -53,17 +53,17 @@ namespace Azure.ResourceManager.Synapse
             }
             if (Optional.IsDefined(StorageAccountSubscriptionId))
             {
-                writer.WritePropertyName("storageAccountSubscriptionId");
+                writer.WritePropertyName("storageAccountSubscriptionId"u8);
                 writer.WriteStringValue(StorageAccountSubscriptionId.Value);
             }
             if (Optional.IsDefined(IsStorageSecondaryKeyInUse))
             {
-                writer.WritePropertyName("isStorageSecondaryKeyInUse");
+                writer.WritePropertyName("isStorageSecondaryKeyInUse"u8);
                 writer.WriteBooleanValue(IsStorageSecondaryKeyInUse.Value);
             }
             if (Optional.IsDefined(IsAzureMonitorTargetEnabled))
             {
-                writer.WritePropertyName("isAzureMonitorTargetEnabled");
+                writer.WritePropertyName("isAzureMonitorTargetEnabled"u8);
                 writer.WriteBooleanValue(IsAzureMonitorTargetEnabled.Value);
             }
             writer.WriteEndObject();
@@ -72,6 +72,10 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseSqlPoolBlobAuditingPolicyData DeserializeSynapseSqlPoolBlobAuditingPolicyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -87,27 +91,27 @@ namespace Azure.ResourceManager.Synapse
             Optional<bool> isAzureMonitorTargetEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -117,7 +121,7 @@ namespace Azure.ResourceManager.Synapse
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,7 +130,7 @@ namespace Azure.ResourceManager.Synapse
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -136,17 +140,17 @@ namespace Azure.ResourceManager.Synapse
                             state = property0.Value.GetString().ToSynapseBlobAuditingPolicyState();
                             continue;
                         }
-                        if (property0.NameEquals("storageEndpoint"))
+                        if (property0.NameEquals("storageEndpoint"u8))
                         {
                             storageEndpoint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("storageAccountAccessKey"))
+                        if (property0.NameEquals("storageAccountAccessKey"u8))
                         {
                             storageAccountAccessKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("retentionDays"))
+                        if (property0.NameEquals("retentionDays"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -156,7 +160,7 @@ namespace Azure.ResourceManager.Synapse
                             retentionDays = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("auditActionsAndGroups"))
+                        if (property0.NameEquals("auditActionsAndGroups"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -171,7 +175,7 @@ namespace Azure.ResourceManager.Synapse
                             auditActionsAndGroups = array;
                             continue;
                         }
-                        if (property0.NameEquals("storageAccountSubscriptionId"))
+                        if (property0.NameEquals("storageAccountSubscriptionId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -181,7 +185,7 @@ namespace Azure.ResourceManager.Synapse
                             storageAccountSubscriptionId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("isStorageSecondaryKeyInUse"))
+                        if (property0.NameEquals("isStorageSecondaryKeyInUse"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -191,7 +195,7 @@ namespace Azure.ResourceManager.Synapse
                             isStorageSecondaryKeyInUse = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("isAzureMonitorTargetEnabled"))
+                        if (property0.NameEquals("isAzureMonitorTargetEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

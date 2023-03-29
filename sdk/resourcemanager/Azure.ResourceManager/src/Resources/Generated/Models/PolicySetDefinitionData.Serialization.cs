@@ -19,26 +19,26 @@ namespace Azure.ResourceManager.Resources
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PolicyType))
             {
-                writer.WritePropertyName("policyType");
+                writer.WritePropertyName("policyType"u8);
                 writer.WriteStringValue(PolicyType.Value.ToString());
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Metadata);
 #else
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Resources
             }
             if (Optional.IsCollectionDefined(PolicyDefinitions))
             {
-                writer.WritePropertyName("policyDefinitions");
+                writer.WritePropertyName("policyDefinitions"u8);
                 writer.WriteStartArray();
                 foreach (var item in PolicyDefinitions)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Resources
             }
             if (Optional.IsCollectionDefined(PolicyDefinitionGroups))
             {
-                writer.WritePropertyName("policyDefinitionGroups");
+                writer.WritePropertyName("policyDefinitionGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in PolicyDefinitionGroups)
                 {
@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.Resources
 
         internal static PolicySetDefinitionData DeserializePolicySetDefinitionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -95,22 +99,22 @@ namespace Azure.ResourceManager.Resources
             Optional<IList<PolicyDefinitionGroup>> policyDefinitionGroups = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +124,7 @@ namespace Azure.ResourceManager.Resources
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,7 +133,7 @@ namespace Azure.ResourceManager.Resources
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("policyType"))
+                        if (property0.NameEquals("policyType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -139,17 +143,17 @@ namespace Azure.ResourceManager.Resources
                             policyType = new PolicyType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("metadata"))
+                        if (property0.NameEquals("metadata"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -159,7 +163,7 @@ namespace Azure.ResourceManager.Resources
                             metadata = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("parameters"))
+                        if (property0.NameEquals("parameters"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -174,7 +178,7 @@ namespace Azure.ResourceManager.Resources
                             parameters = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("policyDefinitions"))
+                        if (property0.NameEquals("policyDefinitions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -189,7 +193,7 @@ namespace Azure.ResourceManager.Resources
                             policyDefinitions = array;
                             continue;
                         }
-                        if (property0.NameEquals("policyDefinitionGroups"))
+                        if (property0.NameEquals("policyDefinitionGroups"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

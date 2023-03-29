@@ -21,22 +21,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RejectType))
             {
-                writer.WritePropertyName("rejectType");
+                writer.WritePropertyName("rejectType"u8);
                 writer.WriteStringValue(RejectType.Value.ToString());
             }
             if (Optional.IsDefined(RejectValue))
             {
-                writer.WritePropertyName("rejectValue");
+                writer.WritePropertyName("rejectValue"u8);
                 writer.WriteObjectValue(RejectValue);
             }
             if (Optional.IsDefined(RejectSampleValue))
             {
-                writer.WritePropertyName("rejectSampleValue");
+                writer.WritePropertyName("rejectSampleValue"u8);
                 writer.WriteObjectValue(RejectSampleValue);
             }
             if (Optional.IsDefined(UseTypeDefault))
             {
-                writer.WritePropertyName("useTypeDefault");
+                writer.WritePropertyName("useTypeDefault"u8);
                 writer.WriteObjectValue(UseTypeDefault);
             }
             foreach (var item in AdditionalProperties)
@@ -49,6 +49,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static PolybaseSettings DeserializePolybaseSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PolybaseSettingsRejectType> rejectType = default;
             Optional<object> rejectValue = default;
             Optional<object> rejectSampleValue = default;
@@ -57,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rejectType"))
+                if (property.NameEquals("rejectType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     rejectType = new PolybaseSettingsRejectType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rejectValue"))
+                if (property.NameEquals("rejectValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +81,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     rejectValue = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("rejectSampleValue"))
+                if (property.NameEquals("rejectSampleValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +91,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     rejectSampleValue = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("useTypeDefault"))
+                if (property.NameEquals("useTypeDefault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

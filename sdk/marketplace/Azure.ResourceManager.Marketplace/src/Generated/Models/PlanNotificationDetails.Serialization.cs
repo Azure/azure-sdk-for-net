@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static PlanNotificationDetails DeserializePlanNotificationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> planId = default;
             Optional<string> planDisplayName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("planId"))
+                if (property.NameEquals("planId"u8))
                 {
                     planId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("planDisplayName"))
+                if (property.NameEquals("planDisplayName"u8))
                 {
                     planDisplayName = property.Value.GetString();
                     continue;

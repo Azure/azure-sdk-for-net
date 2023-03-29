@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("allOf");
+            writer.WritePropertyName("allOf"u8);
             writer.WriteStartArray();
             foreach (var item in AllOf)
             {
@@ -28,10 +28,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SuppressionAlertsScope DeserializeSuppressionAlertsScope(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<SuppressionAlertsScopeElement> allOf = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allOf"))
+                if (property.NameEquals("allOf"u8))
                 {
                     List<SuppressionAlertsScopeElement> array = new List<SuppressionAlertsScopeElement>();
                     foreach (var item in property.Value.EnumerateArray())

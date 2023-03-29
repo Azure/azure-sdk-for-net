@@ -16,22 +16,26 @@ namespace Azure.ResourceManager.Batch.Models
     {
         internal static BatchAccountPoolAutoScaleRun DeserializeBatchAccountPoolAutoScaleRun(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset evaluationTime = default;
             Optional<string> results = default;
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("evaluationTime"))
+                if (property.NameEquals("evaluationTime"u8))
                 {
                     evaluationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("results"))
+                if (property.NameEquals("results"u8))
                 {
                     results = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

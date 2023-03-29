@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static SecurityInsightsAlertConfidenceReason DeserializeSecurityInsightsAlertConfidenceReason(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> reason = default;
             Optional<string> reasonType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("reason"))
+                if (property.NameEquals("reason"u8))
                 {
                     reason = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reasonType"))
+                if (property.NameEquals("reasonType"u8))
                 {
                     reasonType = property.Value.GetString();
                     continue;

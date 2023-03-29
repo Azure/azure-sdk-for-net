@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static SiteCloneability DeserializeSiteCloneability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CloneAbilityResult> result = default;
             Optional<IReadOnlyList<SiteCloneabilityCriterion>> blockingFeatures = default;
             Optional<IReadOnlyList<SiteCloneabilityCriterion>> unsupportedFeatures = default;
             Optional<IReadOnlyList<SiteCloneabilityCriterion>> blockingCharacteristics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("result"))
+                if (property.NameEquals("result"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
                     result = property.Value.GetString().ToCloneAbilityResult();
                     continue;
                 }
-                if (property.NameEquals("blockingFeatures"))
+                if (property.NameEquals("blockingFeatures"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
                     blockingFeatures = array;
                     continue;
                 }
-                if (property.NameEquals("unsupportedFeatures"))
+                if (property.NameEquals("unsupportedFeatures"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
                     unsupportedFeatures = array;
                     continue;
                 }
-                if (property.NameEquals("blockingCharacteristics"))
+                if (property.NameEquals("blockingCharacteristics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

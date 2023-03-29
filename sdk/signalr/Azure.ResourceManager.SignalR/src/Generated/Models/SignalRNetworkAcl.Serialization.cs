@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SignalR.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Allow))
             {
-                writer.WritePropertyName("allow");
+                writer.WritePropertyName("allow"u8);
                 writer.WriteStartArray();
                 foreach (var item in Allow)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SignalR.Models
             }
             if (Optional.IsCollectionDefined(Deny))
             {
-                writer.WritePropertyName("deny");
+                writer.WritePropertyName("deny"u8);
                 writer.WriteStartArray();
                 foreach (var item in Deny)
                 {
@@ -41,11 +41,15 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRNetworkAcl DeserializeSignalRNetworkAcl(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SignalRRequestType>> allow = default;
             Optional<IList<SignalRRequestType>> deny = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allow"))
+                if (property.NameEquals("allow"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     allow = array;
                     continue;
                 }
-                if (property.NameEquals("deny"))
+                if (property.NameEquals("deny"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

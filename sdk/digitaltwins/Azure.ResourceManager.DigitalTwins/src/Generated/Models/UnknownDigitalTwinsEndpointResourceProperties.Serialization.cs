@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("endpointType");
+            writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
             if (Optional.IsDefined(AuthenticationType))
             {
-                writer.WritePropertyName("authenticationType");
+                writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
             if (Optional.IsDefined(DeadLetterSecret))
             {
                 if (DeadLetterSecret != null)
                 {
-                    writer.WritePropertyName("deadLetterSecret");
+                    writer.WritePropertyName("deadLetterSecret"u8);
                     writer.WriteStringValue(DeadLetterSecret);
                 }
                 else
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 if (DeadLetterUri != null)
                 {
-                    writer.WritePropertyName("deadLetterUri");
+                    writer.WritePropertyName("deadLetterUri"u8);
                     writer.WriteStringValue(DeadLetterUri.AbsoluteUri);
                 }
                 else
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 if (Identity != null)
                 {
-                    writer.WritePropertyName("identity");
+                    writer.WritePropertyName("identity"u8);
                     writer.WriteObjectValue(Identity);
                 }
                 else
@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         internal static UnknownDigitalTwinsEndpointResourceProperties DeserializeUnknownDigitalTwinsEndpointResourceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EndpointType endpointType = "Unknown";
             Optional<DigitalTwinsEndpointProvisioningState?> provisioningState = default;
             Optional<DateTimeOffset?> createdTime = default;
@@ -73,12 +77,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             Optional<DigitalTwinsManagedIdentityReference> identity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endpointType"))
+                if (property.NameEquals("endpointType"u8))
                 {
                     endpointType = new EndpointType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +92,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     provisioningState = new DigitalTwinsEndpointProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("createdTime"))
+                if (property.NameEquals("createdTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +102,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("authenticationType"))
+                if (property.NameEquals("authenticationType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +112,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     authenticationType = new DigitalTwinsAuthenticationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("deadLetterSecret"))
+                if (property.NameEquals("deadLetterSecret"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +122,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     deadLetterSecret = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deadLetterUri"))
+                if (property.NameEquals("deadLetterUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -128,7 +132,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     deadLetterUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

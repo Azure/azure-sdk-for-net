@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("uri");
+            writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
             if (Optional.IsDefined(ContentVersion))
             {
-                writer.WritePropertyName("contentVersion");
+                writer.WritePropertyName("contentVersion"u8);
                 writer.WriteStringValue(ContentVersion);
             }
             writer.WriteEndObject();
@@ -28,16 +28,20 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmDeploymentParametersLink DeserializeArmDeploymentParametersLink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri uri = default;
             Optional<string> contentVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("uri"))
+                if (property.NameEquals("uri"u8))
                 {
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("contentVersion"))
+                if (property.NameEquals("contentVersion"u8))
                 {
                     contentVersion = property.Value.GetString();
                     continue;

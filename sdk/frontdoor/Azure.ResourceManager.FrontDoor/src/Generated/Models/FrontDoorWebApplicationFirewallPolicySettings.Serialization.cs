@@ -18,32 +18,32 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EnabledState))
             {
-                writer.WritePropertyName("enabledState");
+                writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
             if (Optional.IsDefined(Mode))
             {
-                writer.WritePropertyName("mode");
+                writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
             if (Optional.IsDefined(RedirectUri))
             {
-                writer.WritePropertyName("redirectUrl");
+                writer.WritePropertyName("redirectUrl"u8);
                 writer.WriteStringValue(RedirectUri.AbsoluteUri);
             }
             if (Optional.IsDefined(CustomBlockResponseStatusCode))
             {
-                writer.WritePropertyName("customBlockResponseStatusCode");
+                writer.WritePropertyName("customBlockResponseStatusCode"u8);
                 writer.WriteNumberValue(CustomBlockResponseStatusCode.Value);
             }
             if (Optional.IsDefined(CustomBlockResponseBody))
             {
-                writer.WritePropertyName("customBlockResponseBody");
+                writer.WritePropertyName("customBlockResponseBody"u8);
                 writer.WriteStringValue(CustomBlockResponseBody);
             }
             if (Optional.IsDefined(RequestBodyCheck))
             {
-                writer.WritePropertyName("requestBodyCheck");
+                writer.WritePropertyName("requestBodyCheck"u8);
                 writer.WriteStringValue(RequestBodyCheck.Value.ToString());
             }
             writer.WriteEndObject();
@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static FrontDoorWebApplicationFirewallPolicySettings DeserializeFrontDoorWebApplicationFirewallPolicySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PolicyEnabledState> enabledState = default;
             Optional<FrontDoorWebApplicationFirewallPolicyMode> mode = default;
             Optional<Uri> redirectUrl = default;
@@ -59,7 +63,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<PolicyRequestBodyCheck> requestBodyCheck = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabledState"))
+                if (property.NameEquals("enabledState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +73,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     enabledState = new PolicyEnabledState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("mode"))
+                if (property.NameEquals("mode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +83,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     mode = new FrontDoorWebApplicationFirewallPolicyMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("redirectUrl"))
+                if (property.NameEquals("redirectUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +93,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     redirectUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("customBlockResponseStatusCode"))
+                if (property.NameEquals("customBlockResponseStatusCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,12 +103,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     customBlockResponseStatusCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("customBlockResponseBody"))
+                if (property.NameEquals("customBlockResponseBody"u8))
                 {
                     customBlockResponseBody = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requestBodyCheck"))
+                if (property.NameEquals("requestBodyCheck"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

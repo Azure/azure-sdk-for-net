@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("ruleCollectionType");
+            writer.WritePropertyName("ruleCollectionType"u8);
             writer.WriteStringValue(RuleCollectionType.ToString());
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Priority))
             {
-                writer.WritePropertyName("priority");
+                writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
             writer.WriteEndObject();
@@ -32,22 +32,26 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static UnknownFirewallPolicyRuleCollection DeserializeUnknownFirewallPolicyRuleCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FirewallPolicyRuleCollectionType ruleCollectionType = "Unknown";
             Optional<string> name = default;
             Optional<int> priority = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ruleCollectionType"))
+                if (property.NameEquals("ruleCollectionType"u8))
                 {
                     ruleCollectionType = new FirewallPolicyRuleCollectionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("priority"))
+                if (property.NameEquals("priority"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Peering.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Role))
             {
-                writer.WritePropertyName("role");
+                writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
             }
             if (Optional.IsDefined(Email))
             {
-                writer.WritePropertyName("email");
+                writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
             if (Optional.IsDefined(Phone))
             {
-                writer.WritePropertyName("phone");
+                writer.WritePropertyName("phone"u8);
                 writer.WriteStringValue(Phone);
             }
             writer.WriteEndObject();
@@ -35,12 +35,16 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static PeerAsnContactDetail DeserializePeerAsnContactDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PeeringRole> role = default;
             Optional<string> email = default;
             Optional<string> phone = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("role"))
+                if (property.NameEquals("role"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,12 +54,12 @@ namespace Azure.ResourceManager.Peering.Models
                     role = new PeeringRole(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("email"))
+                if (property.NameEquals("email"u8))
                 {
                     email = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phone"))
+                if (property.NameEquals("phone"u8))
                 {
                     phone = property.Value.GetString();
                     continue;

@@ -20,10 +20,14 @@ namespace Azure.ResourceManager.Support.Models
 
         internal static SupportEngineer DeserializeSupportEngineer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> emailAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("emailAddress"))
+                if (property.NameEquals("emailAddress"u8))
                 {
                     emailAddress = property.Value.GetString();
                     continue;

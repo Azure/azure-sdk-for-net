@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            writer.WritePropertyName("specification");
+            writer.WritePropertyName("specification"u8);
             writer.WriteObjectValue(Specification);
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
             writer.WriteEndObject();
@@ -32,12 +32,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static CustomRolloutProperties DeserializeCustomRolloutProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             CustomRolloutPropertiesSpecification specification = default;
             Optional<CustomRolloutPropertiesStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,12 +51,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("specification"))
+                if (property.NameEquals("specification"u8))
                 {
                     specification = CustomRolloutPropertiesSpecification.DeserializeCustomRolloutPropertiesSpecification(property.Value);
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

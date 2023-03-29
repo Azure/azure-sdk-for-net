@@ -15,31 +15,31 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("callLocator");
+            writer.WritePropertyName("callLocator"u8);
             writer.WriteObjectValue(CallLocator);
             if (Optional.IsDefined(RecordingStateCallbackUri))
             {
-                writer.WritePropertyName("recordingStateCallbackUri");
+                writer.WritePropertyName("recordingStateCallbackUri"u8);
                 writer.WriteStringValue(RecordingStateCallbackUri);
             }
             if (Optional.IsDefined(RecordingContentType))
             {
-                writer.WritePropertyName("recordingContentType");
+                writer.WritePropertyName("recordingContentType"u8);
                 writer.WriteStringValue(RecordingContentType.Value.ToString());
             }
             if (Optional.IsDefined(RecordingChannelType))
             {
-                writer.WritePropertyName("recordingChannelType");
+                writer.WritePropertyName("recordingChannelType"u8);
                 writer.WriteStringValue(RecordingChannelType.Value.ToString());
             }
             if (Optional.IsDefined(RecordingFormatType))
             {
-                writer.WritePropertyName("recordingFormatType");
+                writer.WritePropertyName("recordingFormatType"u8);
                 writer.WriteStringValue(RecordingFormatType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(AudioChannelParticipantOrdering))
             {
-                writer.WritePropertyName("audioChannelParticipantOrdering");
+                writer.WritePropertyName("audioChannelParticipantOrdering"u8);
                 writer.WriteStartArray();
                 foreach (var item in AudioChannelParticipantOrdering)
                 {
@@ -47,10 +47,10 @@ namespace Azure.Communication.CallAutomation
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RecordingStorageType))
+            if (Optional.IsDefined(ExternalStorage))
             {
-                writer.WritePropertyName("recordingStorageType");
-                writer.WriteStringValue(RecordingStorageType.Value.ToString());
+                writer.WritePropertyName("externalStorage"u8);
+                writer.WriteObjectValue(ExternalStorage);
             }
             writer.WriteEndObject();
         }

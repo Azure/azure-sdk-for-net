@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CloudServiceConfiguration))
             {
-                writer.WritePropertyName("cloudServiceConfiguration");
+                writer.WritePropertyName("cloudServiceConfiguration"u8);
                 writer.WriteObjectValue(CloudServiceConfiguration);
             }
             if (Optional.IsDefined(VmConfiguration))
             {
-                writer.WritePropertyName("virtualMachineConfiguration");
+                writer.WritePropertyName("virtualMachineConfiguration"u8);
                 writer.WriteObjectValue(VmConfiguration);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchDeploymentConfiguration DeserializeBatchDeploymentConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BatchCloudServiceConfiguration> cloudServiceConfiguration = default;
             Optional<BatchVmConfiguration> virtualMachineConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cloudServiceConfiguration"))
+                if (property.NameEquals("cloudServiceConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.Batch.Models
                     cloudServiceConfiguration = BatchCloudServiceConfiguration.DeserializeBatchCloudServiceConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("virtualMachineConfiguration"))
+                if (property.NameEquals("virtualMachineConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

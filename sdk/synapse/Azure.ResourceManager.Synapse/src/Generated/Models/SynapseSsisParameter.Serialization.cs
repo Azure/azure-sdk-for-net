@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseSsisParameter DeserializeSynapseSsisParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> id = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<string> variable = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,22 +42,22 @@ namespace Azure.ResourceManager.Synapse.Models
                     id = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataType"))
+                if (property.NameEquals("dataType"u8))
                 {
                     dataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("required"))
+                if (property.NameEquals("required"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +67,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     required = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("sensitive"))
+                if (property.NameEquals("sensitive"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,27 +77,27 @@ namespace Azure.ResourceManager.Synapse.Models
                     sensitive = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("designDefaultValue"))
+                if (property.NameEquals("designDefaultValue"u8))
                 {
                     designDefaultValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultValue"))
+                if (property.NameEquals("defaultValue"u8))
                 {
                     defaultValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sensitiveDefaultValue"))
+                if (property.NameEquals("sensitiveDefaultValue"u8))
                 {
                     sensitiveDefaultValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("valueType"))
+                if (property.NameEquals("valueType"u8))
                 {
                     valueType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("valueSet"))
+                if (property.NameEquals("valueSet"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +107,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     valueSet = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("variable"))
+                if (property.NameEquals("variable"u8))
                 {
                     variable = property.Value.GetString();
                     continue;

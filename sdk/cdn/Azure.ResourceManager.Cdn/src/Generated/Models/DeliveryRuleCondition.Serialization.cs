@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
             writer.WriteEndObject();
         }
 
         internal static DeliveryRuleCondition DeserializeDeliveryRuleCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("name", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

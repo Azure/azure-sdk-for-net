@@ -17,21 +17,21 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(MappingType.ToString());
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
             if (Optional.IsDefined(IsSecret))
             {
-                writer.WritePropertyName("isSecret");
+                writer.WritePropertyName("isSecret"u8);
                 writer.WriteBooleanValue(IsSecret.Value);
             }
             writer.WriteEndObject();
@@ -40,23 +40,27 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static StaticDeliveryAttributeMapping DeserializeStaticDeliveryAttributeMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             DeliveryAttributeMappingType type = default;
             Optional<string> value = default;
             Optional<bool> isSecret = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new DeliveryAttributeMappingType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,12 +69,12 @@ namespace Azure.ResourceManager.EventGrid.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("value"))
+                        if (property0.NameEquals("value"u8))
                         {
                             value = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("isSecret"))
+                        if (property0.NameEquals("isSecret"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

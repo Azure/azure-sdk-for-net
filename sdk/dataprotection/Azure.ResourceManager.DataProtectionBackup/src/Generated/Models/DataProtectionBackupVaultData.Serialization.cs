@@ -19,21 +19,21 @@ namespace Azure.ResourceManager.DataProtectionBackup
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties);
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("eTag");
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
+            }
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("eTag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -42,16 +42,20 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             writer.WriteEndObject();
         }
 
         internal static DataProtectionBackupVaultData DeserializeDataProtectionBackupVaultData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataProtectionBackupVaultProperties properties = default;
-            Optional<ETag> eTag = default;
             Optional<ManagedServiceIdentity> identity = default;
+            Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -60,22 +64,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
             Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     properties = DataProtectionBackupVaultProperties.DeserializeDataProtectionBackupVaultProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("eTag"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    eTag = new ETag(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +79,17 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("eTag"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    eTag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,27 +104,27 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -131,7 +135,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     continue;
                 }
             }
-            return new DataProtectionBackupVaultData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties, Optional.ToNullable(eTag), identity);
+            return new DataProtectionBackupVaultData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties, identity, Optional.ToNullable(eTag));
         }
     }
 }

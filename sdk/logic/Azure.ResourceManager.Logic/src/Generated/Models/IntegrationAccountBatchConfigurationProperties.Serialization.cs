@@ -16,23 +16,23 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("batchGroupName");
+            writer.WritePropertyName("batchGroupName"u8);
             writer.WriteStringValue(BatchGroupName);
-            writer.WritePropertyName("releaseCriteria");
+            writer.WritePropertyName("releaseCriteria"u8);
             writer.WriteObjectValue(ReleaseCriteria);
             if (Optional.IsDefined(CreatedOn))
             {
-                writer.WritePropertyName("createdTime");
+                writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(ChangedOn))
             {
-                writer.WritePropertyName("changedTime");
+                writer.WritePropertyName("changedTime"u8);
                 writer.WriteStringValue(ChangedOn.Value, "O");
             }
             if (Optional.IsDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Metadata);
 #else
@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationAccountBatchConfigurationProperties DeserializeIntegrationAccountBatchConfigurationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string batchGroupName = default;
             IntegrationAccountBatchReleaseCriteria releaseCriteria = default;
             Optional<DateTimeOffset> createdTime = default;
@@ -51,17 +55,17 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<BinaryData> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("batchGroupName"))
+                if (property.NameEquals("batchGroupName"u8))
                 {
                     batchGroupName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("releaseCriteria"))
+                if (property.NameEquals("releaseCriteria"u8))
                 {
                     releaseCriteria = IntegrationAccountBatchReleaseCriteria.DeserializeIntegrationAccountBatchReleaseCriteria(property.Value);
                     continue;
                 }
-                if (property.NameEquals("createdTime"))
+                if (property.NameEquals("createdTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.Logic.Models
                     createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("changedTime"))
+                if (property.NameEquals("changedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,7 +85,7 @@ namespace Azure.ResourceManager.Logic.Models
                     changedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

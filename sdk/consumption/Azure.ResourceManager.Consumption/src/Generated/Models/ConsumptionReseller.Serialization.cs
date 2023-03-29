@@ -14,11 +14,15 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static ConsumptionReseller DeserializeConsumptionReseller(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> resellerId = default;
             Optional<string> resellerDescription = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resellerId"))
+                if (property.NameEquals("resellerId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     resellerId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resellerDescription"))
+                if (property.NameEquals("resellerDescription"u8))
                 {
                     resellerDescription = property.Value.GetString();
                     continue;

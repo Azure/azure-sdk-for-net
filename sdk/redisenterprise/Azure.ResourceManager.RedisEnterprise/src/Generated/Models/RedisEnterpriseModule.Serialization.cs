@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Args))
             {
-                writer.WritePropertyName("args");
+                writer.WritePropertyName("args"u8);
                 writer.WriteStringValue(Args);
             }
             writer.WriteEndObject();
@@ -27,22 +27,26 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         internal static RedisEnterpriseModule DeserializeRedisEnterpriseModule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> args = default;
             Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("args"))
+                if (property.NameEquals("args"u8))
                 {
                     args = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;

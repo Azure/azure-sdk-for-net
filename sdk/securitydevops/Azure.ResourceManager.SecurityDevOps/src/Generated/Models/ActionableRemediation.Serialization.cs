@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             if (Optional.IsCollectionDefined(SeverityLevels))
             {
-                writer.WritePropertyName("severityLevels");
+                writer.WritePropertyName("severityLevels"u8);
                 writer.WriteStartArray();
                 foreach (var item in SeverityLevels)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             }
             if (Optional.IsCollectionDefined(Categories))
             {
-                writer.WritePropertyName("categories");
+                writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             }
             if (Optional.IsDefined(BranchConfiguration))
             {
-                writer.WritePropertyName("branchConfiguration");
+                writer.WritePropertyName("branchConfiguration"u8);
                 writer.WriteObjectValue(BranchConfiguration);
             }
             writer.WriteEndObject();
@@ -51,13 +51,17 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static ActionableRemediation DeserializeActionableRemediation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ActionableRemediationState> state = default;
             Optional<IList<string>> severityLevels = default;
             Optional<IList<ActionableRemediationRuleCategory>> categories = default;
             Optional<TargetBranchConfiguration> branchConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +71,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     state = new ActionableRemediationState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("severityLevels"))
+                if (property.NameEquals("severityLevels"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +86,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     severityLevels = array;
                     continue;
                 }
-                if (property.NameEquals("categories"))
+                if (property.NameEquals("categories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +101,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     categories = array;
                     continue;
                 }
-                if (property.NameEquals("branchConfiguration"))
+                if (property.NameEquals("branchConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

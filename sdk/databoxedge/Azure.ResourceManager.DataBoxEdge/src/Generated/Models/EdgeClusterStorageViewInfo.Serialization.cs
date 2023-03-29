@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ClusterTotalStorageInMB))
             {
-                writer.WritePropertyName("clusterTotalStorageMb");
+                writer.WritePropertyName("clusterTotalStorageMb"u8);
                 writer.WriteNumberValue(ClusterTotalStorageInMB.Value);
             }
             if (Optional.IsDefined(ClusterFreeStorageInMB))
             {
-                writer.WritePropertyName("clusterFreeStorageMb");
+                writer.WritePropertyName("clusterFreeStorageMb"u8);
                 writer.WriteNumberValue(ClusterFreeStorageInMB.Value);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeClusterStorageViewInfo DeserializeEdgeClusterStorageViewInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> clusterTotalStorageMb = default;
             Optional<double> clusterFreeStorageMb = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clusterTotalStorageMb"))
+                if (property.NameEquals("clusterTotalStorageMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     clusterTotalStorageMb = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("clusterFreeStorageMb"))
+                if (property.NameEquals("clusterFreeStorageMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

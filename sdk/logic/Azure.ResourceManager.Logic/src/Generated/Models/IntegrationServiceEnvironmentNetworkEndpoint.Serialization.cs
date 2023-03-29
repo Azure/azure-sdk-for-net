@@ -15,12 +15,16 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static IntegrationServiceEnvironmentNetworkEndpoint DeserializeIntegrationServiceEnvironmentNetworkEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IntegrationServiceEnvironmentNetworkEndPointAccessibilityState> accessibility = default;
             Optional<string> domainName = default;
             Optional<IReadOnlyList<string>> ports = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accessibility"))
+                if (property.NameEquals("accessibility"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,12 +34,12 @@ namespace Azure.ResourceManager.Logic.Models
                     accessibility = new IntegrationServiceEnvironmentNetworkEndPointAccessibilityState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("domainName"))
+                if (property.NameEquals("domainName"u8))
                 {
                     domainName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ports"))
+                if (property.NameEquals("ports"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static EventHubsNspAccessRule DeserializeEventHubsNspAccessRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EventHubsNspAccessRuleProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,22 +36,22 @@ namespace Azure.ResourceManager.EventHubs.Models
                     properties = EventHubsNspAccessRuleProperties.DeserializeEventHubsNspAccessRuleProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

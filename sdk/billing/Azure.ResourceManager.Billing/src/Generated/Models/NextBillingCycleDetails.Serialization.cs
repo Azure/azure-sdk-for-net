@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.Billing.Models
     {
         internal static NextBillingCycleDetails DeserializeNextBillingCycleDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> billingFrequency = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("billingFrequency"))
+                if (property.NameEquals("billingFrequency"u8))
                 {
                     billingFrequency = property.Value.GetString();
                     continue;

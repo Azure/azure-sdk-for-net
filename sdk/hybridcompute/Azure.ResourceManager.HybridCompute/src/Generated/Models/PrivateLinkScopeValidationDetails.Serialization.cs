@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         internal static PrivateLinkScopeValidationDetails DeserializePrivateLinkScopeValidationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<PublicNetworkAccessType> publicNetworkAccess = default;
             Optional<IReadOnlyList<ConnectionDetail>> connectionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publicNetworkAccess"))
+                if (property.NameEquals("publicNetworkAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +39,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     publicNetworkAccess = new PublicNetworkAccessType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("connectionDetails"))
+                if (property.NameEquals("connectionDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

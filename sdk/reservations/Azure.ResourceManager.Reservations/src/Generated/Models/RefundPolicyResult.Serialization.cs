@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static RefundPolicyResult DeserializeRefundPolicyResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ReservationRefundPolicyResultProperty> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

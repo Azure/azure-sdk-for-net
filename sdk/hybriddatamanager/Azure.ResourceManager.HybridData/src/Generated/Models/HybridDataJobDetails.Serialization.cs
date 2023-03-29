@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HybridData.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(JobStages))
             {
-                writer.WritePropertyName("jobStages");
+                writer.WritePropertyName("jobStages"u8);
                 writer.WriteStartArray();
                 foreach (var item in JobStages)
                 {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.HybridData.Models
             }
             if (Optional.IsDefined(JobDefinition))
             {
-                writer.WritePropertyName("jobDefinition");
+                writer.WritePropertyName("jobDefinition"u8);
                 writer.WriteObjectValue(JobDefinition);
             }
             if (Optional.IsCollectionDefined(ErrorDetails))
             {
-                writer.WritePropertyName("errorDetails");
+                writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in ErrorDetails)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HybridData.Models
             }
             if (Optional.IsDefined(ItemDetailsLink))
             {
-                writer.WritePropertyName("itemDetailsLink");
+                writer.WritePropertyName("itemDetailsLink"u8);
                 writer.WriteStringValue(ItemDetailsLink);
             }
             writer.WriteEndObject();
@@ -52,13 +52,17 @@ namespace Azure.ResourceManager.HybridData.Models
 
         internal static HybridDataJobDetails DeserializeHybridDataJobDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<HybridDataJobStage>> jobStages = default;
             Optional<HybridDataJobDefinitionData> jobDefinition = default;
             Optional<IList<HybridDataJobErrorDetails>> errorDetails = default;
             Optional<string> itemDetailsLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobStages"))
+                if (property.NameEquals("jobStages"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +77,7 @@ namespace Azure.ResourceManager.HybridData.Models
                     jobStages = array;
                     continue;
                 }
-                if (property.NameEquals("jobDefinition"))
+                if (property.NameEquals("jobDefinition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +87,7 @@ namespace Azure.ResourceManager.HybridData.Models
                     jobDefinition = HybridDataJobDefinitionData.DeserializeHybridDataJobDefinitionData(property.Value);
                     continue;
                 }
-                if (property.NameEquals("errorDetails"))
+                if (property.NameEquals("errorDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +102,7 @@ namespace Azure.ResourceManager.HybridData.Models
                     errorDetails = array;
                     continue;
                 }
-                if (property.NameEquals("itemDetailsLink"))
+                if (property.NameEquals("itemDetailsLink"u8))
                 {
                     itemDetailsLink = property.Value.GetString();
                     continue;

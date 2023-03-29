@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static ManagedInstanceOperationData DeserializeManagedInstanceOperationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -47,22 +51,22 @@ namespace Azure.ResourceManager.Sql
             Optional<ManagedInstanceOperationSteps> operationSteps = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.Sql
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,22 +85,22 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("managedInstanceName"))
+                        if (property0.NameEquals("managedInstanceName"u8))
                         {
                             managedInstanceName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("operation"))
+                        if (property0.NameEquals("operation"u8))
                         {
                             operation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("operationFriendlyName"))
+                        if (property0.NameEquals("operationFriendlyName"u8))
                         {
                             operationFriendlyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("percentComplete"))
+                        if (property0.NameEquals("percentComplete"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -106,7 +110,7 @@ namespace Azure.ResourceManager.Sql
                             percentComplete = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("startTime"))
+                        if (property0.NameEquals("startTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -116,7 +120,7 @@ namespace Azure.ResourceManager.Sql
                             startTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -126,7 +130,7 @@ namespace Azure.ResourceManager.Sql
                             state = new ManagementOperationState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("errorCode"))
+                        if (property0.NameEquals("errorCode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -136,12 +140,12 @@ namespace Azure.ResourceManager.Sql
                             errorCode = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("errorDescription"))
+                        if (property0.NameEquals("errorDescription"u8))
                         {
                             errorDescription = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("errorSeverity"))
+                        if (property0.NameEquals("errorSeverity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -151,7 +155,7 @@ namespace Azure.ResourceManager.Sql
                             errorSeverity = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("isUserError"))
+                        if (property0.NameEquals("isUserError"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -161,7 +165,7 @@ namespace Azure.ResourceManager.Sql
                             isUserError = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("estimatedCompletionTime"))
+                        if (property0.NameEquals("estimatedCompletionTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -171,12 +175,12 @@ namespace Azure.ResourceManager.Sql
                             estimatedCompletionTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("isCancellable"))
+                        if (property0.NameEquals("isCancellable"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -186,7 +190,7 @@ namespace Azure.ResourceManager.Sql
                             isCancellable = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("operationParameters"))
+                        if (property0.NameEquals("operationParameters"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -196,7 +200,7 @@ namespace Azure.ResourceManager.Sql
                             operationParameters = ManagedInstanceOperationParametersPair.DeserializeManagedInstanceOperationParametersPair(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("operationSteps"))
+                        if (property0.NameEquals("operationSteps"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

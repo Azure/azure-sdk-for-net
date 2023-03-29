@@ -14,12 +14,16 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static UpsertManagedServerOperationStep DeserializeUpsertManagedServerOperationStep(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> order = default;
             Optional<string> name = default;
             Optional<UpsertManagedServerOperationStepStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("order"))
+                if (property.NameEquals("order"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,12 +33,12 @@ namespace Azure.ResourceManager.Sql.Models
                     order = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -14,22 +14,26 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static SubscriptionPolicies DeserializeSubscriptionPolicies(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> locationPlacementId = default;
             Optional<string> quotaId = default;
             Optional<SpendingLimit> spendingLimit = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("locationPlacementId"))
+                if (property.NameEquals("locationPlacementId"u8))
                 {
                     locationPlacementId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("quotaId"))
+                if (property.NameEquals("quotaId"u8))
                 {
                     quotaId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("spendingLimit"))
+                if (property.NameEquals("spendingLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

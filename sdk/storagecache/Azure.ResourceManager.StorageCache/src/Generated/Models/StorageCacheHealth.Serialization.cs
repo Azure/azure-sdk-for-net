@@ -15,12 +15,16 @@ namespace Azure.ResourceManager.StorageCache.Models
     {
         internal static StorageCacheHealth DeserializeStorageCacheHealth(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageCacheHealthStateType> state = default;
             Optional<string> statusDescription = default;
             Optional<IReadOnlyList<OutstandingCondition>> conditions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,12 +34,12 @@ namespace Azure.ResourceManager.StorageCache.Models
                     state = new StorageCacheHealthStateType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("statusDescription"))
+                if (property.NameEquals("statusDescription"u8))
                 {
                     statusDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("conditions"))
+                if (property.NameEquals("conditions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

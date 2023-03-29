@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static Metadata DeserializeMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> provisionedBy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisionedBy"))
+                if (property.NameEquals("provisionedBy"u8))
                 {
                     provisionedBy = property.Value.GetString();
                     continue;

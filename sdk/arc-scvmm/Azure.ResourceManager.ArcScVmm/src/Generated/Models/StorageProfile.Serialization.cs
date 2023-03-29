@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Disks))
             {
-                writer.WritePropertyName("disks");
+                writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.ArcScVmm.Models
 
         internal static StorageProfile DeserializeStorageProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<VirtualDisk>> disks = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("disks"))
+                if (property.NameEquals("disks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

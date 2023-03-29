@@ -14,13 +14,17 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static StorageUsage DeserializeStorageUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageUsageUnit> unit = default;
             Optional<int> currentValue = default;
             Optional<int> limit = default;
             Optional<StorageUsageName> name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.Storage.Models
                     unit = property.Value.GetString().ToStorageUsageUnit();
                     continue;
                 }
-                if (property.NameEquals("currentValue"))
+                if (property.NameEquals("currentValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Storage.Models
                     currentValue = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.Storage.Models
                     limit = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

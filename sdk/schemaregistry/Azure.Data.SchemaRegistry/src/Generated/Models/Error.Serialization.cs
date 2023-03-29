@@ -14,10 +14,14 @@ namespace Azure.Data.SchemaRegistry.Models
     {
         internal static Error DeserializeError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ErrorDetail error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     error = ErrorDetail.DeserializeErrorDetail(property.Value);
                     continue;

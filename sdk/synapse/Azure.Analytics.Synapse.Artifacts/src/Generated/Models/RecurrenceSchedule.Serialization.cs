@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Minutes))
             {
-                writer.WritePropertyName("minutes");
+                writer.WritePropertyName("minutes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Minutes)
                 {
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(Hours))
             {
-                writer.WritePropertyName("hours");
+                writer.WritePropertyName("hours"u8);
                 writer.WriteStartArray();
                 foreach (var item in Hours)
                 {
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(WeekDays))
             {
-                writer.WritePropertyName("weekDays");
+                writer.WritePropertyName("weekDays"u8);
                 writer.WriteStartArray();
                 foreach (var item in WeekDays)
                 {
@@ -51,7 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(MonthDays))
             {
-                writer.WritePropertyName("monthDays");
+                writer.WritePropertyName("monthDays"u8);
                 writer.WriteStartArray();
                 foreach (var item in MonthDays)
                 {
@@ -61,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(MonthlyOccurrences))
             {
-                writer.WritePropertyName("monthlyOccurrences");
+                writer.WritePropertyName("monthlyOccurrences"u8);
                 writer.WriteStartArray();
                 foreach (var item in MonthlyOccurrences)
                 {
@@ -79,6 +79,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static RecurrenceSchedule DeserializeRecurrenceSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<int>> minutes = default;
             Optional<IList<int>> hours = default;
             Optional<IList<DayOfWeek>> weekDays = default;
@@ -88,7 +92,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minutes"))
+                if (property.NameEquals("minutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +107,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     minutes = array;
                     continue;
                 }
-                if (property.NameEquals("hours"))
+                if (property.NameEquals("hours"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +122,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     hours = array;
                     continue;
                 }
-                if (property.NameEquals("weekDays"))
+                if (property.NameEquals("weekDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,7 +137,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     weekDays = array;
                     continue;
                 }
-                if (property.NameEquals("monthDays"))
+                if (property.NameEquals("monthDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -148,7 +152,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     monthDays = array;
                     continue;
                 }
-                if (property.NameEquals("monthlyOccurrences"))
+                if (property.NameEquals("monthlyOccurrences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

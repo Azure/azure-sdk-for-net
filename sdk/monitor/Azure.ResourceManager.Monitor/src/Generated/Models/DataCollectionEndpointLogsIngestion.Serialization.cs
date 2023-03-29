@@ -20,10 +20,14 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static DataCollectionEndpointLogsIngestion DeserializeDataCollectionEndpointLogsIngestion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> endpoint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endpoint"))
+                if (property.NameEquals("endpoint"u8))
                 {
                     endpoint = property.Value.GetString();
                     continue;

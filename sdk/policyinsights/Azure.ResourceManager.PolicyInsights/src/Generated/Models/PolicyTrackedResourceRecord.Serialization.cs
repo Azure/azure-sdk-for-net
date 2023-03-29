@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static PolicyTrackedResourceRecord DeserializePolicyTrackedResourceRecord(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> trackedResourceId = default;
             Optional<PolicyDetails> policyDetails = default;
             Optional<TrackedResourceModificationDetails> createdBy = default;
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<DateTimeOffset> lastUpdateUtc = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("trackedResourceId"))
+                if (property.NameEquals("trackedResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +36,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     trackedResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policyDetails"))
+                if (property.NameEquals("policyDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     policyDetails = PolicyDetails.DeserializePolicyDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("createdBy"))
+                if (property.NameEquals("createdBy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     createdBy = TrackedResourceModificationDetails.DeserializeTrackedResourceModificationDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("lastModifiedBy"))
+                if (property.NameEquals("lastModifiedBy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +66,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     lastModifiedBy = TrackedResourceModificationDetails.DeserializeTrackedResourceModificationDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("lastUpdateUtc"))
+                if (property.NameEquals("lastUpdateUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

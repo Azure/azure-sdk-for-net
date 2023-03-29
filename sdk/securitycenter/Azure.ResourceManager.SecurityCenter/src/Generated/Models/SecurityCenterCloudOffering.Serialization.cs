@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("offeringType");
+            writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
             writer.WriteEndObject();
         }
 
         internal static SecurityCenterCloudOffering DeserializeSecurityCenterCloudOffering(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("offeringType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

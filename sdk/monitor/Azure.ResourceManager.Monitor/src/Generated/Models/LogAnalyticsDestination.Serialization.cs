@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(WorkspaceResourceId))
             {
-                writer.WritePropertyName("workspaceResourceId");
+                writer.WritePropertyName("workspaceResourceId"u8);
                 writer.WriteStringValue(WorkspaceResourceId);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WriteEndObject();
@@ -30,12 +30,16 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static LogAnalyticsDestination DeserializeLogAnalyticsDestination(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> workspaceResourceId = default;
             Optional<string> workspaceId = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("workspaceResourceId"))
+                if (property.NameEquals("workspaceResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,12 +49,12 @@ namespace Azure.ResourceManager.Monitor.Models
                     workspaceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("workspaceId"))
+                if (property.NameEquals("workspaceId"u8))
                 {
                     workspaceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;

@@ -20,7 +20,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (AlignMode != null)
                 {
-                    writer.WritePropertyName("alignMode");
+                    writer.WritePropertyName("alignMode"u8);
                     writer.WriteStringValue(AlignMode.Value.ToSerialString());
                 }
                 else
@@ -32,7 +32,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (FillNAMethod != null)
                 {
-                    writer.WritePropertyName("fillNAMethod");
+                    writer.WritePropertyName("fillNAMethod"u8);
                     writer.WriteStringValue(FillNAMethod.Value.ToString());
                 }
                 else
@@ -44,7 +44,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (PaddingValue != null)
                 {
-                    writer.WritePropertyName("paddingValue");
+                    writer.WritePropertyName("paddingValue"u8);
                     writer.WriteNumberValue(PaddingValue.Value);
                 }
                 else
@@ -57,12 +57,16 @@ namespace Azure.AI.AnomalyDetector
 
         internal static AlignPolicy DeserializeAlignPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AlignMode?> alignMode = default;
             Optional<FillNAMethod?> fillNAMethod = default;
             Optional<float?> paddingValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("alignMode"))
+                if (property.NameEquals("alignMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.AI.AnomalyDetector
                     alignMode = property.Value.GetString().ToAlignMode();
                     continue;
                 }
-                if (property.NameEquals("fillNAMethod"))
+                if (property.NameEquals("fillNAMethod"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +86,7 @@ namespace Azure.AI.AnomalyDetector
                     fillNAMethod = new FillNAMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("paddingValue"))
+                if (property.NameEquals("paddingValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

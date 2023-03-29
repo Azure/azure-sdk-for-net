@@ -15,15 +15,19 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            writer.WritePropertyName("filenamePattern");
+            writer.WritePropertyName("filenamePattern"u8);
             writer.WriteStringValue(FilenamePattern);
             writer.WriteEndObject();
         }
 
         internal static MediaFormatBase DeserializeMediaFormatBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

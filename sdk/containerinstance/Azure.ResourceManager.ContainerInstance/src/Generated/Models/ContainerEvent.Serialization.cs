@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static ContainerEvent DeserializeContainerEvent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> count = default;
             Optional<DateTimeOffset> firstTimestamp = default;
             Optional<DateTimeOffset> lastTimestamp = default;
@@ -23,7 +27,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<string> type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,7 +37,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     count = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("firstTimestamp"))
+                if (property.NameEquals("firstTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +47,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     firstTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastTimestamp"))
+                if (property.NameEquals("lastTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,17 +57,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     lastTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

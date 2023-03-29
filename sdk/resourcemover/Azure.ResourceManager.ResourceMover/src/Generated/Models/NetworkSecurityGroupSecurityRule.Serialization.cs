@@ -17,52 +17,52 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Access))
             {
-                writer.WritePropertyName("access");
+                writer.WritePropertyName("access"u8);
                 writer.WriteStringValue(Access);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(DestinationAddressPrefix))
             {
-                writer.WritePropertyName("destinationAddressPrefix");
+                writer.WritePropertyName("destinationAddressPrefix"u8);
                 writer.WriteStringValue(DestinationAddressPrefix);
             }
             if (Optional.IsDefined(DestinationPortRange))
             {
-                writer.WritePropertyName("destinationPortRange");
+                writer.WritePropertyName("destinationPortRange"u8);
                 writer.WriteStringValue(DestinationPortRange);
             }
             if (Optional.IsDefined(Direction))
             {
-                writer.WritePropertyName("direction");
+                writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction);
             }
             if (Optional.IsDefined(Priority))
             {
-                writer.WritePropertyName("priority");
+                writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
             if (Optional.IsDefined(Protocol))
             {
-                writer.WritePropertyName("protocol");
+                writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol);
             }
             if (Optional.IsDefined(SourceAddressPrefix))
             {
-                writer.WritePropertyName("sourceAddressPrefix");
+                writer.WritePropertyName("sourceAddressPrefix"u8);
                 writer.WriteStringValue(SourceAddressPrefix);
             }
             if (Optional.IsDefined(SourcePortRange))
             {
-                writer.WritePropertyName("sourcePortRange");
+                writer.WritePropertyName("sourcePortRange"u8);
                 writer.WriteStringValue(SourcePortRange);
             }
             writer.WriteEndObject();
@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static NetworkSecurityGroupSecurityRule DeserializeNetworkSecurityGroupSecurityRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> access = default;
             Optional<string> description = default;
@@ -82,37 +86,37 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<string> sourcePortRange = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("access"))
+                if (property.NameEquals("access"u8))
                 {
                     access = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("destinationAddressPrefix"))
+                if (property.NameEquals("destinationAddressPrefix"u8))
                 {
                     destinationAddressPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("destinationPortRange"))
+                if (property.NameEquals("destinationPortRange"u8))
                 {
                     destinationPortRange = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("direction"))
+                if (property.NameEquals("direction"u8))
                 {
                     direction = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("priority"))
+                if (property.NameEquals("priority"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,17 +126,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     priority = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("protocol"))
+                if (property.NameEquals("protocol"u8))
                 {
                     protocol = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceAddressPrefix"))
+                if (property.NameEquals("sourceAddressPrefix"u8))
                 {
                     sourceAddressPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourcePortRange"))
+                if (property.NameEquals("sourcePortRange"u8))
                 {
                     sourcePortRange = property.Value.GetString();
                     continue;

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EnableUpgradeSchedule))
             {
-                writer.WritePropertyName("upgradeScheduleEnabled");
+                writer.WritePropertyName("upgradeScheduleEnabled"u8);
                 writer.WriteBooleanValue(EnableUpgradeSchedule.Value);
             }
             if (Optional.IsDefined(ScheduledOn))
             {
-                writer.WritePropertyName("scheduledTime");
+                writer.WritePropertyName("scheduledTime"u8);
                 writer.WriteStringValue(ScheduledOn.Value, "O");
             }
             writer.WriteEndObject();
@@ -31,11 +31,15 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static StorageCacheUpgradeSettings DeserializeStorageCacheUpgradeSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> upgradeScheduleEnabled = default;
             Optional<DateTimeOffset> scheduledTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("upgradeScheduleEnabled"))
+                if (property.NameEquals("upgradeScheduleEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     upgradeScheduleEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("scheduledTime"))
+                if (property.NameEquals("scheduledTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ChangeDirectoryResult DeserializeChangeDirectoryResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> id = default;
             Optional<string> name = default;
             Optional<bool> isSucceeded = default;
             Optional<string> error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,12 +35,12 @@ namespace Azure.ResourceManager.Reservations.Models
                     id = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isSucceeded"))
+                if (property.NameEquals("isSucceeded"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     isSucceeded = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     error = property.Value.GetString();
                     continue;

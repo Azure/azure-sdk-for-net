@@ -14,16 +14,20 @@ namespace Azure.Maps.Routing.Models
     {
         internal static ErrorAdditionalInfo DeserializeErrorAdditionalInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<object> info = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("info"))
+                if (property.NameEquals("info"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

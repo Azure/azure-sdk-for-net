@@ -15,22 +15,26 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static GetUserTablesMySqlTaskOutput DeserializeGetUserTablesMySqlTaskOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> databasesToTables = default;
             Optional<IReadOnlyList<ReportableException>> validationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databasesToTables"))
+                if (property.NameEquals("databasesToTables"u8))
                 {
                     databasesToTables = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("validationErrors"))
+                if (property.NameEquals("validationErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

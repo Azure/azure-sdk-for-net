@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     {
         internal static CheckSystemServicesUpdatesAvailableResponse DeserializeCheckSystemServicesUpdatesAvailableResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<UpdatesAvailable> updatesAvailable = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("updatesAvailable"))
+                if (property.NameEquals("updatesAvailable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.StorageCache.Models
     {
         internal static StorageCacheUsageModelDisplay DeserializeStorageCacheUsageModelDisplay(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;

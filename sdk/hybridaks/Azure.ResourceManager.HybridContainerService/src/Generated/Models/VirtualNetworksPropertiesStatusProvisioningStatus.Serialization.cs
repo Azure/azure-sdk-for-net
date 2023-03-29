@@ -14,13 +14,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     {
         internal static VirtualNetworksPropertiesStatusProvisioningStatus DeserializeVirtualNetworksPropertiesStatusProvisioningStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VirtualNetworksPropertiesStatusProvisioningStatusError> error = default;
             Optional<string> operationId = default;
             Optional<string> phase = default;
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,17 +34,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     error = VirtualNetworksPropertiesStatusProvisioningStatusError.DeserializeVirtualNetworksPropertiesStatusProvisioningStatusError(property.Value);
                     continue;
                 }
-                if (property.NameEquals("operationId"))
+                if (property.NameEquals("operationId"u8))
                 {
                     operationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phase"))
+                if (property.NameEquals("phase"u8))
                 {
                     phase = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;

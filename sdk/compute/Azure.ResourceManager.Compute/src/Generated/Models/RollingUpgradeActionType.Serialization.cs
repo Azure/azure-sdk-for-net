@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Compute.Models
 
         public static RollingUpgradeActionType ToRollingUpgradeActionType(this string value)
         {
-            if (string.Equals(value, "Start", StringComparison.InvariantCultureIgnoreCase)) return RollingUpgradeActionType.Start;
-            if (string.Equals(value, "Cancel", StringComparison.InvariantCultureIgnoreCase)) return RollingUpgradeActionType.Cancel;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Start")) return RollingUpgradeActionType.Start;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cancel")) return RollingUpgradeActionType.Cancel;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RollingUpgradeActionType value.");
         }
     }

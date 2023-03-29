@@ -14,12 +14,16 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static ProductAvailabilityInformation DeserializeProductAvailabilityInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProductAvailabilityStage> availabilityStage = default;
             Optional<ProductDisabledReason> disabledReason = default;
             Optional<string> disabledReasonMessage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("availabilityStage"))
+                if (property.NameEquals("availabilityStage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     availabilityStage = new ProductAvailabilityStage(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("disabledReason"))
+                if (property.NameEquals("disabledReason"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +43,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     disabledReason = new ProductDisabledReason(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("disabledReasonMessage"))
+                if (property.NameEquals("disabledReasonMessage"u8))
                 {
                     disabledReasonMessage = property.Value.GetString();
                     continue;

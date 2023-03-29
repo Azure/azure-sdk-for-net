@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsCollectionDefined(ColumnNames))
             {
-                writer.WritePropertyName("columnNames");
+                writer.WritePropertyName("columnNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in ColumnNames)
                 {
@@ -36,16 +36,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static MachineLearningStudioInputs DeserializeMachineLearningStudioInputs(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IList<MachineLearningStudioInputColumn>> columnNames = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("columnNames"))
+                if (property.NameEquals("columnNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

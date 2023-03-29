@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Quantum.Models
     {
         internal static QuotaDimension DeserializeQuotaDimension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> scope = default;
             Optional<string> period = default;
@@ -24,22 +28,22 @@ namespace Azure.ResourceManager.Quantum.Models
             Optional<string> unitPlural = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scope"))
+                if (property.NameEquals("scope"u8))
                 {
                     scope = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("period"))
+                if (property.NameEquals("period"u8))
                 {
                     period = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("quota"))
+                if (property.NameEquals("quota"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,22 +53,22 @@ namespace Azure.ResourceManager.Quantum.Models
                     quota = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     unit = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("unitPlural"))
+                if (property.NameEquals("unitPlural"u8))
                 {
                     unitPlural = property.Value.GetString();
                     continue;

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ProtectableObjectLoadPath))
             {
-                writer.WritePropertyName("protectableObjectLoadPath");
+                writer.WritePropertyName("protectableObjectLoadPath"u8);
                 writer.WriteStartObject();
                 foreach (var item in ProtectableObjectLoadPath)
                 {
@@ -28,69 +28,69 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Protected))
+            if (Optional.IsDefined(IsProtected))
             {
-                writer.WritePropertyName("protected");
-                writer.WriteBooleanValue(Protected.Value);
+                writer.WritePropertyName("protected"u8);
+                writer.WriteBooleanValue(IsProtected.Value);
             }
             if (Optional.IsDefined(IsPresentOnCloud))
             {
-                writer.WritePropertyName("isPresentOnCloud");
+                writer.WritePropertyName("isPresentOnCloud"u8);
                 writer.WriteBooleanValue(IsPresentOnCloud.Value);
             }
             if (Optional.IsDefined(LastBackupStatus))
             {
-                writer.WritePropertyName("lastBackupStatus");
+                writer.WritePropertyName("lastBackupStatus"u8);
                 writer.WriteStringValue(LastBackupStatus);
             }
             if (Optional.IsDefined(LastRefreshedOn))
             {
-                writer.WritePropertyName("lastRefreshedAt");
+                writer.WritePropertyName("lastRefreshedAt"u8);
                 writer.WriteStringValue(LastRefreshedOn.Value, "O");
             }
-            if (Optional.IsDefined(OldestRecoveryPoint))
+            if (Optional.IsDefined(OldestRecoverOn))
             {
-                writer.WritePropertyName("oldestRecoveryPoint");
-                writer.WriteStringValue(OldestRecoveryPoint.Value, "O");
+                writer.WritePropertyName("oldestRecoveryPoint"u8);
+                writer.WriteStringValue(OldestRecoverOn.Value, "O");
             }
             if (Optional.IsDefined(RecoveryPointCount))
             {
-                writer.WritePropertyName("recoveryPointCount");
+                writer.WritePropertyName("recoveryPointCount"u8);
                 writer.WriteNumberValue(RecoveryPointCount.Value);
             }
-            if (Optional.IsDefined(OnPremiseOldestRecoveryPoint))
+            if (Optional.IsDefined(OnPremiseOldestRecoverOn))
             {
-                writer.WritePropertyName("onPremiseOldestRecoveryPoint");
-                writer.WriteStringValue(OnPremiseOldestRecoveryPoint.Value, "O");
+                writer.WritePropertyName("onPremiseOldestRecoveryPoint"u8);
+                writer.WriteStringValue(OnPremiseOldestRecoverOn.Value, "O");
             }
-            if (Optional.IsDefined(OnPremiseLatestRecoveryPoint))
+            if (Optional.IsDefined(OnPremiseLatestRecoverOn))
             {
-                writer.WritePropertyName("onPremiseLatestRecoveryPoint");
-                writer.WriteStringValue(OnPremiseLatestRecoveryPoint.Value, "O");
+                writer.WritePropertyName("onPremiseLatestRecoveryPoint"u8);
+                writer.WriteStringValue(OnPremiseLatestRecoverOn.Value, "O");
             }
             if (Optional.IsDefined(OnPremiseRecoveryPointCount))
             {
-                writer.WritePropertyName("onPremiseRecoveryPointCount");
+                writer.WritePropertyName("onPremiseRecoveryPointCount"u8);
                 writer.WriteNumberValue(OnPremiseRecoveryPointCount.Value);
             }
             if (Optional.IsDefined(IsCollocated))
             {
-                writer.WritePropertyName("isCollocated");
+                writer.WritePropertyName("isCollocated"u8);
                 writer.WriteBooleanValue(IsCollocated.Value);
             }
             if (Optional.IsDefined(ProtectionGroupName))
             {
-                writer.WritePropertyName("protectionGroupName");
+                writer.WritePropertyName("protectionGroupName"u8);
                 writer.WriteStringValue(ProtectionGroupName);
             }
             if (Optional.IsDefined(DiskStorageUsedInBytes))
             {
-                writer.WritePropertyName("diskStorageUsedInBytes");
+                writer.WritePropertyName("diskStorageUsedInBytes"u8);
                 writer.WriteStringValue(DiskStorageUsedInBytes);
             }
             if (Optional.IsDefined(TotalDiskStorageSizeInBytes))
             {
-                writer.WritePropertyName("totalDiskStorageSizeInBytes");
+                writer.WritePropertyName("totalDiskStorageSizeInBytes"u8);
                 writer.WriteStringValue(TotalDiskStorageSizeInBytes);
             }
             writer.WriteEndObject();
@@ -98,6 +98,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static DpmProtectedItemExtendedInfo DeserializeDpmProtectedItemExtendedInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> protectableObjectLoadPath = default;
             Optional<bool> @protected = default;
             Optional<bool> isPresentOnCloud = default;
@@ -114,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> totalDiskStorageSizeInBytes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("protectableObjectLoadPath"))
+                if (property.NameEquals("protectableObjectLoadPath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectableObjectLoadPath = dictionary;
                     continue;
                 }
-                if (property.NameEquals("protected"))
+                if (property.NameEquals("protected"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     @protected = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isPresentOnCloud"))
+                if (property.NameEquals("isPresentOnCloud"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -149,12 +153,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     isPresentOnCloud = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("lastBackupStatus"))
+                if (property.NameEquals("lastBackupStatus"u8))
                 {
                     lastBackupStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastRefreshedAt"))
+                if (property.NameEquals("lastRefreshedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -164,7 +168,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     lastRefreshedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("oldestRecoveryPoint"))
+                if (property.NameEquals("oldestRecoveryPoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -174,7 +178,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     oldestRecoveryPoint = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("recoveryPointCount"))
+                if (property.NameEquals("recoveryPointCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -184,7 +188,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryPointCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("onPremiseOldestRecoveryPoint"))
+                if (property.NameEquals("onPremiseOldestRecoveryPoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -194,7 +198,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     onPremiseOldestRecoveryPoint = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("onPremiseLatestRecoveryPoint"))
+                if (property.NameEquals("onPremiseLatestRecoveryPoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -204,7 +208,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     onPremiseLatestRecoveryPoint = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("onPremiseRecoveryPointCount"))
+                if (property.NameEquals("onPremiseRecoveryPointCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -214,7 +218,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     onPremiseRecoveryPointCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("isCollocated"))
+                if (property.NameEquals("isCollocated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -224,17 +228,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     isCollocated = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("protectionGroupName"))
+                if (property.NameEquals("protectionGroupName"u8))
                 {
                     protectionGroupName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskStorageUsedInBytes"))
+                if (property.NameEquals("diskStorageUsedInBytes"u8))
                 {
                     diskStorageUsedInBytes = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("totalDiskStorageSizeInBytes"))
+                if (property.NameEquals("totalDiskStorageSizeInBytes"u8))
                 {
                     totalDiskStorageSizeInBytes = property.Value.GetString();
                     continue;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static InstancePoolUsage DeserializeInstancePoolUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<InstancePoolUsageName> name = default;
             Optional<ResourceType> type = default;
@@ -23,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<int> requestedLimit = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
                     name = InstancePoolUsageName.DeserializeInstancePoolUsageName(property.Value);
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,12 +57,12 @@ namespace Azure.ResourceManager.Sql.Models
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     unit = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("currentValue"))
+                if (property.NameEquals("currentValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Models
                     currentValue = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +82,7 @@ namespace Azure.ResourceManager.Sql.Models
                     limit = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("requestedLimit"))
+                if (property.NameEquals("requestedLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

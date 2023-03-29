@@ -15,33 +15,37 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("score");
+            writer.WritePropertyName("score"u8);
             writer.WriteStringValue(Score);
-            writer.WritePropertyName("grade");
+            writer.WritePropertyName("grade"u8);
             writer.WriteStringValue(Grade);
-            writer.WritePropertyName("reason");
+            writer.WritePropertyName("reason"u8);
             writer.WriteStringValue(Reason);
             writer.WriteEndObject();
         }
 
         internal static PredictionMappings DeserializePredictionMappings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string score = default;
             string grade = default;
             string reason = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("score"))
+                if (property.NameEquals("score"u8))
                 {
                     score = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("grade"))
+                if (property.NameEquals("grade"u8))
                 {
                     grade = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reason"))
+                if (property.NameEquals("reason"u8))
                 {
                     reason = property.Value.GetString();
                     continue;

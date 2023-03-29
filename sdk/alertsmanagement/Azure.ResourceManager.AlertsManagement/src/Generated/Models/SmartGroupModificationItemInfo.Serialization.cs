@@ -18,37 +18,37 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ModificationEvent))
             {
-                writer.WritePropertyName("modificationEvent");
+                writer.WritePropertyName("modificationEvent"u8);
                 writer.WriteStringValue(ModificationEvent.Value.ToSerialString());
             }
             if (Optional.IsDefined(OldValue))
             {
-                writer.WritePropertyName("oldValue");
+                writer.WritePropertyName("oldValue"u8);
                 writer.WriteStringValue(OldValue);
             }
             if (Optional.IsDefined(NewValue))
             {
-                writer.WritePropertyName("newValue");
+                writer.WritePropertyName("newValue"u8);
                 writer.WriteStringValue(NewValue);
             }
             if (Optional.IsDefined(ModifiedOn))
             {
-                writer.WritePropertyName("modifiedAt");
+                writer.WritePropertyName("modifiedAt"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
             if (Optional.IsDefined(ModifiedBy))
             {
-                writer.WritePropertyName("modifiedBy");
+                writer.WritePropertyName("modifiedBy"u8);
                 writer.WriteStringValue(ModifiedBy);
             }
             if (Optional.IsDefined(Comments))
             {
-                writer.WritePropertyName("comments");
+                writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static SmartGroupModificationItemInfo DeserializeSmartGroupModificationItemInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SmartGroupModificationEvent> modificationEvent = default;
             Optional<string> oldValue = default;
             Optional<string> newValue = default;
@@ -65,7 +69,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("modificationEvent"))
+                if (property.NameEquals("modificationEvent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,17 +79,17 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     modificationEvent = property.Value.GetString().ToSmartGroupModificationEvent();
                     continue;
                 }
-                if (property.NameEquals("oldValue"))
+                if (property.NameEquals("oldValue"u8))
                 {
                     oldValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("newValue"))
+                if (property.NameEquals("newValue"u8))
                 {
                     newValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("modifiedAt"))
+                if (property.NameEquals("modifiedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,17 +99,17 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     modifiedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("modifiedBy"))
+                if (property.NameEquals("modifiedBy"u8))
                 {
                     modifiedBy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("comments"))
+                if (property.NameEquals("comments"u8))
                 {
                     comments = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;

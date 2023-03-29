@@ -17,32 +17,32 @@ namespace Azure.ResourceManager.Search.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateLinkResourceId))
             {
-                writer.WritePropertyName("privateLinkResourceId");
+                writer.WritePropertyName("privateLinkResourceId"u8);
                 writer.WriteStringValue(PrivateLinkResourceId);
             }
             if (Optional.IsDefined(GroupId))
             {
-                writer.WritePropertyName("groupId");
+                writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
             if (Optional.IsDefined(RequestMessage))
             {
-                writer.WritePropertyName("requestMessage");
+                writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
             }
             if (Optional.IsDefined(ResourceRegion))
             {
-                writer.WritePropertyName("resourceRegion");
+                writer.WritePropertyName("resourceRegion"u8);
                 writer.WriteStringValue(ResourceRegion.Value);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static SharedSearchServicePrivateLinkResourceProperties DeserializeSharedSearchServicePrivateLinkResourceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> privateLinkResourceId = default;
             Optional<string> groupId = default;
             Optional<string> requestMessage = default;
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.Search.Models
             Optional<SharedSearchServicePrivateLinkResourceProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("privateLinkResourceId"))
+                if (property.NameEquals("privateLinkResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,17 +72,17 @@ namespace Azure.ResourceManager.Search.Models
                     privateLinkResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("groupId"))
+                if (property.NameEquals("groupId"u8))
                 {
                     groupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requestMessage"))
+                if (property.NameEquals("requestMessage"u8))
                 {
                     requestMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceRegion"))
+                if (property.NameEquals("resourceRegion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +92,7 @@ namespace Azure.ResourceManager.Search.Models
                     resourceRegion = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +102,7 @@ namespace Azure.ResourceManager.Search.Models
                     status = property.Value.GetString().ToSharedSearchServicePrivateLinkResourceStatus();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

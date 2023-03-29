@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static VirtualMachineRunCommandInstanceView DeserializeVirtualMachineRunCommandInstanceView(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ExecutionState> executionState = default;
             Optional<string> executionMessage = default;
             Optional<int> exitCode = default;
@@ -26,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("executionState"))
+                if (property.NameEquals("executionState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,12 +40,12 @@ namespace Azure.ResourceManager.Compute.Models
                     executionState = new ExecutionState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("executionMessage"))
+                if (property.NameEquals("executionMessage"u8))
                 {
                     executionMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("exitCode"))
+                if (property.NameEquals("exitCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,17 +55,17 @@ namespace Azure.ResourceManager.Compute.Models
                     exitCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("output"))
+                if (property.NameEquals("output"u8))
                 {
                     output = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     error = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,7 +85,7 @@ namespace Azure.ResourceManager.Compute.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("statuses"))
+                if (property.NameEquals("statuses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

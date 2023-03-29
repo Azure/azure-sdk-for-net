@@ -14,11 +14,15 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static GalleryImageVersionPolicyViolation DeserializeGalleryImageVersionPolicyViolation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GalleryImageVersionPolicyViolationCategory> category = default;
             Optional<string> details = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
                     category = new GalleryImageVersionPolicyViolationCategory(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("details"))
+                if (property.NameEquals("details"u8))
                 {
                     details = property.Value.GetString();
                     continue;

@@ -18,44 +18,44 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.Value);
             }
             if (Optional.IsDefined(ConnectionString))
             {
-                writer.WritePropertyName("connectionString");
+                writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
             if (Optional.IsDefined(Endpoint))
             {
-                writer.WritePropertyName("endpointUri");
+                writer.WritePropertyName("endpointUri"u8);
                 writer.WriteStringValue(Endpoint);
             }
             if (Optional.IsDefined(EntityPath))
             {
-                writer.WritePropertyName("entityPath");
+                writer.WritePropertyName("entityPath"u8);
                 writer.WriteStringValue(EntityPath);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
-                writer.WritePropertyName("authenticationType");
+                writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(SubscriptionId))
             {
-                writer.WritePropertyName("subscriptionId");
+                writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
             if (Optional.IsDefined(ResourceGroup))
             {
-                writer.WritePropertyName("resourceGroup");
+                writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
             writer.WriteEndObject();
@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static RoutingEventHubProperties DeserializeRoutingEventHubProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> id = default;
             Optional<string> connectionString = default;
             Optional<string> endpointUri = default;
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<string> resourceGroup = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,22 +88,22 @@ namespace Azure.ResourceManager.IotHub.Models
                     id = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("connectionString"))
+                if (property.NameEquals("connectionString"u8))
                 {
                     connectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpointUri"))
+                if (property.NameEquals("endpointUri"u8))
                 {
                     endpointUri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("entityPath"))
+                if (property.NameEquals("entityPath"u8))
                 {
                     entityPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authenticationType"))
+                if (property.NameEquals("authenticationType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,7 +113,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     authenticationType = new IotHubAuthenticationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,17 +123,17 @@ namespace Azure.ResourceManager.IotHub.Models
                     identity = ManagedIdentity.DeserializeManagedIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceGroup"))
+                if (property.NameEquals("resourceGroup"u8))
                 {
                     resourceGroup = property.Value.GetString();
                     continue;

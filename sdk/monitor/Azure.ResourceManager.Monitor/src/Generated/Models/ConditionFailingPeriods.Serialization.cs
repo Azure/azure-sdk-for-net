@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(NumberOfEvaluationPeriods))
             {
-                writer.WritePropertyName("numberOfEvaluationPeriods");
+                writer.WritePropertyName("numberOfEvaluationPeriods"u8);
                 writer.WriteNumberValue(NumberOfEvaluationPeriods.Value);
             }
             if (Optional.IsDefined(MinFailingPeriodsToAlert))
             {
-                writer.WritePropertyName("minFailingPeriodsToAlert");
+                writer.WritePropertyName("minFailingPeriodsToAlert"u8);
                 writer.WriteNumberValue(MinFailingPeriodsToAlert.Value);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ConditionFailingPeriods DeserializeConditionFailingPeriods(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> numberOfEvaluationPeriods = default;
             Optional<long> minFailingPeriodsToAlert = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("numberOfEvaluationPeriods"))
+                if (property.NameEquals("numberOfEvaluationPeriods"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     numberOfEvaluationPeriods = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("minFailingPeriodsToAlert"))
+                if (property.NameEquals("minFailingPeriodsToAlert"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

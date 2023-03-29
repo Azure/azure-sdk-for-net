@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static ManagedDatabaseRestoreDetailData DeserializeManagedDatabaseRestoreDetailData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -55,22 +59,22 @@ namespace Azure.ResourceManager.Sql
             Optional<IReadOnlyList<ManagedDatabaseRestoreDetailUnrestorableFileProperties>> unrestorableFiles = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +84,7 @@ namespace Azure.ResourceManager.Sql
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,27 +93,27 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("type"))
+                        if (property0.NameEquals("type"u8))
                         {
                             type0 = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             status = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("blockReason"))
+                        if (property0.NameEquals("blockReason"u8))
                         {
                             blockReason = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastUploadedFileName"))
+                        if (property0.NameEquals("lastUploadedFileName"u8))
                         {
                             lastUploadedFileName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastUploadedFileTime"))
+                        if (property0.NameEquals("lastUploadedFileTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -119,12 +123,12 @@ namespace Azure.ResourceManager.Sql
                             lastUploadedFileTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastRestoredFileName"))
+                        if (property0.NameEquals("lastRestoredFileName"u8))
                         {
                             lastRestoredFileName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastRestoredFileTime"))
+                        if (property0.NameEquals("lastRestoredFileTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -134,7 +138,7 @@ namespace Azure.ResourceManager.Sql
                             lastRestoredFileTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("percentCompleted"))
+                        if (property0.NameEquals("percentCompleted"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -144,7 +148,7 @@ namespace Azure.ResourceManager.Sql
                             percentCompleted = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("currentRestoredSizeMB"))
+                        if (property0.NameEquals("currentRestoredSizeMB"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -154,7 +158,7 @@ namespace Azure.ResourceManager.Sql
                             currentRestoredSizeMB = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("currentRestorePlanSizeMB"))
+                        if (property0.NameEquals("currentRestorePlanSizeMB"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -164,17 +168,17 @@ namespace Azure.ResourceManager.Sql
                             currentRestorePlanSizeMB = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("currentBackupType"))
+                        if (property0.NameEquals("currentBackupType"u8))
                         {
                             currentBackupType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("currentRestoringFileName"))
+                        if (property0.NameEquals("currentRestoringFileName"u8))
                         {
                             currentRestoringFileName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("numberOfFilesDetected"))
+                        if (property0.NameEquals("numberOfFilesDetected"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -184,7 +188,7 @@ namespace Azure.ResourceManager.Sql
                             numberOfFilesDetected = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("numberOfFilesQueued"))
+                        if (property0.NameEquals("numberOfFilesQueued"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -194,7 +198,7 @@ namespace Azure.ResourceManager.Sql
                             numberOfFilesQueued = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("numberOfFilesSkipped"))
+                        if (property0.NameEquals("numberOfFilesSkipped"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -204,7 +208,7 @@ namespace Azure.ResourceManager.Sql
                             numberOfFilesSkipped = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("numberOfFilesRestoring"))
+                        if (property0.NameEquals("numberOfFilesRestoring"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -214,7 +218,7 @@ namespace Azure.ResourceManager.Sql
                             numberOfFilesRestoring = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("numberOfFilesRestored"))
+                        if (property0.NameEquals("numberOfFilesRestored"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -224,7 +228,7 @@ namespace Azure.ResourceManager.Sql
                             numberOfFilesRestored = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("numberOfFilesUnrestorable"))
+                        if (property0.NameEquals("numberOfFilesUnrestorable"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -234,7 +238,7 @@ namespace Azure.ResourceManager.Sql
                             numberOfFilesUnrestorable = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("fullBackupSets"))
+                        if (property0.NameEquals("fullBackupSets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -249,7 +253,7 @@ namespace Azure.ResourceManager.Sql
                             fullBackupSets = array;
                             continue;
                         }
-                        if (property0.NameEquals("diffBackupSets"))
+                        if (property0.NameEquals("diffBackupSets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -264,7 +268,7 @@ namespace Azure.ResourceManager.Sql
                             diffBackupSets = array;
                             continue;
                         }
-                        if (property0.NameEquals("logBackupSets"))
+                        if (property0.NameEquals("logBackupSets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -279,7 +283,7 @@ namespace Azure.ResourceManager.Sql
                             logBackupSets = array;
                             continue;
                         }
-                        if (property0.NameEquals("unrestorableFiles"))
+                        if (property0.NameEquals("unrestorableFiles"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

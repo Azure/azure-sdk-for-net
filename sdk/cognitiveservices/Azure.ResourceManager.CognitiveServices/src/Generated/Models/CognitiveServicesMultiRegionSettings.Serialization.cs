@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RoutingMethod))
             {
-                writer.WritePropertyName("routingMethod");
+                writer.WritePropertyName("routingMethod"u8);
                 writer.WriteStringValue(RoutingMethod.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Regions))
             {
-                writer.WritePropertyName("regions");
+                writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Regions)
                 {
@@ -36,11 +36,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CognitiveServicesMultiRegionSettings DeserializeCognitiveServicesMultiRegionSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CognitiveServicesRoutingMethod> routingMethod = default;
             Optional<IList<CognitiveServicesRegionSetting>> regions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("routingMethod"))
+                if (property.NameEquals("routingMethod"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     routingMethod = new CognitiveServicesRoutingMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("regions"))
+                if (property.NameEquals("regions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

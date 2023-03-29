@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ReportableException> error = default;
             Optional<IReadOnlyList<SyncMigrationDatabaseErrorEvent>> events = default;
             Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +35,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     error = ReportableException.DeserializeReportableException(property.Value);
                     continue;
                 }
-                if (property.NameEquals("events"))
+                if (property.NameEquals("events"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,12 +50,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     events = array;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultType"))
+                if (property.NameEquals("resultType"u8))
                 {
                     resultType = property.Value.GetString();
                     continue;

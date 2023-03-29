@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FunctionBindingType);
             writer.WriteEndObject();
         }
 
         internal static StreamingJobFunctionBinding DeserializeStreamingJobFunctionBinding(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

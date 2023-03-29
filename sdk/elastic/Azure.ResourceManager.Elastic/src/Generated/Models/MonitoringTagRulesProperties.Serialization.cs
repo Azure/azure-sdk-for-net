@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Elastic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(LogRules))
             {
-                writer.WritePropertyName("logRules");
+                writer.WritePropertyName("logRules"u8);
                 writer.WriteObjectValue(LogRules);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static MonitoringTagRulesProperties DeserializeMonitoringTagRulesProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<LogRules> logRules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("logRules"))
+                if (property.NameEquals("logRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

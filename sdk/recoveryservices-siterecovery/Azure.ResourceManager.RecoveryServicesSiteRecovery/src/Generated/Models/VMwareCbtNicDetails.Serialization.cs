@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static VMwareCbtNicDetails DeserializeVMwareCbtNicDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nicId = default;
             Optional<string> isPrimaryNic = default;
             Optional<string> sourceIPAddress = default;
@@ -30,22 +34,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> isSelectedForMigration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nicId"))
+                if (property.NameEquals("nicId"u8))
                 {
                     nicId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isPrimaryNic"))
+                if (property.NameEquals("isPrimaryNic"u8))
                 {
                     isPrimaryNic = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceIPAddress"))
+                if (property.NameEquals("sourceIPAddress"u8))
                 {
                     sourceIPAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceIPAddressType"))
+                if (property.NameEquals("sourceIPAddressType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,17 +59,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     sourceIPAddressType = new EthernetAddressType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceNetworkId"))
+                if (property.NameEquals("sourceNetworkId"u8))
                 {
                     sourceNetworkId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetIPAddress"))
+                if (property.NameEquals("targetIPAddress"u8))
                 {
                     targetIPAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetIPAddressType"))
+                if (property.NameEquals("targetIPAddressType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,27 +79,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     targetIPAddressType = new EthernetAddressType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetSubnetName"))
+                if (property.NameEquals("targetSubnetName"u8))
                 {
                     targetSubnetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("testNetworkId"))
+                if (property.NameEquals("testNetworkId"u8))
                 {
                     testNetworkId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("testSubnetName"))
+                if (property.NameEquals("testSubnetName"u8))
                 {
                     testSubnetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("testIPAddress"))
+                if (property.NameEquals("testIPAddress"u8))
                 {
                     testIPAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("testIPAddressType"))
+                if (property.NameEquals("testIPAddressType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,12 +109,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     testIPAddressType = new EthernetAddressType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetNicName"))
+                if (property.NameEquals("targetNicName"u8))
                 {
                     targetNicName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isSelectedForMigration"))
+                if (property.NameEquals("isSelectedForMigration"u8))
                 {
                     isSelectedForMigration = property.Value.GetString();
                     continue;

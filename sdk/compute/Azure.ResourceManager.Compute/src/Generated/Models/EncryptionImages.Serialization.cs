@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(OSDiskImage))
             {
-                writer.WritePropertyName("osDiskImage");
+                writer.WritePropertyName("osDiskImage"u8);
                 writer.WriteObjectValue(OSDiskImage);
             }
             if (Optional.IsCollectionDefined(DataDiskImages))
             {
-                writer.WritePropertyName("dataDiskImages");
+                writer.WritePropertyName("dataDiskImages"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataDiskImages)
                 {
@@ -36,11 +36,15 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static EncryptionImages DeserializeEncryptionImages(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OSDiskImageEncryption> osDiskImage = default;
             Optional<IList<DataDiskImageEncryption>> dataDiskImages = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("osDiskImage"))
+                if (property.NameEquals("osDiskImage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
                     osDiskImage = OSDiskImageEncryption.DeserializeOSDiskImageEncryption(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataDiskImages"))
+                if (property.NameEquals("dataDiskImages"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,11 +15,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static AppPlatformGatewayOperatorProperties DeserializeAppPlatformGatewayOperatorProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformGatewayOperatorResourceRequirements> resourceRequests = default;
             Optional<IReadOnlyList<AppPlatformGatewayInstance>> instances = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceRequests"))
+                if (property.NameEquals("resourceRequests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     resourceRequests = AppPlatformGatewayOperatorResourceRequirements.DeserializeAppPlatformGatewayOperatorResourceRequirements(property.Value);
                     continue;
                 }
-                if (property.NameEquals("instances"))
+                if (property.NameEquals("instances"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

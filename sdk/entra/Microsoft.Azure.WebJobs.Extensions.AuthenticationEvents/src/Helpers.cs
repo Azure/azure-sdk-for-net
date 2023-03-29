@@ -5,16 +5,12 @@ using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions;
 using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text;
-using static System.Collections.Specialized.BitVector32;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
@@ -45,11 +41,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     }
                 }
 
-                throw new Exception(string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Comparable_Not_Found, comparable));
+                throw new InvalidOperationException(
+                    string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Comparable_Not_Found, comparable));
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Event_Missing, ex.Message));
+                throw new InvalidOperationException(AuthenticationEventResource.Ex_Event_Missing, ex);
             }
         }
 
@@ -123,7 +120,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         {
             return actionType != null && _actionMapping.ContainsKey(actionType.ToLower(CultureInfo.CurrentCulture))
                  ? (AuthenticationEventAction)Activator.CreateInstance(_actionMapping[actionType.ToLower(CultureInfo.CurrentCulture)])
-                 : throw new Exception(String.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Action_Invalid, actionType, String.Join("', '", _actionMapping.Select(x => x.Key))));
+                 : throw new Exception(String.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Invalid_Action, actionType, String.Join("', '", _actionMapping.Select(x => x.Key))));
         }
 
         internal static void ValidateGraph(object obj)

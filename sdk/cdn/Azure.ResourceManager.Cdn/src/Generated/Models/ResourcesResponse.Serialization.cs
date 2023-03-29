@@ -15,11 +15,15 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static ResourcesResponse DeserializeResourcesResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ResourcesResponseEndpointsItem>> endpoints = default;
             Optional<IReadOnlyList<ResourcesResponseCustomDomainsItem>> customDomains = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endpoints"))
+                if (property.NameEquals("endpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     endpoints = array;
                     continue;
                 }
-                if (property.NameEquals("customDomains"))
+                if (property.NameEquals("customDomains"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

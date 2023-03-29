@@ -16,6 +16,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static HealthcareEntity DeserializeHealthcareEntity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HealthcareAssertion> assertion = default;
             Optional<string> name = default;
             Optional<IReadOnlyList<HealthcareEntityLink>> links = default;
@@ -27,7 +31,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             double confidenceScore = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("assertion"))
+                if (property.NameEquals("assertion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,12 +41,12 @@ namespace Azure.AI.TextAnalytics.Legacy
                     assertion = HealthcareAssertion.DeserializeHealthcareAssertion(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("links"))
+                if (property.NameEquals("links"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,32 +61,32 @@ namespace Azure.AI.TextAnalytics.Legacy
                     links = array;
                     continue;
                 }
-                if (property.NameEquals("text"))
+                if (property.NameEquals("text"u8))
                 {
                     text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
                     category = new HealthcareEntityCategory(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("subcategory"))
+                if (property.NameEquals("subcategory"u8))
                 {
                     subcategory = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offset"))
+                if (property.NameEquals("offset"u8))
                 {
                     offset = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("length"))
+                if (property.NameEquals("length"u8))
                 {
                     length = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("confidenceScore"))
+                if (property.NameEquals("confidenceScore"u8))
                 {
                     confidenceScore = property.Value.GetDouble();
                     continue;

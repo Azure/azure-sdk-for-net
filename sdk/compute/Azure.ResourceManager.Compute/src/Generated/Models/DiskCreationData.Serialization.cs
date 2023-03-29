@@ -16,51 +16,51 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("createOption");
+            writer.WritePropertyName("createOption"u8);
             writer.WriteStringValue(CreateOption.ToString());
             if (Optional.IsDefined(StorageAccountId))
             {
-                writer.WritePropertyName("storageAccountId");
+                writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
             if (Optional.IsDefined(ImageReference))
             {
-                writer.WritePropertyName("imageReference");
+                writer.WritePropertyName("imageReference"u8);
                 writer.WriteObjectValue(ImageReference);
             }
             if (Optional.IsDefined(GalleryImageReference))
             {
-                writer.WritePropertyName("galleryImageReference");
+                writer.WritePropertyName("galleryImageReference"u8);
                 writer.WriteObjectValue(GalleryImageReference);
             }
             if (Optional.IsDefined(SourceUri))
             {
-                writer.WritePropertyName("sourceUri");
+                writer.WritePropertyName("sourceUri"u8);
                 writer.WriteStringValue(SourceUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SourceResourceId))
             {
-                writer.WritePropertyName("sourceResourceId");
+                writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
             if (Optional.IsDefined(UploadSizeBytes))
             {
-                writer.WritePropertyName("uploadSizeBytes");
+                writer.WritePropertyName("uploadSizeBytes"u8);
                 writer.WriteNumberValue(UploadSizeBytes.Value);
             }
             if (Optional.IsDefined(LogicalSectorSize))
             {
-                writer.WritePropertyName("logicalSectorSize");
+                writer.WritePropertyName("logicalSectorSize"u8);
                 writer.WriteNumberValue(LogicalSectorSize.Value);
             }
             if (Optional.IsDefined(SecurityDataUri))
             {
-                writer.WritePropertyName("securityDataUri");
+                writer.WritePropertyName("securityDataUri"u8);
                 writer.WriteStringValue(SecurityDataUri.AbsoluteUri);
             }
             if (Optional.IsDefined(IsPerformancePlusEnabled))
             {
-                writer.WritePropertyName("performancePlus");
+                writer.WritePropertyName("performancePlus"u8);
                 writer.WriteBooleanValue(IsPerformancePlusEnabled.Value);
             }
             writer.WriteEndObject();
@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DiskCreationData DeserializeDiskCreationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DiskCreateOption createOption = default;
             Optional<ResourceIdentifier> storageAccountId = default;
             Optional<ImageDiskReference> imageReference = default;
@@ -81,12 +85,12 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<bool> performancePlus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("createOption"))
+                if (property.NameEquals("createOption"u8))
                 {
                     createOption = new DiskCreateOption(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageAccountId"))
+                if (property.NameEquals("storageAccountId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +100,7 @@ namespace Azure.ResourceManager.Compute.Models
                     storageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("imageReference"))
+                if (property.NameEquals("imageReference"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
                     imageReference = ImageDiskReference.DeserializeImageDiskReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("galleryImageReference"))
+                if (property.NameEquals("galleryImageReference"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
                     galleryImageReference = ImageDiskReference.DeserializeImageDiskReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sourceUri"))
+                if (property.NameEquals("sourceUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,7 +130,7 @@ namespace Azure.ResourceManager.Compute.Models
                     sourceUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceResourceId"))
+                if (property.NameEquals("sourceResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,12 +140,12 @@ namespace Azure.ResourceManager.Compute.Models
                     sourceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceUniqueId"))
+                if (property.NameEquals("sourceUniqueId"u8))
                 {
                     sourceUniqueId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("uploadSizeBytes"))
+                if (property.NameEquals("uploadSizeBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -151,7 +155,7 @@ namespace Azure.ResourceManager.Compute.Models
                     uploadSizeBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("logicalSectorSize"))
+                if (property.NameEquals("logicalSectorSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -161,7 +165,7 @@ namespace Azure.ResourceManager.Compute.Models
                     logicalSectorSize = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("securityDataUri"))
+                if (property.NameEquals("securityDataUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -171,7 +175,7 @@ namespace Azure.ResourceManager.Compute.Models
                     securityDataUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("performancePlus"))
+                if (property.NameEquals("performancePlus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

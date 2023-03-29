@@ -18,7 +18,7 @@ namespace Azure.Security.KeyVault.Administration
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Actions))
             {
-                writer.WritePropertyName("actions");
+                writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
@@ -28,7 +28,7 @@ namespace Azure.Security.KeyVault.Administration
             }
             if (Optional.IsCollectionDefined(NotActions))
             {
-                writer.WritePropertyName("notActions");
+                writer.WritePropertyName("notActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in NotActions)
                 {
@@ -38,7 +38,7 @@ namespace Azure.Security.KeyVault.Administration
             }
             if (Optional.IsCollectionDefined(DataActions))
             {
-                writer.WritePropertyName("dataActions");
+                writer.WritePropertyName("dataActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataActions)
                 {
@@ -48,7 +48,7 @@ namespace Azure.Security.KeyVault.Administration
             }
             if (Optional.IsCollectionDefined(NotDataActions))
             {
-                writer.WritePropertyName("notDataActions");
+                writer.WritePropertyName("notDataActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in NotDataActions)
                 {
@@ -61,13 +61,17 @@ namespace Azure.Security.KeyVault.Administration
 
         internal static KeyVaultPermission DeserializeKeyVaultPermission(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> actions = default;
             Optional<IList<string>> notActions = default;
             Optional<IList<KeyVaultDataAction>> dataActions = default;
             Optional<IList<KeyVaultDataAction>> notDataActions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("actions"))
+                if (property.NameEquals("actions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +86,7 @@ namespace Azure.Security.KeyVault.Administration
                     actions = array;
                     continue;
                 }
-                if (property.NameEquals("notActions"))
+                if (property.NameEquals("notActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +101,7 @@ namespace Azure.Security.KeyVault.Administration
                     notActions = array;
                     continue;
                 }
-                if (property.NameEquals("dataActions"))
+                if (property.NameEquals("dataActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,7 +116,7 @@ namespace Azure.Security.KeyVault.Administration
                     dataActions = array;
                     continue;
                 }
-                if (property.NameEquals("notDataActions"))
+                if (property.NameEquals("notDataActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

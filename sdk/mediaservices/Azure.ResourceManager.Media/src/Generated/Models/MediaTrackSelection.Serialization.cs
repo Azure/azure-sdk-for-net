@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(TrackSelections))
             {
-                writer.WritePropertyName("trackSelections");
+                writer.WritePropertyName("trackSelections"u8);
                 writer.WriteStartArray();
                 foreach (var item in TrackSelections)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaTrackSelection DeserializeMediaTrackSelection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<TrackPropertyCondition>> trackSelections = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("trackSelections"))
+                if (property.NameEquals("trackSelections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

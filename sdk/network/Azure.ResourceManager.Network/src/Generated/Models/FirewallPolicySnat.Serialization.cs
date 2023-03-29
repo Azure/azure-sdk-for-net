@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PrivateRanges))
             {
-                writer.WritePropertyName("privateRanges");
+                writer.WritePropertyName("privateRanges"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateRanges)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPolicySnat DeserializeFirewallPolicySnat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> privateRanges = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("privateRanges"))
+                if (property.NameEquals("privateRanges"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

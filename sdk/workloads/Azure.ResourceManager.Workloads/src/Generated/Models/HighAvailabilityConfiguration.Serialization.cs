@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("highAvailabilityType");
+            writer.WritePropertyName("highAvailabilityType"u8);
             writer.WriteStringValue(HighAvailabilityType.ToString());
             writer.WriteEndObject();
         }
 
         internal static HighAvailabilityConfiguration DeserializeHighAvailabilityConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SapHighAvailabilityType highAvailabilityType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("highAvailabilityType"))
+                if (property.NameEquals("highAvailabilityType"u8))
                 {
                     highAvailabilityType = new SapHighAvailabilityType(property.Value.GetString());
                     continue;

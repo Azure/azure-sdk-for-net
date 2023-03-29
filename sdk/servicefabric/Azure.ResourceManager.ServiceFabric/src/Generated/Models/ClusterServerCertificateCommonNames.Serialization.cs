@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(CommonNames))
             {
-                writer.WritePropertyName("commonNames");
+                writer.WritePropertyName("commonNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in CommonNames)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
             if (Optional.IsDefined(X509StoreName))
             {
-                writer.WritePropertyName("x509StoreName");
+                writer.WritePropertyName("x509StoreName"u8);
                 writer.WriteStringValue(X509StoreName.Value.ToString());
             }
             writer.WriteEndObject();
@@ -36,11 +36,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ClusterServerCertificateCommonNames DeserializeClusterServerCertificateCommonNames(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ClusterServerCertificateCommonName>> commonNames = default;
             Optional<ClusterCertificateStoreName> x509StoreName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("commonNames"))
+                if (property.NameEquals("commonNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     commonNames = array;
                     continue;
                 }
-                if (property.NameEquals("x509StoreName"))
+                if (property.NameEquals("x509StoreName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

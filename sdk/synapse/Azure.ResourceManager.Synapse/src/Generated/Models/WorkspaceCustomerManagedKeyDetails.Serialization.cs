@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Key))
             {
-                writer.WritePropertyName("key");
+                writer.WritePropertyName("key"u8);
                 writer.WriteObjectValue(Key);
             }
             if (Optional.IsDefined(KekIdentity))
             {
-                writer.WritePropertyName("kekIdentity");
+                writer.WritePropertyName("kekIdentity"u8);
                 writer.WriteObjectValue(KekIdentity);
             }
             writer.WriteEndObject();
@@ -30,17 +30,21 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static WorkspaceCustomerManagedKeyDetails DeserializeWorkspaceCustomerManagedKeyDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             Optional<SynapseWorkspaceKeyDetails> key = default;
             Optional<KekIdentityProperties> kekIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     key = SynapseWorkspaceKeyDetails.DeserializeSynapseWorkspaceKeyDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("kekIdentity"))
+                if (property.NameEquals("kekIdentity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

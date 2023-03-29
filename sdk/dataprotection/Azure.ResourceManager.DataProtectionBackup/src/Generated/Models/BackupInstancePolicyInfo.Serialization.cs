@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("policyId");
+            writer.WritePropertyName("policyId"u8);
             writer.WriteStringValue(PolicyId);
             if (Optional.IsDefined(PolicyParameters))
             {
-                writer.WritePropertyName("policyParameters");
+                writer.WritePropertyName("policyParameters"u8);
                 writer.WriteObjectValue(PolicyParameters);
             }
             writer.WriteEndObject();
@@ -27,29 +27,33 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static BackupInstancePolicyInfo DeserializeBackupInstancePolicyInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier policyId = default;
             Optional<string> policyVersion = default;
-            Optional<PolicyParameters> policyParameters = default;
+            Optional<BackupInstancePolicySettings> policyParameters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("policyId"))
+                if (property.NameEquals("policyId"u8))
                 {
                     policyId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policyVersion"))
+                if (property.NameEquals("policyVersion"u8))
                 {
                     policyVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyParameters"))
+                if (property.NameEquals("policyParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    policyParameters = PolicyParameters.DeserializePolicyParameters(property.Value);
+                    policyParameters = BackupInstancePolicySettings.DeserializeBackupInstancePolicySettings(property.Value);
                     continue;
                 }
             }

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static ServerEndpointSyncSessionStatus DeserializeServerEndpointSyncSessionStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> lastSyncResult = default;
             Optional<DateTimeOffset> lastSyncTimestamp = default;
             Optional<DateTimeOffset> lastSyncSuccessTimestamp = default;
@@ -26,7 +30,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<ServerEndpointSyncMode> lastSyncMode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastSyncResult"))
+                if (property.NameEquals("lastSyncResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +40,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     lastSyncResult = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("lastSyncTimestamp"))
+                if (property.NameEquals("lastSyncTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     lastSyncTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastSyncSuccessTimestamp"))
+                if (property.NameEquals("lastSyncSuccessTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     lastSyncSuccessTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastSyncPerItemErrorCount"))
+                if (property.NameEquals("lastSyncPerItemErrorCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     lastSyncPerItemErrorCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("persistentFilesNotSyncingCount"))
+                if (property.NameEquals("persistentFilesNotSyncingCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     persistentFilesNotSyncingCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("transientFilesNotSyncingCount"))
+                if (property.NameEquals("transientFilesNotSyncingCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +90,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     transientFilesNotSyncingCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("filesNotSyncingErrors"))
+                if (property.NameEquals("filesNotSyncingErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +105,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     filesNotSyncingErrors = array;
                     continue;
                 }
-                if (property.NameEquals("lastSyncMode"))
+                if (property.NameEquals("lastSyncMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

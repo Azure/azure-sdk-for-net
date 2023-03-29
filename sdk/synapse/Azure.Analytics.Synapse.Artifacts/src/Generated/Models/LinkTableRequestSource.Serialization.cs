@@ -20,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TableName))
             {
-                writer.WritePropertyName("tableName");
+                writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
             if (Optional.IsDefined(SchemaName))
             {
-                writer.WritePropertyName("schemaName");
+                writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
             }
             writer.WriteEndObject();
@@ -33,16 +33,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static LinkTableRequestSource DeserializeLinkTableRequestSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tableName = default;
             Optional<string> schemaName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tableName"))
+                if (property.NameEquals("tableName"u8))
                 {
                     tableName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("schemaName"))
+                if (property.NameEquals("schemaName"u8))
                 {
                     schemaName = property.Value.GetString();
                     continue;

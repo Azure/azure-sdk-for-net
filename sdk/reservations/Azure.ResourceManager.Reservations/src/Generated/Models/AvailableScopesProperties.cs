@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The AvailableScopesProperties. </summary>
+    /// <summary> The response of available scope api containing scopes and their eligibilities. </summary>
     public partial class AvailableScopesProperties
     {
         /// <summary> Initializes a new instance of AvailableScopesProperties. </summary>
@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Initializes a new instance of AvailableScopesProperties. </summary>
-        /// <param name="properties"></param>
+        /// <param name="properties"> The scopes checked by the available scope api. </param>
         internal AvailableScopesProperties(SubscriptionScopeProperties properties)
         {
             Properties = properties;
         }
 
-        /// <summary> Gets the properties. </summary>
+        /// <summary> The scopes checked by the available scope api. </summary>
         internal SubscriptionScopeProperties Properties { get; }
         /// <summary> Gets the scopes. </summary>
         public IReadOnlyList<ScopeProperties> Scopes

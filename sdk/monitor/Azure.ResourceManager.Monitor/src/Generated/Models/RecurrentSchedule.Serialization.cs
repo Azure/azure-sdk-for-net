@@ -16,23 +16,23 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("timeZone");
+            writer.WritePropertyName("timeZone"u8);
             writer.WriteStringValue(TimeZone);
-            writer.WritePropertyName("days");
+            writer.WritePropertyName("days"u8);
             writer.WriteStartArray();
             foreach (var item in Days)
             {
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("hours");
+            writer.WritePropertyName("hours"u8);
             writer.WriteStartArray();
             foreach (var item in Hours)
             {
                 writer.WriteNumberValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("minutes");
+            writer.WritePropertyName("minutes"u8);
             writer.WriteStartArray();
             foreach (var item in Minutes)
             {
@@ -44,18 +44,22 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static RecurrentSchedule DeserializeRecurrentSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string timeZone = default;
             IList<MonitorDayOfWeek> days = default;
             IList<int> hours = default;
             IList<int> minutes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timeZone"))
+                if (property.NameEquals("timeZone"u8))
                 {
                     timeZone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("days"))
+                if (property.NameEquals("days"u8))
                 {
                     List<MonitorDayOfWeek> array = new List<MonitorDayOfWeek>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -65,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     days = array;
                     continue;
                 }
-                if (property.NameEquals("hours"))
+                if (property.NameEquals("hours"u8))
                 {
                     List<int> array = new List<int>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -75,7 +79,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     hours = array;
                     continue;
                 }
-                if (property.NameEquals("minutes"))
+                if (property.NameEquals("minutes"u8))
                 {
                     List<int> array = new List<int>();
                     foreach (var item in property.Value.EnumerateArray())

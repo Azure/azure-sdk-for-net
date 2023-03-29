@@ -17,21 +17,25 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Action))
             {
-                writer.WritePropertyName("action");
+                writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            writer.WritePropertyName("value");
+            writer.WritePropertyName("value"u8);
             writer.WriteStringValue(IPAddressOrRange);
             writer.WriteEndObject();
         }
 
         internal static ContainerRegistryIPRule DeserializeContainerRegistryIPRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerRegistryIPRuleAction> action = default;
             string value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     action = new ContainerRegistryIPRuleAction(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;

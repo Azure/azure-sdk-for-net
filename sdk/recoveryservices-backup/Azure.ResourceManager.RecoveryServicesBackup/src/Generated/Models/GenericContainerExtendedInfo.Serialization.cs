@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RawCertData))
             {
-                writer.WritePropertyName("rawCertData");
+                writer.WritePropertyName("rawCertData"u8);
                 writer.WriteStringValue(RawCertData);
             }
             if (Optional.IsDefined(ContainerIdentityInfo))
             {
-                writer.WritePropertyName("containerIdentityInfo");
+                writer.WritePropertyName("containerIdentityInfo"u8);
                 writer.WriteObjectValue(ContainerIdentityInfo);
             }
             if (Optional.IsCollectionDefined(ServiceEndpoints))
             {
-                writer.WritePropertyName("serviceEndpoints");
+                writer.WritePropertyName("serviceEndpoints"u8);
                 writer.WriteStartObject();
                 foreach (var item in ServiceEndpoints)
                 {
@@ -42,17 +42,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static GenericContainerExtendedInfo DeserializeGenericContainerExtendedInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> rawCertData = default;
             Optional<ContainerIdentityInfo> containerIdentityInfo = default;
             Optional<IDictionary<string, string>> serviceEndpoints = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rawCertData"))
+                if (property.NameEquals("rawCertData"u8))
                 {
                     rawCertData = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containerIdentityInfo"))
+                if (property.NameEquals("containerIdentityInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     containerIdentityInfo = ContainerIdentityInfo.DeserializeContainerIdentityInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("serviceEndpoints"))
+                if (property.NameEquals("serviceEndpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static VCenterProperties DeserializeVCenterProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> friendlyName = default;
             Optional<string> internalId = default;
             Optional<DateTimeOffset> lastHeartbeat = default;
@@ -29,17 +33,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<HealthError>> healthErrors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("internalId"))
+                if (property.NameEquals("internalId"u8))
                 {
                     internalId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastHeartbeat"))
+                if (property.NameEquals("lastHeartbeat"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,42 +53,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     lastHeartbeat = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("discoveryStatus"))
+                if (property.NameEquals("discoveryStatus"u8))
                 {
                     discoveryStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("processServerId"))
+                if (property.NameEquals("processServerId"u8))
                 {
                     processServerId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
                     ipAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("infrastructureId"))
+                if (property.NameEquals("infrastructureId"u8))
                 {
                     infrastructureId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     port = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runAsAccountId"))
+                if (property.NameEquals("runAsAccountId"u8))
                 {
                     runAsAccountId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fabricArmResourceName"))
+                if (property.NameEquals("fabricArmResourceName"u8))
                 {
                     fabricArmResourceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("healthErrors"))
+                if (property.NameEquals("healthErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

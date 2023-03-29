@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -60,6 +61,7 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeHealthcareEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -79,6 +81,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeHealthcareEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -138,12 +141,11 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             }
 
-            // Check that the FHIR bundle is not null, but empty.
-            Assert.IsNotNull(result1.FhirBundle);
-            Assert.AreEqual(0, result1.FhirBundle.Count);
+            Assert.IsNull(result1.FhirBundle);
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task AnalyzeHealthcareEntitiesWithConfidenceScoreTest()
         {
@@ -170,6 +172,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeHealthcareEntitiesTestWithAssertions()
         {
             TextAnalyticsClient client = GetClient();
@@ -235,6 +238,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeHealthcareEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -251,6 +255,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeHealthcareEntitiesBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -281,6 +286,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeHealthcareEntitiesBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -297,6 +303,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeHealthcareEntitiesBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -321,6 +328,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeHealthcareEntitiesBatchTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -344,6 +352,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeHealthcareEntitiesBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -375,6 +384,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         public async Task AnalyzeHealthcareEntitiesBatchWithNameTest()
         {
@@ -403,6 +413,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public void AnalyzeHealthcareEntitiesBatchWithNameThrows()
         {
@@ -419,6 +430,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeHealthcareEntitiesPagination()
         {
             TextAnalyticsClient client = GetClient();
@@ -456,6 +468,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task AnalyzeHealthcareEntitiesBatchWithFhirVersionTest()
         {
@@ -463,7 +476,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, new AnalyzeHealthcareEntitiesOptions
             {
-                FhirVersion = WellKnownFhirVersion.V4_0_1,
+                FhirVersion = FhirVersion.V4_0_1,
                 DocumentType = HealthcareDocumentType.DischargeSummary
             });
 
@@ -480,10 +493,10 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Check the FHIR bundle.
             Assert.IsNotNull(resultCollection[0].FhirBundle);
-            Assert.Greater(resultCollection[0].FhirBundle.Count, 0);
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         public void AnalyzeHealthcareEntitiesBatchWithFhirVersionThrows()
         {
@@ -493,13 +506,14 @@ namespace Azure.AI.TextAnalytics.Tests
 
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, new AnalyzeHealthcareEntitiesOptions
             {
-                FhirVersion = WellKnownFhirVersion.V4_0_1,
+                FhirVersion = FhirVersion.V4_0_1,
             }));
 
             Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         public void AnalyzeHealthcareEntitiesBatchWithDocumentTypeThrows()
         {
@@ -516,20 +530,13 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task AnalyzeHealthcareEntitiesBatchConvenienceWithAutoDetectedLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
-            AnalyzeHealthcareEntitiesOptions options = new()
-            {
-                AutoDetectionDefaultLanguage = "en"
-            };
 
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(
-                s_batchConvenienceDocuments,
-                "auto",
-                options);
-
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchConvenienceDocuments, "auto");
             await operation.WaitForCompletionAsync();
 
             ValidateOperationProperties(operation);
@@ -540,6 +547,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task AnalyzeOperationAnalyzeHealthcareEntitiesWithAutoDetectedLanguageTest()
         {
@@ -562,27 +570,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
             ValidateBatchDocumentsResult(results, expectedOutput, isLanguageAutoDetected: true);
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
-        public void AnalyzeHealthcareEntitiesBatchWithDefaultLanguageThrows()
-        {
-            TestDiagnostics = false;
-
-            TextAnalyticsClient client = GetClient();
-            AnalyzeHealthcareEntitiesOptions options = new()
-            {
-                AutoDetectionDefaultLanguage = "en"
-            };
-
-            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(
-                async () => await client.StartAnalyzeHealthcareEntitiesAsync(
-                s_batchConvenienceDocuments,
-                "auto",
-                options));
-
-            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
         }
 
         private void ValidateInDocumenResult(IReadOnlyCollection<HealthcareEntity> entities, List<string> minimumExpectedOutput)

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    /// <summary> A class representing the LinkResourceFormat data model. </summary>
+    /// <summary>
+    /// A class representing the LinkResourceFormat data model.
+    /// The link resource format.
+    /// </summary>
     public partial class LinkResourceFormatData : ResourceData
     {
         /// <summary> Initializes a new instance of LinkResourceFormatData. </summary>

@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("ruleName");
+            writer.WritePropertyName("ruleName"u8);
             writer.WriteStringValue(RuleName);
-            writer.WritePropertyName("rulePrecedence");
+            writer.WritePropertyName("rulePrecedence"u8);
             writer.WriteNumberValue(RulePrecedence);
             if (Optional.IsDefined(RuleQosPolicy))
             {
-                writer.WritePropertyName("ruleQosPolicy");
+                writer.WritePropertyName("ruleQosPolicy"u8);
                 writer.WriteObjectValue(RuleQosPolicy);
             }
             if (Optional.IsDefined(TrafficControl))
             {
-                writer.WritePropertyName("trafficControl");
+                writer.WritePropertyName("trafficControl"u8);
                 writer.WriteStringValue(TrafficControl.Value.ToString());
             }
-            writer.WritePropertyName("serviceDataFlowTemplates");
+            writer.WritePropertyName("serviceDataFlowTemplates"u8);
             writer.WriteStartArray();
             foreach (var item in ServiceDataFlowTemplates)
             {
@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static PccRuleConfiguration DeserializePccRuleConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string ruleName = default;
             int rulePrecedence = default;
             Optional<PccRuleQosPolicy> ruleQosPolicy = default;
@@ -49,17 +53,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             IList<ServiceDataFlowTemplate> serviceDataFlowTemplates = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ruleName"))
+                if (property.NameEquals("ruleName"u8))
                 {
                     ruleName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rulePrecedence"))
+                if (property.NameEquals("rulePrecedence"u8))
                 {
                     rulePrecedence = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("ruleQosPolicy"))
+                if (property.NameEquals("ruleQosPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +73,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     ruleQosPolicy = PccRuleQosPolicy.DeserializePccRuleQosPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("trafficControl"))
+                if (property.NameEquals("trafficControl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +83,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     trafficControl = new TrafficControlPermission(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("serviceDataFlowTemplates"))
+                if (property.NameEquals("serviceDataFlowTemplates"u8))
                 {
                     List<ServiceDataFlowTemplate> array = new List<ServiceDataFlowTemplate>();
                     foreach (var item in property.Value.EnumerateArray())

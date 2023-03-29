@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyVaultUri))
             {
-                writer.WritePropertyName("keyVaultUri");
+                writer.WritePropertyName("keyVaultUri"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
             if (Optional.IsDefined(KeyVaultId))
             {
-                writer.WritePropertyName("keyVaultId");
+                writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
             }
             writer.WriteEndObject();
@@ -31,11 +31,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabUserSecretStore DeserializeDevTestLabUserSecretStore(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> keyVaultUri = default;
             Optional<ResourceIdentifier> keyVaultId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyVaultUri"))
+                if (property.NameEquals("keyVaultUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     keyVaultUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyVaultId"))
+                if (property.NameEquals("keyVaultId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

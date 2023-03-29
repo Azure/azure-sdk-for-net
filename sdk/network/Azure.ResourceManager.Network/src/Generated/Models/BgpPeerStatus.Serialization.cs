@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static BgpPeerStatus DeserializeBgpPeerStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> localAddress = default;
             Optional<string> neighbor = default;
             Optional<long> asn = default;
@@ -25,17 +29,17 @@ namespace Azure.ResourceManager.Network.Models
             Optional<long> messagesReceived = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("localAddress"))
+                if (property.NameEquals("localAddress"u8))
                 {
                     localAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("neighbor"))
+                if (property.NameEquals("neighbor"u8))
                 {
                     neighbor = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("asn"))
+                if (property.NameEquals("asn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.Network.Models
                     asn = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
                     state = new BgpPeerState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("connectedDuration"))
+                if (property.NameEquals("connectedDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
                     connectedDuration = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("routesReceived"))
+                if (property.NameEquals("routesReceived"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
                     routesReceived = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("messagesSent"))
+                if (property.NameEquals("messagesSent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                     messagesSent = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("messagesReceived"))
+                if (property.NameEquals("messagesReceived"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

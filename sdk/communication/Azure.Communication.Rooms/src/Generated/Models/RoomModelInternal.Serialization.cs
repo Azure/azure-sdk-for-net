@@ -16,6 +16,10 @@ namespace Azure.Communication.Rooms
     {
         internal static RoomModelInternal DeserializeRoomModelInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<DateTimeOffset> createdDateTime = default;
             Optional<DateTimeOffset> validFrom = default;
@@ -24,12 +28,12 @@ namespace Azure.Communication.Rooms
             Optional<IReadOnlyList<RoomParticipantInternal>> participants = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdDateTime"))
+                if (property.NameEquals("createdDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +43,7 @@ namespace Azure.Communication.Rooms
                     createdDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("validFrom"))
+                if (property.NameEquals("validFrom"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +53,7 @@ namespace Azure.Communication.Rooms
                     validFrom = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("validUntil"))
+                if (property.NameEquals("validUntil"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +63,7 @@ namespace Azure.Communication.Rooms
                     validUntil = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("roomJoinPolicy"))
+                if (property.NameEquals("roomJoinPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +73,7 @@ namespace Azure.Communication.Rooms
                     roomJoinPolicy = new RoomJoinPolicy(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("participants"))
+                if (property.NameEquals("participants"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

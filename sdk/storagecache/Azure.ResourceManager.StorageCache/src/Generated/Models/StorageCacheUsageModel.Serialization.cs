@@ -14,12 +14,16 @@ namespace Azure.ResourceManager.StorageCache.Models
     {
         internal static StorageCacheUsageModel DeserializeStorageCacheUsageModel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageCacheUsageModelDisplay> display = default;
             Optional<string> modelName = default;
             Optional<string> targetType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("display"))
+                if (property.NameEquals("display"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,12 +33,12 @@ namespace Azure.ResourceManager.StorageCache.Models
                     display = StorageCacheUsageModelDisplay.DeserializeStorageCacheUsageModelDisplay(property.Value);
                     continue;
                 }
-                if (property.NameEquals("modelName"))
+                if (property.NameEquals("modelName"u8))
                 {
                     modelName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetType"))
+                if (property.NameEquals("targetType"u8))
                 {
                     targetType = property.Value.GetString();
                     continue;

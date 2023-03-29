@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ExpireOn))
             {
-                writer.WritePropertyName("expirationTime");
+                writer.WritePropertyName("expirationTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(Token))
             {
-                writer.WritePropertyName("token");
+                writer.WritePropertyName("token"u8);
                 writer.WriteStringValue(Token);
             }
             if (Optional.IsDefined(RegistrationTokenOperation))
             {
-                writer.WritePropertyName("registrationTokenOperation");
+                writer.WritePropertyName("registrationTokenOperation"u8);
                 writer.WriteStringValue(RegistrationTokenOperation.Value.ToString());
             }
             writer.WriteEndObject();
@@ -36,12 +36,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static HostPoolRegistrationInfo DeserializeHostPoolRegistrationInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> expirationTime = default;
             Optional<string> token = default;
             Optional<HostPoolRegistrationTokenOperation> registrationTokenOperation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("expirationTime"))
+                if (property.NameEquals("expirationTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,12 +55,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     expirationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("token"))
+                if (property.NameEquals("token"u8))
                 {
                     token = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("registrationTokenOperation"))
+                if (property.NameEquals("registrationTokenOperation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

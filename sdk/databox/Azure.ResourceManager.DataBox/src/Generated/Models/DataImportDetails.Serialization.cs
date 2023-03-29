@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("accountDetails");
+            writer.WritePropertyName("accountDetails"u8);
             writer.WriteObjectValue(AccountDetails);
             if (Optional.IsDefined(LogCollectionLevel))
             {
-                writer.WritePropertyName("logCollectionLevel");
+                writer.WritePropertyName("logCollectionLevel"u8);
                 writer.WriteStringValue(LogCollectionLevel.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -27,16 +27,20 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataImportDetails DeserializeDataImportDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataAccountDetails accountDetails = default;
             Optional<LogCollectionLevel> logCollectionLevel = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountDetails"))
+                if (property.NameEquals("accountDetails"u8))
                 {
                     accountDetails = DataAccountDetails.DeserializeDataAccountDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("logCollectionLevel"))
+                if (property.NameEquals("logCollectionLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

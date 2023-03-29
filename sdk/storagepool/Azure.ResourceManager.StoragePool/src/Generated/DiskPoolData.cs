@@ -15,7 +15,10 @@ using Azure.ResourceManager.StoragePool.Models;
 
 namespace Azure.ResourceManager.StoragePool
 {
-    /// <summary> A class representing the DiskPool data model. </summary>
+    /// <summary>
+    /// A class representing the DiskPool data model.
+    /// Response for Disk Pool request.
+    /// </summary>
     public partial class DiskPoolData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DiskPoolData. </summary>

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.HybridData.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsCollectionDefined(PolicyList))
             {
-                writer.WritePropertyName("policyList");
+                writer.WritePropertyName("policyList"u8);
                 writer.WriteStartArray();
                 foreach (var item in PolicyList)
                 {
@@ -36,16 +36,20 @@ namespace Azure.ResourceManager.HybridData.Models
 
         internal static HybridDataJobRunSchedule DeserializeHybridDataJobRunSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IList<string>> policyList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyList"))
+                if (property.NameEquals("policyList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

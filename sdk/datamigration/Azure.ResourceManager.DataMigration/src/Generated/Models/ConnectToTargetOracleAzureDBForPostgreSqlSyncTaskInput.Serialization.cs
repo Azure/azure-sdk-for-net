@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetConnectionInfo");
+            writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo);
             writer.WriteEndObject();
         }
 
         internal static ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput DeserializeConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PostgreSqlConnectionInfo targetConnectionInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetConnectionInfo"))
+                if (property.NameEquals("targetConnectionInfo"u8))
                 {
                     targetConnectionInfo = PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(property.Value);
                     continue;

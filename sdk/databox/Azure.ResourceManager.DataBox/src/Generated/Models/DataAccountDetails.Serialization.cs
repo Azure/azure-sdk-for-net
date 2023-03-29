@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("dataAccountType");
+            writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
             if (Optional.IsDefined(SharePassword))
             {
-                writer.WritePropertyName("sharePassword");
+                writer.WritePropertyName("sharePassword"u8);
                 writer.WriteStringValue(SharePassword);
             }
             writer.WriteEndObject();
@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataAccountDetails DeserializeDataAccountDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("dataAccountType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

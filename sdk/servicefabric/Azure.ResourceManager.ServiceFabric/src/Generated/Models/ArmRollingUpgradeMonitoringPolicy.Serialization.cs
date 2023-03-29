@@ -18,32 +18,32 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FailureAction))
             {
-                writer.WritePropertyName("failureAction");
+                writer.WritePropertyName("failureAction"u8);
                 writer.WriteStringValue(FailureAction.Value.ToString());
             }
             if (Optional.IsDefined(HealthCheckWaitDuration))
             {
-                writer.WritePropertyName("healthCheckWaitDuration");
+                writer.WritePropertyName("healthCheckWaitDuration"u8);
                 writer.WriteStringValue(HealthCheckWaitDuration.Value, "c");
             }
             if (Optional.IsDefined(HealthCheckStableDuration))
             {
-                writer.WritePropertyName("healthCheckStableDuration");
+                writer.WritePropertyName("healthCheckStableDuration"u8);
                 writer.WriteStringValue(HealthCheckStableDuration.Value, "c");
             }
             if (Optional.IsDefined(HealthCheckRetryTimeout))
             {
-                writer.WritePropertyName("healthCheckRetryTimeout");
+                writer.WritePropertyName("healthCheckRetryTimeout"u8);
                 writer.WriteStringValue(HealthCheckRetryTimeout.Value, "c");
             }
             if (Optional.IsDefined(UpgradeTimeout))
             {
-                writer.WritePropertyName("upgradeTimeout");
+                writer.WritePropertyName("upgradeTimeout"u8);
                 writer.WriteStringValue(UpgradeTimeout.Value, "c");
             }
             if (Optional.IsDefined(UpgradeDomainTimeout))
             {
-                writer.WritePropertyName("upgradeDomainTimeout");
+                writer.WritePropertyName("upgradeDomainTimeout"u8);
                 writer.WriteStringValue(UpgradeDomainTimeout.Value, "c");
             }
             writer.WriteEndObject();
@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ArmRollingUpgradeMonitoringPolicy DeserializeArmRollingUpgradeMonitoringPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ArmUpgradeFailureAction> failureAction = default;
             Optional<TimeSpan> healthCheckWaitDuration = default;
             Optional<TimeSpan> healthCheckStableDuration = default;
@@ -59,7 +63,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Optional<TimeSpan> upgradeDomainTimeout = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("failureAction"))
+                if (property.NameEquals("failureAction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +73,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     failureAction = new ArmUpgradeFailureAction(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("healthCheckWaitDuration"))
+                if (property.NameEquals("healthCheckWaitDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +83,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     healthCheckWaitDuration = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("healthCheckStableDuration"))
+                if (property.NameEquals("healthCheckStableDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +93,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     healthCheckStableDuration = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("healthCheckRetryTimeout"))
+                if (property.NameEquals("healthCheckRetryTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     healthCheckRetryTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("upgradeTimeout"))
+                if (property.NameEquals("upgradeTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,7 +113,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     upgradeTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("upgradeDomainTimeout"))
+                if (property.NameEquals("upgradeDomainTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

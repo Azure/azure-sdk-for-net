@@ -15,18 +15,22 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static DocumentKeyPhrases DeserializeDocumentKeyPhrases(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             IReadOnlyList<string> keyPhrases = default;
             IReadOnlyList<TextAnalyticsWarning> warnings = default;
             Optional<DocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyPhrases"))
+                if (property.NameEquals("keyPhrases"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -36,7 +40,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     keyPhrases = array;
                     continue;
                 }
-                if (property.NameEquals("warnings"))
+                if (property.NameEquals("warnings"u8))
                 {
                     List<TextAnalyticsWarning> array = new List<TextAnalyticsWarning>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -46,7 +50,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     warnings = array;
                     continue;
                 }
-                if (property.NameEquals("statistics"))
+                if (property.NameEquals("statistics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -55,7 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 UnMappedTags = AzMonList.Initialize()
             };
 
-            using var activity = CreateTestActivity(new Dictionary<string, object>());
+            using var activity = CreateTestActivity(new Dictionary<string, object?>());
             monitorTags.ForEach(activity.TagObjects);
 
             Assert.Equal(OperationType.Unknown, monitorTags.activityType);
@@ -72,11 +70,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 UnMappedTags = AzMonList.Initialize()
             };
 
-            IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
+            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?>
             {
                 ["key1"] = null,
-                ["key2"] = new string[] { "test", null },
-                ["key3"] = new string[] { null, null }
+                ["key2"] = new string?[] { "test", null },
+                ["key3"] = new string?[] { null, null }
             };
 
             using var activity = CreateTestActivity(tagObjects);
@@ -99,7 +97,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 UnMappedTags = AzMonList.Initialize()
             };
 
-            IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object> { ["somekey"] = "value" }; ;
+            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?> { ["somekey"] = "value" }; ;
             using var activity = CreateTestActivity(tagObjects);
             monitorTags.ForEach(activity.TagObjects);
 
@@ -117,7 +115,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 UnMappedTags = AzMonList.Initialize()
             };
 
-            IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
+            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?>
             {
                 [SemanticConventions.AttributeNetHostIp] = "127.0.0.1",
                 [SemanticConventions.AttributeHttpScheme] = "https",
@@ -148,7 +146,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 UnMappedTags = AzMonList.Initialize()
             };
 
-            IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
+            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?>
             {
                 [SemanticConventions.AttributeHttpScheme] = "https",
                 [SemanticConventions.AttributeHttpHost] = "localhost",
@@ -179,7 +177,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 UnMappedTags = AzMonList.Initialize()
             };
 
-            IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
+            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?>
             {
                 ["intArray"] = new int[] { 1, 2, 3 },
             };
@@ -203,7 +201,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 UnMappedTags = AzMonList.Initialize()
             };
 
-            IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
+            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?>
             {
                 ["doubleArray"] = new double[] { 1.1, 2.2, 3.3 },
             };
@@ -227,7 +225,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 UnMappedTags = AzMonList.Initialize()
             };
 
-            IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
+            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?>
             {
                 ["strArray"] = new string[] { "test1", "test2", "test3" },
             };
@@ -251,7 +249,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 UnMappedTags = AzMonList.Initialize()
             };
 
-            IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
+            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?>
             {
                 ["boolArray"] = new bool[] { true, false, true },
             };
@@ -275,7 +273,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 UnMappedTags = AzMonList.Initialize()
             };
 
-            IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
+            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?>
             {
                 ["objArray"] = new Test[] { new Test(), new Test(), new Test() { TestProperty = 0 } },
             };
@@ -299,7 +297,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 UnMappedTags = AzMonList.Initialize()
             };
 
-            IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
+            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?>
             {
                 ["intKey"] = 1,
                 ["doubleKey"] = 1.1,
@@ -320,11 +318,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(1.1, AzMonList.GetTagValue(ref monitorTags.UnMappedTags, "doubleKey"));
             Assert.Equal("test", AzMonList.GetTagValue(ref monitorTags.UnMappedTags, "stringKey"));
             Assert.Equal(true, AzMonList.GetTagValue(ref monitorTags.UnMappedTags, "boolKey"));
-            Assert.Equal("Azure.Monitor.OpenTelemetry.Exporter.Tests.TagsTests+Test", AzMonList.GetTagValue(ref monitorTags.UnMappedTags, "objectKey").ToString());
+            Assert.Equal("Azure.Monitor.OpenTelemetry.Exporter.Tests.TagsTests+Test", AzMonList.GetTagValue(ref monitorTags.UnMappedTags, "objectKey")?.ToString());
             Assert.Equal("1,2,3", AzMonList.GetTagValue(ref monitorTags.UnMappedTags, "arrayKey"));
         }
 
-        private static Activity CreateTestActivity(IEnumerable<KeyValuePair<string, object>> additionalAttributes = null)
+        private static Activity CreateTestActivity(IEnumerable<KeyValuePair<string, object?>>? additionalAttributes = null)
         {
             var startTimestamp = DateTime.UtcNow;
             var endTimestamp = startTimestamp.AddSeconds(60);
@@ -333,10 +331,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var parentSpanId = ActivitySpanId.CreateRandom();
 
-            Dictionary<string, object> attributes = null;
+            Dictionary<string, object?>? attributes = null;
             if (additionalAttributes != null)
             {
-                attributes = new Dictionary<string, object>();
+                attributes = new Dictionary<string, object?>();
                 foreach (var attribute in additionalAttributes)
                 {
                     attributes.Add(attribute.Key, attribute.Value);
@@ -353,10 +351,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 null,
                 startTime: startTimestamp);
 
-            activity.SetEndTime(endTimestamp);
-            activity.Stop();
+            activity?.SetEndTime(endTimestamp);
+            activity?.Stop();
 
-            return activity;
+            return activity ?? throw new Exception("Failed to create Activity");
         }
 
         private class Test

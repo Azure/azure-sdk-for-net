@@ -17,37 +17,41 @@ namespace Azure.Communication.JobRouter
             writer.WriteStartObject();
             if (Optional.IsDefined(Note))
             {
-                writer.WritePropertyName("note");
+                writer.WritePropertyName("note"u8);
                 writer.WriteStringValue(Note);
             }
             if (Optional.IsDefined(DispositionCode))
             {
-                writer.WritePropertyName("dispositionCode");
+                writer.WritePropertyName("dispositionCode"u8);
                 writer.WriteStringValue(DispositionCode);
             }
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             writer.WriteEndObject();
         }
 
         internal static CancelExceptionAction DeserializeCancelExceptionAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> note = default;
             Optional<string> dispositionCode = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("note"))
+                if (property.NameEquals("note"u8))
                 {
                     note = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dispositionCode"))
+                if (property.NameEquals("dispositionCode"u8))
                 {
                     dispositionCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;

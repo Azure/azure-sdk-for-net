@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Cpu))
             {
-                writer.WritePropertyName("cpu");
+                writer.WritePropertyName("cpu"u8);
                 writer.WriteNumberValue(Cpu.Value);
             }
             if (Optional.IsDefined(Memory))
             {
-                writer.WritePropertyName("memory");
+                writer.WritePropertyName("memory"u8);
                 writer.WriteStringValue(Memory);
             }
             writer.WriteEndObject();
@@ -30,12 +30,16 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static AppContainerResources DeserializeAppContainerResources(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> cpu = default;
             Optional<string> memory = default;
             Optional<string> ephemeralStorage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cpu"))
+                if (property.NameEquals("cpu"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,12 +49,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                     cpu = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("memory"))
+                if (property.NameEquals("memory"u8))
                 {
                     memory = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ephemeralStorage"))
+                if (property.NameEquals("ephemeralStorage"u8))
                 {
                     ephemeralStorage = property.Value.GetString();
                     continue;

@@ -21,14 +21,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Kernelspec))
             {
-                writer.WritePropertyName("kernelspec");
+                writer.WritePropertyName("kernelspec"u8);
                 writer.WriteObjectValue(Kernelspec);
             }
             if (Optional.IsDefined(LanguageInfo))
             {
                 if (LanguageInfo != null)
                 {
-                    writer.WritePropertyName("language_info");
+                    writer.WritePropertyName("language_info"u8);
                     writer.WriteObjectValue(LanguageInfo);
                 }
                 else
@@ -46,13 +46,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static NotebookMetadata DeserializeNotebookMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NotebookKernelSpec> kernelspec = default;
             Optional<NotebookLanguageInfo> languageInfo = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kernelspec"))
+                if (property.NameEquals("kernelspec"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     kernelspec = NotebookKernelSpec.DeserializeNotebookKernelSpec(property.Value);
                     continue;
                 }
-                if (property.NameEquals("language_info"))
+                if (property.NameEquals("language_info"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

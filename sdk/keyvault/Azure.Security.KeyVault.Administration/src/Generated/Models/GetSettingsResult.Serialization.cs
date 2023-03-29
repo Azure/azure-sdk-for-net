@@ -15,10 +15,14 @@ namespace Azure.Security.KeyVault.Administration
     {
         internal static GetSettingsResult DeserializeGetSettingsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<KeyVaultSetting>> settings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("settings"))
+                if (property.NameEquals("settings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

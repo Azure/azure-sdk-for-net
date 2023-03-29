@@ -15,11 +15,15 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NetworkSecurityGroupResult DeserializeNetworkSecurityGroupResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SecurityRuleAccess> securityRuleAccessResult = default;
             Optional<IReadOnlyList<EvaluatedNetworkSecurityGroup>> evaluatedNetworkSecurityGroups = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("securityRuleAccessResult"))
+                if (property.NameEquals("securityRuleAccessResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
                     securityRuleAccessResult = new SecurityRuleAccess(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("evaluatedNetworkSecurityGroups"))
+                if (property.NameEquals("evaluatedNetworkSecurityGroups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

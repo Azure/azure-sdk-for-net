@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using Azure.Core;
 using OpenTelemetry;
@@ -20,19 +18,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// </summary>
         /// <param name="loggerOptions"><see cref="OpenTelemetryLoggerOptions"/> options to use.</param>
         /// <param name="configure">Exporter configuration options.</param>
-        /// <param name="credential"><see cref="TokenCredential" /></param>
+        /// <param name="credential">
+        /// An Azure <see cref="TokenCredential" /> capable of providing an OAuth token.
+        /// Note: if a credential is provided to both <see cref="AzureMonitorExporterOptions"/> and this parameter,
+        /// the Options will take precedence.
+        /// </param>
         /// <returns>The instance of <see cref="OpenTelemetryLoggerOptions"/> to chain the calls.</returns>
-        public static OpenTelemetryLoggerOptions AddAzureMonitorLogExporter(this OpenTelemetryLoggerOptions loggerOptions, Action<AzureMonitorExporterOptions> configure = null, TokenCredential credential = null)
+        public static OpenTelemetryLoggerOptions AddAzureMonitorLogExporter(this OpenTelemetryLoggerOptions loggerOptions, Action<AzureMonitorExporterOptions>? configure = null, TokenCredential? credential = null)
         {
             if (loggerOptions == null)
             {
                 throw new ArgumentNullException(nameof(loggerOptions));
             }
 
+            // Ideally user should set this to true
+            // but if they miss we may have an issue of missing state values which gets converted to custom dimensions.
+            loggerOptions.ParseStateValues = true;
+
             var options = new AzureMonitorExporterOptions();
             configure?.Invoke(options);
 
-            return loggerOptions.AddProcessor(new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(options, credential)));
+            if (credential != null)
+            {
+                // Credential can be set by either AzureMonitorExporterOptions or Extension Method Parameter.
+                // Options should take precedence.
+                options.Credential ??= credential;
+            }
+
+            return loggerOptions.AddProcessor(new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(options)));
         }
     }
 }

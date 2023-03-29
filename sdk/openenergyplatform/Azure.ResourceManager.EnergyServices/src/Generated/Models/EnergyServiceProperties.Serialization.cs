@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.EnergyServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AuthAppId))
             {
-                writer.WritePropertyName("authAppId");
+                writer.WritePropertyName("authAppId"u8);
                 writer.WriteStringValue(AuthAppId);
             }
             if (Optional.IsCollectionDefined(DataPartitionNames))
             {
-                writer.WritePropertyName("dataPartitionNames");
+                writer.WritePropertyName("dataPartitionNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataPartitionNames)
                 {
@@ -36,18 +36,22 @@ namespace Azure.ResourceManager.EnergyServices.Models
 
         internal static EnergyServiceProperties DeserializeEnergyServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dnsName = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> authAppId = default;
             Optional<IList<DataPartitionName>> dataPartitionNames = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dnsName"))
+                if (property.NameEquals("dnsName"u8))
                 {
                     dnsName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,12 +61,12 @@ namespace Azure.ResourceManager.EnergyServices.Models
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("authAppId"))
+                if (property.NameEquals("authAppId"u8))
                 {
                     authAppId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataPartitionNames"))
+                if (property.NameEquals("dataPartitionNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

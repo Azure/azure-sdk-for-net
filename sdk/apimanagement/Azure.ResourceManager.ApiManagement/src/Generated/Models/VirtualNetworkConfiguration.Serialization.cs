@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SubnetResourceId))
             {
-                writer.WritePropertyName("subnetResourceId");
+                writer.WritePropertyName("subnetResourceId"u8);
                 writer.WriteStringValue(SubnetResourceId);
             }
             writer.WriteEndObject();
@@ -26,12 +26,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static VirtualNetworkConfiguration DeserializeVirtualNetworkConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> vnetid = default;
             Optional<string> subnetname = default;
             Optional<ResourceIdentifier> subnetResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vnetid"))
+                if (property.NameEquals("vnetid"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,12 +45,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     vnetid = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("subnetname"))
+                if (property.NameEquals("subnetname"u8))
                 {
                     subnetname = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subnetResourceId"))
+                if (property.NameEquals("subnetResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.DataBox
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sku");
+            writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -38,25 +38,25 @@ namespace Azure.ResourceManager.DataBox
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("transferType");
+            writer.WritePropertyName("transferType"u8);
             writer.WriteStringValue(TransferType.ToSerialString());
             if (Optional.IsDefined(Details))
             {
-                writer.WritePropertyName("details");
+                writer.WritePropertyName("details"u8);
                 writer.WriteObjectValue(Details);
             }
             if (Optional.IsDefined(DeliveryType))
             {
-                writer.WritePropertyName("deliveryType");
+                writer.WritePropertyName("deliveryType"u8);
                 writer.WriteStringValue(DeliveryType.Value.ToSerialString());
             }
             if (Optional.IsDefined(DeliveryInfo))
             {
-                writer.WritePropertyName("deliveryInfo");
+                writer.WritePropertyName("deliveryInfo"u8);
                 writer.WriteObjectValue(DeliveryInfo);
             }
             writer.WriteEndObject();
@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.DataBox
 
         internal static DataBoxJobData DeserializeDataBoxJobData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataBoxSku sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -88,12 +92,12 @@ namespace Azure.ResourceManager.DataBox
             Optional<bool> isCancellableWithoutFee = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     sku = DataBoxSku.DeserializeDataBoxSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +107,7 @@ namespace Azure.ResourceManager.DataBox
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,27 +122,27 @@ namespace Azure.ResourceManager.DataBox
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -148,7 +152,7 @@ namespace Azure.ResourceManager.DataBox
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -157,12 +161,12 @@ namespace Azure.ResourceManager.DataBox
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("transferType"))
+                        if (property0.NameEquals("transferType"u8))
                         {
                             transferType = property0.Value.GetString().ToDataBoxJobTransferType();
                             continue;
                         }
-                        if (property0.NameEquals("isCancellable"))
+                        if (property0.NameEquals("isCancellable"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -172,7 +176,7 @@ namespace Azure.ResourceManager.DataBox
                             isCancellable = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("isDeletable"))
+                        if (property0.NameEquals("isDeletable"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -182,7 +186,7 @@ namespace Azure.ResourceManager.DataBox
                             isDeletable = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("isShippingAddressEditable"))
+                        if (property0.NameEquals("isShippingAddressEditable"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -192,7 +196,7 @@ namespace Azure.ResourceManager.DataBox
                             isShippingAddressEditable = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("isPrepareToShipEnabled"))
+                        if (property0.NameEquals("isPrepareToShipEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -202,7 +206,7 @@ namespace Azure.ResourceManager.DataBox
                             isPrepareToShipEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -212,7 +216,7 @@ namespace Azure.ResourceManager.DataBox
                             status = new DataBoxStageName(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("startTime"))
+                        if (property0.NameEquals("startTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -222,7 +226,7 @@ namespace Azure.ResourceManager.DataBox
                             startTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("error"))
+                        if (property0.NameEquals("error"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -232,7 +236,7 @@ namespace Azure.ResourceManager.DataBox
                             error = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("details"))
+                        if (property0.NameEquals("details"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -242,12 +246,12 @@ namespace Azure.ResourceManager.DataBox
                             details = DataBoxBasicJobDetails.DeserializeDataBoxBasicJobDetails(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("cancellationReason"))
+                        if (property0.NameEquals("cancellationReason"u8))
                         {
                             cancellationReason = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("deliveryType"))
+                        if (property0.NameEquals("deliveryType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -257,7 +261,7 @@ namespace Azure.ResourceManager.DataBox
                             deliveryType = property0.Value.GetString().ToJobDeliveryType();
                             continue;
                         }
-                        if (property0.NameEquals("deliveryInfo"))
+                        if (property0.NameEquals("deliveryInfo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -267,7 +271,7 @@ namespace Azure.ResourceManager.DataBox
                             deliveryInfo = JobDeliveryInfo.DeserializeJobDeliveryInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("isCancellableWithoutFee"))
+                        if (property0.NameEquals("isCancellableWithoutFee"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

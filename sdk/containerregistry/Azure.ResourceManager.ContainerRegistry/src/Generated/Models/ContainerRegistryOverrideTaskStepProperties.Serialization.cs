@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ContextPath))
             {
-                writer.WritePropertyName("contextPath");
+                writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
             if (Optional.IsDefined(File))
             {
-                writer.WritePropertyName("file");
+                writer.WritePropertyName("file"u8);
                 writer.WriteStringValue(File);
             }
             if (Optional.IsCollectionDefined(Arguments))
             {
-                writer.WritePropertyName("arguments");
+                writer.WritePropertyName("arguments"u8);
                 writer.WriteStartArray();
                 foreach (var item in Arguments)
                 {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             if (Optional.IsDefined(Target))
             {
-                writer.WritePropertyName("target");
+                writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
             if (Optional.IsCollectionDefined(Values))
             {
-                writer.WritePropertyName("values");
+                writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             if (Optional.IsDefined(UpdateTriggerToken))
             {
-                writer.WritePropertyName("updateTriggerToken");
+                writer.WritePropertyName("updateTriggerToken"u8);
                 writer.WriteStringValue(UpdateTriggerToken);
             }
             writer.WriteEndObject();
@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryOverrideTaskStepProperties DeserializeContainerRegistryOverrideTaskStepProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> contextPath = default;
             Optional<string> file = default;
             Optional<IList<ContainerRegistryRunArgument>> arguments = default;
@@ -69,17 +73,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<string> updateTriggerToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("contextPath"))
+                if (property.NameEquals("contextPath"u8))
                 {
                     contextPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("file"))
+                if (property.NameEquals("file"u8))
                 {
                     file = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("arguments"))
+                if (property.NameEquals("arguments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,12 +98,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     arguments = array;
                     continue;
                 }
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
                     target = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("values"))
+                if (property.NameEquals("values"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +118,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     values = array;
                     continue;
                 }
-                if (property.NameEquals("updateTriggerToken"))
+                if (property.NameEquals("updateTriggerToken"u8))
                 {
                     updateTriggerToken = property.Value.GetString();
                     continue;

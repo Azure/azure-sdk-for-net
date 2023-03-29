@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Sql
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CurrentAttempts))
             {
-                writer.WritePropertyName("currentAttempts");
+                writer.WritePropertyName("currentAttempts"u8);
                 writer.WriteNumberValue(CurrentAttempts.Value);
             }
             writer.WriteEndObject();
@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static SqlServerJobExecutionData DeserializeSqlServerJobExecutionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -50,22 +54,22 @@ namespace Azure.ResourceManager.Sql
             Optional<JobExecutionTarget> target = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +79,7 @@ namespace Azure.ResourceManager.Sql
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +88,7 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("jobVersion"))
+                        if (property0.NameEquals("jobVersion"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -94,12 +98,12 @@ namespace Azure.ResourceManager.Sql
                             jobVersion = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("stepName"))
+                        if (property0.NameEquals("stepName"u8))
                         {
                             stepName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("stepId"))
+                        if (property0.NameEquals("stepId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -109,7 +113,7 @@ namespace Azure.ResourceManager.Sql
                             stepId = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("jobExecutionId"))
+                        if (property0.NameEquals("jobExecutionId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -119,7 +123,7 @@ namespace Azure.ResourceManager.Sql
                             jobExecutionId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("lifecycle"))
+                        if (property0.NameEquals("lifecycle"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -129,7 +133,7 @@ namespace Azure.ResourceManager.Sql
                             lifecycle = new JobExecutionLifecycle(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -139,7 +143,7 @@ namespace Azure.ResourceManager.Sql
                             provisioningState = new JobExecutionProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("createTime"))
+                        if (property0.NameEquals("createTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -149,7 +153,7 @@ namespace Azure.ResourceManager.Sql
                             createTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("startTime"))
+                        if (property0.NameEquals("startTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -159,7 +163,7 @@ namespace Azure.ResourceManager.Sql
                             startTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("endTime"))
+                        if (property0.NameEquals("endTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -169,7 +173,7 @@ namespace Azure.ResourceManager.Sql
                             endTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("currentAttempts"))
+                        if (property0.NameEquals("currentAttempts"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -179,7 +183,7 @@ namespace Azure.ResourceManager.Sql
                             currentAttempts = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("currentAttemptStartTime"))
+                        if (property0.NameEquals("currentAttemptStartTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -189,12 +193,12 @@ namespace Azure.ResourceManager.Sql
                             currentAttemptStartTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastMessage"))
+                        if (property0.NameEquals("lastMessage"u8))
                         {
                             lastMessage = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("target"))
+                        if (property0.NameEquals("target"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

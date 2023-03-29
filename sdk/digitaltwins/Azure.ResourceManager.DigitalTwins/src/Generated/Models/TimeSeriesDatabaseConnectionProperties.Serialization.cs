@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("connectionType");
+            writer.WritePropertyName("connectionType"u8);
             writer.WriteStringValue(ConnectionType.ToString());
             if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
-                    writer.WritePropertyName("identity");
+                    writer.WritePropertyName("identity"u8);
                     writer.WriteObjectValue(Identity);
                 }
                 else
@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         internal static TimeSeriesDatabaseConnectionProperties DeserializeTimeSeriesDatabaseConnectionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("connectionType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

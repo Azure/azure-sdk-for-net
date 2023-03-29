@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("labels");
+            writer.WritePropertyName("labels"u8);
             writer.WriteStartArray();
             foreach (var item in Labels)
             {
@@ -28,10 +28,14 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaOutputFile DeserializeMediaOutputFile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> labels = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("labels"))
+                if (property.NameEquals("labels"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())

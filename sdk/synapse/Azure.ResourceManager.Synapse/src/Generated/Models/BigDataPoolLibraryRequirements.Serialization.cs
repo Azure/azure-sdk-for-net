@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Content))
             {
-                writer.WritePropertyName("content");
+                writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
             if (Optional.IsDefined(Filename))
             {
-                writer.WritePropertyName("filename");
+                writer.WritePropertyName("filename"u8);
                 writer.WriteStringValue(Filename);
             }
             writer.WriteEndObject();
@@ -31,12 +31,16 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static BigDataPoolLibraryRequirements DeserializeBigDataPoolLibraryRequirements(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> time = default;
             Optional<string> content = default;
             Optional<string> filename = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("time"))
+                if (property.NameEquals("time"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,12 +50,12 @@ namespace Azure.ResourceManager.Synapse.Models
                     time = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("content"))
+                if (property.NameEquals("content"u8))
                 {
                     content = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filename"))
+                if (property.NameEquals("filename"u8))
                 {
                     filename = property.Value.GetString();
                     continue;

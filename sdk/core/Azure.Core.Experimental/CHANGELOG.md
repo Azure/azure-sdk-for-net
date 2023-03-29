@@ -1,17 +1,39 @@
 # Release History
 
-## 0.1.0-preview.24 (Unreleased)
+## 0.1.0-preview.26 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
-- Moved `JsonData` into `Azure.Core.Dynamic` namespace, and removed all public APIs with the exception of operators.
-- Added extension method `ToDynamic()` to `BinaryData`.
-
 ### Bugs Fixed
 
 ### Other Changes
+
+## 0.1.0-preview.25 (2023-03-02)
+
+### Features Added
+
+- Made `DynamicJson` and `MutableJsonDocument` disposable.
+- Enabled enumerating over object properties in `DynamicJson` and `MutableJsonElement`.
+- Made it possible to use PascalCase accessors with `DynamicJson` properties.
+- Enabled checking for null to determine if property is present in `DynamicJson`.
+
+### Breaking Changes
+
+- Moved `MutableJsonDocument` and `MutableJsonElement` into namespace `Azure.Core.Json`.
+
+## 0.1.0-preview.24 (2023-02-06)
+
+### Features Added
+
+- Added types `MutableJsonDocument` and `MutableJsonElement`.  These types have APIs similar to the BCL types `JsonDocument` and `JsonElement`, but allow the JSON content to be changed.
+- Added types `DynamicJson` and `DynamicData`, which provide a dynamic layer over a data payload.  This allows schematized data to be accessed using patterns similar to those used with standard .NET types.
+- Added extension method `ToDynamic()` to `BinaryData`.  This enables retrieving `DynamicJson` from the `Response.Content` property.
+
+### Breaking Changes
+
+- Removed `JsonData` type.
 
 ## 0.1.0-preview.23 (2022-11-08)
 

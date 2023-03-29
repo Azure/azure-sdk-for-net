@@ -15,12 +15,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static A2ARecoveryPointDetails DeserializeA2ARecoveryPointDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RecoveryPointSyncType> recoveryPointSyncType = default;
             Optional<IReadOnlyList<string>> disks = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryPointSyncType"))
+                if (property.NameEquals("recoveryPointSyncType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     recoveryPointSyncType = new RecoveryPointSyncType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("disks"))
+                if (property.NameEquals("disks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     disks = array;
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

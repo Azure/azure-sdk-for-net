@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
+            writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
             {
-                writer.WritePropertyName("ignoreMissingVnetServiceEndpoint");
+                writer.WritePropertyName("ignoreMissingVnetServiceEndpoint"u8);
                 writer.WriteBooleanValue(IgnoreMissingVnetServiceEndpoint.Value);
             }
             writer.WriteEndObject();
@@ -27,16 +27,20 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static KeyVaultVirtualNetworkRule DeserializeKeyVaultVirtualNetworkRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             Optional<bool> ignoreMissingVnetServiceEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ignoreMissingVnetServiceEndpoint"))
+                if (property.NameEquals("ignoreMissingVnetServiceEndpoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

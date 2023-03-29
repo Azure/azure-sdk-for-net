@@ -5,10 +5,11 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
+generate-model-factory: false
 csharp: true
 library-name: RedisEnterprise
 namespace: Azure.ResourceManager.RedisEnterprise
-require: https://github.com/Azure/azure-rest-api-specs/blob/bab2f4389eb5ca73cdf366ec0a4af3f3eb6e1f6d/specification/redisenterprise/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/969fd0c2634fbcc1975d7abe3749330a5145a97c/specification/redisenterprise/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -24,6 +25,13 @@ rename-mapping:
   DatabaseList: RedisEnterpriseDatabaseList
   AccessKeys: RedisEnterpriseDataAccessKeys
   AccessKeyType: RedisEnterpriseAccessKeyType
+  Capability: RedisEnterpriseCapability
+  ClusterPropertiesEncryptionCustomerManagedKeyEncryption: RedisEnterpriseCustomerManagedKeyEncryption
+  ClusterPropertiesEncryptionCustomerManagedKeyEncryptionKeyIdentity: RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity
+  CmkIdentityType: RedisEnterpriseCustomerManagedKeyIdentityType
+  LocationInfo: RedisEnterpriseLocationInfo
+  RegionSkuDetail: RedisEnterpriseRegionSkuDetail
+  FlushParameters: FlushRedisEnterpriseDatabaseParameters
   ClusteringPolicy: RedisEnterpriseClusteringPolicy
   TlsVersion: RedisEnterpriseTlsVersion
   RegenerateKeyParameters: RedisEnterpriseRegenerateKeyParameters
@@ -57,6 +65,11 @@ rename-mapping:
   Persistence.aofEnabled: IsAofEnabled
   Persistence.rdbEnabled: IsRdbEnabled
   Protocol.Plaintext: PlainText
+  ForceUnlinkParameters.ids: -|arm-id
+  ClusterPropertiesEncryptionCustomerManagedKeyEncryptionKeyIdentity.userAssignedIdentityResourceId: -|arm-id
+  LinkedDatabase.id: -|arm-id
+  OperationStatus.id: -|arm-id
+  RegionSkuDetail.resourceType: -|resource-type
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -64,6 +77,9 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+
+# mgmt-debug:
+#   show-serialized-names: true
 
 rename-rules:
   CPU: Cpu
@@ -94,15 +110,13 @@ rename-rules:
 
 override-operation-name:
   OperationsStatus_Get: GetRedisEnterpriseOperationsStatus
+  Skus_List: GetRedisEnterpriseSkus
 
 directive:
   - from: redisenterprise.json
     where: $.definitions
     transform: >
       $.OperationStatus.properties.error['x-ms-client-name'] = 'ErrorResponse';
-      $.LinkedDatabase.properties.id['x-ms-format'] = 'arm-id';
-      $.ForceUnlinkParameters.properties.ids.items['x-ms-format'] = 'arm-id';
-      $.OperationStatus.properties.id['x-ms-format'] = 'arm-id';
       $.OperationStatus.properties.startTime['format'] = 'date-time';
       $.OperationStatus.properties.endTime['format'] = 'date-time';
 

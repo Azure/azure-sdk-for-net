@@ -15,28 +15,33 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceResourceId");
+            writer.WritePropertyName("sourceResourceId"u8);
             writer.WriteStringValue(SourceResourceId);
-            writer.WritePropertyName("sourceRegion");
+            writer.WritePropertyName("sourceRegion"u8);
             writer.WriteStringValue(SourceRegion);
-            writer.WritePropertyName("dataMoveLevel");
+            writer.WritePropertyName("dataMoveLevel"u8);
             writer.WriteStringValue(DataMoveLevel.ToString());
-            writer.WritePropertyName("correlationId");
+            writer.WritePropertyName("correlationId"u8);
             writer.WriteStringValue(CorrelationId);
             if (Optional.IsCollectionDefined(SourceContainerArmIds))
             {
-                writer.WritePropertyName("sourceContainerArmIds");
+                writer.WritePropertyName("sourceContainerArmIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in SourceContainerArmIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PauseGC))
+            if (Optional.IsDefined(DoesPauseGC))
             {
-                writer.WritePropertyName("pauseGC");
-                writer.WriteBooleanValue(PauseGC.Value);
+                writer.WritePropertyName("pauseGC"u8);
+                writer.WriteBooleanValue(DoesPauseGC.Value);
             }
             writer.WriteEndObject();
         }

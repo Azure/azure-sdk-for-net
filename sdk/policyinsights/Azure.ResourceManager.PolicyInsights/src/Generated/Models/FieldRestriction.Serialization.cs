@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static FieldRestriction DeserializeFieldRestriction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FieldRestrictionResult> result = default;
             Optional<string> defaultValue = default;
             Optional<IReadOnlyList<string>> values = default;
             Optional<PolicyReference> policy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("result"))
+                if (property.NameEquals("result"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,12 +35,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     result = new FieldRestrictionResult(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("defaultValue"))
+                if (property.NameEquals("defaultValue"u8))
                 {
                     defaultValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("values"))
+                if (property.NameEquals("values"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     values = array;
                     continue;
                 }
-                if (property.NameEquals("policy"))
+                if (property.NameEquals("policy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

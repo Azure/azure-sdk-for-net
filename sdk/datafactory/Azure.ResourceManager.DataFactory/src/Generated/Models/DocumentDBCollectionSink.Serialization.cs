@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(NestingSeparator))
             {
-                writer.WritePropertyName("nestingSeparator");
+                writer.WritePropertyName("nestingSeparator"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(NestingSeparator);
 #else
@@ -28,18 +28,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(WriteBehavior))
             {
-                writer.WritePropertyName("writeBehavior");
+                writer.WritePropertyName("writeBehavior"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(WriteBehavior);
 #else
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(WriteBehavior.ToString()).RootElement);
 #endif
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
             if (Optional.IsDefined(WriteBatchSize))
             {
-                writer.WritePropertyName("writeBatchSize");
+                writer.WritePropertyName("writeBatchSize"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(WriteBatchSize);
 #else
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(WriteBatchTimeout))
             {
-                writer.WritePropertyName("writeBatchTimeout");
+                writer.WritePropertyName("writeBatchTimeout"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(WriteBatchTimeout);
 #else
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(SinkRetryCount))
             {
-                writer.WritePropertyName("sinkRetryCount");
+                writer.WritePropertyName("sinkRetryCount"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SinkRetryCount);
 #else
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(SinkRetryWait))
             {
-                writer.WritePropertyName("sinkRetryWait");
+                writer.WritePropertyName("sinkRetryWait"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SinkRetryWait);
 #else
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
-                writer.WritePropertyName("maxConcurrentConnections");
+                writer.WritePropertyName("maxConcurrentConnections"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(MaxConcurrentConnections);
 #else
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
-                writer.WritePropertyName("disableMetricsCollection");
+                writer.WritePropertyName("disableMetricsCollection"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DisableMetricsCollection);
 #else
@@ -105,6 +105,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DocumentDBCollectionSink DeserializeDocumentDBCollectionSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> nestingSeparator = default;
             Optional<BinaryData> writeBehavior = default;
             string type = default;
@@ -118,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nestingSeparator"))
+                if (property.NameEquals("nestingSeparator"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -128,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     nestingSeparator = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("writeBehavior"))
+                if (property.NameEquals("writeBehavior"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -138,12 +142,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     writeBehavior = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("writeBatchSize"))
+                if (property.NameEquals("writeBatchSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -153,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     writeBatchSize = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("writeBatchTimeout"))
+                if (property.NameEquals("writeBatchTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -163,7 +167,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     writeBatchTimeout = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("sinkRetryCount"))
+                if (property.NameEquals("sinkRetryCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -173,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     sinkRetryCount = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("sinkRetryWait"))
+                if (property.NameEquals("sinkRetryWait"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -183,7 +187,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     sinkRetryWait = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentConnections"))
+                if (property.NameEquals("maxConcurrentConnections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -193,7 +197,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("disableMetricsCollection"))
+                if (property.NameEquals("disableMetricsCollection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

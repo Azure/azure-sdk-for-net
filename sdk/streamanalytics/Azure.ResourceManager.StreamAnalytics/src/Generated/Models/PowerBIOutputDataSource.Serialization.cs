@@ -16,48 +16,48 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(OutputDataSourceType);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RefreshToken))
             {
-                writer.WritePropertyName("refreshToken");
+                writer.WritePropertyName("refreshToken"u8);
                 writer.WriteStringValue(RefreshToken);
             }
             if (Optional.IsDefined(TokenUserPrincipalName))
             {
-                writer.WritePropertyName("tokenUserPrincipalName");
+                writer.WritePropertyName("tokenUserPrincipalName"u8);
                 writer.WriteStringValue(TokenUserPrincipalName);
             }
             if (Optional.IsDefined(TokenUserDisplayName))
             {
-                writer.WritePropertyName("tokenUserDisplayName");
+                writer.WritePropertyName("tokenUserDisplayName"u8);
                 writer.WriteStringValue(TokenUserDisplayName);
             }
             if (Optional.IsDefined(Dataset))
             {
-                writer.WritePropertyName("dataset");
+                writer.WritePropertyName("dataset"u8);
                 writer.WriteStringValue(Dataset);
             }
             if (Optional.IsDefined(Table))
             {
-                writer.WritePropertyName("table");
+                writer.WritePropertyName("table"u8);
                 writer.WriteStringValue(Table);
             }
             if (Optional.IsDefined(GroupId))
             {
-                writer.WritePropertyName("groupId");
+                writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId.Value);
             }
             if (Optional.IsDefined(GroupName))
             {
-                writer.WritePropertyName("groupName");
+                writer.WritePropertyName("groupName"u8);
                 writer.WriteStringValue(GroupName);
             }
             if (Optional.IsDefined(AuthenticationMode))
             {
-                writer.WritePropertyName("authenticationMode");
+                writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
             writer.WriteEndObject();
@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static PowerBIOutputDataSource DeserializePowerBIOutputDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> refreshToken = default;
             Optional<string> tokenUserPrincipalName = default;
@@ -77,12 +81,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,32 +95,32 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("refreshToken"))
+                        if (property0.NameEquals("refreshToken"u8))
                         {
                             refreshToken = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("tokenUserPrincipalName"))
+                        if (property0.NameEquals("tokenUserPrincipalName"u8))
                         {
                             tokenUserPrincipalName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("tokenUserDisplayName"))
+                        if (property0.NameEquals("tokenUserDisplayName"u8))
                         {
                             tokenUserDisplayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("dataset"))
+                        if (property0.NameEquals("dataset"u8))
                         {
                             dataset = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("table"))
+                        if (property0.NameEquals("table"u8))
                         {
                             table = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("groupId"))
+                        if (property0.NameEquals("groupId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -126,12 +130,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             groupId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("groupName"))
+                        if (property0.NameEquals("groupName"u8))
                         {
                             groupName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("authenticationMode"))
+                        if (property0.NameEquals("authenticationMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CoresUsed))
             {
-                writer.WritePropertyName("coresUsed");
+                writer.WritePropertyName("coresUsed"u8);
                 writer.WriteNumberValue(CoresUsed.Value);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static QuotaInfo DeserializeQuotaInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> coresUsed = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("coresUsed"))
+                if (property.NameEquals("coresUsed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

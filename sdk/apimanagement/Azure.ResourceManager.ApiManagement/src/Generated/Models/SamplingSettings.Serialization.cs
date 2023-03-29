@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SamplingType))
             {
-                writer.WritePropertyName("samplingType");
+                writer.WritePropertyName("samplingType"u8);
                 writer.WriteStringValue(SamplingType.Value.ToString());
             }
             if (Optional.IsDefined(Percentage))
             {
-                writer.WritePropertyName("percentage");
+                writer.WritePropertyName("percentage"u8);
                 writer.WriteNumberValue(Percentage.Value);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static SamplingSettings DeserializeSamplingSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SamplingType> samplingType = default;
             Optional<double> percentage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("samplingType"))
+                if (property.NameEquals("samplingType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     samplingType = new SamplingType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("percentage"))
+                if (property.NameEquals("percentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

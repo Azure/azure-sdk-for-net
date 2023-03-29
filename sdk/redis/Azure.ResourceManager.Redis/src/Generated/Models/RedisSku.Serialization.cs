@@ -15,33 +15,37 @@ namespace Azure.ResourceManager.Redis.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            writer.WritePropertyName("family");
+            writer.WritePropertyName("family"u8);
             writer.WriteStringValue(Family.ToString());
-            writer.WritePropertyName("capacity");
+            writer.WritePropertyName("capacity"u8);
             writer.WriteNumberValue(Capacity);
             writer.WriteEndObject();
         }
 
         internal static RedisSku DeserializeRedisSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RedisSkuName name = default;
             RedisSkuFamily family = default;
             int capacity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = new RedisSkuName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("family"))
+                if (property.NameEquals("family"u8))
                 {
                     family = new RedisSkuFamily(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("capacity"))
+                if (property.NameEquals("capacity"u8))
                 {
                     capacity = property.Value.GetInt32();
                     continue;

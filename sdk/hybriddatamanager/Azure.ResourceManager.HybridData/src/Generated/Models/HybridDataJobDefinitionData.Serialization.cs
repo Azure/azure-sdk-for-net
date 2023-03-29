@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.HybridData
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("dataSourceId");
+            writer.WritePropertyName("dataSourceId"u8);
             writer.WriteStringValue(DataSourceId);
-            writer.WritePropertyName("dataSinkId");
+            writer.WritePropertyName("dataSinkId"u8);
             writer.WriteStringValue(DataSinkId);
             if (Optional.IsCollectionDefined(Schedules))
             {
-                writer.WritePropertyName("schedules");
+                writer.WritePropertyName("schedules"u8);
                 writer.WriteStartArray();
                 foreach (var item in Schedules)
                 {
@@ -35,26 +35,26 @@ namespace Azure.ResourceManager.HybridData
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("state");
+            writer.WritePropertyName("state"u8);
             writer.WriteStringValue(State.ToSerialString());
             if (Optional.IsDefined(LastModifiedOn))
             {
-                writer.WritePropertyName("lastModifiedTime");
+                writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             if (Optional.IsDefined(RunLocation))
             {
-                writer.WritePropertyName("runLocation");
+                writer.WritePropertyName("runLocation"u8);
                 writer.WriteStringValue(RunLocation.Value.ToSerialString());
             }
             if (Optional.IsDefined(UserConfirmation))
             {
-                writer.WritePropertyName("userConfirmation");
+                writer.WritePropertyName("userConfirmation"u8);
                 writer.WriteStringValue(UserConfirmation.Value.ToSerialString());
             }
             if (Optional.IsDefined(DataServiceInput))
             {
-                writer.WritePropertyName("dataServiceInput");
+                writer.WritePropertyName("dataServiceInput"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DataServiceInput);
 #else
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HybridData
             }
             if (Optional.IsCollectionDefined(CustomerSecrets))
             {
-                writer.WritePropertyName("customerSecrets");
+                writer.WritePropertyName("customerSecrets"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomerSecrets)
                 {
@@ -77,6 +77,10 @@ namespace Azure.ResourceManager.HybridData
 
         internal static HybridDataJobDefinitionData DeserializeHybridDataJobDefinitionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -92,22 +96,22 @@ namespace Azure.ResourceManager.HybridData
             Optional<IList<HybridDataCustomerSecret>> customerSecrets = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -117,7 +121,7 @@ namespace Azure.ResourceManager.HybridData
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,17 +130,17 @@ namespace Azure.ResourceManager.HybridData
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("dataSourceId"))
+                        if (property0.NameEquals("dataSourceId"u8))
                         {
                             dataSourceId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("dataSinkId"))
+                        if (property0.NameEquals("dataSinkId"u8))
                         {
                             dataSinkId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("schedules"))
+                        if (property0.NameEquals("schedules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -151,12 +155,12 @@ namespace Azure.ResourceManager.HybridData
                             schedules = array;
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             state = property0.Value.GetString().ToHybridDataState();
                             continue;
                         }
-                        if (property0.NameEquals("lastModifiedTime"))
+                        if (property0.NameEquals("lastModifiedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -166,7 +170,7 @@ namespace Azure.ResourceManager.HybridData
                             lastModifiedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("runLocation"))
+                        if (property0.NameEquals("runLocation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -176,7 +180,7 @@ namespace Azure.ResourceManager.HybridData
                             runLocation = property0.Value.GetString().ToHybridDataJobRunLocation();
                             continue;
                         }
-                        if (property0.NameEquals("userConfirmation"))
+                        if (property0.NameEquals("userConfirmation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -186,7 +190,7 @@ namespace Azure.ResourceManager.HybridData
                             userConfirmation = property0.Value.GetString().ToUserConfirmationSetting();
                             continue;
                         }
-                        if (property0.NameEquals("dataServiceInput"))
+                        if (property0.NameEquals("dataServiceInput"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -196,7 +200,7 @@ namespace Azure.ResourceManager.HybridData
                             dataServiceInput = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("customerSecrets"))
+                        if (property0.NameEquals("customerSecrets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

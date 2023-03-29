@@ -1,12 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Azure.ResourceManager.Resources;
 using System.Threading;
 using Azure.ResourceManager.Reservations.Models;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations
 {
@@ -36,7 +34,7 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> An async collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ReservationDetailResource> GetReservationDetailsAsync(this TenantResource tenantResource, string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
         {
-            TenantGetReservationDetailsOptions options = new TenantGetReservationDetailsOptions();
+            TenantResourceGetReservationDetailsOptions options = new TenantResourceGetReservationDetailsOptions();
             options.Filter = filter;
             options.Orderby = orderby;
             options.RefreshSummary = refreshSummary;
@@ -71,7 +69,7 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> A collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ReservationDetailResource> GetReservationDetails(this TenantResource tenantResource, string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
         {
-            TenantGetReservationDetailsOptions options = new TenantGetReservationDetailsOptions();
+            TenantResourceGetReservationDetailsOptions options = new TenantResourceGetReservationDetailsOptions();
             options.Filter = filter;
             options.Orderby = orderby;
             options.RefreshSummary = refreshSummary;
@@ -80,6 +78,74 @@ namespace Azure.ResourceManager.Reservations
             options.Take = take;
 
             return tenantResource.GetReservationDetails(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetCatalog</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="reservedResourceType"> The type of the resource for which the skus should be provided. </param>
+        /// <param name="location"> Filters the skus based on the location specified in this parameter. This can be an azure region or global. </param>
+        /// <param name="publisherId"> Publisher id used to get the third party products. </param>
+        /// <param name="offerId"> Offer id used to get the third party products. </param>
+        /// <param name="planId"> Plan id used to get the third party products. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ReservationCatalog> GetCatalogAsync(this SubscriptionResource subscriptionResource, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
+        {
+            SubscriptionResourceGetCatalogOptions options = new SubscriptionResourceGetCatalogOptions
+            {
+                ReservedResourceType = reservedResourceType,
+                Location = location,
+                PublisherId = publisherId,
+                OfferId = offerId,
+                PlanId = planId
+            };
+            return subscriptionResource.GetCatalogAsync(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetCatalog</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="reservedResourceType"> The type of the resource for which the skus should be provided. </param>
+        /// <param name="location"> Filters the skus based on the location specified in this parameter. This can be an azure region or global. </param>
+        /// <param name="publisherId"> Publisher id used to get the third party products. </param>
+        /// <param name="offerId"> Offer id used to get the third party products. </param>
+        /// <param name="planId"> Plan id used to get the third party products. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReservationCatalog> GetCatalog(this SubscriptionResource subscriptionResource, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
+        {
+            SubscriptionResourceGetCatalogOptions options = new SubscriptionResourceGetCatalogOptions
+            {
+                ReservedResourceType = reservedResourceType,
+                Location = location,
+                PublisherId = publisherId,
+                OfferId = offerId,
+                PlanId = planId
+            };
+            return subscriptionResource.GetCatalog(options, cancellationToken);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Scopes))
             {
-                writer.WritePropertyName("scopes");
+                writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Scopes)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static LoginScopes DeserializeLoginScopes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> scopes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scopes"))
+                if (property.NameEquals("scopes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

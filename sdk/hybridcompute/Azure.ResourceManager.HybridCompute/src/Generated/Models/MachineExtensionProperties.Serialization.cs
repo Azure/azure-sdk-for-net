@@ -19,41 +19,46 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ForceUpdateTag))
             {
-                writer.WritePropertyName("forceUpdateTag");
+                writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
             }
             if (Optional.IsDefined(Publisher))
             {
-                writer.WritePropertyName("publisher");
+                writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
             if (Optional.IsDefined(MachineExtensionPropertiesType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(MachineExtensionPropertiesType);
             }
             if (Optional.IsDefined(TypeHandlerVersion))
             {
-                writer.WritePropertyName("typeHandlerVersion");
+                writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
             if (Optional.IsDefined(EnableAutomaticUpgrade))
             {
-                writer.WritePropertyName("enableAutomaticUpgrade");
+                writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
             }
             if (Optional.IsDefined(AutoUpgradeMinorVersion))
             {
-                writer.WritePropertyName("autoUpgradeMinorVersion");
+                writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
             if (Optional.IsCollectionDefined(Settings))
             {
-                writer.WritePropertyName("settings");
+                writer.WritePropertyName("settings"u8);
                 writer.WriteStartObject();
                 foreach (var item in Settings)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
@@ -64,11 +69,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             if (Optional.IsCollectionDefined(ProtectedSettings))
             {
-                writer.WritePropertyName("protectedSettings");
+                writer.WritePropertyName("protectedSettings"u8);
                 writer.WriteStartObject();
                 foreach (var item in ProtectedSettings)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
@@ -79,7 +89,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             if (Optional.IsDefined(InstanceView))
             {
-                writer.WritePropertyName("instanceView");
+                writer.WritePropertyName("instanceView"u8);
                 writer.WriteObjectValue(InstanceView);
             }
             writer.WriteEndObject();
@@ -87,6 +97,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static MachineExtensionProperties DeserializeMachineExtensionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> forceUpdateTag = default;
             Optional<string> publisher = default;
             Optional<string> type = default;
@@ -99,27 +113,27 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Optional<MachineExtensionInstanceView> instanceView = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("forceUpdateTag"))
+                if (property.NameEquals("forceUpdateTag"u8))
                 {
                     forceUpdateTag = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publisher"))
+                if (property.NameEquals("publisher"u8))
                 {
                     publisher = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("typeHandlerVersion"))
+                if (property.NameEquals("typeHandlerVersion"u8))
                 {
                     typeHandlerVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enableAutomaticUpgrade"))
+                if (property.NameEquals("enableAutomaticUpgrade"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,7 +143,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     enableAutomaticUpgrade = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("autoUpgradeMinorVersion"))
+                if (property.NameEquals("autoUpgradeMinorVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,7 +153,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     autoUpgradeMinorVersion = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("settings"))
+                if (property.NameEquals("settings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -149,12 +163,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
                     }
                     settings = dictionary;
                     continue;
                 }
-                if (property.NameEquals("protectedSettings"))
+                if (property.NameEquals("protectedSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -164,17 +185,24 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
                     }
                     protectedSettings = dictionary;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     provisioningState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceView"))
+                if (property.NameEquals("instanceView"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -16,12 +16,16 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static LiveOutputListResult DeserializeLiveOutputListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MediaLiveOutputData>> value = default;
             Optional<int> odataCount = default;
             Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +40,7 @@ namespace Azure.ResourceManager.Media.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("@odata.count"))
+                if (property.NameEquals("@odata.count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.Media.Models
                     odataCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("@odata.nextLink"))
+                if (property.NameEquals("@odata.nextLink"u8))
                 {
                     odataNextLink = property.Value.GetString();
                     continue;

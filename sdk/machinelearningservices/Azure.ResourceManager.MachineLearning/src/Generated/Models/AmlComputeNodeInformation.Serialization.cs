@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static AmlComputeNodeInformation DeserializeAmlComputeNodeInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nodeId = default;
             Optional<IPAddress> privateIPAddress = default;
             Optional<IPAddress> publicIPAddress = default;
@@ -23,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> runId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nodeId"))
+                if (property.NameEquals("nodeId"u8))
                 {
                     nodeId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateIpAddress"))
+                if (property.NameEquals("privateIpAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     privateIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("publicIpAddress"))
+                if (property.NameEquals("publicIpAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     publicIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     port = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("nodeState"))
+                if (property.NameEquals("nodeState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     nodeState = new MachineLearningNodeState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("runId"))
+                if (property.NameEquals("runId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

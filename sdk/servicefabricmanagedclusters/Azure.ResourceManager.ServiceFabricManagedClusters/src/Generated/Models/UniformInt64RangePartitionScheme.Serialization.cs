@@ -15,41 +15,45 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("count");
+            writer.WritePropertyName("count"u8);
             writer.WriteNumberValue(Count);
-            writer.WritePropertyName("lowKey");
+            writer.WritePropertyName("lowKey"u8);
             writer.WriteNumberValue(LowKey);
-            writer.WritePropertyName("highKey");
+            writer.WritePropertyName("highKey"u8);
             writer.WriteNumberValue(HighKey);
-            writer.WritePropertyName("partitionScheme");
+            writer.WritePropertyName("partitionScheme"u8);
             writer.WriteStringValue(PartitionScheme.ToString());
             writer.WriteEndObject();
         }
 
         internal static UniformInt64RangePartitionScheme DeserializeUniformInt64RangePartitionScheme(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int count = default;
             long lowKey = default;
             long highKey = default;
             PartitionScheme partitionScheme = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     count = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("lowKey"))
+                if (property.NameEquals("lowKey"u8))
                 {
                     lowKey = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("highKey"))
+                if (property.NameEquals("highKey"u8))
                 {
                     highKey = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("partitionScheme"))
+                if (property.NameEquals("partitionScheme"u8))
                 {
                     partitionScheme = new PartitionScheme(property.Value.GetString());
                     continue;

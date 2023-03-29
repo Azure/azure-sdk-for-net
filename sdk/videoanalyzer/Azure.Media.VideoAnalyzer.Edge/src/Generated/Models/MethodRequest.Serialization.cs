@@ -17,7 +17,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ApiVersion))
             {
-                writer.WritePropertyName("@apiVersion");
+                writer.WritePropertyName("@apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
             writer.WriteEndObject();
@@ -25,6 +25,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static MethodRequest DeserializeMethodRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("methodName", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

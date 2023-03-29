@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BuildpackId))
             {
-                writer.WritePropertyName("buildpackId");
+                writer.WritePropertyName("buildpackId"u8);
                 writer.WriteStringValue(BuildpackId);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static SupportedBuildpackResourceProperties DeserializeSupportedBuildpackResourceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> buildpackId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("buildpackId"))
+                if (property.NameEquals("buildpackId"u8))
                 {
                     buildpackId = property.Value.GetString();
                     continue;

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PlacementConstraints))
             {
-                writer.WritePropertyName("placementConstraints");
+                writer.WritePropertyName("placementConstraints"u8);
                 writer.WriteStringValue(PlacementConstraints);
             }
             if (Optional.IsCollectionDefined(CorrelationScheme))
             {
-                writer.WritePropertyName("correlationScheme");
+                writer.WritePropertyName("correlationScheme"u8);
                 writer.WriteStartArray();
                 foreach (var item in CorrelationScheme)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             if (Optional.IsCollectionDefined(ServiceLoadMetrics))
             {
-                writer.WritePropertyName("serviceLoadMetrics");
+                writer.WritePropertyName("serviceLoadMetrics"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServiceLoadMetrics)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             if (Optional.IsCollectionDefined(ServicePlacementPolicies))
             {
-                writer.WritePropertyName("servicePlacementPolicies");
+                writer.WritePropertyName("servicePlacementPolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServicePlacementPolicies)
                 {
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             if (Optional.IsDefined(DefaultMoveCost))
             {
-                writer.WritePropertyName("defaultMoveCost");
+                writer.WritePropertyName("defaultMoveCost"u8);
                 writer.WriteStringValue(DefaultMoveCost.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ScalingPolicies))
             {
-                writer.WritePropertyName("scalingPolicies");
+                writer.WritePropertyName("scalingPolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in ScalingPolicies)
                 {
@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ManagedServiceBaseProperties DeserializeManagedServiceBaseProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> placementConstraints = default;
             Optional<IList<ManagedServiceCorrelation>> correlationScheme = default;
             Optional<IList<ManagedServiceLoadMetric>> serviceLoadMetrics = default;
@@ -79,12 +83,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Optional<IList<ManagedServiceScalingPolicy>> scalingPolicies = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("placementConstraints"))
+                if (property.NameEquals("placementConstraints"u8))
                 {
                     placementConstraints = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("correlationScheme"))
+                if (property.NameEquals("correlationScheme"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     correlationScheme = array;
                     continue;
                 }
-                if (property.NameEquals("serviceLoadMetrics"))
+                if (property.NameEquals("serviceLoadMetrics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +118,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     serviceLoadMetrics = array;
                     continue;
                 }
-                if (property.NameEquals("servicePlacementPolicies"))
+                if (property.NameEquals("servicePlacementPolicies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,7 +133,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     servicePlacementPolicies = array;
                     continue;
                 }
-                if (property.NameEquals("defaultMoveCost"))
+                if (property.NameEquals("defaultMoveCost"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,7 +143,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     defaultMoveCost = new ServiceFabricManagedServiceMoveCost(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scalingPolicies"))
+                if (property.NameEquals("scalingPolicies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

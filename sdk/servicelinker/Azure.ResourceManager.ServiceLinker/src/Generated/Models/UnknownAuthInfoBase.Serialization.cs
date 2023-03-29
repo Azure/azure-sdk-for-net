@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("authType");
+            writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToString());
             writer.WriteEndObject();
         }
 
         internal static UnknownAuthInfoBase DeserializeUnknownAuthInfoBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LinkerAuthType authType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("authType"))
+                if (property.NameEquals("authType"u8))
                 {
                     authType = new LinkerAuthType(property.Value.GetString());
                     continue;

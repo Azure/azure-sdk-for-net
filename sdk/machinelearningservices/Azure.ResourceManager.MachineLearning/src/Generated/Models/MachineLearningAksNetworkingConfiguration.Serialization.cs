@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SubnetId))
             {
-                writer.WritePropertyName("subnetId");
+                writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
             if (Optional.IsDefined(ServiceCidr))
             {
-                writer.WritePropertyName("serviceCidr");
+                writer.WritePropertyName("serviceCidr"u8);
                 writer.WriteStringValue(ServiceCidr);
             }
             if (Optional.IsDefined(DnsServiceIP))
             {
-                writer.WritePropertyName("dnsServiceIP");
+                writer.WritePropertyName("dnsServiceIP"u8);
                 writer.WriteStringValue(DnsServiceIP);
             }
             if (Optional.IsDefined(DockerBridgeCidr))
             {
-                writer.WritePropertyName("dockerBridgeCidr");
+                writer.WritePropertyName("dockerBridgeCidr"u8);
                 writer.WriteStringValue(DockerBridgeCidr);
             }
             writer.WriteEndObject();
@@ -40,13 +40,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningAksNetworkingConfiguration DeserializeMachineLearningAksNetworkingConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> subnetId = default;
             Optional<string> serviceCidr = default;
             Optional<string> dnsServiceIP = default;
             Optional<string> dockerBridgeCidr = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subnetId"))
+                if (property.NameEquals("subnetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,17 +60,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("serviceCidr"))
+                if (property.NameEquals("serviceCidr"u8))
                 {
                     serviceCidr = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dnsServiceIP"))
+                if (property.NameEquals("dnsServiceIP"u8))
                 {
                     dnsServiceIP = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dockerBridgeCidr"))
+                if (property.NameEquals("dockerBridgeCidr"u8))
                 {
                     dockerBridgeCidr = property.Value.GetString();
                     continue;

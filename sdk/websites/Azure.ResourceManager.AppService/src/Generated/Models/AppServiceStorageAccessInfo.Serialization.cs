@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(StorageType.Value.ToSerialString());
             }
             if (Optional.IsDefined(AccountName))
             {
-                writer.WritePropertyName("accountName");
+                writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
             if (Optional.IsDefined(ShareName))
             {
-                writer.WritePropertyName("shareName");
+                writer.WritePropertyName("shareName"u8);
                 writer.WriteStringValue(ShareName);
             }
             if (Optional.IsDefined(AccessKey))
             {
-                writer.WritePropertyName("accessKey");
+                writer.WritePropertyName("accessKey"u8);
                 writer.WriteStringValue(AccessKey);
             }
             if (Optional.IsDefined(MountPath))
             {
-                writer.WritePropertyName("mountPath");
+                writer.WritePropertyName("mountPath"u8);
                 writer.WriteStringValue(MountPath);
             }
             writer.WriteEndObject();
@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceStorageAccessInfo DeserializeAppServiceStorageAccessInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppServiceStorageType> type = default;
             Optional<string> accountName = default;
             Optional<string> shareName = default;
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<AppServiceStorageAccountState> state = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,27 +67,27 @@ namespace Azure.ResourceManager.AppService.Models
                     type = property.Value.GetString().ToAppServiceStorageType();
                     continue;
                 }
-                if (property.NameEquals("accountName"))
+                if (property.NameEquals("accountName"u8))
                 {
                     accountName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("shareName"))
+                if (property.NameEquals("shareName"u8))
                 {
                     shareName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accessKey"))
+                if (property.NameEquals("accessKey"u8))
                 {
                     accessKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mountPath"))
+                if (property.NameEquals("mountPath"u8))
                 {
                     mountPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

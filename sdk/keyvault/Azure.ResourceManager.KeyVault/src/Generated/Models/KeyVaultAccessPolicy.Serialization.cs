@@ -16,39 +16,43 @@ namespace Azure.ResourceManager.KeyVault.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tenantId");
+            writer.WritePropertyName("tenantId"u8);
             writer.WriteStringValue(TenantId);
-            writer.WritePropertyName("objectId");
+            writer.WritePropertyName("objectId"u8);
             writer.WriteStringValue(ObjectId);
             if (Optional.IsDefined(ApplicationId))
             {
-                writer.WritePropertyName("applicationId");
+                writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId.Value);
             }
-            writer.WritePropertyName("permissions");
+            writer.WritePropertyName("permissions"u8);
             writer.WriteObjectValue(Permissions);
             writer.WriteEndObject();
         }
 
         internal static KeyVaultAccessPolicy DeserializeKeyVaultAccessPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Guid tenantId = default;
             string objectId = default;
             Optional<Guid> applicationId = default;
             IdentityAccessPermissions permissions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("objectId"))
+                if (property.NameEquals("objectId"u8))
                 {
                     objectId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("applicationId"))
+                if (property.NameEquals("applicationId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     applicationId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("permissions"))
+                if (property.NameEquals("permissions"u8))
                 {
                     permissions = IdentityAccessPermissions.DeserializeIdentityAccessPermissions(property.Value);
                     continue;

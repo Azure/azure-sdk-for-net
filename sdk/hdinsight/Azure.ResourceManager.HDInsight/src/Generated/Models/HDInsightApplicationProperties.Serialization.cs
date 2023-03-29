@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ComputeProfile))
             {
-                writer.WritePropertyName("computeProfile");
+                writer.WritePropertyName("computeProfile"u8);
                 writer.WriteObjectValue(ComputeProfile);
             }
             if (Optional.IsCollectionDefined(InstallScriptActions))
             {
-                writer.WritePropertyName("installScriptActions");
+                writer.WritePropertyName("installScriptActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in InstallScriptActions)
                 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             if (Optional.IsCollectionDefined(UninstallScriptActions))
             {
-                writer.WritePropertyName("uninstallScriptActions");
+                writer.WritePropertyName("uninstallScriptActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in UninstallScriptActions)
                 {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             if (Optional.IsCollectionDefined(HttpsEndpoints))
             {
-                writer.WritePropertyName("httpsEndpoints");
+                writer.WritePropertyName("httpsEndpoints"u8);
                 writer.WriteStartArray();
                 foreach (var item in HttpsEndpoints)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             if (Optional.IsCollectionDefined(SshEndpoints))
             {
-                writer.WritePropertyName("sshEndpoints");
+                writer.WritePropertyName("sshEndpoints"u8);
                 writer.WriteStartArray();
                 foreach (var item in SshEndpoints)
                 {
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             if (Optional.IsDefined(ApplicationType))
             {
-                writer.WritePropertyName("applicationType");
+                writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType);
             }
             if (Optional.IsCollectionDefined(Errors))
             {
-                writer.WritePropertyName("errors");
+                writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             if (Optional.IsCollectionDefined(PrivateLinkConfigurations))
             {
-                writer.WritePropertyName("privateLinkConfigurations");
+                writer.WritePropertyName("privateLinkConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkConfigurations)
                 {
@@ -93,6 +93,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightApplicationProperties DeserializeHDInsightApplicationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ComputeProfile> computeProfile = default;
             Optional<IList<RuntimeScriptAction>> installScriptActions = default;
             Optional<IList<RuntimeScriptAction>> uninstallScriptActions = default;
@@ -107,7 +111,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<IList<HDInsightPrivateLinkConfiguration>> privateLinkConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("computeProfile"))
+                if (property.NameEquals("computeProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -117,7 +121,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     computeProfile = ComputeProfile.DeserializeComputeProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("installScriptActions"))
+                if (property.NameEquals("installScriptActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +136,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     installScriptActions = array;
                     continue;
                 }
-                if (property.NameEquals("uninstallScriptActions"))
+                if (property.NameEquals("uninstallScriptActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -147,7 +151,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     uninstallScriptActions = array;
                     continue;
                 }
-                if (property.NameEquals("httpsEndpoints"))
+                if (property.NameEquals("httpsEndpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -162,7 +166,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     httpsEndpoints = array;
                     continue;
                 }
-                if (property.NameEquals("sshEndpoints"))
+                if (property.NameEquals("sshEndpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -177,22 +181,22 @@ namespace Azure.ResourceManager.HDInsight.Models
                     sshEndpoints = array;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     provisioningState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("applicationType"))
+                if (property.NameEquals("applicationType"u8))
                 {
                     applicationType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("applicationState"))
+                if (property.NameEquals("applicationState"u8))
                 {
                     applicationState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -207,7 +211,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("createdDate"))
+                if (property.NameEquals("createdDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -217,12 +221,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                     createdDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("marketplaceIdentifier"))
+                if (property.NameEquals("marketplaceIdentifier"u8))
                 {
                     marketplaceIdentifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateLinkConfigurations"))
+                if (property.NameEquals("privateLinkConfigurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,52 +17,52 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(DiskId))
             {
-                writer.WritePropertyName("diskId");
+                writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
             if (Optional.IsDefined(DiskSizeGB))
             {
-                writer.WritePropertyName("diskSizeGB");
+                writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
             if (Optional.IsDefined(Bus))
             {
-                writer.WritePropertyName("bus");
+                writer.WritePropertyName("bus"u8);
                 writer.WriteNumberValue(Bus.Value);
             }
             if (Optional.IsDefined(Lun))
             {
-                writer.WritePropertyName("lun");
+                writer.WritePropertyName("lun"u8);
                 writer.WriteNumberValue(Lun.Value);
             }
             if (Optional.IsDefined(BusType))
             {
-                writer.WritePropertyName("busType");
+                writer.WritePropertyName("busType"u8);
                 writer.WriteStringValue(BusType);
             }
             if (Optional.IsDefined(VhdType))
             {
-                writer.WritePropertyName("vhdType");
+                writer.WritePropertyName("vhdType"u8);
                 writer.WriteStringValue(VhdType);
             }
             if (Optional.IsDefined(TemplateDiskId))
             {
-                writer.WritePropertyName("templateDiskId");
+                writer.WritePropertyName("templateDiskId"u8);
                 writer.WriteStringValue(TemplateDiskId);
             }
             if (Optional.IsDefined(StorageQoSPolicy))
             {
-                writer.WritePropertyName("storageQoSPolicy");
+                writer.WritePropertyName("storageQoSPolicy"u8);
                 writer.WriteObjectValue(StorageQoSPolicy);
             }
             if (Optional.IsDefined(CreateDiffDisk))
             {
-                writer.WritePropertyName("createDiffDisk");
+                writer.WritePropertyName("createDiffDisk"u8);
                 writer.WriteStringValue(CreateDiffDisk.Value.ToString());
             }
             writer.WriteEndObject();
@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
 
         internal static VirtualDisk DeserializeVirtualDisk(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> displayName = default;
             Optional<string> diskId = default;
@@ -86,22 +90,22 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             Optional<CreateDiffDisk> createDiffDisk = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskId"))
+                if (property.NameEquals("diskId"u8))
                 {
                     diskId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskSizeGB"))
+                if (property.NameEquals("diskSizeGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,7 +115,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     diskSizeGB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxDiskSizeGB"))
+                if (property.NameEquals("maxDiskSizeGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -121,7 +125,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     maxDiskSizeGB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("bus"))
+                if (property.NameEquals("bus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -131,7 +135,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     bus = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("lun"))
+                if (property.NameEquals("lun"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -141,32 +145,32 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     lun = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("busType"))
+                if (property.NameEquals("busType"u8))
                 {
                     busType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vhdType"))
+                if (property.NameEquals("vhdType"u8))
                 {
                     vhdType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("volumeType"))
+                if (property.NameEquals("volumeType"u8))
                 {
                     volumeType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vhdFormatType"))
+                if (property.NameEquals("vhdFormatType"u8))
                 {
                     vhdFormatType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("templateDiskId"))
+                if (property.NameEquals("templateDiskId"u8))
                 {
                     templateDiskId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageQoSPolicy"))
+                if (property.NameEquals("storageQoSPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -176,7 +180,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     storageQoSPolicy = StorageQoSPolicyDetails.DeserializeStorageQoSPolicyDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("createDiffDisk"))
+                if (property.NameEquals("createDiffDisk"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

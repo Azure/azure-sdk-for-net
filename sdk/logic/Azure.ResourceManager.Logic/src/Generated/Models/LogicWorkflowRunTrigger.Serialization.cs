@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static LogicWorkflowRunTrigger DeserializeLogicWorkflowRunTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<BinaryData> inputs = default;
             Optional<LogicContentLink> inputsLink = default;
@@ -31,12 +35,12 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<BinaryData> trackedProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("inputs"))
+                if (property.NameEquals("inputs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.Logic.Models
                     inputs = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("inputsLink"))
+                if (property.NameEquals("inputsLink"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.Logic.Models
                     inputsLink = LogicContentLink.DeserializeLogicContentLink(property.Value);
                     continue;
                 }
-                if (property.NameEquals("outputs"))
+                if (property.NameEquals("outputs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.Logic.Models
                     outputs = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("outputsLink"))
+                if (property.NameEquals("outputsLink"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
                     outputsLink = LogicContentLink.DeserializeLogicContentLink(property.Value);
                     continue;
                 }
-                if (property.NameEquals("scheduledTime"))
+                if (property.NameEquals("scheduledTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +90,7 @@ namespace Azure.ResourceManager.Logic.Models
                     scheduledTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +100,7 @@ namespace Azure.ResourceManager.Logic.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,7 +110,7 @@ namespace Azure.ResourceManager.Logic.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("trackingId"))
+                if (property.NameEquals("trackingId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,7 +120,7 @@ namespace Azure.ResourceManager.Logic.Models
                     trackingId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("correlation"))
+                if (property.NameEquals("correlation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,12 +130,12 @@ namespace Azure.ResourceManager.Logic.Models
                     correlation = Correlation.DeserializeCorrelation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -141,7 +145,7 @@ namespace Azure.ResourceManager.Logic.Models
                     status = new LogicWorkflowStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -151,7 +155,7 @@ namespace Azure.ResourceManager.Logic.Models
                     error = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("trackedProperties"))
+                if (property.NameEquals("trackedProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

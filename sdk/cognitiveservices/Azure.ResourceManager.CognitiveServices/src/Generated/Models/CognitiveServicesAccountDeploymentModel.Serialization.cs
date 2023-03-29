@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Format))
             {
-                writer.WritePropertyName("format");
+                writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
             writer.WriteEndObject();
@@ -35,28 +35,32 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CognitiveServicesAccountDeploymentModel DeserializeCognitiveServicesAccountDeploymentModel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> format = default;
             Optional<string> name = default;
             Optional<string> version = default;
             Optional<ServiceAccountCallRateLimit> callRateLimit = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("format"))
+                if (property.NameEquals("format"u8))
                 {
                     format = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("callRateLimit"))
+                if (property.NameEquals("callRateLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

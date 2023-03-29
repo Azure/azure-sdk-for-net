@@ -15,11 +15,15 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static RestorePointInstanceView DeserializeRestorePointInstanceView(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DiskRestorePointInstanceView>> diskRestorePoints = default;
             Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskRestorePoints"))
+                if (property.NameEquals("diskRestorePoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
                     diskRestorePoints = array;
                     continue;
                 }
-                if (property.NameEquals("statuses"))
+                if (property.NameEquals("statuses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

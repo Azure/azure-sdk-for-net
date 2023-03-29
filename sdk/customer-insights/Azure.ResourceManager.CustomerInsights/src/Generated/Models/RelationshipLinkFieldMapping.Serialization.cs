@@ -15,31 +15,35 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("interactionFieldName");
+            writer.WritePropertyName("interactionFieldName"u8);
             writer.WriteStringValue(InteractionFieldName);
             if (Optional.IsDefined(LinkType))
             {
-                writer.WritePropertyName("linkType");
+                writer.WritePropertyName("linkType"u8);
                 writer.WriteStringValue(LinkType.Value.ToSerialString());
             }
-            writer.WritePropertyName("relationshipFieldName");
+            writer.WritePropertyName("relationshipFieldName"u8);
             writer.WriteStringValue(RelationshipFieldName);
             writer.WriteEndObject();
         }
 
         internal static RelationshipLinkFieldMapping DeserializeRelationshipLinkFieldMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string interactionFieldName = default;
             Optional<LinkType> linkType = default;
             string relationshipFieldName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("interactionFieldName"))
+                if (property.NameEquals("interactionFieldName"u8))
                 {
                     interactionFieldName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("linkType"))
+                if (property.NameEquals("linkType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +53,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     linkType = property.Value.GetString().ToLinkType();
                     continue;
                 }
-                if (property.NameEquals("relationshipFieldName"))
+                if (property.NameEquals("relationshipFieldName"u8))
                 {
                     relationshipFieldName = property.Value.GetString();
                     continue;

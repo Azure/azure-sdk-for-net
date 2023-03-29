@@ -15,12 +15,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static RecoveryPointProperties DeserializeRecoveryPointProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> recoveryPointTime = default;
             Optional<string> recoveryPointType = default;
             Optional<ProviderSpecificRecoveryPointDetails> providerSpecificDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryPointTime"))
+                if (property.NameEquals("recoveryPointTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,12 +34,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     recoveryPointTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("recoveryPointType"))
+                if (property.NameEquals("recoveryPointType"u8))
                 {
                     recoveryPointType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providerSpecificDetails"))
+                if (property.NameEquals("providerSpecificDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(BusinessIdentities))
             {
-                writer.WritePropertyName("businessIdentities");
+                writer.WritePropertyName("businessIdentities"u8);
                 writer.WriteStartArray();
                 foreach (var item in BusinessIdentities)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static B2BPartnerContent DeserializeB2BPartnerContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<IntegrationAccountBusinessIdentity>> businessIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("businessIdentities"))
+                if (property.NameEquals("businessIdentities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

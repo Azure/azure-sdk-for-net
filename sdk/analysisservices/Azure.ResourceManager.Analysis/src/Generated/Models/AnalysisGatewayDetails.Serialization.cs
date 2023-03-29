@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Analysis.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(GatewayResourceId))
             {
-                writer.WritePropertyName("gatewayResourceId");
+                writer.WritePropertyName("gatewayResourceId"u8);
                 writer.WriteStringValue(GatewayResourceId);
             }
             writer.WriteEndObject();
@@ -26,22 +26,26 @@ namespace Azure.ResourceManager.Analysis.Models
 
         internal static AnalysisGatewayDetails DeserializeAnalysisGatewayDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> gatewayResourceId = default;
             Optional<string> gatewayObjectId = default;
             Optional<Uri> dmtsClusterUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("gatewayResourceId"))
+                if (property.NameEquals("gatewayResourceId"u8))
                 {
                     gatewayResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("gatewayObjectId"))
+                if (property.NameEquals("gatewayObjectId"u8))
                 {
                     gatewayObjectId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dmtsClusterUri"))
+                if (property.NameEquals("dmtsClusterUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

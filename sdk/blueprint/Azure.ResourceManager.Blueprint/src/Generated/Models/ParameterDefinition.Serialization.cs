@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.Blueprint.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TemplateParameterType.ToString());
             if (Optional.IsDefined(DefaultValue))
             {
-                writer.WritePropertyName("defaultValue");
+                writer.WritePropertyName("defaultValue"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DefaultValue);
 #else
@@ -30,10 +30,15 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
             if (Optional.IsCollectionDefined(AllowedValues))
             {
-                writer.WritePropertyName("allowedValues");
+                writer.WritePropertyName("allowedValues"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedValues)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
@@ -42,21 +47,21 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("metadata");
+            writer.WritePropertyName("metadata"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(StrongType))
             {
-                writer.WritePropertyName("strongType");
+                writer.WritePropertyName("strongType"u8);
                 writer.WriteStringValue(StrongType);
             }
             writer.WriteEndObject();
@@ -65,6 +70,10 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static ParameterDefinition DeserializeParameterDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TemplateParameterType type = default;
             Optional<BinaryData> defaultValue = default;
             Optional<IList<BinaryData>> allowedValues = default;
@@ -73,12 +82,12 @@ namespace Azure.ResourceManager.Blueprint.Models
             Optional<string> strongType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new TemplateParameterType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("defaultValue"))
+                if (property.NameEquals("defaultValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +97,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     defaultValue = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("allowedValues"))
+                if (property.NameEquals("allowedValues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,12 +107,19 @@ namespace Azure.ResourceManager.Blueprint.Models
                     List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BinaryData.FromString(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BinaryData.FromString(item.GetRawText()));
+                        }
                     }
                     allowedValues = array;
                     continue;
                 }
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,17 +128,17 @@ namespace Azure.ResourceManager.Blueprint.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("strongType"))
+                        if (property0.NameEquals("strongType"u8))
                         {
                             strongType = property0.Value.GetString();
                             continue;

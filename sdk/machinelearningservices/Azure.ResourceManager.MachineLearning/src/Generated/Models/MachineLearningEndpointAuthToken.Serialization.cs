@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningEndpointAuthToken DeserializeMachineLearningEndpointAuthToken(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> accessToken = default;
             Optional<DateTimeOffset> expiryTimeUtc = default;
             Optional<DateTimeOffset> refreshAfterTimeUtc = default;
             Optional<string> tokenType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accessToken"))
+                if (property.NameEquals("accessToken"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     accessToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expiryTimeUtc"))
+                if (property.NameEquals("expiryTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     expiryTimeUtc = property.Value.GetDateTimeOffset("U");
                     continue;
                 }
-                if (property.NameEquals("refreshAfterTimeUtc"))
+                if (property.NameEquals("refreshAfterTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     refreshAfterTimeUtc = property.Value.GetDateTimeOffset("U");
                     continue;
                 }
-                if (property.NameEquals("tokenType"))
+                if (property.NameEquals("tokenType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

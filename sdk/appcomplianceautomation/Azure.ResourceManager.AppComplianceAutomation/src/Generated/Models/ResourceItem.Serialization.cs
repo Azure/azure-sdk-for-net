@@ -14,28 +14,32 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal static ResourceItem DeserializeResourceItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> subscriptionId = default;
             Optional<string> resourceGroup = default;
             Optional<string> resourceType = default;
             Optional<string> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceGroup"))
+                if (property.NameEquals("resourceGroup"u8))
                 {
                     resourceGroup = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = property.Value.GetString();
                     continue;

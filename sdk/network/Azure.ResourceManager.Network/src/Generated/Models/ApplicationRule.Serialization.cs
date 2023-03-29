@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(SourceAddresses))
             {
-                writer.WritePropertyName("sourceAddresses");
+                writer.WritePropertyName("sourceAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in SourceAddresses)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(DestinationAddresses))
             {
-                writer.WritePropertyName("destinationAddresses");
+                writer.WritePropertyName("destinationAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in DestinationAddresses)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(Protocols))
             {
-                writer.WritePropertyName("protocols");
+                writer.WritePropertyName("protocols"u8);
                 writer.WriteStartArray();
                 foreach (var item in Protocols)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(TargetFqdns))
             {
-                writer.WritePropertyName("targetFqdns");
+                writer.WritePropertyName("targetFqdns"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetFqdns)
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(TargetUrls))
             {
-                writer.WritePropertyName("targetUrls");
+                writer.WritePropertyName("targetUrls"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetUrls)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(FqdnTags))
             {
-                writer.WritePropertyName("fqdnTags");
+                writer.WritePropertyName("fqdnTags"u8);
                 writer.WriteStartArray();
                 foreach (var item in FqdnTags)
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(SourceIPGroups))
             {
-                writer.WritePropertyName("sourceIpGroups");
+                writer.WritePropertyName("sourceIpGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in SourceIPGroups)
                 {
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(TerminateTLS))
             {
-                writer.WritePropertyName("terminateTLS");
+                writer.WritePropertyName("terminateTLS"u8);
                 writer.WriteBooleanValue(TerminateTLS.Value);
             }
             if (Optional.IsCollectionDefined(WebCategories))
             {
-                writer.WritePropertyName("webCategories");
+                writer.WritePropertyName("webCategories"u8);
                 writer.WriteStartArray();
                 foreach (var item in WebCategories)
                 {
@@ -103,21 +103,25 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("ruleType");
+            writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
             writer.WriteEndObject();
         }
 
         internal static ApplicationRule DeserializeApplicationRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> sourceAddresses = default;
             Optional<IList<string>> destinationAddresses = default;
             Optional<IList<FirewallPolicyRuleApplicationProtocol>> protocols = default;
@@ -132,7 +136,7 @@ namespace Azure.ResourceManager.Network.Models
             FirewallPolicyRuleType ruleType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceAddresses"))
+                if (property.NameEquals("sourceAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -147,7 +151,7 @@ namespace Azure.ResourceManager.Network.Models
                     sourceAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("destinationAddresses"))
+                if (property.NameEquals("destinationAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -162,7 +166,7 @@ namespace Azure.ResourceManager.Network.Models
                     destinationAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("protocols"))
+                if (property.NameEquals("protocols"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -177,7 +181,7 @@ namespace Azure.ResourceManager.Network.Models
                     protocols = array;
                     continue;
                 }
-                if (property.NameEquals("targetFqdns"))
+                if (property.NameEquals("targetFqdns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -192,7 +196,7 @@ namespace Azure.ResourceManager.Network.Models
                     targetFqdns = array;
                     continue;
                 }
-                if (property.NameEquals("targetUrls"))
+                if (property.NameEquals("targetUrls"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -207,7 +211,7 @@ namespace Azure.ResourceManager.Network.Models
                     targetUrls = array;
                     continue;
                 }
-                if (property.NameEquals("fqdnTags"))
+                if (property.NameEquals("fqdnTags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -222,7 +226,7 @@ namespace Azure.ResourceManager.Network.Models
                     fqdnTags = array;
                     continue;
                 }
-                if (property.NameEquals("sourceIpGroups"))
+                if (property.NameEquals("sourceIpGroups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -237,7 +241,7 @@ namespace Azure.ResourceManager.Network.Models
                     sourceIPGroups = array;
                     continue;
                 }
-                if (property.NameEquals("terminateTLS"))
+                if (property.NameEquals("terminateTLS"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -247,7 +251,7 @@ namespace Azure.ResourceManager.Network.Models
                     terminateTLS = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("webCategories"))
+                if (property.NameEquals("webCategories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -262,17 +266,17 @@ namespace Azure.ResourceManager.Network.Models
                     webCategories = array;
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ruleType"))
+                if (property.NameEquals("ruleType"u8))
                 {
                     ruleType = new FirewallPolicyRuleType(property.Value.GetString());
                     continue;

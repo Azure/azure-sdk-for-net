@@ -19,22 +19,22 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PricingCurrencyTotal))
             {
-                writer.WritePropertyName("pricingCurrencyTotal");
+                writer.WritePropertyName("pricingCurrencyTotal"u8);
                 writer.WriteObjectValue(PricingCurrencyTotal);
             }
             if (Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("startDate");
+                writer.WritePropertyName("startDate"u8);
                 writer.WriteStringValue(StartOn.Value, "D");
             }
             if (Optional.IsDefined(NextPaymentDueOn))
             {
-                writer.WritePropertyName("nextPaymentDueDate");
+                writer.WritePropertyName("nextPaymentDueDate"u8);
                 writer.WriteStringValue(NextPaymentDueOn.Value, "D");
             }
             if (Optional.IsCollectionDefined(Transactions))
             {
-                writer.WritePropertyName("transactions");
+                writer.WritePropertyName("transactions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Transactions)
                 {
@@ -47,13 +47,17 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         internal static BillingPlanInformation DeserializeBillingPlanInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BillingBenefitsPrice> pricingCurrencyTotal = default;
             Optional<DateTimeOffset> startDate = default;
             Optional<DateTimeOffset> nextPaymentDueDate = default;
             Optional<IList<SavingsPlanOrderPaymentDetail>> transactions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("pricingCurrencyTotal"))
+                if (property.NameEquals("pricingCurrencyTotal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +67,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     pricingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value);
                     continue;
                 }
-                if (property.NameEquals("startDate"))
+                if (property.NameEquals("startDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +77,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     startDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
-                if (property.NameEquals("nextPaymentDueDate"))
+                if (property.NameEquals("nextPaymentDueDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +87,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     nextPaymentDueDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
-                if (property.NameEquals("transactions"))
+                if (property.NameEquals("transactions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

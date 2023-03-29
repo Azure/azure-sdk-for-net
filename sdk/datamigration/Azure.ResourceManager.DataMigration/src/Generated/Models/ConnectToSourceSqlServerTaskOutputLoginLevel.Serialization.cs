@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static ConnectToSourceSqlServerTaskOutputLoginLevel DeserializeConnectToSourceSqlServerTaskOutputLoginLevel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<LoginType> loginType = default;
             Optional<string> defaultDatabase = default;
@@ -23,12 +27,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("loginType"))
+                if (property.NameEquals("loginType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,12 +42,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     loginType = new LoginType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("defaultDatabase"))
+                if (property.NameEquals("defaultDatabase"u8))
                 {
                     defaultDatabase = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isEnabled"))
+                if (property.NameEquals("isEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("migrationEligibility"))
+                if (property.NameEquals("migrationEligibility"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,12 +67,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     migrationEligibility = MigrationEligibilityInfo.DeserializeMigrationEligibilityInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultType"))
+                if (property.NameEquals("resultType"u8))
                 {
                     resultType = property.Value.GetString();
                     continue;

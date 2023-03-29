@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("uri");
+                writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(StorageAccountId))
             {
-                writer.WritePropertyName("storageAccountId");
+                writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WriteEndObject();
@@ -36,12 +36,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryDiskImageSource DeserializeGalleryDiskImageSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> uri = default;
             Optional<ResourceIdentifier> storageAccountId = default;
             Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("uri"))
+                if (property.NameEquals("uri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageAccountId"))
+                if (property.NameEquals("storageAccountId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
                     storageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Consumption.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Dimensions))
             {
-                writer.WritePropertyName("dimensions");
+                writer.WritePropertyName("dimensions"u8);
                 writer.WriteObjectValue(Dimensions);
             }
             if (Optional.IsDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteObjectValue(Tags);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static BudgetFilterProperties DeserializeBudgetFilterProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BudgetComparisonExpression> dimensions = default;
             Optional<BudgetComparisonExpression> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dimensions"))
+                if (property.NameEquals("dimensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     dimensions = BudgetComparisonExpression.DeserializeBudgetComparisonExpression(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

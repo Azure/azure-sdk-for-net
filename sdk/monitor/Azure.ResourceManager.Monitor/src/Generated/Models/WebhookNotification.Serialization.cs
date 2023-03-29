@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceUri))
             {
-                writer.WritePropertyName("serviceUri");
+                writer.WritePropertyName("serviceUri"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(Properties))
             {
-                writer.WritePropertyName("properties");
+                writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
                 foreach (var item in Properties)
                 {
@@ -38,11 +38,15 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static WebhookNotification DeserializeWebhookNotification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> serviceUri = default;
             Optional<IDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceUri"))
+                if (property.NameEquals("serviceUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     serviceUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,17 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.1 (2023-03-11)
+
+### Other Changes
+- Upgraded dependent `Azure.Core` to `1.30.0`.
+
+## 1.0.0 (2023-03-07)
+
+### Breaking Changes
+- Made `Azure.Developer.LoadTesting.LoadTestAdministrationClient.UploadTestFileAsync` internal
+- Made `Azure.Developer.LoadTesting.LoadTestRunClient.CreateOrUpdateTestRunAsync` internal
 
 ## 1.0.0-beta.2 (2023-01-13)
 
@@ -20,8 +31,7 @@
 - Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestRunClient.ListAppComponents`
 - Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestRunClient.CreateOrUpdateServerMetricsConfig`
 - Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestRunClient.GetServerMetricsConfig`
-- Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.
-`
+- Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.BeginUploadTestFile`
 - Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.BeginTestRun`
 - Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestRunClient.ListMetricNamespacesAsync`
 - Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestRunClient.ListMetricDefinitionsAsync`

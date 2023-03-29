@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Advisor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Problem))
             {
-                writer.WritePropertyName("problem");
+                writer.WritePropertyName("problem"u8);
                 writer.WriteStringValue(Problem);
             }
             if (Optional.IsDefined(Solution))
             {
-                writer.WritePropertyName("solution");
+                writer.WritePropertyName("solution"u8);
                 writer.WriteStringValue(Solution);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.Advisor.Models
 
         internal static ShortDescription DeserializeShortDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> problem = default;
             Optional<string> solution = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("problem"))
+                if (property.NameEquals("problem"u8))
                 {
                     problem = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("solution"))
+                if (property.NameEquals("solution"u8))
                 {
                     solution = property.Value.GetString();
                     continue;

@@ -18,25 +18,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("resourceId");
+            writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
-            writer.WritePropertyName("authorizationType");
+            writer.WritePropertyName("authorizationType"u8);
             writer.WriteStringValue(AuthorizationType);
             writer.WriteEndObject();
         }
 
         internal static LinkedIntegrationRuntimeRbacAuthorization DeserializeLinkedIntegrationRuntimeRbacAuthorization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string resourceId = default;
             string authorizationType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authorizationType"))
+                if (property.NameEquals("authorizationType"u8))
                 {
                     authorizationType = property.Value.GetString();
                     continue;

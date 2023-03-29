@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Redis.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("dayOfWeek");
+            writer.WritePropertyName("dayOfWeek"u8);
             writer.WriteStringValue(DayOfWeek.ToSerialString());
-            writer.WritePropertyName("startHourUtc");
+            writer.WritePropertyName("startHourUtc"u8);
             writer.WriteNumberValue(StartHourUtc);
             if (Optional.IsDefined(MaintenanceWindow))
             {
-                writer.WritePropertyName("maintenanceWindow");
+                writer.WritePropertyName("maintenanceWindow"u8);
                 writer.WriteStringValue(MaintenanceWindow.Value, "P");
             }
             writer.WriteEndObject();
@@ -30,22 +30,26 @@ namespace Azure.ResourceManager.Redis.Models
 
         internal static RedisPatchScheduleSetting DeserializeRedisPatchScheduleSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RedisDayOfWeek dayOfWeek = default;
             int startHourUtc = default;
             Optional<TimeSpan> maintenanceWindow = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dayOfWeek"))
+                if (property.NameEquals("dayOfWeek"u8))
                 {
                     dayOfWeek = property.Value.GetString().ToRedisDayOfWeek();
                     continue;
                 }
-                if (property.NameEquals("startHourUtc"))
+                if (property.NameEquals("startHourUtc"u8))
                 {
                     startHourUtc = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maintenanceWindow"))
+                if (property.NameEquals("maintenanceWindow"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

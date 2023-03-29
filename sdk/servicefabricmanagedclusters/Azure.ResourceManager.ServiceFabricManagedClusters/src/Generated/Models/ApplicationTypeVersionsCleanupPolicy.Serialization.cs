@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("maxUnusedVersionsToKeep");
+            writer.WritePropertyName("maxUnusedVersionsToKeep"u8);
             writer.WriteNumberValue(MaxUnusedVersionsToKeep);
             writer.WriteEndObject();
         }
 
         internal static ApplicationTypeVersionsCleanupPolicy DeserializeApplicationTypeVersionsCleanupPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int maxUnusedVersionsToKeep = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxUnusedVersionsToKeep"))
+                if (property.NameEquals("maxUnusedVersionsToKeep"u8))
                 {
                     maxUnusedVersionsToKeep = property.Value.GetInt32();
                     continue;

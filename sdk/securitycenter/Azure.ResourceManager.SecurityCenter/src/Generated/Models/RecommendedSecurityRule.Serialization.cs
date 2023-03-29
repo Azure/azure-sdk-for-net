@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Direction))
             {
-                writer.WritePropertyName("direction");
+                writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction.Value.ToString());
             }
             if (Optional.IsDefined(DestinationPort))
             {
-                writer.WritePropertyName("destinationPort");
+                writer.WritePropertyName("destinationPort"u8);
                 writer.WriteNumberValue(DestinationPort.Value);
             }
             if (Optional.IsCollectionDefined(Protocols))
             {
-                writer.WritePropertyName("protocols");
+                writer.WritePropertyName("protocols"u8);
                 writer.WriteStartArray();
                 foreach (var item in Protocols)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             if (Optional.IsCollectionDefined(IPAddresses))
             {
-                writer.WritePropertyName("ipAddresses");
+                writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPAddresses)
                 {
@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static RecommendedSecurityRule DeserializeRecommendedSecurityRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<SecurityTrafficDirection> direction = default;
             Optional<int> destinationPort = default;
@@ -63,12 +67,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<IList<string>> ipAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("direction"))
+                if (property.NameEquals("direction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     direction = new SecurityTrafficDirection(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("destinationPort"))
+                if (property.NameEquals("destinationPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +92,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     destinationPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("protocols"))
+                if (property.NameEquals("protocols"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     protocols = array;
                     continue;
                 }
-                if (property.NameEquals("ipAddresses"))
+                if (property.NameEquals("ipAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

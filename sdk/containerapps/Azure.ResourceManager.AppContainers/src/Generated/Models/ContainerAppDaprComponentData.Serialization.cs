@@ -18,31 +18,31 @@ namespace Azure.ResourceManager.AppContainers
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ComponentType))
             {
-                writer.WritePropertyName("componentType");
+                writer.WritePropertyName("componentType"u8);
                 writer.WriteStringValue(ComponentType);
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
             if (Optional.IsDefined(IgnoreErrors))
             {
-                writer.WritePropertyName("ignoreErrors");
+                writer.WritePropertyName("ignoreErrors"u8);
                 writer.WriteBooleanValue(IgnoreErrors.Value);
             }
             if (Optional.IsDefined(InitTimeout))
             {
-                writer.WritePropertyName("initTimeout");
+                writer.WritePropertyName("initTimeout"u8);
                 writer.WriteStringValue(InitTimeout);
             }
             if (Optional.IsCollectionDefined(Secrets))
             {
-                writer.WritePropertyName("secrets");
+                writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.AppContainers
             }
             if (Optional.IsDefined(SecretStoreComponent))
             {
-                writer.WritePropertyName("secretStoreComponent");
+                writer.WritePropertyName("secretStoreComponent"u8);
                 writer.WriteStringValue(SecretStoreComponent);
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppContainers
             }
             if (Optional.IsCollectionDefined(Scopes))
             {
-                writer.WritePropertyName("scopes");
+                writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Scopes)
                 {
@@ -81,6 +81,10 @@ namespace Azure.ResourceManager.AppContainers
 
         internal static ContainerAppDaprComponentData DeserializeContainerAppDaprComponentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -95,22 +99,22 @@ namespace Azure.ResourceManager.AppContainers
             Optional<IList<string>> scopes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +124,7 @@ namespace Azure.ResourceManager.AppContainers
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,17 +133,17 @@ namespace Azure.ResourceManager.AppContainers
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("componentType"))
+                        if (property0.NameEquals("componentType"u8))
                         {
                             componentType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("version"))
+                        if (property0.NameEquals("version"u8))
                         {
                             version = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("ignoreErrors"))
+                        if (property0.NameEquals("ignoreErrors"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -149,12 +153,12 @@ namespace Azure.ResourceManager.AppContainers
                             ignoreErrors = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("initTimeout"))
+                        if (property0.NameEquals("initTimeout"u8))
                         {
                             initTimeout = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("secrets"))
+                        if (property0.NameEquals("secrets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -169,12 +173,12 @@ namespace Azure.ResourceManager.AppContainers
                             secrets = array;
                             continue;
                         }
-                        if (property0.NameEquals("secretStoreComponent"))
+                        if (property0.NameEquals("secretStoreComponent"u8))
                         {
                             secretStoreComponent = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("metadata"))
+                        if (property0.NameEquals("metadata"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -189,7 +193,7 @@ namespace Azure.ResourceManager.AppContainers
                             metadata = array;
                             continue;
                         }
-                        if (property0.NameEquals("scopes"))
+                        if (property0.NameEquals("scopes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

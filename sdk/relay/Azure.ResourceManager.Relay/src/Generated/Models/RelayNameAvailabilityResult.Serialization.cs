@@ -14,17 +14,21 @@ namespace Azure.ResourceManager.Relay.Models
     {
         internal static RelayNameAvailabilityResult DeserializeRelayNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             Optional<bool> nameAvailable = default;
             Optional<RelayNameUnavailableReason> reason = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nameAvailable"))
+                if (property.NameEquals("nameAvailable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.Relay.Models
                     nameAvailable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("reason"))
+                if (property.NameEquals("reason"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

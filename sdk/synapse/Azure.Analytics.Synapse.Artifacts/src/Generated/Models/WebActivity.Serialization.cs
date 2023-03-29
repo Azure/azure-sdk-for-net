@@ -21,26 +21,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
-                writer.WritePropertyName("linkedServiceName");
+                writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteObjectValue(LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
-                writer.WritePropertyName("policy");
+                writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
-                writer.WritePropertyName("dependsOn");
+                writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(UserProperties))
             {
-                writer.WritePropertyName("userProperties");
+                writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
@@ -58,30 +58,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("method");
+            writer.WritePropertyName("method"u8);
             writer.WriteStringValue(Method.ToString());
-            writer.WritePropertyName("url");
+            writer.WritePropertyName("url"u8);
             writer.WriteObjectValue(Url);
             if (Optional.IsDefined(Headers))
             {
-                writer.WritePropertyName("headers");
+                writer.WritePropertyName("headers"u8);
                 writer.WriteObjectValue(Headers);
             }
             if (Optional.IsDefined(Body))
             {
-                writer.WritePropertyName("body");
+                writer.WritePropertyName("body"u8);
                 writer.WriteObjectValue(Body);
             }
             if (Optional.IsDefined(Authentication))
             {
-                writer.WritePropertyName("authentication");
+                writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
             if (Optional.IsCollectionDefined(Datasets))
             {
-                writer.WritePropertyName("datasets");
+                writer.WritePropertyName("datasets"u8);
                 writer.WriteStartArray();
                 foreach (var item in Datasets)
                 {
@@ -91,7 +91,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(LinkedServices))
             {
-                writer.WritePropertyName("linkedServices");
+                writer.WritePropertyName("linkedServices"u8);
                 writer.WriteStartArray();
                 foreach (var item in LinkedServices)
                 {
@@ -101,7 +101,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsDefined(ConnectVia))
             {
-                writer.WritePropertyName("connectVia");
+                writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
             writer.WriteEndObject();
@@ -115,6 +115,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static WebActivity DeserializeWebActivity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
@@ -134,7 +138,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linkedServiceName"))
+                if (property.NameEquals("linkedServiceName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -144,7 +148,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("policy"))
+                if (property.NameEquals("policy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,22 +158,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dependsOn"))
+                if (property.NameEquals("dependsOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -184,7 +188,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     dependsOn = array;
                     continue;
                 }
-                if (property.NameEquals("userProperties"))
+                if (property.NameEquals("userProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -199,7 +203,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     userProperties = array;
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -208,17 +212,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("method"))
+                        if (property0.NameEquals("method"u8))
                         {
                             method = new WebActivityMethod(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("url"))
+                        if (property0.NameEquals("url"u8))
                         {
                             url = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("headers"))
+                        if (property0.NameEquals("headers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -228,7 +232,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             headers = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("body"))
+                        if (property0.NameEquals("body"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -238,7 +242,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             body = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("authentication"))
+                        if (property0.NameEquals("authentication"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -248,7 +252,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             authentication = WebActivityAuthentication.DeserializeWebActivityAuthentication(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("datasets"))
+                        if (property0.NameEquals("datasets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -263,7 +267,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             datasets = array;
                             continue;
                         }
-                        if (property0.NameEquals("linkedServices"))
+                        if (property0.NameEquals("linkedServices"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -278,7 +282,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             linkedServices = array;
                             continue;
                         }
-                        if (property0.NameEquals("connectVia"))
+                        if (property0.NameEquals("connectVia"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

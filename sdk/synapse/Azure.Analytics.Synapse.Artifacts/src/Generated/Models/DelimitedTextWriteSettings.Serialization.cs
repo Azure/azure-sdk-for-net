@@ -21,22 +21,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(QuoteAllText))
             {
-                writer.WritePropertyName("quoteAllText");
+                writer.WritePropertyName("quoteAllText"u8);
                 writer.WriteObjectValue(QuoteAllText);
             }
-            writer.WritePropertyName("fileExtension");
+            writer.WritePropertyName("fileExtension"u8);
             writer.WriteObjectValue(FileExtension);
             if (Optional.IsDefined(MaxRowsPerFile))
             {
-                writer.WritePropertyName("maxRowsPerFile");
+                writer.WritePropertyName("maxRowsPerFile"u8);
                 writer.WriteObjectValue(MaxRowsPerFile);
             }
             if (Optional.IsDefined(FileNamePrefix))
             {
-                writer.WritePropertyName("fileNamePrefix");
+                writer.WritePropertyName("fileNamePrefix"u8);
                 writer.WriteObjectValue(FileNamePrefix);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             foreach (var item in AdditionalProperties)
             {
@@ -48,6 +48,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DelimitedTextWriteSettings DeserializeDelimitedTextWriteSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> quoteAllText = default;
             object fileExtension = default;
             Optional<object> maxRowsPerFile = default;
@@ -57,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("quoteAllText"))
+                if (property.NameEquals("quoteAllText"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,12 +71,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     quoteAllText = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("fileExtension"))
+                if (property.NameEquals("fileExtension"u8))
                 {
                     fileExtension = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("maxRowsPerFile"))
+                if (property.NameEquals("maxRowsPerFile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +86,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     maxRowsPerFile = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("fileNamePrefix"))
+                if (property.NameEquals("fileNamePrefix"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +96,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     fileNamePrefix = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

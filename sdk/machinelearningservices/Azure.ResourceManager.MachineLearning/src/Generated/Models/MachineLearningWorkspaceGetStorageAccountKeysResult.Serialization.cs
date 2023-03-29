@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningWorkspaceGetStorageAccountKeysResult DeserializeMachineLearningWorkspaceGetStorageAccountKeysResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> userStorageKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userStorageKey"))
+                if (property.NameEquals("userStorageKey"u8))
                 {
                     userStorageKey = property.Value.GetString();
                     continue;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightVmSizeCompatibilityFilterV2 DeserializeHDInsightVmSizeCompatibilityFilterV2(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HDInsightFilterMode> filterMode = default;
             Optional<IReadOnlyList<string>> regions = default;
             Optional<IReadOnlyList<string>> clusterFlavors = default;
@@ -26,7 +30,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<string> computeIsolationSupported = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("filterMode"))
+                if (property.NameEquals("filterMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +40,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     filterMode = new HDInsightFilterMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("regions"))
+                if (property.NameEquals("regions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     regions = array;
                     continue;
                 }
-                if (property.NameEquals("clusterFlavors"))
+                if (property.NameEquals("clusterFlavors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     clusterFlavors = array;
                     continue;
                 }
-                if (property.NameEquals("nodeTypes"))
+                if (property.NameEquals("nodeTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,7 +85,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     nodeTypes = array;
                     continue;
                 }
-                if (property.NameEquals("clusterVersions"))
+                if (property.NameEquals("clusterVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +100,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     clusterVersions = array;
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,7 +115,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     osType = array;
                     continue;
                 }
-                if (property.NameEquals("vmSizes"))
+                if (property.NameEquals("vmSizes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,12 +130,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                     vmSizes = array;
                     continue;
                 }
-                if (property.NameEquals("espApplied"))
+                if (property.NameEquals("espApplied"u8))
                 {
                     espApplied = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("computeIsolationSupported"))
+                if (property.NameEquals("computeIsolationSupported"u8))
                 {
                     computeIsolationSupported = property.Value.GetString();
                     continue;

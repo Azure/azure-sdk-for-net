@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     {
         internal static OperationalizationClusterCredentials DeserializeOperationalizationClusterCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageAccountCredentials> storageAccount = default;
             Optional<ContainerRegistryCredentials> containerRegistry = default;
             Optional<ContainerServiceCredentials> containerService = default;
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             Optional<SslConfiguration> sslConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageAccount"))
+                if (property.NameEquals("storageAccount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     storageAccount = StorageAccountCredentials.DeserializeStorageAccountCredentials(property.Value);
                     continue;
                 }
-                if (property.NameEquals("containerRegistry"))
+                if (property.NameEquals("containerRegistry"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     containerRegistry = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property.Value);
                     continue;
                 }
-                if (property.NameEquals("containerService"))
+                if (property.NameEquals("containerService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     containerService = ContainerServiceCredentials.DeserializeContainerServiceCredentials(property.Value);
                     continue;
                 }
-                if (property.NameEquals("appInsights"))
+                if (property.NameEquals("appInsights"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     appInsights = AppInsightsCredentials.DeserializeAppInsightsCredentials(property.Value);
                     continue;
                 }
-                if (property.NameEquals("serviceAuthConfiguration"))
+                if (property.NameEquals("serviceAuthConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     serviceAuthConfiguration = ServiceAuthConfiguration.DeserializeServiceAuthConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sslConfiguration"))
+                if (property.NameEquals("sslConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

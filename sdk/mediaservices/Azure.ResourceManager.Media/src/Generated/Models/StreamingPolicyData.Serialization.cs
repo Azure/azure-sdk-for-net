@@ -18,31 +18,31 @@ namespace Azure.ResourceManager.Media
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultContentKeyPolicyName))
             {
-                writer.WritePropertyName("defaultContentKeyPolicyName");
+                writer.WritePropertyName("defaultContentKeyPolicyName"u8);
                 writer.WriteStringValue(DefaultContentKeyPolicyName);
             }
             if (Optional.IsDefined(EnvelopeEncryption))
             {
-                writer.WritePropertyName("envelopeEncryption");
+                writer.WritePropertyName("envelopeEncryption"u8);
                 writer.WriteObjectValue(EnvelopeEncryption);
             }
             if (Optional.IsDefined(CommonEncryptionCenc))
             {
-                writer.WritePropertyName("commonEncryptionCenc");
+                writer.WritePropertyName("commonEncryptionCenc"u8);
                 writer.WriteObjectValue(CommonEncryptionCenc);
             }
             if (Optional.IsDefined(CommonEncryptionCbcs))
             {
-                writer.WritePropertyName("commonEncryptionCbcs");
+                writer.WritePropertyName("commonEncryptionCbcs"u8);
                 writer.WriteObjectValue(CommonEncryptionCbcs);
             }
             if (Optional.IsDefined(NoEncryption))
             {
-                writer.WritePropertyName("noEncryption");
+                writer.WritePropertyName("noEncryption"u8);
                 writer.WriteObjectValue(NoEncryption);
             }
             writer.WriteEndObject();
@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Media
 
         internal static StreamingPolicyData DeserializeStreamingPolicyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -63,22 +67,22 @@ namespace Azure.ResourceManager.Media
             Optional<NoEncryption> noEncryption = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +92,7 @@ namespace Azure.ResourceManager.Media
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +101,7 @@ namespace Azure.ResourceManager.Media
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("created"))
+                        if (property0.NameEquals("created"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -107,12 +111,12 @@ namespace Azure.ResourceManager.Media
                             created = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("defaultContentKeyPolicyName"))
+                        if (property0.NameEquals("defaultContentKeyPolicyName"u8))
                         {
                             defaultContentKeyPolicyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("envelopeEncryption"))
+                        if (property0.NameEquals("envelopeEncryption"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -122,7 +126,7 @@ namespace Azure.ResourceManager.Media
                             envelopeEncryption = EnvelopeEncryption.DeserializeEnvelopeEncryption(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("commonEncryptionCenc"))
+                        if (property0.NameEquals("commonEncryptionCenc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -132,7 +136,7 @@ namespace Azure.ResourceManager.Media
                             commonEncryptionCenc = CommonEncryptionCenc.DeserializeCommonEncryptionCenc(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("commonEncryptionCbcs"))
+                        if (property0.NameEquals("commonEncryptionCbcs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -142,7 +146,7 @@ namespace Azure.ResourceManager.Media
                             commonEncryptionCbcs = CommonEncryptionCbcs.DeserializeCommonEncryptionCbcs(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("noEncryption"))
+                        if (property0.NameEquals("noEncryption"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

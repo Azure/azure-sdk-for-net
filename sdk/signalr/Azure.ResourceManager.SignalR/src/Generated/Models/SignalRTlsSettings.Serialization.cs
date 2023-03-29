@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SignalR.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsClientCertEnabled))
             {
-                writer.WritePropertyName("clientCertEnabled");
+                writer.WritePropertyName("clientCertEnabled"u8);
                 writer.WriteBooleanValue(IsClientCertEnabled.Value);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRTlsSettings DeserializeSignalRTlsSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> clientCertEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientCertEnabled"))
+                if (property.NameEquals("clientCertEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

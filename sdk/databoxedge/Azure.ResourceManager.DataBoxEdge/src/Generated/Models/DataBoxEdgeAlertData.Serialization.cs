@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         internal static DataBoxEdgeAlertData DeserializeDataBoxEdgeAlertData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -40,22 +44,22 @@ namespace Azure.ResourceManager.DataBoxEdge
             Optional<IReadOnlyDictionary<string, string>> detailedInformation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +69,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,17 +78,17 @@ namespace Azure.ResourceManager.DataBoxEdge
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("title"))
+                        if (property0.NameEquals("title"u8))
                         {
                             title = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("alertType"))
+                        if (property0.NameEquals("alertType"u8))
                         {
                             alertType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("appearedAtDateTime"))
+                        if (property0.NameEquals("appearedAtDateTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -94,12 +98,12 @@ namespace Azure.ResourceManager.DataBoxEdge
                             appearedAtDateTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("recommendation"))
+                        if (property0.NameEquals("recommendation"u8))
                         {
                             recommendation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("severity"))
+                        if (property0.NameEquals("severity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -109,7 +113,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             severity = new DataBoxEdgeAlertSeverity(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("errorDetails"))
+                        if (property0.NameEquals("errorDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -119,7 +123,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             errorDetails = DataBoxEdgeAlertErrorDetails.DeserializeDataBoxEdgeAlertErrorDetails(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("detailedInformation"))
+                        if (property0.NameEquals("detailedInformation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

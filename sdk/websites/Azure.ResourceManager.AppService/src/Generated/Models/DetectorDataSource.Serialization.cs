@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Instructions))
             {
-                writer.WritePropertyName("instructions");
+                writer.WritePropertyName("instructions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Instructions)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(DataSourceUri))
             {
-                writer.WritePropertyName("dataSourceUri");
+                writer.WritePropertyName("dataSourceUri"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataSourceUri)
                 {
@@ -41,11 +41,15 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DetectorDataSource DeserializeDetectorDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> instructions = default;
             Optional<IList<AppServiceNameValuePair>> dataSourceUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("instructions"))
+                if (property.NameEquals("instructions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
                     instructions = array;
                     continue;
                 }
-                if (property.NameEquals("dataSourceUri"))
+                if (property.NameEquals("dataSourceUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Rules))
             {
-                writer.WritePropertyName("rules");
+                writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityAutomationRuleSet DeserializeSecurityAutomationRuleSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SecurityAutomationTriggeringRule>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rules"))
+                if (property.NameEquals("rules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

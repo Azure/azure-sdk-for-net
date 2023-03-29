@@ -19,21 +19,21 @@ namespace Azure.ResourceManager.Storage
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceAccount))
             {
-                writer.WritePropertyName("sourceAccount");
+                writer.WritePropertyName("sourceAccount"u8);
                 writer.WriteStringValue(SourceAccount);
             }
             if (Optional.IsDefined(DestinationAccount))
             {
-                writer.WritePropertyName("destinationAccount");
+                writer.WritePropertyName("destinationAccount"u8);
                 writer.WriteStringValue(DestinationAccount);
             }
             if (Optional.IsCollectionDefined(Rules))
             {
-                writer.WritePropertyName("rules");
+                writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.Storage
 
         internal static ObjectReplicationPolicyData DeserializeObjectReplicationPolicyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -58,22 +62,22 @@ namespace Azure.ResourceManager.Storage
             Optional<IList<ObjectReplicationPolicyRule>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +87,7 @@ namespace Azure.ResourceManager.Storage
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,12 +96,12 @@ namespace Azure.ResourceManager.Storage
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("policyId"))
+                        if (property0.NameEquals("policyId"u8))
                         {
                             policyId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("enabledTime"))
+                        if (property0.NameEquals("enabledTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -107,17 +111,17 @@ namespace Azure.ResourceManager.Storage
                             enabledTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("sourceAccount"))
+                        if (property0.NameEquals("sourceAccount"u8))
                         {
                             sourceAccount = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("destinationAccount"))
+                        if (property0.NameEquals("destinationAccount"u8))
                         {
                             destinationAccount = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("rules"))
+                        if (property0.NameEquals("rules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

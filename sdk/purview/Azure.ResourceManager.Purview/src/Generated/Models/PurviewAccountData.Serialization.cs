@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Purview
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -35,23 +35,23 @@ namespace Azure.ResourceManager.Purview
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CloudConnectors))
             {
-                writer.WritePropertyName("cloudConnectors");
+                writer.WritePropertyName("cloudConnectors"u8);
                 writer.WriteObjectValue(CloudConnectors);
             }
             if (Optional.IsDefined(ManagedResourceGroupName))
             {
-                writer.WritePropertyName("managedResourceGroupName");
+                writer.WritePropertyName("managedResourceGroupName"u8);
                 writer.WriteStringValue(ManagedResourceGroupName);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             writer.WriteEndObject();
@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.Purview
 
         internal static PurviewAccountData DeserializePurviewAccountData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PurviewAccountSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -81,7 +85,7 @@ namespace Azure.ResourceManager.Purview
             Optional<PurviewPublicNetworkAccess> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.Purview
                     sku = PurviewAccountSku.DeserializePurviewAccountSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +105,7 @@ namespace Azure.ResourceManager.Purview
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,27 +120,27 @@ namespace Azure.ResourceManager.Purview
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -146,7 +150,7 @@ namespace Azure.ResourceManager.Purview
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -155,7 +159,7 @@ namespace Azure.ResourceManager.Purview
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("cloudConnectors"))
+                        if (property0.NameEquals("cloudConnectors"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -165,7 +169,7 @@ namespace Azure.ResourceManager.Purview
                             cloudConnectors = CloudConnectors.DeserializeCloudConnectors(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("createdAt"))
+                        if (property0.NameEquals("createdAt"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -175,17 +179,17 @@ namespace Azure.ResourceManager.Purview
                             createdAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("createdBy"))
+                        if (property0.NameEquals("createdBy"u8))
                         {
                             createdBy = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("createdByObjectId"))
+                        if (property0.NameEquals("createdByObjectId"u8))
                         {
                             createdByObjectId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("endpoints"))
+                        if (property0.NameEquals("endpoints"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -195,17 +199,17 @@ namespace Azure.ResourceManager.Purview
                             endpoints = PurviewAccountEndpoint.DeserializePurviewAccountEndpoint(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("friendlyName"))
+                        if (property0.NameEquals("friendlyName"u8))
                         {
                             friendlyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("managedResourceGroupName"))
+                        if (property0.NameEquals("managedResourceGroupName"u8))
                         {
                             managedResourceGroupName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("managedResources"))
+                        if (property0.NameEquals("managedResources"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -215,7 +219,7 @@ namespace Azure.ResourceManager.Purview
                             managedResources = PurviewManagedResource.DeserializePurviewManagedResource(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("privateEndpointConnections"))
+                        if (property0.NameEquals("privateEndpointConnections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -230,7 +234,7 @@ namespace Azure.ResourceManager.Purview
                             privateEndpointConnections = array;
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -240,7 +244,7 @@ namespace Azure.ResourceManager.Purview
                             provisioningState = new PurviewProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("publicNetworkAccess"))
+                        if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

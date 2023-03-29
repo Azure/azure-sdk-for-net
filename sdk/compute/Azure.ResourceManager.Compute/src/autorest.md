@@ -8,9 +8,10 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
+generate-model-factory: false
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/ddca448bd879175a928b990e0f25ca3a0e6c1c33/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/03261080b3083a9e8cb0b61d840cc8291c596590/specification/compute/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -118,6 +119,9 @@ prepend-rp-prefix:
 - PublicIPAddressSkuName
 - PublicIPAddressSkuTier
 - StatusLevelTypes
+
+#mgmt-debug:
+#    show-serialized-names: true
 
 rename-mapping:
   DiskSecurityTypes.ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey: ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey
@@ -249,6 +253,11 @@ rename-mapping:
   VirtualMachineNetworkInterfaceConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
   VirtualMachineScaleSetNetworkConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
   VirtualMachineScaleSetUpdateNetworkConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
+  AlternativeOption: ImageAlternativeOption
+  AlternativeType: ImageAlternativeType
+  VirtualMachineScaleSet.properties.constrainedMaximumCapacity : IsMaximumCapacityConstrained
+  RollingUpgradePolicy.maxSurge : IsMaxSurgeEnabled
+  ScheduledEventsProfile: ComputeScheduledEventsProfile
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
@@ -338,15 +347,7 @@ directive:
       $.CloudServiceRole.properties.properties["x-ms-client-flatten"] = true;
       $.RoleInstance.properties.properties["x-ms-client-flatten"] = true;
       $.LoadBalancerConfiguration.properties.properties["x-ms-client-flatten"] = true;
-      $.LoadBalancerFrontendIPConfiguration.properties.properties["x-ms-client-flatten"] = true;
-  - from: cloudService.json
-    where: $.definitions.LoadBalancerConfigurationProperties
-    transform: >
-      $.properties.frontendIpConfigurations = $.properties.frontendIPConfigurations;
-      $.properties.frontendIpConfigurations["x-ms-client-name"] = "frontendIPConfigurations";
-      $.required = ["frontendIpConfigurations"];
-      $.properties.frontendIPConfigurations = undefined;
-    reason: Service returns response with property name as frontendIpConfigurations.
+      $.LoadBalancerFrontendIpConfiguration.properties.properties["x-ms-client-flatten"] = true;
   # this makes the name in VirtualMachineScaleSetExtension to be readonly so that our inheritance chooser could properly make it inherit from Azure.ResourceManager.ResourceData. We have some customized code to add the setter for name back (as in constructor)
   - from: virtualMachineScaleSet.json
     where: $.definitions.VirtualMachineScaleSetExtension.properties.name

@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Error))
             {
-                writer.WritePropertyName("error");
+                writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
             if (Optional.IsDefined(IsTraceEnabled))
             {
-                writer.WritePropertyName("traceEnabled");
+                writer.WritePropertyName("traceEnabled"u8);
                 writer.WriteBooleanValue(IsTraceEnabled.Value);
             }
             if (Optional.IsDefined(AppInsightsInstrumentationKey))
             {
-                writer.WritePropertyName("appInsightsInstrumentationKey");
+                writer.WritePropertyName("appInsightsInstrumentationKey"u8);
                 writer.WriteStringValue(AppInsightsInstrumentationKey);
             }
             if (Optional.IsDefined(AppInsightsSamplingRate))
             {
-                writer.WritePropertyName("appInsightsSamplingRate");
+                writer.WritePropertyName("appInsightsSamplingRate"u8);
                 writer.WriteNumberValue(AppInsightsSamplingRate.Value);
             }
             if (Optional.IsDefined(AppInsightsAgentVersions))
             {
-                writer.WritePropertyName("appInsightsAgentVersions");
+                writer.WritePropertyName("appInsightsAgentVersions"u8);
                 writer.WriteObjectValue(AppInsightsAgentVersions);
             }
             writer.WriteEndObject();
@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformMonitoringSettingProperties DeserializeAppPlatformMonitoringSettingProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformMonitoringSettingState> provisioningState = default;
             Optional<AppPlatformErrorInfo> error = default;
             Optional<bool> traceEnabled = default;
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<ApplicationInsightsAgentVersions> appInsightsAgentVersions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +67,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     provisioningState = new AppPlatformMonitoringSettingState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +77,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     error = AppPlatformErrorInfo.DeserializeAppPlatformErrorInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("traceEnabled"))
+                if (property.NameEquals("traceEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,12 +87,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     traceEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("appInsightsInstrumentationKey"))
+                if (property.NameEquals("appInsightsInstrumentationKey"u8))
                 {
                     appInsightsInstrumentationKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("appInsightsSamplingRate"))
+                if (property.NameEquals("appInsightsSamplingRate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +102,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     appInsightsSamplingRate = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("appInsightsAgentVersions"))
+                if (property.NameEquals("appInsightsAgentVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

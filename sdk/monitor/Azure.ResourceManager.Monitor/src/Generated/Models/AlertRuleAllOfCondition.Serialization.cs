@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("allOf");
+            writer.WritePropertyName("allOf"u8);
             writer.WriteStartArray();
             foreach (var item in AllOf)
             {
@@ -28,10 +28,14 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static AlertRuleAllOfCondition DeserializeAlertRuleAllOfCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<ActivityLogAlertAnyOfOrLeafCondition> allOf = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allOf"))
+                if (property.NameEquals("allOf"u8))
                 {
                     List<ActivityLogAlertAnyOfOrLeafCondition> array = new List<ActivityLogAlertAnyOfOrLeafCondition>();
                     foreach (var item in property.Value.EnumerateArray())

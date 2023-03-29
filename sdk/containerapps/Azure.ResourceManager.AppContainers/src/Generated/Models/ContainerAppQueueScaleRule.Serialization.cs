@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(QueueName))
             {
-                writer.WritePropertyName("queueName");
+                writer.WritePropertyName("queueName"u8);
                 writer.WriteStringValue(QueueName);
             }
             if (Optional.IsDefined(QueueLength))
             {
-                writer.WritePropertyName("queueLength");
+                writer.WritePropertyName("queueLength"u8);
                 writer.WriteNumberValue(QueueLength.Value);
             }
             if (Optional.IsCollectionDefined(Auth))
             {
-                writer.WritePropertyName("auth");
+                writer.WritePropertyName("auth"u8);
                 writer.WriteStartArray();
                 foreach (var item in Auth)
                 {
@@ -41,17 +41,21 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppQueueScaleRule DeserializeContainerAppQueueScaleRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> queueName = default;
             Optional<int> queueLength = default;
             Optional<IList<ContainerAppScaleRuleAuth>> auth = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("queueName"))
+                if (property.NameEquals("queueName"u8))
                 {
                     queueName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("queueLength"))
+                if (property.NameEquals("queueLength"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     queueLength = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("auth"))
+                if (property.NameEquals("auth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

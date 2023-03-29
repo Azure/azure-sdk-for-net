@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VerifyClientCertIssuerDN))
             {
-                writer.WritePropertyName("verifyClientCertIssuerDN");
+                writer.WritePropertyName("verifyClientCertIssuerDN"u8);
                 writer.WriteBooleanValue(VerifyClientCertIssuerDN.Value);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayClientAuthConfiguration DeserializeApplicationGatewayClientAuthConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> verifyClientCertIssuerDN = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("verifyClientCertIssuerDN"))
+                if (property.NameEquals("verifyClientCertIssuerDN"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

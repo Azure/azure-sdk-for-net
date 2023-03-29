@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("certificateSource");
+            writer.WritePropertyName("certificateSource"u8);
             writer.WriteStringValue(CertificateSource.ToString());
-            writer.WritePropertyName("protocolType");
+            writer.WritePropertyName("protocolType"u8);
             writer.WriteStringValue(ProtocolType.ToString());
             if (Optional.IsDefined(MinimumTlsVersion))
             {
-                writer.WritePropertyName("minimumTlsVersion");
+                writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -29,22 +29,26 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UnknownCustomDomainHttpsParameters DeserializeUnknownCustomDomainHttpsParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CertificateSource certificateSource = "Unknown";
             SecureDeliveryProtocolType protocolType = default;
             Optional<CdnMinimumTlsVersion> minimumTlsVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("certificateSource"))
+                if (property.NameEquals("certificateSource"u8))
                 {
                     certificateSource = new CertificateSource(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("protocolType"))
+                if (property.NameEquals("protocolType"u8))
                 {
                     protocolType = new SecureDeliveryProtocolType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("minimumTlsVersion"))
+                if (property.NameEquals("minimumTlsVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

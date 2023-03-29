@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EndpointLocation))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(EndpointLocation);
             }
             if (Optional.IsDefined(DestinationPort))
             {
-                writer.WritePropertyName("destinationPort");
+                writer.WritePropertyName("destinationPort"u8);
                 writer.WriteNumberValue(DestinationPort.Value);
             }
             if (Optional.IsDefined(PublicPort))
             {
-                writer.WritePropertyName("publicPort");
+                writer.WritePropertyName("publicPort"u8);
                 writer.WriteNumberValue(PublicPort.Value);
             }
             if (Optional.IsDefined(PrivateIPAddress))
             {
-                writer.WritePropertyName("privateIPAddress");
+                writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
             }
             writer.WriteEndObject();
@@ -41,18 +41,22 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightApplicationEndpoint DeserializeHDInsightApplicationEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> location = default;
             Optional<int> destinationPort = default;
             Optional<int> publicPort = default;
             Optional<IPAddress> privateIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("destinationPort"))
+                if (property.NameEquals("destinationPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +66,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     destinationPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("publicPort"))
+                if (property.NameEquals("publicPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     publicPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("privateIPAddress"))
+                if (property.NameEquals("privateIPAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

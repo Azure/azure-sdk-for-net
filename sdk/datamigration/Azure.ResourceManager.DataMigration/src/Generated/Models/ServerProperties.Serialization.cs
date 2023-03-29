@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static ServerProperties DeserializeServerProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serverPlatform = default;
             Optional<string> serverName = default;
             Optional<string> serverVersion = default;
@@ -22,32 +26,32 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<int> serverDatabaseCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serverPlatform"))
+                if (property.NameEquals("serverPlatform"u8))
                 {
                     serverPlatform = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverName"))
+                if (property.NameEquals("serverName"u8))
                 {
                     serverName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverVersion"))
+                if (property.NameEquals("serverVersion"u8))
                 {
                     serverVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverEdition"))
+                if (property.NameEquals("serverEdition"u8))
                 {
                     serverEdition = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverOperatingSystemVersion"))
+                if (property.NameEquals("serverOperatingSystemVersion"u8))
                 {
                     serverOperatingSystemVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverDatabaseCount"))
+                if (property.NameEquals("serverDatabaseCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

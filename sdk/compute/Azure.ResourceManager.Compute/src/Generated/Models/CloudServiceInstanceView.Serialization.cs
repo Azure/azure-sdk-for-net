@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static CloudServiceInstanceView DeserializeCloudServiceInstanceView(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<InstanceViewStatusesSummary> roleInstance = default;
             Optional<string> sdkVersion = default;
             Optional<IReadOnlyList<string>> privateIds = default;
             Optional<IReadOnlyList<ResourceInstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("roleInstance"))
+                if (property.NameEquals("roleInstance"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,12 +35,12 @@ namespace Azure.ResourceManager.Compute.Models
                     roleInstance = InstanceViewStatusesSummary.DeserializeInstanceViewStatusesSummary(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sdkVersion"))
+                if (property.NameEquals("sdkVersion"u8))
                 {
                     sdkVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateIds"))
+                if (property.NameEquals("privateIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
                     privateIds = array;
                     continue;
                 }
-                if (property.NameEquals("statuses"))
+                if (property.NameEquals("statuses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

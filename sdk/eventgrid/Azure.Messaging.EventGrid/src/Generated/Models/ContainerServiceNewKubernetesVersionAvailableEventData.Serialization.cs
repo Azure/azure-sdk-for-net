@@ -17,28 +17,32 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static ContainerServiceNewKubernetesVersionAvailableEventData DeserializeContainerServiceNewKubernetesVersionAvailableEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> latestSupportedKubernetesVersion = default;
             Optional<string> latestStableKubernetesVersion = default;
             Optional<string> lowestMinorKubernetesVersion = default;
             Optional<string> latestPreviewKubernetesVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("latestSupportedKubernetesVersion"))
+                if (property.NameEquals("latestSupportedKubernetesVersion"u8))
                 {
                     latestSupportedKubernetesVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("latestStableKubernetesVersion"))
+                if (property.NameEquals("latestStableKubernetesVersion"u8))
                 {
                     latestStableKubernetesVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lowestMinorKubernetesVersion"))
+                if (property.NameEquals("lowestMinorKubernetesVersion"u8))
                 {
                     lowestMinorKubernetesVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("latestPreviewKubernetesVersion"))
+                if (property.NameEquals("latestPreviewKubernetesVersion"u8))
                 {
                     latestPreviewKubernetesVersion = property.Value.GetString();
                     continue;

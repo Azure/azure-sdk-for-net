@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(Days))
             {
-                writer.WritePropertyName("days");
+                writer.WritePropertyName("days"u8);
                 writer.WriteNumberValue(Days.Value);
             }
             if (Optional.IsDefined(AllowPermanentDelete))
             {
-                writer.WritePropertyName("allowPermanentDelete");
+                writer.WritePropertyName("allowPermanentDelete"u8);
                 writer.WriteBooleanValue(AllowPermanentDelete.Value);
             }
             writer.WriteEndObject();
@@ -35,12 +35,16 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static DeleteRetentionPolicy DeserializeDeleteRetentionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<int> days = default;
             Optional<bool> allowPermanentDelete = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.Storage.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("days"))
+                if (property.NameEquals("days"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.Storage.Models
                     days = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("allowPermanentDelete"))
+                if (property.NameEquals("allowPermanentDelete"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

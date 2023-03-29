@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("actionType");
+            writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
             writer.WriteEndObject();
         }
 
         internal static AlertProcessingRuleAction DeserializeAlertProcessingRuleAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("actionType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

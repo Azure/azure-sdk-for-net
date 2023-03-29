@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(AutoDiscovery))
             {
-                writer.WritePropertyName("autoDiscovery");
+                writer.WritePropertyName("autoDiscovery"u8);
                 writer.WriteStringValue(AutoDiscovery.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Projects))
             {
-                writer.WritePropertyName("projects");
+                writer.WritePropertyName("projects"u8);
                 writer.WriteStartArray();
                 foreach (var item in Projects)
                 {
@@ -41,17 +41,21 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static AzureDevOpsOrgMetadata DeserializeAzureDevOpsOrgMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<AutoDiscovery> autoDiscovery = default;
             Optional<IList<AzureDevOpsProjectMetadata>> projects = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("autoDiscovery"))
+                if (property.NameEquals("autoDiscovery"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     autoDiscovery = new AutoDiscovery(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("projects"))
+                if (property.NameEquals("projects"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

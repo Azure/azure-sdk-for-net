@@ -16,6 +16,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static OperationSummary DeserializeOperationSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string operationId = default;
             DocumentOperationStatus status = default;
             Optional<int> percentCompleted = default;
@@ -27,17 +31,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operationId"))
+                if (property.NameEquals("operationId"u8))
                 {
                     operationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString().ToDocumentOperationStatus();
                     continue;
                 }
-                if (property.NameEquals("percentCompleted"))
+                if (property.NameEquals("percentCompleted"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,32 +51,32 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     percentCompleted = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("createdDateTime"))
+                if (property.NameEquals("createdDateTime"u8))
                 {
                     createdDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdatedDateTime"))
+                if (property.NameEquals("lastUpdatedDateTime"u8))
                 {
                     lastUpdatedDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new DocumentOperationKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceLocation"))
+                if (property.NameEquals("resourceLocation"u8))
                 {
                     resourceLocation = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("apiVersion"))
+                if (property.NameEquals("apiVersion"u8))
                 {
                     apiVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

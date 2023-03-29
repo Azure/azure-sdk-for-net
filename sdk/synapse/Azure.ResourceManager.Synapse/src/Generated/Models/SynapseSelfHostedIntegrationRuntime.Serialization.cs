@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.Synapse.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IntegrationRuntimeType.ToString());
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedInfo))
             {
-                writer.WritePropertyName("linkedInfo");
+                writer.WritePropertyName("linkedInfo"u8);
                 writer.WriteObjectValue(LinkedInfo);
             }
             writer.WriteEndObject();
@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseSelfHostedIntegrationRuntime DeserializeSynapseSelfHostedIntegrationRuntime(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IntegrationRuntimeType type = default;
             Optional<string> description = default;
             Optional<SynapseLinkedIntegrationRuntimeType> linkedInfo = default;
@@ -53,17 +57,17 @@ namespace Azure.ResourceManager.Synapse.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new IntegrationRuntimeType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("linkedInfo"))
+                        if (property0.NameEquals("linkedInfo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

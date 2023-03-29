@@ -16,24 +16,24 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("logPath");
+            writer.WritePropertyName("logPath"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(LogPath);
 #else
             JsonSerializer.Serialize(writer, JsonDocument.Parse(LogPath.ToString()).RootElement);
 #endif
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LocationType.ToString());
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AccessCredential))
             {
-                writer.WritePropertyName("accessCredential");
+                writer.WritePropertyName("accessCredential"u8);
                 writer.WriteObjectValue(AccessCredential);
             }
             if (Optional.IsDefined(LogRefreshInterval))
             {
-                writer.WritePropertyName("logRefreshInterval");
+                writer.WritePropertyName("logRefreshInterval"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(LogRefreshInterval);
 #else
@@ -46,23 +46,27 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SsisLogLocation DeserializeSsisLogLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BinaryData logPath = default;
             SsisLogLocationType type = default;
             Optional<SsisAccessCredential> accessCredential = default;
             Optional<BinaryData> logRefreshInterval = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("logPath"))
+                if (property.NameEquals("logPath"u8))
                 {
                     logPath = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new SsisLogLocationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("accessCredential"))
+                        if (property0.NameEquals("accessCredential"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -81,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             accessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("logRefreshInterval"))
+                        if (property0.NameEquals("logRefreshInterval"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

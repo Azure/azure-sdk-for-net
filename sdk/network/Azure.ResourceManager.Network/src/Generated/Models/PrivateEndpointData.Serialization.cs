@@ -21,22 +21,22 @@ namespace Azure.ResourceManager.Network
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocation))
             {
-                writer.WritePropertyName("extendedLocation");
+                writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Subnet))
             {
-                writer.WritePropertyName("subnet");
+                writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet);
             }
             if (Optional.IsCollectionDefined(PrivateLinkServiceConnections))
             {
-                writer.WritePropertyName("privateLinkServiceConnections");
+                writer.WritePropertyName("privateLinkServiceConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkServiceConnections)
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsCollectionDefined(ManualPrivateLinkServiceConnections))
             {
-                writer.WritePropertyName("manualPrivateLinkServiceConnections");
+                writer.WritePropertyName("manualPrivateLinkServiceConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in ManualPrivateLinkServiceConnections)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsCollectionDefined(CustomDnsConfigs))
             {
-                writer.WritePropertyName("customDnsConfigs");
+                writer.WritePropertyName("customDnsConfigs"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomDnsConfigs)
                 {
@@ -88,6 +88,10 @@ namespace Azure.ResourceManager.Network
 
         internal static PrivateEndpointData DeserializePrivateEndpointData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
@@ -103,7 +107,7 @@ namespace Azure.ResourceManager.Network
             Optional<IList<CustomDnsConfigProperties>> customDnsConfigs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("extendedLocation"))
+                if (property.NameEquals("extendedLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +117,7 @@ namespace Azure.ResourceManager.Network
                     extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +127,7 @@ namespace Azure.ResourceManager.Network
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,12 +137,12 @@ namespace Azure.ResourceManager.Network
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -148,7 +152,7 @@ namespace Azure.ResourceManager.Network
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -158,7 +162,7 @@ namespace Azure.ResourceManager.Network
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -173,7 +177,7 @@ namespace Azure.ResourceManager.Network
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -182,7 +186,7 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("subnet"))
+                        if (property0.NameEquals("subnet"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -192,7 +196,7 @@ namespace Azure.ResourceManager.Network
                             subnet = SubnetData.DeserializeSubnetData(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("networkInterfaces"))
+                        if (property0.NameEquals("networkInterfaces"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -207,7 +211,7 @@ namespace Azure.ResourceManager.Network
                             networkInterfaces = array;
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -217,7 +221,7 @@ namespace Azure.ResourceManager.Network
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("privateLinkServiceConnections"))
+                        if (property0.NameEquals("privateLinkServiceConnections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -232,7 +236,7 @@ namespace Azure.ResourceManager.Network
                             privateLinkServiceConnections = array;
                             continue;
                         }
-                        if (property0.NameEquals("manualPrivateLinkServiceConnections"))
+                        if (property0.NameEquals("manualPrivateLinkServiceConnections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -247,7 +251,7 @@ namespace Azure.ResourceManager.Network
                             manualPrivateLinkServiceConnections = array;
                             continue;
                         }
-                        if (property0.NameEquals("customDnsConfigs"))
+                        if (property0.NameEquals("customDnsConfigs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

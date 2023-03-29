@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData DeserializeServiceBusActiveMessagesAvailablePeriodicNotificationsEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> namespaceName = default;
             Optional<string> requestUri = default;
             Optional<string> entityType = default;
@@ -25,32 +29,32 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> subscriptionName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("namespaceName"))
+                if (property.NameEquals("namespaceName"u8))
                 {
                     namespaceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requestUri"))
+                if (property.NameEquals("requestUri"u8))
                 {
                     requestUri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("entityType"))
+                if (property.NameEquals("entityType"u8))
                 {
                     entityType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("queueName"))
+                if (property.NameEquals("queueName"u8))
                 {
                     queueName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("topicName"))
+                if (property.NameEquals("topicName"u8))
                 {
                     topicName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionName"))
+                if (property.NameEquals("subscriptionName"u8))
                 {
                     subscriptionName = property.Value.GetString();
                     continue;

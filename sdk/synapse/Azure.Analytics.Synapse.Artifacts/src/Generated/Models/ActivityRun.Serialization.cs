@@ -18,6 +18,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static ActivityRun DeserializeActivityRun(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> pipelineName = default;
             Optional<string> pipelineRunId = default;
             Optional<string> activityName = default;
@@ -35,42 +39,42 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("pipelineName"))
+                if (property.NameEquals("pipelineName"u8))
                 {
                     pipelineName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pipelineRunId"))
+                if (property.NameEquals("pipelineRunId"u8))
                 {
                     pipelineRunId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("activityName"))
+                if (property.NameEquals("activityName"u8))
                 {
                     activityName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("activityType"))
+                if (property.NameEquals("activityType"u8))
                 {
                     activityType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("activityRunId"))
+                if (property.NameEquals("activityRunId"u8))
                 {
                     activityRunId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("linkedServiceName"))
+                if (property.NameEquals("linkedServiceName"u8))
                 {
                     linkedServiceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("activityRunStart"))
+                if (property.NameEquals("activityRunStart"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +84,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     activityRunStart = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("activityRunEnd"))
+                if (property.NameEquals("activityRunEnd"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +94,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     activityRunEnd = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("durationInMs"))
+                if (property.NameEquals("durationInMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +104,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     durationInMs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("input"))
+                if (property.NameEquals("input"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +114,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     input = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("output"))
+                if (property.NameEquals("output"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +124,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     output = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

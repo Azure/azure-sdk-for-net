@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AS2))
             {
-                writer.WritePropertyName("aS2");
+                writer.WritePropertyName("aS2"u8);
                 writer.WriteObjectValue(AS2);
             }
             if (Optional.IsDefined(X12))
             {
-                writer.WritePropertyName("x12");
+                writer.WritePropertyName("x12"u8);
                 writer.WriteObjectValue(X12);
             }
             if (Optional.IsDefined(Edifact))
             {
-                writer.WritePropertyName("edifact");
+                writer.WritePropertyName("edifact"u8);
                 writer.WriteObjectValue(Edifact);
             }
             writer.WriteEndObject();
@@ -35,12 +35,16 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationAccountAgreementContent DeserializeIntegrationAccountAgreementContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AS2AgreementContent> aS2 = default;
             Optional<X12AgreementContent> x12 = default;
             Optional<EdifactAgreementContent> edifact = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("aS2"))
+                if (property.NameEquals("aS2"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.Logic.Models
                     aS2 = AS2AgreementContent.DeserializeAS2AgreementContent(property.Value);
                     continue;
                 }
-                if (property.NameEquals("x12"))
+                if (property.NameEquals("x12"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.Logic.Models
                     x12 = X12AgreementContent.DeserializeX12AgreementContent(property.Value);
                     continue;
                 }
-                if (property.NameEquals("edifact"))
+                if (property.NameEquals("edifact"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Code))
             {
-                writer.WritePropertyName("code");
+                writer.WritePropertyName("code"u8);
                 writer.WriteNumberValue(Code.Value);
             }
             if (Optional.IsDefined(Title))
             {
-                writer.WritePropertyName("title");
+                writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
             if (Optional.IsDefined(Message))
             {
-                writer.WritePropertyName("message");
+                writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
             if (Optional.IsCollectionDefined(Recommendations))
             {
-                writer.WritePropertyName("recommendations");
+                writer.WritePropertyName("recommendations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Recommendations)
                 {
@@ -46,13 +46,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static MabContainerHealthDetails DeserializeMabContainerHealthDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> code = default;
             Optional<string> title = default;
             Optional<string> message = default;
             Optional<IList<string>> recommendations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,17 +66,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     code = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("title"))
+                if (property.NameEquals("title"u8))
                 {
                     title = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recommendations"))
+                if (property.NameEquals("recommendations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

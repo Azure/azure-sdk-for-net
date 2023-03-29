@@ -15,23 +15,27 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static DocumentLanguage DeserializeDocumentLanguage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             DetectedLanguage detectedLanguage = default;
             IReadOnlyList<TextAnalyticsWarning> warnings = default;
             Optional<DocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("detectedLanguage"))
+                if (property.NameEquals("detectedLanguage"u8))
                 {
                     detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(property.Value);
                     continue;
                 }
-                if (property.NameEquals("warnings"))
+                if (property.NameEquals("warnings"u8))
                 {
                     List<TextAnalyticsWarning> array = new List<TextAnalyticsWarning>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -41,7 +45,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     warnings = array;
                     continue;
                 }
-                if (property.NameEquals("statistics"))
+                if (property.NameEquals("statistics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

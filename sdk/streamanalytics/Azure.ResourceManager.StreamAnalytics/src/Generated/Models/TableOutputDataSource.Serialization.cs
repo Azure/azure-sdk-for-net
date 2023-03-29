@@ -16,38 +16,38 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(OutputDataSourceType);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AccountName))
             {
-                writer.WritePropertyName("accountName");
+                writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
             if (Optional.IsDefined(AccountKey))
             {
-                writer.WritePropertyName("accountKey");
+                writer.WritePropertyName("accountKey"u8);
                 writer.WriteStringValue(AccountKey);
             }
             if (Optional.IsDefined(Table))
             {
-                writer.WritePropertyName("table");
+                writer.WritePropertyName("table"u8);
                 writer.WriteStringValue(Table);
             }
             if (Optional.IsDefined(PartitionKey))
             {
-                writer.WritePropertyName("partitionKey");
+                writer.WritePropertyName("partitionKey"u8);
                 writer.WriteStringValue(PartitionKey);
             }
             if (Optional.IsDefined(RowKey))
             {
-                writer.WritePropertyName("rowKey");
+                writer.WritePropertyName("rowKey"u8);
                 writer.WriteStringValue(RowKey);
             }
             if (Optional.IsCollectionDefined(ColumnsToRemove))
             {
-                writer.WritePropertyName("columnsToRemove");
+                writer.WritePropertyName("columnsToRemove"u8);
                 writer.WriteStartArray();
                 foreach (var item in ColumnsToRemove)
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
             if (Optional.IsDefined(BatchSize))
             {
-                writer.WritePropertyName("batchSize");
+                writer.WritePropertyName("batchSize"u8);
                 writer.WriteNumberValue(BatchSize.Value);
             }
             writer.WriteEndObject();
@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static TableOutputDataSource DeserializeTableOutputDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> accountName = default;
             Optional<string> accountKey = default;
@@ -76,12 +80,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<int> batchSize = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,32 +94,32 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("accountName"))
+                        if (property0.NameEquals("accountName"u8))
                         {
                             accountName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("accountKey"))
+                        if (property0.NameEquals("accountKey"u8))
                         {
                             accountKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("table"))
+                        if (property0.NameEquals("table"u8))
                         {
                             table = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("partitionKey"))
+                        if (property0.NameEquals("partitionKey"u8))
                         {
                             partitionKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("rowKey"))
+                        if (property0.NameEquals("rowKey"u8))
                         {
                             rowKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("columnsToRemove"))
+                        if (property0.NameEquals("columnsToRemove"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -130,7 +134,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             columnsToRemove = array;
                             continue;
                         }
-                        if (property0.NameEquals("batchSize"))
+                        if (property0.NameEquals("batchSize"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -17,41 +17,41 @@ namespace Azure.ResourceManager.Synapse.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IntegrationRuntimeType.ToString());
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("managedVirtualNetwork");
+            writer.WritePropertyName("managedVirtualNetwork"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ReferenceName))
             {
-                writer.WritePropertyName("referenceName");
+                writer.WritePropertyName("referenceName"u8);
                 writer.WriteStringValue(ReferenceName);
             }
             if (Optional.IsDefined(TypeManagedVirtualNetworkType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TypeManagedVirtualNetworkType);
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WriteEndObject();
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ComputeProperties))
             {
-                writer.WritePropertyName("computeProperties");
+                writer.WritePropertyName("computeProperties"u8);
                 writer.WriteObjectValue(ComputeProperties);
             }
             if (Optional.IsDefined(SsisProperties))
             {
-                writer.WritePropertyName("ssisProperties");
+                writer.WritePropertyName("ssisProperties"u8);
                 writer.WriteObjectValue(SsisProperties);
             }
             writer.WriteEndObject();
@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseManagedIntegrationRuntime DeserializeSynapseManagedIntegrationRuntime(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SynapseIntegrationRuntimeState> state = default;
             IntegrationRuntimeType type = default;
             Optional<string> description = default;
@@ -81,7 +85,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,17 +95,17 @@ namespace Azure.ResourceManager.Synapse.Models
                     state = new SynapseIntegrationRuntimeState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new IntegrationRuntimeType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("managedVirtualNetwork"))
+                if (property.NameEquals("managedVirtualNetwork"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,17 +114,17 @@ namespace Azure.ResourceManager.Synapse.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("referenceName"))
+                        if (property0.NameEquals("referenceName"u8))
                         {
                             referenceName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("type"))
+                        if (property0.NameEquals("type"u8))
                         {
                             type0 = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("id"))
+                        if (property0.NameEquals("id"u8))
                         {
                             id = property0.Value.GetString();
                             continue;
@@ -128,7 +132,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     }
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -137,7 +141,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("computeProperties"))
+                        if (property0.NameEquals("computeProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -147,7 +151,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             computeProperties = SynapseIntegrationRuntimeComputeProperties.DeserializeSynapseIntegrationRuntimeComputeProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("ssisProperties"))
+                        if (property0.NameEquals("ssisProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

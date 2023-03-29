@@ -15,11 +15,15 @@ namespace Azure.ResourceManager.Kubernetes.Models
     {
         internal static CredentialResults DeserializeCredentialResults(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HybridConnectionConfig> hybridConnectionConfig = default;
             Optional<IReadOnlyList<CredentialResult>> kubeconfigs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hybridConnectionConfig"))
+                if (property.NameEquals("hybridConnectionConfig"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     hybridConnectionConfig = HybridConnectionConfig.DeserializeHybridConnectionConfig(property.Value);
                     continue;
                 }
-                if (property.NameEquals("kubeconfigs"))
+                if (property.NameEquals("kubeconfigs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

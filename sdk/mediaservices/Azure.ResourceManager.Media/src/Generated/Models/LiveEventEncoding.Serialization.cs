@@ -18,19 +18,19 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EncodingType))
             {
-                writer.WritePropertyName("encodingType");
+                writer.WritePropertyName("encodingType"u8);
                 writer.WriteStringValue(EncodingType.Value.ToString());
             }
             if (Optional.IsDefined(PresetName))
             {
-                writer.WritePropertyName("presetName");
+                writer.WritePropertyName("presetName"u8);
                 writer.WriteStringValue(PresetName);
             }
             if (Optional.IsDefined(StretchMode))
             {
                 if (StretchMode != null)
                 {
-                    writer.WritePropertyName("stretchMode");
+                    writer.WritePropertyName("stretchMode"u8);
                     writer.WriteStringValue(StretchMode.Value.ToString());
                 }
                 else
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 if (KeyFrameInterval != null)
                 {
-                    writer.WritePropertyName("keyFrameInterval");
+                    writer.WritePropertyName("keyFrameInterval"u8);
                     writer.WriteStringValue(KeyFrameInterval.Value, "P");
                 }
                 else
@@ -55,13 +55,17 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static LiveEventEncoding DeserializeLiveEventEncoding(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LiveEventEncodingType> encodingType = default;
             Optional<string> presetName = default;
             Optional<InputVideoStretchMode?> stretchMode = default;
             Optional<TimeSpan?> keyFrameInterval = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("encodingType"))
+                if (property.NameEquals("encodingType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,12 +75,12 @@ namespace Azure.ResourceManager.Media.Models
                     encodingType = new LiveEventEncodingType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("presetName"))
+                if (property.NameEquals("presetName"u8))
                 {
                     presetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stretchMode"))
+                if (property.NameEquals("stretchMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +90,7 @@ namespace Azure.ResourceManager.Media.Models
                     stretchMode = new InputVideoStretchMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyFrameInterval"))
+                if (property.NameEquals("keyFrameInterval"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

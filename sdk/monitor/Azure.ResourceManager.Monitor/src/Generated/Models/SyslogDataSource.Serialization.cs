@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Streams))
             {
-                writer.WritePropertyName("streams");
+                writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
                 foreach (var item in Streams)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(FacilityNames))
             {
-                writer.WritePropertyName("facilityNames");
+                writer.WritePropertyName("facilityNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in FacilityNames)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(LogLevels))
             {
-                writer.WritePropertyName("logLevels");
+                writer.WritePropertyName("logLevels"u8);
                 writer.WriteStartArray();
                 foreach (var item in LogLevels)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WriteEndObject();
@@ -56,13 +56,17 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static SyslogDataSource DeserializeSyslogDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SyslogDataSourceStream>> streams = default;
             Optional<IList<SyslogDataSourceFacilityName>> facilityNames = default;
             Optional<IList<SyslogDataSourceLogLevel>> logLevels = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("streams"))
+                if (property.NameEquals("streams"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +81,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     streams = array;
                     continue;
                 }
-                if (property.NameEquals("facilityNames"))
+                if (property.NameEquals("facilityNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     facilityNames = array;
                     continue;
                 }
-                if (property.NameEquals("logLevels"))
+                if (property.NameEquals("logLevels"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     logLevels = array;
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;

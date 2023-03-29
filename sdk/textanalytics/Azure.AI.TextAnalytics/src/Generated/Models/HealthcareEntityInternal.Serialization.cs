@@ -17,34 +17,34 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("text");
+            writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            writer.WritePropertyName("category");
+            writer.WritePropertyName("category"u8);
             writer.WriteStringValue(Category.ToString());
             if (Optional.IsDefined(Subcategory))
             {
-                writer.WritePropertyName("subcategory");
+                writer.WritePropertyName("subcategory"u8);
                 writer.WriteStringValue(Subcategory);
             }
-            writer.WritePropertyName("offset");
+            writer.WritePropertyName("offset"u8);
             writer.WriteNumberValue(Offset);
-            writer.WritePropertyName("length");
+            writer.WritePropertyName("length"u8);
             writer.WriteNumberValue(Length);
-            writer.WritePropertyName("confidenceScore");
+            writer.WritePropertyName("confidenceScore"u8);
             writer.WriteNumberValue(ConfidenceScore);
             if (Optional.IsDefined(Assertion))
             {
-                writer.WritePropertyName("assertion");
+                writer.WritePropertyName("assertion"u8);
                 writer.WriteObjectValue(Assertion);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsCollectionDefined(Links))
             {
-                writer.WritePropertyName("links");
+                writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
@@ -57,6 +57,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static HealthcareEntityInternal DeserializeHealthcareEntityInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string text = default;
             HealthcareEntityCategory category = default;
             Optional<string> subcategory = default;
@@ -68,37 +72,37 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<IList<EntityDataSource>> links = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("text"))
+                if (property.NameEquals("text"u8))
                 {
                     text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
                     category = new HealthcareEntityCategory(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("subcategory"))
+                if (property.NameEquals("subcategory"u8))
                 {
                     subcategory = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offset"))
+                if (property.NameEquals("offset"u8))
                 {
                     offset = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("length"))
+                if (property.NameEquals("length"u8))
                 {
                     length = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("confidenceScore"))
+                if (property.NameEquals("confidenceScore"u8))
                 {
                     confidenceScore = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("assertion"))
+                if (property.NameEquals("assertion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,12 +112,12 @@ namespace Azure.AI.TextAnalytics.Models
                     assertion = HealthcareEntityAssertion.DeserializeHealthcareEntityAssertion(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("links"))
+                if (property.NameEquals("links"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

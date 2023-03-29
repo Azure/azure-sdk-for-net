@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("accessPolicies");
+            writer.WritePropertyName("accessPolicies"u8);
             writer.WriteStartArray();
             foreach (var item in AccessPolicies)
             {
@@ -28,10 +28,14 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static KeyVaultAccessPolicyProperties DeserializeKeyVaultAccessPolicyProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<KeyVaultAccessPolicy> accessPolicies = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accessPolicies"))
+                if (property.NameEquals("accessPolicies"u8))
                 {
                     List<KeyVaultAccessPolicy> array = new List<KeyVaultAccessPolicy>();
                     foreach (var item in property.Value.EnumerateArray())

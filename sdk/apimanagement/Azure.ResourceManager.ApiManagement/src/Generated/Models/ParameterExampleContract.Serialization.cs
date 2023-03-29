@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Summary))
             {
-                writer.WritePropertyName("summary");
+                writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Value);
 #else
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsDefined(ExternalValue))
             {
-                writer.WritePropertyName("externalValue");
+                writer.WritePropertyName("externalValue"u8);
                 writer.WriteStringValue(ExternalValue);
             }
             writer.WriteEndObject();
@@ -45,23 +45,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ParameterExampleContract DeserializeParameterExampleContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> summary = default;
             Optional<string> description = default;
             Optional<BinaryData> value = default;
             Optional<string> externalValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("summary"))
+                if (property.NameEquals("summary"u8))
                 {
                     summary = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     value = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("externalValue"))
+                if (property.NameEquals("externalValue"u8))
                 {
                     externalValue = property.Value.GetString();
                     continue;

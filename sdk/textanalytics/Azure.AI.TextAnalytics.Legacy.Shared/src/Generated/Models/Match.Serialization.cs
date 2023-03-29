@@ -14,28 +14,32 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static Match DeserializeMatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             double confidenceScore = default;
             string text = default;
             int offset = default;
             int length = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("confidenceScore"))
+                if (property.NameEquals("confidenceScore"u8))
                 {
                     confidenceScore = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("text"))
+                if (property.NameEquals("text"u8))
                 {
                     text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offset"))
+                if (property.NameEquals("offset"u8))
                 {
                     offset = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("length"))
+                if (property.NameEquals("length"u8))
                 {
                     length = property.Value.GetInt32();
                     continue;

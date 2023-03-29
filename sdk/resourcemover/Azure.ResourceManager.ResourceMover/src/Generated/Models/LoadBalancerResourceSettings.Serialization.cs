@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
             if (Optional.IsCollectionDefined(FrontendIPConfigurations))
             {
-                writer.WritePropertyName("frontendIPConfigurations");
+                writer.WritePropertyName("frontendIPConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in FrontendIPConfigurations)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             if (Optional.IsCollectionDefined(BackendAddressPools))
             {
-                writer.WritePropertyName("backendAddressPools");
+                writer.WritePropertyName("backendAddressPools"u8);
                 writer.WriteStartArray();
                 foreach (var item in BackendAddressPools)
                 {
@@ -54,18 +54,22 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             if (Optional.IsDefined(Zones))
             {
-                writer.WritePropertyName("zones");
+                writer.WritePropertyName("zones"u8);
                 writer.WriteStringValue(Zones);
             }
-            writer.WritePropertyName("resourceType");
+            writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            writer.WritePropertyName("targetResourceName");
+            writer.WritePropertyName("targetResourceName"u8);
             writer.WriteStringValue(TargetResourceName);
             writer.WriteEndObject();
         }
 
         internal static LoadBalancerResourceSettings DeserializeLoadBalancerResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             Optional<string> sku = default;
             Optional<IList<LoadBalancerFrontendIPConfigurationResourceSettings>> frontendIPConfigurations = default;
@@ -75,7 +79,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             string targetResourceName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,12 +94,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     sku = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("frontendIPConfigurations"))
+                if (property.NameEquals("frontendIPConfigurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +114,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     frontendIPConfigurations = array;
                     continue;
                 }
-                if (property.NameEquals("backendAddressPools"))
+                if (property.NameEquals("backendAddressPools"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -125,17 +129,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     backendAddressPools = array;
                     continue;
                 }
-                if (property.NameEquals("zones"))
+                if (property.NameEquals("zones"u8))
                 {
                     zones = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourceName"))
+                if (property.NameEquals("targetResourceName"u8))
                 {
                     targetResourceName = property.Value.GetString();
                     continue;

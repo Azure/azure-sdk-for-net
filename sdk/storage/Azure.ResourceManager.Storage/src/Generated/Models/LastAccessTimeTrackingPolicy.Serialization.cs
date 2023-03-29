@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("enable");
+            writer.WritePropertyName("enable"u8);
             writer.WriteBooleanValue(IsEnabled);
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToString());
             }
             if (Optional.IsDefined(TrackingGranularityInDays))
             {
-                writer.WritePropertyName("trackingGranularityInDays");
+                writer.WritePropertyName("trackingGranularityInDays"u8);
                 writer.WriteNumberValue(TrackingGranularityInDays.Value);
             }
             if (Optional.IsCollectionDefined(BlobType))
             {
-                writer.WritePropertyName("blobType");
+                writer.WritePropertyName("blobType"u8);
                 writer.WriteStartArray();
                 foreach (var item in BlobType)
                 {
@@ -43,18 +43,22 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static LastAccessTimeTrackingPolicy DeserializeLastAccessTimeTrackingPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enable = default;
             Optional<LastAccessTimeTrackingPolicyName> name = default;
             Optional<int> trackingGranularityInDays = default;
             Optional<IList<string>> blobType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enable"))
+                if (property.NameEquals("enable"u8))
                 {
                     enable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +68,7 @@ namespace Azure.ResourceManager.Storage.Models
                     name = new LastAccessTimeTrackingPolicyName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("trackingGranularityInDays"))
+                if (property.NameEquals("trackingGranularityInDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.Storage.Models
                     trackingGranularityInDays = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("blobType"))
+                if (property.NameEquals("blobType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

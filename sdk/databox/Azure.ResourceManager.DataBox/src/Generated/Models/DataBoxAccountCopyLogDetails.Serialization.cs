@@ -14,28 +14,32 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataBoxAccountCopyLogDetails DeserializeDataBoxAccountCopyLogDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> accountName = default;
             Optional<string> copyLogLink = default;
             Optional<string> copyVerboseLogLink = default;
             DataBoxOrderType copyLogDetailsType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountName"))
+                if (property.NameEquals("accountName"u8))
                 {
                     accountName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("copyLogLink"))
+                if (property.NameEquals("copyLogLink"u8))
                 {
                     copyLogLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("copyVerboseLogLink"))
+                if (property.NameEquals("copyVerboseLogLink"u8))
                 {
                     copyVerboseLogLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("copyLogDetailsType"))
+                if (property.NameEquals("copyLogDetailsType"u8))
                 {
                     copyLogDetailsType = property.Value.GetString().ToDataBoxOrderType();
                     continue;

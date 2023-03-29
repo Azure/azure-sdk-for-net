@@ -14,6 +14,10 @@ namespace Azure.Communication.CallAutomation
     {
         internal static CallTransferAccepted DeserializeCallTransferAccepted(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
@@ -21,27 +25,27 @@ namespace Azure.Communication.CallAutomation
             Optional<ResultInformation> resultInformation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("callConnectionId"))
+                if (property.NameEquals("callConnectionId"u8))
                 {
                     callConnectionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverCallId"))
+                if (property.NameEquals("serverCallId"u8))
                 {
                     serverCallId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("correlationId"))
+                if (property.NameEquals("correlationId"u8))
                 {
                     correlationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operationContext"))
+                if (property.NameEquals("operationContext"u8))
                 {
                     operationContext = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultInformation"))
+                if (property.NameEquals("resultInformation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

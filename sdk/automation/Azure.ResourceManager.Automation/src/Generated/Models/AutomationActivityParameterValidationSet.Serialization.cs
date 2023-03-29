@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static AutomationActivityParameterValidationSet DeserializeAutomationActivityParameterValidationSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> memberValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("memberValue"))
+                if (property.NameEquals("memberValue"u8))
                 {
                     memberValue = property.Value.GetString();
                     continue;

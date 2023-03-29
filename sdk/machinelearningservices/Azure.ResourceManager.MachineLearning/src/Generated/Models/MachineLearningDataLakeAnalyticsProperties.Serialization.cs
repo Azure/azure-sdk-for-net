@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DataLakeStoreAccountName))
             {
-                writer.WritePropertyName("dataLakeStoreAccountName");
+                writer.WritePropertyName("dataLakeStoreAccountName"u8);
                 writer.WriteStringValue(DataLakeStoreAccountName);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningDataLakeAnalyticsProperties DeserializeMachineLearningDataLakeAnalyticsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dataLakeStoreAccountName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataLakeStoreAccountName"))
+                if (property.NameEquals("dataLakeStoreAccountName"u8))
                 {
                     dataLakeStoreAccountName = property.Value.GetString();
                     continue;

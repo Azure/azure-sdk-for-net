@@ -14,11 +14,15 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VerificationIPFlowResult DeserializeVerificationIPFlowResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NetworkAccess> access = default;
             Optional<string> ruleName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("access"))
+                if (property.NameEquals("access"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                     access = new NetworkAccess(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ruleName"))
+                if (property.NameEquals("ruleName"u8))
                 {
                     ruleName = property.Value.GetString();
                     continue;

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AllowNoncompliantCollectionResponse))
             {
-                writer.WritePropertyName("allowNoncompliantCollectionResponse");
+                writer.WritePropertyName("allowNoncompliantCollectionResponse"u8);
                 writer.WriteBooleanValue(AllowNoncompliantCollectionResponse.Value);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static OpenApiValidation DeserializeOpenApiValidation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> allowNoncompliantCollectionResponse = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowNoncompliantCollectionResponse"))
+                if (property.NameEquals("allowNoncompliantCollectionResponse"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

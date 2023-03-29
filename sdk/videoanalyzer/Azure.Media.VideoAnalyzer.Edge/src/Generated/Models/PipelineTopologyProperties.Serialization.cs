@@ -18,12 +18,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
@@ -33,7 +33,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             if (Optional.IsCollectionDefined(Sources))
             {
-                writer.WritePropertyName("sources");
+                writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
@@ -43,7 +43,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             if (Optional.IsCollectionDefined(Processors))
             {
-                writer.WritePropertyName("processors");
+                writer.WritePropertyName("processors"u8);
                 writer.WriteStartArray();
                 foreach (var item in Processors)
                 {
@@ -53,7 +53,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             if (Optional.IsCollectionDefined(Sinks))
             {
-                writer.WritePropertyName("sinks");
+                writer.WritePropertyName("sinks"u8);
                 writer.WriteStartArray();
                 foreach (var item in Sinks)
                 {
@@ -66,6 +66,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static PipelineTopologyProperties DeserializePipelineTopologyProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<IList<ParameterDeclaration>> parameters = default;
             Optional<IList<SourceNodeBase>> sources = default;
@@ -73,12 +77,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<IList<SinkNodeBase>> sinks = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +97,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     parameters = array;
                     continue;
                 }
-                if (property.NameEquals("sources"))
+                if (property.NameEquals("sources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +112,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     sources = array;
                     continue;
                 }
-                if (property.NameEquals("processors"))
+                if (property.NameEquals("processors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +127,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     processors = array;
                     continue;
                 }
-                if (property.NameEquals("sinks"))
+                if (property.NameEquals("sinks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

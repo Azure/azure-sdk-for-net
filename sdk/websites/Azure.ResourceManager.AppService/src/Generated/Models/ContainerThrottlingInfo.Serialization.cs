@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Periods))
             {
-                writer.WritePropertyName("periods");
+                writer.WritePropertyName("periods"u8);
                 writer.WriteNumberValue(Periods.Value);
             }
             if (Optional.IsDefined(ThrottledPeriods))
             {
-                writer.WritePropertyName("throttledPeriods");
+                writer.WritePropertyName("throttledPeriods"u8);
                 writer.WriteNumberValue(ThrottledPeriods.Value);
             }
             if (Optional.IsDefined(ThrottledTime))
             {
-                writer.WritePropertyName("throttledTime");
+                writer.WritePropertyName("throttledTime"u8);
                 writer.WriteNumberValue(ThrottledTime.Value);
             }
             writer.WriteEndObject();
@@ -35,12 +35,16 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ContainerThrottlingInfo DeserializeContainerThrottlingInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> periods = default;
             Optional<int> throttledPeriods = default;
             Optional<int> throttledTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("periods"))
+                if (property.NameEquals("periods"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
                     periods = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("throttledPeriods"))
+                if (property.NameEquals("throttledPeriods"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
                     throttledPeriods = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("throttledTime"))
+                if (property.NameEquals("throttledTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

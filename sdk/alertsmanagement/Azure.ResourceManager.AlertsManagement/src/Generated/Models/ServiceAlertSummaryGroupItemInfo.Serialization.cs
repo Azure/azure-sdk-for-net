@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Count))
             {
-                writer.WritePropertyName("count");
+                writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
             if (Optional.IsDefined(GroupedBy))
             {
-                writer.WritePropertyName("groupedby");
+                writer.WritePropertyName("groupedby"u8);
                 writer.WriteStringValue(GroupedBy);
             }
             if (Optional.IsCollectionDefined(Values))
             {
-                writer.WritePropertyName("values");
+                writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
@@ -46,18 +46,22 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static ServiceAlertSummaryGroupItemInfo DeserializeServiceAlertSummaryGroupItemInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<long> count = default;
             Optional<string> groupedby = default;
             Optional<IList<ServiceAlertSummaryGroupItemInfo>> values = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,12 +71,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     count = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("groupedby"))
+                if (property.NameEquals("groupedby"u8))
                 {
                     groupedby = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("values"))
+                if (property.NameEquals("values"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

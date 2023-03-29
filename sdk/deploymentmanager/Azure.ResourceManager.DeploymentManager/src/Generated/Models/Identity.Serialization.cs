@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IdentityType);
-            writer.WritePropertyName("identityIds");
+            writer.WritePropertyName("identityIds"u8);
             writer.WriteStartArray();
             foreach (var item in IdentityIds)
             {
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static Identity DeserializeIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             IList<string> identityIds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identityIds"))
+                if (property.NameEquals("identityIds"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())

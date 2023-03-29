@@ -20,16 +20,20 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ExpressRoutePortsLocationBandwidths DeserializeExpressRoutePortsLocationBandwidths(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> offerName = default;
             Optional<int> valueInGbps = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("offerName"))
+                if (property.NameEquals("offerName"u8))
                 {
                     offerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("valueInGbps"))
+                if (property.NameEquals("valueInGbps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

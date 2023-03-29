@@ -17,18 +17,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static StorageLifecyclePolicyCompletedEventData DeserializeStorageLifecyclePolicyCompletedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> scheduleTime = default;
             Optional<StorageLifecyclePolicyActionSummaryDetail> deleteSummary = default;
             Optional<StorageLifecyclePolicyActionSummaryDetail> tierToCoolSummary = default;
             Optional<StorageLifecyclePolicyActionSummaryDetail> tierToArchiveSummary = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scheduleTime"))
+                if (property.NameEquals("scheduleTime"u8))
                 {
                     scheduleTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deleteSummary"))
+                if (property.NameEquals("deleteSummary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,7 +42,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     deleteSummary = StorageLifecyclePolicyActionSummaryDetail.DeserializeStorageLifecyclePolicyActionSummaryDetail(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tierToCoolSummary"))
+                if (property.NameEquals("tierToCoolSummary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +52,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     tierToCoolSummary = StorageLifecyclePolicyActionSummaryDetail.DeserializeStorageLifecyclePolicyActionSummaryDetail(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tierToArchiveSummary"))
+                if (property.NameEquals("tierToArchiveSummary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

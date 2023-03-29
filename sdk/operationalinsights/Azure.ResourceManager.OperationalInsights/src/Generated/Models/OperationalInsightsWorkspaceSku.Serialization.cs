@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
             if (Optional.IsDefined(CapacityReservationLevel))
             {
-                writer.WritePropertyName("capacityReservationLevel");
+                writer.WritePropertyName("capacityReservationLevel"u8);
                 writer.WriteNumberValue((int)CapacityReservationLevel.Value);
             }
             writer.WriteEndObject();
@@ -28,17 +28,21 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static OperationalInsightsWorkspaceSku DeserializeOperationalInsightsWorkspaceSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             OperationalInsightsWorkspaceSkuName name = default;
             Optional<OperationalInsightsWorkspaceCapacityReservationLevel> capacityReservationLevel = default;
             Optional<DateTimeOffset> lastSkuUpdate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = new OperationalInsightsWorkspaceSkuName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("capacityReservationLevel"))
+                if (property.NameEquals("capacityReservationLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,14 +52,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     capacityReservationLevel = property.Value.GetInt32().ToOperationalInsightsWorkspaceCapacityReservationLevel();
                     continue;
                 }
-                if (property.NameEquals("lastSkuUpdate"))
+                if (property.NameEquals("lastSkuUpdate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    lastSkuUpdate = property.Value.GetDateTimeOffset();
+                    lastSkuUpdate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }

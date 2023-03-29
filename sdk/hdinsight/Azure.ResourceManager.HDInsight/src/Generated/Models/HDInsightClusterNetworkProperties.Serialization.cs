@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceProviderConnection))
             {
-                writer.WritePropertyName("resourceProviderConnection");
+                writer.WritePropertyName("resourceProviderConnection"u8);
                 writer.WriteStringValue(ResourceProviderConnection.Value.ToString());
             }
             if (Optional.IsDefined(PrivateLink))
             {
-                writer.WritePropertyName("privateLink");
+                writer.WritePropertyName("privateLink"u8);
                 writer.WriteStringValue(PrivateLink.Value.ToString());
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightClusterNetworkProperties DeserializeHDInsightClusterNetworkProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HDInsightResourceProviderConnection> resourceProviderConnection = default;
             Optional<HDInsightPrivateLinkState> privateLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceProviderConnection"))
+                if (property.NameEquals("resourceProviderConnection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     resourceProviderConnection = new HDInsightResourceProviderConnection(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("privateLink"))
+                if (property.NameEquals("privateLink"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

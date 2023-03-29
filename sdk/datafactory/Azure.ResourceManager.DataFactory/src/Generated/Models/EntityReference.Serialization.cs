@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IntegrationRuntimeEntityReferenceType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IntegrationRuntimeEntityReferenceType.Value.ToString());
             }
             if (Optional.IsDefined(ReferenceName))
             {
-                writer.WritePropertyName("referenceName");
+                writer.WritePropertyName("referenceName"u8);
                 writer.WriteStringValue(ReferenceName);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static EntityReference DeserializeEntityReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IntegrationRuntimeEntityReferenceType> type = default;
             Optional<string> referenceName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     type = new IntegrationRuntimeEntityReferenceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("referenceName"))
+                if (property.NameEquals("referenceName"u8))
                 {
                     referenceName = property.Value.GetString();
                     continue;

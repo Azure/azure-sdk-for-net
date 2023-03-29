@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(AutoDiscovery))
             {
-                writer.WritePropertyName("autoDiscovery");
+                writer.WritePropertyName("autoDiscovery"u8);
                 writer.WriteStringValue(AutoDiscovery.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Repos))
             {
-                writer.WritePropertyName("repos");
+                writer.WritePropertyName("repos"u8);
                 writer.WriteStartArray();
                 foreach (var item in Repos)
                 {
@@ -41,17 +41,21 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static AzureDevOpsProjectMetadata DeserializeAzureDevOpsProjectMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<AutoDiscovery> autoDiscovery = default;
             Optional<IList<string>> repos = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("autoDiscovery"))
+                if (property.NameEquals("autoDiscovery"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     autoDiscovery = new AutoDiscovery(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("repos"))
+                if (property.NameEquals("repos"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

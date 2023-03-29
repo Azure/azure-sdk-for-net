@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("functionAppResourceId");
+            writer.WritePropertyName("functionAppResourceId"u8);
             writer.WriteStringValue(FunctionAppResourceId);
-            writer.WritePropertyName("functionName");
+            writer.WritePropertyName("functionName"u8);
             writer.WriteStringValue(FunctionName);
-            writer.WritePropertyName("httpTriggerUrl");
+            writer.WritePropertyName("httpTriggerUrl"u8);
             writer.WriteStringValue(HttpTriggerUri.AbsoluteUri);
             if (Optional.IsDefined(UseCommonAlertSchema))
             {
-                writer.WritePropertyName("useCommonAlertSchema");
+                writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
             }
             writer.WriteEndObject();
@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorAzureFunctionReceiver DeserializeMonitorAzureFunctionReceiver(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             ResourceIdentifier functionAppResourceId = default;
             string functionName = default;
@@ -41,27 +45,27 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<bool> useCommonAlertSchema = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("functionAppResourceId"))
+                if (property.NameEquals("functionAppResourceId"u8))
                 {
                     functionAppResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("functionName"))
+                if (property.NameEquals("functionName"u8))
                 {
                     functionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("httpTriggerUrl"))
+                if (property.NameEquals("httpTriggerUrl"u8))
                 {
                     httpTriggerUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("useCommonAlertSchema"))
+                if (property.NameEquals("useCommonAlertSchema"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

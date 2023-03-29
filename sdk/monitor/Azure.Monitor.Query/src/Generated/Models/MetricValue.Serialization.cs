@@ -15,6 +15,10 @@ namespace Azure.Monitor.Query.Models
     {
         internal static MetricValue DeserializeMetricValue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset timeStamp = default;
             Optional<double> average = default;
             Optional<double> minimum = default;
@@ -23,12 +27,12 @@ namespace Azure.Monitor.Query.Models
             Optional<double> count = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timeStamp"))
+                if (property.NameEquals("timeStamp"u8))
                 {
                     timeStamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("average"))
+                if (property.NameEquals("average"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,7 +42,7 @@ namespace Azure.Monitor.Query.Models
                     average = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("minimum"))
+                if (property.NameEquals("minimum"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +52,7 @@ namespace Azure.Monitor.Query.Models
                     minimum = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("maximum"))
+                if (property.NameEquals("maximum"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +62,7 @@ namespace Azure.Monitor.Query.Models
                     maximum = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("total"))
+                if (property.NameEquals("total"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +72,7 @@ namespace Azure.Monitor.Query.Models
                     total = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

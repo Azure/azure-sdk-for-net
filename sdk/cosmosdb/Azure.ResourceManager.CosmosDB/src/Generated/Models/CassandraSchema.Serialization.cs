@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Columns))
             {
-                writer.WritePropertyName("columns");
+                writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
                 foreach (var item in Columns)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             if (Optional.IsCollectionDefined(PartitionKeys))
             {
-                writer.WritePropertyName("partitionKeys");
+                writer.WritePropertyName("partitionKeys"u8);
                 writer.WriteStartArray();
                 foreach (var item in PartitionKeys)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             if (Optional.IsCollectionDefined(ClusterKeys))
             {
-                writer.WritePropertyName("clusterKeys");
+                writer.WritePropertyName("clusterKeys"u8);
                 writer.WriteStartArray();
                 foreach (var item in ClusterKeys)
                 {
@@ -51,12 +51,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CassandraSchema DeserializeCassandraSchema(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<CassandraColumn>> columns = default;
             Optional<IList<CassandraPartitionKey>> partitionKeys = default;
             Optional<IList<CassandraClusterKey>> clusterKeys = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("columns"))
+                if (property.NameEquals("columns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     columns = array;
                     continue;
                 }
-                if (property.NameEquals("partitionKeys"))
+                if (property.NameEquals("partitionKeys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     partitionKeys = array;
                     continue;
                 }
-                if (property.NameEquals("clusterKeys"))
+                if (property.NameEquals("clusterKeys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AgreementKeys))
             {
-                writer.WritePropertyName("agreementKeys");
+                writer.WritePropertyName("agreementKeys"u8);
                 writer.WriteStartArray();
                 foreach (var item in AgreementKeys)
                 {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(AgreedBy))
             {
-                writer.WritePropertyName("agreedBy");
+                writer.WritePropertyName("agreedBy"u8);
                 writer.WriteStringValue(AgreedBy);
             }
             if (Optional.IsDefined(AgreedOn))
             {
-                writer.WritePropertyName("agreedAt");
+                writer.WritePropertyName("agreedAt"u8);
                 writer.WriteStringValue(AgreedOn.Value, "O");
             }
             writer.WriteEndObject();
@@ -42,12 +42,16 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DomainPurchaseConsent DeserializeDomainPurchaseConsent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> agreementKeys = default;
             Optional<string> agreedBy = default;
             Optional<DateTimeOffset> agreedAt = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("agreementKeys"))
+                if (property.NameEquals("agreementKeys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,12 +66,12 @@ namespace Azure.ResourceManager.AppService.Models
                     agreementKeys = array;
                     continue;
                 }
-                if (property.NameEquals("agreedBy"))
+                if (property.NameEquals("agreedBy"u8))
                 {
                     agreedBy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agreedAt"))
+                if (property.NameEquals("agreedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

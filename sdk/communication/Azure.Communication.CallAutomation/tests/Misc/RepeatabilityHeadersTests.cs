@@ -9,20 +9,14 @@ namespace Azure.Communication.CallAutomation.Tests.Misc
     public class RepeatabilityHeadersTests
     {
         [Test]
-        public void RepeatablityHeaders_IsNotOverwrittenByDefaultIfSet()
+        public void RepeatablityHeaders_IsSetInConstructor()
         {
-            // arrange
-            var repeatablityRequestId = Guid.NewGuid();
-            var repeatabilityFirstSent = DateTime.UtcNow;
-            // arrange
-            var options = new AnswerCallOptions("context", new Uri("https://contoso.com/callback"))
-            {
-                RepeatabilityHeaders = new RepeatabilityHeaders(repeatablityRequestId, repeatabilityFirstSent)
-            };
+            // arrange & act
+            var repeatabilityHeaders = new RepeatabilityHeaders();
 
-            // act & assert
-            Assert.AreEqual(repeatablityRequestId, options.RepeatabilityHeaders.RepeatabilityRequestId);
-            Assert.AreEqual(repeatabilityFirstSent.ToString("R"), options.RepeatabilityHeaders.GetRepeatabilityFirstSentString());
+            // assert
+            Assert.IsNotNull(repeatabilityHeaders.RepeatabilityFirstSent);
+            Assert.IsNotNull(repeatabilityHeaders.RepeatabilityRequestId);
         }
     }
 }

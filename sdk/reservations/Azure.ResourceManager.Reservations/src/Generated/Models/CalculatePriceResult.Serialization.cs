@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static CalculatePriceResult DeserializeCalculatePriceResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CalculatePriceResultProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

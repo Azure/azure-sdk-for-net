@@ -147,14 +147,13 @@ if (!$ResourceGroupName) {
             exit 0
         }
     } else {
-        if (!$BaseName) {
-            $UserName = GetUserName
-            $BaseName = GetBaseName $UserName $ServiceDirectory
-            Log "BaseName was not set. Using default base name '$BaseName'"
-        }
-
-        # Format the resource group name like in New-TestResources.ps1.
-        $ResourceGroupName = "rg-$BaseName"
+        $serviceName = GetServiceLeafDirectoryName $ServiceDirectory
+        $BaseName, $ResourceGroupName = GetBaseAndResourceGroupNames `
+            -baseNameDefault $BaseName `
+            -resourceGroupNameDefault $ResourceGroupName `
+            -user (GetUserName) `
+            -serviceDirectoryName $serviceName `
+            -CI $CI
     }
 }
 

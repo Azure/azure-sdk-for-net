@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("domainNameLabel");
+            writer.WritePropertyName("domainNameLabel"u8);
             writer.WriteStringValue(DomainNameLabel);
             writer.WriteEndObject();
         }
 
         internal static VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings DeserializeVirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string domainNameLabel = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("domainNameLabel"))
+                if (property.NameEquals("domainNameLabel"u8))
                 {
                     domainNameLabel = property.Value.GetString();
                     continue;

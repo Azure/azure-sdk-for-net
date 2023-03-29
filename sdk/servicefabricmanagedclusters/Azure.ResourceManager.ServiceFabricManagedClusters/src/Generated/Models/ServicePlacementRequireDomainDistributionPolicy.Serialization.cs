@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("domainName");
+            writer.WritePropertyName("domainName"u8);
             writer.WriteStringValue(DomainName);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ServicePlacementPolicyType.ToString());
             writer.WriteEndObject();
         }
 
         internal static ServicePlacementRequireDomainDistributionPolicy DeserializeServicePlacementRequireDomainDistributionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string domainName = default;
             ServicePlacementPolicyType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("domainName"))
+                if (property.NameEquals("domainName"u8))
                 {
                     domainName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ServicePlacementPolicyType(property.Value.GetString());
                     continue;

@@ -15,31 +15,35 @@ namespace Azure.ResourceManager.AppContainers.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(BindingType))
             {
-                writer.WritePropertyName("bindingType");
+                writer.WritePropertyName("bindingType"u8);
                 writer.WriteStringValue(BindingType.Value.ToString());
             }
-            writer.WritePropertyName("certificateId");
+            writer.WritePropertyName("certificateId"u8);
             writer.WriteStringValue(CertificateId);
             writer.WriteEndObject();
         }
 
         internal static ContainerAppCustomDomain DeserializeContainerAppCustomDomain(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<ContainerAppCustomDomainBindingType> bindingType = default;
             ResourceIdentifier certificateId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("bindingType"))
+                if (property.NameEquals("bindingType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     bindingType = new ContainerAppCustomDomainBindingType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("certificateId"))
+                if (property.NameEquals("certificateId"u8))
                 {
                     certificateId = new ResourceIdentifier(property.Value.GetString());
                     continue;

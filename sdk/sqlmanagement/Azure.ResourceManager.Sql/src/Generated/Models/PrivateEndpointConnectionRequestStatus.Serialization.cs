@@ -14,12 +14,16 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static PrivateEndpointConnectionRequestStatus DeserializePrivateEndpointConnectionRequestStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> privateLinkServiceId = default;
             Optional<string> privateEndpointConnectionName = default;
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("privateLinkServiceId"))
+                if (property.NameEquals("privateLinkServiceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,12 +33,12 @@ namespace Azure.ResourceManager.Sql.Models
                     privateLinkServiceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("privateEndpointConnectionName"))
+                if (property.NameEquals("privateEndpointConnectionName"u8))
                 {
                     privateEndpointConnectionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;

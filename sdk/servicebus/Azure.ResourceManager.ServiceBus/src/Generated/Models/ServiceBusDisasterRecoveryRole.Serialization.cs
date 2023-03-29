@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         public static ServiceBusDisasterRecoveryRole ToServiceBusDisasterRecoveryRole(this string value)
         {
-            if (string.Equals(value, "Primary", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusDisasterRecoveryRole.Primary;
-            if (string.Equals(value, "PrimaryNotReplicating", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusDisasterRecoveryRole.PrimaryNotReplicating;
-            if (string.Equals(value, "Secondary", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusDisasterRecoveryRole.Secondary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Primary")) return ServiceBusDisasterRecoveryRole.Primary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PrimaryNotReplicating")) return ServiceBusDisasterRecoveryRole.PrimaryNotReplicating;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Secondary")) return ServiceBusDisasterRecoveryRole.Secondary;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceBusDisasterRecoveryRole value.");
         }
     }

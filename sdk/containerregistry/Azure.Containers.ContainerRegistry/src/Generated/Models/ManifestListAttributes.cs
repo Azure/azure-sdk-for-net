@@ -11,7 +11,7 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class ManifestListAttributes
     {
         /// <summary> Initializes a new instance of ManifestListAttributes. </summary>
-        public ManifestListAttributes()
+        internal ManifestListAttributes()
         {
         }
 
@@ -29,12 +29,12 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> The MIME type of the referenced object. This will generally be application/vnd.docker.image.manifest.v2+json, but it could also be application/vnd.docker.image.manifest.v1+json. </summary>
-        public string MediaType { get; set; }
+        public string MediaType { get; }
         /// <summary> The size in bytes of the object. </summary>
-        public long? Size { get; set; }
+        public long? Size { get; }
         /// <summary> The digest of the content, as defined by the Registry V2 HTTP API Specification. </summary>
-        public string Digest { get; set; }
+        public string Digest { get; }
         /// <summary> The platform object describes the platform which the image in the manifest runs on. A full list of valid operating system and architecture values are listed in the Go language documentation for $GOOS and $GOARCH. </summary>
-        public Platform Platform { get; set; }
+        public Platform Platform { get; }
     }
 }

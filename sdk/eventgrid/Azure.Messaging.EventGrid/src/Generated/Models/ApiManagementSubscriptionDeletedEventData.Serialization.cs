@@ -17,10 +17,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static ApiManagementSubscriptionDeletedEventData DeserializeApiManagementSubscriptionDeletedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceUri"))
+                if (property.NameEquals("resourceUri"u8))
                 {
                     resourceUri = property.Value.GetString();
                     continue;

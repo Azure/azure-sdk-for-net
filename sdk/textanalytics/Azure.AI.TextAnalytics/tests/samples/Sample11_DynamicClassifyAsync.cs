@@ -11,14 +11,14 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
+        [Ignore("Disabled per request of the service team")]
         public async Task DynamicClassifyAsync()
         {
-            // Create a text analytics client.
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            // Get the document.
+            #region Snippet:Sample11_DynamicClassifyAsync
             string document =
                 "“The Microsoft Adaptive Accessories are intended to remove the barriers that traditional mice and"
                 + " keyboards may present to people with limited mobility,” says Gabi Michel, director of Accessible"
@@ -40,21 +40,21 @@ namespace Azure.AI.TextAnalytics.Samples
                 Response<ClassificationCategoryCollection> response = await client.DynamicClassifyAsync(document, categories);
                 ClassificationCategoryCollection classifications = response.Value;
 
-                Console.WriteLine($"The document was classified as follows:");
-                Console.WriteLine();
-
+                Console.WriteLine($"The document was classified as:");
                 foreach (ClassificationCategory classification in classifications)
                 {
                     Console.WriteLine($"  Category: {classification.Category}");
-                    Console.WriteLine($"  ConfidenceScore: {classification.ConfidenceScore}.");
+                    Console.WriteLine($"  ConfidenceScore: {classification.ConfidenceScore}");
                     Console.WriteLine();
                 }
             }
             catch (RequestFailedException exception)
             {
-                Console.WriteLine($"Error Code: {exception.ErrorCode}");
-                Console.WriteLine($"Message: {exception.Message}");
+                Console.WriteLine($"  Error!");
+                Console.WriteLine($"  ErrorCode: {exception.ErrorCode}");
+                Console.WriteLine($"  Message: {exception.Message}");
             }
+            #endregion
         }
     }
 }

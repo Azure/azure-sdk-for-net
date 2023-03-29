@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.Advisor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(ActionGroupResourceId))
             {
-                writer.WritePropertyName("actionGroupResourceId");
+                writer.WritePropertyName("actionGroupResourceId"u8);
                 writer.WriteStringValue(ActionGroupResourceId);
             }
             if (Optional.IsDefined(Frequency))
             {
-                writer.WritePropertyName("frequency");
+                writer.WritePropertyName("frequency"u8);
                 writer.WriteNumberValue(Frequency.Value);
             }
             if (Optional.IsCollectionDefined(Categories))
             {
-                writer.WritePropertyName("categories");
+                writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.Advisor.Models
             }
             if (Optional.IsDefined(Language))
             {
-                writer.WritePropertyName("language");
+                writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             writer.WriteEndObject();
@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.Advisor.Models
 
         internal static DigestConfig DeserializeDigestConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> actionGroupResourceId = default;
             Optional<int> frequency = default;
@@ -64,17 +68,17 @@ namespace Azure.ResourceManager.Advisor.Models
             Optional<DigestConfigState> state = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("actionGroupResourceId"))
+                if (property.NameEquals("actionGroupResourceId"u8))
                 {
                     actionGroupResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("frequency"))
+                if (property.NameEquals("frequency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +88,7 @@ namespace Azure.ResourceManager.Advisor.Models
                     frequency = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("categories"))
+                if (property.NameEquals("categories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,12 +103,12 @@ namespace Azure.ResourceManager.Advisor.Models
                     categories = array;
                     continue;
                 }
-                if (property.NameEquals("language"))
+                if (property.NameEquals("language"u8))
                 {
                     language = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -16,41 +16,45 @@ namespace Azure.AI.TextAnalytics
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("rangeKind");
+            writer.WritePropertyName("rangeKind"u8);
             writer.WriteStringValue(RangeKind.ToString());
-            writer.WritePropertyName("minimum");
+            writer.WritePropertyName("minimum"u8);
             writer.WriteNumberValue(Minimum);
-            writer.WritePropertyName("maximum");
+            writer.WritePropertyName("maximum"u8);
             writer.WriteNumberValue(Maximum);
-            writer.WritePropertyName("resolutionKind");
+            writer.WritePropertyName("resolutionKind"u8);
             writer.WriteStringValue(ResolutionKind.ToString());
             writer.WriteEndObject();
         }
 
         internal static NumericRangeResolution DeserializeNumericRangeResolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RangeKind rangeKind = default;
             double minimum = default;
             double maximum = default;
             ResolutionKind resolutionKind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rangeKind"))
+                if (property.NameEquals("rangeKind"u8))
                 {
                     rangeKind = new RangeKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("minimum"))
+                if (property.NameEquals("minimum"u8))
                 {
                     minimum = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("maximum"))
+                if (property.NameEquals("maximum"u8))
                 {
                     maximum = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("resolutionKind"))
+                if (property.NameEquals("resolutionKind"u8))
                 {
                     resolutionKind = new ResolutionKind(property.Value.GetString());
                     continue;

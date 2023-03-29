@@ -21,10 +21,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FilePattern))
             {
-                writer.WritePropertyName("filePattern");
+                writer.WritePropertyName("filePattern"u8);
                 writer.WriteObjectValue(FilePattern);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             foreach (var item in AdditionalProperties)
             {
@@ -36,13 +36,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static JsonWriteSettings DeserializeJsonWriteSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> filePattern = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("filePattern"))
+                if (property.NameEquals("filePattern"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     filePattern = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

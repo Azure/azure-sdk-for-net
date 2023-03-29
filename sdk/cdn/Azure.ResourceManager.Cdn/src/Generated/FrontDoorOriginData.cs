@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing the FrontDoorOrigin data model. </summary>
+    /// <summary>
+    /// A class representing the FrontDoorOrigin data model.
+    /// CDN origin is the source of the content being delivered via CDN. When the edge nodes represented by an endpoint do not have the requested content cached, they attempt to fetch it from one or more of the configured origins.
+    /// </summary>
     public partial class FrontDoorOriginData : ResourceData
     {
         /// <summary> Initializes a new instance of FrontDoorOriginData. </summary>

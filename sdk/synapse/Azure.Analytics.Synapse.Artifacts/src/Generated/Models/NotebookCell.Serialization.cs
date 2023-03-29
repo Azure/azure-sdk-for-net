@@ -19,11 +19,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("cell_type");
+            writer.WritePropertyName("cell_type"u8);
             writer.WriteStringValue(CellType);
-            writer.WritePropertyName("metadata");
+            writer.WritePropertyName("metadata"u8);
             writer.WriteObjectValue(Metadata);
-            writer.WritePropertyName("source");
+            writer.WritePropertyName("source"u8);
             writer.WriteStartArray();
             foreach (var item in Source)
             {
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (Attachments != null)
                 {
-                    writer.WritePropertyName("attachments");
+                    writer.WritePropertyName("attachments"u8);
                     writer.WriteObjectValue(Attachments);
                 }
                 else
@@ -44,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(Outputs))
             {
-                writer.WritePropertyName("outputs");
+                writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
@@ -62,6 +62,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static NotebookCell DeserializeNotebookCell(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string cellType = default;
             object metadata = default;
             IList<string> source = default;
@@ -71,17 +75,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cell_type"))
+                if (property.NameEquals("cell_type"u8))
                 {
                     cellType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     metadata = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -91,7 +95,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     source = array;
                     continue;
                 }
-                if (property.NameEquals("attachments"))
+                if (property.NameEquals("attachments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +105,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     attachments = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("outputs"))
+                if (property.NameEquals("outputs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LanguageExtensionName))
             {
-                writer.WritePropertyName("languageExtensionName");
+                writer.WritePropertyName("languageExtensionName"u8);
                 writer.WriteStringValue(LanguageExtensionName.Value.ToString());
             }
             if (Optional.IsDefined(LanguageExtensionImageName))
             {
-                writer.WritePropertyName("languageExtensionImageName");
+                writer.WritePropertyName("languageExtensionImageName"u8);
                 writer.WriteStringValue(LanguageExtensionImageName.Value.ToString());
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoLanguageExtension DeserializeKustoLanguageExtension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<KustoLanguageExtensionName> languageExtensionName = default;
             Optional<KustoLanguageExtensionImageName> languageExtensionImageName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("languageExtensionName"))
+                if (property.NameEquals("languageExtensionName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     languageExtensionName = new KustoLanguageExtensionName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("languageExtensionImageName"))
+                if (property.NameEquals("languageExtensionImageName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

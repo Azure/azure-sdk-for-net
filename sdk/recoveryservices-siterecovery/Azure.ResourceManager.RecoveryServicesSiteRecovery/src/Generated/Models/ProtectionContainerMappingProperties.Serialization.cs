@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static ProtectionContainerMappingProperties DeserializeProtectionContainerMappingProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> targetProtectionContainerId = default;
             Optional<string> targetProtectionContainerFriendlyName = default;
             Optional<ProtectionContainerMappingProviderSpecificDetails> providerSpecificDetails = default;
@@ -28,17 +32,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> policyFriendlyName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetProtectionContainerId"))
+                if (property.NameEquals("targetProtectionContainerId"u8))
                 {
                     targetProtectionContainerId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetProtectionContainerFriendlyName"))
+                if (property.NameEquals("targetProtectionContainerFriendlyName"u8))
                 {
                     targetProtectionContainerFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providerSpecificDetails"))
+                if (property.NameEquals("providerSpecificDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,12 +52,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     providerSpecificDetails = ProtectionContainerMappingProviderSpecificDetails.DeserializeProtectionContainerMappingProviderSpecificDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("health"))
+                if (property.NameEquals("health"u8))
                 {
                     health = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("healthErrorDetails"))
+                if (property.NameEquals("healthErrorDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,32 +72,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     healthErrorDetails = array;
                     continue;
                 }
-                if (property.NameEquals("policyId"))
+                if (property.NameEquals("policyId"u8))
                 {
                     policyId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceProtectionContainerFriendlyName"))
+                if (property.NameEquals("sourceProtectionContainerFriendlyName"u8))
                 {
                     sourceProtectionContainerFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceFabricFriendlyName"))
+                if (property.NameEquals("sourceFabricFriendlyName"u8))
                 {
                     sourceFabricFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetFabricFriendlyName"))
+                if (property.NameEquals("targetFabricFriendlyName"u8))
                 {
                     targetFabricFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyFriendlyName"))
+                if (property.NameEquals("policyFriendlyName"u8))
                 {
                     policyFriendlyName = property.Value.GetString();
                     continue;

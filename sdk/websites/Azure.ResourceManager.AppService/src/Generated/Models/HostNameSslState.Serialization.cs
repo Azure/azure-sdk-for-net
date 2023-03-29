@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(SslState))
             {
-                writer.WritePropertyName("sslState");
+                writer.WritePropertyName("sslState"u8);
                 writer.WriteStringValue(SslState.Value.ToSerialString());
             }
             if (Optional.IsDefined(VirtualIP))
             {
-                writer.WritePropertyName("virtualIP");
+                writer.WritePropertyName("virtualIP"u8);
                 writer.WriteStringValue(VirtualIP);
             }
             if (Optional.IsDefined(Thumbprint))
             {
-                writer.WritePropertyName("thumbprint");
+                writer.WritePropertyName("thumbprint"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Thumbprint);
 #else
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (ToUpdate != null)
                 {
-                    writer.WritePropertyName("toUpdate");
+                    writer.WritePropertyName("toUpdate"u8);
                     writer.WriteBooleanValue(ToUpdate.Value);
                 }
                 else
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(HostType))
             {
-                writer.WritePropertyName("hostType");
+                writer.WritePropertyName("hostType"u8);
                 writer.WriteStringValue(HostType.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static HostNameSslState DeserializeHostNameSslState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<HostNameBindingSslState> sslState = default;
             Optional<string> virtualIP = default;
@@ -70,12 +74,12 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<AppServiceHostType> hostType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sslState"))
+                if (property.NameEquals("sslState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,12 +89,12 @@ namespace Azure.ResourceManager.AppService.Models
                     sslState = property.Value.GetString().ToHostNameBindingSslState();
                     continue;
                 }
-                if (property.NameEquals("virtualIP"))
+                if (property.NameEquals("virtualIP"u8))
                 {
                     virtualIP = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("thumbprint"))
+                if (property.NameEquals("thumbprint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                     thumbprint = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("toUpdate"))
+                if (property.NameEquals("toUpdate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +114,7 @@ namespace Azure.ResourceManager.AppService.Models
                     toUpdate = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("hostType"))
+                if (property.NameEquals("hostType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

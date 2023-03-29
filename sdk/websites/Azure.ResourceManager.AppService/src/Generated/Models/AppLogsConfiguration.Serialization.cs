@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Destination))
             {
-                writer.WritePropertyName("destination");
+                writer.WritePropertyName("destination"u8);
                 writer.WriteStringValue(Destination);
             }
             if (Optional.IsDefined(LogAnalyticsConfiguration))
             {
-                writer.WritePropertyName("logAnalyticsConfiguration");
+                writer.WritePropertyName("logAnalyticsConfiguration"u8);
                 writer.WriteObjectValue(LogAnalyticsConfiguration);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppLogsConfiguration DeserializeAppLogsConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> destination = default;
             Optional<LogAnalyticsConfiguration> logAnalyticsConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("destination"))
+                if (property.NameEquals("destination"u8))
                 {
                     destination = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("logAnalyticsConfiguration"))
+                if (property.NameEquals("logAnalyticsConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

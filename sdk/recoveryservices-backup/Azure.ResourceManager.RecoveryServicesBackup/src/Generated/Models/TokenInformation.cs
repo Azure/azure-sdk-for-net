@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of TokenInformation. </summary>
         /// <param name="token"> Token value. </param>
         /// <param name="expiryTimeInUtcTicks"> Expiry time of token. </param>
-        /// <param name="securityPIN"> Security PIN. </param>
-        internal TokenInformation(string token, long? expiryTimeInUtcTicks, string securityPIN)
+        /// <param name="securityPin"> Security PIN. </param>
+        internal TokenInformation(string token, long? expiryTimeInUtcTicks, string securityPin)
         {
             Token = token;
             ExpiryTimeInUtcTicks = expiryTimeInUtcTicks;
-            SecurityPIN = securityPIN;
+            SecurityPin = securityPin;
         }
 
         /// <summary> Token value. </summary>
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Expiry time of token. </summary>
         public long? ExpiryTimeInUtcTicks { get; }
         /// <summary> Security PIN. </summary>
-        public string SecurityPIN { get; }
+        public string SecurityPin { get; }
     }
 }

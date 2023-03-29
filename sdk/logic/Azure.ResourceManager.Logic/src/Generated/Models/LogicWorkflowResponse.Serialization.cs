@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Headers))
             {
-                writer.WritePropertyName("headers");
+                writer.WritePropertyName("headers"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Headers);
 #else
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
             if (Optional.IsDefined(StatusCode))
             {
-                writer.WritePropertyName("statusCode");
+                writer.WritePropertyName("statusCode"u8);
                 writer.WriteNumberValue(StatusCode.Value);
             }
             if (Optional.IsDefined(BodyLink))
             {
-                writer.WritePropertyName("bodyLink");
+                writer.WritePropertyName("bodyLink"u8);
                 writer.WriteObjectValue(BodyLink);
             }
             writer.WriteEndObject();
@@ -40,12 +40,16 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicWorkflowResponse DeserializeLogicWorkflowResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> headers = default;
             Optional<int> statusCode = default;
             Optional<LogicContentLink> bodyLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("headers"))
+                if (property.NameEquals("headers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.Logic.Models
                     headers = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("statusCode"))
+                if (property.NameEquals("statusCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +69,7 @@ namespace Azure.ResourceManager.Logic.Models
                     statusCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("bodyLink"))
+                if (property.NameEquals("bodyLink"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

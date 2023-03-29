@@ -18,36 +18,40 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("offset");
+            writer.WritePropertyName("offset"u8);
             writer.WriteStringValue(Offset);
             if (Optional.IsDefined(Size))
             {
-                writer.WritePropertyName("size");
+                writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WriteEndObject();
         }
 
         internal static SelfDependencyTumblingWindowTriggerReference DeserializeSelfDependencyTumblingWindowTriggerReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string offset = default;
             Optional<string> size = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("offset"))
+                if (property.NameEquals("offset"u8))
                 {
                     offset = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("size"))
+                if (property.NameEquals("size"u8))
                 {
                     size = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

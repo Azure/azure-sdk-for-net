@@ -62,7 +62,6 @@ namespace Azure.Communication.CallAutomation
                     RecordingChannelType = options.RecordingChannel,
                     RecordingContentType = options.RecordingContent,
                     RecordingFormatType = options.RecordingFormat,
-                    RecordingStorageType = options.RecordingStorageType
                 };
 
                 if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())
@@ -71,12 +70,17 @@ namespace Azure.Communication.CallAutomation
                     {
                         request.AudioChannelParticipantOrdering.Add(CommunicationIdentifierSerializer.Serialize(c));
                     }
-                };
+                }
 
-                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+                if (options.ExternalStorage is not null)
+                {
+                    request.ExternalStorage = TranslateExternalStorageToInternal(options.ExternalStorage);
+                }
+
+                var repeatabilityHeaders = new RepeatabilityHeaders();
                 return _callRecordingRestClient.StartRecording(request,
-                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
-                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
                     cancellationToken: cancellationToken);
             }
             catch (Exception ex)
@@ -106,7 +110,6 @@ namespace Azure.Communication.CallAutomation
                     RecordingChannelType = options.RecordingChannel,
                     RecordingContentType = options.RecordingContent,
                     RecordingFormatType = options.RecordingFormat,
-                    RecordingStorageType = options.RecordingStorageType
                 };
 
                 if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())
@@ -117,10 +120,15 @@ namespace Azure.Communication.CallAutomation
                     }
                 };
 
-                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+                if (options.ExternalStorage is not null)
+                {
+                    request.ExternalStorage = TranslateExternalStorageToInternal(options.ExternalStorage);
+                }
+
+                var repeatabilityHeaders = new RepeatabilityHeaders();
                 return await _callRecordingRestClient.StartRecordingAsync(request,
-                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
-                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -595,5 +603,24 @@ namespace Azure.Communication.CallAutomation
                 throw;
             }
         }
+
+        #region private functions
+
+        private static ExternalStorageInternal TranslateExternalStorageToInternal(ExternalStorage externalStorage)
+        {
+            ExternalStorageInternal result = null;
+
+            if (externalStorage is BlobStorage blobStorage)
+            {
+                result = new ExternalStorageInternal(blobStorage.StorageType)
+                {
+                    BlobStorage = new BlobStorageInternal(blobStorage.ContainerUri.AbsoluteUri),
+                };
+            }
+
+            return result;
+        }
+
+        #endregion private functions
     }
 }

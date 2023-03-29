@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Authority))
             {
-                writer.WritePropertyName("authority");
+                writer.WritePropertyName("authority"u8);
                 writer.WriteStringValue(Authority);
             }
             if (Optional.IsDefined(Audience))
             {
-                writer.WritePropertyName("audience");
+                writer.WritePropertyName("audience"u8);
                 writer.WriteStringValue(Audience);
             }
             if (Optional.IsDefined(IsSmartProxyEnabled))
             {
-                writer.WritePropertyName("smartProxyEnabled");
+                writer.WritePropertyName("smartProxyEnabled"u8);
                 writer.WriteBooleanValue(IsSmartProxyEnabled.Value);
             }
             writer.WriteEndObject();
@@ -35,22 +35,26 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static HealthcareApisServiceAuthenticationConfiguration DeserializeHealthcareApisServiceAuthenticationConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> authority = default;
             Optional<string> audience = default;
             Optional<bool> smartProxyEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("authority"))
+                if (property.NameEquals("authority"u8))
                 {
                     authority = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("audience"))
+                if (property.NameEquals("audience"u8))
                 {
                     audience = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("smartProxyEnabled"))
+                if (property.NameEquals("smartProxyEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

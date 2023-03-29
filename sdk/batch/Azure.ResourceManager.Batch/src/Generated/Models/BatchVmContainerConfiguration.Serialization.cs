@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Batch.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ContainerType.ToString());
             if (Optional.IsCollectionDefined(ContainerImageNames))
             {
-                writer.WritePropertyName("containerImageNames");
+                writer.WritePropertyName("containerImageNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in ContainerImageNames)
                 {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
             if (Optional.IsCollectionDefined(ContainerRegistries))
             {
-                writer.WritePropertyName("containerRegistries");
+                writer.WritePropertyName("containerRegistries"u8);
                 writer.WriteStartArray();
                 foreach (var item in ContainerRegistries)
                 {
@@ -43,17 +43,21 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchVmContainerConfiguration DeserializeBatchVmContainerConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BatchVmContainerType type = default;
             Optional<IList<string>> containerImageNames = default;
             Optional<IList<BatchVmContainerRegistry>> containerRegistries = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new BatchVmContainerType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("containerImageNames"))
+                if (property.NameEquals("containerImageNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.Batch.Models
                     containerImageNames = array;
                     continue;
                 }
-                if (property.NameEquals("containerRegistries"))
+                if (property.NameEquals("containerRegistries"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

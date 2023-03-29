@@ -16,29 +16,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("endpointInvocationDefinition");
+            writer.WritePropertyName("endpointInvocationDefinition"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(EndpointInvocationDefinition);
 #else
             JsonSerializer.Serialize(writer, JsonDocument.Parse(EndpointInvocationDefinition.ToString()).RootElement);
 #endif
-            writer.WritePropertyName("actionType");
+            writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
             writer.WriteEndObject();
         }
 
         internal static MachineLearningEndpointScheduleAction DeserializeMachineLearningEndpointScheduleAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BinaryData endpointInvocationDefinition = default;
             ScheduleActionType actionType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endpointInvocationDefinition"))
+                if (property.NameEquals("endpointInvocationDefinition"u8))
                 {
                     endpointInvocationDefinition = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("actionType"))
+                if (property.NameEquals("actionType"u8))
                 {
                     actionType = new ScheduleActionType(property.Value.GetString());
                     continue;

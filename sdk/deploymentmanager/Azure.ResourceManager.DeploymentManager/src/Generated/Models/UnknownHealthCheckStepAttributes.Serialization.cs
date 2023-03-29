@@ -16,37 +16,41 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(HealthCheckStepAttributesType);
             if (Optional.IsDefined(WaitDuration))
             {
-                writer.WritePropertyName("waitDuration");
+                writer.WritePropertyName("waitDuration"u8);
                 writer.WriteStringValue(WaitDuration.Value, "P");
             }
             if (Optional.IsDefined(MaxElasticDuration))
             {
-                writer.WritePropertyName("maxElasticDuration");
+                writer.WritePropertyName("maxElasticDuration"u8);
                 writer.WriteStringValue(MaxElasticDuration.Value, "P");
             }
-            writer.WritePropertyName("healthyStateDuration");
+            writer.WritePropertyName("healthyStateDuration"u8);
             writer.WriteStringValue(HealthyStateDuration, "P");
             writer.WriteEndObject();
         }
 
         internal static UnknownHealthCheckStepAttributes DeserializeUnknownHealthCheckStepAttributes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = "Unknown";
             Optional<TimeSpan> waitDuration = default;
             Optional<TimeSpan> maxElasticDuration = default;
             TimeSpan healthyStateDuration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("waitDuration"))
+                if (property.NameEquals("waitDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     waitDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("maxElasticDuration"))
+                if (property.NameEquals("maxElasticDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     maxElasticDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("healthyStateDuration"))
+                if (property.NameEquals("healthyStateDuration"u8))
                 {
                     healthyStateDuration = property.Value.GetTimeSpan("P");
                     continue;

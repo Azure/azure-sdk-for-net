@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("odata.type");
+            writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(DataSource))
             {
-                writer.WritePropertyName("dataSource");
+                writer.WritePropertyName("dataSource"u8);
                 writer.WriteObjectValue(DataSource);
             }
             writer.WriteEndObject();
@@ -27,16 +27,20 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static UnknownRuleCondition DeserializeUnknownRuleCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string odataType = "Unknown";
             Optional<RuleDataSource> dataSource = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("odata.type"))
+                if (property.NameEquals("odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataSource"))
+                if (property.NameEquals("dataSource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static ContainerState DeserializeContainerState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> state = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<int> exitCode = default;
@@ -22,12 +26,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<string> detailStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,7 +41,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("exitCode"))
+                if (property.NameEquals("exitCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +51,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     exitCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("finishTime"))
+                if (property.NameEquals("finishTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +61,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     finishTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("detailStatus"))
+                if (property.NameEquals("detailStatus"u8))
                 {
                     detailStatus = property.Value.GetString();
                     continue;

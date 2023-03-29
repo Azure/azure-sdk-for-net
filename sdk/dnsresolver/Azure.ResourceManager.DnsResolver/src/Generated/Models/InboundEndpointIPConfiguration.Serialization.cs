@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.DnsResolver.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("subnet");
+            writer.WritePropertyName("subnet"u8);
             JsonSerializer.Serialize(writer, Subnet); if (Optional.IsDefined(PrivateIPAddress))
             {
-                writer.WritePropertyName("privateIpAddress");
+                writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
             }
             if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
-                writer.WritePropertyName("privateIpAllocationMethod");
+                writer.WritePropertyName("privateIpAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
             }
             writer.WriteEndObject();
@@ -33,17 +33,21 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         internal static InboundEndpointIPConfiguration DeserializeInboundEndpointIPConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WritableSubResource subnet = default;
             Optional<IPAddress> privateIPAddress = default;
             Optional<InboundEndpointIPAllocationMethod> privateIPAllocationMethod = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subnet"))
+                if (property.NameEquals("subnet"u8))
                 {
                     subnet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("privateIpAddress"))
+                if (property.NameEquals("privateIpAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     privateIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("privateIpAllocationMethod"))
+                if (property.NameEquals("privateIpAllocationMethod"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

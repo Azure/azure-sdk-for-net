@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ServiceFabric
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -30,18 +30,18 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PlacementConstraints))
             {
-                writer.WritePropertyName("placementConstraints");
+                writer.WritePropertyName("placementConstraints"u8);
                 writer.WriteStringValue(PlacementConstraints);
             }
             if (Optional.IsCollectionDefined(CorrelationScheme))
             {
-                writer.WritePropertyName("correlationScheme");
+                writer.WritePropertyName("correlationScheme"u8);
                 writer.WriteStartArray();
                 foreach (var item in CorrelationScheme)
                 {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceFabric
             }
             if (Optional.IsCollectionDefined(ServiceLoadMetrics))
             {
-                writer.WritePropertyName("serviceLoadMetrics");
+                writer.WritePropertyName("serviceLoadMetrics"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServiceLoadMetrics)
                 {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ServiceFabric
             }
             if (Optional.IsCollectionDefined(ServicePlacementPolicies))
             {
-                writer.WritePropertyName("servicePlacementPolicies");
+                writer.WritePropertyName("servicePlacementPolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServicePlacementPolicies)
                 {
@@ -71,32 +71,32 @@ namespace Azure.ResourceManager.ServiceFabric
             }
             if (Optional.IsDefined(DefaultMoveCost))
             {
-                writer.WritePropertyName("defaultMoveCost");
+                writer.WritePropertyName("defaultMoveCost"u8);
                 writer.WriteStringValue(DefaultMoveCost.Value.ToString());
             }
             if (Optional.IsDefined(ServiceKind))
             {
-                writer.WritePropertyName("serviceKind");
+                writer.WritePropertyName("serviceKind"u8);
                 writer.WriteStringValue(ServiceKind.Value.ToString());
             }
             if (Optional.IsDefined(ServiceTypeName))
             {
-                writer.WritePropertyName("serviceTypeName");
+                writer.WritePropertyName("serviceTypeName"u8);
                 writer.WriteStringValue(ServiceTypeName);
             }
             if (Optional.IsDefined(PartitionDescription))
             {
-                writer.WritePropertyName("partitionDescription");
+                writer.WritePropertyName("partitionDescription"u8);
                 writer.WriteObjectValue(PartitionDescription);
             }
             if (Optional.IsDefined(ServicePackageActivationMode))
             {
-                writer.WritePropertyName("servicePackageActivationMode");
+                writer.WritePropertyName("servicePackageActivationMode"u8);
                 writer.WriteStringValue(ServicePackageActivationMode.Value.ToString());
             }
             if (Optional.IsDefined(ServiceDnsName))
             {
-                writer.WritePropertyName("serviceDnsName");
+                writer.WritePropertyName("serviceDnsName"u8);
                 writer.WriteStringValue(ServiceDnsName);
             }
             writer.WriteEndObject();
@@ -105,6 +105,10 @@ namespace Azure.ResourceManager.ServiceFabric
 
         internal static ServiceFabricServiceData DeserializeServiceFabricServiceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -125,7 +129,7 @@ namespace Azure.ResourceManager.ServiceFabric
             Optional<string> serviceDnsName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -135,7 +139,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -150,27 +154,27 @@ namespace Azure.ResourceManager.ServiceFabric
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -180,7 +184,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -189,12 +193,12 @@ namespace Azure.ResourceManager.ServiceFabric
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("placementConstraints"))
+                        if (property0.NameEquals("placementConstraints"u8))
                         {
                             placementConstraints = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("correlationScheme"))
+                        if (property0.NameEquals("correlationScheme"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -209,7 +213,7 @@ namespace Azure.ResourceManager.ServiceFabric
                             correlationScheme = array;
                             continue;
                         }
-                        if (property0.NameEquals("serviceLoadMetrics"))
+                        if (property0.NameEquals("serviceLoadMetrics"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -224,7 +228,7 @@ namespace Azure.ResourceManager.ServiceFabric
                             serviceLoadMetrics = array;
                             continue;
                         }
-                        if (property0.NameEquals("servicePlacementPolicies"))
+                        if (property0.NameEquals("servicePlacementPolicies"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -239,7 +243,7 @@ namespace Azure.ResourceManager.ServiceFabric
                             servicePlacementPolicies = array;
                             continue;
                         }
-                        if (property0.NameEquals("defaultMoveCost"))
+                        if (property0.NameEquals("defaultMoveCost"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -249,12 +253,12 @@ namespace Azure.ResourceManager.ServiceFabric
                             defaultMoveCost = new ApplicationMoveCost(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("serviceKind"))
+                        if (property0.NameEquals("serviceKind"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -264,12 +268,12 @@ namespace Azure.ResourceManager.ServiceFabric
                             serviceKind = new ApplicationServiceKind(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("serviceTypeName"))
+                        if (property0.NameEquals("serviceTypeName"u8))
                         {
                             serviceTypeName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("partitionDescription"))
+                        if (property0.NameEquals("partitionDescription"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -279,7 +283,7 @@ namespace Azure.ResourceManager.ServiceFabric
                             partitionDescription = PartitionSchemeDescription.DeserializePartitionSchemeDescription(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("servicePackageActivationMode"))
+                        if (property0.NameEquals("servicePackageActivationMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -289,7 +293,7 @@ namespace Azure.ResourceManager.ServiceFabric
                             servicePackageActivationMode = new ArmServicePackageActivationMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("serviceDnsName"))
+                        if (property0.NameEquals("serviceDnsName"u8))
                         {
                             serviceDnsName = property0.Value.GetString();
                             continue;

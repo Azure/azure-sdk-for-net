@@ -14,6 +14,10 @@ namespace Azure.Communication.CallingServer
     {
         internal static RecognizeCompleted DeserializeRecognizeCompleted(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
             Optional<CallMediaRecognitionType> recognitionType = default;
@@ -25,12 +29,12 @@ namespace Azure.Communication.CallingServer
             Optional<string> publicEventType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operationContext"))
+                if (property.NameEquals("operationContext"u8))
                 {
                     operationContext = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultInformation"))
+                if (property.NameEquals("resultInformation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.Communication.CallingServer
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("recognitionType"))
+                if (property.NameEquals("recognitionType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.Communication.CallingServer
                     recognitionType = new CallMediaRecognitionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("collectTonesResult"))
+                if (property.NameEquals("collectTonesResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,27 +64,27 @@ namespace Azure.Communication.CallingServer
                     collectTonesResult = CollectTonesResult.DeserializeCollectTonesResult(property.Value);
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("callConnectionId"))
+                if (property.NameEquals("callConnectionId"u8))
                 {
                     callConnectionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverCallId"))
+                if (property.NameEquals("serverCallId"u8))
                 {
                     serverCallId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("correlationId"))
+                if (property.NameEquals("correlationId"u8))
                 {
                     correlationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publicEventType"))
+                if (property.NameEquals("publicEventType"u8))
                 {
                     publicEventType = property.Value.GetString();
                     continue;

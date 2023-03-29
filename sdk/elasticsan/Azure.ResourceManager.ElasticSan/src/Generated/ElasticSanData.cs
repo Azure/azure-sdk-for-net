@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    /// <summary> A class representing the ElasticSan data model. </summary>
+    /// <summary>
+    /// A class representing the ElasticSan data model.
+    /// Response for ElasticSan request.
+    /// </summary>
     public partial class ElasticSanData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ElasticSanData. </summary>

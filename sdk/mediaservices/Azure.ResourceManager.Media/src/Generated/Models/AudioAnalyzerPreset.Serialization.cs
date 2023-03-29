@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AudioLanguage))
             {
-                writer.WritePropertyName("audioLanguage");
+                writer.WritePropertyName("audioLanguage"u8);
                 writer.WriteStringValue(AudioLanguage);
             }
             if (Optional.IsDefined(Mode))
             {
-                writer.WritePropertyName("mode");
+                writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ExperimentalOptions))
             {
-                writer.WritePropertyName("experimentalOptions");
+                writer.WritePropertyName("experimentalOptions"u8);
                 writer.WriteStartObject();
                 foreach (var item in ExperimentalOptions)
                 {
@@ -37,13 +37,17 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
 
         internal static AudioAnalyzerPreset DeserializeAudioAnalyzerPreset(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -57,12 +61,12 @@ namespace Azure.ResourceManager.Media.Models
             string odataType = "#Microsoft.Media.AudioAnalyzerPreset";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("audioLanguage"))
+                if (property.NameEquals("audioLanguage"u8))
                 {
                     audioLanguage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mode"))
+                if (property.NameEquals("mode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.Media.Models
                     mode = new AudioAnalysisMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("experimentalOptions"))
+                if (property.NameEquals("experimentalOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +91,7 @@ namespace Azure.ResourceManager.Media.Models
                     experimentalOptions = dictionary;
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;

@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.CognitiveServices
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AccountId))
             {
-                writer.WritePropertyName("accountId");
+                writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
             writer.WriteEndObject();
@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.CognitiveServices
 
         internal static CommitmentPlanAccountAssociationData DeserializeCommitmentPlanAccountAssociationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -38,7 +42,7 @@ namespace Azure.ResourceManager.CognitiveServices
             Optional<string> accountId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,22 +52,22 @@ namespace Azure.ResourceManager.CognitiveServices
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +77,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +86,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("accountId"))
+                        if (property0.NameEquals("accountId"u8))
                         {
                             accountId = property0.Value.GetString();
                             continue;

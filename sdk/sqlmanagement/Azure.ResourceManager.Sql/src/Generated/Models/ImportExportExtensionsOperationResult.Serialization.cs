@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ImportExportExtensionsOperationResult DeserializeImportExportExtensionsOperationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -38,22 +42,22 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +67,7 @@ namespace Azure.ResourceManager.Sql.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.Sql.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("requestId"))
+                        if (property0.NameEquals("requestId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -82,32 +86,32 @@ namespace Azure.ResourceManager.Sql.Models
                             requestId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("requestType"))
+                        if (property0.NameEquals("requestType"u8))
                         {
                             requestType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastModifiedTime"))
+                        if (property0.NameEquals("lastModifiedTime"u8))
                         {
                             lastModifiedTime = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("serverName"))
+                        if (property0.NameEquals("serverName"u8))
                         {
                             serverName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("databaseName"))
+                        if (property0.NameEquals("databaseName"u8))
                         {
                             databaseName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             status = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("errorMessage"))
+                        if (property0.NameEquals("errorMessage"u8))
                         {
                             errorMessage = property0.Value.GetString();
                             continue;

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FileShare))
             {
-                writer.WritePropertyName("fileShare");
+                writer.WritePropertyName("fileShare"u8);
                 writer.WriteObjectValue(FileShare);
             }
             if (Optional.IsDefined(AzureBlob))
             {
-                writer.WritePropertyName("azureBlob");
+                writer.WritePropertyName("azureBlob"u8);
                 writer.WriteObjectValue(AzureBlob);
             }
             writer.WriteEndObject();
@@ -30,12 +30,16 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static SourceLocation DeserializeSourceLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlFileShare> fileShare = default;
             Optional<AzureBlob> azureBlob = default;
             Optional<string> fileStorageType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fileShare"))
+                if (property.NameEquals("fileShare"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     fileShare = SqlFileShare.DeserializeSqlFileShare(property.Value);
                     continue;
                 }
-                if (property.NameEquals("azureBlob"))
+                if (property.NameEquals("azureBlob"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     azureBlob = AzureBlob.DeserializeAzureBlob(property.Value);
                     continue;
                 }
-                if (property.NameEquals("fileStorageType"))
+                if (property.NameEquals("fileStorageType"u8))
                 {
                     fileStorageType = property.Value.GetString();
                     continue;

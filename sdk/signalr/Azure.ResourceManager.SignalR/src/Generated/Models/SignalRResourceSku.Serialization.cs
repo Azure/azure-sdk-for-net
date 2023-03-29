@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.SignalR.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Tier))
             {
-                writer.WritePropertyName("tier");
+                writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
             }
             if (Optional.IsDefined(Capacity))
             {
-                writer.WritePropertyName("capacity");
+                writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
             writer.WriteEndObject();
@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRResourceSku DeserializeSignalRResourceSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<SignalRSkuTier> tier = default;
             Optional<string> size = default;
@@ -39,12 +43,12 @@ namespace Azure.ResourceManager.SignalR.Models
             Optional<int> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,17 +58,17 @@ namespace Azure.ResourceManager.SignalR.Models
                     tier = new SignalRSkuTier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("size"))
+                if (property.NameEquals("size"u8))
                 {
                     size = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("family"))
+                if (property.NameEquals("family"u8))
                 {
                     family = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capacity"))
+                if (property.NameEquals("capacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

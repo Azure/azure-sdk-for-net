@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Throughput))
             {
-                writer.WritePropertyName("throughput");
+                writer.WritePropertyName("throughput"u8);
                 writer.WriteNumberValue(Throughput.Value);
             }
             if (Optional.IsDefined(AutoscaleSettings))
             {
-                writer.WritePropertyName("autoscaleSettings");
+                writer.WritePropertyName("autoscaleSettings"u8);
                 writer.WriteObjectValue(AutoscaleSettings);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBBaseConfig DeserializeCosmosDBBaseConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> throughput = default;
             Optional<AutoscaleSettings> autoscaleSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("throughput"))
+                if (property.NameEquals("throughput"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     throughput = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("autoscaleSettings"))
+                if (property.NameEquals("autoscaleSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

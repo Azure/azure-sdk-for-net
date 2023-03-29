@@ -14,10 +14,14 @@ namespace Azure.Communication.CallingServer
     {
         internal static RemoveParticipantsResult DeserializeRemoveParticipantsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> operationContext = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operationContext"))
+                if (property.NameEquals("operationContext"u8))
                 {
                     operationContext = property.Value.GetString();
                     continue;

@@ -7,83 +7,55 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class V2Manifest : IUtf8JsonSerializable
+    internal partial class V2Manifest
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(MediaType))
-            {
-                writer.WritePropertyName("mediaType");
-                writer.WriteStringValue(MediaType);
-            }
-            if (Optional.IsDefined(Config))
-            {
-                writer.WritePropertyName("config");
-                writer.WriteObjectValue(Config);
-            }
-            if (Optional.IsCollectionDefined(Layers))
-            {
-                writer.WritePropertyName("layers");
-                writer.WriteStartArray();
-                foreach (var item in Layers)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(SchemaVersion))
-            {
-                writer.WritePropertyName("schemaVersion");
-                writer.WriteNumberValue(SchemaVersion.Value);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static V2Manifest DeserializeV2Manifest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> mediaType = default;
-            Optional<OciBlobDescriptor> config = default;
-            Optional<IList<OciBlobDescriptor>> layers = default;
+            Optional<OciDescriptor> config = default;
+            Optional<IReadOnlyList<OciDescriptor>> layers = default;
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mediaType"))
+                if (property.NameEquals("mediaType"u8))
                 {
                     mediaType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("config"))
+                if (property.NameEquals("config"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    config = OciBlobDescriptor.DeserializeOciBlobDescriptor(property.Value);
+                    config = OciDescriptor.DeserializeOciDescriptor(property.Value);
                     continue;
                 }
-                if (property.NameEquals("layers"))
+                if (property.NameEquals("layers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OciBlobDescriptor> array = new List<OciBlobDescriptor>();
+                    List<OciDescriptor> array = new List<OciDescriptor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OciBlobDescriptor.DeserializeOciBlobDescriptor(item));
+                        array.Add(OciDescriptor.DeserializeOciDescriptor(item));
                     }
                     layers = array;
                     continue;
                 }
-                if (property.NameEquals("schemaVersion"))
+                if (property.NameEquals("schemaVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

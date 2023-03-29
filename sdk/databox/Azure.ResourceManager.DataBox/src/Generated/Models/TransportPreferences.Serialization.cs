@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("preferredShipmentType");
+            writer.WritePropertyName("preferredShipmentType"u8);
             writer.WriteStringValue(PreferredShipmentType.ToSerialString());
             writer.WriteEndObject();
         }
 
         internal static TransportPreferences DeserializeTransportPreferences(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TransportShipmentType preferredShipmentType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("preferredShipmentType"))
+                if (property.NameEquals("preferredShipmentType"u8))
                 {
                     preferredShipmentType = property.Value.GetString().ToTransportShipmentType();
                     continue;

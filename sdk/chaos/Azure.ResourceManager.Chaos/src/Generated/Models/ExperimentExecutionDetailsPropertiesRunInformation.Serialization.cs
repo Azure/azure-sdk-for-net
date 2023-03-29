@@ -15,10 +15,14 @@ namespace Azure.ResourceManager.Chaos.Models
     {
         internal static ExperimentExecutionDetailsPropertiesRunInformation DeserializeExperimentExecutionDetailsPropertiesRunInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StepStatus>> steps = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("steps"))
+                if (property.NameEquals("steps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

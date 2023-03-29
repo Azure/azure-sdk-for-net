@@ -19,20 +19,30 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsPublic))
             {
-                writer.WritePropertyName("public");
+                writer.WritePropertyName("public"u8);
                 writer.WriteBooleanValue(IsPublic.Value);
             }
             if (Optional.IsCollectionDefined(AddonConfigs))
             {
-                writer.WritePropertyName("addonConfigs");
+                writer.WritePropertyName("addonConfigs"u8);
                 writer.WriteStartObject();
                 foreach (var item in AddonConfigs)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartObject();
                     foreach (var item0 in item.Value)
                     {
                         writer.WritePropertyName(item0.Key);
+                        if (item0.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item0.Value);
 #else
@@ -45,22 +55,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             if (Optional.IsDefined(IsHttpsOnly))
             {
-                writer.WritePropertyName("httpsOnly");
+                writer.WritePropertyName("httpsOnly"u8);
                 writer.WriteBooleanValue(IsHttpsOnly.Value);
             }
             if (Optional.IsDefined(TemporaryDisk))
             {
-                writer.WritePropertyName("temporaryDisk");
+                writer.WritePropertyName("temporaryDisk"u8);
                 writer.WriteObjectValue(TemporaryDisk);
             }
             if (Optional.IsDefined(PersistentDisk))
             {
-                writer.WritePropertyName("persistentDisk");
+                writer.WritePropertyName("persistentDisk"u8);
                 writer.WriteObjectValue(PersistentDisk);
             }
             if (Optional.IsCollectionDefined(CustomPersistentDisks))
             {
-                writer.WritePropertyName("customPersistentDisks");
+                writer.WritePropertyName("customPersistentDisks"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomPersistentDisks)
                 {
@@ -70,12 +80,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             if (Optional.IsDefined(IsEndToEndTlsEnabled))
             {
-                writer.WritePropertyName("enableEndToEndTLS");
+                writer.WritePropertyName("enableEndToEndTLS"u8);
                 writer.WriteBooleanValue(IsEndToEndTlsEnabled.Value);
             }
             if (Optional.IsCollectionDefined(LoadedCertificates))
             {
-                writer.WritePropertyName("loadedCertificates");
+                writer.WritePropertyName("loadedCertificates"u8);
                 writer.WriteStartArray();
                 foreach (var item in LoadedCertificates)
                 {
@@ -85,12 +95,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             if (Optional.IsDefined(VnetAddons))
             {
-                writer.WritePropertyName("vnetAddons");
+                writer.WritePropertyName("vnetAddons"u8);
                 writer.WriteObjectValue(VnetAddons);
             }
             if (Optional.IsDefined(IngressSettings))
             {
-                writer.WritePropertyName("ingressSettings");
+                writer.WritePropertyName("ingressSettings"u8);
                 writer.WriteObjectValue(IngressSettings);
             }
             writer.WriteEndObject();
@@ -98,6 +108,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformAppProperties DeserializeAppPlatformAppProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> @public = default;
             Optional<Uri> uri = default;
             Optional<IDictionary<string, IDictionary<string, BinaryData>>> addonConfigs = default;
@@ -113,7 +127,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<AppIngressSettings> ingressSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("public"))
+                if (property.NameEquals("public"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +137,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     @public = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,7 +147,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("addonConfigs"))
+                if (property.NameEquals("addonConfigs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -143,17 +157,31 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     Dictionary<string, IDictionary<string, BinaryData>> dictionary = new Dictionary<string, IDictionary<string, BinaryData>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        Dictionary<string, BinaryData> dictionary0 = new Dictionary<string, BinaryData>();
-                        foreach (var property1 in property0.Value.EnumerateObject())
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary0.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                            dictionary.Add(property0.Name, null);
                         }
-                        dictionary.Add(property0.Name, dictionary0);
+                        else
+                        {
+                            Dictionary<string, BinaryData> dictionary0 = new Dictionary<string, BinaryData>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary0.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary0.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
+                            }
+                            dictionary.Add(property0.Name, dictionary0);
+                        }
                     }
                     addonConfigs = dictionary;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -163,12 +191,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     provisioningState = new AppPlatformAppProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("fqdn"))
+                if (property.NameEquals("fqdn"u8))
                 {
                     fqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("httpsOnly"))
+                if (property.NameEquals("httpsOnly"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -178,7 +206,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     httpsOnly = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("temporaryDisk"))
+                if (property.NameEquals("temporaryDisk"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -188,7 +216,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     temporaryDisk = AppTemporaryDisk.DeserializeAppTemporaryDisk(property.Value);
                     continue;
                 }
-                if (property.NameEquals("persistentDisk"))
+                if (property.NameEquals("persistentDisk"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -198,7 +226,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     persistentDisk = AppPersistentDisk.DeserializeAppPersistentDisk(property.Value);
                     continue;
                 }
-                if (property.NameEquals("customPersistentDisks"))
+                if (property.NameEquals("customPersistentDisks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -213,7 +241,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     customPersistentDisks = array;
                     continue;
                 }
-                if (property.NameEquals("enableEndToEndTLS"))
+                if (property.NameEquals("enableEndToEndTLS"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -223,7 +251,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     enableEndToEndTls = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("loadedCertificates"))
+                if (property.NameEquals("loadedCertificates"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -238,7 +266,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     loadedCertificates = array;
                     continue;
                 }
-                if (property.NameEquals("vnetAddons"))
+                if (property.NameEquals("vnetAddons"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -248,7 +276,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     vnetAddons = AppVnetAddons.DeserializeAppVnetAddons(property.Value);
                     continue;
                 }
-                if (property.NameEquals("ingressSettings"))
+                if (property.NameEquals("ingressSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

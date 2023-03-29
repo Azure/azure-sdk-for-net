@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("statusCode");
+            writer.WritePropertyName("statusCode"u8);
             writer.WriteNumberValue(StatusCode);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(Representations))
             {
-                writer.WritePropertyName("representations");
+                writer.WritePropertyName("representations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Representations)
                 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsCollectionDefined(Headers))
             {
-                writer.WritePropertyName("headers");
+                writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
@@ -48,23 +48,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ResponseContract DeserializeResponseContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int statusCode = default;
             Optional<string> description = default;
             Optional<IList<RepresentationContract>> representations = default;
             Optional<IList<ParameterContract>> headers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("statusCode"))
+                if (property.NameEquals("statusCode"u8))
                 {
                     statusCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("representations"))
+                if (property.NameEquals("representations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     representations = array;
                     continue;
                 }
-                if (property.NameEquals("headers"))
+                if (property.NameEquals("headers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

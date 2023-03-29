@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SelectedItemValuePath))
             {
-                writer.WritePropertyName("selectedItemValuePath");
+                writer.WritePropertyName("selectedItemValuePath"u8);
                 writer.WriteStringValue(SelectedItemValuePath);
             }
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Value);
 #else
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
             if (Optional.IsDefined(ParameterReference))
             {
-                writer.WritePropertyName("parameterReference");
+                writer.WritePropertyName("parameterReference"u8);
                 writer.WriteStringValue(ParameterReference);
             }
             if (Optional.IsDefined(IsRequired))
             {
-                writer.WritePropertyName("required");
+                writer.WritePropertyName("required"u8);
                 writer.WriteBooleanValue(IsRequired.Value);
             }
             writer.WriteEndObject();
@@ -45,18 +45,22 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static SwaggerCustomDynamicTreeParameterInfo DeserializeSwaggerCustomDynamicTreeParameterInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> selectedItemValuePath = default;
             Optional<BinaryData> value = default;
             Optional<string> parameterReference = default;
             Optional<bool> required = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("selectedItemValuePath"))
+                if (property.NameEquals("selectedItemValuePath"u8))
                 {
                     selectedItemValuePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,12 +70,12 @@ namespace Azure.ResourceManager.Logic.Models
                     value = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("parameterReference"))
+                if (property.NameEquals("parameterReference"u8))
                 {
                     parameterReference = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("required"))
+                if (property.NameEquals("required"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

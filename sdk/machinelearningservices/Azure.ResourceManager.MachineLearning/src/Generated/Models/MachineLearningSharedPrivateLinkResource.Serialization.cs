@@ -17,29 +17,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateLinkResourceId))
             {
-                writer.WritePropertyName("privateLinkResourceId");
+                writer.WritePropertyName("privateLinkResourceId"u8);
                 writer.WriteStringValue(PrivateLinkResourceId);
             }
             if (Optional.IsDefined(GroupId))
             {
-                writer.WritePropertyName("groupId");
+                writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
             if (Optional.IsDefined(RequestMessage))
             {
-                writer.WritePropertyName("requestMessage");
+                writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             writer.WriteEndObject();
@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningSharedPrivateLinkResource DeserializeMachineLearningSharedPrivateLinkResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<ResourceIdentifier> privateLinkResourceId = default;
             Optional<string> groupId = default;
@@ -55,12 +59,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningPrivateEndpointServiceConnectionStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("privateLinkResourceId"))
+                        if (property0.NameEquals("privateLinkResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -79,17 +83,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             privateLinkResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("groupId"))
+                        if (property0.NameEquals("groupId"u8))
                         {
                             groupId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("requestMessage"))
+                        if (property0.NameEquals("requestMessage"u8))
                         {
                             requestMessage = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

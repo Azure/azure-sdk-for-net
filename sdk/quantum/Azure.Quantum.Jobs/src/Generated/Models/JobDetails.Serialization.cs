@@ -19,37 +19,37 @@ namespace Azure.Quantum.Jobs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("containerUri");
+            writer.WritePropertyName("containerUri"u8);
             writer.WriteStringValue(ContainerUri);
             if (Optional.IsDefined(InputDataUri))
             {
-                writer.WritePropertyName("inputDataUri");
+                writer.WritePropertyName("inputDataUri"u8);
                 writer.WriteStringValue(InputDataUri);
             }
-            writer.WritePropertyName("inputDataFormat");
+            writer.WritePropertyName("inputDataFormat"u8);
             writer.WriteStringValue(InputDataFormat);
             if (Optional.IsDefined(InputParams))
             {
-                writer.WritePropertyName("inputParams");
+                writer.WritePropertyName("inputParams"u8);
                 writer.WriteObjectValue(InputParams);
             }
-            writer.WritePropertyName("providerId");
+            writer.WritePropertyName("providerId"u8);
             writer.WriteStringValue(ProviderId);
-            writer.WritePropertyName("target");
+            writer.WritePropertyName("target"u8);
             writer.WriteStringValue(Target);
             if (Optional.IsCollectionDefined(Metadata))
             {
                 if (Metadata != null)
                 {
-                    writer.WritePropertyName("metadata");
+                    writer.WritePropertyName("metadata"u8);
                     writer.WriteStartObject();
                     foreach (var item in Metadata)
                     {
@@ -65,19 +65,19 @@ namespace Azure.Quantum.Jobs.Models
             }
             if (Optional.IsDefined(OutputDataUri))
             {
-                writer.WritePropertyName("outputDataUri");
+                writer.WritePropertyName("outputDataUri"u8);
                 writer.WriteStringValue(OutputDataUri);
             }
             if (Optional.IsDefined(OutputDataFormat))
             {
-                writer.WritePropertyName("outputDataFormat");
+                writer.WritePropertyName("outputDataFormat"u8);
                 writer.WriteStringValue(OutputDataFormat);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
-                    writer.WritePropertyName("tags");
+                    writer.WritePropertyName("tags"u8);
                     writer.WriteStartArray();
                     foreach (var item in Tags)
                     {
@@ -95,6 +95,10 @@ namespace Azure.Quantum.Jobs.Models
 
         internal static JobDetails DeserializeJobDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             string containerUri = default;
@@ -116,32 +120,32 @@ namespace Azure.Quantum.Jobs.Models
             Optional<IList<string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containerUri"))
+                if (property.NameEquals("containerUri"u8))
                 {
                     containerUri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("inputDataUri"))
+                if (property.NameEquals("inputDataUri"u8))
                 {
                     inputDataUri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("inputDataFormat"))
+                if (property.NameEquals("inputDataFormat"u8))
                 {
                     inputDataFormat = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("inputParams"))
+                if (property.NameEquals("inputParams"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -151,17 +155,17 @@ namespace Azure.Quantum.Jobs.Models
                     inputParams = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("providerId"))
+                if (property.NameEquals("providerId"u8))
                 {
                     providerId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
                     target = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -176,17 +180,17 @@ namespace Azure.Quantum.Jobs.Models
                     metadata = dictionary;
                     continue;
                 }
-                if (property.NameEquals("outputDataUri"))
+                if (property.NameEquals("outputDataUri"u8))
                 {
                     outputDataUri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("outputDataFormat"))
+                if (property.NameEquals("outputDataFormat"u8))
                 {
                     outputDataFormat = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -196,7 +200,7 @@ namespace Azure.Quantum.Jobs.Models
                     status = new JobStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("creationTime"))
+                if (property.NameEquals("creationTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -206,7 +210,7 @@ namespace Azure.Quantum.Jobs.Models
                     creationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("beginExecutionTime"))
+                if (property.NameEquals("beginExecutionTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -216,7 +220,7 @@ namespace Azure.Quantum.Jobs.Models
                     beginExecutionTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endExecutionTime"))
+                if (property.NameEquals("endExecutionTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -226,7 +230,7 @@ namespace Azure.Quantum.Jobs.Models
                     endExecutionTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("cancellationTime"))
+                if (property.NameEquals("cancellationTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -236,7 +240,7 @@ namespace Azure.Quantum.Jobs.Models
                     cancellationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("costEstimate"))
+                if (property.NameEquals("costEstimate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -246,7 +250,7 @@ namespace Azure.Quantum.Jobs.Models
                     costEstimate = CostEstimate.DeserializeCostEstimate(property.Value);
                     continue;
                 }
-                if (property.NameEquals("errorData"))
+                if (property.NameEquals("errorData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -256,7 +260,7 @@ namespace Azure.Quantum.Jobs.Models
                     errorData = ErrorData.DeserializeErrorData(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

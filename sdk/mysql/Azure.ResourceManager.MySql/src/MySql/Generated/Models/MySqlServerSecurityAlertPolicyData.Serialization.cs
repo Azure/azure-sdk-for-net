@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.MySql
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(DisabledAlerts))
             {
-                writer.WritePropertyName("disabledAlerts");
+                writer.WritePropertyName("disabledAlerts"u8);
                 writer.WriteStartArray();
                 foreach (var item in DisabledAlerts)
                 {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MySql
             }
             if (Optional.IsCollectionDefined(EmailAddresses))
             {
-                writer.WritePropertyName("emailAddresses");
+                writer.WritePropertyName("emailAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in EmailAddresses)
                 {
@@ -47,22 +47,22 @@ namespace Azure.ResourceManager.MySql
             }
             if (Optional.IsDefined(SendToEmailAccountAdmins))
             {
-                writer.WritePropertyName("emailAccountAdmins");
+                writer.WritePropertyName("emailAccountAdmins"u8);
                 writer.WriteBooleanValue(SendToEmailAccountAdmins.Value);
             }
             if (Optional.IsDefined(StorageEndpoint))
             {
-                writer.WritePropertyName("storageEndpoint");
+                writer.WritePropertyName("storageEndpoint"u8);
                 writer.WriteStringValue(StorageEndpoint);
             }
             if (Optional.IsDefined(StorageAccountAccessKey))
             {
-                writer.WritePropertyName("storageAccountAccessKey");
+                writer.WritePropertyName("storageAccountAccessKey"u8);
                 writer.WriteStringValue(StorageAccountAccessKey);
             }
             if (Optional.IsDefined(RetentionDays))
             {
-                writer.WritePropertyName("retentionDays");
+                writer.WritePropertyName("retentionDays"u8);
                 writer.WriteNumberValue(RetentionDays.Value);
             }
             writer.WriteEndObject();
@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.MySql
 
         internal static MySqlServerSecurityAlertPolicyData DeserializeMySqlServerSecurityAlertPolicyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -84,22 +88,22 @@ namespace Azure.ResourceManager.MySql
             Optional<int> retentionDays = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,7 +113,7 @@ namespace Azure.ResourceManager.MySql
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +122,7 @@ namespace Azure.ResourceManager.MySql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -128,7 +132,7 @@ namespace Azure.ResourceManager.MySql
                             state = property0.Value.GetString().ToMySqlServerSecurityAlertPolicyState();
                             continue;
                         }
-                        if (property0.NameEquals("disabledAlerts"))
+                        if (property0.NameEquals("disabledAlerts"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -143,7 +147,7 @@ namespace Azure.ResourceManager.MySql
                             disabledAlerts = array;
                             continue;
                         }
-                        if (property0.NameEquals("emailAddresses"))
+                        if (property0.NameEquals("emailAddresses"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -158,7 +162,7 @@ namespace Azure.ResourceManager.MySql
                             emailAddresses = array;
                             continue;
                         }
-                        if (property0.NameEquals("emailAccountAdmins"))
+                        if (property0.NameEquals("emailAccountAdmins"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -168,17 +172,17 @@ namespace Azure.ResourceManager.MySql
                             emailAccountAdmins = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("storageEndpoint"))
+                        if (property0.NameEquals("storageEndpoint"u8))
                         {
                             storageEndpoint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("storageAccountAccessKey"))
+                        if (property0.NameEquals("storageAccountAccessKey"u8))
                         {
                             storageAccountAccessKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("retentionDays"))
+                        if (property0.NameEquals("retentionDays"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

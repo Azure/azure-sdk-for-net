@@ -16,36 +16,36 @@ namespace Azure.ResourceManager.ApiManagement
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Hostname))
             {
-                writer.WritePropertyName("hostname");
+                writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
             if (Optional.IsDefined(CertificateId))
             {
-                writer.WritePropertyName("certificateId");
+                writer.WritePropertyName("certificateId"u8);
                 writer.WriteStringValue(CertificateId);
             }
             if (Optional.IsDefined(IsClientCertificateRequired))
             {
-                writer.WritePropertyName("negotiateClientCertificate");
+                writer.WritePropertyName("negotiateClientCertificate"u8);
                 writer.WriteBooleanValue(IsClientCertificateRequired.Value);
             }
             if (Optional.IsDefined(IsTls1_0Enabled))
             {
-                writer.WritePropertyName("tls10Enabled");
+                writer.WritePropertyName("tls10Enabled"u8);
                 writer.WriteBooleanValue(IsTls1_0Enabled.Value);
             }
             if (Optional.IsDefined(IsTls1_1Enabled))
             {
-                writer.WritePropertyName("tls11Enabled");
+                writer.WritePropertyName("tls11Enabled"u8);
                 writer.WriteBooleanValue(IsTls1_1Enabled.Value);
             }
             if (Optional.IsDefined(IsHttp2_0Enabled))
             {
-                writer.WritePropertyName("http2Enabled");
+                writer.WritePropertyName("http2Enabled"u8);
                 writer.WriteBooleanValue(IsHttp2_0Enabled.Value);
             }
             writer.WriteEndObject();
@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static ApiManagementGatewayHostnameConfigurationData DeserializeApiManagementGatewayHostnameConfigurationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -66,22 +70,22 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<bool> http2Enabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,17 +104,17 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("hostname"))
+                        if (property0.NameEquals("hostname"u8))
                         {
                             hostname = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("certificateId"))
+                        if (property0.NameEquals("certificateId"u8))
                         {
                             certificateId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("negotiateClientCertificate"))
+                        if (property0.NameEquals("negotiateClientCertificate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -120,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement
                             negotiateClientCertificate = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("tls10Enabled"))
+                        if (property0.NameEquals("tls10Enabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -130,7 +134,7 @@ namespace Azure.ResourceManager.ApiManagement
                             tls10Enabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("tls11Enabled"))
+                        if (property0.NameEquals("tls11Enabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -140,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement
                             tls11Enabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("http2Enabled"))
+                        if (property0.NameEquals("http2Enabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

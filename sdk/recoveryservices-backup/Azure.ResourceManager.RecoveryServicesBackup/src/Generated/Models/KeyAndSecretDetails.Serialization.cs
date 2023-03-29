@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KekDetails))
             {
-                writer.WritePropertyName("kekDetails");
+                writer.WritePropertyName("kekDetails"u8);
                 writer.WriteObjectValue(KekDetails);
             }
             if (Optional.IsDefined(BekDetails))
             {
-                writer.WritePropertyName("bekDetails");
+                writer.WritePropertyName("bekDetails"u8);
                 writer.WriteObjectValue(BekDetails);
             }
             if (Optional.IsDefined(EncryptionMechanism))
             {
-                writer.WritePropertyName("encryptionMechanism");
+                writer.WritePropertyName("encryptionMechanism"u8);
                 writer.WriteStringValue(EncryptionMechanism);
             }
             writer.WriteEndObject();
@@ -35,32 +35,36 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static KeyAndSecretDetails DeserializeKeyAndSecretDetails(JsonElement element)
         {
-            Optional<KEKDetails> kekDetails = default;
-            Optional<BEKDetails> bekDetails = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<KekDetails> kekDetails = default;
+            Optional<BekDetails> bekDetails = default;
             Optional<string> encryptionMechanism = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kekDetails"))
+                if (property.NameEquals("kekDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    kekDetails = KEKDetails.DeserializeKEKDetails(property.Value);
+                    kekDetails = KekDetails.DeserializeKekDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("bekDetails"))
+                if (property.NameEquals("bekDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    bekDetails = BEKDetails.DeserializeBEKDetails(property.Value);
+                    bekDetails = BekDetails.DeserializeBekDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("encryptionMechanism"))
+                if (property.NameEquals("encryptionMechanism"u8))
                 {
                     encryptionMechanism = property.Value.GetString();
                     continue;

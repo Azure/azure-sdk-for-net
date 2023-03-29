@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Grafana.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(MonitorWorkspaceIntegrations))
             {
-                writer.WritePropertyName("azureMonitorWorkspaceIntegrations");
+                writer.WritePropertyName("azureMonitorWorkspaceIntegrations"u8);
                 writer.WriteStartArray();
                 foreach (var item in MonitorWorkspaceIntegrations)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.Grafana.Models
 
         internal static GrafanaIntegrations DeserializeGrafanaIntegrations(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<MonitorWorkspaceIntegration>> azureMonitorWorkspaceIntegrations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("azureMonitorWorkspaceIntegrations"))
+                if (property.NameEquals("azureMonitorWorkspaceIntegrations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

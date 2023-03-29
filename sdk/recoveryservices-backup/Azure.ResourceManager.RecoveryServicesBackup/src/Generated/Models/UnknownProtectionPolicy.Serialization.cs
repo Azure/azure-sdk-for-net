@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProtectedItemsCount))
             {
-                writer.WritePropertyName("protectedItemsCount");
+                writer.WritePropertyName("protectedItemsCount"u8);
                 writer.WriteNumberValue(ProtectedItemsCount.Value);
             }
-            writer.WritePropertyName("backupManagementType");
+            writer.WritePropertyName("backupManagementType"u8);
             writer.WriteStringValue(BackupManagementType);
             if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
-                writer.WritePropertyName("resourceGuardOperationRequests");
+                writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceGuardOperationRequests)
                 {
@@ -38,12 +38,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static UnknownProtectionPolicy DeserializeUnknownProtectionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> protectedItemsCount = default;
             string backupManagementType = "Unknown";
             Optional<IList<string>> resourceGuardOperationRequests = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("protectedItemsCount"))
+                if (property.NameEquals("protectedItemsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,12 +57,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectedItemsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("backupManagementType"))
+                if (property.NameEquals("backupManagementType"u8))
                 {
                     backupManagementType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceGuardOperationRequests"))
+                if (property.NameEquals("resourceGuardOperationRequests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

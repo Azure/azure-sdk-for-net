@@ -16,16 +16,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(FolderPath))
             {
-                writer.WritePropertyName("folderPath");
+                writer.WritePropertyName("folderPath"u8);
                 writer.WriteObjectValue(FolderPath);
             }
             if (Optional.IsDefined(FileName))
             {
-                writer.WritePropertyName("fileName");
+                writer.WritePropertyName("fileName"u8);
                 writer.WriteObjectValue(FileName);
             }
             foreach (var item in AdditionalProperties)
@@ -38,6 +38,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static UnknownDatasetLocation DeserializeUnknownDatasetLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = "Unknown";
             Optional<object> folderPath = default;
             Optional<object> fileName = default;
@@ -45,12 +49,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("folderPath"))
+                if (property.NameEquals("folderPath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     folderPath = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("fileName"))
+                if (property.NameEquals("fileName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

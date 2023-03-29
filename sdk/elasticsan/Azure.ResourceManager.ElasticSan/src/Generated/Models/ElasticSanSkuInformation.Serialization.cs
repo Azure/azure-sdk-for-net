@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
     {
         internal static ElasticSanSkuInformation DeserializeElasticSanSkuInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ElasticSanSkuName name = default;
             Optional<ElasticSanSkuTier> tier = default;
             Optional<string> resourceType = default;
@@ -23,12 +27,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
             Optional<IReadOnlyList<ElasticSanSkuCapability>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = new ElasticSanSkuName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,12 +42,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     tier = new ElasticSanSkuTier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("locations"))
+                if (property.NameEquals("locations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     locations = array;
                     continue;
                 }
-                if (property.NameEquals("locationInfo"))
+                if (property.NameEquals("locationInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +77,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     locationInfo = array;
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,33 +15,37 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("publisher");
+            writer.WritePropertyName("publisher"u8);
             writer.WriteStringValue(Publisher);
-            writer.WritePropertyName("offer");
+            writer.WritePropertyName("offer"u8);
             writer.WriteStringValue(Offer);
-            writer.WritePropertyName("sku");
+            writer.WritePropertyName("sku"u8);
             writer.WriteStringValue(Sku);
             writer.WriteEndObject();
         }
 
         internal static GalleryImageIdentifier DeserializeGalleryImageIdentifier(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string publisher = default;
             string offer = default;
             string sku = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publisher"))
+                if (property.NameEquals("publisher"u8))
                 {
                     publisher = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offer"))
+                if (property.NameEquals("offer"u8))
                 {
                     offer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     sku = property.Value.GetString();
                     continue;

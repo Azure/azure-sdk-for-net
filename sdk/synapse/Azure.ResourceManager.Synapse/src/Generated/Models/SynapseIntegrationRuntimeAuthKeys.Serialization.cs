@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseIntegrationRuntimeAuthKeys DeserializeSynapseIntegrationRuntimeAuthKeys(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> authKey1 = default;
             Optional<string> authKey2 = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("authKey1"))
+                if (property.NameEquals("authKey1"u8))
                 {
                     authKey1 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authKey2"))
+                if (property.NameEquals("authKey2"u8))
                 {
                     authKey2 = property.Value.GetString();
                     continue;

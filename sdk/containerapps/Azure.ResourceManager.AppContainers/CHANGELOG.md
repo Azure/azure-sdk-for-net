@@ -1,14 +1,21 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.3 (2023-03-28)
 
 ### Bugs Fixed
 
+- Property `RegistryUri` in class `ContainerAppRegistryInfo` is now obsoleted, please use `RegistryServer` instead.
+
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.30.0`.
+
+## 1.0.2 (2023-02-21)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
 ## 1.0.1 (2022-12-27)
 

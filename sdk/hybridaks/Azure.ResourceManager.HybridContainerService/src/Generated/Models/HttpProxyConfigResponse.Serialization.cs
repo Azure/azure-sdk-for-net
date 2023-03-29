@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(HttpProxy))
             {
-                writer.WritePropertyName("httpProxy");
+                writer.WritePropertyName("httpProxy"u8);
                 writer.WriteStringValue(HttpProxy);
             }
             if (Optional.IsDefined(HttpsProxy))
             {
-                writer.WritePropertyName("httpsProxy");
+                writer.WritePropertyName("httpsProxy"u8);
                 writer.WriteStringValue(HttpsProxy);
             }
             if (Optional.IsCollectionDefined(NoProxy))
             {
-                writer.WritePropertyName("noProxy");
+                writer.WritePropertyName("noProxy"u8);
                 writer.WriteStartArray();
                 foreach (var item in NoProxy)
                 {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
             if (Optional.IsDefined(TrustedCa))
             {
-                writer.WritePropertyName("trustedCa");
+                writer.WritePropertyName("trustedCa"u8);
                 writer.WriteStringValue(TrustedCa);
             }
             if (Optional.IsDefined(Username))
             {
-                writer.WritePropertyName("username");
+                writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
             writer.WriteEndObject();
@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static HttpProxyConfigResponse DeserializeHttpProxyConfigResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> httpProxy = default;
             Optional<string> httpsProxy = default;
             Optional<IList<string>> noProxy = default;
@@ -58,17 +62,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<string> username = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("httpProxy"))
+                if (property.NameEquals("httpProxy"u8))
                 {
                     httpProxy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("httpsProxy"))
+                if (property.NameEquals("httpsProxy"u8))
                 {
                     httpsProxy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("noProxy"))
+                if (property.NameEquals("noProxy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,12 +87,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     noProxy = array;
                     continue;
                 }
-                if (property.NameEquals("trustedCa"))
+                if (property.NameEquals("trustedCa"u8))
                 {
                     trustedCa = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("username"))
+                if (property.NameEquals("username"u8))
                 {
                     username = property.Value.GetString();
                     continue;

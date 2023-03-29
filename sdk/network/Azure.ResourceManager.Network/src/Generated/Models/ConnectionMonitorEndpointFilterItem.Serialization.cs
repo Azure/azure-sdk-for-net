@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ItemType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ItemType.Value.ToString());
             }
             if (Optional.IsDefined(Address))
             {
-                writer.WritePropertyName("address");
+                writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorEndpointFilterItem DeserializeConnectionMonitorEndpointFilterItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ConnectionMonitorEndpointFilterItemType> type = default;
             Optional<string> address = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
                     type = new ConnectionMonitorEndpointFilterItemType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("address"))
+                if (property.NameEquals("address"u8))
                 {
                     address = property.Value.GetString();
                     continue;

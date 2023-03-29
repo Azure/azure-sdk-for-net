@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("authorizationQualifier");
+            writer.WritePropertyName("authorizationQualifier"u8);
             writer.WriteStringValue(AuthorizationQualifier);
             if (Optional.IsDefined(AuthorizationValue))
             {
-                writer.WritePropertyName("authorizationValue");
+                writer.WritePropertyName("authorizationValue"u8);
                 writer.WriteStringValue(AuthorizationValue);
             }
-            writer.WritePropertyName("securityQualifier");
+            writer.WritePropertyName("securityQualifier"u8);
             writer.WriteStringValue(SecurityQualifier);
             if (Optional.IsDefined(PasswordValue))
             {
-                writer.WritePropertyName("passwordValue");
+                writer.WritePropertyName("passwordValue"u8);
                 writer.WriteStringValue(PasswordValue);
             }
             writer.WriteEndObject();
@@ -34,28 +34,32 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static X12SecuritySettings DeserializeX12SecuritySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string authorizationQualifier = default;
             Optional<string> authorizationValue = default;
             string securityQualifier = default;
             Optional<string> passwordValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("authorizationQualifier"))
+                if (property.NameEquals("authorizationQualifier"u8))
                 {
                     authorizationQualifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authorizationValue"))
+                if (property.NameEquals("authorizationValue"u8))
                 {
                     authorizationValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("securityQualifier"))
+                if (property.NameEquals("securityQualifier"u8))
                 {
                     securityQualifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("passwordValue"))
+                if (property.NameEquals("passwordValue"u8))
                 {
                     passwordValue = property.Value.GetString();
                     continue;

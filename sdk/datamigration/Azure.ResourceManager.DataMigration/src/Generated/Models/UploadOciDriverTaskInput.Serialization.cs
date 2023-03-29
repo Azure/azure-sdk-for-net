@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DriverShare))
             {
-                writer.WritePropertyName("driverShare");
+                writer.WritePropertyName("driverShare"u8);
                 writer.WriteObjectValue(DriverShare);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static UploadOciDriverTaskInput DeserializeUploadOciDriverTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FileShare> driverShare = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("driverShare"))
+                if (property.NameEquals("driverShare"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,26 +17,30 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomLicenseAcquisitionUriTemplate))
             {
-                writer.WritePropertyName("customLicenseAcquisitionUrlTemplate");
+                writer.WritePropertyName("customLicenseAcquisitionUrlTemplate"u8);
                 writer.WriteStringValue(CustomLicenseAcquisitionUriTemplate);
             }
-            writer.WritePropertyName("allowPersistentLicense");
+            writer.WritePropertyName("allowPersistentLicense"u8);
             writer.WriteBooleanValue(AllowPersistentLicense);
             writer.WriteEndObject();
         }
 
         internal static StreamingPolicyFairPlayConfiguration DeserializeStreamingPolicyFairPlayConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> customLicenseAcquisitionUriTemplate = default;
             bool allowPersistentLicense = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("customLicenseAcquisitionUrlTemplate"))
+                if (property.NameEquals("customLicenseAcquisitionUrlTemplate"u8))
                 {
                     customLicenseAcquisitionUriTemplate = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("allowPersistentLicense"))
+                if (property.NameEquals("allowPersistentLicense"u8))
                 {
                     allowPersistentLicense = property.Value.GetBoolean();
                     continue;

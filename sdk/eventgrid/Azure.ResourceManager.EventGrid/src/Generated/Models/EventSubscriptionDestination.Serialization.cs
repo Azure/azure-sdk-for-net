@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.EventGrid.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("endpointType");
+            writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
             writer.WriteEndObject();
         }
 
         internal static EventSubscriptionDestination DeserializeEventSubscriptionDestination(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("endpointType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         internal static ContainerRegistryWebhookEventRequestContent DeserializeContainerRegistryWebhookEventRequestContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> id = default;
             Optional<string> addr = default;
             Optional<string> host = default;
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<string> userAgent = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,22 +36,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     id = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("addr"))
+                if (property.NameEquals("addr"u8))
                 {
                     addr = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("host"))
+                if (property.NameEquals("host"u8))
                 {
                     host = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("method"))
+                if (property.NameEquals("method"u8))
                 {
                     method = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("useragent"))
+                if (property.NameEquals("useragent"u8))
                 {
                     userAgent = property.Value.GetString();
                     continue;

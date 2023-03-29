@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("ruleGroupName");
+            writer.WritePropertyName("ruleGroupName"u8);
             writer.WriteStringValue(RuleGroupName);
             if (Optional.IsCollectionDefined(Rules))
             {
-                writer.WritePropertyName("rules");
+                writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
@@ -33,16 +33,20 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayFirewallDisabledRuleGroup DeserializeApplicationGatewayFirewallDisabledRuleGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string ruleGroupName = default;
             Optional<IList<int>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ruleGroupName"))
+                if (property.NameEquals("ruleGroupName"u8))
                 {
                     ruleGroupName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rules"))
+                if (property.NameEquals("rules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

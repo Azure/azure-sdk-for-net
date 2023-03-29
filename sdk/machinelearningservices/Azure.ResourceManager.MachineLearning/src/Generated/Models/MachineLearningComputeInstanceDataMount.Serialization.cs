@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningComputeInstanceDataMount DeserializeMachineLearningComputeInstanceDataMount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> source = default;
             Optional<MachineLearningSourceType> sourceType = default;
             Optional<string> mountName = default;
@@ -26,12 +30,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     source = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceType"))
+                if (property.NameEquals("sourceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,12 +45,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     sourceType = new MachineLearningSourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("mountName"))
+                if (property.NameEquals("mountName"u8))
                 {
                     mountName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mountAction"))
+                if (property.NameEquals("mountAction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,17 +60,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     mountAction = new MachineLearningMountAction(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("createdBy"))
+                if (property.NameEquals("createdBy"u8))
                 {
                     createdBy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mountPath"))
+                if (property.NameEquals("mountPath"u8))
                 {
                     mountPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mountState"))
+                if (property.NameEquals("mountState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     mountState = new MachineLearningMountState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("mountedOn"))
+                if (property.NameEquals("mountedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     mountedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     error = property.Value.GetString();
                     continue;

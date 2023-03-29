@@ -15,12 +15,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static DataBoxEdgeIPv4Config DeserializeDataBoxEdgeIPv4Config(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IPAddress> ipAddress = default;
             Optional<string> subnet = default;
             Optional<string> gateway = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,12 +34,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     ipAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("subnet"))
+                if (property.NameEquals("subnet"u8))
                 {
                     subnet = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("gateway"))
+                if (property.NameEquals("gateway"u8))
                 {
                     gateway = property.Value.GetString();
                     continue;

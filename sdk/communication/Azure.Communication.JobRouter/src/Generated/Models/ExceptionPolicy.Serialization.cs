@@ -19,12 +19,12 @@ namespace Azure.Communication.JobRouter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsCollectionDefined(ExceptionRules))
             {
-                writer.WritePropertyName("exceptionRules");
+                writer.WritePropertyName("exceptionRules"u8);
                 writer.WriteStartObject();
                 foreach (var item in ExceptionRules)
                 {
@@ -38,22 +38,26 @@ namespace Azure.Communication.JobRouter.Models
 
         internal static ExceptionPolicy DeserializeExceptionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<IDictionary<string, ExceptionRule>> exceptionRules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("exceptionRules"))
+                if (property.NameEquals("exceptionRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

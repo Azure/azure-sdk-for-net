@@ -19,39 +19,39 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(MeterId))
             {
-                writer.WritePropertyName("meterId");
+                writer.WritePropertyName("meterId"u8);
                 writer.WriteStringValue(MeterId.Value);
             }
             if (Optional.IsDefined(BillingLocation))
             {
-                writer.WritePropertyName("billingLocation");
+                writer.WritePropertyName("billingLocation"u8);
                 writer.WriteStringValue(BillingLocation.Value);
             }
             if (Optional.IsDefined(ShortName))
             {
-                writer.WritePropertyName("shortName");
+                writer.WritePropertyName("shortName"u8);
                 writer.WriteStringValue(ShortName);
             }
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(OSType))
             {
-                writer.WritePropertyName("osType");
+                writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
             if (Optional.IsDefined(Multiplier))
             {
-                writer.WritePropertyName("multiplier");
+                writer.WritePropertyName("multiplier"u8);
                 writer.WriteNumberValue(Multiplier.Value);
             }
             writer.WriteEndObject();
@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceBillingMeter DeserializeAppServiceBillingMeter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -73,27 +77,27 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<double> multiplier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +107,7 @@ namespace Azure.ResourceManager.AppService.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,7 +116,7 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("meterId"))
+                        if (property0.NameEquals("meterId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -122,7 +126,7 @@ namespace Azure.ResourceManager.AppService.Models
                             meterId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("billingLocation"))
+                        if (property0.NameEquals("billingLocation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -132,22 +136,22 @@ namespace Azure.ResourceManager.AppService.Models
                             billingLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("shortName"))
+                        if (property0.NameEquals("shortName"u8))
                         {
                             shortName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("friendlyName"))
+                        if (property0.NameEquals("friendlyName"u8))
                         {
                             friendlyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("osType"))
+                        if (property0.NameEquals("osType"u8))
                         {
                             osType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("multiplier"))
+                        if (property0.NameEquals("multiplier"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

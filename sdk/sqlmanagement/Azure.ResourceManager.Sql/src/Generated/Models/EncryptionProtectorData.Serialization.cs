@@ -18,21 +18,21 @@ namespace Azure.ResourceManager.Sql
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ServerKeyName))
             {
-                writer.WritePropertyName("serverKeyName");
+                writer.WritePropertyName("serverKeyName"u8);
                 writer.WriteStringValue(ServerKeyName);
             }
             if (Optional.IsDefined(ServerKeyType))
             {
-                writer.WritePropertyName("serverKeyType");
+                writer.WritePropertyName("serverKeyType"u8);
                 writer.WriteStringValue(ServerKeyType.Value.ToString());
             }
             if (Optional.IsDefined(IsAutoRotationEnabled))
             {
-                writer.WritePropertyName("autoRotationEnabled");
+                writer.WritePropertyName("autoRotationEnabled"u8);
                 writer.WriteBooleanValue(IsAutoRotationEnabled.Value);
             }
             writer.WriteEndObject();
@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static EncryptionProtectorData DeserializeEncryptionProtectorData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
@@ -55,12 +59,12 @@ namespace Azure.ResourceManager.Sql
             Optional<bool> autoRotationEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,22 +74,22 @@ namespace Azure.ResourceManager.Sql
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,7 +99,7 @@ namespace Azure.ResourceManager.Sql
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,17 +108,17 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("subregion"))
+                        if (property0.NameEquals("subregion"u8))
                         {
                             subregion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("serverKeyName"))
+                        if (property0.NameEquals("serverKeyName"u8))
                         {
                             serverKeyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("serverKeyType"))
+                        if (property0.NameEquals("serverKeyType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -124,7 +128,7 @@ namespace Azure.ResourceManager.Sql
                             serverKeyType = new SqlServerKeyType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("uri"))
+                        if (property0.NameEquals("uri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -134,12 +138,12 @@ namespace Azure.ResourceManager.Sql
                             uri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("thumbprint"))
+                        if (property0.NameEquals("thumbprint"u8))
                         {
                             thumbprint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("autoRotationEnabled"))
+                        if (property0.NameEquals("autoRotationEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

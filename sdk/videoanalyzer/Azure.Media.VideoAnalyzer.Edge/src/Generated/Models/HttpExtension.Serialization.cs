@@ -16,20 +16,20 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("endpoint");
+            writer.WritePropertyName("endpoint"u8);
             writer.WriteObjectValue(Endpoint);
-            writer.WritePropertyName("image");
+            writer.WritePropertyName("image"u8);
             writer.WriteObjectValue(Image);
             if (Optional.IsDefined(SamplingOptions))
             {
-                writer.WritePropertyName("samplingOptions");
+                writer.WritePropertyName("samplingOptions"u8);
                 writer.WriteObjectValue(SamplingOptions);
             }
-            writer.WritePropertyName("@type");
+            writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("inputs");
+            writer.WritePropertyName("inputs"u8);
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
@@ -41,6 +41,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static HttpExtension DeserializeHttpExtension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EndpointBase endpoint = default;
             ImageProperties image = default;
             Optional<SamplingOptions> samplingOptions = default;
@@ -49,17 +53,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             IList<NodeInput> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endpoint"))
+                if (property.NameEquals("endpoint"u8))
                 {
                     endpoint = EndpointBase.DeserializeEndpointBase(property.Value);
                     continue;
                 }
-                if (property.NameEquals("image"))
+                if (property.NameEquals("image"u8))
                 {
                     image = ImageProperties.DeserializeImageProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("samplingOptions"))
+                if (property.NameEquals("samplingOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,17 +73,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     samplingOptions = SamplingOptions.DeserializeSamplingOptions(property.Value);
                     continue;
                 }
-                if (property.NameEquals("@type"))
+                if (property.NameEquals("@type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("inputs"))
+                if (property.NameEquals("inputs"u8))
                 {
                     List<NodeInput> array = new List<NodeInput>();
                     foreach (var item in property.Value.EnumerateArray())

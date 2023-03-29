@@ -17,27 +17,37 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DatabaseType))
             {
-                writer.WritePropertyName("databaseType");
+                writer.WritePropertyName("databaseType"u8);
                 writer.WriteStringValue(DatabaseType.Value.ToString());
             }
-            writer.WritePropertyName("subnetId");
+            writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
-            writer.WritePropertyName("virtualMachineConfiguration");
+            writer.WritePropertyName("virtualMachineConfiguration"u8);
             writer.WriteObjectValue(VirtualMachineConfiguration);
-            writer.WritePropertyName("instanceCount");
+            writer.WritePropertyName("instanceCount"u8);
             writer.WriteNumberValue(InstanceCount);
+            if (Optional.IsDefined(DiskConfiguration))
+            {
+                writer.WritePropertyName("diskConfiguration"u8);
+                writer.WriteObjectValue(DiskConfiguration);
+            }
             writer.WriteEndObject();
         }
 
         internal static DatabaseConfiguration DeserializeDatabaseConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SapDatabaseType> databaseType = default;
             ResourceIdentifier subnetId = default;
             VirtualMachineConfiguration virtualMachineConfiguration = default;
             long instanceCount = default;
+            Optional<DiskConfiguration> diskConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("databaseType"))
+                if (property.NameEquals("databaseType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,23 +57,33 @@ namespace Azure.ResourceManager.Workloads.Models
                     databaseType = new SapDatabaseType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("subnetId"))
+                if (property.NameEquals("subnetId"u8))
                 {
                     subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("virtualMachineConfiguration"))
+                if (property.NameEquals("virtualMachineConfiguration"u8))
                 {
                     virtualMachineConfiguration = VirtualMachineConfiguration.DeserializeVirtualMachineConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("instanceCount"))
+                if (property.NameEquals("instanceCount"u8))
                 {
                     instanceCount = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("diskConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    diskConfiguration = DiskConfiguration.DeserializeDiskConfiguration(property.Value);
+                    continue;
+                }
             }
-            return new DatabaseConfiguration(Optional.ToNullable(databaseType), subnetId, virtualMachineConfiguration, instanceCount);
+            return new DatabaseConfiguration(Optional.ToNullable(databaseType), subnetId, virtualMachineConfiguration, instanceCount, diskConfiguration.Value);
         }
     }
 }

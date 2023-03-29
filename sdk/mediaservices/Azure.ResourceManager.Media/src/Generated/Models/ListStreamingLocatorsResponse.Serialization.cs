@@ -15,10 +15,14 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static ListStreamingLocatorsResponse DeserializeListStreamingLocatorsResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MediaAssetStreamingLocator>> streamingLocators = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("streamingLocators"))
+                if (property.NameEquals("streamingLocators"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

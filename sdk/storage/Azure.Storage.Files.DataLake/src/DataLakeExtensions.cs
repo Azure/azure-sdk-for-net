@@ -45,7 +45,7 @@ namespace Azure.Storage.Files.DataLake
                     PreventEncryptionScopeOverride = containerProperties.PreventEncryptionScopeOverride
                 };
 
-        internal static FileDownloadDetails ToFileDownloadDetails(this BlobDownloadDetails blobDownloadProperties) =>
+        internal static FileDownloadDetails ToFileDownloadDetails(this BlobDownloadDetails blobDownloadProperties, string encryptionContext) =>
             new FileDownloadDetails()
             {
                 LastModified = blobDownloadProperties.LastModified,
@@ -66,59 +66,76 @@ namespace Azure.Storage.Files.DataLake
                 AcceptRanges = blobDownloadProperties.AcceptRanges,
                 IsServerEncrypted = blobDownloadProperties.IsServerEncrypted,
                 EncryptionKeySha256 = blobDownloadProperties.EncryptionKeySha256,
-                ContentHash = blobDownloadProperties.BlobContentHash
+                ContentHash = blobDownloadProperties.BlobContentHash,
+                CreatedOn = blobDownloadProperties.CreatedOn,
+                EncryptionContext = encryptionContext
             };
 
-        internal static FileDownloadInfo ToFileDownloadInfo(this BlobDownloadInfo blobDownloadInfo) =>
-            new FileDownloadInfo()
+        internal static FileDownloadInfo ToFileDownloadInfo(this Response<BlobDownloadInfo> blobDownloadInfoResponse)
+        {
+            blobDownloadInfoResponse.GetRawResponse().Headers.TryGetValue(Constants.DataLake.EncryptionContextHeaderName, out string encryptionContext);
+            FileDownloadInfo fileDownloadInfo = new FileDownloadInfo()
             {
-                ContentLength = blobDownloadInfo.ContentLength,
-                Content = blobDownloadInfo.Content,
-                ContentHash = blobDownloadInfo.ContentHash,
-                Properties = blobDownloadInfo.Details.ToFileDownloadDetails()
+                ContentLength = blobDownloadInfoResponse.Value.ContentLength,
+                Content = blobDownloadInfoResponse.Value.Content,
+                ContentHash = blobDownloadInfoResponse.Value.ContentHash,
+                Properties = blobDownloadInfoResponse.Value.Details.ToFileDownloadDetails(encryptionContext)
             };
+            return fileDownloadInfo;
+        }
 
-        internal static FileDownloadInfo ToFileDownloadInfo(this BlobDownloadStreamingResult blobDownloadStreamingResult) =>
-            new FileDownloadInfo()
+        internal static FileDownloadInfo ToFileDownloadInfo(this Response<BlobDownloadStreamingResult> blobDownloadStreamingResultResponse)
+        {
+            blobDownloadStreamingResultResponse.GetRawResponse().Headers.TryGetValue(Constants.DataLake.EncryptionContextHeaderName, out string encryptionContext);
+            FileDownloadInfo fileDownloadInfo = new FileDownloadInfo()
             {
-                ContentLength = blobDownloadStreamingResult.Details.ContentLength,
-                Content = blobDownloadStreamingResult.Content,
-                ContentHash = blobDownloadStreamingResult.Details.ContentHash,
-                Properties = blobDownloadStreamingResult.Details.ToFileDownloadDetails()
+                ContentLength = blobDownloadStreamingResultResponse.Value.Details.ContentLength,
+                Content = blobDownloadStreamingResultResponse.Value.Content,
+                ContentHash = blobDownloadStreamingResultResponse.Value.Details.ContentHash,
+                Properties = blobDownloadStreamingResultResponse.Value.Details.ToFileDownloadDetails(encryptionContext)
             };
+            return fileDownloadInfo;
+        }
 
-        internal static PathProperties ToPathProperties(this BlobProperties blobProperties) =>
-            new PathProperties()
+        internal static PathProperties ToPathProperties(this Response<BlobProperties> blobPropertiesResponse)
+        {
+            PathProperties pathProperties = new PathProperties()
             {
-                LastModified = blobProperties.LastModified,
-                CreatedOn = blobProperties.CreatedOn,
-                Metadata = blobProperties.Metadata,
-                CopyCompletedOn = blobProperties.CopyCompletedOn,
-                CopyStatusDescription = blobProperties.CopyStatusDescription,
-                CopyId = blobProperties.CopyId,
-                CopyProgress = blobProperties.CopyProgress,
-                CopySource = blobProperties.CopySource,
-                IsIncrementalCopy = blobProperties.IsIncrementalCopy,
-                LeaseDuration = (Models.DataLakeLeaseDuration)blobProperties.LeaseDuration,
-                LeaseStatus = (Models.DataLakeLeaseStatus)blobProperties.LeaseStatus,
-                LeaseState = (Models.DataLakeLeaseState)blobProperties.LeaseState,
-                ContentLength = blobProperties.ContentLength,
-                ContentType = blobProperties.ContentType,
-                ETag = blobProperties.ETag,
-                ContentHash = blobProperties.ContentHash,
-                ContentEncoding = blobProperties.ContentEncoding,
-                ContentDisposition = blobProperties.ContentDisposition,
-                ContentLanguage = blobProperties.ContentLanguage,
-                CacheControl = blobProperties.CacheControl,
-                AcceptRanges = blobProperties.AcceptRanges,
-                IsServerEncrypted = blobProperties.IsServerEncrypted,
-                EncryptionKeySha256 = blobProperties.EncryptionKeySha256,
-                AccessTier = blobProperties.AccessTier,
-                ArchiveStatus = blobProperties.ArchiveStatus,
-                AccessTierChangedOn = blobProperties.AccessTierChangedOn,
-                ExpiresOn = blobProperties.ExpiresOn,
-                EncryptionScope = blobProperties.EncryptionScope
+                LastModified = blobPropertiesResponse.Value.LastModified,
+                CreatedOn = blobPropertiesResponse.Value.CreatedOn,
+                Metadata = blobPropertiesResponse.Value.Metadata,
+                CopyCompletedOn = blobPropertiesResponse.Value.CopyCompletedOn,
+                CopyStatusDescription = blobPropertiesResponse.Value.CopyStatusDescription,
+                CopyId = blobPropertiesResponse.Value.CopyId,
+                CopyProgress = blobPropertiesResponse.Value.CopyProgress,
+                CopySource = blobPropertiesResponse.Value.CopySource,
+                IsIncrementalCopy = blobPropertiesResponse.Value.IsIncrementalCopy,
+                LeaseDuration = (Models.DataLakeLeaseDuration)blobPropertiesResponse.Value.LeaseDuration,
+                LeaseStatus = (Models.DataLakeLeaseStatus)blobPropertiesResponse.Value.LeaseStatus,
+                LeaseState = (Models.DataLakeLeaseState)blobPropertiesResponse.Value.LeaseState,
+                ContentLength = blobPropertiesResponse.Value.ContentLength,
+                ContentType = blobPropertiesResponse.Value.ContentType,
+                ETag = blobPropertiesResponse.Value.ETag,
+                ContentHash = blobPropertiesResponse.Value.ContentHash,
+                ContentEncoding = blobPropertiesResponse.Value.ContentEncoding,
+                ContentDisposition = blobPropertiesResponse.Value.ContentDisposition,
+                ContentLanguage = blobPropertiesResponse.Value.ContentLanguage,
+                CacheControl = blobPropertiesResponse.Value.CacheControl,
+                AcceptRanges = blobPropertiesResponse.Value.AcceptRanges,
+                IsServerEncrypted = blobPropertiesResponse.Value.IsServerEncrypted,
+                EncryptionKeySha256 = blobPropertiesResponse.Value.EncryptionKeySha256,
+                AccessTier = blobPropertiesResponse.Value.AccessTier,
+                ArchiveStatus = blobPropertiesResponse.Value.ArchiveStatus,
+                AccessTierChangedOn = blobPropertiesResponse.Value.AccessTierChangedOn,
+                ExpiresOn = blobPropertiesResponse.Value.ExpiresOn,
+                EncryptionScope = blobPropertiesResponse.Value.EncryptionScope,
             };
+            if (blobPropertiesResponse.GetRawResponse().Headers.TryGetValue(Constants.DataLake.EncryptionContextHeaderName, out string encryptionContext))
+            {
+                pathProperties.EncryptionContext = encryptionContext;
+            }
+            return pathProperties;
+        }
 
         internal static PathInfo ToPathInfo(this BlobInfo blobInfo) =>
             new PathInfo
@@ -577,7 +594,8 @@ namespace Azure.Storage.Files.DataLake
                 Permissions = path.Permissions,
                 CreatedOn = ParseFileTimeString(path.CreationTime),
                 ExpiresOn = ParseFileTimeString(path.ExpiryTime),
-                EncryptionScope = path.EncryptionScope
+                EncryptionScope = path.EncryptionScope,
+                EncryptionContext = path.EncryptionContext,
             };
         }
 
@@ -927,9 +945,7 @@ namespace Azure.Storage.Files.DataLake
             string operationName,
             string parameterName)
         {
-            if (AppContextSwitchHelper.GetConfigValue(
-                Constants.DisableRequestConditionsValidationSwitchName,
-                Constants.DisableRequestConditionsValidationEnvVar))
+            if (CompatSwitches.DisableRequestConditionsValidation)
             {
                 return;
             }
@@ -959,9 +975,7 @@ namespace Azure.Storage.Files.DataLake
             string operationName,
             string parameterName)
         {
-            if (AppContextSwitchHelper.GetConfigValue(
-                Constants.DisableRequestConditionsValidationSwitchName,
-                Constants.DisableRequestConditionsValidationEnvVar))
+            if (CompatSwitches.DisableRequestConditionsValidation)
             {
                 return;
             }

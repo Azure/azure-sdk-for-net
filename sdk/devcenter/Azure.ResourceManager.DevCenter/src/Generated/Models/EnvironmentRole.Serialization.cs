@@ -20,16 +20,20 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         internal static EnvironmentRole DeserializeEnvironmentRole(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> roleName = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("roleName"))
+                if (property.NameEquals("roleName"u8))
                 {
                     roleName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;

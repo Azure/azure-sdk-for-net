@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         internal static LabServicesUsageName DeserializeLabServicesUsageName(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> localizedValue = default;
             Optional<IReadOnlyList<string>> skuInstances = default;
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("localizedValue"))
+                if (property.NameEquals("localizedValue"u8))
                 {
                     localizedValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("skuInstances"))
+                if (property.NameEquals("skuInstances"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     skuInstances = array;
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;

@@ -14,10 +14,14 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static Pagination DeserializePagination(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@nextLink"))
+                if (property.NameEquals("@nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

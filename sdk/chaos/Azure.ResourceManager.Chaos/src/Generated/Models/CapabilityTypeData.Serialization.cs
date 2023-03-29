@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Chaos
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RuntimeProperties))
             {
-                writer.WritePropertyName("runtimeProperties");
+                writer.WritePropertyName("runtimeProperties"u8);
                 writer.WriteObjectValue(RuntimeProperties);
             }
             writer.WriteEndObject();
@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Chaos
 
         internal static CapabilityTypeData DeserializeCapabilityTypeData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.Chaos
             Optional<CapabilityTypePropertiesRuntimeProperties> runtimeProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,22 +64,22 @@ namespace Azure.ResourceManager.Chaos
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +89,7 @@ namespace Azure.ResourceManager.Chaos
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,42 +98,42 @@ namespace Azure.ResourceManager.Chaos
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("publisher"))
+                        if (property0.NameEquals("publisher"u8))
                         {
                             publisher = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("targetType"))
+                        if (property0.NameEquals("targetType"u8))
                         {
                             targetType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("parametersSchema"))
+                        if (property0.NameEquals("parametersSchema"u8))
                         {
                             parametersSchema = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("urn"))
+                        if (property0.NameEquals("urn"u8))
                         {
                             urn = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("kind"))
+                        if (property0.NameEquals("kind"u8))
                         {
                             kind = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("runtimeProperties"))
+                        if (property0.NameEquals("runtimeProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

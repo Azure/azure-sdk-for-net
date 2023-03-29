@@ -20,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedService))
             {
-                writer.WritePropertyName("linkedService");
+                writer.WritePropertyName("linkedService"u8);
                 writer.WriteObjectValue(LinkedService);
             }
             if (Optional.IsDefined(TypeProperties))
             {
-                writer.WritePropertyName("typeProperties");
+                writer.WritePropertyName("typeProperties"u8);
                 writer.WriteObjectValue(TypeProperties);
             }
             writer.WriteEndObject();
@@ -33,11 +33,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static LinkConnectionTargetDatabase DeserializeLinkConnectionTargetDatabase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LinkedServiceReference> linkedService = default;
             Optional<LinkConnectionTargetDatabaseTypeProperties> typeProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linkedService"))
+                if (property.NameEquals("linkedService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     linkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

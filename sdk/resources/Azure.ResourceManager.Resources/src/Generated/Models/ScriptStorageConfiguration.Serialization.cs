@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccountName))
             {
-                writer.WritePropertyName("storageAccountName");
+                writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);
             }
             if (Optional.IsDefined(StorageAccountKey))
             {
-                writer.WritePropertyName("storageAccountKey");
+                writer.WritePropertyName("storageAccountKey"u8);
                 writer.WriteStringValue(StorageAccountKey);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ScriptStorageConfiguration DeserializeScriptStorageConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> storageAccountName = default;
             Optional<string> storageAccountKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageAccountName"))
+                if (property.NameEquals("storageAccountName"u8))
                 {
                     storageAccountName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageAccountKey"))
+                if (property.NameEquals("storageAccountKey"u8))
                 {
                     storageAccountKey = property.Value.GetString();
                     continue;

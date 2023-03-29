@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StreamInputDataSourceType);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IotHubNamespace))
             {
-                writer.WritePropertyName("iotHubNamespace");
+                writer.WritePropertyName("iotHubNamespace"u8);
                 writer.WriteStringValue(IotHubNamespace);
             }
             if (Optional.IsDefined(SharedAccessPolicyName))
             {
-                writer.WritePropertyName("sharedAccessPolicyName");
+                writer.WritePropertyName("sharedAccessPolicyName"u8);
                 writer.WriteStringValue(SharedAccessPolicyName);
             }
             if (Optional.IsDefined(SharedAccessPolicyKey))
             {
-                writer.WritePropertyName("sharedAccessPolicyKey");
+                writer.WritePropertyName("sharedAccessPolicyKey"u8);
                 writer.WriteStringValue(SharedAccessPolicyKey);
             }
             if (Optional.IsDefined(ConsumerGroupName))
             {
-                writer.WritePropertyName("consumerGroupName");
+                writer.WritePropertyName("consumerGroupName"u8);
                 writer.WriteStringValue(ConsumerGroupName);
             }
             if (Optional.IsDefined(Endpoint))
             {
-                writer.WritePropertyName("endpoint");
+                writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
             }
             writer.WriteEndObject();
@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static IoTHubStreamInputDataSource DeserializeIoTHubStreamInputDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> iotHubNamespace = default;
             Optional<string> sharedAccessPolicyName = default;
@@ -58,12 +62,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> endpoint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,27 +76,27 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("iotHubNamespace"))
+                        if (property0.NameEquals("iotHubNamespace"u8))
                         {
                             iotHubNamespace = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sharedAccessPolicyName"))
+                        if (property0.NameEquals("sharedAccessPolicyName"u8))
                         {
                             sharedAccessPolicyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sharedAccessPolicyKey"))
+                        if (property0.NameEquals("sharedAccessPolicyKey"u8))
                         {
                             sharedAccessPolicyKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("consumerGroupName"))
+                        if (property0.NameEquals("consumerGroupName"u8))
                         {
                             consumerGroupName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("endpoint"))
+                        if (property0.NameEquals("endpoint"u8))
                         {
                             endpoint = property0.Value.GetString();
                             continue;

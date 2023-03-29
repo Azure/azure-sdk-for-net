@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseSsisVariable DeserializeSynapseSsisVariable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> id = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -23,7 +27,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<string> sensitiveValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,22 +37,22 @@ namespace Azure.ResourceManager.Synapse.Models
                     id = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataType"))
+                if (property.NameEquals("dataType"u8))
                 {
                     dataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sensitive"))
+                if (property.NameEquals("sensitive"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,12 +62,12 @@ namespace Azure.ResourceManager.Synapse.Models
                     sensitive = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sensitiveValue"))
+                if (property.NameEquals("sensitiveValue"u8))
                 {
                     sensitiveValue = property.Value.GetString();
                     continue;

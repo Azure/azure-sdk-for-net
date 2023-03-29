@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SsisStoreType))
             {
-                writer.WritePropertyName("ssisStoreType");
+                writer.WritePropertyName("ssisStoreType"u8);
                 writer.WriteStringValue(SsisStoreType.Value.ToString());
             }
             if (Optional.IsDefined(ProjectOverwriteOption))
             {
-                writer.WritePropertyName("projectOverwriteOption");
+                writer.WritePropertyName("projectOverwriteOption"u8);
                 writer.WriteStringValue(ProjectOverwriteOption.Value.ToString());
             }
             if (Optional.IsDefined(EnvironmentOverwriteOption))
             {
-                writer.WritePropertyName("environmentOverwriteOption");
+                writer.WritePropertyName("environmentOverwriteOption"u8);
                 writer.WriteStringValue(EnvironmentOverwriteOption.Value.ToString());
             }
             writer.WriteEndObject();
@@ -35,12 +35,16 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static SsisMigrationInfo DeserializeSsisMigrationInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SsisStoreType> ssisStoreType = default;
             Optional<SsisMigrationOverwriteOption> projectOverwriteOption = default;
             Optional<SsisMigrationOverwriteOption> environmentOverwriteOption = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ssisStoreType"))
+                if (property.NameEquals("ssisStoreType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     ssisStoreType = new SsisStoreType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("projectOverwriteOption"))
+                if (property.NameEquals("projectOverwriteOption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     projectOverwriteOption = new SsisMigrationOverwriteOption(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("environmentOverwriteOption"))
+                if (property.NameEquals("environmentOverwriteOption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

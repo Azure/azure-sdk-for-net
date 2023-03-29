@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(OAuth2))
             {
-                writer.WritePropertyName("oAuth2");
+                writer.WritePropertyName("oAuth2"u8);
                 writer.WriteObjectValue(OAuth2);
             }
             if (Optional.IsDefined(OpenId))
             {
-                writer.WritePropertyName("openid");
+                writer.WritePropertyName("openid"u8);
                 writer.WriteObjectValue(OpenId);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static AuthenticationSettingsContract DeserializeAuthenticationSettingsContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OAuth2AuthenticationSettingsContract> oAuth2 = default;
             Optional<OpenIdAuthenticationSettingsContract> openid = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("oAuth2"))
+                if (property.NameEquals("oAuth2"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     oAuth2 = OAuth2AuthenticationSettingsContract.DeserializeOAuth2AuthenticationSettingsContract(property.Value);
                     continue;
                 }
-                if (property.NameEquals("openid"))
+                if (property.NameEquals("openid"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

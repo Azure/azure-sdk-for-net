@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.Sql
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(WeeklyRetention))
             {
-                writer.WritePropertyName("weeklyRetention");
+                writer.WritePropertyName("weeklyRetention"u8);
                 writer.WriteStringValue(WeeklyRetention);
             }
             if (Optional.IsDefined(MonthlyRetention))
             {
-                writer.WritePropertyName("monthlyRetention");
+                writer.WritePropertyName("monthlyRetention"u8);
                 writer.WriteStringValue(MonthlyRetention);
             }
             if (Optional.IsDefined(YearlyRetention))
             {
-                writer.WritePropertyName("yearlyRetention");
+                writer.WritePropertyName("yearlyRetention"u8);
                 writer.WriteStringValue(YearlyRetention);
             }
             if (Optional.IsDefined(WeekOfYear))
             {
-                writer.WritePropertyName("weekOfYear");
+                writer.WritePropertyName("weekOfYear"u8);
                 writer.WriteNumberValue(WeekOfYear.Value);
             }
             writer.WriteEndObject();
@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static LongTermRetentionPolicyData DeserializeLongTermRetentionPolicyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -54,22 +58,22 @@ namespace Azure.ResourceManager.Sql
             Optional<int> weekOfYear = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +83,7 @@ namespace Azure.ResourceManager.Sql
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,22 +92,22 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("weeklyRetention"))
+                        if (property0.NameEquals("weeklyRetention"u8))
                         {
                             weeklyRetention = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("monthlyRetention"))
+                        if (property0.NameEquals("monthlyRetention"u8))
                         {
                             monthlyRetention = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("yearlyRetention"))
+                        if (property0.NameEquals("yearlyRetention"u8))
                         {
                             yearlyRetention = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("weekOfYear"))
+                        if (property0.NameEquals("weekOfYear"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProtocolType))
             {
-                writer.WritePropertyName("protocolType");
+                writer.WritePropertyName("protocolType"u8);
                 writer.WriteStringValue(ProtocolType.Value.ToString());
             }
             if (Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port");
+                writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AzureFirewallApplicationRuleProtocol DeserializeAzureFirewallApplicationRuleProtocol(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureFirewallApplicationRuleProtocolType> protocolType = default;
             Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("protocolType"))
+                if (property.NameEquals("protocolType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
                     protocolType = new AzureFirewallApplicationRuleProtocolType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

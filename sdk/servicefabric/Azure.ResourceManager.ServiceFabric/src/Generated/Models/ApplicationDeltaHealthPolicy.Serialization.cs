@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultServiceTypeDeltaHealthPolicy))
             {
-                writer.WritePropertyName("defaultServiceTypeDeltaHealthPolicy");
+                writer.WritePropertyName("defaultServiceTypeDeltaHealthPolicy"u8);
                 writer.WriteObjectValue(DefaultServiceTypeDeltaHealthPolicy);
             }
             if (Optional.IsCollectionDefined(ServiceTypeDeltaHealthPolicies))
             {
-                writer.WritePropertyName("serviceTypeDeltaHealthPolicies");
+                writer.WritePropertyName("serviceTypeDeltaHealthPolicies"u8);
                 writer.WriteStartObject();
                 foreach (var item in ServiceTypeDeltaHealthPolicies)
                 {
@@ -37,11 +37,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ApplicationDeltaHealthPolicy DeserializeApplicationDeltaHealthPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServiceTypeDeltaHealthPolicy> defaultServiceTypeDeltaHealthPolicy = default;
             Optional<IDictionary<string, ServiceTypeDeltaHealthPolicy>> serviceTypeDeltaHealthPolicies = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("defaultServiceTypeDeltaHealthPolicy"))
+                if (property.NameEquals("defaultServiceTypeDeltaHealthPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     defaultServiceTypeDeltaHealthPolicy = ServiceTypeDeltaHealthPolicy.DeserializeServiceTypeDeltaHealthPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("serviceTypeDeltaHealthPolicies"))
+                if (property.NameEquals("serviceTypeDeltaHealthPolicies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static CanonicalProfileDefinitionPropertiesItem DeserializeCanonicalProfileDefinitionPropertiesItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> profileName = default;
             Optional<string> profilePropertyName = default;
             Optional<int> rank = default;
@@ -21,17 +25,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("profileName"))
+                if (property.NameEquals("profileName"u8))
                 {
                     profileName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("profilePropertyName"))
+                if (property.NameEquals("profilePropertyName"u8))
                 {
                     profilePropertyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rank"))
+                if (property.NameEquals("rank"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     rank = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     type = new CanonicalPropertyValueType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtensionService))
             {
-                writer.WritePropertyName("extensionService");
+                writer.WritePropertyName("extensionService"u8);
                 writer.WriteObjectValue(ExtensionService);
             }
             if (Optional.IsDefined(GuestConfigurationService))
             {
-                writer.WritePropertyName("guestConfigurationService");
+                writer.WritePropertyName("guestConfigurationService"u8);
                 writer.WriteObjectValue(GuestConfigurationService);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static HybridComputeServiceStatuses DeserializeHybridComputeServiceStatuses(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HybridComputeServiceStatus> extensionService = default;
             Optional<HybridComputeServiceStatus> guestConfigurationService = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("extensionService"))
+                if (property.NameEquals("extensionService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     extensionService = HybridComputeServiceStatus.DeserializeHybridComputeServiceStatus(property.Value);
                     continue;
                 }
-                if (property.NameEquals("guestConfigurationService"))
+                if (property.NameEquals("guestConfigurationService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

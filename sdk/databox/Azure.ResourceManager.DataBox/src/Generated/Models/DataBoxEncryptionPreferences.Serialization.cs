@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DoubleEncryption))
             {
-                writer.WritePropertyName("doubleEncryption");
+                writer.WritePropertyName("doubleEncryption"u8);
                 writer.WriteStringValue(DoubleEncryption.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxEncryptionPreferences DeserializeDataBoxEncryptionPreferences(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataBoxDoubleEncryption> doubleEncryption = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("doubleEncryption"))
+                if (property.NameEquals("doubleEncryption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

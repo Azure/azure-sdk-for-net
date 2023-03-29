@@ -20,22 +20,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SessionId))
             {
-                writer.WritePropertyName("sessionId");
+                writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId);
             }
             if (Optional.IsDefined(DataFlowName))
             {
-                writer.WritePropertyName("dataFlowName");
+                writer.WritePropertyName("dataFlowName"u8);
                 writer.WriteStringValue(DataFlowName);
             }
             if (Optional.IsDefined(StreamName))
             {
-                writer.WritePropertyName("streamName");
+                writer.WritePropertyName("streamName"u8);
                 writer.WriteStringValue(StreamName);
             }
             if (Optional.IsDefined(RowLimits))
             {
-                writer.WritePropertyName("rowLimits");
+                writer.WritePropertyName("rowLimits"u8);
                 writer.WriteNumberValue(RowLimits.Value);
             }
             writer.WriteEndObject();
@@ -43,28 +43,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DataFlowDebugPreviewDataRequest DeserializeDataFlowDebugPreviewDataRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sessionId = default;
             Optional<string> dataFlowName = default;
             Optional<string> streamName = default;
             Optional<int> rowLimits = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sessionId"))
+                if (property.NameEquals("sessionId"u8))
                 {
                     sessionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataFlowName"))
+                if (property.NameEquals("dataFlowName"u8))
                 {
                     dataFlowName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("streamName"))
+                if (property.NameEquals("streamName"u8))
                 {
                     streamName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rowLimits"))
+                if (property.NameEquals("rowLimits"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ClaimType))
             {
-                writer.WritePropertyName("claimType");
+                writer.WritePropertyName("claimType"u8);
                 writer.WriteStringValue(ClaimType);
             }
             if (Optional.IsDefined(ClaimValue))
             {
-                writer.WritePropertyName("claimValue");
+                writer.WritePropertyName("claimValue"u8);
                 writer.WriteStringValue(ClaimValue);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ContentKeyPolicyTokenClaim DeserializeContentKeyPolicyTokenClaim(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> claimType = default;
             Optional<string> claimValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("claimType"))
+                if (property.NameEquals("claimType"u8))
                 {
                     claimType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("claimValue"))
+                if (property.NameEquals("claimValue"u8))
                 {
                     claimValue = property.Value.GetString();
                     continue;

@@ -17,24 +17,24 @@ namespace Azure.ResourceManager.SignalR.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(HubPattern))
             {
-                writer.WritePropertyName("hubPattern");
+                writer.WritePropertyName("hubPattern"u8);
                 writer.WriteStringValue(HubPattern);
             }
             if (Optional.IsDefined(EventPattern))
             {
-                writer.WritePropertyName("eventPattern");
+                writer.WritePropertyName("eventPattern"u8);
                 writer.WriteStringValue(EventPattern);
             }
             if (Optional.IsDefined(CategoryPattern))
             {
-                writer.WritePropertyName("categoryPattern");
+                writer.WritePropertyName("categoryPattern"u8);
                 writer.WriteStringValue(CategoryPattern);
             }
-            writer.WritePropertyName("urlTemplate");
+            writer.WritePropertyName("urlTemplate"u8);
             writer.WriteStringValue(UrlTemplate);
             if (Optional.IsDefined(Auth))
             {
-                writer.WritePropertyName("auth");
+                writer.WritePropertyName("auth"u8);
                 writer.WriteObjectValue(Auth);
             }
             writer.WriteEndObject();
@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRUpstreamTemplate DeserializeSignalRUpstreamTemplate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> hubPattern = default;
             Optional<string> eventPattern = default;
             Optional<string> categoryPattern = default;
@@ -49,27 +53,27 @@ namespace Azure.ResourceManager.SignalR.Models
             Optional<SignalRUpstreamAuthSettings> auth = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hubPattern"))
+                if (property.NameEquals("hubPattern"u8))
                 {
                     hubPattern = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eventPattern"))
+                if (property.NameEquals("eventPattern"u8))
                 {
                     eventPattern = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("categoryPattern"))
+                if (property.NameEquals("categoryPattern"u8))
                 {
                     categoryPattern = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("urlTemplate"))
+                if (property.NameEquals("urlTemplate"u8))
                 {
                     urlTemplate = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("auth"))
+                if (property.NameEquals("auth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

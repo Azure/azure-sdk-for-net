@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static KpiParticipantProfilesMetadata DeserializeKpiParticipantProfilesMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string typeName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("typeName"))
+                if (property.NameEquals("typeName"u8))
                 {
                     typeName = property.Value.GetString();
                     continue;

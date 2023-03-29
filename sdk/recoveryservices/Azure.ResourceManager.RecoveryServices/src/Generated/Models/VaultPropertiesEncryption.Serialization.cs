@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyVaultProperties))
             {
-                writer.WritePropertyName("keyVaultProperties");
+                writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
             if (Optional.IsDefined(KekIdentity))
             {
-                writer.WritePropertyName("kekIdentity");
+                writer.WritePropertyName("kekIdentity"u8);
                 writer.WriteObjectValue(KekIdentity);
             }
             if (Optional.IsDefined(InfrastructureEncryption))
             {
-                writer.WritePropertyName("infrastructureEncryption");
+                writer.WritePropertyName("infrastructureEncryption"u8);
                 writer.WriteStringValue(InfrastructureEncryption.Value.ToString());
             }
             writer.WriteEndObject();
@@ -35,12 +35,16 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static VaultPropertiesEncryption DeserializeVaultPropertiesEncryption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CmkKeyVaultProperties> keyVaultProperties = default;
             Optional<CmkKekIdentity> kekIdentity = default;
             Optional<InfrastructureEncryptionState> infrastructureEncryption = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyVaultProperties"))
+                if (property.NameEquals("keyVaultProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     keyVaultProperties = CmkKeyVaultProperties.DeserializeCmkKeyVaultProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("kekIdentity"))
+                if (property.NameEquals("kekIdentity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     kekIdentity = CmkKekIdentity.DeserializeCmkKekIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("infrastructureEncryption"))
+                if (property.NameEquals("infrastructureEncryption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

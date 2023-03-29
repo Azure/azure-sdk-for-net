@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightBillingSpecsListResult DeserializeHDInsightBillingSpecsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> vmSizes = default;
             Optional<IReadOnlyList<string>> vmSizesWithEncryptionAtHost = default;
             Optional<IReadOnlyList<HDInsightVmSizeCompatibilityFilterV2>> vmSizeFilters = default;
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<IReadOnlyList<HDInsightBillingResources>> billingResources = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vmSizes"))
+                if (property.NameEquals("vmSizes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     vmSizes = array;
                     continue;
                 }
-                if (property.NameEquals("vmSizesWithEncryptionAtHost"))
+                if (property.NameEquals("vmSizesWithEncryptionAtHost"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     vmSizesWithEncryptionAtHost = array;
                     continue;
                 }
-                if (property.NameEquals("vmSizeFilters"))
+                if (property.NameEquals("vmSizeFilters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +71,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     vmSizeFilters = array;
                     continue;
                 }
-                if (property.NameEquals("vmSizeProperties"))
+                if (property.NameEquals("vmSizeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +86,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     vmSizeProperties = array;
                     continue;
                 }
-                if (property.NameEquals("billingResources"))
+                if (property.NameEquals("billingResources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

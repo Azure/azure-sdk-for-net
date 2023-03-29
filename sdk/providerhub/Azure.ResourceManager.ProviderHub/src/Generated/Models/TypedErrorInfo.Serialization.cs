@@ -16,23 +16,27 @@ namespace Azure.ResourceManager.ProviderHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TypedErrorInfoType);
             writer.WriteEndObject();
         }
 
         internal static TypedErrorInfo DeserializeTypedErrorInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<BinaryData> info = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("info"))
+                if (property.NameEquals("info"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

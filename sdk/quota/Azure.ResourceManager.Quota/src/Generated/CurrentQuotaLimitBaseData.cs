@@ -11,7 +11,10 @@ using Azure.ResourceManager.Quota.Models;
 
 namespace Azure.ResourceManager.Quota
 {
-    /// <summary> A class representing the CurrentQuotaLimitBase data model. </summary>
+    /// <summary>
+    /// A class representing the CurrentQuotaLimitBase data model.
+    /// Quota limit.
+    /// </summary>
     public partial class CurrentQuotaLimitBaseData : ResourceData
     {
         /// <summary> Initializes a new instance of CurrentQuotaLimitBaseData. </summary>

@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ArtifactId))
             {
-                writer.WritePropertyName("artifactId");
+                writer.WritePropertyName("artifactId"u8);
                 writer.WriteStringValue(ArtifactId);
             }
             if (Optional.IsDefined(ArtifactTitle))
             {
-                writer.WritePropertyName("artifactTitle");
+                writer.WritePropertyName("artifactTitle"u8);
                 writer.WriteStringValue(ArtifactTitle);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
             if (Optional.IsDefined(DeploymentStatusMessage))
             {
-                writer.WritePropertyName("deploymentStatusMessage");
+                writer.WritePropertyName("deploymentStatusMessage"u8);
                 writer.WriteStringValue(DeploymentStatusMessage);
             }
             if (Optional.IsDefined(VmExtensionStatusMessage))
             {
-                writer.WritePropertyName("vmExtensionStatusMessage");
+                writer.WritePropertyName("vmExtensionStatusMessage"u8);
                 writer.WriteStringValue(VmExtensionStatusMessage);
             }
             if (Optional.IsDefined(InstallOn))
             {
-                writer.WritePropertyName("installTime");
+                writer.WritePropertyName("installTime"u8);
                 writer.WriteStringValue(InstallOn.Value, "O");
             }
             writer.WriteEndObject();
@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabArtifactInstallInfo DeserializeDevTestLabArtifactInstallInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> artifactId = default;
             Optional<string> artifactTitle = default;
             Optional<IList<DevTestLabArtifactParameter>> parameters = default;
@@ -71,17 +75,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<DateTimeOffset> installTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("artifactId"))
+                if (property.NameEquals("artifactId"u8))
                 {
                     artifactId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("artifactTitle"))
+                if (property.NameEquals("artifactTitle"u8))
                 {
                     artifactTitle = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,22 +100,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     parameters = array;
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deploymentStatusMessage"))
+                if (property.NameEquals("deploymentStatusMessage"u8))
                 {
                     deploymentStatusMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmExtensionStatusMessage"))
+                if (property.NameEquals("vmExtensionStatusMessage"u8))
                 {
                     vmExtensionStatusMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("installTime"))
+                if (property.NameEquals("installTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

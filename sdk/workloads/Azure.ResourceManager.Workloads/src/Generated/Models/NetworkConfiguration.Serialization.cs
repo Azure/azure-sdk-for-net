@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsSecondaryIPEnabled))
             {
-                writer.WritePropertyName("isSecondaryIpEnabled");
+                writer.WritePropertyName("isSecondaryIpEnabled"u8);
                 writer.WriteBooleanValue(IsSecondaryIPEnabled.Value);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static NetworkConfiguration DeserializeNetworkConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isSecondaryIPEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isSecondaryIpEnabled"))
+                if (property.NameEquals("isSecondaryIpEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,49 +18,49 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(BillingScopeId))
             {
-                writer.WritePropertyName("billingScopeId");
+                writer.WritePropertyName("billingScopeId"u8);
                 writer.WriteStringValue(BillingScopeId);
             }
             if (Optional.IsDefined(Term))
             {
-                writer.WritePropertyName("term");
+                writer.WritePropertyName("term"u8);
                 writer.WriteStringValue(Term.Value.ToString());
             }
             if (Optional.IsDefined(BillingPlan))
             {
-                writer.WritePropertyName("billingPlan");
+                writer.WritePropertyName("billingPlan"u8);
                 writer.WriteStringValue(BillingPlan.Value.ToString());
             }
             if (Optional.IsDefined(AppliedScopeType))
             {
-                writer.WritePropertyName("appliedScopeType");
+                writer.WritePropertyName("appliedScopeType"u8);
                 writer.WriteStringValue(AppliedScopeType.Value.ToString());
             }
             if (Optional.IsDefined(Commitment))
             {
-                writer.WritePropertyName("commitment");
+                writer.WritePropertyName("commitment"u8);
                 writer.WriteObjectValue(Commitment);
             }
             if (Optional.IsDefined(IsRenewed))
             {
-                writer.WritePropertyName("renew");
+                writer.WritePropertyName("renew"u8);
                 writer.WriteBooleanValue(IsRenewed.Value);
             }
             if (Optional.IsDefined(AppliedScopeProperties))
             {
-                writer.WritePropertyName("appliedScopeProperties");
+                writer.WritePropertyName("appliedScopeProperties"u8);
                 writer.WriteObjectValue(AppliedScopeProperties);
             }
             writer.WriteEndObject();
@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         internal static BillingBenefitsPurchaseContent DeserializeBillingBenefitsPurchaseContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BillingBenefitsSku> sku = default;
             Optional<string> displayName = default;
             Optional<ResourceIdentifier> billingScopeId = default;
@@ -81,7 +85,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             Optional<BillingBenefitsAppliedScopeProperties> appliedScopeProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     sku = BillingBenefitsSku.DeserializeBillingBenefitsSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,12 +104,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("billingScopeId"))
+                        if (property0.NameEquals("billingScopeId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -115,7 +119,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                             billingScopeId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("term"))
+                        if (property0.NameEquals("term"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -125,7 +129,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                             term = new BillingBenefitsTerm(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("billingPlan"))
+                        if (property0.NameEquals("billingPlan"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -135,7 +139,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                             billingPlan = new BillingBenefitsBillingPlan(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("appliedScopeType"))
+                        if (property0.NameEquals("appliedScopeType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -145,7 +149,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                             appliedScopeType = new BillingBenefitsAppliedScopeType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("commitment"))
+                        if (property0.NameEquals("commitment"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -155,7 +159,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                             commitment = BillingBenefitsCommitment.DeserializeBillingBenefitsCommitment(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("effectiveDateTime"))
+                        if (property0.NameEquals("effectiveDateTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -165,7 +169,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                             effectiveDateTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("renew"))
+                        if (property0.NameEquals("renew"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -175,7 +179,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                             renew = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("appliedScopeProperties"))
+                        if (property0.NameEquals("appliedScopeProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

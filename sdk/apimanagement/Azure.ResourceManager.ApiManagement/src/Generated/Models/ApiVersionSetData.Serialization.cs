@@ -17,31 +17,31 @@ namespace Azure.ResourceManager.ApiManagement
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(VersionQueryName))
             {
-                writer.WritePropertyName("versionQueryName");
+                writer.WritePropertyName("versionQueryName"u8);
                 writer.WriteStringValue(VersionQueryName);
             }
             if (Optional.IsDefined(VersionHeaderName))
             {
-                writer.WritePropertyName("versionHeaderName");
+                writer.WritePropertyName("versionHeaderName"u8);
                 writer.WriteStringValue(VersionHeaderName);
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(VersioningScheme))
             {
-                writer.WritePropertyName("versioningScheme");
+                writer.WritePropertyName("versioningScheme"u8);
                 writer.WriteStringValue(VersioningScheme.Value.ToString());
             }
             writer.WriteEndObject();
@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static ApiVersionSetData DeserializeApiVersionSetData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -61,22 +65,22 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<VersioningScheme> versioningScheme = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +90,7 @@ namespace Azure.ResourceManager.ApiManagement
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,27 +99,27 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("versionQueryName"))
+                        if (property0.NameEquals("versionQueryName"u8))
                         {
                             versionQueryName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("versionHeaderName"))
+                        if (property0.NameEquals("versionHeaderName"u8))
                         {
                             versionHeaderName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("versioningScheme"))
+                        if (property0.NameEquals("versioningScheme"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

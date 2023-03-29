@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,19 +15,19 @@ namespace Azure.ResourceManager.AppContainers.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RegistryUri))
+            if (Optional.IsDefined(RegistryServer))
             {
-                writer.WritePropertyName("registryUrl");
-                writer.WriteStringValue(RegistryUri.AbsoluteUri);
+                writer.WritePropertyName("registryUrl"u8);
+                writer.WriteStringValue(RegistryServer);
             }
             if (Optional.IsDefined(RegistryUserName))
             {
-                writer.WritePropertyName("registryUserName");
+                writer.WritePropertyName("registryUserName"u8);
                 writer.WriteStringValue(RegistryUserName);
             }
             if (Optional.IsDefined(RegistryPassword))
             {
-                writer.WritePropertyName("registryPassword");
+                writer.WritePropertyName("registryPassword"u8);
                 writer.WriteStringValue(RegistryPassword);
             }
             writer.WriteEndObject();
@@ -36,27 +35,26 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppRegistryInfo DeserializeContainerAppRegistryInfo(JsonElement element)
         {
-            Optional<Uri> registryUrl = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> registryUrl = default;
             Optional<string> registryUserName = default;
             Optional<string> registryPassword = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("registryUrl"))
+                if (property.NameEquals("registryUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        registryUrl = null;
-                        continue;
-                    }
-                    registryUrl = new Uri(property.Value.GetString());
+                    registryUrl = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("registryUserName"))
+                if (property.NameEquals("registryUserName"u8))
                 {
                     registryUserName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("registryPassword"))
+                if (property.NameEquals("registryPassword"u8))
                 {
                     registryPassword = property.Value.GetString();
                     continue;

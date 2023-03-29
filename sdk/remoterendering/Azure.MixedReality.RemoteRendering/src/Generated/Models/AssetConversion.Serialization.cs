@@ -15,6 +15,10 @@ namespace Azure.MixedReality.RemoteRendering
     {
         internal static AssetConversion DeserializeAssetConversion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             AssetConversionOptions settings = default;
             Optional<AssetConversionOutput> output = default;
@@ -23,17 +27,17 @@ namespace Azure.MixedReality.RemoteRendering
             DateTimeOffset creationTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("settings"))
+                if (property.NameEquals("settings"u8))
                 {
                     settings = AssetConversionOptions.DeserializeAssetConversionOptions(property.Value);
                     continue;
                 }
-                if (property.NameEquals("output"))
+                if (property.NameEquals("output"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +47,7 @@ namespace Azure.MixedReality.RemoteRendering
                     output = AssetConversionOutput.DeserializeAssetConversionOutput(property.Value);
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,12 +57,12 @@ namespace Azure.MixedReality.RemoteRendering
                     error = RemoteRenderingServiceError.DeserializeRemoteRenderingServiceError(property.Value);
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = new AssetConversionStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("creationTime"))
+                if (property.NameEquals("creationTime"u8))
                 {
                     creationTime = property.Value.GetDateTimeOffset("O");
                     continue;

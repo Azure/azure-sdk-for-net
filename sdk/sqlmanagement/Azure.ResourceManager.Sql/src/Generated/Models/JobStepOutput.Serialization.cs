@@ -18,37 +18,41 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(OutputType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(OutputType.Value.ToString());
             }
             if (Optional.IsDefined(SubscriptionId))
             {
-                writer.WritePropertyName("subscriptionId");
+                writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId.Value);
             }
             if (Optional.IsDefined(ResourceGroupName))
             {
-                writer.WritePropertyName("resourceGroupName");
+                writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            writer.WritePropertyName("serverName");
+            writer.WritePropertyName("serverName"u8);
             writer.WriteStringValue(ServerName);
-            writer.WritePropertyName("databaseName");
+            writer.WritePropertyName("databaseName"u8);
             writer.WriteStringValue(DatabaseName);
             if (Optional.IsDefined(SchemaName))
             {
-                writer.WritePropertyName("schemaName");
+                writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
             }
-            writer.WritePropertyName("tableName");
+            writer.WritePropertyName("tableName"u8);
             writer.WriteStringValue(TableName);
-            writer.WritePropertyName("credential");
+            writer.WritePropertyName("credential"u8);
             writer.WriteStringValue(Credential);
             writer.WriteEndObject();
         }
 
         internal static JobStepOutput DeserializeJobStepOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<JobStepOutputType> type = default;
             Optional<Guid> subscriptionId = default;
             Optional<string> resourceGroupName = default;
@@ -59,7 +63,7 @@ namespace Azure.ResourceManager.Sql.Models
             string credential = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +73,7 @@ namespace Azure.ResourceManager.Sql.Models
                     type = new JobStepOutputType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,32 +83,32 @@ namespace Azure.ResourceManager.Sql.Models
                     subscriptionId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("resourceGroupName"))
+                if (property.NameEquals("resourceGroupName"u8))
                 {
                     resourceGroupName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverName"))
+                if (property.NameEquals("serverName"u8))
                 {
                     serverName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databaseName"))
+                if (property.NameEquals("databaseName"u8))
                 {
                     databaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("schemaName"))
+                if (property.NameEquals("schemaName"u8))
                 {
                     schemaName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tableName"))
+                if (property.NameEquals("tableName"u8))
                 {
                     tableName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("credential"))
+                if (property.NameEquals("credential"u8))
                 {
                     credential = property.Value.GetString();
                     continue;

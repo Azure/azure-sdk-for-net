@@ -10,7 +10,10 @@ using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics
 {
-    /// <summary> A class representing the StreamingJobInput data model. </summary>
+    /// <summary>
+    /// A class representing the StreamingJobInput data model.
+    /// An input object, containing all information associated with the named input. All inputs are contained under a streaming job.
+    /// </summary>
     public partial class StreamingJobInputData : StreamAnalyticsSubResource
     {
         /// <summary> Initializes a new instance of StreamingJobInputData. </summary>

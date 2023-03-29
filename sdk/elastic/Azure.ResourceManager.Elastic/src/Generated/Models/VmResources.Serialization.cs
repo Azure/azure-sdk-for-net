@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.Elastic.Models
     {
         internal static VmResources DeserializeVmResources(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vmResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vmResourceId"))
+                if (property.NameEquals("vmResourceId"u8))
                 {
                     vmResourceId = property.Value.GetString();
                     continue;

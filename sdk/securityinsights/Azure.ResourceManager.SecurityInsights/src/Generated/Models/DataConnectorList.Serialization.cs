@@ -16,16 +16,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static DataConnectorList DeserializeDataConnectorList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             IReadOnlyList<SecurityInsightsDataConnectorData> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<SecurityInsightsDataConnectorData> array = new List<SecurityInsightsDataConnectorData>();
                     foreach (var item in property.Value.EnumerateArray())

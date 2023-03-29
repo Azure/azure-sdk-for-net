@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(KeyVaultUri))
             {
-                writer.WritePropertyName("keyVaultUrl");
+                writer.WritePropertyName("keyVaultUrl"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -31,16 +31,20 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseWorkspaceKeyDetails DeserializeSynapseWorkspaceKeyDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<Uri> keyVaultUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVaultUrl"))
+                if (property.NameEquals("keyVaultUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -14,22 +14,26 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     {
         internal static NicIPAddressSettings DeserializeNicIPAddressSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> allocationMethod = default;
             Optional<string> ipAddress = default;
             Optional<string> subnetMask = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allocationMethod"))
+                if (property.NameEquals("allocationMethod"u8))
                 {
                     allocationMethod = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
                     ipAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subnetMask"))
+                if (property.NameEquals("subnetMask"u8))
                 {
                     subnetMask = property.Value.GetString();
                     continue;

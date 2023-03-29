@@ -16,11 +16,15 @@ namespace Azure.ResourceManager.StoragePool.Models
     {
         internal static DiskPoolListResult DeserializeDiskPoolListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<DiskPoolData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<DiskPoolData> array = new List<DiskPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

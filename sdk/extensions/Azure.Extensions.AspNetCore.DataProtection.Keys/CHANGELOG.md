@@ -1,6 +1,28 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.2.2 (2023-03-11)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.30.0`.
+
+## 1.2.1 (2023-03-07)
+
+### Other Changes
+
+- Updating additional dependencies to mitigate [CVE-2021-24112](https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-24112).  Note that the vulnerability only exists in a dependency referenced by the `netcoreapp3.0` target, which reach end-of-life in December, 2019.
+
+## 1.2.0 (2023-02-07)
 
 ### Acknowledgments
 
@@ -11,10 +33,6 @@ Thank you to our developer community members who helped to make the Event Hubs c
 ### Features Added
 
 - Added an overload when configuring data protection which allows token credentials to be created by a factory on-demand.  _(A community contribution, courtesy of [thomhurst](https://github.com/thomhurst))_
-
-### Breaking Changes
-
-### Bugs Fixed
 
 ### Other Changes
 

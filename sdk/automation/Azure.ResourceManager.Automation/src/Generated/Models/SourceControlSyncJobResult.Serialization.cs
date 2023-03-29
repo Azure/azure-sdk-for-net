@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static SourceControlSyncJobResult DeserializeSourceControlSyncJobResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> sourceControlSyncJobId = default;
             Optional<DateTimeOffset> creationTime = default;
@@ -25,7 +29,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> exception = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +39,7 @@ namespace Azure.ResourceManager.Automation.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,12 +48,12 @@ namespace Azure.ResourceManager.Automation.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("sourceControlSyncJobId"))
+                        if (property0.NameEquals("sourceControlSyncJobId"u8))
                         {
                             sourceControlSyncJobId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("creationTime"))
+                        if (property0.NameEquals("creationTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -59,7 +63,7 @@ namespace Azure.ResourceManager.Automation.Models
                             creationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -69,7 +73,7 @@ namespace Azure.ResourceManager.Automation.Models
                             provisioningState = new SourceControlProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("startTime"))
+                        if (property0.NameEquals("startTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -79,7 +83,7 @@ namespace Azure.ResourceManager.Automation.Models
                             startTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("endTime"))
+                        if (property0.NameEquals("endTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -89,7 +93,7 @@ namespace Azure.ResourceManager.Automation.Models
                             endTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("syncType"))
+                        if (property0.NameEquals("syncType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.Automation.Models
                             syncType = new SourceControlSyncType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("exception"))
+                        if (property0.NameEquals("exception"u8))
                         {
                             exception = property0.Value.GetString();
                             continue;

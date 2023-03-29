@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static DevTestLabRdpConnection DeserializeDevTestLabRdpConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> contents = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("contents"))
+                if (property.NameEquals("contents"u8))
                 {
                     contents = property.Value.GetString();
                     continue;

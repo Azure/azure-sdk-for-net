@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Usage))
             {
-                writer.WritePropertyName("usage");
+                writer.WritePropertyName("usage"u8);
                 writer.WriteNumberValue(Usage.Value);
             }
             if (Optional.IsDefined(MaxUsage))
             {
-                writer.WritePropertyName("maxUsage");
+                writer.WritePropertyName("maxUsage"u8);
                 writer.WriteNumberValue(MaxUsage.Value);
             }
             if (Optional.IsDefined(Limit))
             {
-                writer.WritePropertyName("limit");
+                writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
             writer.WriteEndObject();
@@ -35,12 +35,16 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ContainerMemoryStatistics DeserializeContainerMemoryStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> usage = default;
             Optional<long> maxUsage = default;
             Optional<long> limit = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("usage"))
+                if (property.NameEquals("usage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
                     usage = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("maxUsage"))
+                if (property.NameEquals("maxUsage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
                     maxUsage = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

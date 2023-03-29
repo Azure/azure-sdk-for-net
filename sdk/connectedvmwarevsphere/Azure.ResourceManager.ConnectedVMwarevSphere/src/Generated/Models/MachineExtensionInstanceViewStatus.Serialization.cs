@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static MachineExtensionInstanceViewStatus DeserializeMachineExtensionInstanceViewStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<MachineExtensionStatusLevelType> level = default;
             Optional<string> displayStatus = default;
@@ -28,12 +32,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Optional<DateTimeOffset> time = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("level"))
+                if (property.NameEquals("level"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,17 +47,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     level = new MachineExtensionStatusLevelType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("displayStatus"))
+                if (property.NameEquals("displayStatus"u8))
                 {
                     displayStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("time"))
+                if (property.NameEquals("time"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

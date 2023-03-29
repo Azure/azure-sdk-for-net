@@ -19,38 +19,38 @@ namespace Azure.ResourceManager.Hci
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("extensionParameters");
+            writer.WritePropertyName("extensionParameters"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ForceUpdateTag))
             {
-                writer.WritePropertyName("forceUpdateTag");
+                writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
             }
             if (Optional.IsDefined(Publisher))
             {
-                writer.WritePropertyName("publisher");
+                writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
             if (Optional.IsDefined(ArcExtensionType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ArcExtensionType);
             }
             if (Optional.IsDefined(TypeHandlerVersion))
             {
-                writer.WritePropertyName("typeHandlerVersion");
+                writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
             if (Optional.IsDefined(ShouldAutoUpgradeMinorVersion))
             {
-                writer.WritePropertyName("autoUpgradeMinorVersion");
+                writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(ShouldAutoUpgradeMinorVersion.Value);
             }
             if (Optional.IsDefined(Settings))
             {
-                writer.WritePropertyName("settings");
+                writer.WritePropertyName("settings"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Settings);
 #else
@@ -59,12 +59,17 @@ namespace Azure.ResourceManager.Hci
             }
             if (Optional.IsDefined(ProtectedSettings))
             {
-                writer.WritePropertyName("protectedSettings");
+                writer.WritePropertyName("protectedSettings"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ProtectedSettings);
 #else
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(ProtectedSettings.ToString()).RootElement);
 #endif
+            }
+            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            {
+                writer.WritePropertyName("enableAutomaticUpgrade"u8);
+                writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -73,6 +78,10 @@ namespace Azure.ResourceManager.Hci
 
         internal static ArcExtensionData DeserializeArcExtensionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -87,24 +96,25 @@ namespace Azure.ResourceManager.Hci
             Optional<bool> autoUpgradeMinorVersion = default;
             Optional<BinaryData> settings = default;
             Optional<BinaryData> protectedSettings = default;
+            Optional<bool> enableAutomaticUpgrade = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +124,7 @@ namespace Azure.ResourceManager.Hci
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +133,7 @@ namespace Azure.ResourceManager.Hci
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -133,7 +143,7 @@ namespace Azure.ResourceManager.Hci
                             provisioningState = new HciProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("aggregateState"))
+                        if (property0.NameEquals("aggregateState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -143,7 +153,7 @@ namespace Azure.ResourceManager.Hci
                             aggregateState = new ArcExtensionAggregateState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("perNodeExtensionDetails"))
+                        if (property0.NameEquals("perNodeExtensionDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -158,7 +168,7 @@ namespace Azure.ResourceManager.Hci
                             perNodeExtensionDetails = array;
                             continue;
                         }
-                        if (property0.NameEquals("extensionParameters"))
+                        if (property0.NameEquals("extensionParameters"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -167,27 +177,27 @@ namespace Azure.ResourceManager.Hci
                             }
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.NameEquals("forceUpdateTag"))
+                                if (property1.NameEquals("forceUpdateTag"u8))
                                 {
                                     forceUpdateTag = property1.Value.GetString();
                                     continue;
                                 }
-                                if (property1.NameEquals("publisher"))
+                                if (property1.NameEquals("publisher"u8))
                                 {
                                     publisher = property1.Value.GetString();
                                     continue;
                                 }
-                                if (property1.NameEquals("type"))
+                                if (property1.NameEquals("type"u8))
                                 {
                                     type0 = property1.Value.GetString();
                                     continue;
                                 }
-                                if (property1.NameEquals("typeHandlerVersion"))
+                                if (property1.NameEquals("typeHandlerVersion"u8))
                                 {
                                     typeHandlerVersion = property1.Value.GetString();
                                     continue;
                                 }
-                                if (property1.NameEquals("autoUpgradeMinorVersion"))
+                                if (property1.NameEquals("autoUpgradeMinorVersion"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
@@ -197,7 +207,7 @@ namespace Azure.ResourceManager.Hci
                                     autoUpgradeMinorVersion = property1.Value.GetBoolean();
                                     continue;
                                 }
-                                if (property1.NameEquals("settings"))
+                                if (property1.NameEquals("settings"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
@@ -207,7 +217,7 @@ namespace Azure.ResourceManager.Hci
                                     settings = BinaryData.FromString(property1.Value.GetRawText());
                                     continue;
                                 }
-                                if (property1.NameEquals("protectedSettings"))
+                                if (property1.NameEquals("protectedSettings"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
@@ -217,6 +227,16 @@ namespace Azure.ResourceManager.Hci
                                     protectedSettings = BinaryData.FromString(property1.Value.GetRawText());
                                     continue;
                                 }
+                                if (property1.NameEquals("enableAutomaticUpgrade"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        property1.ThrowNonNullablePropertyIsNull();
+                                        continue;
+                                    }
+                                    enableAutomaticUpgrade = property1.Value.GetBoolean();
+                                    continue;
+                                }
                             }
                             continue;
                         }
@@ -224,7 +244,7 @@ namespace Azure.ResourceManager.Hci
                     continue;
                 }
             }
-            return new ArcExtensionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(aggregateState), Optional.ToList(perNodeExtensionDetails), forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value);
+            return new ArcExtensionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(aggregateState), Optional.ToList(perNodeExtensionDetails), forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, Optional.ToNullable(enableAutomaticUpgrade));
         }
     }
 }

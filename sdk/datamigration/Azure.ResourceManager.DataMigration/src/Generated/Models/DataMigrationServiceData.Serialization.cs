@@ -21,22 +21,22 @@ namespace Azure.ResourceManager.DataMigration
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("etag");
+                writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -45,33 +45,33 @@ namespace Azure.ResourceManager.DataMigration
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PublicKey))
             {
-                writer.WritePropertyName("publicKey");
+                writer.WritePropertyName("publicKey"u8);
                 writer.WriteStringValue(PublicKey);
             }
             if (Optional.IsDefined(VirtualSubnetId))
             {
-                writer.WritePropertyName("virtualSubnetId");
+                writer.WritePropertyName("virtualSubnetId"u8);
                 writer.WriteStringValue(VirtualSubnetId);
             }
             if (Optional.IsDefined(VirtualNicId))
             {
-                writer.WritePropertyName("virtualNicId");
+                writer.WritePropertyName("virtualNicId"u8);
                 writer.WriteStringValue(VirtualNicId);
             }
             if (Optional.IsDefined(AutoStopDelay))
             {
-                writer.WritePropertyName("autoStopDelay");
+                writer.WritePropertyName("autoStopDelay"u8);
                 writer.WriteStringValue(AutoStopDelay);
             }
             if (Optional.IsDefined(DeleteResourcesOnStop))
             {
-                writer.WritePropertyName("deleteResourcesOnStop");
+                writer.WritePropertyName("deleteResourcesOnStop"u8);
                 writer.WriteBooleanValue(DeleteResourcesOnStop.Value);
             }
             writer.WriteEndObject();
@@ -80,6 +80,10 @@ namespace Azure.ResourceManager.DataMigration
 
         internal static DataMigrationServiceData DeserializeDataMigrationServiceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<string> kind = default;
             Optional<ServiceSku> sku = default;
@@ -97,7 +101,7 @@ namespace Azure.ResourceManager.DataMigration
             Optional<bool> deleteResourcesOnStop = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,12 +111,12 @@ namespace Azure.ResourceManager.DataMigration
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,7 +126,7 @@ namespace Azure.ResourceManager.DataMigration
                     sku = ServiceSku.DeserializeServiceSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -137,27 +141,27 @@ namespace Azure.ResourceManager.DataMigration
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new Core.ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -167,7 +171,7 @@ namespace Azure.ResourceManager.DataMigration
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -176,7 +180,7 @@ namespace Azure.ResourceManager.DataMigration
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -186,27 +190,27 @@ namespace Azure.ResourceManager.DataMigration
                             provisioningState = new ServiceProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("publicKey"))
+                        if (property0.NameEquals("publicKey"u8))
                         {
                             publicKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("virtualSubnetId"))
+                        if (property0.NameEquals("virtualSubnetId"u8))
                         {
                             virtualSubnetId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("virtualNicId"))
+                        if (property0.NameEquals("virtualNicId"u8))
                         {
                             virtualNicId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("autoStopDelay"))
+                        if (property0.NameEquals("autoStopDelay"u8))
                         {
                             autoStopDelay = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("deleteResourcesOnStop"))
+                        if (property0.NameEquals("deleteResourcesOnStop"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

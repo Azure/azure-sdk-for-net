@@ -15,18 +15,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static ComputeDataDisk DeserializeComputeDataDisk(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<Uri> diskUri = default;
             Optional<string> managedDiskId = default;
             Optional<int> diskSizeGiB = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskUri"))
+                if (property.NameEquals("diskUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,12 +40,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     diskUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("managedDiskId"))
+                if (property.NameEquals("managedDiskId"u8))
                 {
                     managedDiskId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskSizeGiB"))
+                if (property.NameEquals("diskSizeGiB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

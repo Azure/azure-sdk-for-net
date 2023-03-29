@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("trackSelections");
+            writer.WritePropertyName("trackSelections"u8);
             writer.WriteStartArray();
             foreach (var item in TrackSelections)
             {
@@ -28,10 +28,14 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static FilterTrackSelection DeserializeFilterTrackSelection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<FilterTrackPropertyCondition> trackSelections = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("trackSelections"))
+                if (property.NameEquals("trackSelections"u8))
                 {
                     List<FilterTrackPropertyCondition> array = new List<FilterTrackPropertyCondition>();
                     foreach (var item in property.Value.EnumerateArray())

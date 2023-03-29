@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static GuestAgentProfile DeserializeGuestAgentProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vmUuid = default;
             Optional<StatusType> status = default;
             Optional<DateTimeOffset> lastStatusChange = default;
@@ -30,12 +34,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Optional<IReadOnlyList<ResponseError>> errorDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vmUuid"))
+                if (property.NameEquals("vmUuid"u8))
                 {
                     vmUuid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     status = new StatusType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("lastStatusChange"))
+                if (property.NameEquals("lastStatusChange"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,12 +59,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     lastStatusChange = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("agentVersion"))
+                if (property.NameEquals("agentVersion"u8))
                 {
                     agentVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorDetails"))
+                if (property.NameEquals("errorDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -21,22 +21,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CatalogServerEndpoint))
             {
-                writer.WritePropertyName("catalogServerEndpoint");
+                writer.WritePropertyName("catalogServerEndpoint"u8);
                 writer.WriteStringValue(CatalogServerEndpoint);
             }
             if (Optional.IsDefined(CatalogAdminUserName))
             {
-                writer.WritePropertyName("catalogAdminUserName");
+                writer.WritePropertyName("catalogAdminUserName"u8);
                 writer.WriteStringValue(CatalogAdminUserName);
             }
             if (Optional.IsDefined(CatalogAdminPassword))
             {
-                writer.WritePropertyName("catalogAdminPassword");
+                writer.WritePropertyName("catalogAdminPassword"u8);
                 writer.WriteObjectValue(CatalogAdminPassword);
             }
             if (Optional.IsDefined(CatalogPricingTier))
             {
-                writer.WritePropertyName("catalogPricingTier");
+                writer.WritePropertyName("catalogPricingTier"u8);
                 writer.WriteStringValue(CatalogPricingTier.Value.ToString());
             }
             foreach (var item in AdditionalProperties)
@@ -49,6 +49,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static IntegrationRuntimeSsisCatalogInfo DeserializeIntegrationRuntimeSsisCatalogInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> catalogServerEndpoint = default;
             Optional<string> catalogAdminUserName = default;
             Optional<SecureString> catalogAdminPassword = default;
@@ -57,17 +61,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("catalogServerEndpoint"))
+                if (property.NameEquals("catalogServerEndpoint"u8))
                 {
                     catalogServerEndpoint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("catalogAdminUserName"))
+                if (property.NameEquals("catalogAdminUserName"u8))
                 {
                     catalogAdminUserName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("catalogAdminPassword"))
+                if (property.NameEquals("catalogAdminPassword"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +81,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     catalogAdminPassword = SecureString.DeserializeSecureString(property.Value);
                     continue;
                 }
-                if (property.NameEquals("catalogPricingTier"))
+                if (property.NameEquals("catalogPricingTier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

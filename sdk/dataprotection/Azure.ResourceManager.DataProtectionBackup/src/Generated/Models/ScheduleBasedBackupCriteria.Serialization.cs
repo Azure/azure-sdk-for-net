@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AbsoluteCriteria))
             {
-                writer.WritePropertyName("absoluteCriteria");
+                writer.WritePropertyName("absoluteCriteria"u8);
                 writer.WriteStartArray();
                 foreach (var item in AbsoluteCriteria)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             if (Optional.IsCollectionDefined(DaysOfMonth))
             {
-                writer.WritePropertyName("daysOfMonth");
+                writer.WritePropertyName("daysOfMonth"u8);
                 writer.WriteStartArray();
                 foreach (var item in DaysOfMonth)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             if (Optional.IsCollectionDefined(DaysOfWeek))
             {
-                writer.WritePropertyName("daysOfTheWeek");
+                writer.WritePropertyName("daysOfTheWeek"u8);
                 writer.WriteStartArray();
                 foreach (var item in DaysOfWeek)
                 {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             if (Optional.IsCollectionDefined(MonthsOfYear))
             {
-                writer.WritePropertyName("monthsOfYear");
+                writer.WritePropertyName("monthsOfYear"u8);
                 writer.WriteStartArray();
                 foreach (var item in MonthsOfYear)
                 {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             if (Optional.IsCollectionDefined(ScheduleTimes))
             {
-                writer.WritePropertyName("scheduleTimes");
+                writer.WritePropertyName("scheduleTimes"u8);
                 writer.WriteStartArray();
                 foreach (var item in ScheduleTimes)
                 {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             if (Optional.IsCollectionDefined(WeeksOfMonth))
             {
-                writer.WritePropertyName("weeksOfTheMonth");
+                writer.WritePropertyName("weeksOfTheMonth"u8);
                 writer.WriteStartArray();
                 foreach (var item in WeeksOfMonth)
                 {
@@ -77,13 +77,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
         }
 
         internal static ScheduleBasedBackupCriteria DeserializeScheduleBasedBackupCriteria(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<BackupAbsoluteMarker>> absoluteCriteria = default;
             Optional<IList<DataProtectionBackupDay>> daysOfMonth = default;
             Optional<IList<DataProtectionBackupDayOfWeek>> daysOfTheWeek = default;
@@ -93,7 +97,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("absoluteCriteria"))
+                if (property.NameEquals("absoluteCriteria"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +112,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     absoluteCriteria = array;
                     continue;
                 }
-                if (property.NameEquals("daysOfMonth"))
+                if (property.NameEquals("daysOfMonth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +127,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     daysOfMonth = array;
                     continue;
                 }
-                if (property.NameEquals("daysOfTheWeek"))
+                if (property.NameEquals("daysOfTheWeek"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -138,7 +142,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     daysOfTheWeek = array;
                     continue;
                 }
-                if (property.NameEquals("monthsOfYear"))
+                if (property.NameEquals("monthsOfYear"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -153,7 +157,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     monthsOfYear = array;
                     continue;
                 }
-                if (property.NameEquals("scheduleTimes"))
+                if (property.NameEquals("scheduleTimes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -168,7 +172,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     scheduleTimes = array;
                     continue;
                 }
-                if (property.NameEquals("weeksOfTheMonth"))
+                if (property.NameEquals("weeksOfTheMonth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -183,7 +187,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     weeksOfTheMonth = array;
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;

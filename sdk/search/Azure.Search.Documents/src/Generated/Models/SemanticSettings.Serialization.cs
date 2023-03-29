@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Configurations))
             {
-                writer.WritePropertyName("configurations");
+                writer.WritePropertyName("configurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Configurations)
                 {
@@ -31,10 +31,14 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SemanticSettings DeserializeSemanticSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SemanticConfiguration>> configurations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("configurations"))
+                if (property.NameEquals("configurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

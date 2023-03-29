@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Automanage.Models
         /// <summary> Initializes a new instance of ConfigurationProfileAssignmentList. </summary>
         internal ConfigurationProfileAssignmentList()
         {
-            Value = new ChangeTrackingList<ConfigurationProfileAssignmentData>();
+            Value = new ChangeTrackingList<AutomanageConfigurationProfileAssignmentData>();
         }
 
         /// <summary> Initializes a new instance of ConfigurationProfileAssignmentList. </summary>
         /// <param name="value"> Result of the list configuration profile assignment operation. </param>
-        internal ConfigurationProfileAssignmentList(IReadOnlyList<ConfigurationProfileAssignmentData> value)
+        internal ConfigurationProfileAssignmentList(IReadOnlyList<AutomanageConfigurationProfileAssignmentData> value)
         {
             Value = value;
         }
 
         /// <summary> Result of the list configuration profile assignment operation. </summary>
-        public IReadOnlyList<ConfigurationProfileAssignmentData> Value { get; }
+        public IReadOnlyList<AutomanageConfigurationProfileAssignmentData> Value { get; }
     }
 }

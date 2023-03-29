@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StoragePool.Models
     {
         internal static StoragePoolSkuInfo DeserializeStoragePoolSkuInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> apiVersion = default;
             Optional<string> resourceType = default;
             Optional<IReadOnlyList<StoragePoolSkuCapability>> capabilities = default;
@@ -24,17 +28,17 @@ namespace Azure.ResourceManager.StoragePool.Models
             Optional<IReadOnlyList<StoragePoolSkuRestrictions>> restrictions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("apiVersion"))
+                if (property.NameEquals("apiVersion"u8))
                 {
                     apiVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +53,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     capabilities = array;
                     continue;
                 }
-                if (property.NameEquals("locationInfo"))
+                if (property.NameEquals("locationInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,17 +63,17 @@ namespace Azure.ResourceManager.StoragePool.Models
                     locationInfo = StoragePoolSkuLocationInfo.DeserializeStoragePoolSkuLocationInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     tier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("restrictions"))
+                if (property.NameEquals("restrictions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

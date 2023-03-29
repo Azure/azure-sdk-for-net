@@ -16,27 +16,27 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("automationAccountId");
+            writer.WritePropertyName("automationAccountId"u8);
             writer.WriteStringValue(AutomationAccountId);
-            writer.WritePropertyName("runbookName");
+            writer.WritePropertyName("runbookName"u8);
             writer.WriteStringValue(RunbookName);
-            writer.WritePropertyName("webhookResourceId");
+            writer.WritePropertyName("webhookResourceId"u8);
             writer.WriteStringValue(WebhookResourceId);
-            writer.WritePropertyName("isGlobalRunbook");
+            writer.WritePropertyName("isGlobalRunbook"u8);
             writer.WriteBooleanValue(IsGlobalRunbook);
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(ServiceUri))
             {
-                writer.WritePropertyName("serviceUri");
+                writer.WritePropertyName("serviceUri"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
             if (Optional.IsDefined(UseCommonAlertSchema))
             {
-                writer.WritePropertyName("useCommonAlertSchema");
+                writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
             }
             writer.WriteEndObject();
@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorAutomationRunbookReceiver DeserializeMonitorAutomationRunbookReceiver(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier automationAccountId = default;
             string runbookName = default;
             ResourceIdentifier webhookResourceId = default;
@@ -53,32 +57,32 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<bool> useCommonAlertSchema = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("automationAccountId"))
+                if (property.NameEquals("automationAccountId"u8))
                 {
                     automationAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("runbookName"))
+                if (property.NameEquals("runbookName"u8))
                 {
                     runbookName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("webhookResourceId"))
+                if (property.NameEquals("webhookResourceId"u8))
                 {
                     webhookResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("isGlobalRunbook"))
+                if (property.NameEquals("isGlobalRunbook"u8))
                 {
                     isGlobalRunbook = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceUri"))
+                if (property.NameEquals("serviceUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +92,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     serviceUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("useCommonAlertSchema"))
+                if (property.NameEquals("useCommonAlertSchema"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

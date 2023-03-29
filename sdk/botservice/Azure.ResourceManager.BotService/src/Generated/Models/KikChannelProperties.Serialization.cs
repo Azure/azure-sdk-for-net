@@ -15,42 +15,46 @@ namespace Azure.ResourceManager.BotService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("userName");
+            writer.WritePropertyName("userName"u8);
             writer.WriteStringValue(UserName);
             if (Optional.IsDefined(ApiKey))
             {
-                writer.WritePropertyName("apiKey");
+                writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
             if (Optional.IsDefined(IsValidated))
             {
-                writer.WritePropertyName("isValidated");
+                writer.WritePropertyName("isValidated"u8);
                 writer.WriteBooleanValue(IsValidated.Value);
             }
-            writer.WritePropertyName("isEnabled");
+            writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             writer.WriteEndObject();
         }
 
         internal static KikChannelProperties DeserializeKikChannelProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string userName = default;
             Optional<string> apiKey = default;
             Optional<bool> isValidated = default;
             bool isEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userName"))
+                if (property.NameEquals("userName"u8))
                 {
                     userName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("apiKey"))
+                if (property.NameEquals("apiKey"u8))
                 {
                     apiKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isValidated"))
+                if (property.NameEquals("isValidated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.BotService.Models
                     isValidated = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isEnabled"))
+                if (property.NameEquals("isEnabled"u8))
                 {
                     isEnabled = property.Value.GetBoolean();
                     continue;

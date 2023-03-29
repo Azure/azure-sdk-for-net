@@ -18,12 +18,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaJobOutputProcessingEventData DeserializeMediaJobOutputProcessingEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MediaJobState> previousState = default;
             Optional<MediaJobOutput> output = default;
             Optional<IReadOnlyDictionary<string, string>> jobCorrelationData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("previousState"))
+                if (property.NameEquals("previousState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,7 +37,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     previousState = property.Value.GetString().ToMediaJobState();
                     continue;
                 }
-                if (property.NameEquals("output"))
+                if (property.NameEquals("output"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +47,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     output = MediaJobOutput.DeserializeMediaJobOutput(property.Value);
                     continue;
                 }
-                if (property.NameEquals("jobCorrelationData"))
+                if (property.NameEquals("jobCorrelationData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

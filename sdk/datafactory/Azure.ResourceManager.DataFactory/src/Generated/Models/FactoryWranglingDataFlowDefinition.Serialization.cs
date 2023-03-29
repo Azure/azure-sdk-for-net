@@ -17,19 +17,24 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DataFlowType);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(Annotations))
             {
-                writer.WritePropertyName("annotations");
+                writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
@@ -40,14 +45,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(Folder))
             {
-                writer.WritePropertyName("folder");
+                writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Sources))
             {
-                writer.WritePropertyName("sources");
+                writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
@@ -57,12 +62,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(Script))
             {
-                writer.WritePropertyName("script");
+                writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);
             }
             if (Optional.IsDefined(DocumentLocale))
             {
-                writer.WritePropertyName("documentLocale");
+                writer.WritePropertyName("documentLocale"u8);
                 writer.WriteStringValue(DocumentLocale);
             }
             writer.WriteEndObject();
@@ -71,6 +76,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FactoryWranglingDataFlowDefinition DeserializeFactoryWranglingDataFlowDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> description = default;
             Optional<IList<BinaryData>> annotations = default;
@@ -80,17 +89,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> documentLocale = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("annotations"))
+                if (property.NameEquals("annotations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,12 +109,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BinaryData.FromString(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BinaryData.FromString(item.GetRawText()));
+                        }
                     }
                     annotations = array;
                     continue;
                 }
-                if (property.NameEquals("folder"))
+                if (property.NameEquals("folder"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -115,7 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value);
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("sources"))
+                        if (property0.NameEquals("sources"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -139,12 +155,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                             sources = array;
                             continue;
                         }
-                        if (property0.NameEquals("script"))
+                        if (property0.NameEquals("script"u8))
                         {
                             script = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("documentLocale"))
+                        if (property0.NameEquals("documentLocale"u8))
                         {
                             documentLocale = property0.Value.GetString();
                             continue;

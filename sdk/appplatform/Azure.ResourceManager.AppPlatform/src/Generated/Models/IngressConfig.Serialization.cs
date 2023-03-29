@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ReadTimeoutInSeconds))
             {
-                writer.WritePropertyName("readTimeoutInSeconds");
+                writer.WritePropertyName("readTimeoutInSeconds"u8);
                 writer.WriteNumberValue(ReadTimeoutInSeconds.Value);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static IngressConfig DeserializeIngressConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> readTimeoutInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("readTimeoutInSeconds"))
+                if (property.NameEquals("readTimeoutInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

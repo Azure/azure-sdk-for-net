@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SignalR.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Categories))
             {
-                writer.WritePropertyName("categories");
+                writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRResourceLogCategoryListResult DeserializeSignalRResourceLogCategoryListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SignalRResourceLogCategory>> categories = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("categories"))
+                if (property.NameEquals("categories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

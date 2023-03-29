@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static MessageServerProperties DeserializeMessageServerProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long?> msPort = default;
             Optional<long?> internalMsPort = default;
             Optional<long?> httpPort = default;
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<SapHealthState> health = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("msPort"))
+                if (property.NameEquals("msPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +43,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     msPort = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("internalMsPort"))
+                if (property.NameEquals("internalMsPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +53,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     internalMsPort = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("httpPort"))
+                if (property.NameEquals("httpPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +63,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     httpPort = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("httpsPort"))
+                if (property.NameEquals("httpsPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,17 +73,17 @@ namespace Azure.ResourceManager.Workloads.Models
                     httpsPort = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("hostname"))
+                if (property.NameEquals("hostname"u8))
                 {
                     hostname = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
                     ipAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("health"))
+                if (property.NameEquals("health"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

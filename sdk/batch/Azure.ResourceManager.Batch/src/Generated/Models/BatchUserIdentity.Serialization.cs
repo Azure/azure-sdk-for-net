@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(UserName))
             {
-                writer.WritePropertyName("userName");
+                writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
             if (Optional.IsDefined(AutoUser))
             {
-                writer.WritePropertyName("autoUser");
+                writer.WritePropertyName("autoUser"u8);
                 writer.WriteObjectValue(AutoUser);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchUserIdentity DeserializeBatchUserIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> userName = default;
             Optional<BatchAutoUserSpecification> autoUser = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userName"))
+                if (property.NameEquals("userName"u8))
                 {
                     userName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("autoUser"))
+                if (property.NameEquals("autoUser"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxPercentUnhealthyServices))
             {
-                writer.WritePropertyName("maxPercentUnhealthyServices");
+                writer.WritePropertyName("maxPercentUnhealthyServices"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyServices.Value);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ServiceTypeHealthPolicy DeserializeServiceTypeHealthPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxPercentUnhealthyServices = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxPercentUnhealthyServices"))
+                if (property.NameEquals("maxPercentUnhealthyServices"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

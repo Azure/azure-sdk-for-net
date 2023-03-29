@@ -17,36 +17,40 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(NativeCloudConnection))
             {
-                writer.WritePropertyName("nativeCloudConnection");
+                writer.WritePropertyName("nativeCloudConnection"u8);
                 writer.WriteObjectValue(NativeCloudConnection);
             }
             if (Optional.IsDefined(DataPipelineNativeCloudConnection))
             {
-                writer.WritePropertyName("dataPipelineNativeCloudConnection");
+                writer.WritePropertyName("dataPipelineNativeCloudConnection"u8);
                 writer.WriteObjectValue(DataPipelineNativeCloudConnection);
             }
             if (Optional.IsDefined(IsAuditLogsAutoProvisioningEnabled))
             {
-                writer.WritePropertyName("auditLogsAutoProvisioningFlag");
+                writer.WritePropertyName("auditLogsAutoProvisioningFlag"u8);
                 writer.WriteBooleanValue(IsAuditLogsAutoProvisioningEnabled.Value);
             }
             if (Optional.IsDefined(IsDefenderAgentAutoProvisioningEnabled))
             {
-                writer.WritePropertyName("defenderAgentAutoProvisioningFlag");
+                writer.WritePropertyName("defenderAgentAutoProvisioningFlag"u8);
                 writer.WriteBooleanValue(IsDefenderAgentAutoProvisioningEnabled.Value);
             }
             if (Optional.IsDefined(IsPolicyAgentAutoProvisioningEnabled))
             {
-                writer.WritePropertyName("policyAgentAutoProvisioningFlag");
+                writer.WritePropertyName("policyAgentAutoProvisioningFlag"u8);
                 writer.WriteBooleanValue(IsPolicyAgentAutoProvisioningEnabled.Value);
             }
-            writer.WritePropertyName("offeringType");
+            writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
             writer.WriteEndObject();
         }
 
         internal static DefenderForContainersGcpOffering DeserializeDefenderForContainersGcpOffering(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DefenderForContainersGcpOfferingNativeCloudConnection> nativeCloudConnection = default;
             Optional<DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection> dataPipelineNativeCloudConnection = default;
             Optional<bool> auditLogsAutoProvisioningFlag = default;
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nativeCloudConnection"))
+                if (property.NameEquals("nativeCloudConnection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     nativeCloudConnection = DefenderForContainersGcpOfferingNativeCloudConnection.DeserializeDefenderForContainersGcpOfferingNativeCloudConnection(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataPipelineNativeCloudConnection"))
+                if (property.NameEquals("dataPipelineNativeCloudConnection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     dataPipelineNativeCloudConnection = DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection.DeserializeDefenderForContainersGcpOfferingDataPipelineNativeCloudConnection(property.Value);
                     continue;
                 }
-                if (property.NameEquals("auditLogsAutoProvisioningFlag"))
+                if (property.NameEquals("auditLogsAutoProvisioningFlag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     auditLogsAutoProvisioningFlag = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("defenderAgentAutoProvisioningFlag"))
+                if (property.NameEquals("defenderAgentAutoProvisioningFlag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     defenderAgentAutoProvisioningFlag = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("policyAgentAutoProvisioningFlag"))
+                if (property.NameEquals("policyAgentAutoProvisioningFlag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,12 +110,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     policyAgentAutoProvisioningFlag = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("offeringType"))
+                if (property.NameEquals("offeringType"u8))
                 {
                     offeringType = new OfferingType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;

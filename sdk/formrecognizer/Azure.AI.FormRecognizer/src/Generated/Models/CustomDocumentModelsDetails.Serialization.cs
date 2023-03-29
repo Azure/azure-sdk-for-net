@@ -14,16 +14,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static CustomDocumentModelsDetails DeserializeCustomDocumentModelsDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int count = default;
             int limit = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     count = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     limit = property.Value.GetInt32();
                     continue;

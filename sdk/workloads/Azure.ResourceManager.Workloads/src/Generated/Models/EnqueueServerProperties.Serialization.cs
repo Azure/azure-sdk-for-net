@@ -20,23 +20,27 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static EnqueueServerProperties DeserializeEnqueueServerProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> hostname = default;
             Optional<string> ipAddress = default;
             Optional<long?> port = default;
             Optional<SapHealthState> health = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hostname"))
+                if (property.NameEquals("hostname"u8))
                 {
                     hostname = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
                     ipAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     port = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("health"))
+                if (property.NameEquals("health"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

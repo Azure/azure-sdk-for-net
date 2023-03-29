@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("secrets");
+            writer.WritePropertyName("secrets"u8);
             writer.WriteObjectValue(Secrets);
-            writer.WritePropertyName("credentialsType");
+            writer.WritePropertyName("credentialsType"u8);
             writer.WriteStringValue(CredentialsType.ToString());
             writer.WriteEndObject();
         }
 
         internal static MachineLearningAccountKeyDatastoreCredentials DeserializeMachineLearningAccountKeyDatastoreCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MachineLearningAccountKeyDatastoreSecrets secrets = default;
             CredentialsType credentialsType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("secrets"))
+                if (property.NameEquals("secrets"u8))
                 {
                     secrets = MachineLearningAccountKeyDatastoreSecrets.DeserializeMachineLearningAccountKeyDatastoreSecrets(property.Value);
                     continue;
                 }
-                if (property.NameEquals("credentialsType"))
+                if (property.NameEquals("credentialsType"u8))
                 {
                     credentialsType = new CredentialsType(property.Value.GetString());
                     continue;

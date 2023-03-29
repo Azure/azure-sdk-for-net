@@ -14,12 +14,16 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         internal static IotHubNameAvailabilityResponse DeserializeIotHubNameAvailabilityResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> nameAvailable = default;
             Optional<IotHubNameUnavailableReason> reason = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nameAvailable"))
+                if (property.NameEquals("nameAvailable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     nameAvailable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("reason"))
+                if (property.NameEquals("reason"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +43,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     reason = property.Value.GetString().ToIotHubNameUnavailableReason();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;

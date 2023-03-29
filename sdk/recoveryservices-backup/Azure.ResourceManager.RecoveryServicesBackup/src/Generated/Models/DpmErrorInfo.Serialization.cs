@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ErrorString))
             {
-                writer.WritePropertyName("errorString");
+                writer.WritePropertyName("errorString"u8);
                 writer.WriteStringValue(ErrorString);
             }
             if (Optional.IsCollectionDefined(Recommendations))
             {
-                writer.WritePropertyName("recommendations");
+                writer.WritePropertyName("recommendations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Recommendations)
                 {
@@ -36,16 +36,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static DpmErrorInfo DeserializeDpmErrorInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> errorString = default;
             Optional<IList<string>> recommendations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errorString"))
+                if (property.NameEquals("errorString"u8))
                 {
                     errorString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recommendations"))
+                if (property.NameEquals("recommendations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

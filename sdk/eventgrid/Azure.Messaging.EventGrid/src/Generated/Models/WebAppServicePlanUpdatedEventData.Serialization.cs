@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static WebAppServicePlanUpdatedEventData DeserializeWebAppServicePlanUpdatedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppServicePlanEventTypeDetail> appServicePlanEventTypeDetail = default;
             Optional<WebAppServicePlanUpdatedEventDataSku> sku = default;
             Optional<string> name = default;
@@ -27,7 +31,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> verb = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("appServicePlanEventTypeDetail"))
+                if (property.NameEquals("appServicePlanEventTypeDetail"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,7 +41,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     appServicePlanEventTypeDetail = AppServicePlanEventTypeDetail.DeserializeAppServicePlanEventTypeDetail(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,32 +51,32 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     sku = WebAppServicePlanUpdatedEventDataSku.DeserializeWebAppServicePlanUpdatedEventDataSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientRequestId"))
+                if (property.NameEquals("clientRequestId"u8))
                 {
                     clientRequestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("correlationRequestId"))
+                if (property.NameEquals("correlationRequestId"u8))
                 {
                     correlationRequestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requestId"))
+                if (property.NameEquals("requestId"u8))
                 {
                     requestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("address"))
+                if (property.NameEquals("address"u8))
                 {
                     address = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("verb"))
+                if (property.NameEquals("verb"u8))
                 {
                     verb = property.Value.GetString();
                     continue;

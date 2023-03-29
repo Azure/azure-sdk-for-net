@@ -17,24 +17,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(BackupManagementType))
             {
-                writer.WritePropertyName("backupManagementType");
+                writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            writer.WritePropertyName("protectableContainerType");
+            writer.WritePropertyName("protectableContainerType"u8);
             writer.WriteStringValue(ProtectableContainerType.ToSerialString());
             if (Optional.IsDefined(HealthStatus))
             {
-                writer.WritePropertyName("healthStatus");
+                writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
             if (Optional.IsDefined(ContainerId))
             {
-                writer.WritePropertyName("containerId");
+                writer.WritePropertyName("containerId"u8);
                 writer.WriteStringValue(ContainerId);
             }
             writer.WriteEndObject();
@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static UnknownProtectableContainer DeserializeUnknownProtectableContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> friendlyName = default;
             Optional<BackupManagementType> backupManagementType = default;
             ProtectableContainerType protectableContainerType = default;
@@ -49,12 +53,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> containerId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("backupManagementType"))
+                if (property.NameEquals("backupManagementType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,17 +68,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     backupManagementType = new BackupManagementType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("protectableContainerType"))
+                if (property.NameEquals("protectableContainerType"u8))
                 {
                     protectableContainerType = property.Value.GetString().ToProtectableContainerType();
                     continue;
                 }
-                if (property.NameEquals("healthStatus"))
+                if (property.NameEquals("healthStatus"u8))
                 {
                     healthStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containerId"))
+                if (property.NameEquals("containerId"u8))
                 {
                     containerId = property.Value.GetString();
                     continue;

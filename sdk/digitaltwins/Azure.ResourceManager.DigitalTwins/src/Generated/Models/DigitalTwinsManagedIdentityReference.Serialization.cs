@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IdentityType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityType.Value.ToString());
             }
             if (Optional.IsDefined(UserAssignedIdentity))
             {
                 if (UserAssignedIdentity != null)
                 {
-                    writer.WritePropertyName("userAssignedIdentity");
+                    writer.WritePropertyName("userAssignedIdentity"u8);
                     writer.WriteStringValue(UserAssignedIdentity);
                 }
                 else
@@ -37,11 +37,15 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         internal static DigitalTwinsManagedIdentityReference DeserializeDigitalTwinsManagedIdentityReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DigitalTwinsManagedIdentityType> type = default;
             Optional<string> userAssignedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     type = new DigitalTwinsManagedIdentityType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("userAssignedIdentity"))
+                if (property.NameEquals("userAssignedIdentity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

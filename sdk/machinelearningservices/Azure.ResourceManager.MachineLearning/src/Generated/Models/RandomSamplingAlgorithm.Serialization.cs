@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Rule))
             {
-                writer.WritePropertyName("rule");
+                writer.WritePropertyName("rule"u8);
                 writer.WriteStringValue(Rule.Value.ToString());
             }
             if (Optional.IsDefined(Seed))
             {
                 if (Seed != null)
                 {
-                    writer.WritePropertyName("seed");
+                    writer.WritePropertyName("seed"u8);
                     writer.WriteNumberValue(Seed.Value);
                 }
                 else
@@ -32,19 +32,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("seed");
                 }
             }
-            writer.WritePropertyName("samplingAlgorithmType");
+            writer.WritePropertyName("samplingAlgorithmType"u8);
             writer.WriteStringValue(SamplingAlgorithmType.ToString());
             writer.WriteEndObject();
         }
 
         internal static RandomSamplingAlgorithm DeserializeRandomSamplingAlgorithm(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RandomSamplingAlgorithmRule> rule = default;
             Optional<int?> seed = default;
             SamplingAlgorithmType samplingAlgorithmType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rule"))
+                if (property.NameEquals("rule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     rule = new RandomSamplingAlgorithmRule(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("seed"))
+                if (property.NameEquals("seed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     seed = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("samplingAlgorithmType"))
+                if (property.NameEquals("samplingAlgorithmType"u8))
                 {
                     samplingAlgorithmType = new SamplingAlgorithmType(property.Value.GetString());
                     continue;

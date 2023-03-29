@@ -18,38 +18,47 @@ namespace Azure.Communication.JobRouter
             writer.WriteStartObject();
             if (Optional.IsDefined(ClassificationPolicyId))
             {
-                writer.WritePropertyName("classificationPolicyId");
+                writer.WritePropertyName("classificationPolicyId"u8);
                 writer.WriteStringValue(ClassificationPolicyId);
             }
             if (Optional.IsCollectionDefined(_labelsToUpsert))
             {
-                writer.WritePropertyName("labelsToUpsert");
+                writer.WritePropertyName("labelsToUpsert"u8);
                 writer.WriteStartObject();
                 foreach (var item in _labelsToUpsert)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             writer.WriteEndObject();
         }
 
         internal static ReclassifyExceptionAction DeserializeReclassifyExceptionAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> classificationPolicyId = default;
             Optional<IDictionary<string, object>> labelsToUpsert = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("classificationPolicyId"))
+                if (property.NameEquals("classificationPolicyId"u8))
                 {
                     classificationPolicyId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("labelsToUpsert"))
+                if (property.NameEquals("labelsToUpsert"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,12 +68,19 @@ namespace Azure.Communication.JobRouter
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetObject());
+                        }
                     }
                     labelsToUpsert = dictionary;
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;

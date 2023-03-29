@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("contactDetails");
+            writer.WritePropertyName("contactDetails"u8);
             writer.WriteObjectValue(ContactDetails);
             if (Optional.IsDefined(ShippingAddress))
             {
-                writer.WritePropertyName("shippingAddress");
+                writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress);
             }
             if (Optional.IsCollectionDefined(DataImportDetails))
             {
-                writer.WritePropertyName("dataImportDetails");
+                writer.WritePropertyName("dataImportDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataImportDetails)
                 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             if (Optional.IsCollectionDefined(DataExportDetails))
             {
-                writer.WritePropertyName("dataExportDetails");
+                writer.WritePropertyName("dataExportDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataExportDetails)
                 {
@@ -43,21 +43,21 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("jobDetailsType");
+            writer.WritePropertyName("jobDetailsType"u8);
             writer.WriteStringValue(JobDetailsType.ToSerialString());
             if (Optional.IsDefined(Preferences))
             {
-                writer.WritePropertyName("preferences");
+                writer.WritePropertyName("preferences"u8);
                 writer.WriteObjectValue(Preferences);
             }
             if (Optional.IsDefined(KeyEncryptionKey))
             {
-                writer.WritePropertyName("keyEncryptionKey");
+                writer.WritePropertyName("keyEncryptionKey"u8);
                 writer.WriteObjectValue(KeyEncryptionKey);
             }
             if (Optional.IsDefined(ExpectedDataSizeInTerabytes))
             {
-                writer.WritePropertyName("expectedDataSizeInTeraBytes");
+                writer.WritePropertyName("expectedDataSizeInTeraBytes"u8);
                 writer.WriteNumberValue(ExpectedDataSizeInTerabytes.Value);
             }
             writer.WriteEndObject();
@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static UnknownJobDetails DeserializeUnknownJobDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataBoxJobStage>> jobStages = default;
             DataBoxContactDetails contactDetails = default;
             Optional<DataBoxShippingAddress> shippingAddress = default;
@@ -86,7 +90,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<DataCenterCode> dataCenterCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobStages"))
+                if (property.NameEquals("jobStages"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,12 +105,12 @@ namespace Azure.ResourceManager.DataBox.Models
                     jobStages = array;
                     continue;
                 }
-                if (property.NameEquals("contactDetails"))
+                if (property.NameEquals("contactDetails"u8))
                 {
                     contactDetails = DataBoxContactDetails.DeserializeDataBoxContactDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("shippingAddress"))
+                if (property.NameEquals("shippingAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,7 +120,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     shippingAddress = DataBoxShippingAddress.DeserializeDataBoxShippingAddress(property.Value);
                     continue;
                 }
-                if (property.NameEquals("deliveryPackage"))
+                if (property.NameEquals("deliveryPackage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,7 +130,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     deliveryPackage = PackageShippingDetails.DeserializePackageShippingDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("returnPackage"))
+                if (property.NameEquals("returnPackage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,7 +140,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     returnPackage = PackageShippingDetails.DeserializePackageShippingDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataImportDetails"))
+                if (property.NameEquals("dataImportDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -151,7 +155,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     dataImportDetails = array;
                     continue;
                 }
-                if (property.NameEquals("dataExportDetails"))
+                if (property.NameEquals("dataExportDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -166,12 +170,12 @@ namespace Azure.ResourceManager.DataBox.Models
                     dataExportDetails = array;
                     continue;
                 }
-                if (property.NameEquals("jobDetailsType"))
+                if (property.NameEquals("jobDetailsType"u8))
                 {
                     jobDetailsType = property.Value.GetString().ToDataBoxOrderType();
                     continue;
                 }
-                if (property.NameEquals("preferences"))
+                if (property.NameEquals("preferences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -181,7 +185,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     preferences = DataBoxOrderPreferences.DeserializeDataBoxOrderPreferences(property.Value);
                     continue;
                 }
-                if (property.NameEquals("copyLogDetails"))
+                if (property.NameEquals("copyLogDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -196,17 +200,17 @@ namespace Azure.ResourceManager.DataBox.Models
                     copyLogDetails = array;
                     continue;
                 }
-                if (property.NameEquals("reverseShipmentLabelSasKey"))
+                if (property.NameEquals("reverseShipmentLabelSasKey"u8))
                 {
                     reverseShipmentLabelSasKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("chainOfCustodySasKey"))
+                if (property.NameEquals("chainOfCustodySasKey"u8))
                 {
                     chainOfCustodySasKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deviceErasureDetails"))
+                if (property.NameEquals("deviceErasureDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -216,7 +220,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     deviceErasureDetails = DeviceErasureDetails.DeserializeDeviceErasureDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("keyEncryptionKey"))
+                if (property.NameEquals("keyEncryptionKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -226,7 +230,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     keyEncryptionKey = DataBoxKeyEncryptionKey.DeserializeDataBoxKeyEncryptionKey(property.Value);
                     continue;
                 }
-                if (property.NameEquals("expectedDataSizeInTeraBytes"))
+                if (property.NameEquals("expectedDataSizeInTeraBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -236,7 +240,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     expectedDataSizeInTerabytes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("actions"))
+                if (property.NameEquals("actions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -251,7 +255,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     actions = array;
                     continue;
                 }
-                if (property.NameEquals("lastMitigationActionOnJob"))
+                if (property.NameEquals("lastMitigationActionOnJob"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -261,7 +265,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     lastMitigationActionOnJob = LastMitigationActionOnJob.DeserializeLastMitigationActionOnJob(property.Value);
                     continue;
                 }
-                if (property.NameEquals("datacenterAddress"))
+                if (property.NameEquals("datacenterAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -271,7 +275,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     dataCenterAddress = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataCenterCode"))
+                if (property.NameEquals("dataCenterCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceConnectionInfo");
+            writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo);
             writer.WriteEndObject();
         }
 
         internal static ConnectToSourceOracleSyncTaskInput DeserializeConnectToSourceOracleSyncTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             OracleConnectionInfo sourceConnectionInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceConnectionInfo"))
+                if (property.NameEquals("sourceConnectionInfo"u8))
                 {
                     sourceConnectionInfo = OracleConnectionInfo.DeserializeOracleConnectionInfo(property.Value);
                     continue;

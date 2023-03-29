@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.SecurityCenter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             writer.WriteEndObject();
@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static RegulatoryComplianceAssessmentData DeserializeRegulatoryComplianceAssessmentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -44,22 +48,22 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<int> unsupportedResources = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +73,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,22 +82,22 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("assessmentType"))
+                        if (property0.NameEquals("assessmentType"u8))
                         {
                             assessmentType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("assessmentDetailsLink"))
+                        if (property0.NameEquals("assessmentDetailsLink"u8))
                         {
                             assessmentDetailsLink = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -103,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             state = new RegulatoryComplianceState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("passedResources"))
+                        if (property0.NameEquals("passedResources"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -113,7 +117,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             passedResources = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("failedResources"))
+                        if (property0.NameEquals("failedResources"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -123,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             failedResources = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("skippedResources"))
+                        if (property0.NameEquals("skippedResources"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -133,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             skippedResources = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("unsupportedResources"))
+                        if (property0.NameEquals("unsupportedResources"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

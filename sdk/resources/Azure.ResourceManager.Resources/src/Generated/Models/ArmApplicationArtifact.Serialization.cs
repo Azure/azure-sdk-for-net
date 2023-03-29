@@ -15,22 +15,26 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ArmApplicationArtifact DeserializeArmApplicationArtifact(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ArmApplicationArtifactName name = default;
             Uri uri = default;
             ArmApplicationArtifactType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = new ArmApplicationArtifactName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("uri"))
+                if (property.NameEquals("uri"u8))
                 {
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString().ToArmApplicationArtifactType();
                     continue;

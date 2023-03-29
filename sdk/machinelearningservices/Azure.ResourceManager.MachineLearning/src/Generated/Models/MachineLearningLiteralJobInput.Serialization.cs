@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("value");
+            writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
-                    writer.WritePropertyName("description");
+                    writer.WritePropertyName("description"u8);
                     writer.WriteStringValue(Description);
                 }
                 else
@@ -29,24 +29,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            writer.WritePropertyName("jobInputType");
+            writer.WritePropertyName("jobInputType"u8);
             writer.WriteStringValue(JobInputType.ToString());
             writer.WriteEndObject();
         }
 
         internal static MachineLearningLiteralJobInput DeserializeMachineLearningLiteralJobInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string value = default;
             Optional<string> description = default;
             JobInputType jobInputType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobInputType"))
+                if (property.NameEquals("jobInputType"u8))
                 {
                     jobInputType = new JobInputType(property.Value.GetString());
                     continue;

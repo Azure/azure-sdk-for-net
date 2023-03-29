@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(VnetSubnetIds))
             {
-                writer.WritePropertyName("vnetSubnetIds");
+                writer.WritePropertyName("vnetSubnetIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in VnetSubnetIds)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static CloudProviderProfileInfraNetworkProfile DeserializeCloudProviderProfileInfraNetworkProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> vnetSubnetIds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vnetSubnetIds"))
+                if (property.NameEquals("vnetSubnetIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Tcp))
             {
-                writer.WritePropertyName("tcp");
+                writer.WritePropertyName("tcp"u8);
                 writer.WriteNumberValue(Tcp.Value);
             }
             if (Optional.IsDefined(Udp))
             {
-                writer.WritePropertyName("udp");
+                writer.WritePropertyName("udp"u8);
                 writer.WriteNumberValue(Udp.Value);
             }
             if (Optional.IsDefined(Icmp))
             {
-                writer.WritePropertyName("icmp");
+                writer.WritePropertyName("icmp"u8);
                 writer.WriteNumberValue(Icmp.Value);
             }
             writer.WriteEndObject();
@@ -35,12 +35,16 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static PinholeTimeouts DeserializePinholeTimeouts(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> tcp = default;
             Optional<int> udp = default;
             Optional<int> icmp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tcp"))
+                if (property.NameEquals("tcp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     tcp = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("udp"))
+                if (property.NameEquals("udp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     udp = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("icmp"))
+                if (property.NameEquals("icmp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

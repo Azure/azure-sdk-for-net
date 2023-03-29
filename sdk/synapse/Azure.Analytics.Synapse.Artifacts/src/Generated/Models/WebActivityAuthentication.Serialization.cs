@@ -18,26 +18,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Pfx))
             {
-                writer.WritePropertyName("pfx");
+                writer.WritePropertyName("pfx"u8);
                 writer.WriteObjectValue(Pfx);
             }
             if (Optional.IsDefined(Username))
             {
-                writer.WritePropertyName("username");
+                writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
+                writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);
             }
             if (Optional.IsDefined(Resource))
             {
-                writer.WritePropertyName("resource");
+                writer.WritePropertyName("resource"u8);
                 writer.WriteStringValue(Resource);
             }
             writer.WriteEndObject();
@@ -45,6 +45,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static WebActivityAuthentication DeserializeWebActivityAuthentication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<SecretBase> pfx = default;
             Optional<string> username = default;
@@ -52,12 +56,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> resource = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pfx"))
+                if (property.NameEquals("pfx"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,12 +71,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     pfx = SecretBase.DeserializeSecretBase(property.Value);
                     continue;
                 }
-                if (property.NameEquals("username"))
+                if (property.NameEquals("username"u8))
                 {
                     username = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +86,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     password = SecretBase.DeserializeSecretBase(property.Value);
                     continue;
                 }
-                if (property.NameEquals("resource"))
+                if (property.NameEquals("resource"u8))
                 {
                     resource = property.Value.GetString();
                     continue;

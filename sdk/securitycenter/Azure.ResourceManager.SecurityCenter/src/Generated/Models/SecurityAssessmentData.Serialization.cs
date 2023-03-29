@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.SecurityCenter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceDetails))
             {
-                writer.WritePropertyName("resourceDetails");
+                writer.WritePropertyName("resourceDetails"u8);
                 writer.WriteObjectValue(ResourceDetails);
             }
             if (Optional.IsCollectionDefined(AdditionalData))
             {
-                writer.WritePropertyName("additionalData");
+                writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
                 foreach (var item in AdditionalData)
                 {
@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             if (Optional.IsDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
             if (Optional.IsDefined(PartnersData))
             {
-                writer.WritePropertyName("partnersData");
+                writer.WritePropertyName("partnersData"u8);
                 writer.WriteObjectValue(PartnersData);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
             writer.WriteEndObject();
@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static SecurityAssessmentData DeserializeSecurityAssessmentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -70,22 +74,22 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<SecurityAssessmentStatusResult> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,7 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("resourceDetails"))
+                        if (property0.NameEquals("resourceDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -114,12 +118,12 @@ namespace Azure.ResourceManager.SecurityCenter
                             resourceDetails = SecurityCenterResourceDetails.DeserializeSecurityCenterResourceDetails(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("additionalData"))
+                        if (property0.NameEquals("additionalData"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -134,7 +138,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             additionalData = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("links"))
+                        if (property0.NameEquals("links"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -144,7 +148,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             links = AssessmentLinks.DeserializeAssessmentLinks(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("metadata"))
+                        if (property0.NameEquals("metadata"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -154,7 +158,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             metadata = SecurityAssessmentMetadataProperties.DeserializeSecurityAssessmentMetadataProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("partnersData"))
+                        if (property0.NameEquals("partnersData"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -164,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             partnersData = SecurityAssessmentPartner.DeserializeSecurityAssessmentPartner(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

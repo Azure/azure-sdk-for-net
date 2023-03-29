@@ -1,9 +1,31 @@
 # Release History
 
-## 12.15.0-beta.1 (Unreleased)
+## 12.16.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.16.0-beta.1 (2023-03-28)
+- Added support for service version 2022-11-02.
+- Fixed bug where GenerateSasUri did not honor TrimBlobNameSlashes when creating the SAS (#34591).
+
+## 12.15.1 (2023-03-24)
+- Bumped Azure.Core dependency from 1.28 and 1.30, fixing issue with headers being non-resilient to double dispose of the request.
+
+## 12.15.0 (2023-02-21)
+- Includes all features from 12.15.0-beta.1.
+- Added BlobDownloadDetails.CreatedOn property.
+
+## 12.15.0-beta.1 (2023-02-07)
 - Added support for service version 2021-12-02.
 - Added support for Blob Cold Tier.
 - Fixed bug where BlobErrorCode.IncrementalCopyOfEarlierVersionSnapshotNotAllowed was spelled incorrectly.
+- Fixed bug / regression where BlobContainerClient.GetProperties would return null instead of PublicAccessType.None for the BlobContainerProperties.PublicAccess
 
 ## 12.14.1 (2022-10-20)
 - Fixed bug were BlobBaseClient constructor taking a URI and BlobClientOptions would ignore BlobClientOptions.TrimBlobNameSlashes.

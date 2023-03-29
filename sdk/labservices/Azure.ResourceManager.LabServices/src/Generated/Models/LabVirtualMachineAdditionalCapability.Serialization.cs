@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(InstallGpuDrivers))
             {
-                writer.WritePropertyName("installGpuDrivers");
+                writer.WritePropertyName("installGpuDrivers"u8);
                 writer.WriteStringValue(InstallGpuDrivers.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabVirtualMachineAdditionalCapability DeserializeLabVirtualMachineAdditionalCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LabServicesEnableState> installGpuDrivers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("installGpuDrivers"))
+                if (property.NameEquals("installGpuDrivers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

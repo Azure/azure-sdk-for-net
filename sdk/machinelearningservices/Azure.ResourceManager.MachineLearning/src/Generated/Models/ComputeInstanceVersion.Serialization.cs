@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static ComputeInstanceVersion DeserializeComputeInstanceVersion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> runtime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("runtime"))
+                if (property.NameEquals("runtime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

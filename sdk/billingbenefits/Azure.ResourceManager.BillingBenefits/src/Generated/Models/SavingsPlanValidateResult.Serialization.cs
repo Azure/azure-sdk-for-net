@@ -14,12 +14,16 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     {
         internal static SavingsPlanValidateResult DeserializeSavingsPlanValidateResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> valid = default;
             Optional<string> reasonCode = default;
             Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("valid"))
+                if (property.NameEquals("valid"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,12 +33,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     valid = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("reasonCode"))
+                if (property.NameEquals("reasonCode"u8))
                 {
                     reasonCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reason"))
+                if (property.NameEquals("reason"u8))
                 {
                     reason = property.Value.GetString();
                     continue;

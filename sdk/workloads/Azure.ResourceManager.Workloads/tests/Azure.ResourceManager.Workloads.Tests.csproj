@@ -3,14 +3,6 @@
     <ProjectReference Include="..\src\Azure.ResourceManager.Workloads.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="TestData\PhpWorkloads\PatchPhpWorkload.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\PhpWorkloads\PutPhpWorkload.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Update="*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -19,5 +11,10 @@
     <None Update="*.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="payload\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

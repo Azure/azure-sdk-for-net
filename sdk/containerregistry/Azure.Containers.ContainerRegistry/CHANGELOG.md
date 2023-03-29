@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.6 (Unreleased)
+## 1.1.0-beta.9 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,45 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.8 (2023-03-13)
+
+### Features Added
+
+- Added `SizeInBytes` to `UploadBlobResult` to prevent the need to check stream length on a possibly non-seekable stream.
+
+### Breaking Changes
+
+- Renamed `OciBlobDescriptor` to `OciDescriptor`.
+
+## 1.1.0-beta.7 (2023-03-07)
+
+### Features Added
+
+- Added overloads to `ContainerRegistryBlobClient.DownloadManifest()` method that allow caller to specify multiple manifest media types in a collection.
+- Added overloads to `ContainerRegistryBlobClient` methods `UploadBlob()` and `UploadManifest()` that take the content to upload as a `BinaryData`.
+
+### Breaking Changes
+
+- Removed `UploadBlobOptions` type and moved chunk size configuration into ClientOptions.
+- Reordered parameters in `ContainerRegistryBlobClient` constructor for consistency with other SDK clients.
+- Renamed `OciAnnotations.Size` to `OciAnnotations.SizeInBytes` and removed `Size` parameter from `UploadBlobResult` type.
+- Changed the name of `OciManifest` to `OciImageManifest`.
+
+## 1.1.0-beta.6 (2023-02-07)
+
+### Features Added
+
+- Added method `DownloadBlobTo()` to `ContainerRegistryBlobClient`.  This method downloads a blob to a provided Stream, using multiple requests if the blob size exceeds the maximum chunk size.
+- Added an optional `ManifestMediaType` parameter to `UploadManifest()` to enable uploading image manifests of any type.
+- Added `MediaType` property to `DownloadManifestResult` to enable checking the media type prior to deserializing returned manifest.
+
+### Breaking Changes
+
+- Changed signatures of `DownloadManifest()` and `UploadManifest()` methods on `ContainerRegistryBlobClient`.
+- Removed `DownloadManifestOptions` and `UploadManifestOptions` types.
+- Removed `ArtifactManifest` type.
+- Removed `Manifest` and `ManifestStream` properties from `DownloadManifestResult`.
 
 ## 1.1.0-beta.5 (2023-01-10)
 

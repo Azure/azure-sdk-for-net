@@ -15,12 +15,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static ServiceAccountQuotaLimit DeserializeServiceAccountQuotaLimit(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> count = default;
             Optional<float> renewalPeriod = default;
             Optional<IReadOnlyList<ServiceAccountThrottlingRule>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     count = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("renewalPeriod"))
+                if (property.NameEquals("renewalPeriod"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     renewalPeriod = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("rules"))
+                if (property.NameEquals("rules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

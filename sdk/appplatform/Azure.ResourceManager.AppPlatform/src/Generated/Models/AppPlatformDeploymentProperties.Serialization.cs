@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Source))
             {
-                writer.WritePropertyName("source");
+                writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
             if (Optional.IsDefined(DeploymentSettings))
             {
-                writer.WritePropertyName("deploymentSettings");
+                writer.WritePropertyName("deploymentSettings"u8);
                 writer.WriteObjectValue(DeploymentSettings);
             }
             if (Optional.IsDefined(IsActive))
             {
-                writer.WritePropertyName("active");
+                writer.WritePropertyName("active"u8);
                 writer.WriteBooleanValue(IsActive.Value);
             }
             writer.WriteEndObject();
@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformDeploymentProperties DeserializeAppPlatformDeploymentProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformUserSourceInfo> source = default;
             Optional<AppPlatformDeploymentSettings> deploymentSettings = default;
             Optional<AppPlatformDeploymentProvisioningState> provisioningState = default;
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<IReadOnlyList<AppPlatformDeploymentInstance>> instances = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +58,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     source = AppPlatformUserSourceInfo.DeserializeAppPlatformUserSourceInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("deploymentSettings"))
+                if (property.NameEquals("deploymentSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +68,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     deploymentSettings = AppPlatformDeploymentSettings.DeserializeAppPlatformDeploymentSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     provisioningState = new AppPlatformDeploymentProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +88,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     status = new AppPlatformDeploymentStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("active"))
+                if (property.NameEquals("active"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +98,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     active = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("instances"))
+                if (property.NameEquals("instances"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

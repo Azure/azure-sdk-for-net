@@ -14,28 +14,32 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static SiteMachineKey DeserializeSiteMachineKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> validation = default;
             Optional<string> validationKey = default;
             Optional<string> decryption = default;
             Optional<string> decryptionKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("validation"))
+                if (property.NameEquals("validation"u8))
                 {
                     validation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("validationKey"))
+                if (property.NameEquals("validationKey"u8))
                 {
                     validationKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("decryption"))
+                if (property.NameEquals("decryption"u8))
                 {
                     decryption = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("decryptionKey"))
+                if (property.NameEquals("decryptionKey"u8))
                 {
                     decryptionKey = property.Value.GetString();
                     continue;

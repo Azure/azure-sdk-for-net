@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Script))
             {
-                writer.WritePropertyName("script");
+                writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);
             }
             if (Optional.IsDefined(ScriptUri))
             {
-                writer.WritePropertyName("scriptUri");
+                writer.WritePropertyName("scriptUri"u8);
                 writer.WriteStringValue(ScriptUri.AbsoluteUri);
             }
             if (Optional.IsDefined(CommandId))
             {
-                writer.WritePropertyName("commandId");
+                writer.WritePropertyName("commandId"u8);
                 writer.WriteStringValue(CommandId);
             }
             writer.WriteEndObject();
@@ -36,17 +36,21 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineRunCommandScriptSource DeserializeVirtualMachineRunCommandScriptSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> script = default;
             Optional<Uri> scriptUri = default;
             Optional<string> commandId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("script"))
+                if (property.NameEquals("script"u8))
                 {
                     script = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scriptUri"))
+                if (property.NameEquals("scriptUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
                     scriptUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("commandId"))
+                if (property.NameEquals("commandId"u8))
                 {
                     commandId = property.Value.GetString();
                     continue;

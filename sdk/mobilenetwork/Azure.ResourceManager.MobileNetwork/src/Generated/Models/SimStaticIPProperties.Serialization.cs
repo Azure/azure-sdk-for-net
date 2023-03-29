@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AttachedDataNetwork))
             {
-                writer.WritePropertyName("attachedDataNetwork");
+                writer.WritePropertyName("attachedDataNetwork"u8);
                 JsonSerializer.Serialize(writer, AttachedDataNetwork);
             }
             if (Optional.IsDefined(Slice))
             {
-                writer.WritePropertyName("slice");
+                writer.WritePropertyName("slice"u8);
                 JsonSerializer.Serialize(writer, Slice);
             }
             if (Optional.IsDefined(StaticIP))
             {
-                writer.WritePropertyName("staticIp");
+                writer.WritePropertyName("staticIp"u8);
                 writer.WriteObjectValue(StaticIP);
             }
             writer.WriteEndObject();
@@ -36,12 +36,16 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static SimStaticIPProperties DeserializeSimStaticIPProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> attachedDataNetwork = default;
             Optional<WritableSubResource> slice = default;
             Optional<SimStaticIPPropertiesStaticIP> staticIP = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("attachedDataNetwork"))
+                if (property.NameEquals("attachedDataNetwork"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     attachedDataNetwork = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("slice"))
+                if (property.NameEquals("slice"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     slice = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("staticIp"))
+                if (property.NameEquals("staticIp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,11 +15,15 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ConnectionMonitorQueryResult DeserializeConnectionMonitorQueryResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ConnectionMonitorSourceStatus> sourceStatus = default;
             Optional<IReadOnlyList<ConnectionStateSnapshot>> states = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceStatus"))
+                if (property.NameEquals("sourceStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
                     sourceStatus = new ConnectionMonitorSourceStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("states"))
+                if (property.NameEquals("states"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

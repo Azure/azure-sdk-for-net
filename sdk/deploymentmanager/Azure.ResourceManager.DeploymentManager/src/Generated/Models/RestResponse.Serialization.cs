@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(SuccessStatusCodes))
             {
-                writer.WritePropertyName("successStatusCodes");
+                writer.WritePropertyName("successStatusCodes"u8);
                 writer.WriteStartArray();
                 foreach (var item in SuccessStatusCodes)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             }
             if (Optional.IsDefined(Regex))
             {
-                writer.WritePropertyName("regex");
+                writer.WritePropertyName("regex"u8);
                 writer.WriteObjectValue(Regex);
             }
             writer.WriteEndObject();
@@ -36,11 +36,15 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static RestResponse DeserializeRestResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> successStatusCodes = default;
             Optional<RestResponseRegex> regex = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("successStatusCodes"))
+                if (property.NameEquals("successStatusCodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     successStatusCodes = array;
                     continue;
                 }
-                if (property.NameEquals("regex"))
+                if (property.NameEquals("regex"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

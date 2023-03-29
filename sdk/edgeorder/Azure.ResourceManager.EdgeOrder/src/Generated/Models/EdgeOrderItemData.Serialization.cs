@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EdgeOrder
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.EdgeOrder
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("orderItemDetails");
+            writer.WritePropertyName("orderItemDetails"u8);
             writer.WriteObjectValue(OrderItemDetails);
-            writer.WritePropertyName("addressDetails");
+            writer.WritePropertyName("addressDetails"u8);
             writer.WriteObjectValue(AddressDetails);
-            writer.WritePropertyName("orderId");
+            writer.WritePropertyName("orderId"u8);
             writer.WriteStringValue(OrderId);
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.EdgeOrder
 
         internal static EdgeOrderItemData DeserializeEdgeOrderItemData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.EdgeOrder
             ResourceIdentifier orderId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,27 +77,27 @@ namespace Azure.ResourceManager.EdgeOrder
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +107,7 @@ namespace Azure.ResourceManager.EdgeOrder
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,17 +116,17 @@ namespace Azure.ResourceManager.EdgeOrder
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("orderItemDetails"))
+                        if (property0.NameEquals("orderItemDetails"u8))
                         {
                             orderItemDetails = EdgeOrderItemDetails.DeserializeEdgeOrderItemDetails(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("addressDetails"))
+                        if (property0.NameEquals("addressDetails"u8))
                         {
                             addressDetails = EdgeOrderItemAddressDetails.DeserializeEdgeOrderItemAddressDetails(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("startTime"))
+                        if (property0.NameEquals("startTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -132,7 +136,7 @@ namespace Azure.ResourceManager.EdgeOrder
                             startTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("orderId"))
+                        if (property0.NameEquals("orderId"u8))
                         {
                             orderId = new ResourceIdentifier(property0.Value.GetString());
                             continue;

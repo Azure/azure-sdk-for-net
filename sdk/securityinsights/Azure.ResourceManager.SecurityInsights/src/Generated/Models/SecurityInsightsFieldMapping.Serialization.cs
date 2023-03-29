@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Identifier))
             {
-                writer.WritePropertyName("identifier");
+                writer.WritePropertyName("identifier"u8);
                 writer.WriteStringValue(Identifier);
             }
             if (Optional.IsDefined(ColumnName))
             {
-                writer.WritePropertyName("columnName");
+                writer.WritePropertyName("columnName"u8);
                 writer.WriteStringValue(ColumnName);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsFieldMapping DeserializeSecurityInsightsFieldMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> identifier = default;
             Optional<string> columnName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identifier"))
+                if (property.NameEquals("identifier"u8))
                 {
                     identifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("columnName"))
+                if (property.NameEquals("columnName"u8))
                 {
                     columnName = property.Value.GetString();
                     continue;

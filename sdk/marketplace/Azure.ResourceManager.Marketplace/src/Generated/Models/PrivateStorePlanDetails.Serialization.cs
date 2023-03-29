@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.Marketplace.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PlanId))
             {
-                writer.WritePropertyName("planId");
+                writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
             if (Optional.IsDefined(Justification))
             {
-                writer.WritePropertyName("justification");
+                writer.WritePropertyName("justification"u8);
                 writer.WriteStringValue(Justification);
             }
             if (Optional.IsDefined(SubscriptionId))
             {
-                writer.WritePropertyName("subscriptionId");
+                writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
             if (Optional.IsDefined(SubscriptionName))
             {
-                writer.WritePropertyName("subscriptionName");
+                writer.WritePropertyName("subscriptionName"u8);
                 writer.WriteStringValue(SubscriptionName);
             }
             writer.WriteEndObject();
@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         internal static PrivateStorePlanDetails DeserializePrivateStorePlanDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> planId = default;
             Optional<PrivateStorePlanStatus> status = default;
             Optional<BinaryData> requestDate = default;
@@ -49,12 +53,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<string> subscriptionName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("planId"))
+                if (property.NameEquals("planId"u8))
                 {
                     planId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +68,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     status = new PrivateStorePlanStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("requestDate"))
+                if (property.NameEquals("requestDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,17 +78,17 @@ namespace Azure.ResourceManager.Marketplace.Models
                     requestDate = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("justification"))
+                if (property.NameEquals("justification"u8))
                 {
                     justification = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionName"))
+                if (property.NameEquals("subscriptionName"u8))
                 {
                     subscriptionName = property.Value.GetString();
                     continue;

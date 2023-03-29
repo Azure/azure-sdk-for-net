@@ -15,15 +15,15 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            writer.WritePropertyName("minConcurrentOffers");
+            writer.WritePropertyName("minConcurrentOffers"u8);
             writer.WriteNumberValue(MinConcurrentOffers);
-            writer.WritePropertyName("maxConcurrentOffers");
+            writer.WritePropertyName("maxConcurrentOffers"u8);
             writer.WriteNumberValue(MaxConcurrentOffers);
             if (Optional.IsDefined(BypassSelectors))
             {
-                writer.WritePropertyName("bypassSelectors");
+                writer.WritePropertyName("bypassSelectors"u8);
                 writer.WriteBooleanValue(BypassSelectors.Value);
             }
             writer.WriteEndObject();
@@ -31,6 +31,10 @@ namespace Azure.Communication.JobRouter
 
         internal static DistributionMode DeserializeDistributionMode(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

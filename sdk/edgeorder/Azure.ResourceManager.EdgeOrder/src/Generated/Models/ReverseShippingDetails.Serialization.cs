@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static ReverseShippingDetails DeserializeReverseShippingDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sasKeyForLabel = default;
             Optional<string> carrierName = default;
             Optional<string> carrierDisplayName = default;
@@ -22,27 +26,27 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<Uri> trackingUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sasKeyForLabel"))
+                if (property.NameEquals("sasKeyForLabel"u8))
                 {
                     sasKeyForLabel = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("carrierName"))
+                if (property.NameEquals("carrierName"u8))
                 {
                     carrierName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("carrierDisplayName"))
+                if (property.NameEquals("carrierDisplayName"u8))
                 {
                     carrierDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trackingId"))
+                if (property.NameEquals("trackingId"u8))
                 {
                     trackingId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trackingUrl"))
+                if (property.NameEquals("trackingUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

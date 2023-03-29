@@ -18,21 +18,43 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PrometheusUri))
             {
-                writer.WritePropertyName("prometheusUrl");
+                writer.WritePropertyName("prometheusUrl"u8);
                 writer.WriteStringValue(PrometheusUri.AbsoluteUri);
             }
-            writer.WritePropertyName("providerType");
+            if (Optional.IsDefined(SslPreference))
+            {
+                writer.WritePropertyName("sslPreference"u8);
+                writer.WriteStringValue(SslPreference.Value.ToString());
+            }
+            if (Optional.IsDefined(SslCertificateUri))
+            {
+                writer.WritePropertyName("sslCertificateUri"u8);
+                writer.WriteStringValue(SslCertificateUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(SapSid))
+            {
+                writer.WritePropertyName("sapSid"u8);
+                writer.WriteStringValue(SapSid);
+            }
+            writer.WritePropertyName("providerType"u8);
             writer.WriteStringValue(ProviderType);
             writer.WriteEndObject();
         }
 
         internal static PrometheusOSProviderInstanceProperties DeserializePrometheusOSProviderInstanceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> prometheusUrl = default;
+            Optional<SslPreference> sslPreference = default;
+            Optional<Uri> sslCertificateUri = default;
+            Optional<string> sapSid = default;
             string providerType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("prometheusUrl"))
+                if (property.NameEquals("prometheusUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,13 +64,38 @@ namespace Azure.ResourceManager.Workloads.Models
                     prometheusUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("providerType"))
+                if (property.NameEquals("sslPreference"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sslPreference = new SslPreference(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sslCertificateUri"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        sslCertificateUri = null;
+                        continue;
+                    }
+                    sslCertificateUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sapSid"u8))
+                {
+                    sapSid = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("providerType"u8))
                 {
                     providerType = property.Value.GetString();
                     continue;
                 }
             }
-            return new PrometheusOSProviderInstanceProperties(providerType, prometheusUrl.Value);
+            return new PrometheusOSProviderInstanceProperties(providerType, prometheusUrl.Value, Optional.ToNullable(sslPreference), sslCertificateUri.Value, sapSid.Value);
         }
     }
 }

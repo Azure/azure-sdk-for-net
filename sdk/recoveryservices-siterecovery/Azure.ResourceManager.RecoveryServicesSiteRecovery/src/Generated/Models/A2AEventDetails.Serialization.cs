@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static A2AEventDetails DeserializeA2AEventDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> protectedItemName = default;
             Optional<string> fabricObjectId = default;
             Optional<string> fabricName = default;
@@ -23,37 +27,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("protectedItemName"))
+                if (property.NameEquals("protectedItemName"u8))
                 {
                     protectedItemName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fabricObjectId"))
+                if (property.NameEquals("fabricObjectId"u8))
                 {
                     fabricObjectId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fabricName"))
+                if (property.NameEquals("fabricName"u8))
                 {
                     fabricName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fabricLocation"))
+                if (property.NameEquals("fabricLocation"u8))
                 {
                     fabricLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("remoteFabricName"))
+                if (property.NameEquals("remoteFabricName"u8))
                 {
                     remoteFabricName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("remoteFabricLocation"))
+                if (property.NameEquals("remoteFabricLocation"u8))
                 {
                     remoteFabricLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

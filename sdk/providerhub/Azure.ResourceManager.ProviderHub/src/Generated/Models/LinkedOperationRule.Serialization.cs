@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         internal static LinkedOperationRule DeserializeLinkedOperationRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LinkedOperation linkedOperation = default;
             LinkedAction linkedAction = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linkedOperation"))
+                if (property.NameEquals("linkedOperation"u8))
                 {
                     linkedOperation = new LinkedOperation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("linkedAction"))
+                if (property.NameEquals("linkedAction"u8))
                 {
                     linkedAction = new LinkedAction(property.Value.GetString());
                     continue;

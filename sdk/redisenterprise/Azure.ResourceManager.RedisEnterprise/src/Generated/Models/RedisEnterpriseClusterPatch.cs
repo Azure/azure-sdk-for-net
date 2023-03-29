@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
@@ -23,10 +24,26 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> The SKU to create, which affects price, performance, and features. </summary>
         public RedisEnterpriseSku Sku { get; set; }
+        /// <summary> The identity of the resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The minimum TLS version for the cluster to support, e.g. &apos;1.2&apos;. </summary>
         public RedisEnterpriseTlsVersion? MinimumTlsVersion { get; set; }
+        /// <summary> Encryption-at-rest configuration for the cluster. </summary>
+        internal ClusterPropertiesEncryption Encryption { get; set; }
+        /// <summary> All Customer-managed key encryption properties for the resource. Set this to an empty object to use Microsoft-managed key encryption. </summary>
+        public RedisEnterpriseCustomerManagedKeyEncryption CustomerManagedKeyEncryption
+        {
+            get => Encryption is null ? default : Encryption.CustomerManagedKeyEncryption;
+            set
+            {
+                if (Encryption is null)
+                    Encryption = new ClusterPropertiesEncryption();
+                Encryption.CustomerManagedKeyEncryption = value;
+            }
+        }
+
         /// <summary> DNS name of the cluster endpoint. </summary>
         public string HostName { get; }
         /// <summary> Current provisioning status of the cluster. </summary>

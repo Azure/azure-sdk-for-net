@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Fields != null)
                 {
-                    writer.WritePropertyName("fields");
+                    writer.WritePropertyName("fields"u8);
                     writer.WriteStartArray();
                     foreach (var item in Fields)
                     {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Parameters != null)
                 {
-                    writer.WritePropertyName("parameters");
+                    writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Parameters);
 #else
@@ -55,11 +55,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ColumnTransformer DeserializeColumnTransformer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> fields = default;
             Optional<BinaryData> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fields"))
+                if (property.NameEquals("fields"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     fields = array;
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

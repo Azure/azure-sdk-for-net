@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.FrontDoor
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,18 +29,18 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsCollectionDefined(RoutingRules))
             {
-                writer.WritePropertyName("routingRules");
+                writer.WritePropertyName("routingRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in RoutingRules)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.FrontDoor
             }
             if (Optional.IsCollectionDefined(LoadBalancingSettings))
             {
-                writer.WritePropertyName("loadBalancingSettings");
+                writer.WritePropertyName("loadBalancingSettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancingSettings)
                 {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.FrontDoor
             }
             if (Optional.IsCollectionDefined(HealthProbeSettings))
             {
-                writer.WritePropertyName("healthProbeSettings");
+                writer.WritePropertyName("healthProbeSettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in HealthProbeSettings)
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.FrontDoor
             }
             if (Optional.IsCollectionDefined(BackendPools))
             {
-                writer.WritePropertyName("backendPools");
+                writer.WritePropertyName("backendPools"u8);
                 writer.WriteStartArray();
                 foreach (var item in BackendPools)
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.FrontDoor
             }
             if (Optional.IsCollectionDefined(FrontendEndpoints))
             {
-                writer.WritePropertyName("frontendEndpoints");
+                writer.WritePropertyName("frontendEndpoints"u8);
                 writer.WriteStartArray();
                 foreach (var item in FrontendEndpoints)
                 {
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.FrontDoor
             }
             if (Optional.IsDefined(BackendPoolsSettings))
             {
-                writer.WritePropertyName("backendPoolsSettings");
+                writer.WritePropertyName("backendPoolsSettings"u8);
                 writer.WriteObjectValue(BackendPoolsSettings);
             }
             if (Optional.IsDefined(EnabledState))
             {
-                writer.WritePropertyName("enabledState");
+                writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
             writer.WriteEndObject();
@@ -104,6 +104,10 @@ namespace Azure.ResourceManager.FrontDoor
 
         internal static FrontDoorData DeserializeFrontDoorData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -126,7 +130,7 @@ namespace Azure.ResourceManager.FrontDoor
             Optional<IReadOnlyDictionary<string, string>> extendedProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -141,27 +145,27 @@ namespace Azure.ResourceManager.FrontDoor
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -171,7 +175,7 @@ namespace Azure.ResourceManager.FrontDoor
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -180,12 +184,12 @@ namespace Azure.ResourceManager.FrontDoor
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("friendlyName"))
+                        if (property0.NameEquals("friendlyName"u8))
                         {
                             friendlyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("routingRules"))
+                        if (property0.NameEquals("routingRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -200,7 +204,7 @@ namespace Azure.ResourceManager.FrontDoor
                             routingRules = array;
                             continue;
                         }
-                        if (property0.NameEquals("loadBalancingSettings"))
+                        if (property0.NameEquals("loadBalancingSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -215,7 +219,7 @@ namespace Azure.ResourceManager.FrontDoor
                             loadBalancingSettings = array;
                             continue;
                         }
-                        if (property0.NameEquals("healthProbeSettings"))
+                        if (property0.NameEquals("healthProbeSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -230,7 +234,7 @@ namespace Azure.ResourceManager.FrontDoor
                             healthProbeSettings = array;
                             continue;
                         }
-                        if (property0.NameEquals("backendPools"))
+                        if (property0.NameEquals("backendPools"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -245,7 +249,7 @@ namespace Azure.ResourceManager.FrontDoor
                             backendPools = array;
                             continue;
                         }
-                        if (property0.NameEquals("frontendEndpoints"))
+                        if (property0.NameEquals("frontendEndpoints"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -260,7 +264,7 @@ namespace Azure.ResourceManager.FrontDoor
                             frontendEndpoints = array;
                             continue;
                         }
-                        if (property0.NameEquals("backendPoolsSettings"))
+                        if (property0.NameEquals("backendPoolsSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -270,7 +274,7 @@ namespace Azure.ResourceManager.FrontDoor
                             backendPoolsSettings = BackendPoolsSettings.DeserializeBackendPoolsSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("enabledState"))
+                        if (property0.NameEquals("enabledState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -280,7 +284,7 @@ namespace Azure.ResourceManager.FrontDoor
                             enabledState = new FrontDoorEnabledState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("resourceState"))
+                        if (property0.NameEquals("resourceState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -290,22 +294,22 @@ namespace Azure.ResourceManager.FrontDoor
                             resourceState = new FrontDoorResourceState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("cname"))
+                        if (property0.NameEquals("cname"u8))
                         {
                             cname = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("frontdoorId"))
+                        if (property0.NameEquals("frontdoorId"u8))
                         {
                             frontdoorId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("rulesEngines"))
+                        if (property0.NameEquals("rulesEngines"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -320,7 +324,7 @@ namespace Azure.ResourceManager.FrontDoor
                             rulesEngines = array;
                             continue;
                         }
-                        if (property0.NameEquals("extendedProperties"))
+                        if (property0.NameEquals("extendedProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

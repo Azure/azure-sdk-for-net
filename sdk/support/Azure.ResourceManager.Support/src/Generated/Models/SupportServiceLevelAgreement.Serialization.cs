@@ -21,12 +21,16 @@ namespace Azure.ResourceManager.Support.Models
 
         internal static SupportServiceLevelAgreement DeserializeSupportServiceLevelAgreement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> expirationTime = default;
             Optional<int> slaMinutes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +40,7 @@ namespace Azure.ResourceManager.Support.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("expirationTime"))
+                if (property.NameEquals("expirationTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.Support.Models
                     expirationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("slaMinutes"))
+                if (property.NameEquals("slaMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

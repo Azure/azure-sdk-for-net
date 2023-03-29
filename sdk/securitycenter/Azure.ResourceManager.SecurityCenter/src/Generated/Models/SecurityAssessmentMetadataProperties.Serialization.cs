@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("displayName");
+            writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(RemediationDescription))
             {
-                writer.WritePropertyName("remediationDescription");
+                writer.WritePropertyName("remediationDescription"u8);
                 writer.WriteStringValue(RemediationDescription);
             }
             if (Optional.IsCollectionDefined(Categories))
             {
-                writer.WritePropertyName("categories");
+                writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("severity");
+            writer.WritePropertyName("severity"u8);
             writer.WriteStringValue(Severity.ToString());
             if (Optional.IsDefined(UserImpact))
             {
-                writer.WritePropertyName("userImpact");
+                writer.WritePropertyName("userImpact"u8);
                 writer.WriteStringValue(UserImpact.Value.ToString());
             }
             if (Optional.IsDefined(ImplementationEffort))
             {
-                writer.WritePropertyName("implementationEffort");
+                writer.WritePropertyName("implementationEffort"u8);
                 writer.WriteStringValue(ImplementationEffort.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Threats))
             {
-                writer.WritePropertyName("threats");
+                writer.WritePropertyName("threats"u8);
                 writer.WriteStartArray();
                 foreach (var item in Threats)
                 {
@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             if (Optional.IsDefined(IsPreview))
             {
-                writer.WritePropertyName("preview");
+                writer.WritePropertyName("preview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
             }
-            writer.WritePropertyName("assessmentType");
+            writer.WritePropertyName("assessmentType"u8);
             writer.WriteStringValue(AssessmentType.ToString());
             if (Optional.IsDefined(PartnerData))
             {
-                writer.WritePropertyName("partnerData");
+                writer.WritePropertyName("partnerData"u8);
                 writer.WriteObjectValue(PartnerData);
             }
             writer.WriteEndObject();
@@ -77,6 +77,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityAssessmentMetadataProperties DeserializeSecurityAssessmentMetadataProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string displayName = default;
             Optional<ResourceIdentifier> policyDefinitionId = default;
             Optional<string> description = default;
@@ -91,12 +95,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<SecurityAssessmentMetadataPartner> partnerData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyDefinitionId"))
+                if (property.NameEquals("policyDefinitionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,17 +110,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     policyDefinitionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("remediationDescription"))
+                if (property.NameEquals("remediationDescription"u8))
                 {
                     remediationDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("categories"))
+                if (property.NameEquals("categories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -131,12 +135,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     categories = array;
                     continue;
                 }
-                if (property.NameEquals("severity"))
+                if (property.NameEquals("severity"u8))
                 {
                     severity = new SecurityAssessmentSeverity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("userImpact"))
+                if (property.NameEquals("userImpact"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -146,7 +150,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     userImpact = new SecurityAssessmentUserImpact(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("implementationEffort"))
+                if (property.NameEquals("implementationEffort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -156,7 +160,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     implementationEffort = new ImplementationEffort(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("threats"))
+                if (property.NameEquals("threats"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -171,7 +175,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     threats = array;
                     continue;
                 }
-                if (property.NameEquals("preview"))
+                if (property.NameEquals("preview"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -181,12 +185,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     preview = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("assessmentType"))
+                if (property.NameEquals("assessmentType"u8))
                 {
                     assessmentType = new SecurityAssessmentType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("partnerData"))
+                if (property.NameEquals("partnerData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

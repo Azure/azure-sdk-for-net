@@ -13,6 +13,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataCenterAddressResult DeserializeDataCenterAddressResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("datacenterAddressType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

@@ -14,6 +14,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         public void GetMonitor_ReturnsSharedMonitor()
         {
             var queueListener = new QueueListener();
+
             var watcherMock = new Mock<IBlobWrittenWatcher>(MockBehavior.Strict);
             var executor = new BlobQueueTriggerExecutor(BlobTriggerSource.LogsAndContainerScan, watcherMock.Object, NullLogger<BlobListener>.Instance);
             var sharedBlobQueueListener = new SharedBlobQueueListener(queueListener, executor);
@@ -25,7 +26,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             var monitor2 = blobListener1.GetMonitor();
 
             Assert.AreSame(monitor1, monitor2);
-            Assert.AreSame(monitor1, queueListener);
+            Assert.AreSame(monitor1, queueListener.GetMonitor());
+
+            var targetScaler1 = blobListener1.GetTargetScaler();
+            var targetScaler2 = blobListener1.GetTargetScaler();
+
+            Assert.AreSame(targetScaler1, targetScaler2);
+            Assert.AreSame(targetScaler1, queueListener.GetTargetScaler());
         }
     }
 }

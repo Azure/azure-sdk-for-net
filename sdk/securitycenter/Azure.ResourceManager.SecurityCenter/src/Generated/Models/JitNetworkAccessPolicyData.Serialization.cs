@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.SecurityCenter
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("virtualMachines");
+            writer.WritePropertyName("virtualMachines"u8);
             writer.WriteStartArray();
             foreach (var item in VirtualMachines)
             {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Requests))
             {
-                writer.WritePropertyName("requests");
+                writer.WritePropertyName("requests"u8);
                 writer.WriteStartArray();
                 foreach (var item in Requests)
                 {
@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static JitNetworkAccessPolicyData DeserializeJitNetworkAccessPolicyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
@@ -59,12 +63,12 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,22 +78,22 @@ namespace Azure.ResourceManager.SecurityCenter
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +112,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("virtualMachines"))
+                        if (property0.NameEquals("virtualMachines"u8))
                         {
                             List<JitNetworkAccessPolicyVirtualMachine> array = new List<JitNetworkAccessPolicyVirtualMachine>();
                             foreach (var item in property0.Value.EnumerateArray())
@@ -118,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             virtualMachines = array;
                             continue;
                         }
-                        if (property0.NameEquals("requests"))
+                        if (property0.NameEquals("requests"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -133,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             requests = array;
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;

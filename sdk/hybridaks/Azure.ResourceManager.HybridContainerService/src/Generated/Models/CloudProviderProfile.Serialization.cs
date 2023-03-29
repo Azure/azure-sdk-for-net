@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(InfraNetworkProfile))
             {
-                writer.WritePropertyName("infraNetworkProfile");
+                writer.WritePropertyName("infraNetworkProfile"u8);
                 writer.WriteObjectValue(InfraNetworkProfile);
             }
             if (Optional.IsDefined(InfraStorageProfile))
             {
-                writer.WritePropertyName("infraStorageProfile");
+                writer.WritePropertyName("infraStorageProfile"u8);
                 writer.WriteObjectValue(InfraStorageProfile);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static CloudProviderProfile DeserializeCloudProviderProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CloudProviderProfileInfraNetworkProfile> infraNetworkProfile = default;
             Optional<CloudProviderProfileInfraStorageProfile> infraStorageProfile = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("infraNetworkProfile"))
+                if (property.NameEquals("infraNetworkProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     infraNetworkProfile = CloudProviderProfileInfraNetworkProfile.DeserializeCloudProviderProfileInfraNetworkProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("infraStorageProfile"))
+                if (property.NameEquals("infraStorageProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

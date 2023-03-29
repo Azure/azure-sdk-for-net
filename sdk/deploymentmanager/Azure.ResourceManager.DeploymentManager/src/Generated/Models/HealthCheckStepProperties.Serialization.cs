@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("attributes");
+            writer.WritePropertyName("attributes"u8);
             writer.WriteObjectValue(Attributes);
-            writer.WritePropertyName("stepType");
+            writer.WritePropertyName("stepType"u8);
             writer.WriteStringValue(StepType.ToSerialString());
             writer.WriteEndObject();
         }
 
         internal static HealthCheckStepProperties DeserializeHealthCheckStepProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             HealthCheckStepAttributes attributes = default;
             StepType stepType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("attributes"))
+                if (property.NameEquals("attributes"u8))
                 {
                     attributes = HealthCheckStepAttributes.DeserializeHealthCheckStepAttributes(property.Value);
                     continue;
                 }
-                if (property.NameEquals("stepType"))
+                if (property.NameEquals("stepType"u8))
                 {
                     stepType = property.Value.GetString().ToStepType();
                     continue;

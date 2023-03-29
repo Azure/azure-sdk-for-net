@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("value");
+            writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Value);
 #else
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #endif
             if (Optional.IsDefined(IsSensitive))
             {
-                writer.WritePropertyName("isSensitive");
+                writer.WritePropertyName("isSensitive"u8);
                 writer.WriteBooleanValue(IsSensitive.Value);
             }
             writer.WriteEndObject();
@@ -32,16 +32,20 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SsisPropertyOverride DeserializeSsisPropertyOverride(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BinaryData value = default;
             Optional<bool> isSensitive = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("isSensitive"))
+                if (property.NameEquals("isSensitive"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

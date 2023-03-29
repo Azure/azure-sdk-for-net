@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static LinkedIntegrationRuntime DeserializeLinkedIntegrationRuntime(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> subscriptionId = default;
             Optional<string> dataFactoryName = default;
@@ -22,22 +26,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DateTimeOffset> createTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataFactoryName"))
+                if (property.NameEquals("dataFactoryName"u8))
                 {
                     dataFactoryName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataFactoryLocation"))
+                if (property.NameEquals("dataFactoryLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     dataFactoryLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("createTime"))
+                if (property.NameEquals("createTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

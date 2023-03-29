@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         internal static ContainerRegistryWebhookEventResponseMessage DeserializeContainerRegistryWebhookEventResponseMessage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> content = default;
             Optional<IReadOnlyDictionary<string, string>> headers = default;
             Optional<string> reasonPhrase = default;
@@ -22,12 +26,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("content"))
+                if (property.NameEquals("content"u8))
                 {
                     content = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("headers"))
+                if (property.NameEquals("headers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,17 +46,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     headers = dictionary;
                     continue;
                 }
-                if (property.NameEquals("reasonPhrase"))
+                if (property.NameEquals("reasonPhrase"u8))
                 {
                     reasonPhrase = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statusCode"))
+                if (property.NameEquals("statusCode"u8))
                 {
                     statusCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
