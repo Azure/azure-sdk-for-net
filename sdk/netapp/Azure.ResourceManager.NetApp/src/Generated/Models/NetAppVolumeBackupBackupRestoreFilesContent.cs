@@ -13,13 +13,13 @@ using Azure.Core;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Restore payload for single file backup restore. </summary>
-    public partial class BackupRestoreFiles
+    public partial class NetAppVolumeBackupBackupRestoreFilesContent
     {
-        /// <summary> Initializes a new instance of BackupRestoreFiles. </summary>
+        /// <summary> Initializes a new instance of NetAppVolumeBackupBackupRestoreFilesContent. </summary>
         /// <param name="fileList"> List of files to be restored. </param>
         /// <param name="destinationVolumeId"> Resource Id of the destination volume on which the files need to be restored. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileList"/> or <paramref name="destinationVolumeId"/> is null. </exception>
-        public BackupRestoreFiles(IEnumerable<string> fileList, string destinationVolumeId)
+        public NetAppVolumeBackupBackupRestoreFilesContent(IEnumerable<string> fileList, ResourceIdentifier destinationVolumeId)
         {
             Argument.AssertNotNull(fileList, nameof(fileList));
             Argument.AssertNotNull(destinationVolumeId, nameof(destinationVolumeId));
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Destination folder where the files will be restored. The path name should start with a forward slash. If it is omitted from request then restore is done at the root folder of the destination volume by default. </summary>
         public string RestoreFilePath { get; set; }
         /// <summary> Resource Id of the destination volume on which the files need to be restored. </summary>
-        public string DestinationVolumeId { get; }
+        public ResourceIdentifier DestinationVolumeId { get; }
     }
 }

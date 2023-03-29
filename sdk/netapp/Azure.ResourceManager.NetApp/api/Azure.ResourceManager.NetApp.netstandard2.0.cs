@@ -303,8 +303,8 @@ namespace Azure.ResourceManager.NetApp
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetApp.NetAppVolumeBackupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.NetAppVolumeBackupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation RestoreFiles(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.BackupRestoreFiles body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RestoreFilesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.BackupRestoreFiles body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation RestoreFiles(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupBackupRestoreFilesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RestoreFilesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupBackupRestoreFilesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.NetAppVolumeBackupResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.NetAppVolumeBackupResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.NetApp
         public Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource? EncryptionKeySource { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule> ExportRules { get { throw null; } }
-        public Azure.ResourceManager.NetApp.Models.FileAccessLog? FileAccessLogs { get { throw null; } }
+        public Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog? FileAccessLogs { get { throw null; } }
         public System.Guid? FileSystemId { get { throw null; } }
         public bool? IsCoolAccessEnabled { get { throw null; } set { } }
         public bool? IsDefaultQuotaEnabled { get { throw null; } set { } }
@@ -465,8 +465,8 @@ namespace Azure.ResourceManager.NetApp
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.NetAppVolumeResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation AuthorizeReplication(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.NetAppVolumeAuthorizeReplicationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> AuthorizeReplicationAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.NetAppVolumeAuthorizeReplicationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation BreakFileLocks(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.BreakFileLocksContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> BreakFileLocksAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.BreakFileLocksContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation BreakFileLocks(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.NetAppVolumeBreakFileLocksContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> BreakFileLocksAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.NetAppVolumeBreakFileLocksContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation BreakReplication(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.NetAppVolumeBreakReplicationContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> BreakReplicationAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.NetAppVolumeBreakReplicationContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName) { throw null; }
@@ -617,19 +617,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public string AvailabilityZone { get { throw null; } }
         public bool? IsAvailable { get { throw null; } }
     }
-    public partial class BackupRestoreFiles
-    {
-        public BackupRestoreFiles(System.Collections.Generic.IEnumerable<string> fileList, string destinationVolumeId) { }
-        public string DestinationVolumeId { get { throw null; } }
-        public System.Collections.Generic.IList<string> FileList { get { throw null; } }
-        public string RestoreFilePath { get { throw null; } set { } }
-    }
-    public partial class BreakFileLocksContent
-    {
-        public BreakFileLocksContent() { }
-        public string ClientIP { get { throw null; } set { } }
-        public bool? ConfirmRunningDisruptiveOperation { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CapacityPoolEncryptionType : System.IEquatable<Azure.ResourceManager.NetApp.Models.CapacityPoolEncryptionType>
     {
@@ -689,24 +676,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume left, Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume left, Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FileAccessLog : System.IEquatable<Azure.ResourceManager.NetApp.Models.FileAccessLog>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FileAccessLog(string value) { throw null; }
-        public static Azure.ResourceManager.NetApp.Models.FileAccessLog Disabled { get { throw null; } }
-        public static Azure.ResourceManager.NetApp.Models.FileAccessLog Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.NetApp.Models.FileAccessLog other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.NetApp.Models.FileAccessLog left, Azure.ResourceManager.NetApp.Models.FileAccessLog right) { throw null; }
-        public static implicit operator Azure.ResourceManager.NetApp.Models.FileAccessLog (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.NetApp.Models.FileAccessLog left, Azure.ResourceManager.NetApp.Models.FileAccessLog right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class NetAppAccountActiveDirectory
@@ -902,6 +871,24 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppEndpointType left, Azure.ResourceManager.NetApp.Models.NetAppEndpointType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppEndpointType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetApp.Models.NetAppEndpointType left, Azure.ResourceManager.NetApp.Models.NetAppEndpointType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetAppFileAccessLog : System.IEquatable<Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetAppFileAccessLog(string value) { throw null; }
+        public static Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog Disabled { get { throw null; } }
+        public static Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog left, Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog left, Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class NetAppFilePathAvailabilityContent
@@ -1203,6 +1190,13 @@ namespace Azure.ResourceManager.NetApp.Models
         public NetAppVolumeAuthorizeReplicationContent() { }
         public Azure.Core.ResourceIdentifier RemoteVolumeResourceId { get { throw null; } set { } }
     }
+    public partial class NetAppVolumeBackupBackupRestoreFilesContent
+    {
+        public NetAppVolumeBackupBackupRestoreFilesContent(System.Collections.Generic.IEnumerable<string> fileList, Azure.Core.ResourceIdentifier destinationVolumeId) { }
+        public Azure.Core.ResourceIdentifier DestinationVolumeId { get { throw null; } }
+        public System.Collections.Generic.IList<string> FileList { get { throw null; } }
+        public string RestoreFilePath { get { throw null; } set { } }
+    }
     public partial class NetAppVolumeBackupConfiguration
     {
         public NetAppVolumeBackupConfiguration() { }
@@ -1245,6 +1239,12 @@ namespace Azure.ResourceManager.NetApp.Models
         public long? TotalTransferBytes { get { throw null; } }
         public string UnhealthyReason { get { throw null; } }
     }
+    public partial class NetAppVolumeBreakFileLocksContent
+    {
+        public NetAppVolumeBreakFileLocksContent() { }
+        public System.Net.IPAddress ClientIP { get { throw null; } set { } }
+        public bool? ConfirmRunningDisruptiveOperation { get { throw null; } set { } }
+    }
     public partial class NetAppVolumeBreakReplicationContent
     {
         public NetAppVolumeBreakReplicationContent() { }
@@ -1256,7 +1256,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupConfiguration Backup { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppReplicationObject Replication { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SnapshotPolicyId { get { throw null; } set { } }
-        public Azure.ResourceManager.NetApp.Models.VolumeRelocationProperties VolumeRelocation { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.NetAppVolumeRelocationProperties VolumeRelocation { get { throw null; } set { } }
     }
     public partial class NetAppVolumeExportPolicyRule
     {
@@ -1312,7 +1312,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume? EnableSubvolumes { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource? EncryptionKeySource { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule> ExportRules { get { throw null; } }
-        public Azure.ResourceManager.NetApp.Models.FileAccessLog? FileAccessLogs { get { throw null; } }
+        public Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog? FileAccessLogs { get { throw null; } }
         public System.Guid? FileSystemId { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public bool? IsCoolAccessEnabled { get { throw null; } set { } }
@@ -1426,6 +1426,12 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         public NetAppVolumeReestablishReplicationContent() { }
         public Azure.Core.ResourceIdentifier SourceVolumeId { get { throw null; } set { } }
+    }
+    public partial class NetAppVolumeRelocationProperties
+    {
+        public NetAppVolumeRelocationProperties() { }
+        public bool? IsReadyToBeFinalized { get { throw null; } }
+        public bool? IsRelocationRequested { get { throw null; } set { } }
     }
     public partial class NetAppVolumeReplication
     {
@@ -1595,11 +1601,5 @@ namespace Azure.ResourceManager.NetApp.Models
         public int? Minute { get { throw null; } set { } }
         public int? SnapshotsToKeep { get { throw null; } set { } }
         public long? UsedBytes { get { throw null; } set { } }
-    }
-    public partial class VolumeRelocationProperties
-    {
-        public VolumeRelocationProperties() { }
-        public bool? IsReadyToBeFinalized { get { throw null; } }
-        public bool? IsRelocationRequested { get { throw null; } set { } }
     }
 }

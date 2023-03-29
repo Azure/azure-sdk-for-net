@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class BackupRestoreFiles : IUtf8JsonSerializable
+    public partial class NetAppVolumeBackupBackupRestoreFilesContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

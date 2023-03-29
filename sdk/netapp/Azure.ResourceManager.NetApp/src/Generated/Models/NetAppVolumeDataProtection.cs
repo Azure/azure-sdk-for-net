@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="replication"> Replication properties. </param>
         /// <param name="snapshot"> Snapshot properties. </param>
         /// <param name="volumeRelocation"> VolumeRelocation properties. </param>
-        internal NetAppVolumeDataProtection(NetAppVolumeBackupConfiguration backup, NetAppReplicationObject replication, VolumeSnapshotProperties snapshot, VolumeRelocationProperties volumeRelocation)
+        internal NetAppVolumeDataProtection(NetAppVolumeBackupConfiguration backup, NetAppReplicationObject replication, VolumeSnapshotProperties snapshot, NetAppVolumeRelocationProperties volumeRelocation)
         {
             Backup = backup;
             Replication = replication;
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> VolumeRelocation properties. </summary>
-        public VolumeRelocationProperties VolumeRelocation { get; set; }
+        public NetAppVolumeRelocationProperties VolumeRelocation { get; set; }
     }
 }

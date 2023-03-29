@@ -99,7 +99,7 @@ rename-mapping:
   FilePathAvailabilityRequest.subnetId: -|arm-id
   MountTargetProperties.mountTargetId: -|uuid
   MountTargetProperties.fileSystemId: -|uuid
-  MountTargetProperties.ipAddress: -|ip-address
+  MountTargetProperties.ipAddress: -|ip-address  
   ActiveDirectory.kdcIP: -|ip-address
   ReplicationSchedule._10minutely: TenMinutely
   EndpointType.src: Source
@@ -128,6 +128,7 @@ rename-mapping:
   Volume.properties.smbContinuouslyAvailable: IsSmbContinuouslyAvailable
   Volume.properties.ldapEnabled: IsLdapEnabled
   Volume.properties.encrypted: IsEncrypted
+  Volume.properties.dataStoreResourceId: -|arm-id  
   VolumeGroupVolumeProperties.properties.proximityPlacementGroup: ProximityPlacementGroupId|arm-id
   VolumeGroupVolumeProperties.properties.coolAccess: IsCoolAccessEnabled
   VolumeGroupVolumeProperties.properties.snapshotDirectoryVisible: IsSnapshotDirectoryVisible
@@ -215,8 +216,12 @@ rename-mapping:
   RegionInfoAvailabilityZoneMappingsItem: AvailabilityZoneMapping
   VolumeRelocationProperties.readyToBeFinalized: IsReadyToBeFinalized
   VolumeRelocationProperties.relocationRequested: IsRelocationRequested
-  Volume.properties.dataStoreResourceId: -|arm-id
-
+  BreakFileLocksRequest.clientIp: -|ip-address
+  BreakFileLocksRequest: NetAppVolumeBreakFileLocksContent  
+  BackupRestoreFiles.destinationVolumeId: -|arm-id
+  BackupRestoreFiles: NetAppVolumeBackupBackupRestoreFilesContent
+  VolumeRelocationProperties: NetAppVolumeRelocationProperties
+  FileAccessLogs: NetAppFileAccessLog
 list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}
 

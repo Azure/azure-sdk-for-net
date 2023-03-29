@@ -12,6 +12,19 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Volume Backup Properties. </summary>
     public partial class NetAppVolumeBackupConfiguration
     {
+        /// <summary> Initializes a new instance of NetAppVolumeBackupConfiguration. </summary>
+        /// <param name="backupPolicyId"> Backup Policy Resource ID. </param>
+        /// <param name="isPolicyEnforced"> Policy Enforced. </param>
+        /// <param name="vaultId"> Vault Resource ID. </param>
+        /// <param name="isBackupEnabled"> Backup Enabled. </param>
+        internal NetAppVolumeBackupConfiguration(ResourceIdentifier backupPolicyId, bool? isPolicyEnforced, ResourceIdentifier vaultId, bool? isBackupEnabled)
+        {
+            BackupPolicyId = backupPolicyId;
+            IsPolicyEnforced = isPolicyEnforced;
+            VaultId = vaultId;
+            IsBackupEnabled = isBackupEnabled;
+        }
+
         /// <summary> Vault Resource ID. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier VaultId { get; set; }

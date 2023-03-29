@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        internal HttpMessage CreateBreakFileLocksRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, BreakFileLocksContent content)
+        internal HttpMessage CreateBreakFileLocksRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeBreakFileLocksContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> BreakFileLocksAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, BreakFileLocksContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response> BreakFileLocksAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeBreakFileLocksContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response BreakFileLocks(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, BreakFileLocksContent content = null, CancellationToken cancellationToken = default)
+        public Response BreakFileLocks(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeBreakFileLocksContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class VolumeRelocationProperties : IUtf8JsonSerializable
+    public partial class NetAppVolumeRelocationProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteEndObject();
         }
 
-        internal static VolumeRelocationProperties DeserializeVolumeRelocationProperties(JsonElement element)
+        internal static NetAppVolumeRelocationProperties DeserializeNetAppVolumeRelocationProperties(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new VolumeRelocationProperties(Optional.ToNullable(relocationRequested), Optional.ToNullable(readyToBeFinalized));
+            return new NetAppVolumeRelocationProperties(Optional.ToNullable(relocationRequested), Optional.ToNullable(readyToBeFinalized));
         }
     }
 }

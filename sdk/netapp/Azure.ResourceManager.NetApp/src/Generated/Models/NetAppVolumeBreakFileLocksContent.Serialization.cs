@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class BreakFileLocksContent : IUtf8JsonSerializable
+    public partial class NetAppVolumeBreakFileLocksContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(ClientIP))
             {
                 writer.WritePropertyName("clientIp"u8);
-                writer.WriteStringValue(ClientIP);
+                writer.WriteStringValue(ClientIP.ToString());
             }
             if (Optional.IsDefined(ConfirmRunningDisruptiveOperation))
             {

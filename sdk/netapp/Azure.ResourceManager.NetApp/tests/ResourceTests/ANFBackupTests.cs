@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                     List<NetAppVolumeResource> volumeList = await volumeCollection.GetAllAsync().ToEnumerableAsync();
                     foreach (NetAppVolumeResource volume in volumeList)
                     {
+                        string provisioningState = volume.Data.ProvisioningState;
                         if (volume.Data.DataProtection?.Backup?.IsBackupEnabled == true)
                         {
                             NetAppVolumeBackupConfiguration backupPolicyProperties = new() { IsBackupEnabled = false };
@@ -82,12 +83,15 @@ namespace Azure.ResourceManager.NetApp.Tests
                                 DataProtection = dataProtectionProperties
                             };
                             await volume.UpdateAsync(WaitUntil.Completed, volumePatch);
+                            await WaitForVolumeSucceeded(volumeCollection, volume);
+                            NetAppVolumeResource volumeUpd = await volumeCollection.GetAsync(volume.Id.Name);
+                            provisioningState = volumeUpd.Data.ProvisioningState;
                         }
                         if (Mode != RecordedTestMode.Playback)
                         {
                             await Task.Delay(30000);
                         }
-                        if (volume.Data.ProvisioningState.Equals("Succeeded") || volume.Data.ProvisioningState.Equals("Failed"))
+                        if (provisioningState.Equals("Succeeded") || provisioningState.Equals("Failed"))
                         {
                             await volume.DeleteAsync(WaitUntil.Completed);
                         }
@@ -131,7 +135,6 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [Test]
-        //[Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task CreateDeleteBackup()
         {
@@ -247,7 +250,6 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [Test]
-        [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task UpdateBackup()
         {
@@ -309,7 +311,6 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [Test]
-        [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task ListBackups()
         {
@@ -384,7 +385,6 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [Test]
-        [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task ListAccountBackups()
         {
@@ -466,7 +466,6 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [Test]
-        [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task GetBackupStatus()
         {
@@ -522,7 +521,7 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [Test]
-        [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
+        [Ignore("Ignore for now, needs AFEC, re-enable when afec is removed")]
         [RecordedTest]
         public async Task RestoreFilesNoFiles()
         {
@@ -570,19 +569,19 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsFalse(await _volumeBackupCollection.ExistsAsync(backupName + "1"));
 
             //Restore Files
-            BackupRestoreFiles body = new BackupRestoreFiles(
+            NetAppVolumeBackupBackupRestoreFilesContent body = new(
                 fileList: new string[]
                 {
                     "/dir1/customer1.db","/dir1/customer2.db"
                 },
-                destinationVolumeId: volumeResource1.Id.ToString()
+                destinationVolumeId:  volumeResource1.Id
             );
             InvalidOperationException restoreException = Assert.ThrowsAsync<InvalidOperationException>(async () => { await backupResource1.RestoreFilesAsync(WaitUntil.Completed, body); });
             //StringAssert.Contains("SingleFileSnapshotRestoreInvalidStatusForOperation", restoreException.Message);
         }
 
         [Test]
-        [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
+        [Ignore("Ignore for now due to service side issue, re-enable when fixed")]
         [RecordedTest]
         public async Task CreateVolumeFromBackupCheckRestoreStatus()
         {
@@ -639,11 +638,8 @@ namespace Azure.ResourceManager.NetApp.Tests
             //Restore backup
             //You can restore a backup only to a new volume. You cannot overwrite the existing volume with the backup
             string newVolumeName = Recording.GenerateAssetName("restoredVolume-");
-            NetAppVolumeResource _restoredVolumeResource = await CreateVolume(_defaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: newVolumeName, subnetId: DefaultSubnetId, backupId: backupResource2.Id);
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(40000);
-            }
+            NetAppVolumeResource _restoredVolumeResource = await CreateVolume(_defaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: newVolumeName, subnetId: DefaultSubnetId, backupId: backupResource1.Data.BackupId);
+            await WaitForVolumeSucceeded(this._volumeCollection, _restoredVolumeResource);
             NetAppVolumeResource newVolumeResource2 = await _volumeCollection.GetAsync(newVolumeName);
             Assert.IsNotNull(newVolumeResource2);
             Assert.AreEqual(newVolumeName, newVolumeResource2.Id.Name);

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<NetAppVolumeBackupConfiguration> backup = default;
             Optional<NetAppReplicationObject> replication = default;
             Optional<VolumeSnapshotProperties> snapshot = default;
-            Optional<VolumeRelocationProperties> volumeRelocation = default;
+            Optional<NetAppVolumeRelocationProperties> volumeRelocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backup"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    volumeRelocation = VolumeRelocationProperties.DeserializeVolumeRelocationProperties(property.Value);
+                    volumeRelocation = NetAppVolumeRelocationProperties.DeserializeNetAppVolumeRelocationProperties(property.Value);
                     continue;
                 }
             }

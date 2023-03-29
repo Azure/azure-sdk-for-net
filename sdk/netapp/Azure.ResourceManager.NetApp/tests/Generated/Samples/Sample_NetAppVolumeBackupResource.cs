@@ -143,11 +143,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumeBackupResource netAppVolumeBackup = client.GetNetAppVolumeBackupResource(netAppVolumeBackupResourceId);
 
             // invoke the operation
-            BackupRestoreFiles body = new BackupRestoreFiles(new string[]
+            NetAppVolumeBackupBackupRestoreFilesContent content = new NetAppVolumeBackupBackupRestoreFilesContent(new string[]
             {
 "/dir1/customer1.db","/dir1/customer2.db"
-            }, "/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1/volumes/volume1");
-            await netAppVolumeBackup.RestoreFilesAsync(WaitUntil.Completed, body);
+            }, new ResourceIdentifier("/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1/volumes/volume1"));
+            await netAppVolumeBackup.RestoreFilesAsync(WaitUntil.Completed, content);
 
             Console.WriteLine($"Succeeded");
         }

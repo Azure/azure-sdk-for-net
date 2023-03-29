@@ -5,18 +5,20 @@
 
 #nullable disable
 
+using System.Net;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Break file locks request. </summary>
-    public partial class BreakFileLocksContent
+    public partial class NetAppVolumeBreakFileLocksContent
     {
-        /// <summary> Initializes a new instance of BreakFileLocksContent. </summary>
-        public BreakFileLocksContent()
+        /// <summary> Initializes a new instance of NetAppVolumeBreakFileLocksContent. </summary>
+        public NetAppVolumeBreakFileLocksContent()
         {
         }
 
         /// <summary> To clear file locks on a volume for a particular client. </summary>
-        public string ClientIP { get; set; }
+        public IPAddress ClientIP { get; set; }
         /// <summary> Break File locks could be a disruptive operation for application as locks on the volume will be broken, if want to process, set to true. </summary>
         public bool? ConfirmRunningDisruptiveOperation { get; set; }
     }

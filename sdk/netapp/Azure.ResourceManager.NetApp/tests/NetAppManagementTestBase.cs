@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.NetApp.Tests
 {
     public class NetAppManagementTestBase : ManagementRecordedTestBase<NetAppManagementTestEnvironment>
     {
-        protected ArmClient Client { get; set; }
+        protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
         protected NetAppManagementTestBase(bool isAsync, RecordedTestMode mode)

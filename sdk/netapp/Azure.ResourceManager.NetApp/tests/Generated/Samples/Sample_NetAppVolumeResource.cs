@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -201,9 +202,9 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // invoke the operation
-            BreakFileLocksContent content = new BreakFileLocksContent()
+            NetAppVolumeBreakFileLocksContent content = new NetAppVolumeBreakFileLocksContent()
             {
-                ClientIP = "101.102.103.104",
+                ClientIP = IPAddress.Parse("101.102.103.104"),
                 ConfirmRunningDisruptiveOperation = true,
             };
             await netAppVolume.BreakFileLocksAsync(WaitUntil.Completed, content: content);

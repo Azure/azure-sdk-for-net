@@ -608,8 +608,10 @@ namespace Azure.ResourceManager.NetApp.Tests
             VerifyVolumeProperties(volumeResource2, true);
 
             //Call break file locks
-            BreakFileLocksContent parameters = new();
-            parameters.ConfirmRunningDisruptiveOperation = true;
+            NetAppVolumeBreakFileLocksContent parameters = new()
+            {
+                ConfirmRunningDisruptiveOperation = true
+            };
 
             await volumeResource1.BreakFileLocksAsync(WaitUntil.Completed, parameters);
         }

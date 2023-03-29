@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<int> coolnessPeriod = default;
             Optional<string> unixPermissions = default;
             Optional<int?> cloneProgress = default;
-            Optional<FileAccessLog> fileAccessLogs = default;
+            Optional<NetAppFileAccessLog> fileAccessLogs = default;
             Optional<NetAppAvsDataStore> avsDataStore = default;
             Optional<IReadOnlyList<ResourceIdentifier>> dataStoreResourceId = default;
             Optional<bool> isDefaultQuotaEnabled = default;
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.NetApp.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            fileAccessLogs = new FileAccessLog(property0.Value.GetString());
+                            fileAccessLogs = new NetAppFileAccessLog(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("avsDataStore"u8))
