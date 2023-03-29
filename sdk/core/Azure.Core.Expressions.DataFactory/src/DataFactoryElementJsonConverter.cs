@@ -58,7 +58,7 @@ namespace Azure.Core.Expressions.DataFactory
                 return methodInfo!.Invoke(null, new object[] { document.RootElement })!;
             }
 
-            throw new InvalidOperationException($"Unable to convert {typeToConvert.Name} into a DataFactoryExpression<T>");
+            throw new InvalidOperationException($"Unable to convert {typeToConvert.Name} into a DataFactoryElement<T>");
         }
 
         public override void Write(Utf8JsonWriter writer, object? value, JsonSerializerOptions options)
@@ -68,47 +68,47 @@ namespace Azure.Core.Expressions.DataFactory
                 case null:
                     writer.WriteNullValue();
                     break;
-                case DataFactoryElement<string?> stringExpression:
-                    Serialize(writer, stringExpression);
+                case DataFactoryElement<string?> stringElement:
+                    Serialize(writer, stringElement);
                     break;
-                case DataFactoryElement<int> intExpression:
-                    Serialize(writer, intExpression);
+                case DataFactoryElement<int> intElement:
+                    Serialize(writer, intElement);
                     break;
-                case DataFactoryElement<int?> nullableIntExpression:
-                    Serialize(writer, nullableIntExpression);
+                case DataFactoryElement<int?> nullableIntElement:
+                    Serialize(writer, nullableIntElement);
                     break;
-                case DataFactoryElement<double> doubleExpression:
-                    Serialize(writer, doubleExpression);
+                case DataFactoryElement<double> doubleElement:
+                    Serialize(writer, doubleElement);
                     break;
-                case DataFactoryElement<double?> nullableDoubleExpression:
-                    Serialize(writer, nullableDoubleExpression);
+                case DataFactoryElement<double?> nullableDoubleElement:
+                    Serialize(writer, nullableDoubleElement);
                     break;
-                case DataFactoryElement<bool> boolExpression:
-                    Serialize(writer, boolExpression);
+                case DataFactoryElement<bool> boolElement:
+                    Serialize(writer, boolElement);
                     break;
-                case DataFactoryElement<bool?> nullableBoolExpression:
-                    Serialize(writer, nullableBoolExpression);
+                case DataFactoryElement<bool?> nullableBoolElement:
+                    Serialize(writer, nullableBoolElement);
                     break;
-                case DataFactoryElement<DateTimeOffset> dtoExpression:
-                    Serialize(writer, dtoExpression);
+                case DataFactoryElement<DateTimeOffset> dtoElement:
+                    Serialize(writer, dtoElement);
                     break;
-                case DataFactoryElement<DateTimeOffset?> nullableDtoExpression:
-                    Serialize(writer, nullableDtoExpression);
+                case DataFactoryElement<DateTimeOffset?> nullableDtoElement:
+                    Serialize(writer, nullableDtoElement);
                     break;
-                case DataFactoryElement<TimeSpan> timespanExpression:
-                    Serialize(writer, timespanExpression);
+                case DataFactoryElement<TimeSpan> timespanElement:
+                    Serialize(writer, timespanElement);
                     break;
-                case DataFactoryElement<TimeSpan?> nullableTimespanExpression:
-                    Serialize(writer, nullableTimespanExpression);
+                case DataFactoryElement<TimeSpan?> nullableTimespanElement:
+                    Serialize(writer, nullableTimespanElement);
                     break;
-                case DataFactoryElement<Uri?> uriExpression:
-                    Serialize(writer, uriExpression);
+                case DataFactoryElement<Uri?> uriElement:
+                    Serialize(writer, uriElement);
                     break;
-                case DataFactoryElement<IList<string?>?> stringListExpression:
-                    Serialize<IList<string?>?>(writer, stringListExpression);
+                case DataFactoryElement<IList<string?>?> stringListElement:
+                    Serialize<IList<string?>?>(writer, stringListElement);
                     break;
-                case DataFactoryElement<IDictionary<string, string?>?> keyValuePairExpression:
-                    Serialize(writer, keyValuePairExpression);
+                case DataFactoryElement<IDictionary<string, string?>?> keyValuePairElement:
+                    Serialize(writer, keyValuePairElement);
                     break;
                 default:
                 {
@@ -197,7 +197,7 @@ namespace Azure.Core.Expressions.DataFactory
             }
             else
             {
-                SerializeExpression(writer, element.Kind!, element.Expression!);
+                SerializeObject(writer, element.Kind!, element.Value!);
             }
         }
 
@@ -221,11 +221,11 @@ namespace Azure.Core.Expressions.DataFactory
             }
             else
             {
-                SerializeExpression(writer, element.Kind, element.Expression!);
+                SerializeObject(writer, element.Kind, element.Value!);
             }
         }
 
-        private static void SerializeExpression(Utf8JsonWriter writer, DataFactoryElementKind kind, string value)
+        private static void SerializeObject(Utf8JsonWriter writer, DataFactoryElementKind kind, string value)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
@@ -235,12 +235,12 @@ namespace Azure.Core.Expressions.DataFactory
             writer.WriteEndObject();
         }
 
-        private static DataFactoryElement<IList<T?>> DeserializeGenericList<T>(JsonElement element)
+        private static DataFactoryElement<IList<T?>> DeserializeGenericList<T>(JsonElement json)
         {
-            if (element.ValueKind == JsonValueKind.Array)
+            if (json.ValueKind == JsonValueKind.Array)
             {
                 var list = new List<T?>();
-                foreach (var item in element.EnumerateArray())
+                foreach (var item in json.EnumerateArray())
                 {
                     list.Add(item.ValueKind == JsonValueKind.Null ? default : JsonSerializer.Deserialize<T>(item.GetRawText()!));
                 }
@@ -248,35 +248,32 @@ namespace Azure.Core.Expressions.DataFactory
                 return new DataFactoryElement<IList<T?>>(list);
             }
 
-            if (element.ValueKind == JsonValueKind.Object)
+            if (json.ValueKind == JsonValueKind.Object && TryGetReservedElement(json, out DataFactoryElement<IList<T?>>? element))
             {
-                return DeserializeExpression<IList<T?>>(element);
+                return element!;
             }
 
-            throw new InvalidOperationException($"Cannot deserialize an {element.ValueKind} as a list.");
+            throw new InvalidOperationException($"Cannot deserialize an {json.ValueKind} as a list.");
         }
 
-        internal static DataFactoryElement<T?>? Deserialize<T>(JsonElement element)
+        internal static DataFactoryElement<T?>? Deserialize<T>(JsonElement json)
         {
             T? value = default;
 
-            if (element.ValueKind == JsonValueKind.Null)
+            if (json.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
 
-            if (element.ValueKind == JsonValueKind.Object
-                && element.TryGetProperty("type", out JsonElement typeElement)
-                && typeElement.ValueKind == JsonValueKind.String
-                && typeElement.GetString() == "Expression")
+            if (TryGetReservedElement(json, out DataFactoryElement<T?>? element))
             {
-                return DeserializeExpression<T?>(element);
+                return element;
             }
 
-            if (element.ValueKind == JsonValueKind.Object && typeof(T) == typeof(IDictionary<string, string>))
+            if (json.ValueKind == JsonValueKind.Object && typeof(T) == typeof(IDictionary<string, string>))
             {
                 var dictionary = new Dictionary<string, string>();
-                foreach (var item in element.EnumerateObject())
+                foreach (var item in json.EnumerateObject())
                 {
                     dictionary.Add(item.Name, item.Value.GetString()!);
                 }
@@ -284,10 +281,10 @@ namespace Azure.Core.Expressions.DataFactory
                 return new DataFactoryElement<T?>((T)(object)dictionary);
             }
 
-            if (element.ValueKind == JsonValueKind.Array && typeof(T) == typeof(IList<string>))
+            if (json.ValueKind == JsonValueKind.Array && typeof(T) == typeof(IList<string>))
             {
                 var list = new List<string?>();
-                foreach (var item in element.EnumerateArray())
+                foreach (var item in json.EnumerateArray())
                 {
                     list.Add(item.ValueKind == JsonValueKind.Null ? default : JsonSerializer.Deserialize<string?>(item.GetRawText()!));
                 }
@@ -297,41 +294,57 @@ namespace Azure.Core.Expressions.DataFactory
 
             if (typeof(T) == typeof(DateTimeOffset))
             {
-                return new DataFactoryElement<T?>((T)(object)element.GetDateTimeOffset("O"));
+                return new DataFactoryElement<T?>((T)(object)json.GetDateTimeOffset("O"));
             }
 
             if (typeof(T) == typeof(TimeSpan) || typeof(T) == typeof(TimeSpan?))
             {
-                return new DataFactoryElement<T?>((T)(object)element.GetTimeSpan("c"));
+                return new DataFactoryElement<T?>((T)(object)json.GetTimeSpan("c"));
             }
 
             if (typeof(T) == typeof(Uri))
             {
-                return new DataFactoryElement<T?>((T)(object)new Uri(element.GetString()!));
+                return new DataFactoryElement<T?>((T)(object)new Uri(json.GetString()!));
             }
 
-            var obj = element.GetObject();
+            var obj = json.GetObject();
             if (obj is not null)
                 value = (T)obj;
 
             return new DataFactoryElement<T?>(value);
         }
 
-        private static DataFactoryElement<T> DeserializeExpression<T>(JsonElement element)
+        private static bool TryGetReservedElement<T>(JsonElement json, out DataFactoryElement<T>? element)
         {
-            string? expression = null;
-            foreach (var property in element.EnumerateObject())
+            string? type = null;
+            string? value = null;
+            int propertyCount = 0;
+            element = null;
+
+            if (json.ValueKind != JsonValueKind.Object)
             {
-                if (property.NameEquals("value"))
+                return false;
+            }
+
+            foreach (var property in json.EnumerateObject())
+            {
+                propertyCount++;
+                if (property.NameEquals("type") && property.Value.ValueKind == JsonValueKind.String)
                 {
-                    expression = property.Value.GetString();
-                    break;
+                    type = property.Value.GetString();
+                }
+                if (property.NameEquals("value") && property.Value.ValueKind == JsonValueKind.String)
+                {
+                    value = property.Value.GetString();
                 }
             }
 
-            if (expression is null)
-                throw new InvalidOperationException("Could not be deserialized as an expression. Missing required parameter 'value'.");
-            return DataFactoryElement<T>.FromExpression(expression);
+            if (type != null && value != null && propertyCount == 2)
+            {
+                element = new DataFactoryElement<T>(value, new DataFactoryElementKind(type));
+            }
+
+            return element != null;
         }
     }
 }

@@ -34,9 +34,32 @@ property of an AzureBlobDataset can either be a "string (or Expression with resu
 
 In this example when the pipeline is run in the first case the folder is always `foo/bar`, but in the second case the service will append the time the pipeline kicked off to the folder name.
 
-### DataFactoryExpressoin<T>
+#### Secure String
 
-The `DataFactoryExpression<T>` class allows us to model the literal value expected by this property using strongly typed practices.
+```json
+"folderpath": {
+  "type": "SecureString",
+  "value": "some/secret/path"
+}
+```
+
+When a secure string is used, the value is return masked with '*' characters when the resource is retrieved from the service.
+
+#### Key Vault Reference
+
+```json
+"folderpath": {
+  "type": "KeyVaultReference",
+  "value": "@Microsoft.KeyVault(SecretUri=https://myvault.vault.azure.net/secrets/mysecret/)"
+}
+```
+
+A Key Vault Reference can be used to specify a Key Vault where the value of the property is stored. 
+
+
+### DataFactoryElement<T>
+
+The `DataFactoryElement<T>` class allows us to model the literal value expected by this property using strongly typed practices.
 If the expression should evaluate to an `int` then a literal value that is assigned to the same property must also be an int.
 
 With the FolderPath example above we could set the property using either case below.
@@ -47,13 +70,25 @@ With the FolderPath example above we could set the property using either case be
   azureBlobDataset.FolderPath = "foo/bar";
 ```
 
-#### Expresion
+#### Expression
 
 ```c#
   azureBlobDataset.FolderPath = DataFactoryExpression<string>.FromExpression("foo/bar-@{pipeline().TriggerTime}");
 ```
 
-In each case the library will be able to serialize and deserialize both scenarios appropriately allowing you to seemlessly use either according to your applications needs.
+#### Secure String
+
+```c#
+  azureBlobDataset.FolderPath = DataFactoryExpression<string>.FromLiteral("some/secret/path", asSecureString: true);
+```
+
+#### Key Vault Reference
+
+```c#
+  azureBlobDataset.FolderPath = DataFactoryExpression<string>.FromKeyVaultReference("@Microsoft.KeyVault(SecretUri=https://myvault.vault.azure.net/secrets/mysecret/)");
+```
+
+In each case the library will be able to serialize and deserialize all scenarios appropriately allowing you to seamlessly use either according to your application's needs.
 
 ## Troubleshooting
 

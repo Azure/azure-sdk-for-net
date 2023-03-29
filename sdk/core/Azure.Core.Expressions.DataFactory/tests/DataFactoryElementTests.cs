@@ -52,7 +52,9 @@ namespace Azure.Core.Expressions.DataFactory.Tests
 
         private const string DoubleJson = "1.1";
         private const string StringJson = "\"a\"";
-        private const string ExpressionJson = "{\"type\":\"Expression\",\"value\":\"@{myExpression}\"}";
+        private const string ExpressionJson = $"{{\"type\":\"Expression\",\"value\":\"{ExpressionValue}\"}}";
+        private const string SecureStringJson = $"{{\"type\":\"SecureString\",\"value\":\"{SecureStringValue}\"}}";
+        private const string KeyVaultReferenceJson = $"{{\"type\":\"KeyVaultReference\",\"value\":\"{KeyVaultReferenceValue}\"}}";
         private const string NullJson = "null";
         private const string DictionaryJson = "{\"key1\":\"value1\",\"key2\":\"value2\"}";
 
@@ -71,6 +73,8 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         private const double DoubleValue = 1.1;
         private const string StringValue = "a";
         private const string ExpressionValue = "@{myExpression}";
+        private const string SecureStringValue = "somestring";
+        private const string KeyVaultReferenceValue = "@Microsoft.KeyVault(SecretUri=https://myvault.vault.azure.net/secrets/mysecret/)";
 
         private static string TimeSpanJson = $"\"{TimeSpanValue.ToString()}\"";
         private static string DateTimeOffsetJson = $"\"{TypeFormatters.ToString(DateTimeOffsetValue, "O")}\"";
@@ -120,10 +124,10 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         public void CreateFromStringLiteral()
         {
             var dfe = new DataFactoryElement<string?>(StringValue);
-            AssertStringDfe(dfe, StringValue);
+            AssertStringDfe(dfe, StringValue, DataFactoryElementKind.Literal);
 
             dfe = StringValue;
-            AssertStringDfe(dfe, StringValue);
+            AssertStringDfe(dfe, StringValue, DataFactoryElementKind.Literal);
         }
 
         [Test]
@@ -173,7 +177,8 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             {
                 new TestModel { A = 1, B = true },
                 new TestModel { A = 2, B = false }
-            };            var dfe = new DataFactoryElement<IList<TestModel>>(literal);
+            };
+            var dfe = new DataFactoryElement<IList<TestModel>>(literal);
             AssertDfe(dfe, literal);
 
             dfe = literal;
@@ -181,13 +186,20 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         }
 
         [Test]
+        public void CreateAsSecureStringLiteral()
+        {
+            var dfe = DataFactoryElement<string?>.FromLiteral(StringValue, true);
+            AssertStringDfe(dfe, new string('*', StringValue.Length), DataFactoryElementKind.SecureString);;
+        }
+
+        [Test]
         public void IncorrectlyUseExpressionAsLiteralString()
         {
             var dfe = new DataFactoryElement<string?>(ExpressionValue);
-            AssertStringDfe(dfe, ExpressionValue);
+            AssertStringDfe(dfe, ExpressionValue, DataFactoryElementKind.Literal);
 
             dfe = ExpressionValue;
-            AssertStringDfe(dfe, ExpressionValue);
+            AssertStringDfe(dfe, ExpressionValue, DataFactoryElementKind.Literal);
         }
 
         [Test]
@@ -195,6 +207,13 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         {
             var dfe = DataFactoryElement<string?>.FromExpression(ExpressionValue);
             AssertExpressionDfe(dfe);
+        }
+
+        [Test]
+        public void CreateFromKeyVaultReference()
+        {
+            var dfe = DataFactoryElement<string?>.FromKeyVaultReference(KeyVaultReferenceValue);
+            AssertKeyVaultReferenceDfe(dfe);
         }
 
         [Test]
@@ -398,6 +417,23 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         }
 
         [Test]
+        public void SerializationOfSecureString()
+        {
+            var dfe = DataFactoryElement<string>.FromLiteral(SecureStringValue, true);
+            var actual = GetSerializedString(dfe);
+            Assert.AreEqual(SecureStringJson, actual);
+            Assert.AreEqual(new string('*', SecureStringValue.Length), dfe.ToString());
+        }
+
+        [Test]
+        public void SerializationOfKeyVaultReference()
+        {
+            var dfe = DataFactoryElement<int>.FromKeyVaultReference(KeyVaultReferenceValue);
+            var actual = GetSerializedString(dfe);
+            Assert.AreEqual(KeyVaultReferenceJson, actual);
+        }
+
+        [Test]
         public void DeserializationOfIntValue()
         {
             var doc = JsonDocument.Parse(IntJson);
@@ -450,7 +486,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         {
             var doc = JsonDocument.Parse(StringJson);
             var dfe = DataFactoryElementJsonConverter.Deserialize<string?>(doc.RootElement)!;
-            AssertStringDfe(dfe, StringValue);
+            AssertStringDfe(dfe, StringValue, DataFactoryElementKind.Literal);
         }
 
         [Test]
@@ -593,7 +629,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             var serialized = GetSerializedString(dfe);
             dfe = JsonSerializer.Deserialize<DataFactoryElement<IList<TestModel>>>(serialized)!;
             Assert.AreEqual(DataFactoryElementKind.Expression, dfe.Kind);
-            Assert.AreEqual("some expression", dfe.Expression);
+            Assert.AreEqual("some expression", dfe.Value);
         }
 
         [Test]
@@ -617,13 +653,12 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         {
             var dfe = DataFactoryElement<IReadOnlyList<TestModel>>.FromExpression("some expression");
             Assert.AreEqual(DataFactoryElementKind.Expression, dfe.Kind);
-            Assert.AreEqual("some expression", dfe.Expression);
+            Assert.AreEqual("some expression", dfe.ToString());
         }
 
-        private static void AssertStringDfe(DataFactoryElement<string?> dfe, string expectedValue)
+        private static void AssertStringDfe(DataFactoryElement<string?> dfe, string expectedValue, DataFactoryElementKind expectedKind)
         {
-            Assert.AreEqual(DataFactoryElementKind.Literal, dfe.Kind);
-            Assert.AreEqual(expectedValue, dfe.Literal);
+            Assert.AreEqual(expectedKind, dfe.Kind);
             Assert.AreEqual(expectedValue, dfe.ToString());
         }
 
@@ -701,6 +736,23 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             AssertDictionaryDfe(dfe);
         }
 
+        [Test]
+        public void RoundTripDictionaryWithExtraProperties()
+        {
+            DataFactoryElement<IDictionary<string, string>> input = new Dictionary<string, string>
+            {
+                { "type", "Expression" },
+                { "value", "foo" },
+                // the extra property will cause this to be treated as a literal
+                { "extra", "bar"}
+            };
+            Assert.AreEqual(DataFactoryElementKind.Literal, input.Kind);
+            var serialized = GetSerializedString(input);
+
+            var output = JsonSerializer.Deserialize<DataFactoryElement<IDictionary<string, string?>?>>(serialized)!;
+            Assert.AreEqual(DataFactoryElementKind.Literal, output.Kind);
+        }
+
         private static void AssertDictionaryDfe(DataFactoryElement<IDictionary<string, string?>?> dfe)
         {
             Assert.AreEqual(DataFactoryElementKind.Literal, dfe.Kind);
@@ -727,11 +779,34 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             AssertExpressionDfe(dfe);
         }
 
+        [Test]
+        public void DeserializationOfKeyVaultReference()
+        {
+            var doc = JsonDocument.Parse(KeyVaultReferenceJson);
+            var dfe = DataFactoryElementJsonConverter.Deserialize<string>(doc.RootElement)!;
+            AssertKeyVaultReferenceDfe(dfe);
+        }
+
+        [Test]
+        public void DeserializationOfSecureString()
+        {
+            var doc = JsonDocument.Parse(SecureStringJson);
+            var dfe = DataFactoryElementJsonConverter.Deserialize<string>(doc.RootElement)!;
+            AssertStringDfe(dfe, SecureStringValue, DataFactoryElementKind.SecureString);
+        }
+
         private static void AssertExpressionDfe(DataFactoryElement<string?> dfe)
         {
             Assert.AreEqual(DataFactoryElementKind.Expression, dfe.Kind);
             Assert.Throws<InvalidOperationException>(() => { var x = dfe.Literal; });
             Assert.AreEqual(ExpressionValue, dfe.ToString());
+        }
+
+        private static void AssertKeyVaultReferenceDfe(DataFactoryElement<string?> dfe)
+        {
+            Assert.AreEqual(DataFactoryElementKind.KeyVaultReference, dfe.Kind);
+            Assert.Throws<InvalidOperationException>(() => { var x = dfe.Literal; });
+            Assert.AreEqual(KeyVaultReferenceValue, dfe.ToString());
         }
 
         private string GetSerializedString<T>(DataFactoryElement<T> payload)
