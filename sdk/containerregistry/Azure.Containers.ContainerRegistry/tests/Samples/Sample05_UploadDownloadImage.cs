@@ -16,7 +16,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
         {
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
-            #region Snippet:ContainerRegistry_Samples_CreateBlobClient
+            #region Snippet:ContainerRegistry_Samples_CreateContentClient
 
             // Get the service endpoint from the environment
             Uri endpoint = new(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
@@ -176,7 +176,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             var manifestList = new
             {
                 schemaVersion = 2,
-                mediaType = ManifestMediaType.DockerManifestList.ToString(),
+                mediaType = "application/vnd.docker.distribution.manifest.list.v2+json",
                 manifests = new[]
                 {
                     new
