@@ -3,8 +3,8 @@
 ## 1.0.0-beta.2 (2023-03-31-preview)
 
 ### Features Added
-- New function `ListRooms` added to list all created rooms.
-- Added pagination support for `GetParticipants` but introducing `NextLink` property
+- Added new function `ListRooms` to list all created rooms by returning `Pageable<CommunicationRoom>`,
+- Added pagination support for `GetParticipants` by returning `Pageable<RoomParticipant>`.
 
 ### Breaking Changes
 - Removed `Participants` from `CommunicationRoom` class.
