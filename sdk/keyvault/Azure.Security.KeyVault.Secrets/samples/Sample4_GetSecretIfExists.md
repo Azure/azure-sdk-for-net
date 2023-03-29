@@ -50,6 +50,9 @@ if (response.HasValue)
 }
 ```
 
+See samples for [RequestContext] for more ways you can customize specific API calls.
+
 [.NET Configuration]: https://learn.microsoft.com/dotnet/core/extensions/configuration
 [Azure.Extensions.AspNetCore.Configuration.Secrets]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/extensions/Azure.Extensions.AspNetCore.Configuration.Secrets/README.md
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
+[RequestContext]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/RequestContext.md

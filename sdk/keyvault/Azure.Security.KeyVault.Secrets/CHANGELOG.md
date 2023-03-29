@@ -4,11 +4,11 @@
 
 ### Features Added
 
+- Added overload for `SecretClient.GetSecret` and `GetSecretAsync` to pass `RequestContext` to avoid throwing or logging when a secret was not found. ([#25125](https://github.com/Azure/azure-sdk-for-net/issues/25125))
+
 ### Breaking Changes
 
 ### Bugs Fixed
-
-- Added `SecretClient.GetSecretIfExists` and `GetSecretIfExistsAsync` to avoid throwing or logging when a secret was not found. ([#25125](https://github.com/Azure/azure-sdk-for-net/issues/25125))
 
 ### Other Changes
 

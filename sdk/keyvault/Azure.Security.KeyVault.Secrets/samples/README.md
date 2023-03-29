@@ -14,4 +14,4 @@ description: Samples for the Azure.Security.KeyVault.Secrets client library.
 - [Creating, getting, updating, and deleting secrets](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/samples/Sample1_HelloWorld.md)
 - [Back up and restore a secret](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/samples/Sample2_BackupAndRestore.md)
 - [Listing secrets, secret versions, and deleted secrets](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/samples/Sample3_GetSecrets.md)
-- [Get a secret without throwing if it is not defined](https://github.com/heaths/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/samples/Sample4_GetSecretIfExists.md)
+- [Get a secret without throwing if it is not defined](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/samples/Sample4_GetSecretIfExists.md)
