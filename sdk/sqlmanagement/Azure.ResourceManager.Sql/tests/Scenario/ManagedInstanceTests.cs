@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
     {
         private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
-        private string _subnetId;
 
         public ManagedInstanceTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
@@ -31,12 +30,6 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroupResource resourceGroup = rgLro.Value;
             _resourceGroupIdentifier = resourceGroup.Id;
-
-            // create Virtual network
-            string vnetName = SessionRecording.GenerateAssetName("vnet-");
-            var vnet = await CreateVirtualNetwork(vnetName, resourceGroup);
-            _subnetId = SubnetResource.CreateResourceIdentifier(resourceGroup.Id.SubscriptionId, resourceGroup.Id.Name, vnetName, "ManagedInstance");
-            await StopSessionRecordingAsync();
         }
 
         [SetUp]
@@ -56,24 +49,6 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             }
         }
 
-        private async Task<ManagedInstanceResource> CreateOrUpdateManagedInstance(string managedInstanceName)
-        {
-            ManagedInstanceData data = new ManagedInstanceData(AzureLocation.WestUS2)
-            {
-                AdministratorLogin = $"admin-{managedInstanceName}",
-                AdministratorLoginPassword = CreateGeneralPassword(),
-                SubnetId = new ResourceIdentifier(_subnetId),
-                IsPublicDataEndpointEnabled = false,
-                MaintenanceConfigurationId = new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default"),
-                ProxyOverride = new ManagedInstanceProxyOverride("Proxy") { },
-                TimezoneId = "UTC",
-                IsZoneRedundant = false,
-            };
-            var managedInstanceLro = await _resourceGroup.GetManagedInstances().CreateOrUpdateAsync(WaitUntil.Completed, managedInstanceName, data);
-            var managedInstance = managedInstanceLro.Value;
-            return managedInstance;
-        }
-
         [Test]
         [RecordedTest]
         public async Task ManagedInstanceApiTests()
@@ -81,7 +56,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             //Because MangedInstance deployment takes a lot of time(more than 4.5 hours), the test cases are not separated separately
             // 1.CreateOrUpdate
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
-            var managedInstance = await CreateOrUpdateManagedInstance(managedInstanceName);
+            string vnetName = Recording.GenerateAssetName("vnet-");
+            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName,vnetName,DefaultLocation,_resourceGroup);
             Assert.IsNotNull(managedInstance.Data);
             Assert.AreEqual(managedInstanceName, managedInstance.Data.Name);
             Assert.AreEqual("westus2", managedInstance.Data.Location.ToString());

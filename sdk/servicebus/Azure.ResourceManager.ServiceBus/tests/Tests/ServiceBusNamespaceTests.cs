@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         private ResourceGroupResource _resourceGroup;
         private string namespacePrefix = "testnamespacemgmt";
 
-        public ServiceBusNamespaceTests(bool isAsync) : base(isAsync)
+        public ServiceBusNamespaceTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -93,13 +93,13 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                     Tier = ServiceBusSkuTier.Premium,
                     Capacity = 2
                 },
-                PremiumMessagingPartitions=2,
+                PremiumMessagingPartitions = 2,
                 IsZoneRedundant = true,
                 Location = "North Europe"
             };
             ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, parameters)).Value;
             VerifyNamespaceProperties(serviceBusNamespace, false);
-            Assert.AreEqual(parameters.Sku.Capacity,serviceBusNamespace.Data.Sku.Capacity);
+            Assert.AreEqual(parameters.Sku.Capacity, serviceBusNamespace.Data.Sku.Capacity);
             Assert.IsTrue(serviceBusNamespace.Data.IsZoneRedundant);
             Assert.AreEqual(serviceBusNamespace.Data.PremiumMessagingPartitions, 2);
             await serviceBusNamespace.DeleteAsync(WaitUntil.Completed);
@@ -408,32 +408,38 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //prepare vnet
             string vnetName = Recording.GenerateAssetName("sdktestvnet");
-            var parameters = new VirtualNetworkData
+            if (Mode == RecordedTestMode.Record)
             {
-                Subnets = {
-                    new SubnetData
+                using (Recording.DisableRecording())
+                {
+                    var parameters = new VirtualNetworkData
                     {
-                        Name = "default1",
-                        AddressPrefix = "10.0.0.0/24",
-                        ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.ServiceBus" } }
-                    },
-                    new SubnetData
-                    {
-                        Name = "default2",
-                        AddressPrefix = "10.0.1.0/24",
-                        ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.ServiceBus" } }
-                    },
-                    new SubnetData
-                    {
-                        Name = "default3",
-                        AddressPrefix = "10.0.2.0/24",
-                        ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.ServiceBus" } }
-                    }
-                },
-                Location = "eastus2"
-            };
-            parameters.AddressPrefixes.Add("10.0.0.0/16");
-            VirtualNetworkResource virtualNetwork = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, parameters)).Value;
+                        Subnets = {
+                            new SubnetData
+                            {
+                                Name = "default1",
+                                AddressPrefix = "10.0.0.0/24",
+                                ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.ServiceBus" } }
+                            },
+                            new SubnetData
+                            {
+                                Name = "default2",
+                                AddressPrefix = "10.0.1.0/24",
+                                ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.ServiceBus" } }
+                            },
+                            new SubnetData
+                            {
+                                Name = "default3",
+                                AddressPrefix = "10.0.2.0/24",
+                                ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.ServiceBus" } }
+                            }
+                        },
+                        Location = "eastus2"
+                    };
+                    parameters.AddressPrefixes.Add("10.0.0.0/16");
+                    VirtualNetworkResource virtualNetwork = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, parameters)).Value;
+                }
+            }
 
             //set network rule set
             string subscriptionId = DefaultSubscription.Id.ToString();
@@ -467,9 +473,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.NotNull(networkRuleSet.Data.VirtualNetworkRules);
             Assert.AreEqual(networkRuleSet.Data.VirtualNetworkRules.Count, 3);
             Assert.AreEqual(networkRuleSet.Data.IPRules.Count, 5);
-
-            //delete virtual network
-            await virtualNetwork.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]

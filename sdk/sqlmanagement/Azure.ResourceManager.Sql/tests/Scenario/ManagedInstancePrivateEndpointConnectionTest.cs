@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
         public ManagedInstancePrivateEndpointConnectionTest(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         }
 
         [Test]
-        [Ignore("Playback execution timeout")]
+        //[Ignore("Playback execution timeout")]
         [RecordedTest]
         public async Task ManagedInstancePrivateEndpointConnectioApiTests()
         {
@@ -59,14 +59,12 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             string privateEndpointName = list.FirstOrDefault().Data.Name;
 
             // 2.CheckIfExist
-            Assert.IsTrue(collection.Exists(privateEndpointName));
+            bool flag = await collection.ExistsAsync(privateEndpointName);
+            Assert.IsTrue(flag);
 
             // 3.Get
-            var getprivateEndpoint= await collection.GetAsync(privateEndpointName);
+            var getprivateEndpoint = await collection.GetAsync(privateEndpointName);
             Assert.IsNotNull(getprivateEndpoint.Value.Data);
-
-            // 4.GetAll
-            Assert.IsTrue(await collection.ExistsAsync(privateEndpointName));
         }
     }
 }
