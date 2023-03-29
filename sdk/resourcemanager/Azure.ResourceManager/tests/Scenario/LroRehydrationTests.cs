@@ -29,7 +29,9 @@ namespace Azure.ResourceManager.Tests
             };
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             // The creation of a resource group is a fake LRO
-            var rgOp = await subscription.GetResourceGroups().Construct(AzureLocation.WestUS2, tags).CreateOrUpdateAsync(rgName);
+            var rgOp = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, rgName, new ResourceGroupData());
+            await rgOp.UpdateStatusAsync();
+            //await rgOp.WaitForCompletionAsync();
             var rgOpId = rgOp.Id;
             var rg = rgOp.Value;
             Assert.Throws<ArgumentException>(() => new ArmOperation<ResourceGroupData>(Client, rgOpId));
