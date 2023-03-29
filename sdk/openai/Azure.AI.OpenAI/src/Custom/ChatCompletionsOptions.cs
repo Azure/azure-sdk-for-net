@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -59,5 +60,27 @@ namespace Azure.AI.OpenAI
         internal string InternalNonAzureModelName { get; set; }
 
         internal bool? InternalShouldStreamResponse { get; set; }
+
+        /// <summary> Initializes a new instance of ChatCompletionsOptions. </summary>
+        /// <param name="messages">
+        /// The collection of context messages associated with this chat completions request.
+        /// Typical usage begins with a chat message for the System role that provides instructions for
+        /// the behavior of the assistant, followed by alternating messages between the User and
+        /// Assistant roles.
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="messages"/> is null. </exception>
+        public ChatCompletionsOptions(IEnumerable<ChatMessage> messages)
+            : this()
+        {
+            Argument.AssertNotNull(messages, nameof(messages));
+            Messages = messages.ToList();
+        }
+
+        /// <inheritdoc cref="ChatCompletionsOptions(IEnumerable{ChatMessage})"/>
+        public ChatCompletionsOptions()
+        {
+            InternalStringKeyedTokenSelectionBiases = new ChangeTrackingDictionary<string, int>();
+            StopSequences = new ChangeTrackingList<string>();
+        }
     }
 }

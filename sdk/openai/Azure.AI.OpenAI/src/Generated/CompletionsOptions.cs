@@ -54,7 +54,10 @@ namespace Azure.AI.OpenAI
         /// a full ban or exclusive selection of a token, respectively. The exact behavior of a given bias
         /// score varies by model.
         /// </param>
-        /// <param name="user"> The ID of the end-user, for use in tracking and rate-limiting. </param>
+        /// <param name="user">
+        /// An identifier for the caller or end user of the operation. This may be used for tracking
+        /// or rate-limiting purposes.
+        /// </param>
         /// <param name="choicesPerPrompt">
         /// The number of completions choices that should be generated per provided prompt as part of an
         /// overall completions response.
@@ -114,7 +117,10 @@ namespace Azure.AI.OpenAI
             InternalShouldStreamResponse = internalShouldStreamResponse;
             InternalNonAzureModelName = internalNonAzureModelName;
         }
-        /// <summary> The ID of the end-user, for use in tracking and rate-limiting. </summary>
+        /// <summary>
+        /// An identifier for the caller or end user of the operation. This may be used for tracking
+        /// or rate-limiting purposes.
+        /// </summary>
         public string User { get; set; }
     }
 }

@@ -12,11 +12,14 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> Expected response schema to embeddings object list item request. </summary>
+    /// <summary> Representation of a single embeddings relatedness comparison. </summary>
     public partial class EmbeddingItem
     {
         /// <summary> Initializes a new instance of EmbeddingItem. </summary>
-        /// <param name="embedding"> List of embeddings value for the input prompt. These represents a measurement of releated of text strings. </param>
+        /// <param name="embedding">
+        /// List of embeddings value for the input prompt. These represent a measurement of the
+        /// vector-based relatedness of the provided input.
+        /// </param>
         /// <param name="index"> Index of the prompt to which the EmbeddingItem corresponds. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="embedding"/> is null. </exception>
         internal EmbeddingItem(IEnumerable<float> embedding, int index)
@@ -28,7 +31,10 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Initializes a new instance of EmbeddingItem. </summary>
-        /// <param name="embedding"> List of embeddings value for the input prompt. These represents a measurement of releated of text strings. </param>
+        /// <param name="embedding">
+        /// List of embeddings value for the input prompt. These represent a measurement of the
+        /// vector-based relatedness of the provided input.
+        /// </param>
         /// <param name="index"> Index of the prompt to which the EmbeddingItem corresponds. </param>
         internal EmbeddingItem(IReadOnlyList<float> embedding, int index)
         {
@@ -36,7 +42,10 @@ namespace Azure.AI.OpenAI
             Index = index;
         }
 
-        /// <summary> List of embeddings value for the input prompt. These represents a measurement of releated of text strings. </summary>
+        /// <summary>
+        /// List of embeddings value for the input prompt. These represent a measurement of the
+        /// vector-based relatedness of the provided input.
+        /// </summary>
         public IReadOnlyList<float> Embedding { get; }
         /// <summary> Index of the prompt to which the EmbeddingItem corresponds. </summary>
         public int Index { get; }

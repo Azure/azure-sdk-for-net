@@ -21,11 +21,6 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
-            if (Optional.IsDefined(InputType))
-            {
-                writer.WritePropertyName("input_type"u8);
-                writer.WriteStringValue(InputType);
-            }
             if (Optional.IsDefined(InternalNonAzureModelName))
             {
                 writer.WritePropertyName("model"u8);
@@ -43,7 +38,6 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             Optional<string> user = default;
-            Optional<string> inputType = default;
             Optional<string> model = default;
             string input = default;
             foreach (var property in element.EnumerateObject())
@@ -51,11 +45,6 @@ namespace Azure.AI.OpenAI
                 if (property.NameEquals("user"u8))
                 {
                     user = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("input_type"u8))
-                {
-                    inputType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("model"u8))
@@ -69,7 +58,7 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new EmbeddingsOptions(user, inputType, model, input);
+            return new EmbeddingsOptions(user, model, input);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

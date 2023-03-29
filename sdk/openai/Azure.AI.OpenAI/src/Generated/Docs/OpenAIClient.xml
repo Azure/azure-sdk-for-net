@@ -29,7 +29,6 @@ var client = new OpenAIClient(endpoint, credential);
 
 var data = new {
     user = "<user>",
-    input_type = "<input_type>",
     model = "<model>",
     input = new {},
 };
@@ -50,9 +49,9 @@ Request Body:
 
 Schema for <c>EmbeddingsOptions</c>:
 <code>{
-  user: string, # Optional. The ID of the end-user, for use in tracking and rate-limiting.
-  input_type: string, # Optional. input type of embedding search to use
-  model: string, # Optional. The model name to provide as part of this completions request.
+  user: string, # Optional. An identifier for the caller or end user of the operation. This may be used for tracking
+or rate-limiting purposes.
+  model: string, # Optional. The model name to provide as part of this embeddings request.
 Not applicable to Azure OpenAI, where deployment information should be included in the Azure
 resource URI that&apos;s connected to.
   input: Union, # Required. Input text to get embeddings for, encoded as a string.
@@ -70,14 +69,15 @@ Schema for <c>Embeddings</c>:
 <code>{
   data: [
     {
-      embedding: [number], # Required. List of embeddings value for the input prompt. These represents a measurement of releated of text strings
-      index: number, # Required. Index of the prompt to which the EmbeddingItem corresponds
+      embedding: [number], # Required. List of embeddings value for the input prompt. These represent a measurement of the
+vector-based relatedness of the provided input.
+      index: number, # Required. Index of the prompt to which the EmbeddingItem corresponds.
     }
-  ], # Required. Embedding values for the prompts submitted in the request
+  ], # Required. Embedding values for the prompts submitted in the request.
   usage: {
-    prompt_tokens: number, # Required. Number of tokens sent in the original request
-    total_tokens: number, # Required. Total number of tokens transacted in this request/response
-  }, # Required. Usage counts for tokens input using the embeddings API
+    prompt_tokens: number, # Required. Number of tokens sent in the original request.
+    total_tokens: number, # Required. Total number of tokens transacted in this request/response.
+  }, # Required. Usage counts for tokens input using the embeddings API.
 }
 </code>
 
@@ -111,7 +111,6 @@ var client = new OpenAIClient(endpoint, credential);
 
 var data = new {
     user = "<user>",
-    input_type = "<input_type>",
     model = "<model>",
     input = new {},
 };
@@ -132,9 +131,9 @@ Request Body:
 
 Schema for <c>EmbeddingsOptions</c>:
 <code>{
-  user: string, # Optional. The ID of the end-user, for use in tracking and rate-limiting.
-  input_type: string, # Optional. input type of embedding search to use
-  model: string, # Optional. The model name to provide as part of this completions request.
+  user: string, # Optional. An identifier for the caller or end user of the operation. This may be used for tracking
+or rate-limiting purposes.
+  model: string, # Optional. The model name to provide as part of this embeddings request.
 Not applicable to Azure OpenAI, where deployment information should be included in the Azure
 resource URI that&apos;s connected to.
   input: Union, # Required. Input text to get embeddings for, encoded as a string.
@@ -152,14 +151,15 @@ Schema for <c>Embeddings</c>:
 <code>{
   data: [
     {
-      embedding: [number], # Required. List of embeddings value for the input prompt. These represents a measurement of releated of text strings
-      index: number, # Required. Index of the prompt to which the EmbeddingItem corresponds
+      embedding: [number], # Required. List of embeddings value for the input prompt. These represent a measurement of the
+vector-based relatedness of the provided input.
+      index: number, # Required. Index of the prompt to which the EmbeddingItem corresponds.
     }
-  ], # Required. Embedding values for the prompts submitted in the request
+  ], # Required. Embedding values for the prompts submitted in the request.
   usage: {
-    prompt_tokens: number, # Required. Number of tokens sent in the original request
-    total_tokens: number, # Required. Total number of tokens transacted in this request/response
-  }, # Required. Usage counts for tokens input using the embeddings API
+    prompt_tokens: number, # Required. Number of tokens sent in the original request.
+    total_tokens: number, # Required. Total number of tokens transacted in this request/response.
+  }, # Required. Usage counts for tokens input using the embeddings API.
 }
 </code>
 
@@ -257,7 +257,8 @@ appearing in a completions response. Token IDs are computed via external tokeniz
 bias scores reside in the range of -100 to 100 with minimum and maximum values corresponding to
 a full ban or exclusive selection of a token, respectively. The exact behavior of a given bias
 score varies by model.
-  user: string, # Optional. The ID of the end-user, for use in tracking and rate-limiting.
+  user: string, # Optional. An identifier for the caller or end user of the operation. This may be used for tracking
+or rate-limiting purposes.
   n: number, # Optional. The number of completions choices that should be generated per provided prompt as part of an
 overall completions response.
 Because this setting can generate many completions, it may quickly consume your token quota.
@@ -305,7 +306,7 @@ represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1
         top_logprobs: [Dictionary&lt;string, number&gt;], # Optional. A mapping of tokens to maximum log probability values in this completions data.
         text_offset: [number], # Optional. The text offsets associated with tokens in this completions data.
       }, # Optional. The log probabilities model for tokens associated with this completions choice.
-      finish_reason: &quot;None&quot; | &quot;Stopped&quot; | &quot;TokenLimitReached&quot; | &quot;ContentFiltered&quot;, # Required. Reason for finishing
+      finish_reason: &quot;none&quot; | &quot;stopped&quot; | &quot;tokenLimitReached&quot; | &quot;contentFiltered&quot;, # Required. Reason for finishing
     }
   ], # Optional. The collection of completions choices associated with this completions response.
 Generally, `n` choices are generated per provided prompt with a default value of 1.
@@ -412,7 +413,8 @@ appearing in a completions response. Token IDs are computed via external tokeniz
 bias scores reside in the range of -100 to 100 with minimum and maximum values corresponding to
 a full ban or exclusive selection of a token, respectively. The exact behavior of a given bias
 score varies by model.
-  user: string, # Optional. The ID of the end-user, for use in tracking and rate-limiting.
+  user: string, # Optional. An identifier for the caller or end user of the operation. This may be used for tracking
+or rate-limiting purposes.
   n: number, # Optional. The number of completions choices that should be generated per provided prompt as part of an
 overall completions response.
 Because this setting can generate many completions, it may quickly consume your token quota.
@@ -460,7 +462,7 @@ represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1
         top_logprobs: [Dictionary&lt;string, number&gt;], # Optional. A mapping of tokens to maximum log probability values in this completions data.
         text_offset: [number], # Optional. The text offsets associated with tokens in this completions data.
       }, # Optional. The log probabilities model for tokens associated with this completions choice.
-      finish_reason: &quot;None&quot; | &quot;Stopped&quot; | &quot;TokenLimitReached&quot; | &quot;ContentFiltered&quot;, # Required. Reason for finishing
+      finish_reason: &quot;none&quot; | &quot;stopped&quot; | &quot;tokenLimitReached&quot; | &quot;contentFiltered&quot;, # Required. Reason for finishing
     }
   ], # Optional. The collection of completions choices associated with this completions response.
 Generally, `n` choices are generated per provided prompt with a default value of 1.
@@ -477,13 +479,19 @@ Token limits and other settings may limit the number of choices generated.
     </member>
     <member name="GetChatCompletionsAsync(String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call GetChatCompletionsAsync with required parameters and parse the result.
+This sample shows how to call GetChatCompletionsAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new OpenAIClient(endpoint, credential);
 
-var data = new {};
+var data = new {
+    messages = new[] {
+        new {
+            role = "system",
+        }
+    },
+};
 
 Response response = await client.GetChatCompletionsAsync("<deploymentId>", RequestContent.Create(data));
 
@@ -552,7 +560,7 @@ Schema for <c>ChatCompletionsOptions</c>:
       role: &quot;system&quot; | &quot;assistant&quot; | &quot;user&quot;, # Required. The role associated with this message payload.
       content: string, # Optional. The text associated with this message payload.
     }
-  ], # Optional. The collection of context messages associated with this chat completions request.
+  ], # Required. The collection of context messages associated with this chat completions request.
 Typical usage begins with a chat message for the System role that provides instructions for
 the behavior of the assistant, followed by alternating messages between the User and
 Assistant roles.
@@ -573,7 +581,8 @@ appearing in a completions response. Token IDs are computed via external tokeniz
 bias scores reside in the range of -100 to 100 with minimum and maximum values corresponding to
 a full ban or exclusive selection of a token, respectively. The exact behavior of a given bias
 score varies by model.
-  user: string, # Optional. The ID of the end-user, for use in tracking and rate-limiting.
+  user: string, # Optional. An identifier for the caller or end user of the operation. This may be used for tracking
+or rate-limiting purposes.
   n: number, # Optional. The number of completions choices that should be generated per provided prompt as part of an
 overall completions response.
 Because this setting can generate many completions, it may quickly consume your token quota.
@@ -608,7 +617,7 @@ represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1
         content: string, # Optional. The text associated with this message payload.
       }, # Optional. The chat message for a given chat completions prompt.
       index: number, # Required. The ordered index associated with this chat completions choice.
-      finish_reason: &quot;None&quot; | &quot;Stopped&quot; | &quot;TokenLimitReached&quot; | &quot;ContentFiltered&quot;, # Required. The reason that this chat completions choice completed its generated.
+      finish_reason: &quot;none&quot; | &quot;stopped&quot; | &quot;tokenLimitReached&quot; | &quot;contentFiltered&quot;, # Required. The reason that this chat completions choice completed its generated.
       delta: ChatMessage, # Optional. The delta message content for a streaming response.
     }
   ], # Optional. The collection of completions choices associated with this completions response.
@@ -626,13 +635,19 @@ Token limits and other settings may limit the number of choices generated.
     </member>
     <member name="GetChatCompletions(String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call GetChatCompletions with required parameters and parse the result.
+This sample shows how to call GetChatCompletions with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new OpenAIClient(endpoint, credential);
 
-var data = new {};
+var data = new {
+    messages = new[] {
+        new {
+            role = "system",
+        }
+    },
+};
 
 Response response = client.GetChatCompletions("<deploymentId>", RequestContent.Create(data));
 
@@ -701,7 +716,7 @@ Schema for <c>ChatCompletionsOptions</c>:
       role: &quot;system&quot; | &quot;assistant&quot; | &quot;user&quot;, # Required. The role associated with this message payload.
       content: string, # Optional. The text associated with this message payload.
     }
-  ], # Optional. The collection of context messages associated with this chat completions request.
+  ], # Required. The collection of context messages associated with this chat completions request.
 Typical usage begins with a chat message for the System role that provides instructions for
 the behavior of the assistant, followed by alternating messages between the User and
 Assistant roles.
@@ -722,7 +737,8 @@ appearing in a completions response. Token IDs are computed via external tokeniz
 bias scores reside in the range of -100 to 100 with minimum and maximum values corresponding to
 a full ban or exclusive selection of a token, respectively. The exact behavior of a given bias
 score varies by model.
-  user: string, # Optional. The ID of the end-user, for use in tracking and rate-limiting.
+  user: string, # Optional. An identifier for the caller or end user of the operation. This may be used for tracking
+or rate-limiting purposes.
   n: number, # Optional. The number of completions choices that should be generated per provided prompt as part of an
 overall completions response.
 Because this setting can generate many completions, it may quickly consume your token quota.
@@ -757,7 +773,7 @@ represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1
         content: string, # Optional. The text associated with this message payload.
       }, # Optional. The chat message for a given chat completions prompt.
       index: number, # Required. The ordered index associated with this chat completions choice.
-      finish_reason: &quot;None&quot; | &quot;Stopped&quot; | &quot;TokenLimitReached&quot; | &quot;ContentFiltered&quot;, # Required. The reason that this chat completions choice completed its generated.
+      finish_reason: &quot;none&quot; | &quot;stopped&quot; | &quot;tokenLimitReached&quot; | &quot;contentFiltered&quot;, # Required. The reason that this chat completions choice completed its generated.
       delta: ChatMessage, # Optional. The delta message content for a streaming response.
     }
   ], # Optional. The collection of completions choices associated with this completions response.

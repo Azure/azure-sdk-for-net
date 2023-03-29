@@ -17,16 +17,13 @@ namespace Azure.AI.OpenAI
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Messages))
+            writer.WritePropertyName("messages"u8);
+            writer.WriteStartArray();
+            foreach (var item in Messages)
             {
-                writer.WritePropertyName("messages"u8);
-                writer.WriteStartArray();
-                foreach (var item in Messages)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item);
             }
+            writer.WriteEndArray();
             if (Optional.IsDefined(MaxTokens))
             {
                 if (MaxTokens != null)
@@ -151,7 +148,7 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<IList<ChatMessage>> messages = default;
+            IList<ChatMessage> messages = default;
             Optional<int?> maxTokens = default;
             Optional<float?> temperature = default;
             Optional<float?> topP = default;
@@ -167,11 +164,6 @@ namespace Azure.AI.OpenAI
             {
                 if (property.NameEquals("messages"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     List<ChatMessage> array = new List<ChatMessage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -291,7 +283,7 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new ChatCompletionsOptions(Optional.ToList(messages), Optional.ToNullable(maxTokens), Optional.ToNullable(temperature), Optional.ToNullable(topP), Optional.ToDictionary(logitBias), user, Optional.ToNullable(n), Optional.ToList(stop), Optional.ToNullable(presencePenalty), Optional.ToNullable(frequencyPenalty), Optional.ToNullable(stream), model);
+            return new ChatCompletionsOptions(messages, Optional.ToNullable(maxTokens), Optional.ToNullable(temperature), Optional.ToNullable(topP), Optional.ToDictionary(logitBias), user, Optional.ToNullable(n), Optional.ToList(stop), Optional.ToNullable(presencePenalty), Optional.ToNullable(frequencyPenalty), Optional.ToNullable(stream), model);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

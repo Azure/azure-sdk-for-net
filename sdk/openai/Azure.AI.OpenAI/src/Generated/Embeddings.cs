@@ -12,7 +12,11 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> Expected response schema to embeddings request. </summary>
+    /// <summary>
+    /// Representation of the response data from an embeddings request.
+    /// Embeddings measure the relatedness of text strings and are commonly used for search, clustering,
+    /// recommendations, and other similar scenarios.
+    /// </summary>
     public partial class Embeddings
     {
         /// <summary> Initializes a new instance of Embeddings. </summary>
