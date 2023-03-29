@@ -148,10 +148,10 @@ rename-mapping:
   CassandraTableResource: CassandraTableResourceInfo
   CosmosTablePropertiesResource: ExtendedCosmosTableResourceInfo
   ClientEncryptionKeyGetPropertiesResource: CosmosDBSqlClientEncryptionKeyProperties
-  ClientEncryptionKeyResource: CosmosDBSqlClientEncryptionKeyResource
+  ClientEncryptionKeyResource: CosmosDBSqlClientEncryptionKeyResourceInfo
   ClientEncryptionPolicy: CosmosDBClientEncryptionPolicy
   ClientEncryptionIncludedPath: CosmosDBClientEncryptionIncludedPath
-  ClientEncryptionKeyGetResultData: CosmosDBSqlClientEncryptionKey
+  ClientEncryptionKeyGetResult: CosmosDBSqlClientEncryptionKey
   DatabaseRestoreResource: DatabaseRestoreResourceInfo
   GremlinDatabaseRestoreResource: GremlinDatabaseRestoreResourceInfo
   GremlinDatabasePropertiesResource: ExtendedGremlinDatabaseResourceInfo
