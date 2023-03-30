@@ -25,12 +25,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         private const string DocumentModelBuildValue = "documentModelBuild";
         private const string DocumentModelComposeValue = "documentModelCompose";
         private const string DocumentModelCopyToValue = "documentModelCopyTo";
+        private const string DocumentClassifierBuildValue = "documentClassifierBuild";
 
-        /// <summary> documentModelBuild. </summary>
+        /// <summary> Build a new custom document model. </summary>
         public static DocumentOperationKind DocumentModelBuild { get; } = new DocumentOperationKind(DocumentModelBuildValue);
-        /// <summary> documentModelCompose. </summary>
+        /// <summary> Compose a new custom document model from existing models. </summary>
         public static DocumentOperationKind DocumentModelCompose { get; } = new DocumentOperationKind(DocumentModelComposeValue);
-        /// <summary> documentModelCopyTo. </summary>
+        /// <summary> Copy an existing document model to potentially a different resource, region, or subscription. </summary>
         public static DocumentOperationKind DocumentModelCopyTo { get; } = new DocumentOperationKind(DocumentModelCopyToValue);
         /// <summary> Determines if two <see cref="DocumentOperationKind"/> values are the same. </summary>
         public static bool operator ==(DocumentOperationKind left, DocumentOperationKind right) => left.Equals(right);

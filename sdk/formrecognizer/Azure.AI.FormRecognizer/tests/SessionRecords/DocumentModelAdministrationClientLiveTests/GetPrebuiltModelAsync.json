@@ -1,26 +1,27 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard?api-version=2022-08-31",
+      "RequestUri": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard?api-version=2023-02-28-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-6aada30d4eec4fc819737a857955d98d-f469dc9216ba7217-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "b5a417b49cf05c4a03c7425575ba65da",
+        "traceparent": "00-d0e1fbe27c28b83e556dc87b967f9a65-7383f3654baf4733-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230302.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f33eb2cf3f4a9de55ece9ddd75d4ffaf",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "5ff2cec1-f96f-4767-91b5-941cec26ca91",
+        "apim-request-id": "6f5d7c3e-aa20-4cb9-8441-b8fb82347bce",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Aug 2022 06:34:21 GMT",
+        "Date": "Fri, 03 Mar 2023 03:43:43 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "3"
+        "x-envoy-upstream-service-time": "2",
+        "x-ms-region": "West Europe"
       },
       "ResponseBody": {
         "docTypes": {
@@ -131,15 +132,15 @@
           }
         },
         "modelId": "prebuilt-businessCard",
-        "createdDateTime": "2022-08-31T00:00:00Z",
-        "apiVersion": "2022-08-31",
+        "createdDateTime": "2023-02-28T00:00:00Z",
+        "apiVersion": "2023-02-28-preview",
         "description": "Extract key information from business cards."
       }
     }
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/",
-    "RandomSeed": "1871036286"
+    "FORM_RECOGNIZER_ENDPOINT": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/",
+    "RandomSeed": "1003991353"
   }
 }

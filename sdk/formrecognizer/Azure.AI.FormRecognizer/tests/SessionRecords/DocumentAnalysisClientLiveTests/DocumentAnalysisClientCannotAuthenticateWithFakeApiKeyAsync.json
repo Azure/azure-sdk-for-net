@@ -1,25 +1,25 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-08-31",
+      "RequestUri": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2023-02-28-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "479269",
         "Content-Type": "application/octet-stream",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-2f5b6ef51e31a81ab2e9fb034b3ecb16-ad27032b3be63436-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "4ec3cfc6cf89ec7afb6daed84c119d07",
+        "traceparent": "00-ee99a18bb571cc4da251db59ebdf21c0-4eeffc162e9bdac5-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230302.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2a5f061f04988ea1d50cddd71c2b81e3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 401,
       "ResponseHeaders": {
-        "apim-request-id": "c1d7d383-cf82-4bcf-9cf1-94a0eb2ddf67",
+        "apim-request-id": "aec19594-77ab-43bd-8e5c-26ed6edc951b",
         "Content-Length": "224",
         "Content-Type": "application/json",
-        "Date": "Tue, 16 Aug 2022 05:56:00 GMT"
+        "Date": "Fri, 03 Mar 2023 03:43:27 GMT"
       },
       "ResponseBody": {
         "error": {
@@ -30,7 +30,7 @@
     }
   ],
   "Variables": {
-    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/",
-    "RandomSeed": "209007168"
+    "FORM_RECOGNIZER_ENDPOINT": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/",
+    "RandomSeed": "226990162"
   }
 }

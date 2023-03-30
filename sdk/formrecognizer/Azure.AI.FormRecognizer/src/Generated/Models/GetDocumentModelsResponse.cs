@@ -28,7 +28,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of GetDocumentModelsResponse. </summary>
         /// <param name="value"> List of document models. </param>
         /// <param name="nextLink"> Link to the next page of document models. </param>
-        internal GetDocumentModelsResponse(IReadOnlyList<DocumentModelSummary> value, string nextLink)
+        internal GetDocumentModelsResponse(IReadOnlyList<DocumentModelSummary> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,6 +37,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> List of document models. </summary>
         public IReadOnlyList<DocumentModelSummary> Value { get; }
         /// <summary> Link to the next page of document models. </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }
