@@ -55,7 +55,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         private const string ExpressionJson = $"{{\"type\":\"Expression\",\"value\":\"{ExpressionValue}\"}}";
         private const string SecureStringJson = $"{{\"type\":\"SecureString\",\"value\":\"{SecureStringValue}\"}}";
         private static readonly string SecureStringJsonNonString = $"{{\"type\":\"SecureString\",\"value\":\"{SecureStringValueNonString}\"}}";
-        private const string KeyVaultReferenceJson = $"{{\"type\":\"KeyVaultReference\",\"value\":\"{KeyVaultReferenceValue}\"}}";
+        private const string KeyVaultSecretReferenceJson = $"{{\"type\":\"AzureKeyVaultSecretReference\",\"value\":\"{KeyVaultSecretReferenceValue}\"}}";
         private const string NullJson = "null";
         private const string DictionaryJson = "{\"key1\":\"value1\",\"key2\":\"value2\"}";
 
@@ -76,7 +76,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         private const string ExpressionValue = "@{myExpression}";
         private const string SecureStringValue = "somestring";
         private const int SecureStringValueNonString = 1;
-        private const string KeyVaultReferenceValue = "@Microsoft.KeyVault(SecretUri=https://myvault.vault.azure.net/secrets/mysecret/)";
+        private const string KeyVaultSecretReferenceValue = "@Microsoft.KeyVault(SecretUri=https://myvault.vault.azure.net/secrets/mysecret/)";
 
         private static string TimeSpanJson = $"\"{TimeSpanValue.ToString()}\"";
         private static string DateTimeOffsetJson = $"\"{TypeFormatters.ToString(DateTimeOffsetValue, "O")}\"";
@@ -215,7 +215,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void CreateFromKeyVaultReference()
         {
-            var dfe = DataFactoryElement<string?>.FromKeyVaultReference(KeyVaultReferenceValue);
+            var dfe = DataFactoryElement<string?>.FromKeyVaultReference(KeyVaultSecretReferenceValue);
             AssertKeyVaultReferenceDfe(dfe);
         }
 
@@ -441,9 +441,9 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationOfKeyVaultReference()
         {
-            var dfe = DataFactoryElement<int>.FromKeyVaultReference(KeyVaultReferenceValue);
+            var dfe = DataFactoryElement<int>.FromKeyVaultReference(KeyVaultSecretReferenceValue);
             var actual = GetSerializedString(dfe);
-            Assert.AreEqual(KeyVaultReferenceJson, actual);
+            Assert.AreEqual(KeyVaultSecretReferenceJson, actual);
         }
 
         [Test]
@@ -795,7 +795,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void DeserializationOfKeyVaultReference()
         {
-            var doc = JsonDocument.Parse(KeyVaultReferenceJson);
+            var doc = JsonDocument.Parse(KeyVaultSecretReferenceJson);
             var dfe = DataFactoryElementJsonConverter.Deserialize<string>(doc.RootElement)!;
             AssertKeyVaultReferenceDfe(dfe);
         }
@@ -818,9 +818,9 @@ namespace Azure.Core.Expressions.DataFactory.Tests
 
         private static void AssertKeyVaultReferenceDfe(DataFactoryElement<string?> dfe)
         {
-            Assert.AreEqual(DataFactoryElementKind.KeyVaultReference, dfe.Kind);
+            Assert.AreEqual(DataFactoryElementKind.KeyVaultSecretReference, dfe.Kind);
             Assert.Throws<InvalidOperationException>(() => { var x = dfe.Literal; });
-            Assert.AreEqual(KeyVaultReferenceValue, dfe.ToString());
+            Assert.AreEqual(KeyVaultSecretReferenceValue, dfe.ToString());
         }
 
         private string GetSerializedString<T>(DataFactoryElement<T> payload)

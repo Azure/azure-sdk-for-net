@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace Azure.Core.Expressions.DataFactory
 {
     /// <summary>
-    /// A class representing either a primitive value or an expression.
+    /// A class representing either a literal value, a masked literal value (also known as a SecureString), an expression, or a Key Vault reference.
     /// For details on DataFactoryExpressions see https://learn.microsoft.com/en-us/azure/data-factory/control-flow-expression-language-functions#expressions.
     /// </summary>
     /// <typeparam name="T"> Can be one of <see cref="string"/>, <see cref="bool"/>, <see cref="int"/>, <see cref="double"/>, <see cref="TimeSpan"/>,
@@ -25,7 +25,7 @@ namespace Azure.Core.Expressions.DataFactory
         internal string? StringValue { get; }
 
         /// <summary>
-        /// Initializes a new instance of DataFactoryExpression with a literal value.
+        /// Initializes a new instance of DataFactoryElement with a literal value.
         /// </summary>
         /// <param name="literal"> The literal value. </param>
         public DataFactoryElement(T? literal) : this (literal, false)
@@ -39,19 +39,14 @@ namespace Azure.Core.Expressions.DataFactory
         }
 
         /// <summary>
-        ///
+        /// Gets the kind of the element.
         /// </summary>
         public DataFactoryElementKind Kind => _kind;
 
-        // /// <summary>
-        // /// Gets whether this instance was constructed by a primitive value.
-        // /// </summary>
-        // public bool HasLiteral { get; }
-
         /// <summary>
-        /// Gets the primitive value unless this instance is an expression.
+        /// Gets the literal value if the element has a <see cref="Kind"/> of <see cref="DataFactoryElementKind.Literal"/>.
         /// </summary>
-        /// <exception cref="InvalidOperationException"> HasValue is false. </exception>
+        /// <exception cref="InvalidOperationException"> <see cref="Kind"/> is not <see cref="DataFactoryElementKind.Literal"/>.</exception>
         public T? Literal
         {
             get
@@ -75,13 +70,13 @@ namespace Azure.Core.Expressions.DataFactory
         }
 
         /// <summary>
-        /// Converts a primitive value into a expression representing that value.
+        /// Converts a literal value into a <see cref="DataFactoryElement{T}"/> representing that value.
         /// </summary>
         /// <param name="literal"> The literal value. </param>
         public static implicit operator DataFactoryElement<T>(T literal) => new DataFactoryElement<T>(literal);
 
         /// <summary>
-        /// Creates a new instance of DataFactoryExpression using the expression value.
+        /// Creates a new instance of <see cref="DataFactoryElement{T}"/> using the expression value.
         /// </summary>
         /// <param name="expression"> The expression value. </param>
 #pragma warning disable CA1000 // Do not declare static members on generic types
@@ -92,23 +87,25 @@ namespace Azure.Core.Expressions.DataFactory
         }
 
         /// <summary>
-        /// Creates a new instance of DataFactoryExpression using the KeyVaultReference value.
+        /// Creates a new instance of <see cref="DataFactoryElement{T}"/> using the KeyVaultReference value.
         /// </summary>
         /// <param name="keyVaultReference"> The key vault reference value. </param>
 #pragma warning disable CA1000 // Do not declare static members on generic types
         public static DataFactoryElement<T> FromKeyVaultReference(string keyVaultReference)
 #pragma warning restore CA1000 // Do not declare static members on generic types
         {
-            return new DataFactoryElement<T>(keyVaultReference, DataFactoryElementKind.KeyVaultReference);
+            return new DataFactoryElement<T>(keyVaultReference, DataFactoryElementKind.KeyVaultSecretReference);
         }
 
         /// <summary>
-        /// Creates a new instance of DataFactoryExpression using the literal value.
+        /// Creates a new instance of <see cref="DataFactoryElement{T}"/> using the literal value.
         /// </summary>
-        /// <param name="literal"></param>
-        /// <param name="asSecureString"></param>
+        /// <param name="literal">The literal value.</param>
+        /// <param name="asSecureString">Whether to create the element as a secure string. If set to <value>true</value>, the value
+        /// will be masked with asterisks when subsequently retrieved from the service. By default, this is <value>false</value>. The value will
+        /// NOT be masked when calling <see cref="ToString"/> after creating the element from a literal.</param>
 #pragma warning disable CA1000 // Do not declare static members on generic types
-        public static DataFactoryElement<T> FromLiteral(T literal, bool asSecureString)
+        public static DataFactoryElement<T> FromLiteral(T literal, bool asSecureString = false)
 #pragma warning restore CA1000 // Do not declare static members on generic types
         {
             if (asSecureString)

@@ -333,7 +333,7 @@ namespace Azure.Core.Expressions.DataFactory
                 {
                     type = property.Value.GetString();
                 }
-                if (property.NameEquals("value") && property.Value.ValueKind == JsonValueKind.String)
+                else if (property.NameEquals("value") && property.Value.ValueKind == JsonValueKind.String)
                 {
                     value = property.Value.GetString();
                 }

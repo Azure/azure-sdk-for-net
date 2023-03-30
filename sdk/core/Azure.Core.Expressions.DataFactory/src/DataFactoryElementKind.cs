@@ -6,31 +6,31 @@ using System;
 namespace Azure.Core.Expressions.DataFactory
 {
     /// <summary>
-    ///
+    /// Represents the kind of data factory element.
     /// </summary>
     public readonly struct DataFactoryElementKind : IEquatable<DataFactoryElementKind>
     {
         private readonly string _kind;
 
         /// <summary>
-        /// Literal
+        /// A literal element.
         /// </summary>
         public static DataFactoryElementKind Literal { get; } = new DataFactoryElementKind("Literal");
 
         /// <summary>
-        /// Expression
+        /// An expression element.
         /// </summary>
         public static DataFactoryElementKind Expression { get; } = new DataFactoryElementKind("Expression");
 
         /// <summary>
-        /// SecureString
+        /// A SecureString element.
         /// </summary>
         public static DataFactoryElementKind SecureString { get; } = new DataFactoryElementKind("SecureString");
 
         /// <summary>
-        /// KeyVaultReference
+        /// A KeyVaultReference element.
         /// </summary>
-        public static DataFactoryElementKind KeyVaultReference { get; } = new DataFactoryElementKind("KeyVaultReference");
+        public static DataFactoryElementKind KeyVaultSecretReference { get; } = new DataFactoryElementKind("AzureKeyVaultSecretReference");
 
         /// <summary>
         /// Creates an instance of <see cref="DataFactoryElementKind"/>.
@@ -61,8 +61,8 @@ namespace Azure.Core.Expressions.DataFactory
         /// <summary>
         /// Compares equality of two <see cref="DataFactoryElementKind"/> instances.
         /// </summary>
-        /// <param name="left">The method to compare.</param>
-        /// <param name="right">The method to compare against.</param>
+        /// <param name="left">The kind to compare.</param>
+        /// <param name="right">The kind to compare against.</param>
         /// <returns><c>true</c> if <see cref="DataFactoryElementKind"/> values are equal for <paramref name="left"/> and <paramref name="right"/>, otherwise <c>false</c>.</returns>
         public static bool operator ==(DataFactoryElementKind left, DataFactoryElementKind right)
             => left.Equals(right);
@@ -70,8 +70,8 @@ namespace Azure.Core.Expressions.DataFactory
         /// <summary>
         /// Compares inequality of two <see cref="DataFactoryElementKind"/> instances.
         /// </summary>
-        /// <param name="left">The method to compare.</param>
-        /// <param name="right">The method to compare against.</param>
+        /// <param name="left">The kind to compare.</param>
+        /// <param name="right">The kind to compare against.</param>
         /// <returns><c>true</c> if <see cref="DataFactoryElementKind"/> values are equal for <paramref name="left"/> and <paramref name="right"/>, otherwise <c>false</c>.</returns>
         public static bool operator !=(DataFactoryElementKind left, DataFactoryElementKind right)
             => !left.Equals(right);
