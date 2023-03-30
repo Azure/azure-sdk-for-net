@@ -19,6 +19,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             CustomDocumentModelsDetails customDocumentModels = default;
+            QuotaDetails customNeuralDocumentModelBuilds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customDocumentModels"u8))
@@ -26,8 +27,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     customDocumentModels = CustomDocumentModelsDetails.DeserializeCustomDocumentModelsDetails(property.Value);
                     continue;
                 }
+                if (property.NameEquals("customNeuralDocumentModelBuilds"u8))
+                {
+                    customNeuralDocumentModelBuilds = QuotaDetails.DeserializeQuotaDetails(property.Value);
+                    continue;
+                }
             }
-            return new ServiceResourceDetails(customDocumentModels);
+            return new ServiceResourceDetails(customDocumentModels, customNeuralDocumentModelBuilds);
         }
     }
 }

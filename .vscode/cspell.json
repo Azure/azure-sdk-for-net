@@ -641,6 +641,29 @@
       ]
     },
     {
+      "filename": "**/sdk/paloaltonetworks/**/*",
+      "words": [
+      	"armid",
+      	"cpus",
+      	"eastus",
+      	"cloudngfw",
+      	"fqdnlists",
+      	"isvtestuklegacy",
+      	"liftr",
+      	"liftrpantestplan",
+      	"msal",
+        "ngfw",
+        "panrsid",
+        "palo",
+        "paloaltonetworks",
+        "payg",
+        "praval",
+        "rgopenapi",
+        "vmos",
+        "vwan"
+      ]
+    },
+    {
       "filename": "**/sdk/peering/**/*.cs",
       "words": [
         "asns",

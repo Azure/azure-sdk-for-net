@@ -5,7 +5,6 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenModel("DocumentTableCell")]
     public partial class DocumentTableCell
     {
         private const int DefaultSpanValue = 1;

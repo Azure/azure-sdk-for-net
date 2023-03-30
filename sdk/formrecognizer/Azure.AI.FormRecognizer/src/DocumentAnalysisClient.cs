@@ -63,7 +63,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
-            ServiceClient = new DocumentAnalysisRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
+            ServiceClient = new DocumentAnalysisRestClient(Diagnostics, pipeline, endpoint, options.VersionString);
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, defaultScope));
-            ServiceClient = new DocumentAnalysisRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
+            ServiceClient = new DocumentAnalysisRestClient(Diagnostics, pipeline, endpoint, options.VersionString);
         }
 
         /// <summary>
@@ -147,12 +147,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                var response = await ServiceClient.AnalyzeDocumentAsync(
+                var response = await ServiceClient.DocumentModelsAnalyzeDocumentAsync(
                     modelId,
-                    ContentType1.ApplicationOctetStream,
+                    InternalContentType.ApplicationOctetStream,
                     options.Pages.Count == 0 ? null : string.Join(",", options.Pages),
                     options.Locale,
                     Constants.DefaultStringIndexType,
+                    features: null,
+                    queryFields: null,
                     document,
                     cancellationToken).ConfigureAwait(false);
 
@@ -208,12 +210,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                var response = ServiceClient.AnalyzeDocument(
+                var response = ServiceClient.DocumentModelsAnalyzeDocument(
                     modelId,
-                    ContentType1.ApplicationOctetStream,
+                    InternalContentType.ApplicationOctetStream,
                     options.Pages.Count == 0 ? null : string.Join(",", options.Pages),
                     options.Locale,
                     Constants.DefaultStringIndexType,
+                    features: null,
+                    queryFields: null,
                     document,
                     cancellationToken);
 
@@ -269,12 +273,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                var request = new AnalyzeDocumentRequest() { UrlSource = documentUri.AbsoluteUri };
-                var response = await ServiceClient.AnalyzeDocumentAsync(
+                var request = new AnalyzeDocumentRequest() { UrlSource = documentUri };
+                var response = await ServiceClient.DocumentModelsAnalyzeDocumentAsync(
                     modelId,
                     options.Pages.Count == 0 ? null : string.Join(",", options.Pages),
                     options.Locale,
                     Constants.DefaultStringIndexType,
+                    features: null,
+                    queryFields: null,
                     request,
                     cancellationToken).ConfigureAwait(false);
 
@@ -330,12 +336,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                var request = new AnalyzeDocumentRequest() { UrlSource = documentUri.AbsoluteUri };
-                var response = ServiceClient.AnalyzeDocument(
+                var request = new AnalyzeDocumentRequest() { UrlSource = documentUri };
+                var response = ServiceClient.DocumentModelsAnalyzeDocument(
                     modelId,
                     options.Pages.Count == 0 ? null : string.Join(",", options.Pages),
                     options.Locale,
                     Constants.DefaultStringIndexType,
+                    features: null,
+                    queryFields: null,
                     request,
                     cancellationToken);
 

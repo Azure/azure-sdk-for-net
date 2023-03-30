@@ -209,10 +209,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns<EventData>(e =>
                 {
                     var hasSpace = writtenEventsData.Count <= 1;
-                    if (hasSpace)
-                    {
-                        writtenEventsData.Add(e.Clone());
-                    }
+                    writtenEventsData.Add(e.Clone());
                     return hasSpace;
                 });
 
@@ -239,15 +236,13 @@ namespace Azure.Messaging.EventHubs.Tests
             await producer.SendAsync(batch);
 
             activity.Stop();
-            Assert.That(writtenEventsData.Count, Is.EqualTo(2), "Each of the events in the batch should have been instrumented.");
+            Assert.That(writtenEventsData.Count, Is.EqualTo(3), "Each of the events should have been instrumented when attempting to add them to the batch.");
 
             foreach (EventData eventData in writtenEventsData)
             {
                 Assert.That(eventData.Properties.TryGetValue(MessagingClientDiagnostics.DiagnosticIdAttribute, out object value), Is.True, "The events should have a diagnostic identifier property.");
                 Assert.That(value, Is.EqualTo(activity.Id), "The diagnostics identifier should match the activity in the active scope.");
             }
-
-            Assert.That(eventData3.Properties.ContainsKey(MessagingClientDiagnostics.DiagnosticIdAttribute), Is.False, "Events that were not accepted into the batch should not have been instrumented.");
         }
 
         /// <summary>
