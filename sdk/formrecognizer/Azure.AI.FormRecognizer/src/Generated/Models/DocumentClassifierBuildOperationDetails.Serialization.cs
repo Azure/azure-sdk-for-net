@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    internal partial class DocumentClassifierBuildOperationDetails
+    public partial class DocumentClassifierBuildOperationDetails
     {
         internal static DocumentClassifierBuildOperationDetails DeserializeDocumentClassifierBuildOperationDetails(JsonElement element)
         {
