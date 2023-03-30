@@ -50,10 +50,6 @@ namespace Azure.Core.Expressions.DataFactory
         }
 
         /// <inheritdoc />
-        public bool Equals(string? other)
-            => string.Equals(other, _kind, StringComparison.Ordinal);
-
-        /// <inheritdoc />
         public override bool Equals(object? obj)
             => (obj is DataFactoryElementKind other && Equals(other)) ||
                (obj is string str && str.Equals(_kind, StringComparison.Ordinal));
