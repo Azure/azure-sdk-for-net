@@ -9,7 +9,7 @@ namespace Azure.Storage
         {
             if (checksumAlgorithm == StorageChecksumAlgorithm.Auto)
             {
-#if BlobSDK || DataLakeSDK
+#if BlobSDK || DataLakeSDK || CommonSDK
                 return StorageChecksumAlgorithm.StorageCrc64;
 #elif FileSDK // file shares don't support crc64
                 return StorageChecksumAlgorithm.MD5;
