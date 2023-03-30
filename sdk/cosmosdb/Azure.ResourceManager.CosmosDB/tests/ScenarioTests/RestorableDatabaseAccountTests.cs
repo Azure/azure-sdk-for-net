@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
     public class RestorableDatabaseAccountTests : CosmosDBManagementClientBase
     {
         private CosmosDBAccountResource _restorableDatabaseAccount;
+        private CosmosDBAccountResource _restoredDatabaseAccount;
+
         public Dictionary<AccountType, string> accounts;
 
         public RestorableDatabaseAccountTests(bool isAsync) : base(isAsync)
@@ -42,6 +44,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             if (_restorableDatabaseAccount != null)
             {
                 await _restorableDatabaseAccount.DeleteAsync(WaitUntil.Completed);
+            }
+
+            if (_restoredDatabaseAccount != null)
+            {
+                await _restoredDatabaseAccount.DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -91,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 RestoreSource = restorableAccount.Id.ToString(),
             };
 
-            await RestoreAndVerifyRestoredAccount(AccountType.PitrSql, restorableAccount, restoreParameters);
+            _restoredDatabaseAccount = await RestoreAndVerifyRestoredAccount(AccountType.PitrSql, restorableAccount, restoreParameters);
         }
 
         [Test]
@@ -120,7 +127,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 RestoreSource = restorableAccount.Id.ToString(),
             };
 
-            await RestoreAndVerifyRestoredAccount(AccountType.Gremlin, restorableAccount, restoreParameters);
+            _restoredDatabaseAccount = await RestoreAndVerifyRestoredAccount(AccountType.Gremlin, restorableAccount, restoreParameters);
         }
 
         [Test]
@@ -169,10 +176,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             restoreParameters.GremlinDatabasesToRestore.Add(restoreInfo);
 
-            CosmosDBAccountResource restoredAccount = await RestoreAndVerifyRestoredAccount(AccountType.Gremlin, restorableAccount, restoreParameters);
+            _restoredDatabaseAccount = await RestoreAndVerifyRestoredAccount(AccountType.Gremlin, restorableAccount, restoreParameters);
 
             // verifying restored database
-            GremlinDatabaseResource restoredDatabase = await restoredAccount.GetGremlinDatabaseAsync(restorableDatabase.Resource.DatabaseName);
+            GremlinDatabaseResource restoredDatabase = await _restoredDatabaseAccount.GetGremlinDatabaseAsync(restorableDatabase.Resource.DatabaseName);
             Assert.NotNull(restoredDatabase);
 
             // verifying restored graph
@@ -203,7 +210,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 RestoreSource = restorableAccount.Id.ToString(),
             };
 
-            await RestoreAndVerifyRestoredAccount(AccountType.Table, restorableAccount, restoreParameters);
+            _restoredDatabaseAccount = await RestoreAndVerifyRestoredAccount(AccountType.Table, restorableAccount, restoreParameters);
         }
 
         [Test]
@@ -243,10 +250,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             restoreParameters.TablesToRestore.Add(restorableTable.Resource.TableName);
 
-            CosmosDBAccountResource restoredAccount = await RestoreAndVerifyRestoredAccount(AccountType.Table, restorableAccount, restoreParameters);
+            _restoredDatabaseAccount = await RestoreAndVerifyRestoredAccount(AccountType.Table, restorableAccount, restoreParameters);
 
             // verifying restored table
-            CosmosDBTableResource restoredTable = await restoredAccount.GetCosmosDBTableAsync(restorableTable.Resource.TableName);
+            CosmosDBTableResource restoredTable = await _restoredDatabaseAccount.GetCosmosDBTableAsync(restorableTable.Resource.TableName);
             Assert.NotNull(restoredTable);
         }
 
