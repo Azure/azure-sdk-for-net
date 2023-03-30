@@ -20,6 +20,7 @@ using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Shared;
 using Azure.Storage.DataMovement.JobPlanModels;
 using System.Drawing;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -39,6 +40,8 @@ namespace Azure.Storage.DataMovement.Tests
         public string GetNewBlobName() => BlobsClientBuilder.GetNewBlobName();
         public string GetNewBlobDirectoryName() => BlobsClientBuilder.GetNewBlobDirectoryName();
         public string GetNewBlockName() => BlobsClientBuilder.GetNewBlockName();
+
+        public List<string> FailureMessages { get; } = new List<string>();
 
         public DataMovementBlobTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
             : base(async, mode /* RecordedTestMode.Record /* to re-record */)

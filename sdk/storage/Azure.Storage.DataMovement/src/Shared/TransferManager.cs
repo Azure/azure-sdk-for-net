@@ -122,7 +122,7 @@ namespace Azure.Storage.DataMovement
             _maxJobChunkTasks = options?.MaximumConcurrency ?? DataMovementConstants.MaxJobChunkTasks;
             _dataTransfers = new Dictionary<string, DataTransfer>();
             _arrayPool = ArrayPool<byte>.Shared;
-            _checkpointer = options.Checkpointer != default ? options.Checkpointer : CreateDefaultCheckpointer();
+            _checkpointer = options?.Checkpointer != default ? options.Checkpointer : CreateDefaultCheckpointer();
             _errorHandling = options?.ErrorHandling != default ? options.ErrorHandling : ErrorHandlingOptions.StopOnAllFailures;
         }
 
