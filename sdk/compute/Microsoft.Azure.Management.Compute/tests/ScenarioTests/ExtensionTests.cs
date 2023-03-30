@@ -30,6 +30,7 @@ namespace Compute.Tests
                 Settings = "{}",
                 ProtectedSettings = "{}",
                 EnableAutomaticUpgrade = false,
+                ProvisionAfterExtensions = {}
             };
             typeof(ResourceWithOptionalLocation).GetRuntimeProperty("Name").SetValue(vmExtension, "vmext01");
             typeof(ResourceWithOptionalLocation).GetRuntimeProperty("Type").SetValue(vmExtension, "Microsoft.Compute/virtualMachines/extensions");
@@ -152,6 +153,15 @@ namespace Compute.Tests
             Assert.True(vmExtExpected.Tags.SequenceEqual(vmExtReturned.Tags));
             Assert.True(vmExtExpected.EnableAutomaticUpgrade == vmExtReturned.EnableAutomaticUpgrade);
             Assert.True(vmExtExpected.SuppressFailures == vmExtReturned.SuppressFailures);
+
+            if (vmExtExpected.ProvisionAfterExtensions != null)
+            {
+                Assert.True(vmExtExpected.ProvisionAfterExtensions.Count == vmExtReturned.ProvisionAfterExtensions.Count);
+                for (int i = 0; i < vmExtExpected.ProvisionAfterExtensions.Count; i++)
+                {
+                    Assert.True(vmExtExpected.ProvisionAfterExtensions[i] == vmExtReturned.ProvisionAfterExtensions[i]);
+                }
+            }
         }
 
         private void ValidateVMExtensionInstanceView(VirtualMachineExtensionInstanceView vmExtInstanceView)
