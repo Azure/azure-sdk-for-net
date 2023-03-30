@@ -7,7 +7,6 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    [CodeGenModel("DataTableCell")]
     internal partial class DataTableCell
     {
         // We're ovewriting the generated deserialization method to fix two service behaviors:

@@ -58,6 +58,7 @@ namespace Azure.Storage.DataMovement.Blobs
     public partial class BlobStorageResourceContainerOptions
     {
         public BlobStorageResourceContainerOptions() { }
+        public Azure.Storage.Blobs.Models.BlobType BlobType { get { throw null; } set { } }
         public Azure.Storage.DataMovement.Models.TransferCopyMethod CopyMethod { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobStates States { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobTraits Traits { get { throw null; } set { } }

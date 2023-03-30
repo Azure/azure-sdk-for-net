@@ -318,7 +318,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(1.1, AzMonList.GetTagValue(ref monitorTags.UnMappedTags, "doubleKey"));
             Assert.Equal("test", AzMonList.GetTagValue(ref monitorTags.UnMappedTags, "stringKey"));
             Assert.Equal(true, AzMonList.GetTagValue(ref monitorTags.UnMappedTags, "boolKey"));
-            Assert.Equal("Azure.Monitor.OpenTelemetry.Exporter.Tests.TagsTests+Test", AzMonList.GetTagValue(ref monitorTags.UnMappedTags, "objectKey").ToString());
+            Assert.Equal("Azure.Monitor.OpenTelemetry.Exporter.Tests.TagsTests+Test", AzMonList.GetTagValue(ref monitorTags.UnMappedTags, "objectKey")?.ToString());
             Assert.Equal("1,2,3", AzMonList.GetTagValue(ref monitorTags.UnMappedTags, "arrayKey"));
         }
 

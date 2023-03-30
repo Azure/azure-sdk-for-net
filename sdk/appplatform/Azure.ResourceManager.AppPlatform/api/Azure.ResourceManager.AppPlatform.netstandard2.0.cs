@@ -1843,7 +1843,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceNetworkProfile NetworkProfile { get { throw null; } set { } }
         public Azure.ResourceManager.AppPlatform.Models.AppPlatformServicePowerState? PowerState { get { throw null; } }
         public Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceProvisioningState? ProvisioningState { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("'ServiceId' is deprecated. Use 'ServiceInstanceId' instead.")]
         public System.Guid? ServiceId { get { throw null; } }
+        public string ServiceInstanceId { get { throw null; } }
         public int? Version { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

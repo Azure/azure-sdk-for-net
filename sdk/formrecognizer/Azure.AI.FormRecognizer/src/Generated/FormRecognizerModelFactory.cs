@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.FormRecognizer.DocumentAnalysis;
-using Azure.AI.FormRecognizer.Training;
 
 namespace Azure.AI.FormRecognizer.Models
 {
