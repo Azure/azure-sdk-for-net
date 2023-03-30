@@ -27,7 +27,7 @@ namespace Azure.Communication.Rooms.Tests
             RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview);
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
 
-            var validFrom = DateTime.UtcNow;
+            var validFrom = DateTimeOffset.UtcNow;
             var validUntil = validFrom.AddDays(1);
 
             try
@@ -47,13 +47,8 @@ namespace Azure.Communication.Rooms.Tests
                 Assert.AreEqual(validFrom, createCommunicationRoom.ValidFrom);
                 Assert.AreEqual(validUntil, createCommunicationRoom.ValidUntil);
 
-                // List All Rooms
-                AsyncPageable<CommunicationRoom> allRooms = roomsClient.GetRoomsAsync();
-                await foreach (CommunicationRoom room in allRooms)
-                {
-                    Console.WriteLine($" Room {room.Id} createdAt {room.CreatedAt}, valid from {room.ValidFrom} to {room.ValidUntil}.");
-                }
-                // TODO: we should check that the list of retrieved rooms should not have count of 0;
+                // List Rooms
+                // TODO: add list rooms test
 
                 // Update Room
                 Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom.AddDays(1), validUntil.AddDays(2));
@@ -87,7 +82,7 @@ namespace Azure.Communication.Rooms.Tests
             var communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value;
             var communicationUser3 = communicationIdentityClient.CreateUserAsync().Result.Value;
 
-            var validFrom = DateTime.UtcNow;
+            var validFrom = DateTimeOffset.UtcNow;
             var validUntil = validFrom.AddDays(1);
 
             try
@@ -120,13 +115,8 @@ namespace Azure.Communication.Rooms.Tests
                 Assert.AreEqual(validFrom, createCommunicationRoom.ValidFrom);
                 Assert.AreEqual(validUntil, createCommunicationRoom.ValidUntil);
 
-                // List All Rooms
-                AsyncPageable<CommunicationRoom> allRooms = roomsClient.GetRoomsAsync();
-                await foreach (CommunicationRoom room in allRooms)
-                {
-                    Console.WriteLine($" Room {room.Id} createdAt {room.CreatedAt}, valid from {room.ValidFrom} to {room.ValidUntil}.");
-                }
-                // TODO: we should check that the list of retrieved rooms should not have count of 0;
+                // List Rooms
+                // TODO: add list rooms test
 
                 // Update Room
                 validFrom = validFrom.AddDays(30);
@@ -135,16 +125,17 @@ namespace Azure.Communication.Rooms.Tests
                 Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom, validUntil);
                 CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
                 Assert.AreEqual(createdRoomId, updateCommunicationRoom.Id);
-                Assert.AreEqual(validFrom, createCommunicationRoom.ValidFrom);
-                Assert.AreEqual(validUntil, createCommunicationRoom.ValidUntil);
+                Assert.AreEqual(validFrom, updateCommunicationRoom.ValidFrom);
+                Assert.AreEqual(validUntil, updateCommunicationRoom.ValidUntil);
 
                 // Delete Room
                 Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
                 Assert.AreEqual(204, deleteRoomResponse.Status);
 
                 // Get Deleted Room
-                Response<CommunicationRoom> getDeletedRoomResponse = await roomsClient.GetRoomAsync(createdRoomId);
-                Assert.AreEqual(404, getDeletedRoomResponse.GetRawResponse().Status);
+                RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.GetRoomAsync(createdRoomId));
+                Assert.NotNull(ex);
+                Assert.AreEqual(404, ex?.Status);
             }
             catch (RequestFailedException ex)
             {
@@ -189,7 +180,7 @@ namespace Azure.Communication.Rooms.Tests
                 Assert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
 
                 var createdRoomId = createCommunicationRoom.Id;
-                participant2 = new InvitedRoomParticipant(communicationUser1);
+                participant2 = new InvitedRoomParticipant(communicationUser2) { Role = ParticipantRole.Consumer };
 
                 // Upsert room participants
                 // participant2 updated from Presenter -> Consumer
