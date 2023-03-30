@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="vmId"> Virtual Machine Id of SessionHost&apos;s underlying virtual machine. </param>
         /// <param name="resourceId"> Resource Id of SessionHost&apos;s underlying virtual machine. </param>
         /// <param name="assignedUser"> User assigned to SessionHost. </param>
+        /// <param name="friendlyName"> Friendly name of SessionHost. </param>
         /// <param name="status"> Status for a SessionHost. </param>
         /// <param name="statusTimestamp"> The timestamp of the status. </param>
         /// <param name="osVersion"> The version of the OS on the session host. </param>
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="lastUpdatedOn"> The timestamp of the last update. </param>
         /// <param name="updateErrorMessage"> The error message. </param>
         /// <param name="sessionHostHealthCheckResults"> List of SessionHostHealthCheckReports. </param>
-        internal SessionHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string objectId, DateTimeOffset? lastHeartBeatOn, int? sessions, string agentVersion, bool? allowNewSession, string vmId, ResourceIdentifier resourceId, string assignedUser, SessionHostStatus? status, DateTimeOffset? statusTimestamp, string osVersion, string sxsStackVersion, SessionHostUpdateState? updateState, DateTimeOffset? lastUpdatedOn, string updateErrorMessage, IReadOnlyList<SessionHostHealthCheckReport> sessionHostHealthCheckResults) : base(id, name, resourceType, systemData)
+        internal SessionHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string objectId, DateTimeOffset? lastHeartBeatOn, int? sessions, string agentVersion, bool? allowNewSession, string vmId, ResourceIdentifier resourceId, string assignedUser, string friendlyName, SessionHostStatus? status, DateTimeOffset? statusTimestamp, string osVersion, string sxsStackVersion, SessionHostUpdateState? updateState, DateTimeOffset? lastUpdatedOn, string updateErrorMessage, IReadOnlyList<SessionHostHealthCheckReport> sessionHostHealthCheckResults) : base(id, name, resourceType, systemData)
         {
             ObjectId = objectId;
             LastHeartBeatOn = lastHeartBeatOn;
@@ -56,6 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             VmId = vmId;
             ResourceId = resourceId;
             AssignedUser = assignedUser;
+            FriendlyName = friendlyName;
             Status = status;
             StatusTimestamp = statusTimestamp;
             OSVersion = osVersion;
@@ -82,6 +84,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public ResourceIdentifier ResourceId { get; }
         /// <summary> User assigned to SessionHost. </summary>
         public string AssignedUser { get; set; }
+        /// <summary> Friendly name of SessionHost. </summary>
+        public string FriendlyName { get; set; }
         /// <summary> Status for a SessionHost. </summary>
         public SessionHostStatus? Status { get; set; }
         /// <summary> The timestamp of the status. </summary>

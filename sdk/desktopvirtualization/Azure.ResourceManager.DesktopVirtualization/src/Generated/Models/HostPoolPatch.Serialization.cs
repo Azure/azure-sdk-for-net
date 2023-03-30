@@ -110,6 +110,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("startVMOnConnect"u8);
                 writer.WriteBooleanValue(StartVmOnConnect.Value);
             }
+            if (Optional.IsDefined(AgentUpdate))
+            {
+                writer.WritePropertyName("agentUpdate"u8);
+                writer.WriteObjectValue(AgentUpdate);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -141,6 +146,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Optional<HostPoolSsoSecretType> ssoSecretType = default;
             Optional<PreferredAppGroupType> preferredAppGroupType = default;
             Optional<bool> startVmOnConnect = default;
+            Optional<AgentUpdatePatchProperties> agentUpdate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -317,11 +323,21 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             startVmOnConnect = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("agentUpdate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            agentUpdate = AgentUpdatePatchProperties.DeserializeAgentUpdatePatchProperties(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new HostPoolPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), friendlyName.Value, description.Value, customRdpProperty.Value, Optional.ToNullable(maxSessionLimit), Optional.ToNullable(personalDesktopAssignmentType), Optional.ToNullable(loadBalancerType), Optional.ToNullable(ring), Optional.ToNullable(validationEnvironment), registrationInfo.Value, vmTemplate.Value, ssoadfsAuthority.Value, ssoClientId.Value, ssoClientSecretKeyVaultPath.Value, Optional.ToNullable(ssoSecretType), Optional.ToNullable(preferredAppGroupType), Optional.ToNullable(startVmOnConnect));
+            return new HostPoolPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), friendlyName.Value, description.Value, customRdpProperty.Value, Optional.ToNullable(maxSessionLimit), Optional.ToNullable(personalDesktopAssignmentType), Optional.ToNullable(loadBalancerType), Optional.ToNullable(ring), Optional.ToNullable(validationEnvironment), registrationInfo.Value, vmTemplate.Value, ssoadfsAuthority.Value, ssoClientId.Value, ssoClientSecretKeyVaultPath.Value, Optional.ToNullable(ssoSecretType), Optional.ToNullable(preferredAppGroupType), Optional.ToNullable(startVmOnConnect), agentUpdate.Value);
         }
     }
 }

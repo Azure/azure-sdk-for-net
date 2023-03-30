@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("startVMOnConnect"u8);
                 writer.WriteBooleanValue(StartVmOnConnect.Value);
             }
-            if (Optional.IsDefined(MigrationRequest))
+            if (Optional.IsDefined(AgentUpdate))
             {
-                writer.WritePropertyName("migrationRequest"u8);
-                writer.WriteObjectValue(MigrationRequest);
+                writer.WritePropertyName("agentUpdate"u8);
+                writer.WriteObjectValue(AgentUpdate);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -181,8 +181,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<HostPoolSsoSecretType> ssoSecretType = default;
             PreferredAppGroupType preferredAppGroupType = default;
             Optional<bool> startVmOnConnect = default;
-            Optional<DesktopVirtualizationMigrationProperties> migrationRequest = default;
             Optional<bool> cloudPCResource = default;
+            Optional<AgentUpdateProperties> agentUpdate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"u8))
@@ -434,16 +434,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             startVmOnConnect = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("migrationRequest"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            migrationRequest = DesktopVirtualizationMigrationProperties.DeserializeDesktopVirtualizationMigrationProperties(property0.Value);
-                            continue;
-                        }
                         if (property0.NameEquals("cloudPcResource"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -454,11 +444,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             cloudPCResource = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("agentUpdate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            agentUpdate = AgentUpdateProperties.DeserializeAgentUpdateProperties(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new HostPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, friendlyName.Value, description.Value, hostPoolType, Optional.ToNullable(personalDesktopAssignmentType), customRdpProperty.Value, Optional.ToNullable(maxSessionLimit), loadBalancerType, Optional.ToNullable(ring), Optional.ToNullable(validationEnvironment), registrationInfo.Value, vmTemplate.Value, Optional.ToList(applicationGroupReferences), ssoadfsAuthority.Value, ssoClientId.Value, ssoClientSecretKeyVaultPath.Value, Optional.ToNullable(ssoSecretType), preferredAppGroupType, Optional.ToNullable(startVmOnConnect), migrationRequest.Value, Optional.ToNullable(cloudPCResource), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan);
+            return new HostPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, friendlyName.Value, description.Value, hostPoolType, Optional.ToNullable(personalDesktopAssignmentType), customRdpProperty.Value, Optional.ToNullable(maxSessionLimit), loadBalancerType, Optional.ToNullable(ring), Optional.ToNullable(validationEnvironment), registrationInfo.Value, vmTemplate.Value, Optional.ToList(applicationGroupReferences), ssoadfsAuthority.Value, ssoClientId.Value, ssoClientSecretKeyVaultPath.Value, Optional.ToNullable(ssoSecretType), preferredAppGroupType, Optional.ToNullable(startVmOnConnect), Optional.ToNullable(cloudPCResource), agentUpdate.Value, managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan);
         }
     }
 }

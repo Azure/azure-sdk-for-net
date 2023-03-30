@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -32,10 +31,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RampUpStartOn))
+            if (Optional.IsDefined(RampUpStartTime))
             {
                 writer.WritePropertyName("rampUpStartTime"u8);
-                writer.WriteStringValue(RampUpStartOn.Value, "O");
+                writer.WriteObjectValue(RampUpStartTime);
             }
             if (Optional.IsDefined(RampUpLoadBalancingAlgorithm))
             {
@@ -52,20 +51,20 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("rampUpCapacityThresholdPct"u8);
                 writer.WriteNumberValue(RampUpCapacityThresholdPct.Value);
             }
-            if (Optional.IsDefined(PeakStartOn))
+            if (Optional.IsDefined(PeakStartTime))
             {
                 writer.WritePropertyName("peakStartTime"u8);
-                writer.WriteStringValue(PeakStartOn.Value, "O");
+                writer.WriteObjectValue(PeakStartTime);
             }
             if (Optional.IsDefined(PeakLoadBalancingAlgorithm))
             {
                 writer.WritePropertyName("peakLoadBalancingAlgorithm"u8);
                 writer.WriteStringValue(PeakLoadBalancingAlgorithm.Value.ToString());
             }
-            if (Optional.IsDefined(RampDownStartOn))
+            if (Optional.IsDefined(RampDownStartTime))
             {
                 writer.WritePropertyName("rampDownStartTime"u8);
-                writer.WriteStringValue(RampDownStartOn.Value, "O");
+                writer.WriteObjectValue(RampDownStartTime);
             }
             if (Optional.IsDefined(RampDownLoadBalancingAlgorithm))
             {
@@ -102,10 +101,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("rampDownNotificationMessage"u8);
                 writer.WriteStringValue(RampDownNotificationMessage);
             }
-            if (Optional.IsDefined(OffPeakStartOn))
+            if (Optional.IsDefined(OffPeakStartTime))
             {
                 writer.WritePropertyName("offPeakStartTime"u8);
-                writer.WriteStringValue(OffPeakStartOn.Value, "O");
+                writer.WriteObjectValue(OffPeakStartTime);
             }
             if (Optional.IsDefined(OffPeakLoadBalancingAlgorithm))
             {
@@ -123,13 +122,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             Optional<string> name = default;
             Optional<IList<ScalingScheduleDaysOfWeekItem>> daysOfWeek = default;
-            Optional<DateTimeOffset> rampUpStartTime = default;
+            Optional<Time> rampUpStartTime = default;
             Optional<SessionHostLoadBalancingAlgorithm> rampUpLoadBalancingAlgorithm = default;
             Optional<int> rampUpMinimumHostsPct = default;
             Optional<int> rampUpCapacityThresholdPct = default;
-            Optional<DateTimeOffset> peakStartTime = default;
+            Optional<Time> peakStartTime = default;
             Optional<SessionHostLoadBalancingAlgorithm> peakLoadBalancingAlgorithm = default;
-            Optional<DateTimeOffset> rampDownStartTime = default;
+            Optional<Time> rampDownStartTime = default;
             Optional<SessionHostLoadBalancingAlgorithm> rampDownLoadBalancingAlgorithm = default;
             Optional<int> rampDownMinimumHostsPct = default;
             Optional<int> rampDownCapacityThresholdPct = default;
@@ -137,7 +136,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Optional<DesktopVirtualizationStopHostsWhen> rampDownStopHostsWhen = default;
             Optional<int> rampDownWaitTimeMinutes = default;
             Optional<string> rampDownNotificationMessage = default;
-            Optional<DateTimeOffset> offPeakStartTime = default;
+            Optional<Time> offPeakStartTime = default;
             Optional<SessionHostLoadBalancingAlgorithm> offPeakLoadBalancingAlgorithm = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -168,7 +167,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rampUpStartTime = property.Value.GetDateTimeOffset("O");
+                    rampUpStartTime = Time.DeserializeTime(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rampUpLoadBalancingAlgorithm"u8))
@@ -208,7 +207,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    peakStartTime = property.Value.GetDateTimeOffset("O");
+                    peakStartTime = Time.DeserializeTime(property.Value);
                     continue;
                 }
                 if (property.NameEquals("peakLoadBalancingAlgorithm"u8))
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rampDownStartTime = property.Value.GetDateTimeOffset("O");
+                    rampDownStartTime = Time.DeserializeTime(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rampDownLoadBalancingAlgorithm"u8))
@@ -303,7 +302,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    offPeakStartTime = property.Value.GetDateTimeOffset("O");
+                    offPeakStartTime = Time.DeserializeTime(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offPeakLoadBalancingAlgorithm"u8))
@@ -317,7 +316,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     continue;
                 }
             }
-            return new ScalingSchedule(name.Value, Optional.ToList(daysOfWeek), Optional.ToNullable(rampUpStartTime), Optional.ToNullable(rampUpLoadBalancingAlgorithm), Optional.ToNullable(rampUpMinimumHostsPct), Optional.ToNullable(rampUpCapacityThresholdPct), Optional.ToNullable(peakStartTime), Optional.ToNullable(peakLoadBalancingAlgorithm), Optional.ToNullable(rampDownStartTime), Optional.ToNullable(rampDownLoadBalancingAlgorithm), Optional.ToNullable(rampDownMinimumHostsPct), Optional.ToNullable(rampDownCapacityThresholdPct), Optional.ToNullable(rampDownForceLogoffUsers), Optional.ToNullable(rampDownStopHostsWhen), Optional.ToNullable(rampDownWaitTimeMinutes), rampDownNotificationMessage.Value, Optional.ToNullable(offPeakStartTime), Optional.ToNullable(offPeakLoadBalancingAlgorithm));
+            return new ScalingSchedule(name.Value, Optional.ToList(daysOfWeek), rampUpStartTime.Value, Optional.ToNullable(rampUpLoadBalancingAlgorithm), Optional.ToNullable(rampUpMinimumHostsPct), Optional.ToNullable(rampUpCapacityThresholdPct), peakStartTime.Value, Optional.ToNullable(peakLoadBalancingAlgorithm), rampDownStartTime.Value, Optional.ToNullable(rampDownLoadBalancingAlgorithm), Optional.ToNullable(rampDownMinimumHostsPct), Optional.ToNullable(rampDownCapacityThresholdPct), Optional.ToNullable(rampDownForceLogoffUsers), Optional.ToNullable(rampDownStopHostsWhen), Optional.ToNullable(rampDownWaitTimeMinutes), rampDownNotificationMessage.Value, offPeakStartTime.Value, Optional.ToNullable(offPeakLoadBalancingAlgorithm));
         }
     }
 }

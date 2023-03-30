@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -21,8 +22,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
     {
         /// <summary> Initializes a new instance of ScalingPlanData. </summary>
         /// <param name="location"> The location. </param>
-        public ScalingPlanData(AzureLocation location) : base(location)
+        /// <param name="timeZone"> Timezone of the scaling plan. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="timeZone"/> is null. </exception>
+        public ScalingPlanData(AzureLocation location, string timeZone) : base(location)
         {
+            Argument.AssertNotNull(timeZone, nameof(timeZone));
+
+            TimeZone = timeZone;
             Schedules = new ChangeTrackingList<ScalingSchedule>();
             HostPoolReferences = new ChangeTrackingList<ScalingHostPoolReference>();
         }
@@ -40,7 +46,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="timeZone"> Timezone of the scaling plan. </param>
         /// <param name="hostPoolType"> HostPool type for desktop. </param>
         /// <param name="exclusionTag"> Exclusion tag for scaling plan. </param>
-        /// <param name="schedules"> List of ScalingSchedule definitions. </param>
+        /// <param name="schedules"> List of ScalingPlanPooledSchedule definitions. </param>
         /// <param name="hostPoolReferences"> List of ScalingHostPoolReference definitions. </param>
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
@@ -48,7 +54,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned. </param>
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="plan"> Gets or sets the plan. </param>
-        internal ScalingPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, string timeZone, HostPoolType? hostPoolType, string exclusionTag, IList<ScalingSchedule> schedules, IList<ScalingHostPoolReference> hostPoolReferences, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan) : base(id, name, resourceType, systemData, tags, location)
+        internal ScalingPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, string timeZone, ScalingHostPoolType? hostPoolType, string exclusionTag, IList<ScalingSchedule> schedules, IList<ScalingHostPoolReference> hostPoolReferences, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan) : base(id, name, resourceType, systemData, tags, location)
         {
             ObjectId = objectId;
             Description = description;
@@ -75,10 +81,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> Timezone of the scaling plan. </summary>
         public string TimeZone { get; set; }
         /// <summary> HostPool type for desktop. </summary>
-        public HostPoolType? HostPoolType { get; set; }
+        public ScalingHostPoolType? HostPoolType { get; set; }
         /// <summary> Exclusion tag for scaling plan. </summary>
         public string ExclusionTag { get; set; }
-        /// <summary> List of ScalingSchedule definitions. </summary>
+        /// <summary> List of ScalingPlanPooledSchedule definitions. </summary>
         public IList<ScalingSchedule> Schedules { get; }
         /// <summary> List of ScalingHostPoolReference definitions. </summary>
         public IList<ScalingHostPoolReference> HostPoolReferences { get; }

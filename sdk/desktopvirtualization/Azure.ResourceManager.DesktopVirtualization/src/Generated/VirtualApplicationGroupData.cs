@@ -46,7 +46,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="hostPoolId"> HostPool arm path of ApplicationGroup. </param>
         /// <param name="workspaceId"> Workspace arm path of ApplicationGroup. </param>
         /// <param name="applicationGroupType"> Resource Type of ApplicationGroup. </param>
-        /// <param name="migrationRequest"> The registration info of HostPool. </param>
         /// <param name="isCloudPCResource"> Is cloud pc resource. </param>
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned. </param>
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="plan"> Gets or sets the plan. </param>
-        internal VirtualApplicationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, ResourceIdentifier hostPoolId, ResourceIdentifier workspaceId, VirtualApplicationGroupType applicationGroupType, DesktopVirtualizationMigrationProperties migrationRequest, bool? isCloudPCResource, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualApplicationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, ResourceIdentifier hostPoolId, ResourceIdentifier workspaceId, VirtualApplicationGroupType applicationGroupType, bool? isCloudPCResource, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan) : base(id, name, resourceType, systemData, tags, location)
         {
             ObjectId = objectId;
             Description = description;
@@ -62,7 +61,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
             HostPoolId = hostPoolId;
             WorkspaceId = workspaceId;
             ApplicationGroupType = applicationGroupType;
-            MigrationRequest = migrationRequest;
             IsCloudPCResource = isCloudPCResource;
             ManagedBy = managedBy;
             Kind = kind;
@@ -84,8 +82,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public ResourceIdentifier WorkspaceId { get; }
         /// <summary> Resource Type of ApplicationGroup. </summary>
         public VirtualApplicationGroupType ApplicationGroupType { get; set; }
-        /// <summary> The registration info of HostPool. </summary>
-        public DesktopVirtualizationMigrationProperties MigrationRequest { get; set; }
         /// <summary> Is cloud pc resource. </summary>
         public bool? IsCloudPCResource { get; }
         /// <summary> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </summary>

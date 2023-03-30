@@ -83,11 +83,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScalingPlanResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ScalingPlanResource> GetScalingPlansAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ScalingPlanResource> GetScalingPlansAsync(this SubscriptionResource subscriptionResource, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetScalingPlansAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetScalingPlansAsync(pageSize, isDescending, initialSkip, cancellationToken);
         }
 
         /// <summary>
@@ -104,11 +107,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScalingPlanResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ScalingPlanResource> GetScalingPlans(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<ScalingPlanResource> GetScalingPlans(this SubscriptionResource subscriptionResource, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetScalingPlans(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetScalingPlans(pageSize, isDescending, initialSkip, cancellationToken);
         }
 
         /// <summary>
@@ -169,11 +175,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HostPoolResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<HostPoolResource> GetHostPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<HostPoolResource> GetHostPoolsAsync(this SubscriptionResource subscriptionResource, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetHostPoolsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetHostPoolsAsync(pageSize, isDescending, initialSkip, cancellationToken);
         }
 
         /// <summary>
@@ -190,11 +199,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HostPoolResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<HostPoolResource> GetHostPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<HostPoolResource> GetHostPools(this SubscriptionResource subscriptionResource, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetHostPools(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetHostPools(pageSize, isDescending, initialSkip, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -463,6 +475,25 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 ScalingPlanResource.ValidateResourceId(id);
                 return new ScalingPlanResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ScalingPlanPooledScheduleResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ScalingPlanPooledScheduleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScalingPlanPooledScheduleResource.CreateResourceIdentifier" /> to create a <see cref="ScalingPlanPooledScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ScalingPlanPooledScheduleResource" /> object. </returns>
+        public static ScalingPlanPooledScheduleResource GetScalingPlanPooledScheduleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ScalingPlanPooledScheduleResource.ValidateResourceId(id);
+                return new ScalingPlanPooledScheduleResource(client, id);
             }
             );
         }

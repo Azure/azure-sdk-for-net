@@ -43,11 +43,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsDefined(HostPoolType))
-            {
-                writer.WritePropertyName("hostPoolType"u8);
-                writer.WriteStringValue(HostPoolType.Value.ToString());
-            }
             if (Optional.IsDefined(ExclusionTag))
             {
                 writer.WritePropertyName("exclusionTag"u8);

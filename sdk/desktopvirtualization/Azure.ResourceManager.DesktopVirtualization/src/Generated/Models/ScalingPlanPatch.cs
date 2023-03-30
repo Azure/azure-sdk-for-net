@@ -29,8 +29,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public string FriendlyName { get; set; }
         /// <summary> Timezone of the scaling plan. </summary>
         public string TimeZone { get; set; }
-        /// <summary> HostPool type for desktop. </summary>
-        public HostPoolType? HostPoolType { get; set; }
         /// <summary> Exclusion tag for scaling plan. </summary>
         public string ExclusionTag { get; set; }
         /// <summary> List of ScalingSchedule definitions. </summary>

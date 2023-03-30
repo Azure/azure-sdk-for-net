@@ -73,11 +73,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
             writer.WriteStringValue(HostPoolId);
             writer.WritePropertyName("applicationGroupType"u8);
             writer.WriteStringValue(ApplicationGroupType.ToString());
-            if (Optional.IsDefined(MigrationRequest))
-            {
-                writer.WritePropertyName("migrationRequest"u8);
-                writer.WriteObjectValue(MigrationRequest);
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -106,7 +101,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
             ResourceIdentifier hostPoolArmPath = default;
             Optional<ResourceIdentifier> workspaceArmPath = default;
             VirtualApplicationGroupType applicationGroupType = default;
-            Optional<DesktopVirtualizationMigrationProperties> migrationRequest = default;
             Optional<bool> cloudPCResource = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -254,16 +248,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             applicationGroupType = new VirtualApplicationGroupType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("migrationRequest"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            migrationRequest = DesktopVirtualizationMigrationProperties.DeserializeDesktopVirtualizationMigrationProperties(property0.Value);
-                            continue;
-                        }
                         if (property0.NameEquals("cloudPcResource"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -278,7 +262,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new VirtualApplicationGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, hostPoolArmPath, workspaceArmPath.Value, applicationGroupType, migrationRequest.Value, Optional.ToNullable(cloudPCResource), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan);
+            return new VirtualApplicationGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, hostPoolArmPath, workspaceArmPath.Value, applicationGroupType, Optional.ToNullable(cloudPCResource), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan);
         }
     }
 }

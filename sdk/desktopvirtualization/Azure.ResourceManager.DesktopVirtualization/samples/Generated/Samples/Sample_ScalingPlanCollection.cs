@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ScalingPlansGet()
         {
-            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2021-07-12/examples/ScalingPlan_Get.json
+            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2022-09-09/examples/ScalingPlan_Get.json
             // this example is just showing the usage of "ScalingPlans_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_ScalingPlansGet()
         {
-            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2021-07-12/examples/ScalingPlan_Get.json
+            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2022-09-09/examples/ScalingPlan_Get.json
             // this example is just showing the usage of "ScalingPlans_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_ScalingPlansCreate()
         {
-            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2021-07-12/examples/ScalingPlan_Create.json
+            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2022-09-09/examples/ScalingPlan_Create.json
             // this example is just showing the usage of "ScalingPlans_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -108,12 +108,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // invoke the operation
             string scalingPlanName = "scalingPlan1";
-            ScalingPlanData data = new ScalingPlanData(new AzureLocation("centralus"))
+            ScalingPlanData data = new ScalingPlanData(new AzureLocation("centralus"), "Central Standard Time")
             {
-                Description = "des1",
-                FriendlyName = "friendly",
-                TimeZone = "",
-                HostPoolType = HostPoolType.Personal,
+                Description = "Description of Scaling Plan",
+                FriendlyName = "Scaling Plan 1",
+                HostPoolType = ScalingHostPoolType.Pooled,
                 ExclusionTag = "value",
                 Schedules =
 {
@@ -124,20 +123,20 @@ DaysOfWeek =
 {
 ScalingScheduleDaysOfWeekItem.Monday,ScalingScheduleDaysOfWeekItem.Tuesday,ScalingScheduleDaysOfWeekItem.Wednesday,ScalingScheduleDaysOfWeekItem.Thursday,ScalingScheduleDaysOfWeekItem.Friday
 },
-RampUpStartOn = DateTimeOffset.Parse("2020-11-10T06:00:00.000Z"),
+RampUpStartTime = new Time(6,0),
 RampUpLoadBalancingAlgorithm = SessionHostLoadBalancingAlgorithm.DepthFirst,
 RampUpMinimumHostsPct = 20,
 RampUpCapacityThresholdPct = 80,
-PeakStartOn = DateTimeOffset.Parse("2020-11-10T08:00:00.000Z"),
+PeakStartTime = new Time(8,0),
 PeakLoadBalancingAlgorithm = SessionHostLoadBalancingAlgorithm.BreadthFirst,
-RampDownStartOn = DateTimeOffset.Parse("2020-11-10T18:00:00.000Z"),
+RampDownStartTime = new Time(18,0),
 RampDownLoadBalancingAlgorithm = SessionHostLoadBalancingAlgorithm.DepthFirst,
 RampDownMinimumHostsPct = 20,
 RampDownCapacityThresholdPct = 50,
 RampDownForceLogoffUsers = true,
 RampDownWaitTimeMinutes = 30,
 RampDownNotificationMessage = "message",
-OffPeakStartOn = DateTimeOffset.Parse("2020-11-10T20:00:00.000Z"),
+OffPeakStartTime = new Time(20,0),
 OffPeakLoadBalancingAlgorithm = SessionHostLoadBalancingAlgorithm.DepthFirst,
 }
 },
@@ -170,7 +169,7 @@ IsScalingPlanEnabled = true,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ScalingPlansListByResourceGroup()
         {
-            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2021-07-12/examples/ScalingPlan_ListByResourceGroup.json
+            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2022-09-09/examples/ScalingPlan_ListByResourceGroup.json
             // this example is just showing the usage of "ScalingPlans_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -189,7 +188,10 @@ IsScalingPlanEnabled = true,
             ScalingPlanCollection collection = resourceGroupResource.GetScalingPlans();
 
             // invoke the operation and iterate over the result
-            await foreach (ScalingPlanResource item in collection.GetAllAsync())
+            int? pageSize = 10;
+            bool? isDescending = true;
+            int? initialSkip = 0;
+            await foreach (ScalingPlanResource item in collection.GetAllAsync(pageSize: pageSize, isDescending: isDescending, initialSkip: initialSkip))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
