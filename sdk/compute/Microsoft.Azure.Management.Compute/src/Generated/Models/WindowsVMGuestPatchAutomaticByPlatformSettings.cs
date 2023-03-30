@@ -35,9 +35,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="rebootSetting">Specifies the reboot setting for all
         /// AutomaticByPlatform patch installation operations. Possible values
         /// include: 'Unknown', 'IfRequired', 'Never', 'Always'</param>
-        public WindowsVMGuestPatchAutomaticByPlatformSettings(string rebootSetting = default(string))
+        /// <param name="bypassPlatformSafetyChecksOnUserSchedule">Enables
+        /// customer to schedule patching without accidental upgrades</param>
+        public WindowsVMGuestPatchAutomaticByPlatformSettings(string rebootSetting = default(string), bool? bypassPlatformSafetyChecksOnUserSchedule = default(bool?))
         {
             RebootSetting = rebootSetting;
+            BypassPlatformSafetyChecksOnUserSchedule = bypassPlatformSafetyChecksOnUserSchedule;
             CustomInit();
         }
 
@@ -53,6 +56,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "rebootSetting")]
         public string RebootSetting { get; set; }
+
+        /// <summary>
+        /// Gets or sets enables customer to schedule patching without
+        /// accidental upgrades
+        /// </summary>
+        [JsonProperty(PropertyName = "bypassPlatformSafetyChecksOnUserSchedule")]
+        public bool? BypassPlatformSafetyChecksOnUserSchedule { get; set; }
 
     }
 }
