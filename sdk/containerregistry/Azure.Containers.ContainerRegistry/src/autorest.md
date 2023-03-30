@@ -82,26 +82,6 @@ directive:
         delete $.responses["201"].schema;
 ```
 
-# Add content-range and content-length parameters to upload chunk
-``` yaml
-directive:
-    from: swagger-document
-    where: $.paths["/{nextBlobUuidLink}"].patch
-    transform: >
-        $.parameters.push({
-            "name": "Content-Range",
-            "in": "header",
-            "type": "string",
-            "description": "Range of bytes identifying the desired block of content represented by the body. Start must the end offset retrieved via status check plus one. Note that this is a non-standard use of the Content-Range header."
-        });
-        $.parameters.push({
-            "name": "Content-Length",
-            "in": "header",
-            "type": "string",
-            "description": "Length of the chunk being uploaded, corresponding the length of the request body."
-        });
-```
-
 # Change NextLink client name to nextLink
 ``` yaml
 directive:
@@ -162,14 +142,6 @@ directive:
     delete $["x-accessibility"]
 ```
 
-# Don't buffer downloads
-``` yaml
-directive:
-- from: swagger-document
-  where: $..[?(@.operationId=='ContainerRegistryBlob_GetBlob' || @.operationId=='ContainerRegistryBlob_GetChunk')]
-  transform: $["x-csharp-buffer-response"] = false;
-```
-
 # Remove security definitions
 ``` yaml
 directive:
@@ -178,4 +150,36 @@ directive:
   transform: >
     delete $["securityDefinitions"];
     delete $["security"];
+```
+
+# Add content-range and content-length parameters to upload chunk
+<!--.NET specific -->
+
+``` yaml
+directive:
+    from: swagger-document
+    where: $.paths["/{nextBlobUuidLink}"].patch
+    transform: >
+        $.parameters.push({
+            "name": "Content-Range",
+            "in": "header",
+            "type": "string",
+            "description": "Range of bytes identifying the desired block of content represented by the body. Start must the end offset retrieved via status check plus one. Note that this is a non-standard use of the Content-Range header."
+        });
+        $.parameters.push({
+            "name": "Content-Length",
+            "in": "header",
+            "type": "string",
+            "description": "Length of the chunk being uploaded, corresponding the length of the request body."
+        });
+```
+
+# Don't buffer downloads
+<!--.NET specific -->
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $..[?(@.operationId=='ContainerRegistryBlob_GetBlob' || @.operationId=='ContainerRegistryBlob_GetChunk')]
+  transform: $["x-csharp-buffer-response"] = false;
 ```
