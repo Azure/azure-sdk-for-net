@@ -4082,6 +4082,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public LinuxPatchSettings() { }
         public Azure.ResourceManager.Compute.Models.LinuxPatchAssessmentMode? AssessmentMode { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.LinuxVmGuestPatchAutomaticByPlatformRebootSetting? AutomaticByPlatformRebootSetting { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.LinuxVmGuestPatchAutomaticByPlatformSettings AutomaticByPlatformSettings { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.LinuxVmGuestPatchMode? PatchMode { get { throw null; } set { } }
     }
@@ -4464,6 +4465,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public PatchSettings() { }
         public Azure.ResourceManager.Compute.Models.WindowsPatchAssessmentMode? AssessmentMode { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.WindowsVmGuestPatchAutomaticByPlatformRebootSetting? AutomaticByPlatformRebootSetting { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.WindowsVmGuestPatchAutomaticByPlatformSettings AutomaticByPlatformSettings { get { throw null; } set { } }
         public bool? EnableHotpatching { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.WindowsVmGuestPatchMode? PatchMode { get { throw null; } set { } }
