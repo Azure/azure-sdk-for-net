@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
     {
         private ResourceGroupResource _resourceGroup;
 
-        public AllowedConnectionsTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public AllowedConnectionsTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         private ResourceGroupResource _resourceGroup;
         private string namespacePrefix = "testnamespacemgmt";
 
-        public ServiceBusNamespaceTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ServiceBusNamespaceTests(bool isAsync) : base(isAsync)
         {
         }
 

@@ -10,6 +10,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceNetworking;
+using Azure.ResourceManager.Network;
 using Azure.Core;
 using NUnit.Framework;
 using Azure.ResourceManager.ServiceNetworking.Models;
@@ -19,8 +20,6 @@ using System.Xml.Linq;
 using Azure.ResourceManager.Network.Models;
 using AssociationType = Azure.ResourceManager.ServiceNetworking.Models.AssociationType;
 using Azure.ResourceManager.ServiceNetworking.Tests;
-using System.Collections.Immutable;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
 {
