@@ -10,13 +10,14 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Collections.Generic;
 using Microsoft.Azure.Management.ApiManagement;
 using Microsoft.Azure.Management.ApiManagement.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Network;
 using Xunit;
 using Microsoft.Azure.Management.EventHub;
 using Microsoft.Azure.Management.ManagedServiceIdentity;
+using ApiManagementManagement.Tests.Helpers;
 
 namespace ApiManagement.Tests
 {
@@ -32,6 +33,9 @@ namespace ApiManagement.Tests
         private const string TestBackupStorageAccount = "TestBackupStorageAccount";
         private const string TestBackupUserMsiClientId = "TestBackupUserMsiClientId";
         private const string TestBackupUserMsiResourceId = "TestBackupUserMsiResourceId";
+
+        private static string[] CanaryRegions = new[] { "eastus2euap", "centraluseuap" };
+        private const string EnvironmentKey = "Environment";
 
         public string location { get; set; }
         public string subscriptionId { get; set; }
@@ -51,9 +55,11 @@ namespace ApiManagement.Tests
         public string testBackupStorageAccountName { get; internal set; }
         public string testBackupUserMsiClientId { get; internal set; }
         public string testBackupUserMsiId { get; internal set; }
+        public string envName { get; internal set; }
 
         public ApiManagementTestBase(MockContext context)
         {
+
             this.client = context.GetServiceClient<ApiManagementClient>();
             this.resourcesClient = context.GetServiceClient<ResourceManagementClient>();
             this.storageClient = context.GetServiceClient<StorageManagementClient>();
@@ -67,6 +73,8 @@ namespace ApiManagement.Tests
         private void Initialize()
         {
             var testEnv = TestEnvironmentFactory.GetTestEnvironment();
+
+            tags = new Dictionary<string, string> { { "DateCreated", $"{DateTime.UtcNow.ToString()}" }, { "apiversion", $"{client.ApiVersion}" } };
 
             if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
@@ -91,12 +99,13 @@ namespace ApiManagement.Tests
                 if (!testEnv.ConnectionString.KeyValuePairs.TryGetValue(ResourceGroupNameKey, out string resourceGroupName))
                 {
                     rgName = TestUtilities.GenerateName("sdktestrg");
-                    resourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = this.location });
                 }
                 else
                 {
                     this.rgName = resourceGroupName;
                 }
+
+                TryCreateResourceGroupIfNoExists(this.rgName);
 
                 if (testEnv.ConnectionString.KeyValuePairs.TryGetValue(TestCertificateKey, out string base64EncodedCertificate))
                 {
@@ -134,6 +143,12 @@ namespace ApiManagement.Tests
                     HttpMockServer.Variables[TestBackupUserMsiResourceId] = backupUserMsiId;
                 }
 
+                if (testEnv.ConnectionString.KeyValuePairs.TryGetValue(EnvironmentKey, out string envName))
+                {
+                    this.envName = envName;
+                    HttpMockServer.Variables[EnvironmentKey] = envName;
+                }
+
                 this.subscriptionId = testEnv.SubscriptionId;
                 HttpMockServer.Variables[SubIdKey] = subscriptionId;
                 HttpMockServer.Variables[ServiceNameKey] = this.serviceName;
@@ -168,18 +183,22 @@ namespace ApiManagement.Tests
                     this.testBackupStorageAccountName = testBackupStorageAccount;
                 }
                 HttpMockServer.Variables.TryGetValue(TestBackupUserMsiClientId, out string backupUserMsiClientId);
-                if(!string.IsNullOrEmpty(backupUserMsiClientId))
+                if (!string.IsNullOrEmpty(backupUserMsiClientId))
                 {
                     this.testBackupUserMsiClientId = backupUserMsiClientId;
                 }
                 HttpMockServer.Variables.TryGetValue(TestBackupUserMsiResourceId, out string backupUserMsiId);
                 if (!string.IsNullOrEmpty(backupUserMsiId))
-                { 
+                {
                     this.testBackupUserMsiId = backupUserMsiId;
+                }
+                if (testEnv.ConnectionString.KeyValuePairs.TryGetValue(EnvironmentKey, out string envName))
+                {
+                    this.envName = envName;
+                    HttpMockServer.Variables[EnvironmentKey] = envName;
                 }
             }
 
-            tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
 
             serviceProperties = new ApiManagementServiceResource
             {
@@ -193,7 +212,7 @@ namespace ApiManagement.Tests
                 PublisherName = "autorestsdk",
                 Tags = tags,
                 Identity = new ApiManagementServiceIdentity("SystemAssigned")
-        };
+            };
         }
 
         public void TryCreateApiManagementService()
@@ -207,6 +226,14 @@ namespace ApiManagement.Tests
             Assert.Equal(this.serviceName, service.Name);
         }
 
+        private void TryCreateResourceGroupIfNoExists(string rgName)
+        {
+            var rg = resourcesClient.ResourceGroups.CheckExistence(rgName);
+            if (!rg)
+            {
+                resourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = this.location, Tags = tags });
+            }
+        }
 
         public string GetOpenIdMetadataEndpointUrl()
         {
@@ -225,6 +252,29 @@ namespace ApiManagement.Tests
                         return false;
                 }
                 ).First().Locations.Where(l => l.Contains(regionIn)).FirstOrDefault();
+        }
+
+        public string GetAdditionLocation(string masterLocation, string regionIn = "US")
+        {
+            if (CanaryRegions
+                .Any(d => string.Equals(masterLocation.ToLowerAndRemoveWhiteSpaces(), d)))
+            {
+                return CanaryRegions.FirstOrDefault(d => !string.Equals(d, masterLocation.ToLowerAndRemoveWhiteSpaces()));
+            }
+
+            var provider = this.resourcesClient.Providers.Get("Microsoft.ApiManagement");
+            return provider.ResourceTypes.Where(
+                (resType) =>
+                {
+                    if (resType.ResourceType == "service")
+                        return true;
+                    else
+                        return false;
+                }
+                ).First().Locations
+                .Where(l => !string.Equals(l.ToLowerAndRemoveWhiteSpaces(), masterLocation.ToLowerAndRemoveWhiteSpaces()))
+                .Where(l => l.Contains(regionIn))
+                .FirstOrDefault();
         }
 
         public static byte[] RandomBytes(int length)
