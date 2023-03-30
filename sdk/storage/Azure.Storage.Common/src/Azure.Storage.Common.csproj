@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks);net6.0</TargetFrameworks>
     <!-- Remove this line when Azure.Core is released for net6.0  -->
@@ -6,9 +6,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Common client library</AssemblyTitle>
-    <Version>12.15.0-beta.1</Version>
+    <Version>12.15.0-beta.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>12.14.0</ApiCompatVersion>
+    <ApiCompatVersion>12.14.1</ApiCompatVersion>
     <DefineConstants>CommonSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Common, Microsoft, Azure, StorageScalable, azureofficial</PackageTags>
     <Description>
@@ -48,6 +48,7 @@
     <Compile Include="Shared\UriExtensions.cs" />
     <Compile Include="Shared\UriQueryParamsCollection.cs" />
     <Compile Include="Shared\StorageBearerTokenChallengeAuthorizationPolicy.cs" />
+    <Compile Include="Shared\TransferValidationOptionsExtensions.cs" LinkBase="Shared" />
     <Compile Include="Shared\ISupportsTenantIdChallenges.cs" />
   </ItemGroup>
 </Project>

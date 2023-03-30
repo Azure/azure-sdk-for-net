@@ -12,6 +12,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     /// </summary>
     internal class BoundingRegionTests
     {
+        [Test]
         public void EqualsObjectReturnsFalseIfObjectIsNull()
         {
             BoundingRegion region = GetBoundingRegion(10, 50f, 60f, 70f, 80f);

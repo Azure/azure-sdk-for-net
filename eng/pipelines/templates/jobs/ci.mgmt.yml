@@ -92,9 +92,9 @@ jobs:
       vmImage: windows-2022
     steps:
       - task: UsePythonVersion@0
-        displayName: "Use Python 3.6"
+        displayName: "Use Python 3.9"
         inputs:
-          versionSpec: "3.6"
+          versionSpec: "3.9"
       - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
         parameters:
           SourceDirectory: $(Build.SourcesDirectory)

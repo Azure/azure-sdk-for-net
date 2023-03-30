@@ -213,5 +213,32 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.IsTrue(ex.Message.Contains("Invalid Something."));
             Assert.IsTrue(ex.Message.Contains("AdditionInformation"));
         }
+
+        [Test]
+        public async Task BuildDocumentClassifierOperationCreatesDiagnosticScopeOnUpdate()
+        {
+            using var testListener = new ClientDiagnosticListener(DiagnosticNamespace);
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes("{}"));
+
+            var mockResponse = new MockResponse(200);
+            mockResponse.ContentStream = stream;
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateDocumentModelAdministrationClient(options);
+
+            var operation = new BuildDocumentClassifierOperation(AnalyzeOperationId, client);
+
+            if (IsAsync)
+            {
+                await operation.UpdateStatusAsync();
+            }
+            else
+            {
+                operation.UpdateStatus();
+            }
+
+            testListener.AssertScope($"{nameof(BuildDocumentClassifierOperation)}.{nameof(BuildDocumentClassifierOperation.UpdateStatus)}");
+        }
     }
 }

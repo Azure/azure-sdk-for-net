@@ -13,6 +13,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     /// </summary>
     public class DocumentAnalysisTestEnvironment : TestEnvironment
     {
+        private const string SanitizedSasUrl = "https://sanitized.blob.core.windows.net";
+
         public DocumentAnalysisTestEnvironment()
         {
         }
@@ -44,14 +46,24 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// <summary>The name of the environment variable for the Blob Container SAS URL to use for storing documents that have tables with fixed rows used for live tests.</summary>
         internal const string TableFixedRowsBlobContainerSasUrlEnvironmentVariableName = "FORM_RECOGNIZER_TABLE_FIXED_ROWS_BLOB_CONTAINER_SAS_URL";
 
+        /// <summary>The name of the environment variable for the Blob Container SAS URL containing data for training classifiers.</summary>
+        internal const string ClassifierTrainingBlobContainerSasUrlEnvironmentVariableName = "FORM_RECOGNIZER_CLASSIFIER_TRAINING_BLOB_CONTAINER_SAS_URL";
+
         public string ApiKey => GetRecordedVariable(ApiKeyEnvironmentVariableName, options => options.IsSecret());
+
         public string Endpoint => GetRecordedVariable(EndpointEnvironmentVariableName);
 
-        public string BlobContainerSasUrl => GetRecordedVariable(BlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
-        public string SelectionMarkBlobContainerSasUrl => GetRecordedVariable(SelectionMarkBlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
-        public string MultipageBlobContainerSasUrl => GetRecordedVariable(MultipageBlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
-        public string TableDynamicRowsContainerSasUrl => GetRecordedVariable(TableDynamicRowsBlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
-        public string TableFixedRowsContainerSasUrl => GetRecordedVariable(TableFixedRowsBlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
+        public string BlobContainerSasUrl => GetRecordedVariable(BlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret(SanitizedSasUrl));
+
+        public string SelectionMarkBlobContainerSasUrl => GetRecordedVariable(SelectionMarkBlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret(SanitizedSasUrl));
+
+        public string MultipageBlobContainerSasUrl => GetRecordedVariable(MultipageBlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret(SanitizedSasUrl));
+
+        public string TableDynamicRowsContainerSasUrl => GetRecordedVariable(TableDynamicRowsBlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret(SanitizedSasUrl));
+
+        public string TableFixedRowsContainerSasUrl => GetRecordedVariable(TableFixedRowsBlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret(SanitizedSasUrl));
+
+        public string ClassifierTrainingSasUrl => GetRecordedVariable(ClassifierTrainingBlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret(SanitizedSasUrl));
 
         /// <summary>
         /// The absolute path of the directory where the running assembly is located.
