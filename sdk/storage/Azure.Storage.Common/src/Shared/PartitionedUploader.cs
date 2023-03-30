@@ -380,6 +380,8 @@ namespace Azure.Storage
             // If we know the length and it's small enough
             if (length < _singleUploadThreshold)
             {
+                IDisposable disposable = null;
+
                 // may not be seekable. buffer if that's the case
                 if (!content.CanSeek)
                 {
@@ -394,10 +396,11 @@ namespace Azure.Storage
                         maxArrayPoolRentalSize: default,
                         async,
                         cancellationToken).ConfigureAwait(false);
+                    disposable = content;
                 }
 
                 // Upload it in a single request
-                return await _singleUploadStreamingInternal(
+                var result = await _singleUploadStreamingInternal(
                     content,
                     args,
                     progressHandler,
@@ -406,6 +409,9 @@ namespace Azure.Storage
                     async,
                     cancellationToken)
                     .ConfigureAwait(false);
+
+                disposable?.Dispose();
+                return result;
             }
 
             // If the caller provided an explicit block size, we'll use it.
