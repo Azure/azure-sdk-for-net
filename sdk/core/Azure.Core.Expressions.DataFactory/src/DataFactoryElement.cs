@@ -22,7 +22,7 @@ namespace Azure.Core.Expressions.DataFactory
     {
         private readonly T? _literal;
         private readonly DataFactoryElementKind _kind;
-        internal string? Value { get; }
+        internal string? StringValue { get; }
 
         /// <summary>
         /// Initializes a new instance of DataFactoryExpression with a literal value.
@@ -62,20 +62,16 @@ namespace Azure.Core.Expressions.DataFactory
             }
         }
 
-        internal DataFactoryElement(string value, DataFactoryElementKind kind)
+        internal DataFactoryElement(string stringValue, DataFactoryElementKind kind)
         {
             _kind = kind;
-            Value = value;
+            StringValue = stringValue;
         }
 
         /// <inheritdoc/>
         public override string? ToString()
         {
-            if (_kind ==DataFactoryElementKind.Literal)
-                return _literal?.ToString();
-            if (_kind == DataFactoryElementKind.SecureString)
-                return new string('*', Value?.Length ?? 0);
-            return Value;
+            return _kind == DataFactoryElementKind.Literal ? _literal?.ToString() : StringValue;
         }
 
         /// <summary>

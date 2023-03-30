@@ -197,7 +197,7 @@ namespace Azure.Core.Expressions.DataFactory
             }
             else
             {
-                SerializeObject(writer, element.Kind!, element.Value!);
+                SerializeObject(writer, element.Kind!, element.StringValue!);
             }
         }
 
@@ -221,7 +221,7 @@ namespace Azure.Core.Expressions.DataFactory
             }
             else
             {
-                SerializeObject(writer, element.Kind, element.Value!);
+                SerializeObject(writer, element.Kind, element.StringValue!);
             }
         }
 
