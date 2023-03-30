@@ -228,7 +228,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         }
 
         [TestCaseSource(nameof(TestData_RecognizeOperations))]
-        public void RecognizeOperations_Return404NotFound(Func<CallMedia, Response<RecognizeResult>> operation)
+        public void RecognizeOperations_Return404NotFound(Func<CallMedia, Response<StartRecognizingResult>> operation)
         {
             _callMedia = GetCallMedia(404);
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(
