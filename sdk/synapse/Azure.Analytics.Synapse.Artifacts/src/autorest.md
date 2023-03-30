@@ -11,7 +11,6 @@ require:
     - https://github.com/Azure/azure-rest-api-specs/blob/61a8b1a62420c393fe5276c47373ea8dce74a985/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.Artifacts
 generation1-convenience-client: true
-public-clients: true
 security: AADToken
 security-scopes: https://dev.azuresynapse.net/.default
 modelerfour:
