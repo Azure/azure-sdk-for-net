@@ -87,14 +87,14 @@ namespace Azure.Core.Expressions.DataFactory
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="DataFactoryElement{T}"/> using the KeyVaultReference value.
+        /// Creates a new instance of <see cref="DataFactoryElement{T}"/> using the KeyVaultSecretReference value.
         /// </summary>
-        /// <param name="keyVaultReference"> The key vault reference value. </param>
+        /// <param name="keyVaultSecretReference"> The key vault secret reference value. </param>
 #pragma warning disable CA1000 // Do not declare static members on generic types
-        public static DataFactoryElement<T> FromKeyVaultReference(string keyVaultReference)
+        public static DataFactoryElement<T> FromKeyVaultSecretReference(string keyVaultSecretReference)
 #pragma warning restore CA1000 // Do not declare static members on generic types
         {
-            return new DataFactoryElement<T>(keyVaultReference, DataFactoryElementKind.KeyVaultSecretReference);
+            return new DataFactoryElement<T>(keyVaultSecretReference, DataFactoryElementKind.KeyVaultSecretReference);
         }
 
         /// <summary>

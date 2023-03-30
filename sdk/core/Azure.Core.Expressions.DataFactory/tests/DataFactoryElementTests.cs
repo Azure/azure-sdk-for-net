@@ -215,7 +215,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void CreateFromKeyVaultReference()
         {
-            var dfe = DataFactoryElement<string?>.FromKeyVaultReference(KeyVaultSecretReferenceValue);
+            var dfe = DataFactoryElement<string?>.FromKeyVaultSecretReference(KeyVaultSecretReferenceValue);
             AssertKeyVaultReferenceDfe(dfe);
         }
 
@@ -441,7 +441,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationOfKeyVaultReference()
         {
-            var dfe = DataFactoryElement<int>.FromKeyVaultReference(KeyVaultSecretReferenceValue);
+            var dfe = DataFactoryElement<int>.FromKeyVaultSecretReference(KeyVaultSecretReferenceValue);
             var actual = GetSerializedString(dfe);
             Assert.AreEqual(KeyVaultSecretReferenceJson, actual);
         }

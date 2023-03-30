@@ -25,7 +25,7 @@ namespace Azure.Core.Expressions.DataFactory
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         public static Azure.Core.Expressions.DataFactory.DataFactoryElement<T> FromExpression(string expression) { throw null; }
-        public static Azure.Core.Expressions.DataFactory.DataFactoryElement<T> FromKeyVaultReference(string keyVaultReference) { throw null; }
+        public static Azure.Core.Expressions.DataFactory.DataFactoryElement<T> FromKeyVaultSecretReference(string keyVaultSecretReference) { throw null; }
         public static Azure.Core.Expressions.DataFactory.DataFactoryElement<T> FromLiteral(T literal, bool asSecureString = false) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
