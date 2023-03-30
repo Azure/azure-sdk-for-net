@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Nginx.Tests
             return lro.Value;
         }
 
-        protected async Task<VirtualNetworkResource> CreateVirtualNetwork(ResourceGroupResource resourceGroup, AzureLocation location, NetworkSecurityGroupData nsgData)
+        protected async Task<ResourceIdentifier> GetSubnetID(ResourceGroupResource resourceGroup, AzureLocation location, NetworkSecurityGroupData nsgData)
         {
             if (resourceGroup == null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Nginx.Tests
                 Name = NginxDeploymentResourceType,
                 ServiceName = NginxDeploymentResourceType
             };
-
+            string vnetName = Recording.GenerateAssetName("testVNet-");
             string subnetName = Recording.GenerateAssetName("testSubnet-");
             SubnetData subnetData = new SubnetData
             {
@@ -158,19 +158,22 @@ namespace Azure.ResourceManager.Nginx.Tests
                 }
             };
 
-            string vnetName = Recording.GenerateAssetName("testVNet-");
-            ArmOperation<VirtualNetworkResource> lro = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, virtualNetworkData);
-            return lro.Value;
-        }
-
-        protected ResourceIdentifier GetSubnetId(VirtualNetworkResource vnet)
-        {
-            if (vnet == null)
+            ResourceIdentifier subnetID;
+            if (Mode == RecordedTestMode.Playback)
             {
-                throw new ArgumentNullException(nameof(vnet));
+                subnetID = SubnetResource.CreateResourceIdentifier(resourceGroup.Id.SubscriptionId, resourceGroup.Id.Name, vnetName, subnetName);
             }
-
-            return new ResourceIdentifier(vnet.Data.Subnets.FirstOrDefault().Id);
+            else
+            {
+                using (Recording.DisableRecording())
+                {
+                    var vnetResource = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, virtualNetworkData);
+                    var subnetCollection = vnetResource.Value.GetSubnets();
+                    //SubnetResource subnetResource = (await subnetCollection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName2, subnetData)).Value;
+                    subnetID = vnetResource.Value.Data.Subnets[0].Id;
+                }
+            };
+            return subnetID;
         }
 
         protected async Task<PublicIPAddressResource> CreatePublicIP(ResourceGroupResource resourceGroup, AzureLocation location)
@@ -225,8 +228,7 @@ namespace Azure.ResourceManager.Nginx.Tests
             });
 
             NetworkSecurityGroupResource nsg = await CreateNetworkSecurityGroup(resourceGroup, location);
-            VirtualNetworkResource vnet = await CreateVirtualNetwork(resourceGroup, location, nsg.Data);
-            string subnetId = GetSubnetId(vnet);
+            string subnetId = await GetSubnetID(resourceGroup, location, nsg.Data);
 
             NginxNetworkProfile networkProfile = new NginxNetworkProfile();
             networkProfile.FrontEndIPConfiguration = frontEndIPConfiguration;
