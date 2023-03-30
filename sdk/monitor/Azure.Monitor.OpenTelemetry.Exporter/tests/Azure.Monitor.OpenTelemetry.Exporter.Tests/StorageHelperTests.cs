@@ -10,27 +10,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class StorageHelperTests
     {
-        // The directory separator is either `/` or `\` depending on the Platform, making unit testing tricky.
-        private static char ds = Path.DirectorySeparatorChar;
+        // The directory separator is either '/' or '\' depending on the Platform, making unit testing tricky.
+        private static readonly char ds = Path.DirectorySeparatorChar;
 
         [Fact]
         public void VerifyDirectory()
         {
             var directoryPath = StorageHelper.GetStorageDirectory(
                 configuredStorageDirectory: $"C:{ds}Temp",
-                instrumentationKey: "b872f848-8757-49fe-b66b-9d3699a12edf");
+                instrumentationKey: "testIkey",
+                processName: "w3wp",
+                applicationDirectory: "C:\\inetpub\\wwwroot");
 
-            Assert.StartsWith($"C:{ds}Temp{ds}SPhyuFeH/km2a502maEu3w", directoryPath);
-        }
-
-        [Fact]
-        public void VerifyDirectory_WithTestValue()
-        {
-            var directoryPath = StorageHelper.GetStorageDirectory(
-                configuredStorageDirectory: $"C:{ds}Temp",
-                instrumentationKey: "testikey");
-
-            Assert.StartsWith($"C:{ds}Temp{ds}testikey", directoryPath);
+            Assert.Equal(directoryPath, $"C:{ds}Temp{ds}da7bc2b3fc208d871eda206b7dec121a7944a3bce25e17143ba0f8b1a6c41bdd");
         }
 
         [Fact]
@@ -38,21 +30,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var directoryPath = StorageHelper.GetStorageDirectory(
                 configuredStorageDirectory: null,
-                instrumentationKey: "b872f848-8757-49fe-b66b-9d3699a12edf");
+                instrumentationKey: "testIkey",
+                processName: "w3wp",
+                applicationDirectory: "C:\\inetpub\\wwwroot");
 
-            // Note: Default root directory will be variable depending on OS and permissions.
-            Assert.Contains($"{ds}Microsoft{ds}AzureMonitor{ds}SPhyuFeH/km2a502maEu3w", directoryPath);
-        }
-
-        [Fact]
-        public void VerifyDefaultDirectory_WithTestValue()
-        {
-            var directoryPath = StorageHelper.GetStorageDirectory(
-                configuredStorageDirectory: null,
-                instrumentationKey: "testikey");
-
-            // Note: Default root directory will be variable depending on OS and permissions.
-            Assert.Contains($"{ds}Microsoft{ds}AzureMonitor{ds}testikey", directoryPath);
+            // Note: Cannot assert full string because default root directory will be variable depending on OS and environment variables.
+            Assert.EndsWith($"{ds}Microsoft{ds}AzureMonitor{ds}da7bc2b3fc208d871eda206b7dec121a7944a3bce25e17143ba0f8b1a6c41bdd", directoryPath);
         }
     }
 }

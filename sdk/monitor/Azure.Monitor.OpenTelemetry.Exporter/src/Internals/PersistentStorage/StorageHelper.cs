@@ -12,20 +12,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
     {
         private static string? s_defaultStorageDirectory;
 
-        internal static string GetStorageDirectory(string? configuredStorageDirectory, string instrumentationKey)
+        internal static string GetStorageDirectory(string? configuredStorageDirectory, string instrumentationKey, string processName, string applicationDirectory)
         {
             // get root directory
             var rootDirectory = configuredStorageDirectory
                 ?? GetDefaultStorageDirectory()
                 ?? throw new InvalidOperationException("Unable to determine offline storage directory.");
 
-            // get ikey for unique data directory
-            // users will often use a test string which is not a valid guid.
-            string dataDirectory = Guid.TryParse(instrumentationKey, out var guid)
-                ? Convert.ToBase64String(guid.ToByteArray()).TrimEnd('=')
-                : instrumentationKey;
+            // get unique sub directory
+            string subDirectory = HashHelper.GetSHA256Hash($"{instrumentationKey};{processName};{applicationDirectory}");
 
-            return Path.Combine(rootDirectory, dataDirectory);
+            return Path.Combine(rootDirectory, subDirectory);
         }
 
         internal static string? GetDefaultStorageDirectory()
