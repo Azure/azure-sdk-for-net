@@ -4,7 +4,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore
@@ -12,7 +11,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
     /// <summary>
     /// Options that allow users to configure the Azure Monitor.
     /// </summary>
-    public class AzureMonitorOptions
+    public class AzureMonitorOptions : ClientOptions
     {
         /// <summary>
         /// The Connection String provides users with a single configuration setting to identify the Azure Monitor resource and endpoint.
@@ -38,41 +37,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         public bool DisableOfflineStorage { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether Logs should be enabled.
-        /// </summary>
-        public bool EnableLogs { get; set; } = true;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether Metrics should be enabled.
-        /// </summary>
-        public bool EnableMetrics { get; set; } = true;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether Traces should be enabled.
-        /// </summary>
-        public bool EnableTraces { get; set; } = true;
-
-        /// <summary>
         /// Override the default directory for offline storage.
         /// </summary>
         public string StorageDirectory { get; set; }
-
-        // Used for testing purpose
-        internal HttpPipelineTransport Transport;
-
-        internal void Clone(AzureMonitorOptions options)
-        {
-            if (options != null)
-            {
-                ConnectionString = options.ConnectionString;
-                DisableOfflineStorage = options.DisableOfflineStorage;
-                EnableLogs = options.EnableLogs;
-                EnableMetrics = options.EnableMetrics;
-                EnableTraces = options.EnableTraces;
-                StorageDirectory = options.StorageDirectory;
-                Transport = options.Transport;
-            }
-        }
 
         internal void SetValueToExporterOptions(AzureMonitorExporterOptions exporterOptions)
         {
