@@ -249,6 +249,7 @@ jobs:
           parameters:
             BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
+            Artifacts: ${{ parameters.Artifacts }}
 
     - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
       parameters:
