@@ -12,7 +12,6 @@ namespace Azure.Core.Expressions.DataFactory
         public static Azure.Core.Expressions.DataFactory.DataFactoryElementKind SecureString { get { throw null; } }
         public bool Equals(Azure.Core.Expressions.DataFactory.DataFactoryElementKind other) { throw null; }
         public override bool Equals(object? obj) { throw null; }
-        public bool Equals(string? other) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Core.Expressions.DataFactory.DataFactoryElementKind left, Azure.Core.Expressions.DataFactory.DataFactoryElementKind right) { throw null; }
         public static bool operator !=(Azure.Core.Expressions.DataFactory.DataFactoryElementKind left, Azure.Core.Expressions.DataFactory.DataFactoryElementKind right) { throw null; }
