@@ -10,7 +10,6 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceNetworking;
-using Azure.ResourceManager.Network;
 using Azure.Core;
 using NUnit.Framework;
 using Azure.ResourceManager.ServiceNetworking.Models;
@@ -20,6 +19,8 @@ using System.Xml.Linq;
 using Azure.ResourceManager.Network.Models;
 using AssociationType = Azure.ResourceManager.ServiceNetworking.Models.AssociationType;
 using Azure.ResourceManager.ServiceNetworking.Tests;
+using System.Collections.Immutable;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
 {
@@ -79,21 +80,29 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             FrontendCollection frontends = GetFrontends(tc);
 
             //Creating a public IP (PIP) Address Resource. The resource ID of the resouce is passed on to the Frontend.
-            PublicIPAddressCollection publicIPAddresses = rgResource.GetPublicIPAddresses();
             string pipName = Recording.GenerateAssetName("tc-pip");
-            _resourceNames["tc-pip"] = pipName;
-            var pipData = new PublicIPAddressData()
+            PublicIPAddressResource pip;
+            if (Mode == RecordedTestMode.Playback)
             {
-                Location = "East US 2",
-                Sku = new PublicIPAddressSku()
+                ResourceIdentifier id = PublicIPAddressResource.CreateResourceIdentifier(rgResource.Id.SubscriptionId, rgResource.Id.Name, pipName);
+                pip = Client.GetPublicIPAddressResource(id);
+            }
+            else
+            {
+                PublicIPAddressCollection publicIPAddresses = rgResource.GetPublicIPAddresses();
+                _resourceNames["tc-pip"] = pipName;
+                var pipData = new PublicIPAddressData()
                 {
-                    Name = PublicIPAddressSkuName.Standard,
-                    Tier = PublicIPAddressSkuTier.Global
-                },
-                PublicIPAllocationMethod = NetworkIPAllocationMethod.Static
-            };
-
-            PublicIPAddressResource pip = publicIPAddresses.CreateOrUpdateAsync(WaitUntil.Completed, pipName, pipData).Result.Value;
+                    Location = "East US 2",
+                    Sku = new PublicIPAddressSku()
+                    {
+                        Name = PublicIPAddressSkuName.Standard,
+                        Tier = PublicIPAddressSkuTier.Global
+                    },
+                    PublicIPAllocationMethod = NetworkIPAllocationMethod.Static
+                };
+                pip = publicIPAddresses.CreateOrUpdateAsync(WaitUntil.Completed, pipName, pipData).Result.Value;
+            }
 
             //Frontend Data object that is used to create the new frontend object.
             FrontendData fnd = new FrontendData(location)
@@ -127,9 +136,15 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
                 return;
             }
             FrontendCollection frontends = GetFrontends(tc);
-            PublicIPAddressCollection publicIPAddresses = rgResource.GetPublicIPAddresses();
-            PublicIPAddressResource pip = publicIPAddresses.GetAsync(pipName).Result;
-            await pip.DeleteAsync(WaitUntil.Started);
+            if (Mode == RecordedTestMode.Record)
+            {
+                using (Recording.DisableRecording())
+                {
+                    PublicIPAddressCollection publicIPAddresses = rgResource.GetPublicIPAddresses();
+                    PublicIPAddressResource pip = publicIPAddresses.GetAsync(pipName).Result;
+                    await pip.DeleteAsync(WaitUntil.Started);
+                }
+            }
         }
 
         private async Task<ArmOperation<AssociationResource>> CreateAssociationAsync(string resourceGroup, string associationName, TrafficControllerResource tc, string location)
@@ -138,29 +153,39 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             AssociationCollection associations = GetAssociations(tc);
 
             //Creating the virtual network (vnet) and subnet required for creating an association object.
-            VirtualNetworkCollection vnets = GetVirtualNetworks(resourceGroup);
-            VirtualNetworkData vnetData = new VirtualNetworkData()
-            {
-                Location = location,
-                AddressPrefixes = { "10.225.0.0/16" },
-            };
+            var rg = GetResourceGroup(resourceGroup);
             string vnetName = Recording.GenerateAssetName("tc-vnet");
-            _resourceNames["tc-vnet"] = vnetName;
-            VirtualNetworkResource vnet = vnets.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData).Result.Value;
-            SubnetCollection subnets = vnet.GetSubnets();
-            SubnetData subnetData = new SubnetData()
-            {
-                AddressPrefix = "10.225.0.0/24",
-            };
-            var trafficControllerServiceDelegation = new ServiceDelegation()
-            {
-                ServiceName = "Microsoft.ServiceNetworking/trafficControllers",
-                Name = "Microsoft.ServiceNetworking/trafficControllers",
-            };
-            subnetData.Delegations.Add(trafficControllerServiceDelegation);
             string subnetName = Recording.GenerateAssetName("tc-subnet");
-            _resourceNames["tc-subnet"] = subnetName;
-            SubnetResource subnet = subnets.CreateOrUpdateAsync(WaitUntil.Completed, subnetName, subnetData).Result.Value;
+            SubnetResource subnet;
+            if (Mode == RecordedTestMode.Playback)
+            {
+                ResourceIdentifier id = SubnetResource.CreateResourceIdentifier(rg.Id.SubscriptionId, rg.Id.Name, vnetName, subnetName);
+                subnet = Client.GetSubnetResource(id);
+            }
+            else
+            {
+                VirtualNetworkCollection vnets = GetVirtualNetworks(resourceGroup);
+                VirtualNetworkData vnetData = new VirtualNetworkData()
+                {
+                    Location = location,
+                    AddressPrefixes = { "10.225.0.0/16" },
+                };
+                _resourceNames["tc-vnet"] = vnetName;
+                VirtualNetworkResource vnet = vnets.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData).Result.Value;
+                SubnetCollection subnets = vnet.GetSubnets();
+                SubnetData subnetData = new SubnetData()
+                {
+                    AddressPrefix = "10.225.0.0/24",
+                };
+                var trafficControllerServiceDelegation = new ServiceDelegation()
+                {
+                    ServiceName = "Microsoft.ServiceNetworking/trafficControllers",
+                    Name = "Microsoft.ServiceNetworking/trafficControllers",
+                };
+                subnetData.Delegations.Add(trafficControllerServiceDelegation);
+                _resourceNames["tc-subnet"] = subnetName;
+                subnet = subnets.CreateOrUpdateAsync(WaitUntil.Completed, subnetName, subnetData).Result.Value;
+            }
 
             //Association Data object that is used to create the new frontend object.
             AssociationData associationData = new AssociationData(location)
@@ -189,12 +214,18 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             }
             AssociationCollection associations = GetAssociations(tc);
 
-            VirtualNetworkCollection vnets = GetVirtualNetworks(resourceGroup);
-            VirtualNetworkResource vnet = vnets.GetAsync(vnetName).Result;
+            if (Mode==RecordedTestMode.Record)
+            {
+                using (Recording.DisableRecording())
+                {
+                    VirtualNetworkCollection vnets = GetVirtualNetworks(resourceGroup);
+                    VirtualNetworkResource vnet = vnets.GetAsync(vnetName).Result;
 
-            SubnetResource subnet = vnet.GetSubnetAsync(subnetName).Result;
-            await subnet.DeleteAsync(WaitUntil.Started);
-            await vnet.DeleteAsync(WaitUntil.Started);
+                    SubnetResource subnet = vnet.GetSubnetAsync(subnetName).Result;
+                    await subnet.DeleteAsync(WaitUntil.Started);
+                    await vnet.DeleteAsync(WaitUntil.Started);
+                }
+            }
         }
 
         private async Task DeleteAssociation(AssociationResource association)
