@@ -320,6 +320,23 @@ namespace Azure.Monitor.Query
 
         /// <summary>
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
+        /// <example snippet="Snippet:ResourceQuery">
+        /// <code language="csharp">
+        /// string resourceId = &quot;&lt;resource_id&gt;&quot;;
+        /// // Get activity over last 24 hours
+        /// string query = &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;;
+        /// var client = new LogsQueryClient(new DefaultAzureCredential());
+        ///
+        /// Response&lt;LogsQueryResult&gt; response = await client.QueryResource(resourceId, query,
+        ///     new QueryTimeRange(TimeSpan.FromDays(1));
+        ///
+        /// LogsTable table = response.Value.Table;
+        /// foreach (var row in table.Rows)
+        /// {
+        ///     Console.WriteLine(row);
+        /// }
+        /// </code>
+        /// </example>
         /// </summary>
         /// <param name="resourceId"> The resourceId where the query should be executed. </param>
         /// <param name="query"> The Kusto query to fetch the logs. </param>
@@ -328,6 +345,8 @@ namespace Azure.Monitor.Query
         /// <returns>The logs matching the query.</returns>
         public virtual Response<LogsQueryResult> QueryResource(string resourceId, string query, QueryTimeRange timeRange, CancellationToken cancellationToken = default)
         {
+            //remove all / preceding
+            //resourceId = resourceId.Remove("\\");
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(QueryResource)}");
             scope.Start();
             try
@@ -342,7 +361,24 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// TODO
+        /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
+        /// <example snippet="Snippet:ResourceQuery">
+        /// <code language="csharp">
+        /// string resourceId = &quot;&lt;resource_id&gt;&quot;;
+        /// // Get activity over last 24 hours
+        /// string query = &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;;
+        /// var client = new LogsQueryClient(new DefaultAzureCredential());
+        ///
+        /// Response&lt;LogsQueryResult&gt; response = await client.QueryResource(resourceId, query,
+        ///     new QueryTimeRange(TimeSpan.FromDays(1));
+        ///
+        /// LogsTable table = response.Value.Table;
+        /// foreach (var row in table.Rows)
+        /// {
+        ///     Console.WriteLine(row);
+        /// }
+        /// </code>
+        /// </example>
         /// </summary>
         /// <param name="resourceId"></param>
         /// <param name="query"></param>

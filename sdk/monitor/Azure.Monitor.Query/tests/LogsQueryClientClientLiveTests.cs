@@ -17,7 +17,7 @@ namespace Azure.Monitor.Query.Tests
     {
         private LogsTestData _logsTestData;
 
-        public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync)
+        public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
 
@@ -673,6 +673,33 @@ namespace Azure.Monitor.Query.Tests
 
             var response = await client.QueryWorkspaceAsync<bool>(TestEnvironment.WorkspaceId, LogsQueryClient.CreateQuery(query.Value), _logsTestData.DataTimeRange);
             Assert.True(response.Value.Single());
+        }
+
+        [RecordedTest]
+        public async Task CanQueryResource()
+        {
+            var client = CreateClient();
+
+            var results = await client.QueryResourceAsync("/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourcegroups/rg-query8/providers/microsoft.operationalinsights/workspaces/query8-logs",
+                "TableA1_75_CL",
+                _logsTestData.DataTimeRange);
+
+            var resultTable = results.Value.Table;
+            CollectionAssert.IsNotEmpty(resultTable.Columns);
+
+            Assert.AreEqual(LogsQueryResultStatus.Success, results.Value.Status);
+
+            Assert.AreEqual("a", resultTable.Rows[0].GetString(0));
+            Assert.AreEqual("a", resultTable.Rows[0].GetString(LogsTestData.StringColumnName));
+
+            Assert.AreEqual(1, resultTable.Rows[0].GetInt32(1));
+            Assert.AreEqual(1, resultTable.Rows[0].GetInt32(LogsTestData.IntColumnName));
+
+            Assert.AreEqual(false, resultTable.Rows[0].GetBoolean(2));
+            Assert.AreEqual(false, resultTable.Rows[0].GetBoolean(LogsTestData.BoolColumnName));
+
+            Assert.AreEqual(0d, resultTable.Rows[0].GetDouble(3));
+            Assert.AreEqual(0d, resultTable.Rows[0].GetDouble(LogsTestData.FloatColumnName));
         }
 
         public static IEnumerable<FormattableStringWrapper> Queries

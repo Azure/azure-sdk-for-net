@@ -11,7 +11,9 @@ using System.ComponentModel;
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> The Path. </summary>
+#pragma warning disable AZC0012 // Avoid single word type names
     public readonly partial struct Path : IEquatable<Path>
+#pragma warning restore AZC0012 // Avoid single word type names
     {
         private readonly string _value;
 

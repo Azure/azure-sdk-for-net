@@ -183,3 +183,4 @@ output INGESTION_STREAM_NAME string = streamName
 output INGESTION_TABLE_NAME string = table.name
 output INGESTION_DATA_COLLECTION_RULE_ID string = dataCollectionRule.id
 output INGESTION_DATA_COLLECTION_RULE_IMMUTABLE_ID string = dataCollectionRule.properties.immutableId
+output QUERY_RESOURCE_GROUP_ID string = baseName_resource.id
