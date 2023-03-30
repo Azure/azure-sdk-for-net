@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.SignalR.Protocol;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Microsoft.AspNetCore.SignalR.Protocol;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 
