@@ -3,12 +3,13 @@
 --------------------------------------
 For this example, you need the following namespaces:
 
-```C# Snippet:Managing_VirtualMachines_Namespaces
+```C# Snippet:Manage_PtrRecord_Namespaces
 using System;
 using System.Threading.Tasks;
-using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.Identity;
-using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Dns;
+using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 ```
