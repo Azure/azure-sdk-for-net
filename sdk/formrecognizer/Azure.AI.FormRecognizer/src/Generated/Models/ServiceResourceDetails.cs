@@ -15,15 +15,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         /// <summary> Initializes a new instance of ServiceResourceDetails. </summary>
         /// <param name="customDocumentModels"> Details regarding custom document models. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customDocumentModels"/> is null. </exception>
-        internal ServiceResourceDetails(CustomDocumentModelsDetails customDocumentModels)
+        /// <param name="customNeuralDocumentModelBuilds"> Quota used, limit, and next reset date/time. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customDocumentModels"/> or <paramref name="customNeuralDocumentModelBuilds"/> is null. </exception>
+        internal ServiceResourceDetails(CustomDocumentModelsDetails customDocumentModels, QuotaDetails customNeuralDocumentModelBuilds)
         {
             Argument.AssertNotNull(customDocumentModels, nameof(customDocumentModels));
+            Argument.AssertNotNull(customNeuralDocumentModelBuilds, nameof(customNeuralDocumentModelBuilds));
 
             CustomDocumentModels = customDocumentModels;
+            CustomNeuralDocumentModelBuilds = customNeuralDocumentModelBuilds;
         }
 
         /// <summary> Details regarding custom document models. </summary>
         public CustomDocumentModelsDetails CustomDocumentModels { get; }
+        /// <summary> Quota used, limit, and next reset date/time. </summary>
+        public QuotaDetails CustomNeuralDocumentModelBuilds { get; }
     }
 }

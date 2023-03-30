@@ -5,11 +5,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
+using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 {
     [ClientTestFixture(
-    DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31)]
+        DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31,
+        DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)]
     public class DocumentAnalysisLiveTestBase : RecordedTestBase<DocumentAnalysisTestEnvironment>
     {
         /// <summary>
@@ -22,10 +25,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             : base(isAsync)
         {
             _serviceVersion = serviceVersion;
+
+            ServiceVersionString = _serviceVersion switch
+            {
+                DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31 => "2022-08-31",
+                DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview => "2023-02-28-preview",
+                _ => null
+            };
+
             JsonPathSanitizers.Add("$..accessToken");
-            JsonPathSanitizers.Add("$..containerUrl");
+            BodyKeySanitizers.Add(new BodyKeySanitizer("https://sanitized.blob.core.windows.net") { JsonPath = "$..containerUrl" });
             SanitizedHeaders.Add(Constants.AuthorizationHeader);
         }
+
+        protected string ServiceVersionString { get; }
 
         /// <summary>
         /// Creates a <see cref="DocumentAnalysisClient" /> with the endpoint and API key provided via environment
@@ -46,6 +59,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// <returns>The instrumented <see cref="DocumentAnalysisClient" />.</returns>
         protected DocumentAnalysisClient CreateDocumentAnalysisClient(out DocumentAnalysisClient nonInstrumentedClient, bool useTokenCredential = false, string apiKey = default)
         {
+            if (useTokenCredential)
+            {
+                Assert.Ignore();
+            }
+
             var endpoint = new Uri(TestEnvironment.Endpoint);
             var options = InstrumentClientOptions(new DocumentAnalysisClientOptions(_serviceVersion));
 

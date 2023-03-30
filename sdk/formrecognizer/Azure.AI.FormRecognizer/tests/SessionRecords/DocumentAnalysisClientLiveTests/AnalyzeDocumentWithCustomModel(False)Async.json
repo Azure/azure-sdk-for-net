@@ -1,132 +1,136 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels:build?api-version=2022-08-31",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels:build?api-version=2023-02-28-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "94",
+        "Content-Length": "124",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-db550be29e8e73bd308b13d4cc86f987-711048fe53767f8c-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "dfd5e73877b042b062e671457f078eea",
+        "traceparent": "00-6ad0a152df6b5cfd7992059171cbfb4b-0b446b2b8ee47f72-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230326.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "78e4e49c041e036db4b718a9012b8616",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "modelId": "1760264917",
+        "modelId": "2005807053",
         "buildMode": "template",
         "azureBlobSource": {
-          "containerUrl": "Sanitized"
+          "containerUrl": "https://sanitized.blob.core.windows.net"
         }
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "7e2c0d0b-4293-4b3e-920a-d7e53e49a898",
+        "apim-request-id": "99775ba3-1f6d-44ab-9b0e-150493e84f3f",
         "Content-Length": "0",
-        "Date": "Tue, 16 Aug 2022 05:53:25 GMT",
-        "operation-location": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/operations/31505738797_7e2c0d0b-4293-4b3e-920a-d7e53e49a898?api-version=2022-08-31",
+        "Date": "Mon, 27 Mar 2023 08:32:24 GMT",
+        "operation-location": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/operations/31486462057_99775ba3-1f6d-44ab-9b0e-150493e84f3f?api-version=2023-02-28-preview",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "2749"
+        "x-envoy-upstream-service-time": "1772",
+        "x-ms-region": "East US"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/operations/31505738797_7e2c0d0b-4293-4b3e-920a-d7e53e49a898?api-version=2022-08-31",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/operations/31486462057_99775ba3-1f6d-44ab-9b0e-150493e84f3f?api-version=2023-02-28-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-db550be29e8e73bd308b13d4cc86f987-e016be4b720536f2-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "71ff08b0372eb3cfc4537208ece42a0c",
+        "traceparent": "00-6ad0a152df6b5cfd7992059171cbfb4b-4cc4960eb62bc20e-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230326.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0e2e6430532d88df366a772411eb8398",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "bb455139-a755-4131-a060-8589b16b474d",
+        "apim-request-id": "b83aebe2-666d-494f-b04f-c307574600fd",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Aug 2022 05:53:25 GMT",
+        "Date": "Mon, 27 Mar 2023 08:32:24 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "24"
+        "x-envoy-upstream-service-time": "17",
+        "x-ms-region": "East US"
       },
       "ResponseBody": {
-        "operationId": "31505738797_7e2c0d0b-4293-4b3e-920a-d7e53e49a898",
-        "kind": "documentModelBuild",
-        "status": "notStarted",
-        "createdDateTime": "2022-08-16T05:53:23Z",
-        "lastUpdatedDateTime": "2022-08-16T05:53:23Z",
-        "resourceLocation": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/1760264917?api-version=2022-08-31"
-      }
-    },
-    {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/operations/31505738797_7e2c0d0b-4293-4b3e-920a-d7e53e49a898?api-version=2022-08-31",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-db550be29e8e73bd308b13d4cc86f987-a8c09a6354cefae3-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "9137342daf6362fa937f687f75e024a1",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "ecc8ced0-ee81-4e78-a639-6021def90bad",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Aug 2022 05:53:26 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "105"
-      },
-      "ResponseBody": {
-        "operationId": "31505738797_7e2c0d0b-4293-4b3e-920a-d7e53e49a898",
+        "operationId": "31486462057_99775ba3-1f6d-44ab-9b0e-150493e84f3f",
         "kind": "documentModelBuild",
         "status": "running",
-        "createdDateTime": "2022-08-16T05:53:23Z",
-        "lastUpdatedDateTime": "2022-08-16T05:53:26Z",
-        "resourceLocation": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/1760264917?api-version=2022-08-31"
+        "createdDateTime": "2023-03-27T08:32:23Z",
+        "lastUpdatedDateTime": "2023-03-27T08:32:25Z",
+        "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/2005807053?api-version=2023-02-28-preview"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/operations/31505738797_7e2c0d0b-4293-4b3e-920a-d7e53e49a898?api-version=2022-08-31",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/operations/31486462057_99775ba3-1f6d-44ab-9b0e-150493e84f3f?api-version=2023-02-28-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-db550be29e8e73bd308b13d4cc86f987-72f37b1f58cbf487-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "e05fd9516a0500a617211a5c04a7557e",
+        "traceparent": "00-6ad0a152df6b5cfd7992059171cbfb4b-447e89d60ee188d3-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230326.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8dc11bf2c370ddef0c207375e1ee9249",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "e979e605-45dd-49dd-974e-a5e3e196675b",
+        "apim-request-id": "95d12d6d-437d-47c8-bae6-fb3de126694e",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Aug 2022 05:53:27 GMT",
+        "Date": "Mon, 27 Mar 2023 08:32:25 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "27"
+        "x-envoy-upstream-service-time": "17",
+        "x-ms-region": "East US"
       },
       "ResponseBody": {
-        "operationId": "31505738797_7e2c0d0b-4293-4b3e-920a-d7e53e49a898",
+        "operationId": "31486462057_99775ba3-1f6d-44ab-9b0e-150493e84f3f",
+        "kind": "documentModelBuild",
+        "status": "running",
+        "createdDateTime": "2023-03-27T08:32:23Z",
+        "lastUpdatedDateTime": "2023-03-27T08:32:25Z",
+        "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/2005807053?api-version=2023-02-28-preview"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/operations/31486462057_99775ba3-1f6d-44ab-9b0e-150493e84f3f?api-version=2023-02-28-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-6ad0a152df6b5cfd7992059171cbfb4b-2fd4e016833714b8-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230326.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5c88b4a2b37348a0055c41b48c49f2c9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "2b5be5be-1fc1-4c80-bf28-13720de2c618",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 27 Mar 2023 08:32:26 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "34",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "operationId": "31486462057_99775ba3-1f6d-44ab-9b0e-150493e84f3f",
         "kind": "documentModelBuild",
         "status": "succeeded",
-        "createdDateTime": "2022-08-16T05:53:23Z",
-        "lastUpdatedDateTime": "2022-08-16T05:53:28Z",
-        "resourceLocation": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/1760264917?api-version=2022-08-31",
+        "createdDateTime": "2023-03-27T08:32:23Z",
+        "lastUpdatedDateTime": "2023-03-27T08:32:26Z",
+        "resourceLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/2005807053?api-version=2023-02-28-preview",
         "percentCompleted": 100,
         "result": {
           "docTypes": {
-            "1760264917": {
+            "2005807053": {
               "fieldSchema": {
                 "Merchant": {
                   "type": "string"
@@ -198,23 +202,24 @@
               }
             }
           },
-          "modelId": "1760264917",
-          "createdDateTime": "2022-08-16T05:53:27Z",
-          "apiVersion": "2022-08-31"
+          "modelId": "2005807053",
+          "createdDateTime": "2023-03-27T08:32:26Z",
+          "expirationDateTime": "2025-03-26T08:32:26Z",
+          "apiVersion": "2023-02-28-preview"
         }
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/1760264917:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-08-31",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/2005807053:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2023-02-28-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "145",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-65eeb1370eec3abfae4c58c51fdc7207-381d1cbd2e76bf5e-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "4b1864bbfcd001860d9dddafce503ee4",
+        "traceparent": "00-620370fba342679139ea30163b271ec0-3000614cc50cf057-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230326.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e6b68033f9696ca67551020de069a748",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -222,157 +227,134 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "438f4bf3-e9f9-4b6e-bec4-c7c109674c90",
+        "apim-request-id": "0b4f645a-9607-4cae-905c-0d161044be30",
         "Content-Length": "0",
-        "Date": "Tue, 16 Aug 2022 05:53:29 GMT",
-        "Operation-Location": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/1760264917/analyzeResults/438f4bf3-e9f9-4b6e-bec4-c7c109674c90?api-version=2022-08-31",
+        "Date": "Mon, 27 Mar 2023 08:32:27 GMT",
+        "Operation-Location": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/2005807053/analyzeResults/0b4f645a-9607-4cae-905c-0d161044be30?api-version=2023-02-28-preview",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "983"
+        "x-envoy-upstream-service-time": "318",
+        "x-ms-region": "East US"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/1760264917/analyzeResults/438f4bf3-e9f9-4b6e-bec4-c7c109674c90?api-version=2022-08-31",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/2005807053/analyzeResults/0b4f645a-9607-4cae-905c-0d161044be30?api-version=2023-02-28-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-65eeb1370eec3abfae4c58c51fdc7207-da82d7a91231e206-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "13b7d12e4984c2078d367941949d5dec",
+        "traceparent": "00-620370fba342679139ea30163b271ec0-b1ab998d006c5433-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230326.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5d812dd827623e247a788813823a50c2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "ff1c4122-9938-4d2c-bad3-24fc45b95ce0",
+        "apim-request-id": "43a552eb-aca2-4e5c-9cbd-e33d452d40de",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Aug 2022 05:53:29 GMT",
+        "Date": "Mon, 27 Mar 2023 08:32:27 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "23"
+        "x-envoy-upstream-service-time": "19",
+        "x-ms-region": "East US"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-08-16T05:53:28Z",
-        "lastUpdatedDateTime": "2022-08-16T05:53:28Z"
+        "createdDateTime": "2023-03-27T08:32:27Z",
+        "lastUpdatedDateTime": "2023-03-27T08:32:27Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/1760264917/analyzeResults/438f4bf3-e9f9-4b6e-bec4-c7c109674c90?api-version=2022-08-31",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/2005807053/analyzeResults/0b4f645a-9607-4cae-905c-0d161044be30?api-version=2023-02-28-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-65eeb1370eec3abfae4c58c51fdc7207-caf8dd50101b0671-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "10c3ea29d9c755d1525ed3688cf731c6",
+        "traceparent": "00-620370fba342679139ea30163b271ec0-23aae68a7a9967b5-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230326.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6041aa2dab38a9df0d1ce621b192679b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "db81b886-9cc2-4f8e-be5e-53100188f031",
+        "apim-request-id": "e382b502-68b9-48b8-a816-2ee9438e382c",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Aug 2022 05:53:30 GMT",
+        "Date": "Mon, 27 Mar 2023 08:32:28 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "21"
+        "x-envoy-upstream-service-time": "14",
+        "x-ms-region": "East US"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-08-16T05:53:28Z",
-        "lastUpdatedDateTime": "2022-08-16T05:53:28Z"
+        "createdDateTime": "2023-03-27T08:32:27Z",
+        "lastUpdatedDateTime": "2023-03-27T08:32:27Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/1760264917/analyzeResults/438f4bf3-e9f9-4b6e-bec4-c7c109674c90?api-version=2022-08-31",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/2005807053/analyzeResults/0b4f645a-9607-4cae-905c-0d161044be30?api-version=2023-02-28-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-65eeb1370eec3abfae4c58c51fdc7207-09d250e5933f5115-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "332e36e341ef71f95d56bd9a82456c70",
+        "traceparent": "00-620370fba342679139ea30163b271ec0-1ef0c5a07c5f7b5b-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230326.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5fdcf9b595c70c665b776bf17092ea3a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "3f263fb6-bc7f-44a3-a295-195d577d6c1d",
+        "apim-request-id": "6d1e221e-8647-4f5c-8b52-268d0a40585e",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Aug 2022 05:53:31 GMT",
+        "Date": "Mon, 27 Mar 2023 08:32:29 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "18"
+        "x-envoy-upstream-service-time": "16",
+        "x-ms-region": "East US"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-08-16T05:53:28Z",
-        "lastUpdatedDateTime": "2022-08-16T05:53:28Z"
+        "createdDateTime": "2023-03-27T08:32:27Z",
+        "lastUpdatedDateTime": "2023-03-27T08:32:27Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/1760264917/analyzeResults/438f4bf3-e9f9-4b6e-bec4-c7c109674c90?api-version=2022-08-31",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/2005807053/analyzeResults/0b4f645a-9607-4cae-905c-0d161044be30?api-version=2023-02-28-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-65eeb1370eec3abfae4c58c51fdc7207-1471249d6070bc79-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "e485f13f2d8d551c0062c125769e3695",
+        "traceparent": "00-620370fba342679139ea30163b271ec0-37ef8bc1304aaf23-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230326.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "36df3f0146272c0f4dd84f4640028de7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "5f603d4a-985c-405d-aa91-50058e5f182e",
-        "Content-Length": "106",
+        "apim-request-id": "3eafab2e-01f3-4fc8-8f82-1c24800b89e6",
+        "Content-Length": "31949",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Aug 2022 05:53:32 GMT",
+        "Date": "Mon, 27 Mar 2023 08:32:30 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "21"
-      },
-      "ResponseBody": {
-        "status": "running",
-        "createdDateTime": "2022-08-16T05:53:28Z",
-        "lastUpdatedDateTime": "2022-08-16T05:53:28Z"
-      }
-    },
-    {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/1760264917/analyzeResults/438f4bf3-e9f9-4b6e-bec4-c7c109674c90?api-version=2022-08-31",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-65eeb1370eec3abfae4c58c51fdc7207-7f81aaa249bf15ce-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "5d5db204296fe8fcf051b2711b37d20d",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "a7dab283-fadc-464a-926a-4767d1f9659f",
-        "Content-Length": "31940",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Aug 2022 05:53:34 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "56"
+        "x-envoy-upstream-service-time": "63",
+        "x-ms-region": "East US"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2022-08-16T05:53:28Z",
-        "lastUpdatedDateTime": "2022-08-16T05:53:33Z",
+        "createdDateTime": "2023-03-27T08:32:27Z",
+        "lastUpdatedDateTime": "2023-03-27T08:32:31Z",
         "analyzeResult": {
-          "apiVersion": "2022-08-31",
-          "modelId": "1760264917",
+          "apiVersion": "2023-02-28-preview",
+          "modelId": "2005807053",
           "stringIndexType": "utf16CodeUnit",
           "content": "Purchase Order\nHero Limited\nCompany Phone: 555-348-6512 Website: www.herolimited.com Email: accounts@herolimited.com\nPurchase Order\nDated As: 12/20/2020 Purchase Order #: 948284\nShipped To Vendor Name: Hillary Swank Company Name: Higgly Wiggly Books Address: 938 NE Burner Road Boulder City, CO 92848 Phone: 938-294-2949\nShipped From Name: Bernie Sanders Company Name: Jupiter Book Supply Address: 383 N Kinnick Road Seattle, WA 38383\nPhone: 932-299-0292\nDetails\nQuantity\nUnit Price\nTotal\nBindings\n20\n1.00\n20.00\nCovers Small\n20\n1.00\n20.00\nFeather Bookmark\n20\n5.00\n100.00\nCopper Swirl Marker\n20\n5.00\n100.00\nBernie Sanders\nBernie Sanders Manager\nAdditional Notes:\nDo not Jostle Box. Unpack carefully. Enjoy. Jupiter Book Supply will refund you 50% per book if returned within 60 days of reading and offer you 25% off you next total purchase.\nSUBTOTAL\n$140.00\nTAX\n$4.00\nTOTAL\n$144.00",
           "pages": [
@@ -4547,7 +4529,7 @@
           ],
           "documents": [
             {
-              "docType": "1760264917:1760264917",
+              "docType": "2005807053:2005807053",
               "boundingRegions": [
                 {
                   "pageNumber": 1,
@@ -4564,63 +4546,63 @@
                 }
               ],
               "fields": {
-                "CompanyPhoneNumber": {
+                "Total": {
                   "type": "string",
-                  "valueString": "938-294-2949",
-                  "content": "938-294-2949",
+                  "valueString": "$144.00",
+                  "content": "$144.00",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        707,
-                        718,
-                        886,
-                        718,
-                        886,
-                        752,
-                        707,
-                        752
+                        1425,
+                        1669,
+                        1528,
+                        1669,
+                        1528,
+                        1699,
+                        1425,
+                        1699
                       ]
                     }
                   ],
                   "confidence": 0.994,
                   "spans": [
                     {
-                      "offset": 308,
-                      "length": 12
+                      "offset": 873,
+                      "length": 7
+                    }
+                  ]
+                },
+                "Tax": {
+                  "type": "string",
+                  "valueString": "$4.00",
+                  "content": "$4.00",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        1456,
+                        1611,
+                        1529,
+                        1611,
+                        1529,
+                        1646,
+                        1456,
+                        1646
+                      ]
+                    }
+                  ],
+                  "confidence": 0.995,
+                  "spans": [
+                    {
+                      "offset": 861,
+                      "length": 5
                     }
                   ]
                 },
                 "Signature": {
                   "type": "string",
                   "confidence": 0.919
-                },
-                "Quantity": {
-                  "type": "number",
-                  "valueNumber": 20,
-                  "content": "20",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "polygon": [
-                        860,
-                        1094,
-                        888,
-                        1094,
-                        888,
-                        1119,
-                        860,
-                        1119
-                      ]
-                    }
-                  ],
-                  "confidence": 0.99,
-                  "spans": [
-                    {
-                      "offset": 498,
-                      "length": 2
-                    }
-                  ]
                 },
                 "PurchaseOrderNumber": {
                   "type": "string",
@@ -4649,87 +4631,6 @@
                     }
                   ]
                 },
-                "VendorName": {
-                  "type": "string",
-                  "valueString": "Hillary Swank",
-                  "content": "Hillary Swank",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "polygon": [
-                        347,
-                        606,
-                        521,
-                        606,
-                        521,
-                        641,
-                        347,
-                        641
-                      ]
-                    }
-                  ],
-                  "confidence": 0.99,
-                  "spans": [
-                    {
-                      "offset": 202,
-                      "length": 13
-                    }
-                  ]
-                },
-                "Total": {
-                  "type": "string",
-                  "valueString": "$144.00",
-                  "content": "$144.00",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "polygon": [
-                        1425,
-                        1669,
-                        1528,
-                        1669,
-                        1528,
-                        1699,
-                        1425,
-                        1699
-                      ]
-                    }
-                  ],
-                  "confidence": 0.994,
-                  "spans": [
-                    {
-                      "offset": 873,
-                      "length": 7
-                    }
-                  ]
-                },
-                "DatedAs": {
-                  "type": "string",
-                  "valueString": "12/20/2020",
-                  "content": "12/20/2020",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "polygon": [
-                        1163,
-                        418,
-                        1315,
-                        418,
-                        1315,
-                        450,
-                        1163,
-                        450
-                      ]
-                    }
-                  ],
-                  "confidence": 0.994,
-                  "spans": [
-                    {
-                      "offset": 142,
-                      "length": 10
-                    }
-                  ]
-                },
                 "Merchant": {
                   "type": "string",
                   "valueString": "Hero Limited",
@@ -4754,6 +4655,33 @@
                     {
                       "offset": 15,
                       "length": 12
+                    }
+                  ]
+                },
+                "CompanyAddress": {
+                  "type": "string",
+                  "valueString": "938 NE Burner Road Boulder City, CO 92848",
+                  "content": "938 NE Burner Road Boulder City, CO 92848",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        272,
+                        683,
+                        563,
+                        683,
+                        563,
+                        753,
+                        272,
+                        753
+                      ]
+                    }
+                  ],
+                  "confidence": 0.699,
+                  "spans": [
+                    {
+                      "offset": 259,
+                      "length": 41
                     }
                   ]
                 },
@@ -4805,30 +4733,57 @@
                   ],
                   "confidence": 0.995
                 },
-                "CompanyName": {
+                "PhoneNumber": {
                   "type": "string",
-                  "valueString": "Higgly Wiggly Books",
-                  "content": "Higgly Wiggly Books",
+                  "valueString": "555-348-6512",
+                  "content": "555-348-6512",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        376,
-                        645,
-                        627,
-                        645,
-                        627,
-                        679,
-                        376,
-                        679
+                        365,
+                        349,
+                        527,
+                        349,
+                        527,
+                        377,
+                        365,
+                        377
                       ]
                     }
                   ],
-                  "confidence": 0.992,
+                  "confidence": 0.99,
                   "spans": [
                     {
-                      "offset": 230,
-                      "length": 19
+                      "offset": 43,
+                      "length": 12
+                    }
+                  ]
+                },
+                "CompanyPhoneNumber": {
+                  "type": "string",
+                  "valueString": "938-294-2949",
+                  "content": "938-294-2949",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        707,
+                        718,
+                        886,
+                        718,
+                        886,
+                        752,
+                        707,
+                        752
+                      ]
+                    }
+                  ],
+                  "confidence": 0.994,
+                  "spans": [
+                    {
+                      "offset": 308,
+                      "length": 12
                     }
                   ]
                 },
@@ -4859,87 +4814,6 @@
                     }
                   ]
                 },
-                "PhoneNumber": {
-                  "type": "string",
-                  "valueString": "555-348-6512",
-                  "content": "555-348-6512",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "polygon": [
-                        365,
-                        349,
-                        527,
-                        349,
-                        527,
-                        377,
-                        365,
-                        377
-                      ]
-                    }
-                  ],
-                  "confidence": 0.99,
-                  "spans": [
-                    {
-                      "offset": 43,
-                      "length": 12
-                    }
-                  ]
-                },
-                "CompanyAddress": {
-                  "type": "string",
-                  "valueString": "938 NE Burner Road Boulder City, CO 92848",
-                  "content": "938 NE Burner Road Boulder City, CO 92848",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "polygon": [
-                        272,
-                        683,
-                        563,
-                        683,
-                        563,
-                        753,
-                        272,
-                        753
-                      ]
-                    }
-                  ],
-                  "confidence": 0.699,
-                  "spans": [
-                    {
-                      "offset": 259,
-                      "length": 41
-                    }
-                  ]
-                },
-                "Tax": {
-                  "type": "string",
-                  "valueString": "$4.00",
-                  "content": "$4.00",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "polygon": [
-                        1456,
-                        1611,
-                        1529,
-                        1611,
-                        1529,
-                        1646,
-                        1456,
-                        1646
-                      ]
-                    }
-                  ],
-                  "confidence": 0.995,
-                  "spans": [
-                    {
-                      "offset": 861,
-                      "length": 5
-                    }
-                  ]
-                },
                 "Website": {
                   "type": "string",
                   "valueString": "www.herolimited.com",
@@ -4966,9 +4840,117 @@
                       "length": 19
                     }
                   ]
+                },
+                "Quantity": {
+                  "type": "number",
+                  "valueNumber": 20,
+                  "content": "20",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        860,
+                        1094,
+                        888,
+                        1094,
+                        888,
+                        1119,
+                        860,
+                        1119
+                      ]
+                    }
+                  ],
+                  "confidence": 0.99,
+                  "spans": [
+                    {
+                      "offset": 498,
+                      "length": 2
+                    }
+                  ]
+                },
+                "DatedAs": {
+                  "type": "string",
+                  "valueString": "12/20/2020",
+                  "content": "12/20/2020",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        1163,
+                        418,
+                        1315,
+                        418,
+                        1315,
+                        450,
+                        1163,
+                        450
+                      ]
+                    }
+                  ],
+                  "confidence": 0.994,
+                  "spans": [
+                    {
+                      "offset": 142,
+                      "length": 10
+                    }
+                  ]
+                },
+                "CompanyName": {
+                  "type": "string",
+                  "valueString": "Higgly Wiggly Books",
+                  "content": "Higgly Wiggly Books",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        376,
+                        645,
+                        627,
+                        645,
+                        627,
+                        679,
+                        376,
+                        679
+                      ]
+                    }
+                  ],
+                  "confidence": 0.992,
+                  "spans": [
+                    {
+                      "offset": 230,
+                      "length": 19
+                    }
+                  ]
+                },
+                "VendorName": {
+                  "type": "string",
+                  "valueString": "Hillary Swank",
+                  "content": "Hillary Swank",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        347,
+                        606,
+                        521,
+                        606,
+                        521,
+                        641,
+                        347,
+                        641
+                      ]
+                    }
+                  ],
+                  "confidence": 0.99,
+                  "spans": [
+                    {
+                      "offset": 202,
+                      "length": 13
+                    }
+                  ]
                 }
               },
-              "confidence": 0.92,
+              "confidence": 0.926,
               "spans": [
                 {
                   "offset": 0,
@@ -4981,25 +4963,26 @@
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/1760264917?api-version=2022-08-31",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/2005807053?api-version=2023-02-28-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-2d498f4a4998b45491bc6aa2fd7caa9e-3451c9d76b162f8f-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "9a2862f24d71b6391ad8338d80d3fbbe",
+        "traceparent": "00-bf0589f8bf821a646f405e10995ed786-c165953846663f2d-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230326.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "885eec10f05e98fa433505c13fee387b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
-        "apim-request-id": "50cca90a-1ca2-4720-9483-58b6965bcefc",
+        "apim-request-id": "25fe2bb0-136d-4fe6-9ebc-40736c00affd",
         "Content-Length": "0",
-        "Date": "Tue, 16 Aug 2022 05:53:34 GMT",
+        "Date": "Mon, 27 Mar 2023 08:32:30 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "79"
+        "x-envoy-upstream-service-time": "62",
+        "x-ms-region": "East US"
       },
       "ResponseBody": null
     }
@@ -5007,7 +4990,7 @@
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
     "FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL": "https://sanitized.blob.core.windows.net",
-    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/",
-    "RandomSeed": "1864033977"
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/",
+    "RandomSeed": "1257671151"
   }
 }

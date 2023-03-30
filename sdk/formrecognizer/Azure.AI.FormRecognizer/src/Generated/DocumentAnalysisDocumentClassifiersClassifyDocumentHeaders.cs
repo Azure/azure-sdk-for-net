@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer
 {
-    internal partial class DocumentAnalysisComposeDocumentModelHeaders
+    internal partial class DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders
     {
         private readonly Response _response;
-        public DocumentAnalysisComposeDocumentModelHeaders(Response response)
+        public DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders(Response response)
         {
             _response = response;
         }
-        /// <summary> Operation result URL. </summary>
+        /// <summary> URL used to track the progress and obtain the result of the classification operation. </summary>
         public string OperationLocation => _response.Headers.TryGetValue("Operation-Location", out string value) ? value : null;
     }
 }

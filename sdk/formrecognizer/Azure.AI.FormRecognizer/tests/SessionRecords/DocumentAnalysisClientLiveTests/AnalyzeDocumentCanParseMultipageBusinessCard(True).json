@@ -1,202 +1,180 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-08-31",
+      "RequestUri": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2023-02-28-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "189935",
         "Content-Type": "application/octet-stream",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f54f8c92830152c3337cbf083070f9e5-c78aa50e8d2f8567-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "d52319f63e9821449c2d5a1eb8564ebe",
+        "traceparent": "00-4e5cfe99a42005b37652d82856c3685b-d524a69600eed955-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "91034e015a3eb7ab6dec31b2e0804c34",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "fc476ed2-1fb2-455c-b797-d49f2a0224da",
+        "apim-request-id": "1205a9fd-2fbd-43a1-b1b4-334cced927e6",
         "Content-Length": "0",
-        "Date": "Tue, 16 Aug 2022 05:45:07 GMT",
-        "Operation-Location": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/fc476ed2-1fb2-455c-b797-d49f2a0224da?api-version=2022-08-31",
+        "Date": "Tue, 07 Mar 2023 01:01:20 GMT",
+        "Operation-Location": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/1205a9fd-2fbd-43a1-b1b4-334cced927e6?api-version=2023-02-28-preview",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "98"
+        "x-envoy-upstream-service-time": "93",
+        "x-ms-region": "West Europe"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/fc476ed2-1fb2-455c-b797-d49f2a0224da?api-version=2022-08-31",
+      "RequestUri": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/1205a9fd-2fbd-43a1-b1b4-334cced927e6?api-version=2023-02-28-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f54f8c92830152c3337cbf083070f9e5-4ee7f64f0a4f4da2-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "1326668577835a3bc4f81f6ed47ff490",
+        "traceparent": "00-4e5cfe99a42005b37652d82856c3685b-d23f86a641791e0e-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "57fc5907d05ea2868cb11d2aa5e264d3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "624e644b-5014-4780-b0e6-b54b264a137c",
+        "apim-request-id": "7cf45b76-9dc1-4634-9fca-c539234d44f7",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Aug 2022 05:45:07 GMT",
+        "Date": "Tue, 07 Mar 2023 01:01:20 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "22"
+        "x-envoy-upstream-service-time": "18",
+        "x-ms-region": "West Europe"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-08-16T05:45:08Z",
-        "lastUpdatedDateTime": "2022-08-16T05:45:08Z"
+        "createdDateTime": "2023-03-07T01:01:20Z",
+        "lastUpdatedDateTime": "2023-03-07T01:01:20Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/fc476ed2-1fb2-455c-b797-d49f2a0224da?api-version=2022-08-31",
+      "RequestUri": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/1205a9fd-2fbd-43a1-b1b4-334cced927e6?api-version=2023-02-28-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f54f8c92830152c3337cbf083070f9e5-6709ed77c20580c4-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "5f44fa454dba799ed1b5da95c71e5c30",
+        "traceparent": "00-4e5cfe99a42005b37652d82856c3685b-29e49812d4242eda-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "58a452c7e33c80970f7043456b47d871",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "b924f4be-1926-4016-9e7c-5dd9f4fea7c6",
+        "apim-request-id": "0ecf614d-40ab-473a-a7dc-0df89c6219c9",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Aug 2022 05:45:08 GMT",
+        "Date": "Tue, 07 Mar 2023 01:01:21 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "23"
+        "x-envoy-upstream-service-time": "16",
+        "x-ms-region": "West Europe"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-08-16T05:45:08Z",
-        "lastUpdatedDateTime": "2022-08-16T05:45:08Z"
+        "createdDateTime": "2023-03-07T01:01:20Z",
+        "lastUpdatedDateTime": "2023-03-07T01:01:20Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/fc476ed2-1fb2-455c-b797-d49f2a0224da?api-version=2022-08-31",
+      "RequestUri": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/1205a9fd-2fbd-43a1-b1b4-334cced927e6?api-version=2023-02-28-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f54f8c92830152c3337cbf083070f9e5-2c2327b01a0ff588-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "a014c3b183ce7e4adec910a01fd54d1c",
+        "traceparent": "00-4e5cfe99a42005b37652d82856c3685b-8745b1fab6db2385-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "683d8dd08dd930cdc760058d3d80128b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "af0ea463-0424-4f53-acee-3b08a89edd09",
+        "apim-request-id": "c09f549d-0af9-4e0d-a354-62344da38952",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Aug 2022 05:45:09 GMT",
+        "Date": "Tue, 07 Mar 2023 01:01:23 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "21"
+        "x-envoy-upstream-service-time": "38",
+        "x-ms-region": "West Europe"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-08-16T05:45:08Z",
-        "lastUpdatedDateTime": "2022-08-16T05:45:08Z"
+        "createdDateTime": "2023-03-07T01:01:20Z",
+        "lastUpdatedDateTime": "2023-03-07T01:01:20Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/fc476ed2-1fb2-455c-b797-d49f2a0224da?api-version=2022-08-31",
+      "RequestUri": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/1205a9fd-2fbd-43a1-b1b4-334cced927e6?api-version=2023-02-28-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f54f8c92830152c3337cbf083070f9e5-9ca4f6eba4881354-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "bdd8c938ee123704c8ac42cd9da592a5",
+        "traceparent": "00-4e5cfe99a42005b37652d82856c3685b-855724a83b0b6285-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8deb5e87f4dc23f8c27b48ed8d403744",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "fffa6279-43ae-4778-b5e8-9e59f6a9d34a",
+        "apim-request-id": "93ec101a-e90a-47e6-a1f8-55c6e7de1a1a",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Aug 2022 05:45:10 GMT",
+        "Date": "Tue, 07 Mar 2023 01:01:24 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "22"
+        "x-envoy-upstream-service-time": "13",
+        "x-ms-region": "West Europe"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-08-16T05:45:08Z",
-        "lastUpdatedDateTime": "2022-08-16T05:45:08Z"
+        "createdDateTime": "2023-03-07T01:01:20Z",
+        "lastUpdatedDateTime": "2023-03-07T01:01:24Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/fc476ed2-1fb2-455c-b797-d49f2a0224da?api-version=2022-08-31",
+      "RequestUri": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/1205a9fd-2fbd-43a1-b1b4-334cced927e6?api-version=2023-02-28-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f54f8c92830152c3337cbf083070f9e5-dfec73ba0853ef5e-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "10bcee9b546bc2c1afc581f13dfe5afb",
+        "traceparent": "00-4e5cfe99a42005b37652d82856c3685b-4355a6ec8f79a00d-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "175aabd8fca539f9857390dbdd09438f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "80ff0501-8f2d-45f5-9901-5e721e2c6a33",
-        "Content-Length": "106",
+        "apim-request-id": "946715ec-f75b-4287-af2c-eaa47e687d4f",
+        "Content-Length": "15398",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Aug 2022 05:45:12 GMT",
+        "Date": "Tue, 07 Mar 2023 01:01:26 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "23"
-      },
-      "ResponseBody": {
-        "status": "running",
-        "createdDateTime": "2022-08-16T05:45:08Z",
-        "lastUpdatedDateTime": "2022-08-16T05:45:11Z"
-      }
-    },
-    {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/fc476ed2-1fb2-455c-b797-d49f2a0224da?api-version=2022-08-31",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f54f8c92830152c3337cbf083070f9e5-66fb4bd0b4862817-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "fd5dbe689f45c31ebeddd722417ce138",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "9df0ec8c-b294-462e-bcc9-87eb3d3d8f44",
-        "Content-Length": "16652",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Aug 2022 05:45:14 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "93"
+        "x-envoy-upstream-service-time": "47",
+        "x-ms-region": "West Europe"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2022-08-16T05:45:08Z",
-        "lastUpdatedDateTime": "2022-08-16T05:45:13Z",
+        "createdDateTime": "2023-03-07T01:01:20Z",
+        "lastUpdatedDateTime": "2023-03-07T01:01:24Z",
         "analyzeResult": {
-          "apiVersion": "2022-08-31",
+          "apiVersion": "2023-02-28-preview",
           "modelId": "prebuilt-businessCard",
           "stringIndexType": "utf16CodeUnit",
-          "content": "JOHN SINGER\nSoftware Engineer \u002B1 (425) 779-3479 johnsinger@contoso.com https://www.contoso.com\nDr. Avery Smith Senior Researcher Cloud \u0026 Al Department\navery.smith@contoso.com https://www.contoso.com/ mob: \u002B44 (0) 7911 123456 tel: \u002B44 (0) 20 9876 5432 fax: \u002B44 (0) 20 6789 2345\nContoso 2 Kingdom Street Paddington, London, W2 6BD\nO",
+          "content": "JOHN\nSINGER\nSoftware Engineer\n\u002B1 (425) 779-3479 johnsinger@contoso.com\nhttps://www.contoso.com\nDr. Avery Smith\nSenior Researcher\nCloud \u0026 Al Department\navery.smith@contoso.com\nhttps://www.contoso.com/\nmob: \u002B44 (0) 7911 123456\ntel: \u002B44 (0) 20 9876 5432\nfax: \u002B44 (0) 20 6789 2345\nO\nContoso\n2 Kingdom Street\nPaddington, London, W2 6BD",
           "pages": [
             {
               "pageNumber": 1,
@@ -985,6 +963,24 @@
                   }
                 },
                 {
+                  "content": "O",
+                  "polygon": [
+                    1.848,
+                    4.3589,
+                    2.2492,
+                    4.2109,
+                    2.5118,
+                    4.9271,
+                    2.1059,
+                    5.0799
+                  ],
+                  "confidence": 0.867,
+                  "span": {
+                    "offset": 277,
+                    "length": 1
+                  }
+                },
+                {
                   "content": "Contoso",
                   "polygon": [
                     2.827,
@@ -998,7 +994,7 @@
                   ],
                   "confidence": 0.996,
                   "span": {
-                    "offset": 277,
+                    "offset": 279,
                     "length": 7
                   }
                 },
@@ -1016,7 +1012,7 @@
                   ],
                   "confidence": 0.998,
                   "span": {
-                    "offset": 285,
+                    "offset": 287,
                     "length": 1
                   }
                 },
@@ -1034,7 +1030,7 @@
                   ],
                   "confidence": 0.996,
                   "span": {
-                    "offset": 287,
+                    "offset": 289,
                     "length": 7
                   }
                 },
@@ -1052,7 +1048,7 @@
                   ],
                   "confidence": 0.997,
                   "span": {
-                    "offset": 295,
+                    "offset": 297,
                     "length": 6
                   }
                 },
@@ -1070,7 +1066,7 @@
                   ],
                   "confidence": 0.991,
                   "span": {
-                    "offset": 302,
+                    "offset": 304,
                     "length": 11
                   }
                 },
@@ -1088,7 +1084,7 @@
                   ],
                   "confidence": 0.996,
                   "span": {
-                    "offset": 314,
+                    "offset": 316,
                     "length": 7
                   }
                 },
@@ -1106,7 +1102,7 @@
                   ],
                   "confidence": 0.997,
                   "span": {
-                    "offset": 322,
+                    "offset": 324,
                     "length": 2
                   }
                 },
@@ -1124,26 +1120,8 @@
                   ],
                   "confidence": 0.997,
                   "span": {
-                    "offset": 325,
+                    "offset": 327,
                     "length": 3
-                  }
-                },
-                {
-                  "content": "O",
-                  "polygon": [
-                    1.848,
-                    4.3589,
-                    2.2492,
-                    4.2109,
-                    2.5118,
-                    4.9271,
-                    2.1059,
-                    5.0799
-                  ],
-                  "confidence": 0.867,
-                  "span": {
-                    "offset": 329,
-                    "length": 1
                   }
                 }
               ],
@@ -1301,6 +1279,25 @@
                   ]
                 },
                 {
+                  "content": "O",
+                  "polygon": [
+                    1.848,
+                    4.3589,
+                    2.6503,
+                    4.1298,
+                    2.8843,
+                    4.7313,
+                    2.1059,
+                    5.0799
+                  ],
+                  "spans": [
+                    {
+                      "offset": 277,
+                      "length": 1
+                    }
+                  ]
+                },
+                {
                   "content": "Contoso",
                   "polygon": [
                     2.8222,
@@ -1314,7 +1311,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 277,
+                      "offset": 279,
                       "length": 7
                     }
                   ]
@@ -1333,7 +1330,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 285,
+                      "offset": 287,
                       "length": 16
                     }
                   ]
@@ -1352,27 +1349,8 @@
                   ],
                   "spans": [
                     {
-                      "offset": 302,
+                      "offset": 304,
                       "length": 26
-                    }
-                  ]
-                },
-                {
-                  "content": "O",
-                  "polygon": [
-                    1.848,
-                    4.3589,
-                    2.6503,
-                    4.1298,
-                    2.8843,
-                    4.7313,
-                    2.1059,
-                    5.0799
-                  ],
-                  "spans": [
-                    {
-                      "offset": 329,
-                      "length": 1
                     }
                   ]
                 }
@@ -1384,152 +1362,6 @@
                 }
               ],
               "kind": "document"
-            }
-          ],
-          "paragraphs": [
-            {
-              "spans": [
-                {
-                  "offset": 0,
-                  "length": 11
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1.7429,
-                    3.7425,
-                    3.3669,
-                    3.9397,
-                    3.2763,
-                    4.6851,
-                    1.6522,
-                    4.4878
-                  ]
-                }
-              ],
-              "content": "JOHN SINGER"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 12,
-                  "length": 82
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1.5313,
-                    5.2543,
-                    6.1927,
-                    5.8923,
-                    6.0871,
-                    6.6629,
-                    1.4257,
-                    6.0249
-                  ]
-                }
-              ],
-              "content": "Software Engineer \u002B1 (425) 779-3479 johnsinger@contoso.com https://www.contoso.com"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 95,
-                  "length": 55
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 2,
-                  "polygon": [
-                    1.6581,
-                    2.8593,
-                    3.5849,
-                    2.4007,
-                    3.7148,
-                    2.9461,
-                    1.7879,
-                    3.4047
-                  ]
-                }
-              ],
-              "content": "Dr. Avery Smith Senior Researcher Cloud \u0026 Al Department"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 151,
-                  "length": 125
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 2,
-                  "polygon": [
-                    4.3797,
-                    2.4981,
-                    6.0096,
-                    2.0391,
-                    6.2067,
-                    2.7387,
-                    4.5768,
-                    3.1977
-                  ]
-                }
-              ],
-              "content": "avery.smith@contoso.com https://www.contoso.com/ mob: \u002B44 (0) 7911 123456 tel: \u002B44 (0) 20 9876 5432 fax: \u002B44 (0) 20 6789 2345"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 277,
-                  "length": 51
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 2,
-                  "polygon": [
-                    2.8037,
-                    4.0886,
-                    4.9564,
-                    3.3272,
-                    5.215,
-                    4.058,
-                    3.0623,
-                    4.8194
-                  ]
-                }
-              ],
-              "content": "Contoso 2 Kingdom Street Paddington, London, W2 6BD"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 329,
-                  "length": 1
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 2,
-                  "polygon": [
-                    1.848,
-                    4.3589,
-                    2.6487,
-                    4.0727,
-                    2.9066,
-                    4.7936,
-                    2.1059,
-                    5.0799
-                  ]
-                }
-              ],
-              "content": "O"
             }
           ],
           "styles": [],
@@ -1613,7 +1445,7 @@
                           ]
                         }
                       },
-                      "content": "JOHN SINGER",
+                      "content": "JOHN\nSINGER",
                       "boundingRegions": [
                         {
                           "pageNumber": 1,
@@ -1799,7 +1631,7 @@
                   "valueArray": [
                     {
                       "type": "address",
-                      "content": "2 Kingdom Street Paddington, London, W2 6BD",
+                      "content": "2 Kingdom Street\nPaddington, London, W2 6BD",
                       "boundingRegions": [
                         {
                           "pageNumber": 2,
@@ -1818,7 +1650,7 @@
                       "confidence": 0.962,
                       "spans": [
                         {
-                          "offset": 285,
+                          "offset": 287,
                           "length": 43
                         }
                       ],
@@ -1858,7 +1690,7 @@
                       "confidence": 0.847,
                       "spans": [
                         {
-                          "offset": 277,
+                          "offset": 279,
                           "length": 7
                         }
                       ]
@@ -2192,7 +2024,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/",
-    "RandomSeed": "1583295670"
+    "FORM_RECOGNIZER_ENDPOINT": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/",
+    "RandomSeed": "2054806870"
   }
 }

@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer
 {
-    internal partial class DocumentAnalysisBuildDocumentModelHeaders
+    internal partial class DocumentAnalysisDocumentModelsBuildModelHeaders
     {
         private readonly Response _response;
-        public DocumentAnalysisBuildDocumentModelHeaders(Response response)
+        public DocumentAnalysisDocumentModelsBuildModelHeaders(Response response)
         {
             _response = response;
         }

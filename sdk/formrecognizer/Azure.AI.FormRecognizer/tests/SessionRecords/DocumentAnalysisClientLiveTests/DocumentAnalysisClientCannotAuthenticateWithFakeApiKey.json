@@ -1,25 +1,25 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-08-31",
+      "RequestUri": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2023-02-28-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "479269",
         "Content-Type": "application/octet-stream",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-82543dffe8e72b68b1a4d4579e3b37a9-32775d0d9756f2b1-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "59d1029bad995384164850adffd22eb2",
+        "traceparent": "00-82481cfbe73d83fb2969a0015ce5b9da-d17ec7526f70ffd1-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230302.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "490b382b128a7e7756b98e694200de91",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 401,
       "ResponseHeaders": {
-        "apim-request-id": "31cde98b-9ab6-4c9e-a58a-1d43516c5f02",
+        "apim-request-id": "4164950e-8f20-46f4-a5fc-0c624040f49c",
         "Content-Length": "224",
         "Content-Type": "application/json",
-        "Date": "Tue, 16 Aug 2022 05:51:08 GMT"
+        "Date": "Fri, 03 Mar 2023 03:43:04 GMT"
       },
       "ResponseBody": {
         "error": {
@@ -30,7 +30,7 @@
     }
   ],
   "Variables": {
-    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/",
-    "RandomSeed": "1123018248"
+    "FORM_RECOGNIZER_ENDPOINT": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/",
+    "RandomSeed": "1909775024"
   }
 }
