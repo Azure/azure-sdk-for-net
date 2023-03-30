@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -350,6 +352,44 @@ namespace Azure.Storage.Tests
             Assert.AreEqual(expectedCommit, mocks.Commit.Invocations.Count);
             Assert.AreEqual(0, mocks.SingleUploadStream.Invocations.Count);
             Assert.AreEqual(0, mocks.PartitionUploadStream.Invocations.Count);
+        }
+
+        [TestCase(Constants.KB)]
+        public async Task ReleasesMemoryOnKnownLengthUnseekableStream(int dataLength)
+        {
+            // Given mock array pool that actually calls to a real one
+            var arraypool = new Mock<ArrayPool<byte>>();
+            arraypool.Setup(pool => pool.Rent(It.IsAny<int>()))
+                .Returns<int>(size => ArrayPool<byte>.Shared.Rent(size));
+            arraypool.Setup(pool => pool.Return(It.IsAny<byte[]>(), It.IsAny<bool>()))
+                .Callback<byte[], bool>((array, clear) => ArrayPool<byte>.Shared.Return(array, clear));
+
+            // and a partitioneduploader
+            var mocks = GetMockBehaviors(dataLength, dataLength);
+            var partitionedUploader = new PartitionedUploader<object, object>(
+                mocks.ToBehaviors(),
+                transferOptions: default,
+                s_validationOptions,
+                arrayPool: arraypool.Object,
+                operationName: s_operationName);
+
+            // upload a nonseekable stream with provided length and properly dispose after
+            using (var stream = new NonSeekableMemoryStream(TestHelper.GetRandomBuffer(dataLength)))
+            {
+                Response<object> result = await partitionedUploader.UploadInternal(
+                    content: stream,
+                    expectedContentLength: dataLength,
+                    s_objectArgs,
+                    s_progress,
+                    IsAsync,
+                    s_cancellation);
+            }
+
+            // assert every pool rental was returned
+            int rents = arraypool.Invocations.Where(i => i.Method.Name == "Rent").Count();
+            int returns = arraypool.Invocations.Where(i => i.Method.Name == "Return").Count();
+            Assert.Greater(rents, 0);
+            Assert.AreEqual(rents, returns);
         }
     }
 }
