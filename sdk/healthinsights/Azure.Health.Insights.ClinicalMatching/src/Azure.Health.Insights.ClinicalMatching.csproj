@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the Azure Health Insights ClinicalMatching client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Azure SDK Code Generation HealthInsights for Azure Data Plane</AssemblyTitle>
