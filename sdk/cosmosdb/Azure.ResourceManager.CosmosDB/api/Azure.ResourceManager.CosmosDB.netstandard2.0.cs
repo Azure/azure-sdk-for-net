@@ -217,38 +217,6 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CassandraTableThroughputSettingResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CassandraTableThroughputSettingResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ClientEncryptionKeyGetResultCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.ClientEncryptionKeyGetResultResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.ClientEncryptionKeyGetResultResource>, System.Collections.IEnumerable
-    {
-        protected ClientEncryptionKeyGetResultCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.ClientEncryptionKeyGetResultResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string clientEncryptionKeyName, Azure.ResourceManager.CosmosDB.Models.ClientEncryptionKeyGetResultCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.ClientEncryptionKeyGetResultResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string clientEncryptionKeyName, Azure.ResourceManager.CosmosDB.Models.ClientEncryptionKeyGetResultCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string clientEncryptionKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string clientEncryptionKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.ClientEncryptionKeyGetResultResource> Get(string clientEncryptionKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.ClientEncryptionKeyGetResultResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.ClientEncryptionKeyGetResultResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.ClientEncryptionKeyGetResultResource>> GetAsync(string clientEncryptionKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CosmosDB.ClientEncryptionKeyGetResultResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.ClientEncryptionKeyGetResultResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.ClientEncryptionKeyGetResultResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.ClientEncryptionKeyGetResultResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ClientEncryptionKeyGetResultData : Azure.ResourceManager.Models.ResourceData
-    {
-        public ClientEncryptionKeyGetResultData() { }
-        public Azure.ResourceManager.CosmosDB.Models.ClientEncryptionKeyGetPropertiesResource Resource { get { throw null; } set { } }
-    }
-    public partial class ClientEncryptionKeyGetResultResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ClientEncryptionKeyGetResultResource() { }
-        public virtual Azure.ResourceManager.CosmosDB.ClientEncryptionKeyGetResultData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string clientEncryptionKeyName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.ClientEncryptionKeyGetResultResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.ClientEncryptionKeyGetResultResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.ClientEncryptionKeyGetResultResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.Models.ClientEncryptionKeyGetResultCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.ClientEncryptionKeyGetResultResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.Models.ClientEncryptionKeyGetResultCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class CosmosDBAccountCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBAccountResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBAccountResource>, System.Collections.IEnumerable
     {
         protected CosmosDBAccountCollection() { }
@@ -430,7 +398,6 @@ namespace Azure.ResourceManager.CosmosDB
         public static Azure.ResourceManager.CosmosDB.CassandraKeyspaceThroughputSettingResource GetCassandraKeyspaceThroughputSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CosmosDB.CassandraTableResource GetCassandraTableResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CosmosDB.CassandraTableThroughputSettingResource GetCassandraTableThroughputSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.ClientEncryptionKeyGetResultResource GetClientEncryptionKeyGetResultResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBAccountResource> GetCosmosDBAccount(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBAccountResource>> GetCosmosDBAccountAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.CosmosDB.CosmosDBAccountResource GetCosmosDBAccountResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -444,6 +411,7 @@ namespace Azure.ResourceManager.CosmosDB
         public static Azure.ResourceManager.CosmosDB.CosmosDBPrivateEndpointConnectionResource GetCosmosDBPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CosmosDB.CosmosDBPrivateLinkResource GetCosmosDBPrivateLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CosmosDB.CosmosDBServiceResource GetCosmosDBServiceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyResource GetCosmosDBSqlClientEncryptionKeyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CosmosDB.CosmosDBSqlContainerResource GetCosmosDBSqlContainerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CosmosDB.CosmosDBSqlContainerThroughputSettingResource GetCosmosDBSqlContainerThroughputSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CosmosDB.CosmosDBSqlDatabaseResource GetCosmosDBSqlDatabaseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -601,6 +569,38 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosDBServiceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosDBServiceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class CosmosDBSqlClientEncryptionKeyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyResource>, System.Collections.IEnumerable
+    {
+        protected CosmosDBSqlClientEncryptionKeyCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string clientEncryptionKeyName, Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string clientEncryptionKeyName, Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string clientEncryptionKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string clientEncryptionKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyResource> Get(string clientEncryptionKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyResource>> GetAsync(string clientEncryptionKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class CosmosDBSqlClientEncryptionKeyData : Azure.ResourceManager.Models.ResourceData
+    {
+        public CosmosDBSqlClientEncryptionKeyData() { }
+        public Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyProperties Resource { get { throw null; } set { } }
+    }
+    public partial class CosmosDBSqlClientEncryptionKeyResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected CosmosDBSqlClientEncryptionKeyResource() { }
+        public virtual Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string clientEncryptionKeyName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class CosmosDBSqlContainerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBSqlContainerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBSqlContainerResource>, System.Collections.IEnumerable
     {
         protected CosmosDBSqlContainerCollection() { }
@@ -710,9 +710,9 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBSqlDatabaseResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBSqlDatabaseResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.ClientEncryptionKeyGetResultResource> GetClientEncryptionKeyGetResult(string clientEncryptionKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.ClientEncryptionKeyGetResultResource>> GetClientEncryptionKeyGetResultAsync(string clientEncryptionKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.CosmosDB.ClientEncryptionKeyGetResultCollection GetClientEncryptionKeyGetResults() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyResource> GetCosmosDBSqlClientEncryptionKey(string clientEncryptionKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyResource>> GetCosmosDBSqlClientEncryptionKeyAsync(string clientEncryptionKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyCollection GetCosmosDBSqlClientEncryptionKeys() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBSqlContainerResource> GetCosmosDBSqlContainer(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBSqlContainerResource>> GetCosmosDBSqlContainerAsync(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.CosmosDBSqlContainerCollection GetCosmosDBSqlContainers() { throw null; }
@@ -1747,18 +1747,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CassandraSchema Schema { get { throw null; } set { } }
         public string TableName { get { throw null; } set { } }
     }
-    public partial class ClientEncryptionKeyGetPropertiesResource : Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyResource
-    {
-        public ClientEncryptionKeyGetPropertiesResource() { }
-        public Azure.ETag? ETag { get { throw null; } }
-        public string Rid { get { throw null; } }
-        public float? Timestamp { get { throw null; } }
-    }
-    public partial class ClientEncryptionKeyGetResultCreateOrUpdateContent
-    {
-        public ClientEncryptionKeyGetResultCreateOrUpdateContent(Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyResource resource) { }
-        public Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyResource Resource { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CompositePathSortOrder : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.CompositePathSortOrder>
     {
@@ -2568,9 +2556,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.CosmosDBSpatialType left, Azure.ResourceManager.CosmosDB.Models.CosmosDBSpatialType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CosmosDBSqlClientEncryptionKeyResource
+    public partial class CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent
     {
-        public CosmosDBSqlClientEncryptionKeyResource() { }
+        public CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent(Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyResourceInfo resource) { }
+        public Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyResourceInfo Resource { get { throw null; } }
+    }
+    public partial class CosmosDBSqlClientEncryptionKeyProperties : Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyResourceInfo
+    {
+        public CosmosDBSqlClientEncryptionKeyProperties() { }
+        public Azure.ETag? ETag { get { throw null; } }
+        public string Rid { get { throw null; } }
+        public float? Timestamp { get { throw null; } }
+    }
+    public partial class CosmosDBSqlClientEncryptionKeyResourceInfo
+    {
+        public CosmosDBSqlClientEncryptionKeyResourceInfo() { }
         public string EncryptionAlgorithm { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.KeyWrapMetadata KeyWrapMetadata { get { throw null; } set { } }
