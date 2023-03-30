@@ -118,8 +118,7 @@ try
 {
     // Using ClinicalMatchingClient + MatchTrialsAsync
     Operation<TrialMatcherResult> operation = await clinicalMatchingClient.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData);
-    Response resp = operation.GetRawResponse();
-    trialMatcherResult = TrialMatcherResult.FromResponse(resp);
+    trialMatcherResult = operation.Value;
 }
 catch (Exception ex)
 {

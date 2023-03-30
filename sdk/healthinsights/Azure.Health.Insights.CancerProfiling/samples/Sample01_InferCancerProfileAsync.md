@@ -148,8 +148,7 @@ OncoPhenotypeResult oncoPhenotypeResult = default;
 try
 {
     Operation<OncoPhenotypeResult> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, oncoPhenotypeData);
-    Response resp = operation.GetRawResponse();
-    oncoPhenotypeResult = OncoPhenotypeResult.FromResponse(resp);
+    oncoPhenotypeResult = operation.Value;
 }
 catch (Exception ex)
 {

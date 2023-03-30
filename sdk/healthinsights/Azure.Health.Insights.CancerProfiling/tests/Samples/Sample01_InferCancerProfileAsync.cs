@@ -148,8 +148,7 @@ namespace Azure.Health.Insights.CancerProfiling.Tests.Samples
             try
             {
                 Operation<OncoPhenotypeResult> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, oncoPhenotypeData);
-                Response resp = operation.GetRawResponse();
-                oncoPhenotypeResult = OncoPhenotypeResult.FromResponse(resp);
+                oncoPhenotypeResult = operation.Value;
             }
             catch (Exception ex)
             {
