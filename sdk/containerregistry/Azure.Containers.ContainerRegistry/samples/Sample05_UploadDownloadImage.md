@@ -8,9 +8,9 @@ An image consists of a manifest file, config file, and one or more layer files. 
 
 ## Create Client
 
-Create a `ContainerRegistryBlobClient` for the registry, passing the repository, credentials, and client options.
+Create a `ContainerRegistryContentClient` for the registry, passing the repository, credentials, and client options.
 
-```C# Snippet:ContainerRegistry_Samples_CreateBlobClient
+```C# Snippet:ContainerRegistry_Samples_CreateContentClient
 // Get the service endpoint from the environment
 Uri endpoint = new(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
@@ -105,7 +105,7 @@ static string TrimSha(string digest)
 }
 ```
 
-## Upload a custom manifest
+## Upload a Docker manifest
 
 To upload an image with a custom manifest type, pass the `ManifestMediaType` to the `UploadManifest` method.
 
@@ -114,7 +114,7 @@ To upload an image with a custom manifest type, pass the `ManifestMediaType` to 
 var manifestList = new
 {
     schemaVersion = 2,
-    mediaType = ManifestMediaType.DockerManifestList.ToString(),
+    mediaType = "application/vnd.docker.distribution.manifest.list.v2+json",
     manifests = new[]
     {
         new
@@ -134,9 +134,9 @@ BinaryData content = BinaryData.FromObjectAsJson(manifestList);
 await client.SetManifestAsync(content, tag: "sample", ManifestMediaType.DockerManifestList);
 ```
 
-## Download a custom manifest
+## Download a manifest of an unknown type
 
-To download a manifest of an unknown type, pass possible values to the list of acceptable media types.  The media type of the manifest is returned on the `DownloadManifestResult`.
+If you are downloading a manifest where the media type isn't known ahead of time, check the `MediaType` property returned on the `DownloadManifestResult` to determine the type.
 
 ```C# Snippet:ContainerRegistry_Samples_DownloadCustomManifestAsync
 GetManifestResult result = await client.GetManifestAsync("sample");

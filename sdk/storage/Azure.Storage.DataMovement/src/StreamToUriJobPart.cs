@@ -152,22 +152,24 @@ namespace Azure.Storage.DataMovement
                     this,
                     _destinationResource.TransferType);
 
-                await CreateDestinationResource(blockSize, length, false).ConfigureAwait(false);
-
-                // If we cannot upload in one shot, initiate the parallel block uploader
-                List<(long Offset, long Length)> rangeList = GetRangeList(blockSize, length);
-                if (_destinationResource.TransferType == TransferType.Concurrent)
+                bool destinationCreated = await CreateDestinationResource(blockSize, length, false).ConfigureAwait(false);
+                if (destinationCreated)
                 {
-                    await QueueStageBlockRequests(rangeList, length).ConfigureAwait(false);
-                }
-                else // Sequential
-                {
-                    // Queue paritioned block task
-                    await QueueChunk(async () =>
-                    await StageBlockInternal(
-                        rangeList[0].Offset,
-                        rangeList[0].Length,
-                        length).ConfigureAwait(false)).ConfigureAwait(false);
+                    // If we cannot upload in one shot, initiate the parallel block uploader
+                    List<(long Offset, long Length)> rangeList = GetRangeList(blockSize, length);
+                    if (_destinationResource.TransferType == TransferType.Concurrent)
+                    {
+                        await QueueStageBlockRequests(rangeList, length).ConfigureAwait(false);
+                    }
+                    else // Sequential
+                    {
+                        // Queue paritioned block task
+                        await QueueChunk(async () =>
+                        await StageBlockInternal(
+                            rangeList[0].Offset,
+                            rangeList[0].Length,
+                            length).ConfigureAwait(false)).ConfigureAwait(false);
+                    }
                 }
             }
             else

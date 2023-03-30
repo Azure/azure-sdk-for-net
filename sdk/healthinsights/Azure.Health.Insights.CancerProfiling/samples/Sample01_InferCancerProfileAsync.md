@@ -1,6 +1,8 @@
 # Get the inferred cancer staging for an oncology patient
 This sample demonstrates how to get the inferred cancer staging, such as pTNM staging and histology codes, for an oncology patient, based on his/her clinical documents (medical records), and to review the clinical evidence for each inference, extracted from these documents.
 
+To get started, make sure you have satisfied all the prerequisites and got all the resources required by [README][README].
+
 ## Creating a `CancerProfilingClient`
 
 To create a new `CancerProfilingClient` to get the inferred cancer staging, you need a Cognitive Services endpoint and credentials. You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a AzureHealthInsights service API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client.
@@ -194,3 +196,7 @@ else
     }
 }
 ```
+
+
+<!-- Links -->
+[README]:https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/healthinsights/Azure.Health.Insights.CancerProfiling/README.md

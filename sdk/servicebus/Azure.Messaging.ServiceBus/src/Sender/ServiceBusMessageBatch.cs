@@ -113,7 +113,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 AssertNotLocked();
 
-                _clientDiagnostics.InstrumentMessage(message.ApplicationProperties, DiagnosticProperty.MessageActivityName, out var _, out var _, out var _);
+                _clientDiagnostics.InstrumentMessage(message.ApplicationProperties, DiagnosticProperty.MessageActivityName, out var _, out var _);
                 return _innerBatch.TryAddMessage(message);
             }
         }

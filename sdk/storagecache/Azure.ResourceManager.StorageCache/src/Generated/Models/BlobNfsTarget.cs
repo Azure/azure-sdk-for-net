@@ -20,15 +20,23 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> Initializes a new instance of BlobNfsTarget. </summary>
         /// <param name="target"> Resource ID of the storage container. </param>
         /// <param name="usageModel"> Identifies the StorageCache usage model to be used for this storage target. </param>
-        internal BlobNfsTarget(ResourceIdentifier target, string usageModel)
+        /// <param name="verificationDelayInSeconds"> Amount of time (in seconds) the cache waits before it checks the back-end storage for file updates. </param>
+        /// <param name="writeBackDelayInSeconds"> Amount of time (in seconds) the cache waits after the last file change before it copies the changed file to back-end storage. </param>
+        internal BlobNfsTarget(ResourceIdentifier target, string usageModel, int? verificationDelayInSeconds, int? writeBackDelayInSeconds)
         {
             Target = target;
             UsageModel = usageModel;
+            VerificationDelayInSeconds = verificationDelayInSeconds;
+            WriteBackDelayInSeconds = writeBackDelayInSeconds;
         }
 
         /// <summary> Resource ID of the storage container. </summary>
         public ResourceIdentifier Target { get; set; }
         /// <summary> Identifies the StorageCache usage model to be used for this storage target. </summary>
         public string UsageModel { get; set; }
+        /// <summary> Amount of time (in seconds) the cache waits before it checks the back-end storage for file updates. </summary>
+        public int? VerificationDelayInSeconds { get; set; }
+        /// <summary> Amount of time (in seconds) the cache waits after the last file change before it copies the changed file to back-end storage. </summary>
+        public int? WriteBackDelayInSeconds { get; set; }
     }
 }

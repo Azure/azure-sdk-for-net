@@ -16,20 +16,25 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public partial class DocumentPage
     {
         /// <summary> Initializes a new instance of DocumentPage. </summary>
+        /// <param name="kind"> Kind of document page. </param>
         /// <param name="pageNumber"> 1-based page number in the input document. </param>
         /// <param name="spans"> Location of the page in the reading order concatenated content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="spans"/> is null. </exception>
-        internal DocumentPage(int pageNumber, IEnumerable<DocumentSpan> spans)
+        internal DocumentPage(DocumentPageKind kind, int pageNumber, IEnumerable<DocumentSpan> spans)
         {
             Argument.AssertNotNull(spans, nameof(spans));
 
+            Kind = kind;
             PageNumber = pageNumber;
             Spans = spans.ToList();
             Words = new ChangeTrackingList<DocumentWord>();
             SelectionMarks = new ChangeTrackingList<DocumentSelectionMark>();
             Lines = new ChangeTrackingList<DocumentLine>();
+            Annotations = new ChangeTrackingList<DocumentAnnotation>();
+            Barcodes = new ChangeTrackingList<DocumentBarcode>();
+            Formulas = new ChangeTrackingList<DocumentFormula>();
+            Images = new ChangeTrackingList<DocumentImage>();
         }
-
         /// <summary> 1-based page number in the input document. </summary>
         public int PageNumber { get; }
         /// <summary> The general orientation of the content in clockwise direction, measured in degrees between (-180, 180]. </summary>

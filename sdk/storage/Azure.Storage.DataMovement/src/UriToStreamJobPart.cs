@@ -181,57 +181,63 @@ namespace Azure.Storage.DataMovement
             if (initialResult == default || initialLength == 0)
             {
                 // We just need to at minimum create the file
-                await CopyToStreamInternal(
+                bool succesfulCreation = await CopyToStreamInternal(
                     offset: 0,
                     sourceLength: 0,
                     source: default,
                     expectedLength: 0).ConfigureAwait(false);
-                // Queue the work to end the download
-                await QueueChunk(
-                    async () =>
-                    await CompleteFileDownload().ConfigureAwait(false))
-                    .ConfigureAwait(false);
+                if (succesfulCreation)
+                {
+                    // Queue the work to end the download
+                    await QueueChunk(
+                        async () =>
+                        await CompleteFileDownload().ConfigureAwait(false))
+                        .ConfigureAwait(false);
+                }
                 return;
             }
 
             // TODO: Change to use buffer instead of converting to stream
             long totalLength = ParseRangeTotalLength(initialResult.ContentRange);
-            await CopyToStreamInternal(
+            bool succesfulInitialCopy = await CopyToStreamInternal(
                 offset: 0,
                 sourceLength: initialLength,
                 source: initialResult.Content,
                 expectedLength: totalLength).ConfigureAwait(false);
-            ReportBytesWritten(initialLength);
-            if (totalLength == initialLength)
+            if (succesfulInitialCopy)
             {
-                // Complete download since it was done in one go
-                await QueueChunk(
-                    async () =>
-                    await CompleteFileDownload().ConfigureAwait(false))
-                    .ConfigureAwait(false);
-            }
-            else
-            {
-                // Set rangeSize
-                long rangeSize = CalculateBlockSize(totalLength);
-
-                // Get list of ranges of the blob
-                IList<HttpRange> ranges = GetRangesList(initialLength, totalLength, rangeSize);
-                // Create Download Chunk event handler to manage when the ranges finish downloading
-                _downloadChunkHandler = GetDownloadChunkHandler(
-                    currentTranferred: initialLength,
-                    expectedLength: totalLength,
-                    ranges: ranges,
-                    jobPart: this);
-
-                // Fill the queue with tasks to download each of the remaining
-                // ranges in the blob
-                foreach (HttpRange httpRange in ranges)
+                ReportBytesWritten(initialLength);
+                if (totalLength == initialLength)
                 {
-                    // Add the next Task (which will start the download but
-                    // return before it's completed downloading)
-                    await QueueChunk(async () =>
-                        await DownloadStreamingInternal(range: httpRange).ConfigureAwait(false)).ConfigureAwait(false);
+                    // Complete download since it was done in one go
+                    await QueueChunk(
+                        async () =>
+                        await CompleteFileDownload().ConfigureAwait(false))
+                        .ConfigureAwait(false);
+                }
+                else
+                {
+                    // Set rangeSize
+                    long rangeSize = CalculateBlockSize(totalLength);
+
+                    // Get list of ranges of the blob
+                    IList<HttpRange> ranges = GetRangesList(initialLength, totalLength, rangeSize);
+                    // Create Download Chunk event handler to manage when the ranges finish downloading
+                    _downloadChunkHandler = GetDownloadChunkHandler(
+                        currentTranferred: initialLength,
+                        expectedLength: totalLength,
+                        ranges: ranges,
+                        jobPart: this);
+
+                    // Fill the queue with tasks to download each of the remaining
+                    // ranges in the blob
+                    foreach (HttpRange httpRange in ranges)
+                    {
+                        // Add the next Task (which will start the download but
+                        // return before it's completed downloading)
+                        await QueueChunk(async () =>
+                            await DownloadStreamingInternal(range: httpRange).ConfigureAwait(false)).ConfigureAwait(false);
+                    }
                 }
             }
         }
@@ -253,16 +259,19 @@ namespace Azure.Storage.DataMovement
                 if (result == default || initialLength == 0)
                 {
                     // We just need to at minimum create the file
-                    await CopyToStreamInternal(
+                    bool successfulCopy = await CopyToStreamInternal(
                         offset: 0,
                         sourceLength: 0,
                         source: default,
                         expectedLength: 0).ConfigureAwait(false);
-                    // Queue the work to end the download
-                    await QueueChunk(
-                        async () =>
-                        await CompleteFileDownload().ConfigureAwait(false))
-                        .ConfigureAwait(false);
+                    if (successfulCopy)
+                    {
+                        // Queue the work to end the download
+                        await QueueChunk(
+                            async () =>
+                            await CompleteFileDownload().ConfigureAwait(false))
+                            .ConfigureAwait(false);
+                    }
                     return;
                 }
             }
@@ -343,7 +352,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        public async Task CopyToStreamInternal(
+        public async Task<bool> CopyToStreamInternal(
             long offset,
             long sourceLength,
             Stream source,
@@ -362,6 +371,7 @@ namespace Azure.Storage.DataMovement
                     completeLength: expectedLength,
                     options: default,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
+                return true;
             }
             catch (IOException ex)
             when (_createMode == StorageResourceCreateMode.Skip &&
@@ -379,6 +389,7 @@ namespace Azure.Storage.DataMovement
             {
                 await InvokeFailedArg(ex).ConfigureAwait(false);
             }
+            return false;
         }
 
         public async Task WriteChunkToTempFile(string chunkFilePath, Stream source)

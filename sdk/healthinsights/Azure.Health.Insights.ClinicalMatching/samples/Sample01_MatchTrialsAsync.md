@@ -1,6 +1,8 @@
 # Get all matching clinical trials for a specific patient
 This sample demonstrates how to get all matching clinical trials for a specific patient, together with the associated evidence, based on the given patient's clinical condition and a public clinical trial registry. Trial list should be refined by a certain set of properties, as specified by the user (like trial phase and trial recruitment status).
 
+To get started, make sure you have satisfied all the prerequisites and got all the resources required by [README][README].
+
 ## Creating a `ClinicalMatchingClient`
 
 To create a new `ClinicalMatchingClient` to get all matching clinical trials for a specific patient, you need a Cognitive Services or HealthInsights service endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a AzureHealthInsights service API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client.
@@ -153,3 +155,6 @@ else
     }
 }
 ```
+
+<!-- Links -->
+[README]:https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/healthinsights/Azure.Health.Insights.ClinicalMatching/README.md

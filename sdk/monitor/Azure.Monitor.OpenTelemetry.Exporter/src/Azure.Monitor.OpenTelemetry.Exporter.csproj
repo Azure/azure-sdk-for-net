@@ -24,10 +24,4 @@
     <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared" />
   </ItemGroup>
 
-  <PropertyGroup>
-    <!-- TODO: As part of release process, this PropertyGroup can be removed once RP is approved for namespace
-      https://github.com/Azure/azure-sdk-for-net/issues/17155 -->
-    <NoWarn>$(NoWarn);AZC0001</NoWarn>
-  </PropertyGroup>
-
 </Project>
