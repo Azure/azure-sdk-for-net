@@ -24,17 +24,9 @@ namespace Azure.Core.Expressions.DataFactory
         private readonly DataFactoryElementKind _kind;
         internal string? StringValue { get; }
 
-        /// <summary>
-        /// Initializes a new instance of DataFactoryElement with a literal value.
-        /// </summary>
-        /// <param name="literal"> The literal value. </param>
-        public DataFactoryElement(T? literal) : this (literal, false)
+        internal DataFactoryElement(T? literal)
         {
-        }
-
-        internal DataFactoryElement(T? literal, bool asSecureString)
-        {
-            _kind = asSecureString ? DataFactoryElementKind.SecureString : DataFactoryElementKind.Literal;
+            _kind = DataFactoryElementKind.Literal;
             _literal = literal;
         }
 
@@ -105,7 +97,7 @@ namespace Azure.Core.Expressions.DataFactory
         /// will be masked with asterisks when subsequently retrieved from the service. By default, this is <value>false</value>. The value will
         /// NOT be masked when calling <see cref="ToString"/> after creating the element from a literal.</param>
 #pragma warning disable CA1000 // Do not declare static members on generic types
-        public static DataFactoryElement<T> FromLiteral(T literal, bool asSecureString = false)
+        public static DataFactoryElement<T> FromLiteral(T? literal, bool asSecureString = false)
 #pragma warning restore CA1000 // Do not declare static members on generic types
         {
             if (asSecureString)

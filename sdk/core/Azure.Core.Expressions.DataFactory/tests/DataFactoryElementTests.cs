@@ -85,7 +85,17 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void CreateFromIntLiteral()
         {
-            DataFactoryElement<int> dfe = new DataFactoryElement<int>(IntValue);
+            DataFactoryElement<int> dfe = DataFactoryElement<int>.FromLiteral(IntValue);
+            AssertIntDfe(dfe);
+
+            dfe = IntValue;
+            AssertIntDfe(dfe);
+        }
+
+        [Test]
+        public void ImplicitCastFromIntLiteral()
+        {
+            DataFactoryElement<int> dfe = IntValue;
             AssertIntDfe(dfe);
 
             dfe = IntValue;
@@ -95,7 +105,17 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void CreateFromListOfStringLiteral()
         {
-            var dfe = new DataFactoryElement<IList<string>>(ListOfStringValue);
+            var dfe = DataFactoryElement<IList<string>>.FromLiteral(ListOfStringValue);
+            AssertListOfStringDfe(dfe);
+
+            dfe = ListOfStringValue;
+            AssertListOfStringDfe(dfe);
+        }
+
+        [Test]
+        public void ImplicitCastFromListOfStringLiteral()
+        {
+            DataFactoryElement<IList<string>> dfe = ListOfStringValue;
             AssertListOfStringDfe(dfe);
 
             dfe = ListOfStringValue;
@@ -105,7 +125,17 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void CreateFromBoolLiteral()
         {
-            var dfe = new DataFactoryElement<bool>(BoolValue);
+            var dfe = DataFactoryElement<bool>.FromLiteral(BoolValue);
+            AssertBoolDfe(dfe);
+
+            dfe = BoolValue;
+            AssertBoolDfe(dfe);
+        }
+
+        [Test]
+        public void ImplicitCastFromBoolLiteral()
+        {
+            DataFactoryElement<bool> dfe = BoolValue;
             AssertBoolDfe(dfe);
 
             dfe = BoolValue;
@@ -115,7 +145,17 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void CreateFromDoubleLiteral()
         {
-            var dfe = new DataFactoryElement<double>(DoubleValue);
+            var dfe = DataFactoryElement<double>.FromLiteral(DoubleValue);
+            AssertDoubleDfe(dfe);
+
+            dfe = DoubleValue;
+            AssertDoubleDfe(dfe);
+        }
+
+        [Test]
+        public void ImplicitCastFromDoubleLiteral()
+        {
+            DataFactoryElement<double> dfe = DoubleValue;
             AssertDoubleDfe(dfe);
 
             dfe = DoubleValue;
@@ -125,7 +165,17 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void CreateFromStringLiteral()
         {
-            var dfe = new DataFactoryElement<string?>(StringValue);
+            var dfe = DataFactoryElement<string?>.FromLiteral(StringValue);
+            AssertStringDfe(dfe, StringValue, DataFactoryElementKind.Literal);
+
+            dfe = StringValue;
+            AssertStringDfe(dfe, StringValue, DataFactoryElementKind.Literal);
+        }
+
+        [Test]
+        public void ImplicitCastFromStringLiteral()
+        {
+            DataFactoryElement<string?> dfe = StringValue;
             AssertStringDfe(dfe, StringValue, DataFactoryElementKind.Literal);
 
             dfe = StringValue;
@@ -135,7 +185,17 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void CreateFromDateTimeOffsetLiteral()
         {
-            var dfe = new DataFactoryElement<DateTimeOffset?>(DateTimeOffsetValue);
+            var dfe = DataFactoryElement<DateTimeOffset?>.FromLiteral(DateTimeOffsetValue);
+            AssertDfe(dfe, DateTimeOffsetValue);
+
+            dfe = DateTimeOffsetValue;
+            AssertDfe(dfe, DateTimeOffsetValue);
+        }
+
+        [Test]
+        public void ImplicitCastFromDateTimeOffsetLiteral()
+        {
+            DataFactoryElement<DateTimeOffset?> dfe = DateTimeOffsetValue;
             AssertDfe(dfe, DateTimeOffsetValue);
 
             dfe = DateTimeOffsetValue;
@@ -145,7 +205,17 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void CreateFromTimespanLiteral()
         {
-            var dfe = new DataFactoryElement<TimeSpan?>(TimeSpanValue);
+            var dfe = DataFactoryElement<TimeSpan?>.FromLiteral(TimeSpanValue);
+            AssertDfe(dfe, TimeSpanValue);
+
+            dfe = TimeSpanValue;
+            AssertDfe(dfe, TimeSpanValue);
+        }
+
+        [Test]
+        public void ImplicitCastFromTimespanLiteral()
+        {
+            DataFactoryElement<TimeSpan?> dfe = TimeSpanValue;
             AssertDfe(dfe, TimeSpanValue);
 
             dfe = TimeSpanValue;
@@ -155,7 +225,17 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void CreateFromUriLiteral()
         {
-            var dfe = new DataFactoryElement<Uri?>(UriValue);
+            var dfe = DataFactoryElement<Uri?>.FromLiteral(UriValue);
+            AssertDfe(dfe, UriValue);
+
+            dfe = UriValue;
+            AssertDfe(dfe, UriValue);
+        }
+
+        [Test]
+        public void ImplicitCastFromUriLiteral()
+        {
+            DataFactoryElement<Uri?> dfe = UriValue;
             AssertDfe(dfe, UriValue);
 
             dfe = UriValue;
@@ -165,7 +245,17 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void CreateFromDictionaryLiteral()
         {
-            var dfe = new DataFactoryElement<IDictionary<string, string>?>(DictionaryValue);
+            var dfe = DataFactoryElement<IDictionary<string, string>?>.FromLiteral(DictionaryValue);
+            AssertDfe(dfe, DictionaryValue);
+
+            dfe = DictionaryValue;
+            AssertDfe(dfe, DictionaryValue);
+        }
+
+        [Test]
+        public void ImplicitCastFromDictionaryLiteral()
+        {
+            DataFactoryElement<IDictionary<string, string>?> dfe = DictionaryValue;
             AssertDfe(dfe, DictionaryValue);
 
             dfe = DictionaryValue;
@@ -181,6 +271,21 @@ namespace Azure.Core.Expressions.DataFactory.Tests
                 new TestModel { A = 2, B = false }
             };
             var dfe = new DataFactoryElement<IList<TestModel>>(literal);
+            AssertDfe(dfe, literal);
+
+            dfe = literal;
+            AssertDfe(dfe, literal);
+        }
+
+        [Test]
+        public void ImplicitCastFromListOfTLiteral()
+        {
+            var literal = new List<TestModel>
+            {
+                new TestModel { A = 1, B = true },
+                new TestModel { A = 2, B = false }
+            };
+            DataFactoryElement<IList<TestModel>> dfe = literal;
             AssertDfe(dfe, literal);
 
             dfe = literal;
@@ -222,7 +327,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void NullValueForString()
         {
-            var dfe = new DataFactoryElement<string>(null);
+            var dfe = DataFactoryElement<string>.FromLiteral(null);
             Assert.AreEqual(DataFactoryElementKind.Literal, dfe.Kind);
             Assert.AreEqual(null, dfe.Literal);
             Assert.AreEqual(null, dfe.ToString());
@@ -231,7 +336,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void NullValueForArray()
         {
-            var dfe = new DataFactoryElement<Array>(null);
+            var dfe = DataFactoryElement<Array>.FromLiteral(null);
             Assert.AreEqual(DataFactoryElementKind.Literal, dfe.Kind);
             Assert.AreEqual(null, dfe.Literal);
             Assert.AreEqual(null, dfe.ToString());
@@ -254,7 +359,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationOfIntValue()
         {
-            var dfe = new DataFactoryElement<int>(IntValue);
+            var dfe = DataFactoryElement<int>.FromLiteral(IntValue);
             var actual = GetSerializedString(dfe);
             Assert.AreEqual(IntJson, actual);
         }
@@ -262,7 +367,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationOfNullableIntValue()
         {
-            var dfe = new DataFactoryElement<int?>(null);
+            var dfe = DataFactoryElement<int?>.FromLiteral(null);
             var actual = GetSerializedString(dfe);
             Assert.AreEqual("null", actual);
         }
@@ -270,7 +375,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationOfBoolValue()
         {
-            var dfe = new DataFactoryElement<bool>(BoolValue);
+            var dfe = DataFactoryElement<bool>.FromLiteral(BoolValue);
             var actual = GetSerializedString(dfe);
             Assert.AreEqual(BoolJson, actual);
         }
@@ -278,7 +383,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationOfNullableBoolValue()
         {
-            var dfe = new DataFactoryElement<bool?>(null);
+            var dfe = DataFactoryElement<bool?>.FromLiteral(null);
             var actual = GetSerializedString(dfe);
             Assert.AreEqual("null", actual);
         }
@@ -286,7 +391,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationOfTimespanValue()
         {
-            var dfe = new DataFactoryElement<TimeSpan>(TimeSpanValue);
+            var dfe = DataFactoryElement<TimeSpan>.FromLiteral(TimeSpanValue);
             var actual = GetSerializedString(dfe);
             Assert.AreEqual(TimeSpanJson, actual);
             Assert.AreEqual(TimeSpanValue.ToString(), dfe.ToString());
@@ -295,7 +400,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationOfNullableTimeSpanValue()
         {
-            var dfe = new DataFactoryElement<TimeSpan?>(null);
+            var dfe = DataFactoryElement<TimeSpan?>.FromLiteral(null);
             var actual = GetSerializedString(dfe);
             Assert.AreEqual("null", actual);
             Assert.AreEqual(null, dfe.ToString());
@@ -304,7 +409,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationOfDateTimeOffsetValue()
         {
-            var dfe = new DataFactoryElement<DateTimeOffset>(DateTimeOffsetValue);
+            var dfe = DataFactoryElement<DateTimeOffset>.FromLiteral(DateTimeOffsetValue);
             var actual = GetSerializedString(dfe);
             Assert.AreEqual(DateTimeOffsetJson, actual);
             Assert.AreEqual(DateTimeOffsetValue.ToString(), dfe.ToString());
@@ -313,7 +418,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationOfNullableDateTimeOffsetValue()
         {
-            var dfe = new DataFactoryElement<DateTimeOffset?>(null);
+            var dfe = DataFactoryElement<DateTimeOffset?>.FromLiteral(null);
             var actual = GetSerializedString(dfe);
             Assert.AreEqual("null", actual);
             Assert.AreEqual(null, dfe.ToString());
@@ -322,7 +427,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationOfDictionaryValue()
         {
-            var dfe = new DataFactoryElement<IDictionary<string, string>>(DictionaryValue);
+            var dfe = DataFactoryElement<IDictionary<string, string>>.FromLiteral(DictionaryValue);
             var actual = GetSerializedString(dfe);
             Assert.AreEqual(DictionaryJson, actual);
             Assert.AreEqual("System.Collections.Generic.Dictionary`2[System.String,System.String]", dfe.ToString());
@@ -331,7 +436,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationOfNullableDictionaryValue()
         {
-            var dfe = new DataFactoryElement<IDictionary<string, string>?>(null);
+            var dfe = DataFactoryElement<IDictionary<string, string>?>.FromLiteral(null);
             var actual = GetSerializedString(dfe);
             Assert.AreEqual("null", actual);
             Assert.AreEqual(null, dfe.ToString());
@@ -340,7 +445,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationOfUriValue()
         {
-            var dfe = new DataFactoryElement<Uri>(UriValue);
+            var dfe = DataFactoryElement<Uri>.FromLiteral(UriValue);
             var actual = GetSerializedString(dfe);
             Assert.AreEqual(UriJson, actual);
             Assert.AreEqual(UriValue.AbsoluteUri, dfe.ToString());
@@ -349,7 +454,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationOfStringValue()
         {
-            var dfe = new DataFactoryElement<string>(StringValue);
+            var dfe = DataFactoryElement<string>.FromLiteral(StringValue);
             var actual = GetSerializedString(dfe);
             Assert.AreEqual(StringJson, actual);
         }
@@ -357,7 +462,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationOfNullStringValue()
         {
-            var dfe = new DataFactoryElement<string?>(null);
+            var dfe = DataFactoryElement<string?>.FromLiteral(null);
             var actual = GetSerializedString(dfe);
             Assert.AreEqual("null", actual);
         }
@@ -370,7 +475,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
                 new TestModel { A = 1, B = true },
                 new TestModel { A = 2, B = false }
             };
-            var dfe = new DataFactoryElement<IList<TestModel>>(elements);
+            var dfe = DataFactoryElement<IList<TestModel>>.FromLiteral(elements);
             var actual = GetSerializedString(dfe);
             Assert.AreEqual(@"[{""A"":1,""B"":true},{""A"":2,""B"":false}]", actual);
         }
@@ -378,7 +483,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationOfNullListOfT()
         {
-            var dfe = new DataFactoryElement<IList<TestModel>>(null);
+            var dfe = DataFactoryElement<IList<TestModel>>.FromLiteral(null);
             var actual = GetSerializedString(dfe);
             Assert.AreEqual("null", actual);
         }
@@ -386,7 +491,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationOfDoubleValue()
         {
-            var dfe = new DataFactoryElement<double>(DoubleValue);
+            var dfe = DataFactoryElement<double>.FromLiteral(DoubleValue);
             var actual = GetSerializedString(dfe);
 #if NET461_OR_GREATER
             Assert.AreEqual("1.1000000000000001", actual);
@@ -513,7 +618,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void DeserializationOfNullStringValue()
         {
-            var dfe = new DataFactoryElement<string?>(null);
+            var dfe = DataFactoryElement<string?>.FromLiteral(null);
             var actual = GetSerializedString(dfe);
             var doc = JsonDocument.Parse(actual);
             dfe = DataFactoryElementJsonConverter.Deserialize<string?>(doc.RootElement);
@@ -539,7 +644,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void DeserializationOfNullTimeSpanValue()
         {
-            var dfe = new DataFactoryElement<TimeSpan?>(null);
+            var dfe = DataFactoryElement<TimeSpan?>.FromLiteral(null);
             var actual = GetSerializedString(dfe);
             var doc = JsonDocument.Parse(actual);
             dfe = DataFactoryElementJsonConverter.Deserialize<TimeSpan?>(doc.RootElement);
@@ -565,7 +670,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void DeserializationOfUriDateTimeOffsetValue()
         {
-            var dfe = new DataFactoryElement<Uri?>(null);
+            var dfe = DataFactoryElement<Uri?>.FromLiteral(null);
             var actual = GetSerializedString(dfe);
             var doc = JsonDocument.Parse(actual);
             dfe = DataFactoryElementJsonConverter.Deserialize<Uri?>(doc.RootElement);
@@ -591,7 +696,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void DeserializationOfNullDateTimeOffsetValue()
         {
-            var dfe = new DataFactoryElement<DateTimeOffset?>(null);
+            var dfe = DataFactoryElement<DateTimeOffset?>.FromLiteral(null);
             var actual = GetSerializedString(dfe);
             var doc = JsonDocument.Parse(actual);
             dfe = DataFactoryElementJsonConverter.Deserialize<DateTimeOffset?>(doc.RootElement);
@@ -606,7 +711,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
                 new TestModel { A = 1, B = true },
                 new TestModel { A = 2, B = false }
             };
-            var dfe = new DataFactoryElement<IList<TestModel>>(elements);
+            var dfe = DataFactoryElement<IList<TestModel>>.FromLiteral(elements);
             var actual = GetSerializedString(dfe);
             dfe = JsonSerializer.Deserialize<DataFactoryElement<IList<TestModel>>>(actual)!;
             Assert.AreEqual(1, dfe!.Literal![0]!.A);
@@ -620,7 +725,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         public void DeserializationOfEmptyListOfT()
         {
             var elements = new List<TestModel>();
-            var dfe = new DataFactoryElement<IList<TestModel>>(elements);
+            var dfe = DataFactoryElement<IList<TestModel>>.FromLiteral(elements);
             var actual = GetSerializedString(dfe);
             dfe = JsonSerializer.Deserialize<DataFactoryElement<IList<TestModel>>>(actual);
             Assert.IsEmpty(dfe!.Literal!);
@@ -629,9 +734,9 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void DeserializationOfNullListOfT()
         {
-            var dfe = new DataFactoryElement<IList<TestModel>>(null);
+            var dfe = DataFactoryElement<IList<TestModel?>>.FromLiteral(null);
             var actual = GetSerializedString(dfe);
-            dfe = JsonSerializer.Deserialize<DataFactoryElement<IList<TestModel>>>(actual);
+            dfe = JsonSerializer.Deserialize<DataFactoryElement<IList<TestModel?>>>(actual);
             Assert.IsNull(dfe);
         }
 
@@ -653,7 +758,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
                 new TestModel { A = 1, B = true },
                 null
             };
-            var dfe = new DataFactoryElement<IList<TestModel?>>(elements);
+            var dfe = DataFactoryElement<IList<TestModel?>>.FromLiteral(elements);
             var actual = GetSerializedString(dfe);
             dfe = JsonSerializer.Deserialize<DataFactoryElement<IList<TestModel?>>>(actual)!;
             Assert.AreEqual(1, dfe!.Literal![0]!.A);
@@ -698,7 +803,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void DeserializationOfNullableDouble()
         {
-            var dfe = new DataFactoryElement<double?>(null);
+            var dfe = DataFactoryElement<double?>.FromLiteral(null);
             var actual = GetSerializedString(dfe);
             dfe = JsonSerializer.Deserialize<DataFactoryElement<double?>>(actual);
             Assert.IsNull(dfe);
@@ -736,7 +841,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void DeserializationOfNullListOfString()
         {
-            var dfe = new DataFactoryElement<IList<string?>?>(null);
+            var dfe = DataFactoryElement<IList<string?>?>.FromLiteral(null);
             var actual = GetSerializedString(dfe);
             dfe = JsonSerializer.Deserialize<DataFactoryElement<IList<string?>?>>(actual);
             Assert.IsNull(dfe);
