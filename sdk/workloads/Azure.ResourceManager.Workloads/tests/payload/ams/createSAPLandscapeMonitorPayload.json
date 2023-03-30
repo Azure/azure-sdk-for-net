@@ -1,0 +1,26 @@
+{
+	"properties" : {
+		"grouping": {
+			"landscape": [
+				{
+					"name": "NonProd",
+					"topSid": [
+						"X00",
+						"SID1",
+						"SID2"
+					]
+				},
+				{
+					"name": "Prod",
+					"topSid": [
+						"X00",
+						"SID3",
+						"SID4"
+					]
+				}
+				
+			]
+		}
+	}
+
+}

@@ -17,4 +17,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="payload\ams\updateSAPLandscapeMonitorPayload.json" />
+  </ItemGroup>
 </Project>
