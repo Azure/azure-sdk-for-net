@@ -39,6 +39,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">The name of the extension.</param>
         /// <param name="type">Resource type</param>
+        /// <param name="location">The location of the extension</param>
         /// <param name="forceUpdateTag">If a value is provided and is
         /// different from the previous value, the extension handler will be
         /// forced to update even if the extension configuration has not
@@ -73,11 +74,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="protectedSettingsFromKeyVault">The extensions
         /// protected settings that are passed by reference, and consumed from
         /// key vault</param>
-        public VirtualMachineScaleSetExtension(string id = default(string), string name = default(string), string type = default(string), string forceUpdateTag = default(string), string publisher = default(string), string type1 = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), IList<string> provisionAfterExtensions = default(IList<string>), bool? suppressFailures = default(bool?), KeyVaultSecretReference protectedSettingsFromKeyVault = default(KeyVaultSecretReference))
+        public VirtualMachineScaleSetExtension(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string forceUpdateTag = default(string), string publisher = default(string), string type1 = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), IList<string> provisionAfterExtensions = default(IList<string>), bool? suppressFailures = default(bool?), KeyVaultSecretReference protectedSettingsFromKeyVault = default(KeyVaultSecretReference))
             : base(id)
         {
             Name = name;
             Type = type;
+            Location = location;
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;
             Type1 = type1;
@@ -109,6 +111,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the location of the extension
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets if a value is provided and is different from the
