@@ -1,6 +1,6 @@
 # Release History
 
-## 1.10.0 (2023-04-05)
+## 1.10.0 (2023-04-11)
 
 ### Features Added
 * Support MessagePack hub protocol for both persistent mode and transient mode.
