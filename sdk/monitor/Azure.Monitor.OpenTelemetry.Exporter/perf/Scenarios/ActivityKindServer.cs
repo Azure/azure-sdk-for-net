@@ -40,10 +40,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Perf
 
             ActivitySource.AddActivityListener(listener);
 
-            var mockResponse = new MockResponse(200).SetContent("Ok");
-            var transport = new MockTransport(mockResponse);
             var exporterOptions = new AzureMonitorExporterOptions();
-            exporterOptions.Transport = transport;
             exporterOptions.EnableStatsbeat = false;
             exporterOptions.DisableOfflineStorage = true;
             exporterOptions.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
