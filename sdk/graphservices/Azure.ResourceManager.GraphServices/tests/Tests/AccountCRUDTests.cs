@@ -3,7 +3,6 @@
 
 using System.Threading.Tasks;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.GraphServices.Tests.Helpers;
 using Azure.ResourceManager.GraphServices.Models;
 using NUnit.Framework;
 using Azure.Core.TestFramework;
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.GraphServices.Tests.Tests
 
             // Set Account Resource Values
             var resourceName = Recording.GenerateAssetName("SDKAccounts");
-            string appId = new AccountTestEnvironment().ApplicationIDClient;
+            string appId = TestEnvironment.ApplicationClientId;
             GraphServicesAccountResourceProperties accountResourceProperties = new GraphServicesAccountResourceProperties(appId);
             GraphServicesAccountResourceData accountResourceData = new GraphServicesAccountResourceData("global", accountResourceProperties);
 

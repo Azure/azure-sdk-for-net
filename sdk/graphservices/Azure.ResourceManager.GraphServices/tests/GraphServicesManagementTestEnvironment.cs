@@ -7,5 +7,6 @@ namespace Azure.ResourceManager.GraphServices.Tests
 {
     public class GraphServicesManagementTestEnvironment : TestEnvironment
     {
+        public string ApplicationClientId => GetRecordedVariable("AZURE_CLIENT_ID");
     }
 }
