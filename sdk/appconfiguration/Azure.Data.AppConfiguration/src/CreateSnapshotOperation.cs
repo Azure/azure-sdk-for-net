@@ -20,7 +20,6 @@ namespace Azure.Data.AppConfiguration
     public class CreateSnapshotOperation : Operation<ConfigurationSettingsSnapshot>
     {
         private ConfigurationSettingsSnapshot _snapshot;
-        private OperationInternal _operationInternal;
         private Operation<BinaryData> _operation;
         private readonly ClientDiagnostics _diagnostics;
         private Response _rawResponse;
@@ -32,7 +31,7 @@ namespace Azure.Data.AppConfiguration
         /// Gets the <see cref="ConfigurationSettingsSnapshot"/>. This snapshot will have a status of
         /// <see cref="SnapshotStatus.Provisioning"/> until the operation has completed.
         /// </summary>
-        public override ConfigurationSettingsSnapshot Value => _snapshot;
+        public override ConfigurationSettingsSnapshot Value => OperationHelpers.GetValue(ref _snapshot);
 
         private bool _hasValue;
 
@@ -53,11 +52,11 @@ namespace Azure.Data.AppConfiguration
             _snapshotName = snapshot;
         }
 
-        internal CreateSnapshotOperation(string snapshot, ConfigurationClient client, ClientDiagnostics diagnostics, Operation<BinaryData> operation, Response<ConfigurationSettingsSnapshot> response)
+        internal CreateSnapshotOperation(ConfigurationClient client, string snapshot, ClientDiagnostics diagnostics, Operation<BinaryData> operation)
             : this(snapshot, client)
         {
             _diagnostics = diagnostics;
-            _rawResponse = response.GetRawResponse();
+            _rawResponse = operation.GetRawResponse();
             _operation = operation;
         }
 
@@ -69,7 +68,7 @@ namespace Azure.Data.AppConfiguration
         /// <inheritdoc/>
         public override Response GetRawResponse()
         {
-            return _operationInternal.RawResponse;
+            return _rawResponse;
         }
 
         /// <inheritdoc/>
@@ -101,13 +100,6 @@ namespace Azure.Data.AppConfiguration
                         ? await _client.GetOperationDetailsAsync(_snapshotName).ConfigureAwait(false)
                         : _client.GetOperationDetails(_snapshotName);
 
-                    // Get the latest snapshot - TODO is there a way to pull this from the operation details
-                    ConfigurationSettingsSnapshot updatedSnapshot = async
-                        ? await _client.GetSnapshotAsync(_snapshotName).ConfigureAwait(false)
-                        : _client.GetSnapshot(_snapshotName);
-
-                    _snapshot = updatedSnapshot;
-
                     JsonElement result = JsonDocument.Parse(update.ContentStream).RootElement;
                     var status = result.GetProperty("status");
 
@@ -115,6 +107,15 @@ namespace Azure.Data.AppConfiguration
                     _hasCompleted = IsJobComplete(status.ToString());
                     if (_hasCompleted)
                     {
+                        // Only want to set this if the operation has completed.
+
+                        // Get the latest snapshot - TODO is there a way to pull this from the operation details
+                        ConfigurationSettingsSnapshot updatedSnapshot = async
+                            ? await _client.GetSnapshotAsync(_snapshotName).ConfigureAwait(false)
+                            : _client.GetSnapshot(_snapshotName);
+
+                        _snapshot = updatedSnapshot;
+
                         _hasValue = true;
                     }
 
@@ -137,7 +138,6 @@ namespace Azure.Data.AppConfiguration
             {
                 return true;
             }
-
             return false;
         }
     }
