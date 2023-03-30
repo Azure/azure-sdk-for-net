@@ -222,9 +222,9 @@ jobs:
         vmImage: windows-2022
       steps:
         - task: UsePythonVersion@0
-          displayName: "Use Python 3.7"
+          displayName: "Use Python 3.9"
           inputs:
-            versionSpec: "3.7"
+            versionSpec: "3.9"
 
         - template: /eng/common/pipelines/templates/steps/validate-filename.yml
 
