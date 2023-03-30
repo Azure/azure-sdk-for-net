@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
+using Azure.Test.Perf;
 using NUnit.Framework;
 
 namespace Azure.Containers.ContainerRegistry.Tests
@@ -561,6 +562,34 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await client.DeleteBlobAsync(digest);
         }
 
+        [LiveOnly]
+        public async Task CanDownloadBlobToStream_MultipleChunks()
+        {
+            // Download a blob that is larger than the max chunk size.
+            int blobSize = 6 * 1024 * 1024;
+
+            // Arrange
+            string repositoryId = Recording.Random.NewGuid().ToString();
+            ContainerRegistryContentClient client = CreateBlobClient(repositoryId);
+
+            byte[] data = GetRandomBuffer(blobSize);
+
+            using MemoryStream uploadStream = new(data);
+            UploadRegistryBlobResult uploadResult = await client.UploadBlobAsync(uploadStream);
+            string digest = uploadResult.Digest;
+
+            // Act
+            using var downloadStream = new MemoryStream();
+            await client.DownloadBlobToAsync(digest, downloadStream);
+            string digestOfDownload = BlobHelper.ComputeDigest(downloadStream);
+
+            Assert.AreEqual(digest, digestOfDownload);
+            Assert.AreEqual(blobSize, downloadStream.Length);
+
+            // Clean up
+            await client.DeleteBlobAsync(digest);
+        }
+
         [RecordedTest]
         [Ignore(reason: "We don't currently support configurable chunk size on download.")]
         public async Task CanDownloadBlobToStreamInEqualSizeChunks()
@@ -661,52 +690,34 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var uneven = 20;
             long size = (1024 * 1024 * 1024 * sizeInGiB) + uneven;
 
-            var repositoryId = Recording.Random.NewGuid().ToString();
-            var client = CreateBlobClient(repositoryId);
+            string repositoryId = Recording.Random.NewGuid().ToString();
+            ContainerRegistryContentClient client = CreateBlobClient(repositoryId);
 
-            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "LargeFile");
-            string uploadFileName = "blob.bin";
+            // Upload the large blob
+            Stream uploadStream = RandomStream.Create(size);
+            UploadRegistryBlobResult uploadResult = await client.UploadBlobAsync(uploadStream);
 
-            if (!File.Exists(Path.Combine(path, uploadFileName)))
+            // Download to a file stream
+            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "LargeFile");
+            string downloadFileName = "blob_downloaded.bin";
+            string filePath = Path.Combine(path, downloadFileName);
+
+            if (!Directory.Exists(path))
             {
-                WriteLargeFile(path, uploadFileName, size);
+                Directory.CreateDirectory(path);
             }
-
-            // Upload the large file
-            using var fs = File.OpenRead(Path.Combine(path, uploadFileName));
-            var uploadResult = await client.UploadBlobAsync(fs);
-
-            // Download the large file
-            var downloadFileName = "blob_downloaded.bin";
-            var filePath = Path.Combine(path, downloadFileName);
 
             if (File.Exists(filePath))
             {
                 File.Delete(filePath);
             }
 
-            using var downloadFs = File.OpenWrite(filePath);
-            await client.DownloadBlobToAsync(uploadResult.Value.Digest, downloadFs);
+            using FileStream downloadFs = File.OpenWrite(filePath);
+            await client.DownloadBlobToAsync(uploadResult.Digest, downloadFs);
 
+            // Content is validated by the client, so we only need to check length.
             Assert.IsTrue(File.Exists(filePath));
             Assert.AreEqual(size, new FileInfo(filePath).Length);
-        }
-
-        private void WriteLargeFile(string path, string fileName, long size)
-        {
-            Directory.CreateDirectory(path);
-            using var fs = File.OpenWrite(Path.Combine(path, fileName));
-
-            int writeBufferSize = 1024 * 1024 * 64; // 64MB
-
-            long bytesWritten = 0;
-            while (bytesWritten < size)
-            {
-                var length = Math.Min(writeBufferSize, size - bytesWritten);
-                var buffer = GetRandomBuffer(length);
-                fs.Write(buffer, 0, buffer.Length);
-                bytesWritten += buffer.Length;
-            };
         }
 
         [RecordedTest]

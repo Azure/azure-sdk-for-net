@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.CosmosDB
             return GetCosmosDBSqlContainers().Get(containerName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ClientEncryptionKeyGetResultResources in the CosmosDBSqlDatabase. </summary>
-        /// <returns> An object representing collection of ClientEncryptionKeyGetResultResources and their operations over a ClientEncryptionKeyGetResultResource. </returns>
-        public virtual ClientEncryptionKeyGetResultCollection GetClientEncryptionKeyGetResults()
+        /// <summary> Gets a collection of CosmosDBSqlClientEncryptionKeyResources in the CosmosDBSqlDatabase. </summary>
+        /// <returns> An object representing collection of CosmosDBSqlClientEncryptionKeyResources and their operations over a CosmosDBSqlClientEncryptionKeyResource. </returns>
+        public virtual CosmosDBSqlClientEncryptionKeyCollection GetCosmosDBSqlClientEncryptionKeys()
         {
-            return GetCachedClient(Client => new ClientEncryptionKeyGetResultCollection(Client, Id));
+            return GetCachedClient(Client => new CosmosDBSqlClientEncryptionKeyCollection(Client, Id));
         }
 
         /// <summary>
@@ -173,9 +173,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="clientEncryptionKeyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clientEncryptionKeyName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ClientEncryptionKeyGetResultResource>> GetClientEncryptionKeyGetResultAsync(string clientEncryptionKeyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBSqlClientEncryptionKeyResource>> GetCosmosDBSqlClientEncryptionKeyAsync(string clientEncryptionKeyName, CancellationToken cancellationToken = default)
         {
-            return await GetClientEncryptionKeyGetResults().GetAsync(clientEncryptionKeyName, cancellationToken).ConfigureAwait(false);
+            return await GetCosmosDBSqlClientEncryptionKeys().GetAsync(clientEncryptionKeyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -196,9 +196,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="clientEncryptionKeyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clientEncryptionKeyName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ClientEncryptionKeyGetResultResource> GetClientEncryptionKeyGetResult(string clientEncryptionKeyName, CancellationToken cancellationToken = default)
+        public virtual Response<CosmosDBSqlClientEncryptionKeyResource> GetCosmosDBSqlClientEncryptionKey(string clientEncryptionKeyName, CancellationToken cancellationToken = default)
         {
-            return GetClientEncryptionKeyGetResults().Get(clientEncryptionKeyName, cancellationToken);
+            return GetCosmosDBSqlClientEncryptionKeys().Get(clientEncryptionKeyName, cancellationToken);
         }
 
         /// <summary>

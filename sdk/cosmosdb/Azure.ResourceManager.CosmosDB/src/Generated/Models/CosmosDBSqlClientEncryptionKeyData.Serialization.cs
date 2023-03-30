@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    public partial class ClientEncryptionKeyGetResultData : IUtf8JsonSerializable
+    public partial class CosmosDBSqlClientEncryptionKeyData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB
             writer.WriteEndObject();
         }
 
-        internal static ClientEncryptionKeyGetResultData DeserializeClientEncryptionKeyGetResultData(JsonElement element)
+        internal static CosmosDBSqlClientEncryptionKeyData DeserializeCosmosDBSqlClientEncryptionKeyData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ClientEncryptionKeyGetPropertiesResource> resource = default;
+            Optional<CosmosDBSqlClientEncryptionKeyProperties> resource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            resource = ClientEncryptionKeyGetPropertiesResource.DeserializeClientEncryptionKeyGetPropertiesResource(property0.Value);
+                            resource = CosmosDBSqlClientEncryptionKeyProperties.DeserializeCosmosDBSqlClientEncryptionKeyProperties(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ClientEncryptionKeyGetResultData(id, name, type, systemData.Value, resource.Value);
+            return new CosmosDBSqlClientEncryptionKeyData(id, name, type, systemData.Value, resource.Value);
         }
     }
 }
