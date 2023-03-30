@@ -118,7 +118,6 @@ namespace Azure.ResourceManager.Compute
             Optional<BinaryData> settings = default;
             Optional<BinaryData> protectedSettings = default;
             Optional<string> provisioningState = default;
-            Optional<IList<string>> provisionAfterExtensions = default;
             Optional<VirtualMachineExtensionInstanceView> instanceView = default;
             Optional<bool> suppressFailures = default;
             Optional<KeyVaultSecretReference> protectedSettingsFromKeyVault = default;
@@ -243,21 +242,6 @@ namespace Azure.ResourceManager.Compute
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisionAfterExtensions"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            provisionAfterExtensions = array;
-                            continue;
-                        }
                         if (property0.NameEquals("instanceView"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -292,7 +276,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new VirtualMachineExtensionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, provisioningState.Value, Optional.ToList(provisionAfterExtensions), instanceView.Value, Optional.ToNullable(suppressFailures), protectedSettingsFromKeyVault.Value);
+            return new VirtualMachineExtensionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, provisioningState.Value, instanceView.Value, Optional.ToNullable(suppressFailures), protectedSettingsFromKeyVault.Value);
         }
     }
 }
