@@ -38,7 +38,7 @@ To enable Azure Monitor Distro, add `AddAzureMonitor()` to your `Program.cs` fil
 var builder = WebApplication.CreateBuilder(args);
 
 // The following line enables Azure Monitor Distro.
-builder.Services.AddAzureMonitor();
+builder.Services.AddOpenTelemetry().WithAzureMonitor();
 
 // This code adds other services for your application.
 builder.Services.AddMvc();
@@ -55,7 +55,7 @@ To enable Azure Monitor Distro with a hard-coded connection string, add `AddAzur
 var builder = WebApplication.CreateBuilder(args);
 
 // The following line enables Azure Monitor Distro with hard-coded connection string.
-builder.Services.AddAzureMonitor(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000");
+builder.Services.AddOpenTelemetry().WithAzureMonitor(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000");
 
 // This code adds other services for your application.
 builder.Services.AddMvc();
@@ -71,7 +71,7 @@ Azure Active Directory (AAD) authentication is an optional feature that can be u
 
 ```C#
 // Call AddAzureMonitor and set Credential to authenticate through Active Directory.
-builder.Services.AddAzureMonitor(o =>
+builder.Services.AddOpenTelemetry().WithAzureMonitor(o =>
 {
     o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
     o.Credential = new DefaultAzureCredential();

@@ -2,14 +2,15 @@
 // Licensed under the MIT License.
 
 #if NET6_0_OR_GREATER
+using System;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Xunit;
 using Azure.Core.TestFramework;
-using System.Net.Http;
-using System;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 {
@@ -22,12 +23,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             builder.Logging.ClearProviders();
             var mockResponse = new MockResponse(200).SetContent("Ok");
             var transport = new MockTransport(mockResponse);
-            builder.Services.AddAzureMonitor(o =>
+            builder.Services.AddOpenTelemetry().WithAzureMonitor(o =>
             {
                 o.Transport = transport;
                 o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
-                o.EnableLogs = false;
-                o.EnableMetrics = false;
             });
 
             var app = builder.Build();
