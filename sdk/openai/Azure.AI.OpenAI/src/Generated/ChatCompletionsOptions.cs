@@ -19,6 +19,7 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class ChatCompletionsOptions
     {
+
         /// <summary> Initializes a new instance of ChatCompletionsOptions. </summary>
         /// <param name="messages">
         /// The collection of context messages associated with this chat completions request.

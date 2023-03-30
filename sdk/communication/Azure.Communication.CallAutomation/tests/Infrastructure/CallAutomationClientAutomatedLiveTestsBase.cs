@@ -76,11 +76,15 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         [TearDown]
         public async Task CleanUp()
         {
-            await DeRegisterCallBackWithDispatcher();
-            await _recordedEventListener.DisposeAsync();
-            _eventstore.Clear();
-            _incomingcontextstore.Clear();
-            await Task.CompletedTask;
+            try
+            {
+                await _recordedEventListener.DisposeAsync();
+                _eventstore.Clear();
+                _incomingcontextstore.Clear();
+                await Task.CompletedTask;
+            }
+            catch
+            { }
         }
 
         public bool SkipCallingServerInteractionLiveTests
