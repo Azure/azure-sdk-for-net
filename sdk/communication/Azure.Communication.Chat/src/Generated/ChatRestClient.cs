@@ -77,7 +77,7 @@ namespace Azure.Communication.Chat
         /// <param name="topic"> The chat thread topic. </param>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="participants"> Participants to be added to the chat thread. </param>
-        /// <param name="retentionPolicy"> Data retention policy for auto deletion. </param>
+        /// <param name="retentionPolicy"> Data retention policy for auto deletion. It&apos;s not updatable after creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topic"/> is null. </exception>
         public async Task<Response<CreateChatThreadResultInternal>> CreateChatThreadAsync(string topic, string repeatabilityRequestId = null, IEnumerable<ChatParticipantInternal> participants = null, RetentionPolicy retentionPolicy = null, CancellationToken cancellationToken = default)
@@ -107,7 +107,7 @@ namespace Azure.Communication.Chat
         /// <param name="topic"> The chat thread topic. </param>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="participants"> Participants to be added to the chat thread. </param>
-        /// <param name="retentionPolicy"> Data retention policy for auto deletion. </param>
+        /// <param name="retentionPolicy"> Data retention policy for auto deletion. It&apos;s not updatable after creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topic"/> is null. </exception>
         public Response<CreateChatThreadResultInternal> CreateChatThread(string topic, string repeatabilityRequestId = null, IEnumerable<ChatParticipantInternal> participants = null, RetentionPolicy retentionPolicy = null, CancellationToken cancellationToken = default)

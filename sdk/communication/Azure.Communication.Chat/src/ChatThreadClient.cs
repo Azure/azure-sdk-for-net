@@ -53,25 +53,6 @@ namespace Azure.Communication.Chat
         }
 
         #region Thread Operations
-        /// <summary> Updates the thread's retention policy asynchronously. </summary>
-        /// <param name="retentionPolicy"> Retention policy</param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> UpdateRetentionPolicyAsync(RetentionPolicy retentionPolicy = null, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(UpdateTopic)}");
-            scope.Start();
-            try
-            {
-                return await _chatThreadRestClient.UpdateChatThreadPropertiesAsync(Id, null, retentionPolicy, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
         /// <summary> Updates the thread's topic asynchronously. </summary>
         /// <param name="topic"> Chat thread topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -82,26 +63,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return await _chatThreadRestClient.UpdateChatThreadPropertiesAsync(Id, topic, null, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Updates the thread's retention policy. </summary>
-        /// <param name="retentionPolicy"> Retention policy</param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response UpdateRetentionPolicy(RetentionPolicy retentionPolicy = null, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(UpdateTopic)}");
-            scope.Start();
-            try
-            {
-                return _chatThreadRestClient.UpdateChatThreadProperties(Id, null, retentionPolicy, cancellationToken);
+                return await _chatThreadRestClient.UpdateChatThreadPropertiesAsync(Id, topic, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -120,7 +82,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return _chatThreadRestClient.UpdateChatThreadProperties(Id, topic, null, cancellationToken);
+                return _chatThreadRestClient.UpdateChatThreadProperties(Id, topic, cancellationToken);
             }
             catch (Exception ex)
             {

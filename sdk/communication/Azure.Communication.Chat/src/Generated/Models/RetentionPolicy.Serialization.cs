@@ -30,7 +30,7 @@ namespace Azure.Communication.Chat
             {
                 switch (discriminator.GetString())
                 {
-                    case "basedOnThreadCreationDate": return BasedOnThreadCreationDateRetentionPolicy.DeserializeBasedOnThreadCreationDateRetentionPolicy(element);
+                    case "threadCreationDate": return ThreadCreationDateRetentionPolicy.DeserializeThreadCreationDateRetentionPolicy(element);
                 }
             }
             return UnknownRetentionPolicy.DeserializeUnknownRetentionPolicy(element);

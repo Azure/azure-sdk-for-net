@@ -11,9 +11,9 @@ If any of the new objects needs to be overwritten, add the required changes to t
 
 ``` yaml
 title: Chat
-tag: package-preview-2023-07
+tag: package-chat-2023-07-01-preview
 model-namespace: false
 require:
-    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/aea5c54820c38a6a176f45cfa0366c0e8157e093/specification/communication/data-plane/Chat/readme.md
+    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/168c1726a6cd747d63d643947215fb9f7119706b/specification/communication/data-plane/Chat/readme.md
 payload-flattening-threshold: 10
 generation1-convenience-client: true

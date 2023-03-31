@@ -22,10 +22,10 @@ namespace Azure.Communication.Chat
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string BasedOnThreadCreationDateValue = "basedOnThreadCreationDate";
+        private const string ThreadCreationDateValue = "threadCreationDate";
 
         /// <summary> Thread retention policy based on thread creation date. </summary>
-        public static PolicyType BasedOnThreadCreationDate { get; } = new PolicyType(BasedOnThreadCreationDateValue);
+        public static PolicyType ThreadCreationDate { get; } = new PolicyType(ThreadCreationDateValue);
         /// <summary> Determines if two <see cref="PolicyType"/> values are the same. </summary>
         public static bool operator ==(PolicyType left, PolicyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyType"/> values are not the same. </summary>

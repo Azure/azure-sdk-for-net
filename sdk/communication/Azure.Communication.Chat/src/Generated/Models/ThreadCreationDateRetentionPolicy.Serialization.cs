@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    public partial class BasedOnThreadCreationDateRetentionPolicy : IUtf8JsonSerializable
+    public partial class ThreadCreationDateRetentionPolicy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,7 +22,7 @@ namespace Azure.Communication.Chat
             writer.WriteEndObject();
         }
 
-        internal static BasedOnThreadCreationDateRetentionPolicy DeserializeBasedOnThreadCreationDateRetentionPolicy(JsonElement element)
+        internal static ThreadCreationDateRetentionPolicy DeserializeThreadCreationDateRetentionPolicy(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -43,7 +43,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new BasedOnThreadCreationDateRetentionPolicy(policyType, daysAfterCreation);
+            return new ThreadCreationDateRetentionPolicy(policyType, daysAfterCreation);
         }
     }
 }

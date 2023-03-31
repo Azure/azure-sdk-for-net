@@ -8,20 +8,20 @@
 namespace Azure.Communication.Chat
 {
     /// <summary> Thread retention policy based on thread creation date. </summary>
-    public partial class BasedOnThreadCreationDateRetentionPolicy : RetentionPolicy
+    public partial class ThreadCreationDateRetentionPolicy : RetentionPolicy
     {
-        /// <summary> Initializes a new instance of BasedOnThreadCreationDateRetentionPolicy. </summary>
+        /// <summary> Initializes a new instance of ThreadCreationDateRetentionPolicy. </summary>
         /// <param name="daysAfterCreation"> Indicates how many days after the thread creation the thread will be deleted. Only 90 is accepted for now. </param>
-        public BasedOnThreadCreationDateRetentionPolicy(int daysAfterCreation)
+        public ThreadCreationDateRetentionPolicy(int daysAfterCreation)
         {
             DaysAfterCreation = daysAfterCreation;
-            PolicyType = PolicyType.BasedOnThreadCreationDate;
+            PolicyType = PolicyType.ThreadCreationDate;
         }
 
-        /// <summary> Initializes a new instance of BasedOnThreadCreationDateRetentionPolicy. </summary>
+        /// <summary> Initializes a new instance of ThreadCreationDateRetentionPolicy. </summary>
         /// <param name="policyType"> Retention Policy Type. </param>
         /// <param name="daysAfterCreation"> Indicates how many days after the thread creation the thread will be deleted. Only 90 is accepted for now. </param>
-        internal BasedOnThreadCreationDateRetentionPolicy(PolicyType policyType, int daysAfterCreation) : base(policyType)
+        internal ThreadCreationDateRetentionPolicy(PolicyType policyType, int daysAfterCreation) : base(policyType)
         {
             DaysAfterCreation = daysAfterCreation;
             PolicyType = policyType;

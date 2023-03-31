@@ -28,6 +28,19 @@ namespace Azure.Communication.Chat
             return new ChatError(code, message, target, details?.ToList(), innerError);
         }
 
+        ///// <summary> Initializes a new instance of ChatAttachment. </summary>
+        ///// <param name="id"> Id of the attachment. </param>
+        ///// <param name="attachmentType"> The type of attachment. </param>
+        ///// <param name="contentType"> The type of content of the attachment, if available. </param>
+        ///// <param name="name"> The name of the attachment content. </param>
+        ///// <param name="url"> The URL where the attachment can be downloaded. </param>
+        ///// <param name="previewUrl"> The URL where the preview of attachment can be downloaded. </param>
+        ///// <returns> A new <see cref="Chat.ChatAttachment"/> instance for mocking. </returns>
+        //public static ChatAttachment ChatAttachment(string id = null, AttachmentType attachmentType = default, string contentType = null, string name = null, Uri url = null, Uri previewUrl = null)
+        //{
+        //    return new ChatAttachment(id, attachmentType, contentType, name, url, previewUrl);
+        //}
+
         /// <summary> Initializes a new instance of AddChatParticipantsResult. </summary>
         /// <param name="invalidParticipants"> The participants that failed to be added to the chat thread. </param>
         /// <returns> A new <see cref="Chat.AddChatParticipantsResult"/> instance for mocking. </returns>
@@ -44,9 +57,9 @@ namespace Azure.Communication.Chat
         /// <param name="deletedOn"> The timestamp when the chat thread was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="lastMessageReceivedOn"> The timestamp when the last message arrived at the server. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="retentionPolicy">
-        /// Data retention policy for auto deletion.
+        /// Data retention policy for auto deletion. It&apos;s not updatable after creation.
         /// Please note <see cref="RetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BasedOnThreadCreationDateRetentionPolicy"/>.
+        /// The available derived classes include <see cref="ThreadCreationDateRetentionPolicy"/>.
         /// </param>
         /// <returns> A new <see cref="Chat.ChatThreadItem"/> instance for mocking. </returns>
         public static ChatThreadItem ChatThreadItem(string id = null, string topic = null, DateTimeOffset? deletedOn = null, DateTimeOffset? lastMessageReceivedOn = null, RetentionPolicy retentionPolicy = null)
