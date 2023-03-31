@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string azureRegion = "southeastasia";
+            AzureLocation location = new AzureLocation("southeastasia");
             BackupStatusContent content = new BackupStatusContent()
             {
-                ResourceType = DataSourceType.Vm,
-                ResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.Compute/VirtualMachines/testVm",
+                ResourceType = BackupDataSourceType.Vm,
+                ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.Compute/VirtualMachines/testVm"),
             };
-            BackupStatusResponse result = await subscriptionResource.GetBackupStatusAsync(azureRegion, content);
+            BackupStatusResult result = await subscriptionResource.GetBackupStatusAsync(location, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -69,13 +69,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string azureRegion = "southeastasia";
-            FeatureSupportContent content = new AzureVmResourceFeatureSupportRequest()
+            AzureLocation location = new AzureLocation("southeastasia");
+            FeatureSupportContent content = new VmResourceFeatureSupportContent()
             {
                 VmSize = "Basic_A0",
                 VmSku = "Premium",
             };
-            AzureVmResourceFeatureSupportResponse result = await subscriptionResource.ValidateFeatureSupportAsync(azureRegion, content);
+            VmResourceFeatureSupportResult result = await subscriptionResource.ValidateFeatureSupportAsync(location, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

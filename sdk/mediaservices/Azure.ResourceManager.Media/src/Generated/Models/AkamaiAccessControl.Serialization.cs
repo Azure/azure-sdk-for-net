@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AkamaiSignatureHeaderAuthenticationKeyList))
             {
-                writer.WritePropertyName("akamaiSignatureHeaderAuthenticationKeyList");
+                writer.WritePropertyName("akamaiSignatureHeaderAuthenticationKeyList"u8);
                 writer.WriteStartArray();
                 foreach (var item in AkamaiSignatureHeaderAuthenticationKeyList)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static AkamaiAccessControl DeserializeAkamaiAccessControl(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<AkamaiSignatureHeaderAuthenticationKey>> akamaiSignatureHeaderAuthenticationKeyList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("akamaiSignatureHeaderAuthenticationKeyList"))
+                if (property.NameEquals("akamaiSignatureHeaderAuthenticationKeyList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

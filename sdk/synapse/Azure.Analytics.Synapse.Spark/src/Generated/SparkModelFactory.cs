@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class SparkModelFactory
     {
         /// <summary> Initializes a new instance of SparkBatchJobCollection. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TotalThroughputLimit))
             {
-                writer.WritePropertyName("totalThroughputLimit");
+                writer.WritePropertyName("totalThroughputLimit"u8);
                 writer.WriteNumberValue(TotalThroughputLimit.Value);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBAccountCapacity DeserializeCosmosDBAccountCapacity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> totalThroughputLimit = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("totalThroughputLimit"))
+                if (property.NameEquals("totalThroughputLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Project))
             {
-                writer.WritePropertyName("project");
+                writer.WritePropertyName("project"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Project);
 #else
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(Sort))
             {
-                writer.WritePropertyName("sort");
+                writer.WritePropertyName("sort"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Sort);
 #else
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(Skip))
             {
-                writer.WritePropertyName("skip");
+                writer.WritePropertyName("skip"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Skip);
 #else
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(Limit))
             {
-                writer.WritePropertyName("limit");
+                writer.WritePropertyName("limit"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Limit);
 #else
@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static MongoDBCursorMethodsProperties DeserializeMongoDBCursorMethodsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> project = default;
             Optional<BinaryData> sort = default;
             Optional<BinaryData> skip = default;
@@ -75,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("project"))
+                if (property.NameEquals("project"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     project = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("sort"))
+                if (property.NameEquals("sort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     sort = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("skip"))
+                if (property.NameEquals("skip"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,7 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     skip = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

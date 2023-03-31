@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AddressPrefixes))
             {
-                writer.WritePropertyName("addressPrefixes");
+                writer.WritePropertyName("addressPrefixes"u8);
                 writer.WriteStartArray();
                 foreach (var item in AddressPrefixes)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(NextHopIPAddress))
             {
-                writer.WritePropertyName("nextHopIpAddress");
+                writer.WritePropertyName("nextHopIpAddress"u8);
                 writer.WriteStringValue(NextHopIPAddress);
             }
             writer.WriteEndObject();
@@ -36,11 +36,15 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VirtualHubRoute DeserializeVirtualHubRoute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> addressPrefixes = default;
             Optional<string> nextHopIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("addressPrefixes"))
+                if (property.NameEquals("addressPrefixes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
                     addressPrefixes = array;
                     continue;
                 }
-                if (property.NameEquals("nextHopIpAddress"))
+                if (property.NameEquals("nextHopIpAddress"u8))
                 {
                     nextHopIPAddress = property.Value.GetString();
                     continue;

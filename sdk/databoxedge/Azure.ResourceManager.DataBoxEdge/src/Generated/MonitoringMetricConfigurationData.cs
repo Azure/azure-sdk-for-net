@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary> A class representing the MonitoringMetricConfiguration data model. </summary>
+    /// <summary>
+    /// A class representing the MonitoringMetricConfiguration data model.
+    /// The metric setting details for the role
+    /// </summary>
     public partial class MonitoringMetricConfigurationData : ResourceData
     {
         /// <summary> Initializes a new instance of MonitoringMetricConfigurationData. </summary>

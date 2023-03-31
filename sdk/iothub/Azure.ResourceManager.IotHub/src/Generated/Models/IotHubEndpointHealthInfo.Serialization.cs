@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         internal static IotHubEndpointHealthInfo DeserializeIotHubEndpointHealthInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> endpointId = default;
             Optional<IotHubEndpointHealthStatus> healthStatus = default;
             Optional<string> lastKnownError = default;
@@ -23,12 +27,12 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<DateTimeOffset> lastSendAttemptTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endpointId"))
+                if (property.NameEquals("endpointId"u8))
                 {
                     endpointId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("healthStatus"))
+                if (property.NameEquals("healthStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,12 +42,12 @@ namespace Azure.ResourceManager.IotHub.Models
                     healthStatus = new IotHubEndpointHealthStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("lastKnownError"))
+                if (property.NameEquals("lastKnownError"u8))
                 {
                     lastKnownError = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastKnownErrorTime"))
+                if (property.NameEquals("lastKnownErrorTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     lastKnownErrorTime = property.Value.GetDateTimeOffset("R");
                     continue;
                 }
-                if (property.NameEquals("lastSuccessfulSendAttemptTime"))
+                if (property.NameEquals("lastSuccessfulSendAttemptTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +67,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     lastSuccessfulSendAttemptTime = property.Value.GetDateTimeOffset("R");
                     continue;
                 }
-                if (property.NameEquals("lastSendAttemptTime"))
+                if (property.NameEquals("lastSendAttemptTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

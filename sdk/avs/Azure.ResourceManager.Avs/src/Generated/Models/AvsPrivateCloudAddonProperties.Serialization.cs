@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.Avs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("addonType");
+            writer.WritePropertyName("addonType"u8);
             writer.WriteStringValue(AddonType.ToString());
             writer.WriteEndObject();
         }
 
         internal static AvsPrivateCloudAddonProperties DeserializeAvsPrivateCloudAddonProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("addonType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

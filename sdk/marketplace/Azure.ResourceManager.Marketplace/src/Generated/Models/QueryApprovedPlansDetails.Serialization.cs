@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static QueryApprovedPlansDetails DeserializeQueryApprovedPlansDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> planId = default;
             Optional<IReadOnlyList<string>> subscriptionIds = default;
             Optional<bool> allSubscriptions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("planId"))
+                if (property.NameEquals("planId"u8))
                 {
                     planId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionIds"))
+                if (property.NameEquals("subscriptionIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     subscriptionIds = array;
                     continue;
                 }
-                if (property.NameEquals("allSubscriptions"))
+                if (property.NameEquals("allSubscriptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

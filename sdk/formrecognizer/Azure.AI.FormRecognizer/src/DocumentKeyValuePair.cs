@@ -5,8 +5,11 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenModel("DocumentKeyValuePair")]
     public partial class DocumentKeyValuePair
     {
+        /// <summary>
+        /// Common name of the key-value pair.
+        /// </summary>
+        internal string CommonName { get; }
     }
 }

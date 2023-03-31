@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("vmwareSiteId");
+            writer.WritePropertyName("vmwareSiteId"u8);
             writer.WriteStringValue(VMwareSiteId);
-            writer.WritePropertyName("physicalSiteId");
+            writer.WritePropertyName("physicalSiteId"u8);
             writer.WriteStringValue(PhysicalSiteId);
-            writer.WritePropertyName("sourceAgentIdentity");
+            writer.WritePropertyName("sourceAgentIdentity"u8);
             writer.WriteObjectValue(SourceAgentIdentity);
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

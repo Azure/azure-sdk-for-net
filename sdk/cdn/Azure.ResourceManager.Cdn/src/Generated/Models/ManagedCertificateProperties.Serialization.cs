@@ -16,24 +16,28 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(SecretType.ToString());
             writer.WriteEndObject();
         }
 
         internal static ManagedCertificateProperties DeserializeManagedCertificateProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> subject = default;
             Optional<DateTimeOffset> expirationDate = default;
             SecretType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subject"))
+                if (property.NameEquals("subject"u8))
                 {
                     subject = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expirationDate"))
+                if (property.NameEquals("expirationDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     expirationDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new SecretType(property.Value.GetString());
                     continue;

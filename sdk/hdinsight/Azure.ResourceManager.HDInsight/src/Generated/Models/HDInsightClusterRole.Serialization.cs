@@ -18,47 +18,47 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(MinInstanceCount))
             {
-                writer.WritePropertyName("minInstanceCount");
+                writer.WritePropertyName("minInstanceCount"u8);
                 writer.WriteNumberValue(MinInstanceCount.Value);
             }
             if (Optional.IsDefined(TargetInstanceCount))
             {
-                writer.WritePropertyName("targetInstanceCount");
+                writer.WritePropertyName("targetInstanceCount"u8);
                 writer.WriteNumberValue(TargetInstanceCount.Value);
             }
             if (Optional.IsDefined(VmGroupName))
             {
-                writer.WritePropertyName("VMGroupName");
+                writer.WritePropertyName("VMGroupName"u8);
                 writer.WriteStringValue(VmGroupName);
             }
             if (Optional.IsDefined(AutoScaleConfiguration))
             {
-                writer.WritePropertyName("autoscale");
+                writer.WritePropertyName("autoscale"u8);
                 writer.WriteObjectValue(AutoScaleConfiguration);
             }
             if (Optional.IsDefined(HardwareProfile))
             {
-                writer.WritePropertyName("hardwareProfile");
+                writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile);
             }
             if (Optional.IsDefined(OSProfile))
             {
-                writer.WritePropertyName("osProfile");
+                writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
             if (Optional.IsDefined(VirtualNetworkProfile))
             {
-                writer.WritePropertyName("virtualNetworkProfile");
+                writer.WritePropertyName("virtualNetworkProfile"u8);
                 writer.WriteObjectValue(VirtualNetworkProfile);
             }
             if (Optional.IsCollectionDefined(DataDisksGroups))
             {
-                writer.WritePropertyName("dataDisksGroups");
+                writer.WritePropertyName("dataDisksGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataDisksGroups)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             if (Optional.IsCollectionDefined(ScriptActions))
             {
-                writer.WritePropertyName("scriptActions");
+                writer.WritePropertyName("scriptActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in ScriptActions)
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             if (Optional.IsDefined(EncryptDataDisks))
             {
-                writer.WritePropertyName("encryptDataDisks");
+                writer.WritePropertyName("encryptDataDisks"u8);
                 writer.WriteBooleanValue(EncryptDataDisks.Value);
             }
             writer.WriteEndObject();
@@ -86,6 +86,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightClusterRole DeserializeHDInsightClusterRole(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<int> minInstanceCount = default;
             Optional<int> targetInstanceCount = default;
@@ -99,12 +103,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<bool> encryptDataDisks = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("minInstanceCount"))
+                if (property.NameEquals("minInstanceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +118,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     minInstanceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("targetInstanceCount"))
+                if (property.NameEquals("targetInstanceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,12 +128,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                     targetInstanceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("VMGroupName"))
+                if (property.NameEquals("VMGroupName"u8))
                 {
                     vmGroupName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("autoscale"))
+                if (property.NameEquals("autoscale"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,7 +143,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     autoScale = HDInsightAutoScaleConfiguration.DeserializeHDInsightAutoScaleConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("hardwareProfile"))
+                if (property.NameEquals("hardwareProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -149,7 +153,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     hardwareProfile = HardwareProfile.DeserializeHardwareProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("osProfile"))
+                if (property.NameEquals("osProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -159,7 +163,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     osProfile = OSProfile.DeserializeOSProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("virtualNetworkProfile"))
+                if (property.NameEquals("virtualNetworkProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -169,7 +173,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     virtualNetworkProfile = HDInsightVirtualNetworkProfile.DeserializeHDInsightVirtualNetworkProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataDisksGroups"))
+                if (property.NameEquals("dataDisksGroups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -184,7 +188,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     dataDisksGroups = array;
                     continue;
                 }
-                if (property.NameEquals("scriptActions"))
+                if (property.NameEquals("scriptActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -199,7 +203,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     scriptActions = array;
                     continue;
                 }
-                if (property.NameEquals("encryptDataDisks"))
+                if (property.NameEquals("encryptDataDisks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

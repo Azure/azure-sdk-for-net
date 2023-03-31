@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static ComputeSizeErrorDetails DeserializeComputeSizeErrorDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             Optional<string> severity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("severity"))
+                if (property.NameEquals("severity"u8))
                 {
                     severity = property.Value.GetString();
                     continue;

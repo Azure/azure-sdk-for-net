@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("messageId");
+            writer.WritePropertyName("messageId"u8);
             writer.WriteStringValue(MessageId);
             writer.WriteEndObject();
         }
 
         internal static EdifactMessageIdentifier DeserializeEdifactMessageIdentifier(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string messageId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("messageId"))
+                if (property.NameEquals("messageId"u8))
                 {
                     messageId = property.Value.GetString();
                     continue;

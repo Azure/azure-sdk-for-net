@@ -18,28 +18,28 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AlertRulesCreatedByTemplateCount))
             {
-                writer.WritePropertyName("alertRulesCreatedByTemplateCount");
+                writer.WritePropertyName("alertRulesCreatedByTemplateCount"u8);
                 writer.WriteNumberValue(AlertRulesCreatedByTemplateCount.Value);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsCollectionDefined(RequiredDataConnectors))
             {
-                writer.WritePropertyName("requiredDataConnectors");
+                writer.WritePropertyName("requiredDataConnectors"u8);
                 writer.WriteStartArray();
                 foreach (var item in RequiredDataConnectors)
                 {
@@ -49,17 +49,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(Severity))
             {
-                writer.WritePropertyName("severity");
+                writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Tactics))
             {
-                writer.WritePropertyName("tactics");
+                writer.WritePropertyName("tactics"u8);
                 writer.WriteStartArray();
                 foreach (var item in Tactics)
                 {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             if (Optional.IsCollectionDefined(Techniques))
             {
-                writer.WritePropertyName("techniques");
+                writer.WritePropertyName("techniques"u8);
                 writer.WriteStartArray();
                 foreach (var item in Techniques)
                 {
@@ -83,6 +83,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsFusionAlertRuleTemplate DeserializeSecurityInsightsFusionAlertRuleTemplate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AlertRuleKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -100,37 +104,37 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<IList<string>> techniques = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new AlertRuleKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,7 +143,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("alertRulesCreatedByTemplateCount"))
+                        if (property0.NameEquals("alertRulesCreatedByTemplateCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -149,7 +153,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             alertRulesCreatedByTemplateCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("createdDateUTC"))
+                        if (property0.NameEquals("createdDateUTC"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -159,7 +163,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             createdDateUTC = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastUpdatedDateUTC"))
+                        if (property0.NameEquals("lastUpdatedDateUTC"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -169,17 +173,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             lastUpdatedDateUTC = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("requiredDataConnectors"))
+                        if (property0.NameEquals("requiredDataConnectors"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -194,7 +198,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             requiredDataConnectors = array;
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -204,7 +208,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             status = new SecurityInsightsAlertRuleTemplateStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("severity"))
+                        if (property0.NameEquals("severity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -214,7 +218,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             severity = new SecurityInsightsAlertSeverity(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("tactics"))
+                        if (property0.NameEquals("tactics"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -229,7 +233,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             tactics = array;
                             continue;
                         }
-                        if (property0.NameEquals("techniques"))
+                        if (property0.NameEquals("techniques"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

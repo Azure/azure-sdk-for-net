@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("retentionPolicyType");
+            writer.WritePropertyName("retentionPolicyType"u8);
             writer.WriteStringValue(RetentionPolicyType);
             writer.WriteEndObject();
         }
 
         internal static UnknownRetentionPolicy DeserializeUnknownRetentionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string retentionPolicyType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("retentionPolicyType"))
+                if (property.NameEquals("retentionPolicyType"u8))
                 {
                     retentionPolicyType = property.Value.GetString();
                     continue;

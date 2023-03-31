@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SyncType))
             {
-                writer.WritePropertyName("syncType");
+                writer.WritePropertyName("syncType"u8);
                 writer.WriteStringValue(SyncType.Value.ToString());
             }
             writer.WriteEndObject();

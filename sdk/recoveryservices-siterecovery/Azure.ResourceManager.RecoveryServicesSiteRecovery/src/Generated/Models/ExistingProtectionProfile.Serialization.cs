@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("protectionProfileId");
+            writer.WritePropertyName("protectionProfileId"u8);
             writer.WriteStringValue(ProtectionProfileId);
-            writer.WritePropertyName("resourceType");
+            writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
             writer.WriteEndObject();
         }
 
         internal static ExistingProtectionProfile DeserializeExistingProtectionProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string protectionProfileId = default;
             string resourceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("protectionProfileId"))
+                if (property.NameEquals("protectionProfileId"u8))
                 {
                     protectionProfileId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;

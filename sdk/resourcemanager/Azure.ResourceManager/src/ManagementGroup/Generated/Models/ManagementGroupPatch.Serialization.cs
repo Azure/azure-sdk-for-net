@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 if (DisplayName != null)
                 {
-                    writer.WritePropertyName("displayName");
+                    writer.WritePropertyName("displayName"u8);
                     writer.WriteStringValue(DisplayName);
                 }
                 else
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 if (ParentGroupId != null)
                 {
-                    writer.WritePropertyName("parentGroupId");
+                    writer.WritePropertyName("parentGroupId"u8);
                     writer.WriteStringValue(ParentGroupId);
                 }
                 else

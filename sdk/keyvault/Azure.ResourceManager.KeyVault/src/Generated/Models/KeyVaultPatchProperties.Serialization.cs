@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsCollectionDefined(AccessPolicies))
             {
-                writer.WritePropertyName("accessPolicies");
+                writer.WritePropertyName("accessPolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in AccessPolicies)
                 {
@@ -37,52 +37,52 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             if (Optional.IsDefined(EnabledForDeployment))
             {
-                writer.WritePropertyName("enabledForDeployment");
+                writer.WritePropertyName("enabledForDeployment"u8);
                 writer.WriteBooleanValue(EnabledForDeployment.Value);
             }
             if (Optional.IsDefined(EnabledForDiskEncryption))
             {
-                writer.WritePropertyName("enabledForDiskEncryption");
+                writer.WritePropertyName("enabledForDiskEncryption"u8);
                 writer.WriteBooleanValue(EnabledForDiskEncryption.Value);
             }
             if (Optional.IsDefined(EnabledForTemplateDeployment))
             {
-                writer.WritePropertyName("enabledForTemplateDeployment");
+                writer.WritePropertyName("enabledForTemplateDeployment"u8);
                 writer.WriteBooleanValue(EnabledForTemplateDeployment.Value);
             }
             if (Optional.IsDefined(EnableSoftDelete))
             {
-                writer.WritePropertyName("enableSoftDelete");
+                writer.WritePropertyName("enableSoftDelete"u8);
                 writer.WriteBooleanValue(EnableSoftDelete.Value);
             }
             if (Optional.IsDefined(EnableRbacAuthorization))
             {
-                writer.WritePropertyName("enableRbacAuthorization");
+                writer.WritePropertyName("enableRbacAuthorization"u8);
                 writer.WriteBooleanValue(EnableRbacAuthorization.Value);
             }
             if (Optional.IsDefined(SoftDeleteRetentionInDays))
             {
-                writer.WritePropertyName("softDeleteRetentionInDays");
+                writer.WritePropertyName("softDeleteRetentionInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionInDays.Value);
             }
             if (Optional.IsDefined(CreateMode))
             {
-                writer.WritePropertyName("createMode");
+                writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(EnablePurgeProtection))
             {
-                writer.WritePropertyName("enablePurgeProtection");
+                writer.WritePropertyName("enablePurgeProtection"u8);
                 writer.WriteBooleanValue(EnablePurgeProtection.Value);
             }
             if (Optional.IsDefined(NetworkRuleSet))
             {
-                writer.WritePropertyName("networkAcls");
+                writer.WritePropertyName("networkAcls"u8);
                 writer.WriteObjectValue(NetworkRuleSet);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess);
             }
             writer.WriteEndObject();

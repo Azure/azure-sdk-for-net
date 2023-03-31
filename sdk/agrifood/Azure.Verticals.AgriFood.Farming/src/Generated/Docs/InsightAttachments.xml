@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="CreateOrUpdateAsync(String,String,String,String,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrUpdateAsync with required parameters and request content and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(<2022-11-01-preview>);
+
+var data = File.OpenRead("<filePath>");
+
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("insightId").ToString());
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("resourceType").ToString());
+Console.WriteLine(result.GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("originalFileName").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("eTag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>InsightAttachment</c>:
+<code>{
+  insightId: string, # Required. InsightID for this InsightAttachment.
+  modelId: string, # Optional. ModelID for this InsightAttachment.
+  resourceType: &quot;Party&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot;, # Optional. Associated Resource type for this attachment.
+  resourceId: string, # Optional. Associated Resource id for this attachment.
+  originalFileName: string, # Optional. Original File Name for this attachment.
+  partyId: string, # Optional. PartyId id for this attachment.
+  id: string, # Optional. Unique id.
+  status: string, # Optional. Status of the resource.
+  createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
+  modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+  source: string, # Optional. Source of the resource.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
+  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateOrUpdate(String,String,String,String,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrUpdate with required parameters and request content and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(<2022-11-01-preview>);
+
+var data = File.OpenRead("<filePath>");
+
+Response response = client.CreateOrUpdate("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("insightId").ToString());
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("resourceType").ToString());
+Console.WriteLine(result.GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("originalFileName").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("eTag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>InsightAttachment</c>:
+<code>{
+  insightId: string, # Required. InsightID for this InsightAttachment.
+  modelId: string, # Optional. ModelID for this InsightAttachment.
+  resourceType: &quot;Party&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot;, # Optional. Associated Resource type for this attachment.
+  resourceId: string, # Optional. Associated Resource id for this attachment.
+  originalFileName: string, # Optional. Original File Name for this attachment.
+  partyId: string, # Optional. PartyId id for this attachment.
+  id: string, # Optional. Unique id.
+  status: string, # Optional. Status of the resource.
+  createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
+  modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+  source: string, # Optional. Source of the resource.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
+  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetInsightAttachmentAsync(String,String,String,String,String,RequestContext)">
+<example>
+This sample shows how to call GetInsightAttachmentAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(<2022-11-01-preview>);
+
+Response response = await client.GetInsightAttachmentAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("insightId").ToString());
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("resourceType").ToString());
+Console.WriteLine(result.GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("originalFileName").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("eTag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>InsightAttachment</c>:
+<code>{
+  insightId: string, # Required. InsightID for this InsightAttachment.
+  modelId: string, # Optional. ModelID for this InsightAttachment.
+  resourceType: &quot;Party&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot;, # Optional. Associated Resource type for this attachment.
+  resourceId: string, # Optional. Associated Resource id for this attachment.
+  originalFileName: string, # Optional. Original File Name for this attachment.
+  partyId: string, # Optional. PartyId id for this attachment.
+  id: string, # Optional. Unique id.
+  status: string, # Optional. Status of the resource.
+  createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
+  modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+  source: string, # Optional. Source of the resource.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
+  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetInsightAttachment(String,String,String,String,String,RequestContext)">
+<example>
+This sample shows how to call GetInsightAttachment with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(<2022-11-01-preview>);
+
+Response response = client.GetInsightAttachment("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("insightId").ToString());
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("resourceType").ToString());
+Console.WriteLine(result.GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("originalFileName").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("eTag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>InsightAttachment</c>:
+<code>{
+  insightId: string, # Required. InsightID for this InsightAttachment.
+  modelId: string, # Optional. ModelID for this InsightAttachment.
+  resourceType: &quot;Party&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot;, # Optional. Associated Resource type for this attachment.
+  resourceId: string, # Optional. Associated Resource id for this attachment.
+  originalFileName: string, # Optional. Original File Name for this attachment.
+  partyId: string, # Optional. PartyId id for this attachment.
+  id: string, # Optional. Unique id.
+  status: string, # Optional. Status of the resource.
+  createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
+  modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+  source: string, # Optional. Source of the resource.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
+  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DeleteAsync(String,String,String,String,String,RequestContext)">
+<example>
+This sample shows how to call DeleteAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(<2022-11-01-preview>);
+
+Response response = await client.DeleteAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="Delete(String,String,String,String,String,RequestContext)">
+<example>
+This sample shows how to call Delete with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(<2022-11-01-preview>);
+
+Response response = client.Delete("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="DownloadAsync(String,String,String,String,String,RequestContext)">
+<example>
+This sample shows how to call DownloadAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(<2022-11-01-preview>);
+
+Response response = await client.DownloadAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>");
+if (response.ContentStream != null)
+{
+    using(Stream outFileStream = File.OpenWrite("<filePath>")
+    {
+        response.ContentStream.CopyTo(outFileStream);
+    }
+}
+]]></code>
+</example>
+    </member>
+    <member name="Download(String,String,String,String,String,RequestContext)">
+<example>
+This sample shows how to call Download with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(<2022-11-01-preview>);
+
+Response response = client.Download("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>");
+if (response.ContentStream != null)
+{
+    using(Stream outFileStream = File.OpenWrite("<filePath>")
+    {
+        response.ContentStream.CopyTo(outFileStream);
+    }
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetInsightAttachmentsByPartyIdModelIdAndResourceAsync(String,String,String,String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+<example>
+This sample shows how to call GetInsightAttachmentsByPartyIdModelIdAndResourceAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(<2022-11-01-preview>);
+
+await foreach (var data in client.GetInsightAttachmentsByPartyIdModelIdAndResourceAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("insightId").ToString());
+}
+]]></code>
+This sample shows how to call GetInsightAttachmentsByPartyIdModelIdAndResourceAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(<2022-11-01-preview>);
+
+await foreach (var data in client.GetInsightAttachmentsByPartyIdModelIdAndResourceAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", new String[]{"<insightIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("insightId").ToString());
+    Console.WriteLine(result.GetProperty("modelId").ToString());
+    Console.WriteLine(result.GetProperty("resourceType").ToString());
+    Console.WriteLine(result.GetProperty("resourceId").ToString());
+    Console.WriteLine(result.GetProperty("originalFileName").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+    Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("source").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+    Console.WriteLine(result.GetProperty("eTag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>InsightAttachmentListResponseValue</c>:
+<code>{
+  insightId: string, # Required. InsightID for this InsightAttachment.
+  modelId: string, # Optional. ModelID for this InsightAttachment.
+  resourceType: &quot;Party&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot;, # Optional. Associated Resource type for this attachment.
+  resourceId: string, # Optional. Associated Resource id for this attachment.
+  originalFileName: string, # Optional. Original File Name for this attachment.
+  partyId: string, # Optional. PartyId id for this attachment.
+  id: string, # Optional. Unique id.
+  status: string, # Optional. Status of the resource.
+  createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
+  modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+  source: string, # Optional. Source of the resource.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
+  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetInsightAttachmentsByPartyIdModelIdAndResource(String,String,String,String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+<example>
+This sample shows how to call GetInsightAttachmentsByPartyIdModelIdAndResource with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(<2022-11-01-preview>);
+
+foreach (var data in client.GetInsightAttachmentsByPartyIdModelIdAndResource("<partyId>", "<modelId>", "<resourceType>", "<resourceId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("insightId").ToString());
+}
+]]></code>
+This sample shows how to call GetInsightAttachmentsByPartyIdModelIdAndResource with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(<2022-11-01-preview>);
+
+foreach (var data in client.GetInsightAttachmentsByPartyIdModelIdAndResource("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", new String[]{"<insightIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("insightId").ToString());
+    Console.WriteLine(result.GetProperty("modelId").ToString());
+    Console.WriteLine(result.GetProperty("resourceType").ToString());
+    Console.WriteLine(result.GetProperty("resourceId").ToString());
+    Console.WriteLine(result.GetProperty("originalFileName").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+    Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("source").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+    Console.WriteLine(result.GetProperty("eTag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>InsightAttachmentListResponseValue</c>:
+<code>{
+  insightId: string, # Required. InsightID for this InsightAttachment.
+  modelId: string, # Optional. ModelID for this InsightAttachment.
+  resourceType: &quot;Party&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot;, # Optional. Associated Resource type for this attachment.
+  resourceId: string, # Optional. Associated Resource id for this attachment.
+  originalFileName: string, # Optional. Original File Name for this attachment.
+  partyId: string, # Optional. PartyId id for this attachment.
+  id: string, # Optional. Unique id.
+  status: string, # Optional. Status of the resource.
+  createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
+  modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+  source: string, # Optional. Source of the resource.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
+  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>

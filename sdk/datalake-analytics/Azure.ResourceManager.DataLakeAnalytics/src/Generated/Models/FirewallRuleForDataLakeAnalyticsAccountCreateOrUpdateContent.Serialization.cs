@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("startIpAddress");
+            writer.WritePropertyName("startIpAddress"u8);
             writer.WriteStringValue(StartIPAddress.ToString());
-            writer.WritePropertyName("endIpAddress");
+            writer.WritePropertyName("endIpAddress"u8);
             writer.WriteStringValue(EndIPAddress.ToString());
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Minute))
             {
-                writer.WritePropertyName("minute");
+                writer.WritePropertyName("minute"u8);
                 writer.WriteNumberValue(Minute.Value);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static HourDetails DeserializeHourDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> minute = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minute"))
+                if (property.NameEquals("minute"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

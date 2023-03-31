@@ -14,18 +14,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
     {
         internal static ManagedRuleDefinition DeserializeManagedRuleDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ruleId = default;
             Optional<ManagedRuleEnabledState> defaultState = default;
             Optional<RuleMatchActionType> defaultAction = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ruleId"))
+                if (property.NameEquals("ruleId"u8))
                 {
                     ruleId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultState"))
+                if (property.NameEquals("defaultState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +39,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     defaultState = new ManagedRuleEnabledState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("defaultAction"))
+                if (property.NameEquals("defaultAction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     defaultAction = new RuleMatchActionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;

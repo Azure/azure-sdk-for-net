@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RestartWithFailover))
             {
-                writer.WritePropertyName("restartWithFailover");
+                writer.WritePropertyName("restartWithFailover"u8);
                 writer.WriteBooleanValue(RestartWithFailover.Value);
             }
             if (Optional.IsDefined(FailoverMode))
             {
-                writer.WritePropertyName("failoverMode");
+                writer.WritePropertyName("failoverMode"u8);
                 writer.WriteStringValue(FailoverMode.Value.ToString());
             }
             writer.WriteEndObject();

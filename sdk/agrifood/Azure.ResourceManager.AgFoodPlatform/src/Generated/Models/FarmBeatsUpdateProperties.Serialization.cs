@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SensorIntegration))
             {
-                writer.WritePropertyName("sensorIntegration");
+                writer.WritePropertyName("sensorIntegration"u8);
                 writer.WriteObjectValue(SensorIntegration);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             writer.WriteEndObject();

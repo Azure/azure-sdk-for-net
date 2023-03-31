@@ -1,0 +1,20 @@
+Service: storage-file-datalake
+
+Project: sdk/storage/Azure.Storage.Files.DataLake/perf/Azure.Storage.Files.DataLake.Perf/Azure.Storage.Files.DataLake.Perf.csproj
+
+PackageVersions:
+- Azure.Storage.Files.DataLake: 12.12.1
+- Azure.Storage.Files.DataLake: source
+
+Tests:
+- Test: download
+  Class: Read
+  Arguments: &sizes
+  - --size 10240 --parallel 64
+  - --size 10485760 --parallel 32
+  - --size 1073741824 --parallel 1 --warmup 60 --duration 60
+  - --size 1073741824 --parallel 8 --warmup 60 --duration 60
+
+- Test: upload
+  Class: Upload
+  Arguments: *sizes

@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Reservations.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AppliedScopeType))
             {
-                writer.WritePropertyName("appliedScopeType");
+                writer.WritePropertyName("appliedScopeType"u8);
                 writer.WriteStringValue(AppliedScopeType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(AppliedScopes))
             {
-                writer.WritePropertyName("appliedScopes");
+                writer.WritePropertyName("appliedScopes"u8);
                 writer.WriteStartArray();
                 foreach (var item in AppliedScopes)
                 {
@@ -32,25 +32,35 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(AppliedScopeProperties))
+            {
+                writer.WritePropertyName("appliedScopeProperties"u8);
+                writer.WriteObjectValue(AppliedScopeProperties);
+            }
             if (Optional.IsDefined(InstanceFlexibility))
             {
-                writer.WritePropertyName("instanceFlexibility");
+                writer.WritePropertyName("instanceFlexibility"u8);
                 writer.WriteStringValue(InstanceFlexibility.Value.ToString());
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(IsRenewEnabled))
             {
-                writer.WritePropertyName("renew");
+                writer.WritePropertyName("renew"u8);
                 writer.WriteBooleanValue(IsRenewEnabled.Value);
             }
             if (Optional.IsDefined(RenewProperties))
             {
-                writer.WritePropertyName("renewProperties");
+                writer.WritePropertyName("renewProperties"u8);
                 writer.WriteObjectValue(RenewProperties);
+            }
+            if (Optional.IsDefined(ReviewOn))
+            {
+                writer.WritePropertyName("reviewDateTime"u8);
+                writer.WriteStringValue(ReviewOn.Value, "O");
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -15,22 +15,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static SwitchProtectionJobDetails DeserializeSwitchProtectionJobDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> newReplicationProtectedItemId = default;
             string instanceType = default;
             Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("newReplicationProtectedItemId"))
+                if (property.NameEquals("newReplicationProtectedItemId"u8))
                 {
                     newReplicationProtectedItemId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("affectedObjectDetails"))
+                if (property.NameEquals("affectedObjectDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

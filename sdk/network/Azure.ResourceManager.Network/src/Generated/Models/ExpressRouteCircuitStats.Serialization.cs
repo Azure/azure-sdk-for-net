@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimarybytesIn))
             {
-                writer.WritePropertyName("primarybytesIn");
+                writer.WritePropertyName("primarybytesIn"u8);
                 writer.WriteNumberValue(PrimarybytesIn.Value);
             }
             if (Optional.IsDefined(PrimarybytesOut))
             {
-                writer.WritePropertyName("primarybytesOut");
+                writer.WritePropertyName("primarybytesOut"u8);
                 writer.WriteNumberValue(PrimarybytesOut.Value);
             }
             if (Optional.IsDefined(SecondarybytesIn))
             {
-                writer.WritePropertyName("secondarybytesIn");
+                writer.WritePropertyName("secondarybytesIn"u8);
                 writer.WriteNumberValue(SecondarybytesIn.Value);
             }
             if (Optional.IsDefined(SecondarybytesOut))
             {
-                writer.WritePropertyName("secondarybytesOut");
+                writer.WritePropertyName("secondarybytesOut"u8);
                 writer.WriteNumberValue(SecondarybytesOut.Value);
             }
             writer.WriteEndObject();
@@ -40,13 +40,17 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ExpressRouteCircuitStats DeserializeExpressRouteCircuitStats(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> primarybytesIn = default;
             Optional<long> primarybytesOut = default;
             Optional<long> secondarybytesIn = default;
             Optional<long> secondarybytesOut = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primarybytesIn"))
+                if (property.NameEquals("primarybytesIn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
                     primarybytesIn = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("primarybytesOut"))
+                if (property.NameEquals("primarybytesOut"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
                     primarybytesOut = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("secondarybytesIn"))
+                if (property.NameEquals("secondarybytesIn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                     secondarybytesIn = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("secondarybytesOut"))
+                if (property.NameEquals("secondarybytesOut"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

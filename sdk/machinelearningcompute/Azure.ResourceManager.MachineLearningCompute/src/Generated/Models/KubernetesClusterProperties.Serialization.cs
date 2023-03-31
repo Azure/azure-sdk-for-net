@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ServicePrincipal))
             {
-                writer.WritePropertyName("servicePrincipal");
+                writer.WritePropertyName("servicePrincipal"u8);
                 writer.WriteObjectValue(ServicePrincipal);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 
         internal static KubernetesClusterProperties DeserializeKubernetesClusterProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServicePrincipalProperties> servicePrincipal = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("servicePrincipal"))
+                if (property.NameEquals("servicePrincipal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

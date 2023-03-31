@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DiskEncryptionKeyInfo))
             {
-                writer.WritePropertyName("diskEncryptionKeyInfo");
+                writer.WritePropertyName("diskEncryptionKeyInfo"u8);
                 writer.WriteObjectValue(DiskEncryptionKeyInfo);
             }
             if (Optional.IsDefined(KeyEncryptionKeyInfo))
             {
-                writer.WritePropertyName("keyEncryptionKeyInfo");
+                writer.WritePropertyName("keyEncryptionKeyInfo"u8);
                 writer.WriteObjectValue(KeyEncryptionKeyInfo);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static DiskEncryptionInfo DeserializeDiskEncryptionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DiskEncryptionKeyInfo> diskEncryptionKeyInfo = default;
             Optional<KeyEncryptionKeyInfo> keyEncryptionKeyInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskEncryptionKeyInfo"))
+                if (property.NameEquals("diskEncryptionKeyInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     diskEncryptionKeyInfo = DiskEncryptionKeyInfo.DeserializeDiskEncryptionKeyInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("keyEncryptionKeyInfo"))
+                if (property.NameEquals("keyEncryptionKeyInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

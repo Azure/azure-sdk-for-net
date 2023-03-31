@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ParameterServerCount))
             {
-                writer.WritePropertyName("parameterServerCount");
+                writer.WritePropertyName("parameterServerCount"u8);
                 writer.WriteNumberValue(ParameterServerCount.Value);
             }
             if (Optional.IsDefined(WorkerCount))
             {
                 if (WorkerCount != null)
                 {
-                    writer.WritePropertyName("workerCount");
+                    writer.WritePropertyName("workerCount"u8);
                     writer.WriteNumberValue(WorkerCount.Value);
                 }
                 else
@@ -32,19 +32,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("workerCount");
                 }
             }
-            writer.WritePropertyName("distributionType");
+            writer.WritePropertyName("distributionType"u8);
             writer.WriteStringValue(DistributionType.ToString());
             writer.WriteEndObject();
         }
 
         internal static TensorFlowDistributionConfiguration DeserializeTensorFlowDistributionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> parameterServerCount = default;
             Optional<int?> workerCount = default;
             DistributionType distributionType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("parameterServerCount"))
+                if (property.NameEquals("parameterServerCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     parameterServerCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("workerCount"))
+                if (property.NameEquals("workerCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     workerCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("distributionType"))
+                if (property.NameEquals("distributionType"u8))
                 {
                     distributionType = new DistributionType(property.Value.GetString());
                     continue;

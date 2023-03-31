@@ -19,15 +19,20 @@ namespace Azure.ResourceManager.CustomerInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Attributes))
             {
-                writer.WritePropertyName("attributes");
+                writer.WritePropertyName("attributes"u8);
                 writer.WriteStartObject();
                 foreach (var item in Attributes)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartArray();
                     foreach (var item0 in item.Value)
                     {
@@ -39,7 +44,7 @@ namespace Azure.ResourceManager.CustomerInsights
             }
             if (Optional.IsCollectionDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
                 foreach (var item in Description)
                 {
@@ -50,7 +55,7 @@ namespace Azure.ResourceManager.CustomerInsights
             }
             if (Optional.IsCollectionDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
                 foreach (var item in DisplayName)
                 {
@@ -61,11 +66,16 @@ namespace Azure.ResourceManager.CustomerInsights
             }
             if (Optional.IsCollectionDefined(LocalizedAttributes))
             {
-                writer.WritePropertyName("localizedAttributes");
+                writer.WritePropertyName("localizedAttributes"u8);
                 writer.WriteStartObject();
                 foreach (var item in LocalizedAttributes)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartObject();
                     foreach (var item0 in item.Value)
                     {
@@ -78,32 +88,32 @@ namespace Azure.ResourceManager.CustomerInsights
             }
             if (Optional.IsDefined(SmallImage))
             {
-                writer.WritePropertyName("smallImage");
+                writer.WritePropertyName("smallImage"u8);
                 writer.WriteStringValue(SmallImage);
             }
             if (Optional.IsDefined(MediumImage))
             {
-                writer.WritePropertyName("mediumImage");
+                writer.WritePropertyName("mediumImage"u8);
                 writer.WriteStringValue(MediumImage);
             }
             if (Optional.IsDefined(LargeImage))
             {
-                writer.WritePropertyName("largeImage");
+                writer.WritePropertyName("largeImage"u8);
                 writer.WriteStringValue(LargeImage);
             }
             if (Optional.IsDefined(ApiEntitySetName))
             {
-                writer.WritePropertyName("apiEntitySetName");
+                writer.WritePropertyName("apiEntitySetName"u8);
                 writer.WriteStringValue(ApiEntitySetName);
             }
             if (Optional.IsDefined(EntityType))
             {
-                writer.WritePropertyName("entityType");
+                writer.WritePropertyName("entityType"u8);
                 writer.WriteStringValue(EntityType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Fields))
             {
-                writer.WritePropertyName("fields");
+                writer.WritePropertyName("fields"u8);
                 writer.WriteStartArray();
                 foreach (var item in Fields)
                 {
@@ -113,27 +123,27 @@ namespace Azure.ResourceManager.CustomerInsights
             }
             if (Optional.IsDefined(InstancesCount))
             {
-                writer.WritePropertyName("instancesCount");
+                writer.WritePropertyName("instancesCount"u8);
                 writer.WriteNumberValue(InstancesCount.Value);
             }
             if (Optional.IsDefined(SchemaItemTypeLink))
             {
-                writer.WritePropertyName("schemaItemTypeLink");
+                writer.WritePropertyName("schemaItemTypeLink"u8);
                 writer.WriteStringValue(SchemaItemTypeLink);
             }
             if (Optional.IsDefined(TimestampFieldName))
             {
-                writer.WritePropertyName("timestampFieldName");
+                writer.WritePropertyName("timestampFieldName"u8);
                 writer.WriteStringValue(TimestampFieldName);
             }
             if (Optional.IsDefined(TypeName))
             {
-                writer.WritePropertyName("typeName");
+                writer.WritePropertyName("typeName"u8);
                 writer.WriteStringValue(TypeName);
             }
             if (Optional.IsCollectionDefined(IdPropertyNames))
             {
-                writer.WritePropertyName("idPropertyNames");
+                writer.WritePropertyName("idPropertyNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in IdPropertyNames)
                 {
@@ -143,7 +153,7 @@ namespace Azure.ResourceManager.CustomerInsights
             }
             if (Optional.IsCollectionDefined(ParticipantProfiles))
             {
-                writer.WritePropertyName("participantProfiles");
+                writer.WritePropertyName("participantProfiles"u8);
                 writer.WriteStartArray();
                 foreach (var item in ParticipantProfiles)
                 {
@@ -153,15 +163,15 @@ namespace Azure.ResourceManager.CustomerInsights
             }
             if (Optional.IsDefined(PrimaryParticipantProfilePropertyName))
             {
-                writer.WritePropertyName("primaryParticipantProfilePropertyName");
+                writer.WritePropertyName("primaryParticipantProfilePropertyName"u8);
                 writer.WriteStringValue(PrimaryParticipantProfilePropertyName);
             }
             if (Optional.IsDefined(IsActivity))
             {
-                writer.WritePropertyName("isActivity");
+                writer.WritePropertyName("isActivity"u8);
                 writer.WriteBooleanValue(IsActivity.Value);
             }
-            writer.WritePropertyName("defaultDataSource");
+            writer.WritePropertyName("defaultDataSource"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -170,6 +180,10 @@ namespace Azure.ResourceManager.CustomerInsights
 
         internal static InteractionResourceFormatData DeserializeInteractionResourceFormatData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -203,22 +217,22 @@ namespace Azure.ResourceManager.CustomerInsights
             Optional<string> dataSourceReferenceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -228,7 +242,7 @@ namespace Azure.ResourceManager.CustomerInsights
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -237,7 +251,7 @@ namespace Azure.ResourceManager.CustomerInsights
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("attributes"))
+                        if (property0.NameEquals("attributes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -247,17 +261,24 @@ namespace Azure.ResourceManager.CustomerInsights
                             Dictionary<string, IList<string>> dictionary = new Dictionary<string, IList<string>>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                List<string> array = new List<string>();
-                                foreach (var item in property1.Value.EnumerateArray())
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
                                 {
-                                    array.Add(item.GetString());
+                                    dictionary.Add(property1.Name, null);
                                 }
-                                dictionary.Add(property1.Name, array);
+                                else
+                                {
+                                    List<string> array = new List<string>();
+                                    foreach (var item in property1.Value.EnumerateArray())
+                                    {
+                                        array.Add(item.GetString());
+                                    }
+                                    dictionary.Add(property1.Name, array);
+                                }
                             }
                             attributes = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -272,7 +293,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             description = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -287,7 +308,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             displayName = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("localizedAttributes"))
+                        if (property0.NameEquals("localizedAttributes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -297,37 +318,44 @@ namespace Azure.ResourceManager.CustomerInsights
                             Dictionary<string, IDictionary<string, string>> dictionary = new Dictionary<string, IDictionary<string, string>>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                Dictionary<string, string> dictionary0 = new Dictionary<string, string>();
-                                foreach (var property2 in property1.Value.EnumerateObject())
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
                                 {
-                                    dictionary0.Add(property2.Name, property2.Value.GetString());
+                                    dictionary.Add(property1.Name, null);
                                 }
-                                dictionary.Add(property1.Name, dictionary0);
+                                else
+                                {
+                                    Dictionary<string, string> dictionary0 = new Dictionary<string, string>();
+                                    foreach (var property2 in property1.Value.EnumerateObject())
+                                    {
+                                        dictionary0.Add(property2.Name, property2.Value.GetString());
+                                    }
+                                    dictionary.Add(property1.Name, dictionary0);
+                                }
                             }
                             localizedAttributes = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("smallImage"))
+                        if (property0.NameEquals("smallImage"u8))
                         {
                             smallImage = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("mediumImage"))
+                        if (property0.NameEquals("mediumImage"u8))
                         {
                             mediumImage = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("largeImage"))
+                        if (property0.NameEquals("largeImage"u8))
                         {
                             largeImage = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("apiEntitySetName"))
+                        if (property0.NameEquals("apiEntitySetName"u8))
                         {
                             apiEntitySetName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("entityType"))
+                        if (property0.NameEquals("entityType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -337,7 +365,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             entityType = property0.Value.GetString().ToEntityType();
                             continue;
                         }
-                        if (property0.NameEquals("fields"))
+                        if (property0.NameEquals("fields"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -352,7 +380,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             fields = array;
                             continue;
                         }
-                        if (property0.NameEquals("instancesCount"))
+                        if (property0.NameEquals("instancesCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -362,7 +390,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             instancesCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("lastChangedUtc"))
+                        if (property0.NameEquals("lastChangedUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -372,7 +400,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             lastChangedUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -382,12 +410,12 @@ namespace Azure.ResourceManager.CustomerInsights
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("schemaItemTypeLink"))
+                        if (property0.NameEquals("schemaItemTypeLink"u8))
                         {
                             schemaItemTypeLink = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("tenantId"))
+                        if (property0.NameEquals("tenantId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -397,17 +425,17 @@ namespace Azure.ResourceManager.CustomerInsights
                             tenantId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("timestampFieldName"))
+                        if (property0.NameEquals("timestampFieldName"u8))
                         {
                             timestampFieldName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("typeName"))
+                        if (property0.NameEquals("typeName"u8))
                         {
                             typeName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("idPropertyNames"))
+                        if (property0.NameEquals("idPropertyNames"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -422,7 +450,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             idPropertyNames = array;
                             continue;
                         }
-                        if (property0.NameEquals("participantProfiles"))
+                        if (property0.NameEquals("participantProfiles"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -437,12 +465,12 @@ namespace Azure.ResourceManager.CustomerInsights
                             participantProfiles = array;
                             continue;
                         }
-                        if (property0.NameEquals("primaryParticipantProfilePropertyName"))
+                        if (property0.NameEquals("primaryParticipantProfilePropertyName"u8))
                         {
                             primaryParticipantProfilePropertyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("dataSourcePrecedenceRules"))
+                        if (property0.NameEquals("dataSourcePrecedenceRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -457,7 +485,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             dataSourcePrecedenceRules = array;
                             continue;
                         }
-                        if (property0.NameEquals("isActivity"))
+                        if (property0.NameEquals("isActivity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -467,7 +495,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             isActivity = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("defaultDataSource"))
+                        if (property0.NameEquals("defaultDataSource"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -476,12 +504,12 @@ namespace Azure.ResourceManager.CustomerInsights
                             }
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.NameEquals("name"))
+                                if (property1.NameEquals("name"u8))
                                 {
                                     name0 = property1.Value.GetString();
                                     continue;
                                 }
-                                if (property1.NameEquals("dataSourceType"))
+                                if (property1.NameEquals("dataSourceType"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
@@ -491,7 +519,7 @@ namespace Azure.ResourceManager.CustomerInsights
                                     dataSourceType = new DataSourceType(property1.Value.GetString());
                                     continue;
                                 }
-                                if (property1.NameEquals("status"))
+                                if (property1.NameEquals("status"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
@@ -501,7 +529,7 @@ namespace Azure.ResourceManager.CustomerInsights
                                     status = new Status(property1.Value.GetString());
                                     continue;
                                 }
-                                if (property1.NameEquals("id"))
+                                if (property1.NameEquals("id"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
@@ -511,7 +539,7 @@ namespace Azure.ResourceManager.CustomerInsights
                                     id0 = property1.Value.GetInt32();
                                     continue;
                                 }
-                                if (property1.NameEquals("dataSourceReferenceId"))
+                                if (property1.NameEquals("dataSourceReferenceId"u8))
                                 {
                                     dataSourceReferenceId = property1.Value.GetString();
                                     continue;

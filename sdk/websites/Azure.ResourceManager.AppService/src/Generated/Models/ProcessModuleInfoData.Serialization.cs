@@ -18,64 +18,64 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(BaseAddress))
             {
-                writer.WritePropertyName("base_address");
+                writer.WritePropertyName("base_address"u8);
                 writer.WriteStringValue(BaseAddress);
             }
             if (Optional.IsDefined(FileName))
             {
-                writer.WritePropertyName("file_name");
+                writer.WritePropertyName("file_name"u8);
                 writer.WriteStringValue(FileName);
             }
             if (Optional.IsDefined(Href))
             {
-                writer.WritePropertyName("href");
+                writer.WritePropertyName("href"u8);
                 writer.WriteStringValue(Href);
             }
             if (Optional.IsDefined(FilePath))
             {
-                writer.WritePropertyName("file_path");
+                writer.WritePropertyName("file_path"u8);
                 writer.WriteStringValue(FilePath);
             }
             if (Optional.IsDefined(ModuleMemorySize))
             {
-                writer.WritePropertyName("module_memory_size");
+                writer.WritePropertyName("module_memory_size"u8);
                 writer.WriteNumberValue(ModuleMemorySize.Value);
             }
             if (Optional.IsDefined(FileVersion))
             {
-                writer.WritePropertyName("file_version");
+                writer.WritePropertyName("file_version"u8);
                 writer.WriteStringValue(FileVersion);
             }
             if (Optional.IsDefined(FileDescription))
             {
-                writer.WritePropertyName("file_description");
+                writer.WritePropertyName("file_description"u8);
                 writer.WriteStringValue(FileDescription);
             }
             if (Optional.IsDefined(Product))
             {
-                writer.WritePropertyName("product");
+                writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
             if (Optional.IsDefined(ProductVersion))
             {
-                writer.WritePropertyName("product_version");
+                writer.WritePropertyName("product_version"u8);
                 writer.WriteStringValue(ProductVersion);
             }
             if (Optional.IsDefined(IsDebug))
             {
-                writer.WritePropertyName("is_debug");
+                writer.WritePropertyName("is_debug"u8);
                 writer.WriteBooleanValue(IsDebug.Value);
             }
             if (Optional.IsDefined(Language))
             {
-                writer.WritePropertyName("language");
+                writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
             writer.WriteEndObject();
@@ -84,6 +84,10 @@ namespace Azure.ResourceManager.AppService
 
         internal static ProcessModuleInfoData DeserializeProcessModuleInfoData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -102,27 +106,27 @@ namespace Azure.ResourceManager.AppService
             Optional<string> language = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +136,7 @@ namespace Azure.ResourceManager.AppService
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -141,27 +145,27 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("base_address"))
+                        if (property0.NameEquals("base_address"u8))
                         {
                             baseAddress = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("file_name"))
+                        if (property0.NameEquals("file_name"u8))
                         {
                             fileName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("href"))
+                        if (property0.NameEquals("href"u8))
                         {
                             href = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("file_path"))
+                        if (property0.NameEquals("file_path"u8))
                         {
                             filePath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("module_memory_size"))
+                        if (property0.NameEquals("module_memory_size"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -171,27 +175,27 @@ namespace Azure.ResourceManager.AppService
                             moduleMemorySize = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("file_version"))
+                        if (property0.NameEquals("file_version"u8))
                         {
                             fileVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("file_description"))
+                        if (property0.NameEquals("file_description"u8))
                         {
                             fileDescription = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("product"))
+                        if (property0.NameEquals("product"u8))
                         {
                             product = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("product_version"))
+                        if (property0.NameEquals("product_version"u8))
                         {
                             productVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("is_debug"))
+                        if (property0.NameEquals("is_debug"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -201,7 +205,7 @@ namespace Azure.ResourceManager.AppService
                             isDebug = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("language"))
+                        if (property0.NameEquals("language"u8))
                         {
                             language = property0.Value.GetString();
                             continue;

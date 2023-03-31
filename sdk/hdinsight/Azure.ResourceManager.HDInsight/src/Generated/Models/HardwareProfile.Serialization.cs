@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VmSize))
             {
-                writer.WritePropertyName("vmSize");
+                writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HardwareProfile DeserializeHardwareProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vmSize = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vmSize"))
+                if (property.NameEquals("vmSize"u8))
                 {
                     vmSize = property.Value.GetString();
                     continue;

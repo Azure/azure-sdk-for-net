@@ -14,22 +14,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static MobilityServiceUpdate DeserializeMobilityServiceUpdate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> version = default;
             Optional<string> rebootStatus = default;
             Optional<string> osType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rebootStatus"))
+                if (property.NameEquals("rebootStatus"u8))
                 {
                     rebootStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = property.Value.GetString();
                     continue;

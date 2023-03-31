@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.Specialized
+namespace Azure.Containers.ContainerRegistry
 {
     public partial class OciAnnotations : IUtf8JsonSerializable
     {
@@ -19,62 +19,62 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             writer.WriteStartObject();
             if (Optional.IsDefined(CreatedOn))
             {
-                writer.WritePropertyName("org.opencontainers.image.created");
+                writer.WritePropertyName("org.opencontainers.image.created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(Authors))
             {
-                writer.WritePropertyName("org.opencontainers.image.authors");
+                writer.WritePropertyName("org.opencontainers.image.authors"u8);
                 writer.WriteStringValue(Authors);
             }
             if (Optional.IsDefined(Url))
             {
-                writer.WritePropertyName("org.opencontainers.image.url");
-                writer.WriteStringValue(Url);
+                writer.WritePropertyName("org.opencontainers.image.url"u8);
+                writer.WriteStringValue(Url.AbsoluteUri);
             }
             if (Optional.IsDefined(Documentation))
             {
-                writer.WritePropertyName("org.opencontainers.image.documentation");
-                writer.WriteStringValue(Documentation);
+                writer.WritePropertyName("org.opencontainers.image.documentation"u8);
+                writer.WriteStringValue(Documentation.AbsoluteUri);
             }
             if (Optional.IsDefined(Source))
             {
-                writer.WritePropertyName("org.opencontainers.image.source");
-                writer.WriteStringValue(Source);
+                writer.WritePropertyName("org.opencontainers.image.source"u8);
+                writer.WriteStringValue(Source.AbsoluteUri);
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("org.opencontainers.image.version");
+                writer.WritePropertyName("org.opencontainers.image.version"u8);
                 writer.WriteStringValue(Version);
             }
             if (Optional.IsDefined(Revision))
             {
-                writer.WritePropertyName("org.opencontainers.image.revision");
+                writer.WritePropertyName("org.opencontainers.image.revision"u8);
                 writer.WriteStringValue(Revision);
             }
             if (Optional.IsDefined(Vendor))
             {
-                writer.WritePropertyName("org.opencontainers.image.vendor");
+                writer.WritePropertyName("org.opencontainers.image.vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
             if (Optional.IsDefined(Licenses))
             {
-                writer.WritePropertyName("org.opencontainers.image.licenses");
+                writer.WritePropertyName("org.opencontainers.image.licenses"u8);
                 writer.WriteStringValue(Licenses);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("org.opencontainers.image.ref.name");
+                writer.WritePropertyName("org.opencontainers.image.ref.name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Title))
             {
-                writer.WritePropertyName("org.opencontainers.image.title");
+                writer.WritePropertyName("org.opencontainers.image.title"u8);
                 writer.WriteStringValue(Title);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("org.opencontainers.image.description");
+                writer.WritePropertyName("org.opencontainers.image.description"u8);
                 writer.WriteStringValue(Description);
             }
             foreach (var item in AdditionalProperties)
@@ -87,11 +87,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
         internal static OciAnnotations DeserializeOciAnnotations(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> orgOpencontainersImageCreated = default;
             Optional<string> orgOpencontainersImageAuthors = default;
-            Optional<string> orgOpencontainersImageUrl = default;
-            Optional<string> orgOpencontainersImageDocumentation = default;
-            Optional<string> orgOpencontainersImageSource = default;
+            Optional<Uri> orgOpencontainersImageUrl = default;
+            Optional<Uri> orgOpencontainersImageDocumentation = default;
+            Optional<Uri> orgOpencontainersImageSource = default;
             Optional<string> orgOpencontainersImageVersion = default;
             Optional<string> orgOpencontainersImageRevision = default;
             Optional<string> orgOpencontainersImageVendor = default;
@@ -103,7 +107,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("org.opencontainers.image.created"))
+                if (property.NameEquals("org.opencontainers.image.created"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,57 +117,72 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                     orgOpencontainersImageCreated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("org.opencontainers.image.authors"))
+                if (property.NameEquals("org.opencontainers.image.authors"u8))
                 {
                     orgOpencontainersImageAuthors = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("org.opencontainers.image.url"))
+                if (property.NameEquals("org.opencontainers.image.url"u8))
                 {
-                    orgOpencontainersImageUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    orgOpencontainersImageUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("org.opencontainers.image.documentation"))
+                if (property.NameEquals("org.opencontainers.image.documentation"u8))
                 {
-                    orgOpencontainersImageDocumentation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    orgOpencontainersImageDocumentation = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("org.opencontainers.image.source"))
+                if (property.NameEquals("org.opencontainers.image.source"u8))
                 {
-                    orgOpencontainersImageSource = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    orgOpencontainersImageSource = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("org.opencontainers.image.version"))
+                if (property.NameEquals("org.opencontainers.image.version"u8))
                 {
                     orgOpencontainersImageVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("org.opencontainers.image.revision"))
+                if (property.NameEquals("org.opencontainers.image.revision"u8))
                 {
                     orgOpencontainersImageRevision = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("org.opencontainers.image.vendor"))
+                if (property.NameEquals("org.opencontainers.image.vendor"u8))
                 {
                     orgOpencontainersImageVendor = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("org.opencontainers.image.licenses"))
+                if (property.NameEquals("org.opencontainers.image.licenses"u8))
                 {
                     orgOpencontainersImageLicenses = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("org.opencontainers.image.ref.name"))
+                if (property.NameEquals("org.opencontainers.image.ref.name"u8))
                 {
                     orgOpencontainersImageRefName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("org.opencontainers.image.title"))
+                if (property.NameEquals("org.opencontainers.image.title"u8))
                 {
                     orgOpencontainersImageTitle = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("org.opencontainers.image.description"))
+                if (property.NameEquals("org.opencontainers.image.description"u8))
                 {
                     orgOpencontainersImageDescription = property.Value.GetString();
                     continue;

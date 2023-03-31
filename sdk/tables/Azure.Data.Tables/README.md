@@ -108,7 +108,6 @@ Next, we can create a new table.
 
 ```C# Snippet:TablesSample1CreateTable
 // Create a new table. The TableItem class stores properties of the created table.
-string tableName = "OfficeSupplies1p1";
 TableItem table = serviceClient.CreateTableIfNotExists(tableName);
 Console.WriteLine($"The created table's name is {table.Name}.");
 ```
@@ -137,7 +136,6 @@ Individual tables can be deleted from the service.
 
 ```C# Snippet:TablesSample1DeleteTable
 // Deletes the table made previously.
-string tableName = "OfficeSupplies1p1";
 serviceClient.DeleteTable(tableName);
 ```
 
@@ -162,21 +160,21 @@ Let's define a new `TableEntity` so that we can add it to the table.
 
 ```C# Snippet:TablesSample2CreateDictionaryEntity
 // Make a dictionary entity by defining a <see cref="TableEntity">.
-var entity = new TableEntity(partitionKey, rowKey)
+var tableEntity = new TableEntity(partitionKey, rowKey)
 {
     { "Product", "Marker Set" },
     { "Price", 5.00 },
     { "Quantity", 21 }
 };
 
-Console.WriteLine($"{entity.RowKey}: {entity["Product"]} costs ${entity.GetDouble("Price")}.");
+Console.WriteLine($"{tableEntity.RowKey}: {tableEntity["Product"]} costs ${tableEntity.GetDouble("Price")}.");
 ```
 
 Using the `TableClient` we can now add our new entity to the table.
 
 ```C# Snippet:TablesSample2AddEntity
 // Add the newly created entity.
-tableClient.AddEntity(entity);
+tableClient.AddEntity(tableEntity);
 ```
 
 ### Query table entities

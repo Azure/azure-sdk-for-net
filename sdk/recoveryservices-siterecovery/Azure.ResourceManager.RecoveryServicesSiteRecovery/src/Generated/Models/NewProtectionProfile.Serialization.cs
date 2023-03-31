@@ -15,32 +15,36 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("policyName");
+            writer.WritePropertyName("policyName"u8);
             writer.WriteStringValue(PolicyName);
             if (Optional.IsDefined(RecoveryPointHistory))
             {
-                writer.WritePropertyName("recoveryPointHistory");
+                writer.WritePropertyName("recoveryPointHistory"u8);
                 writer.WriteNumberValue(RecoveryPointHistory.Value);
             }
             if (Optional.IsDefined(CrashConsistentFrequencyInMinutes))
             {
-                writer.WritePropertyName("crashConsistentFrequencyInMinutes");
+                writer.WritePropertyName("crashConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(CrashConsistentFrequencyInMinutes.Value);
             }
             if (Optional.IsDefined(AppConsistentFrequencyInMinutes))
             {
-                writer.WritePropertyName("appConsistentFrequencyInMinutes");
+                writer.WritePropertyName("appConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(AppConsistentFrequencyInMinutes.Value);
             }
-            writer.WritePropertyName("multiVmSyncStatus");
+            writer.WritePropertyName("multiVmSyncStatus"u8);
             writer.WriteStringValue(MultiVmSyncStatus.ToString());
-            writer.WritePropertyName("resourceType");
+            writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
             writer.WriteEndObject();
         }
 
         internal static NewProtectionProfile DeserializeNewProtectionProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string policyName = default;
             Optional<int> recoveryPointHistory = default;
             Optional<int> crashConsistentFrequencyInMinutes = default;
@@ -49,12 +53,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string resourceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("policyName"))
+                if (property.NameEquals("policyName"u8))
                 {
                     policyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointHistory"))
+                if (property.NameEquals("recoveryPointHistory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     recoveryPointHistory = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("crashConsistentFrequencyInMinutes"))
+                if (property.NameEquals("crashConsistentFrequencyInMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     crashConsistentFrequencyInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("appConsistentFrequencyInMinutes"))
+                if (property.NameEquals("appConsistentFrequencyInMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,12 +88,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     appConsistentFrequencyInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("multiVmSyncStatus"))
+                if (property.NameEquals("multiVmSyncStatus"u8))
                 {
                     multiVmSyncStatus = new SetMultiVmSyncStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;

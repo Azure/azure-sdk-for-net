@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TaskFilePath))
             {
-                writer.WritePropertyName("taskFilePath");
+                writer.WritePropertyName("taskFilePath"u8);
                 writer.WriteStringValue(TaskFilePath);
             }
             if (Optional.IsDefined(ValuesFilePath))
             {
-                writer.WritePropertyName("valuesFilePath");
+                writer.WritePropertyName("valuesFilePath"u8);
                 writer.WriteStringValue(ValuesFilePath);
             }
             if (Optional.IsCollectionDefined(Values))
             {
-                writer.WritePropertyName("values");
+                writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StepType.ToString());
             if (Optional.IsDefined(ContextPath))
             {
-                writer.WritePropertyName("contextPath");
+                writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
             if (Optional.IsDefined(ContextAccessToken))
             {
-                writer.WritePropertyName("contextAccessToken");
+                writer.WritePropertyName("contextAccessToken"u8);
                 writer.WriteStringValue(ContextAccessToken);
             }
             writer.WriteEndObject();

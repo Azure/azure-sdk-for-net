@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             if (Optional.IsDefined(KeyData))
             {
-                writer.WritePropertyName("keyData");
+                writer.WritePropertyName("keyData"u8);
                 writer.WriteStringValue(KeyData);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static SshPublicKeyConfiguration DeserializeSshPublicKeyConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> path = default;
             Optional<string> keyData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyData"))
+                if (property.NameEquals("keyData"u8))
                 {
                     keyData = property.Value.GetString();
                     continue;

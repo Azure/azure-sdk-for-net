@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static KeyVaultSecretNearExpiryEventData DeserializeKeyVaultSecretNearExpiryEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> vaultName = default;
             Optional<string> objectType = default;
@@ -26,32 +30,32 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<float> exp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("Id"))
+                if (property.NameEquals("Id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("VaultName"))
+                if (property.NameEquals("VaultName"u8))
                 {
                     vaultName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ObjectType"))
+                if (property.NameEquals("ObjectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ObjectName"))
+                if (property.NameEquals("ObjectName"u8))
                 {
                     objectName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("Version"))
+                if (property.NameEquals("Version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("NBF"))
+                if (property.NameEquals("NBF"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     nbf = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("EXP"))
+                if (property.NameEquals("EXP"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

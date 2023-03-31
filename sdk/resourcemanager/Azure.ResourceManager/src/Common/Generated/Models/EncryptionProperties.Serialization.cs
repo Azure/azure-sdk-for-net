@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(KeyVaultProperties))
             {
-                writer.WritePropertyName("keyVaultProperties");
+                writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
             writer.WriteEndObject();
@@ -33,11 +33,15 @@ namespace Azure.ResourceManager.Models
 
         internal static EncryptionProperties DeserializeEncryptionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EncryptionStatus> status = default;
             Optional<KeyVaultProperties> keyVaultProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +51,7 @@ namespace Azure.ResourceManager.Models
                     status = new EncryptionStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyVaultProperties"))
+                if (property.NameEquals("keyVaultProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

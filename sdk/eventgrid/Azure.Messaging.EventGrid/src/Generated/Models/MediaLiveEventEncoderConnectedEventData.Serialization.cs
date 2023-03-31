@@ -17,28 +17,32 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaLiveEventEncoderConnectedEventData DeserializeMediaLiveEventEncoderConnectedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ingestUrl = default;
             Optional<string> streamId = default;
             Optional<string> encoderIp = default;
             Optional<string> encoderPort = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ingestUrl"))
+                if (property.NameEquals("ingestUrl"u8))
                 {
                     ingestUrl = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("streamId"))
+                if (property.NameEquals("streamId"u8))
                 {
                     streamId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encoderIp"))
+                if (property.NameEquals("encoderIp"u8))
                 {
                     encoderIp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encoderPort"))
+                if (property.NameEquals("encoderPort"u8))
                 {
                     encoderPort = property.Value.GetString();
                     continue;

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProtectFromScaleIn))
             {
-                writer.WritePropertyName("protectFromScaleIn");
+                writer.WritePropertyName("protectFromScaleIn"u8);
                 writer.WriteBooleanValue(ProtectFromScaleIn.Value);
             }
             if (Optional.IsDefined(ProtectFromScaleSetActions))
             {
-                writer.WritePropertyName("protectFromScaleSetActions");
+                writer.WritePropertyName("protectFromScaleSetActions"u8);
                 writer.WriteBooleanValue(ProtectFromScaleSetActions.Value);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetVmProtectionPolicy DeserializeVirtualMachineScaleSetVmProtectionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> protectFromScaleIn = default;
             Optional<bool> protectFromScaleSetActions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("protectFromScaleIn"))
+                if (property.NameEquals("protectFromScaleIn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
                     protectFromScaleIn = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("protectFromScaleSetActions"))
+                if (property.NameEquals("protectFromScaleSetActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

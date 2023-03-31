@@ -14,12 +14,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AppServicePlanEventTypeDetail DeserializeAppServicePlanEventTypeDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StampKind> stampKind = default;
             Optional<AppServicePlanAction> action = default;
             Optional<AsyncStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("stampKind"))
+                if (property.NameEquals("stampKind"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     stampKind = new StampKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +43,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     action = new AppServicePlanAction(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

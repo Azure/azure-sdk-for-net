@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DatasetCompressionType);
 #else
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #endif
             if (Optional.IsDefined(Level))
             {
-                writer.WritePropertyName("level");
+                writer.WritePropertyName("level"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Level);
 #else
@@ -46,18 +46,22 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DatasetCompression DeserializeDatasetCompression(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BinaryData type = default;
             Optional<BinaryData> level = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("level"))
+                if (property.NameEquals("level"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

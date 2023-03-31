@@ -21,12 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Day))
             {
-                writer.WritePropertyName("day");
+                writer.WritePropertyName("day"u8);
                 writer.WriteStringValue(Day.Value.ToSerialString());
             }
             if (Optional.IsDefined(Occurrence))
             {
-                writer.WritePropertyName("occurrence");
+                writer.WritePropertyName("occurrence"u8);
                 writer.WriteNumberValue(Occurrence.Value);
             }
             foreach (var item in AdditionalProperties)
@@ -39,13 +39,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static RecurrenceScheduleOccurrence DeserializeRecurrenceScheduleOccurrence(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DayOfWeek> day = default;
             Optional<int> occurrence = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("day"))
+                if (property.NameEquals("day"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     day = property.Value.GetString().ToDayOfWeek();
                     continue;
                 }
-                if (property.NameEquals("occurrence"))
+                if (property.NameEquals("occurrence"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

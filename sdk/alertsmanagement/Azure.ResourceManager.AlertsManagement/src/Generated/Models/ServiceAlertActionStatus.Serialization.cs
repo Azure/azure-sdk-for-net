@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsSuppressed))
             {
-                writer.WritePropertyName("isSuppressed");
+                writer.WritePropertyName("isSuppressed"u8);
                 writer.WriteBooleanValue(IsSuppressed.Value);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static ServiceAlertActionStatus DeserializeServiceAlertActionStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isSuppressed = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isSuppressed"))
+                if (property.NameEquals("isSuppressed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

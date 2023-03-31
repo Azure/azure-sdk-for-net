@@ -17,22 +17,22 @@ namespace Azure.Containers.ContainerRegistry
             writer.WriteStartObject();
             if (Optional.IsDefined(CanDelete))
             {
-                writer.WritePropertyName("deleteEnabled");
+                writer.WritePropertyName("deleteEnabled"u8);
                 writer.WriteBooleanValue(CanDelete.Value);
             }
             if (Optional.IsDefined(CanWrite))
             {
-                writer.WritePropertyName("writeEnabled");
+                writer.WritePropertyName("writeEnabled"u8);
                 writer.WriteBooleanValue(CanWrite.Value);
             }
             if (Optional.IsDefined(CanList))
             {
-                writer.WritePropertyName("listEnabled");
+                writer.WritePropertyName("listEnabled"u8);
                 writer.WriteBooleanValue(CanList.Value);
             }
             if (Optional.IsDefined(CanRead))
             {
-                writer.WritePropertyName("readEnabled");
+                writer.WritePropertyName("readEnabled"u8);
                 writer.WriteBooleanValue(CanRead.Value);
             }
             writer.WriteEndObject();

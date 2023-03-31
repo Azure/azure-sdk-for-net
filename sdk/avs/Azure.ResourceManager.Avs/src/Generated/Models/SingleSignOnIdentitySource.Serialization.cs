@@ -18,52 +18,52 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Alias))
             {
-                writer.WritePropertyName("alias");
+                writer.WritePropertyName("alias"u8);
                 writer.WriteStringValue(Alias);
             }
             if (Optional.IsDefined(Domain))
             {
-                writer.WritePropertyName("domain");
+                writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
             if (Optional.IsDefined(BaseUserDN))
             {
-                writer.WritePropertyName("baseUserDN");
+                writer.WritePropertyName("baseUserDN"u8);
                 writer.WriteStringValue(BaseUserDN);
             }
             if (Optional.IsDefined(BaseGroupDN))
             {
-                writer.WritePropertyName("baseGroupDN");
+                writer.WritePropertyName("baseGroupDN"u8);
                 writer.WriteStringValue(BaseGroupDN);
             }
             if (Optional.IsDefined(PrimaryServer))
             {
-                writer.WritePropertyName("primaryServer");
+                writer.WritePropertyName("primaryServer"u8);
                 writer.WriteStringValue(PrimaryServer.AbsoluteUri);
             }
             if (Optional.IsDefined(SecondaryServer))
             {
-                writer.WritePropertyName("secondaryServer");
+                writer.WritePropertyName("secondaryServer"u8);
                 writer.WriteStringValue(SecondaryServer.AbsoluteUri);
             }
             if (Optional.IsDefined(Ssl))
             {
-                writer.WritePropertyName("ssl");
+                writer.WritePropertyName("ssl"u8);
                 writer.WriteStringValue(Ssl.Value.ToString());
             }
             if (Optional.IsDefined(Username))
             {
-                writer.WritePropertyName("username");
+                writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
+                writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
             writer.WriteEndObject();
@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static SingleSignOnIdentitySource DeserializeSingleSignOnIdentitySource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> @alias = default;
             Optional<string> domain = default;
@@ -83,32 +87,32 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<string> password = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("alias"))
+                if (property.NameEquals("alias"u8))
                 {
                     @alias = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("domain"))
+                if (property.NameEquals("domain"u8))
                 {
                     domain = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("baseUserDN"))
+                if (property.NameEquals("baseUserDN"u8))
                 {
                     baseUserDN = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("baseGroupDN"))
+                if (property.NameEquals("baseGroupDN"u8))
                 {
                     baseGroupDN = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primaryServer"))
+                if (property.NameEquals("primaryServer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +122,7 @@ namespace Azure.ResourceManager.Avs.Models
                     primaryServer = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("secondaryServer"))
+                if (property.NameEquals("secondaryServer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -128,7 +132,7 @@ namespace Azure.ResourceManager.Avs.Models
                     secondaryServer = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ssl"))
+                if (property.NameEquals("ssl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -138,12 +142,12 @@ namespace Azure.ResourceManager.Avs.Models
                     ssl = new SslCertificateStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("username"))
+                if (property.NameEquals("username"u8))
                 {
                     username = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
                     continue;

@@ -14,28 +14,32 @@ namespace Azure.DigitalTwins.Core
     {
         internal static IncomingRelationship DeserializeIncomingRelationship(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> relationshipId = default;
             Optional<string> sourceId = default;
             Optional<string> relationshipName = default;
             Optional<string> relationshipLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("$relationshipId"))
+                if (property.NameEquals("$relationshipId"u8))
                 {
                     relationshipId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("$sourceId"))
+                if (property.NameEquals("$sourceId"u8))
                 {
                     sourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("$relationshipName"))
+                if (property.NameEquals("$relationshipName"u8))
                 {
                     relationshipName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("$relationshipLink"))
+                if (property.NameEquals("$relationshipLink"u8))
                 {
                     relationshipLink = property.Value.GetString();
                     continue;

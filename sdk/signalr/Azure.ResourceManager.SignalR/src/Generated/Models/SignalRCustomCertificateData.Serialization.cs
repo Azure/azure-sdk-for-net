@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.SignalR
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("keyVaultBaseUri");
+            writer.WritePropertyName("keyVaultBaseUri"u8);
             writer.WriteStringValue(KeyVaultBaseUri.AbsoluteUri);
-            writer.WritePropertyName("keyVaultSecretName");
+            writer.WritePropertyName("keyVaultSecretName"u8);
             writer.WriteStringValue(KeyVaultSecretName);
             if (Optional.IsDefined(KeyVaultSecretVersion))
             {
-                writer.WritePropertyName("keyVaultSecretVersion");
+                writer.WritePropertyName("keyVaultSecretVersion"u8);
                 writer.WriteStringValue(KeyVaultSecretVersion);
             }
             writer.WriteEndObject();
@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.SignalR
 
         internal static SignalRCustomCertificateData DeserializeSignalRCustomCertificateData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -45,22 +49,22 @@ namespace Azure.ResourceManager.SignalR
             Optional<string> keyVaultSecretVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +74,7 @@ namespace Azure.ResourceManager.SignalR
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +83,7 @@ namespace Azure.ResourceManager.SignalR
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -89,17 +93,17 @@ namespace Azure.ResourceManager.SignalR
                             provisioningState = new SignalRProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("keyVaultBaseUri"))
+                        if (property0.NameEquals("keyVaultBaseUri"u8))
                         {
                             keyVaultBaseUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("keyVaultSecretName"))
+                        if (property0.NameEquals("keyVaultSecretName"u8))
                         {
                             keyVaultSecretName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("keyVaultSecretVersion"))
+                        if (property0.NameEquals("keyVaultSecretVersion"u8))
                         {
                             keyVaultSecretVersion = property0.Value.GetString();
                             continue;

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TokenId))
             {
-                writer.WritePropertyName("tokenId");
+                writer.WritePropertyName("tokenId"u8);
                 writer.WriteStringValue(TokenId);
             }
             if (Optional.IsDefined(ExpireOn))
             {
-                writer.WritePropertyName("expiry");
+                writer.WritePropertyName("expiry"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToString());
             }
             writer.WriteEndObject();

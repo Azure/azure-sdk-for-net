@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ThroughputPolicy))
             {
-                writer.WritePropertyName("throughputPolicy");
+                writer.WritePropertyName("throughputPolicy"u8);
                 writer.WriteObjectValue(ThroughputPolicy);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static AutoUpgradePolicyResourceInfo DeserializeAutoUpgradePolicyResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ThroughputPolicyResourceInfo> throughputPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("throughputPolicy"))
+                if (property.NameEquals("throughputPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

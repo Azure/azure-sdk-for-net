@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> A class representing the ManagedHsmPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedHsmPrivateEndpointConnection data model.
+    /// Private endpoint connection resource.
+    /// </summary>
     public partial class ManagedHsmPrivateEndpointConnectionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionData. </summary>

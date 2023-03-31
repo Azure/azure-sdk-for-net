@@ -182,6 +182,7 @@ namespace Azure.ResourceManager.Tests
         }
 
         [RecordedTest]
+        [Ignore("Re-record of this test will cause github not able to show file diffs and run CI")]
         public async Task ValidateResourceInRestApi()
         {
             var namespacesToSkip = new HashSet<string>
@@ -199,6 +200,9 @@ namespace Azure.ResourceManager.Tests
                 "Microsoft.ServicesHub",
                 "Microsoft.SoftwarePlan",
                 "Microsoft.TimeSeriesInsights",
+                "Microsoft.Chaos",
+                "Microsoft.VMwareCloudSimple",
+                "Microsoft.HybridData"
             };
             var subscription = await Client.GetDefaultSubscriptionAsync();
             await foreach (var provider in subscription.GetResourceProviders())

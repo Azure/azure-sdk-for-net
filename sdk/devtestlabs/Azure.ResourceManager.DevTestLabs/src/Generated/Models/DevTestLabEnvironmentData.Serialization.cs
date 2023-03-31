@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DevTestLabs
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -30,18 +30,18 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DeploymentProperties))
             {
-                writer.WritePropertyName("deploymentProperties");
+                writer.WritePropertyName("deploymentProperties"u8);
                 writer.WriteObjectValue(DeploymentProperties);
             }
             if (Optional.IsDefined(ArmTemplateDisplayName))
             {
-                writer.WritePropertyName("armTemplateDisplayName");
+                writer.WritePropertyName("armTemplateDisplayName"u8);
                 writer.WriteStringValue(ArmTemplateDisplayName);
             }
             writer.WriteEndObject();
@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.DevTestLabs
 
         internal static DevTestLabEnvironmentData DeserializeDevTestLabEnvironmentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -64,7 +68,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,27 +83,27 @@ namespace Azure.ResourceManager.DevTestLabs
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,7 +113,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +122,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("deploymentProperties"))
+                        if (property0.NameEquals("deploymentProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -128,27 +132,27 @@ namespace Azure.ResourceManager.DevTestLabs
                             deploymentProperties = DevTestLabEnvironmentDeployment.DeserializeDevTestLabEnvironmentDeployment(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("armTemplateDisplayName"))
+                        if (property0.NameEquals("armTemplateDisplayName"u8))
                         {
                             armTemplateDisplayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("resourceGroupId"))
+                        if (property0.NameEquals("resourceGroupId"u8))
                         {
                             resourceGroupId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("createdByUser"))
+                        if (property0.NameEquals("createdByUser"u8))
                         {
                             createdByUser = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("uniqueIdentifier"))
+                        if (property0.NameEquals("uniqueIdentifier"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

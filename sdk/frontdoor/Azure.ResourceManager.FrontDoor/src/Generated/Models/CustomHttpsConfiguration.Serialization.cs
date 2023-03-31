@@ -16,35 +16,35 @@ namespace Azure.ResourceManager.FrontDoor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("certificateSource");
+            writer.WritePropertyName("certificateSource"u8);
             writer.WriteStringValue(CertificateSource.ToString());
-            writer.WritePropertyName("protocolType");
+            writer.WritePropertyName("protocolType"u8);
             writer.WriteStringValue(ProtocolType.ToString());
-            writer.WritePropertyName("minimumTlsVersion");
+            writer.WritePropertyName("minimumTlsVersion"u8);
             writer.WriteStringValue(MinimumTlsVersion.ToString());
-            writer.WritePropertyName("frontDoorCertificateSourceParameters");
+            writer.WritePropertyName("frontDoorCertificateSourceParameters"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CertificateType))
             {
-                writer.WritePropertyName("certificateType");
+                writer.WritePropertyName("certificateType"u8);
                 writer.WriteStringValue(CertificateType.Value.ToString());
             }
             writer.WriteEndObject();
-            writer.WritePropertyName("keyVaultCertificateSourceParameters");
+            writer.WritePropertyName("keyVaultCertificateSourceParameters"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Vault))
             {
-                writer.WritePropertyName("vault");
+                writer.WritePropertyName("vault"u8);
                 JsonSerializer.Serialize(writer, Vault);
             }
             if (Optional.IsDefined(SecretName))
             {
-                writer.WritePropertyName("secretName");
+                writer.WritePropertyName("secretName"u8);
                 writer.WriteStringValue(SecretName);
             }
             if (Optional.IsDefined(SecretVersion))
             {
-                writer.WritePropertyName("secretVersion");
+                writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);
             }
             writer.WriteEndObject();
@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static CustomHttpsConfiguration DeserializeCustomHttpsConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FrontDoorCertificateSource certificateSource = default;
             FrontDoorTlsProtocolType protocolType = default;
             FrontDoorRequiredMinimumTlsVersion minimumTlsVersion = default;
@@ -62,22 +66,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<string> secretVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("certificateSource"))
+                if (property.NameEquals("certificateSource"u8))
                 {
                     certificateSource = new FrontDoorCertificateSource(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("protocolType"))
+                if (property.NameEquals("protocolType"u8))
                 {
                     protocolType = new FrontDoorTlsProtocolType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("minimumTlsVersion"))
+                if (property.NameEquals("minimumTlsVersion"u8))
                 {
                     minimumTlsVersion = new FrontDoorRequiredMinimumTlsVersion(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("frontDoorCertificateSourceParameters"))
+                if (property.NameEquals("frontDoorCertificateSourceParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +90,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("certificateType"))
+                        if (property0.NameEquals("certificateType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     }
                     continue;
                 }
-                if (property.NameEquals("keyVaultCertificateSourceParameters"))
+                if (property.NameEquals("keyVaultCertificateSourceParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +112,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("vault"))
+                        if (property0.NameEquals("vault"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -118,12 +122,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             vault = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("secretName"))
+                        if (property0.NameEquals("secretName"u8))
                         {
                             secretName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("secretVersion"))
+                        if (property0.NameEquals("secretVersion"u8))
                         {
                             secretVersion = property0.Value.GetString();
                             continue;

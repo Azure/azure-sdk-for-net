@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static PaymentDetail DeserializePaymentDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> dueDate = default;
             Optional<DateTimeOffset> paymentDate = default;
             Optional<PurchasePrice> pricingCurrencyTotal = default;
@@ -24,7 +28,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<ExtendedStatusInfo> extendedStatusInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dueDate"))
+                if (property.NameEquals("dueDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     dueDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
-                if (property.NameEquals("paymentDate"))
+                if (property.NameEquals("paymentDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     paymentDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
-                if (property.NameEquals("pricingCurrencyTotal"))
+                if (property.NameEquals("pricingCurrencyTotal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +58,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     pricingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
-                if (property.NameEquals("billingCurrencyTotal"))
+                if (property.NameEquals("billingCurrencyTotal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,12 +68,12 @@ namespace Azure.ResourceManager.Reservations.Models
                     billingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
-                if (property.NameEquals("billingAccount"))
+                if (property.NameEquals("billingAccount"u8))
                 {
                     billingAccount = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +83,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     status = new PaymentStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("extendedStatusInfo"))
+                if (property.NameEquals("extendedStatusInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

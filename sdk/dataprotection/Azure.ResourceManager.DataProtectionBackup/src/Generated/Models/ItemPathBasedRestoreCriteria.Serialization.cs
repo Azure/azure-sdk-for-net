@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("itemPath");
+            writer.WritePropertyName("itemPath"u8);
             writer.WriteStringValue(ItemPath);
-            writer.WritePropertyName("isPathRelativeToBackupItem");
+            writer.WritePropertyName("isPathRelativeToBackupItem"u8);
             writer.WriteBooleanValue(IsPathRelativeToBackupItem);
             if (Optional.IsCollectionDefined(SubItemPathPrefix))
             {
-                writer.WritePropertyName("subItemPathPrefix");
+                writer.WritePropertyName("subItemPathPrefix"u8);
                 writer.WriteStartArray();
                 foreach (var item in SubItemPathPrefix)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
         }

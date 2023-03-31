@@ -17,27 +17,31 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(OnError))
             {
-                writer.WritePropertyName("onError");
+                writer.WritePropertyName("onError"u8);
                 writer.WriteStringValue(OnError.Value.ToString());
             }
             if (Optional.IsDefined(RelativePriority))
             {
-                writer.WritePropertyName("relativePriority");
+                writer.WritePropertyName("relativePriority"u8);
                 writer.WriteStringValue(RelativePriority.Value.ToString());
             }
-            writer.WritePropertyName("preset");
+            writer.WritePropertyName("preset"u8);
             writer.WriteObjectValue(Preset);
             writer.WriteEndObject();
         }
 
         internal static MediaTransformOutput DeserializeMediaTransformOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MediaTransformOnErrorType> onError = default;
             Optional<MediaJobPriority> relativePriority = default;
             MediaTransformPreset preset = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("onError"))
+                if (property.NameEquals("onError"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +51,7 @@ namespace Azure.ResourceManager.Media.Models
                     onError = new MediaTransformOnErrorType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("relativePriority"))
+                if (property.NameEquals("relativePriority"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +61,7 @@ namespace Azure.ResourceManager.Media.Models
                     relativePriority = new MediaJobPriority(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("preset"))
+                if (property.NameEquals("preset"u8))
                 {
                     preset = MediaTransformPreset.DeserializeMediaTransformPreset(property.Value);
                     continue;

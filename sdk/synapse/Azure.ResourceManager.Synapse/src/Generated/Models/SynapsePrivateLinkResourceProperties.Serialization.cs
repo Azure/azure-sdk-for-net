@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapsePrivateLinkResourceProperties DeserializeSynapsePrivateLinkResourceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> groupId = default;
             Optional<IReadOnlyList<string>> requiredMembers = default;
             Optional<IReadOnlyList<string>> requiredZoneNames = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("groupId"))
+                if (property.NameEquals("groupId"u8))
                 {
                     groupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requiredMembers"))
+                if (property.NameEquals("requiredMembers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     requiredMembers = array;
                     continue;
                 }
-                if (property.NameEquals("requiredZoneNames"))
+                if (property.NameEquals("requiredZoneNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

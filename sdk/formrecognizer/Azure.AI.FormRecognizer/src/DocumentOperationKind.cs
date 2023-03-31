@@ -8,5 +8,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     [CodeGenModel("OperationKind")]
     public partial struct DocumentOperationKind
     {
+        /// <summary>
+        /// documentClassifierBuild.
+        /// </summary>
+        internal static DocumentOperationKind DocumentClassifierBuild { get; } = new DocumentOperationKind(DocumentClassifierBuildValue);
     }
 }

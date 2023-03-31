@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static LogicSku DeserializeLogicSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LogicSkuName name = default;
             Optional<LogicResourceReference> plan = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = new LogicSkuName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("plan"))
+                if (property.NameEquals("plan"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("uplink");
+            writer.WritePropertyName("uplink"u8);
             writer.WriteStringValue(Uplink);
-            writer.WritePropertyName("downlink");
+            writer.WritePropertyName("downlink"u8);
             writer.WriteStringValue(Downlink);
             writer.WriteEndObject();
         }
 
         internal static Ambr DeserializeAmbr(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string uplink = default;
             string downlink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("uplink"))
+                if (property.NameEquals("uplink"u8))
                 {
                     uplink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("downlink"))
+                if (property.NameEquals("downlink"u8))
                 {
                     downlink = property.Value.GetString();
                     continue;

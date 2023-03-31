@@ -18,21 +18,21 @@ namespace Azure.ResourceManager.ServiceBus
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IsTrustedServiceAccessEnabled))
             {
-                writer.WritePropertyName("trustedServiceAccessEnabled");
+                writer.WritePropertyName("trustedServiceAccessEnabled"u8);
                 writer.WriteBooleanValue(IsTrustedServiceAccessEnabled.Value);
             }
             if (Optional.IsDefined(DefaultAction))
             {
-                writer.WritePropertyName("defaultAction");
+                writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
             if (Optional.IsCollectionDefined(VirtualNetworkRules))
             {
-                writer.WritePropertyName("virtualNetworkRules");
+                writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
             if (Optional.IsCollectionDefined(IPRules))
             {
-                writer.WritePropertyName("ipRules");
+                writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             writer.WriteEndObject();
@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.ServiceBus
 
         internal static ServiceBusNetworkRuleSetData DeserializeServiceBusNetworkRuleSetData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -73,7 +77,7 @@ namespace Azure.ResourceManager.ServiceBus
             Optional<ServiceBusPublicNetworkAccessFlag> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,22 +87,22 @@ namespace Azure.ResourceManager.ServiceBus
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +112,7 @@ namespace Azure.ResourceManager.ServiceBus
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -117,7 +121,7 @@ namespace Azure.ResourceManager.ServiceBus
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("trustedServiceAccessEnabled"))
+                        if (property0.NameEquals("trustedServiceAccessEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -127,7 +131,7 @@ namespace Azure.ResourceManager.ServiceBus
                             trustedServiceAccessEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("defaultAction"))
+                        if (property0.NameEquals("defaultAction"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -137,7 +141,7 @@ namespace Azure.ResourceManager.ServiceBus
                             defaultAction = new ServiceBusNetworkRuleSetDefaultAction(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("virtualNetworkRules"))
+                        if (property0.NameEquals("virtualNetworkRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -152,7 +156,7 @@ namespace Azure.ResourceManager.ServiceBus
                             virtualNetworkRules = array;
                             continue;
                         }
-                        if (property0.NameEquals("ipRules"))
+                        if (property0.NameEquals("ipRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -167,7 +171,7 @@ namespace Azure.ResourceManager.ServiceBus
                             ipRules = array;
                             continue;
                         }
-                        if (property0.NameEquals("publicNetworkAccess"))
+                        if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

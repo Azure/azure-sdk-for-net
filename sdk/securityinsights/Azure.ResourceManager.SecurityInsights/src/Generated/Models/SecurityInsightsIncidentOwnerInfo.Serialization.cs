@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Email))
             {
-                writer.WritePropertyName("email");
+                writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
             if (Optional.IsDefined(AssignedTo))
             {
-                writer.WritePropertyName("assignedTo");
+                writer.WritePropertyName("assignedTo"u8);
                 writer.WriteStringValue(AssignedTo);
             }
             if (Optional.IsDefined(ObjectId))
             {
-                writer.WritePropertyName("objectId");
+                writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId.Value);
             }
             if (Optional.IsDefined(UserPrincipalName))
             {
-                writer.WritePropertyName("userPrincipalName");
+                writer.WritePropertyName("userPrincipalName"u8);
                 writer.WriteStringValue(UserPrincipalName);
             }
             if (Optional.IsDefined(OwnerType))
             {
-                writer.WritePropertyName("ownerType");
+                writer.WritePropertyName("ownerType"u8);
                 writer.WriteStringValue(OwnerType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsIncidentOwnerInfo DeserializeSecurityInsightsIncidentOwnerInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> email = default;
             Optional<string> assignedTo = default;
             Optional<Guid> objectId = default;
@@ -53,17 +57,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<SecurityInsightsIncidentOwnerType> ownerType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("email"))
+                if (property.NameEquals("email"u8))
                 {
                     email = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("assignedTo"))
+                if (property.NameEquals("assignedTo"u8))
                 {
                     assignedTo = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectId"))
+                if (property.NameEquals("objectId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,12 +77,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     objectId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("userPrincipalName"))
+                if (property.NameEquals("userPrincipalName"u8))
                 {
                     userPrincipalName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ownerType"))
+                if (property.NameEquals("ownerType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

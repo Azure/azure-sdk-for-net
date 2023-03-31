@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RejectType))
             {
-                writer.WritePropertyName("rejectType");
+                writer.WritePropertyName("rejectType"u8);
                 writer.WriteStringValue(RejectType.Value.ToString());
             }
             if (Optional.IsDefined(RejectValue))
             {
-                writer.WritePropertyName("rejectValue");
+                writer.WritePropertyName("rejectValue"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(RejectValue);
 #else
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(RejectSampleValue))
             {
-                writer.WritePropertyName("rejectSampleValue");
+                writer.WritePropertyName("rejectSampleValue"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(RejectSampleValue);
 #else
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(UseTypeDefault))
             {
-                writer.WritePropertyName("useTypeDefault");
+                writer.WritePropertyName("useTypeDefault"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(UseTypeDefault);
 #else
@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static PolybaseSettings DeserializePolybaseSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PolybaseSettingsRejectType> rejectType = default;
             Optional<BinaryData> rejectValue = default;
             Optional<BinaryData> rejectSampleValue = default;
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rejectType"))
+                if (property.NameEquals("rejectType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     rejectType = new PolybaseSettingsRejectType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rejectValue"))
+                if (property.NameEquals("rejectValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     rejectValue = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("rejectSampleValue"))
+                if (property.NameEquals("rejectSampleValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     rejectSampleValue = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("useTypeDefault"))
+                if (property.NameEquals("useTypeDefault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,32 +18,32 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LoadBalancerProfile))
             {
-                writer.WritePropertyName("loadBalancerProfile");
+                writer.WritePropertyName("loadBalancerProfile"u8);
                 writer.WriteObjectValue(LoadBalancerProfile);
             }
             if (Optional.IsDefined(LoadBalancerSku))
             {
-                writer.WritePropertyName("loadBalancerSku");
+                writer.WritePropertyName("loadBalancerSku"u8);
                 writer.WriteStringValue(LoadBalancerSku.Value.ToString());
             }
             if (Optional.IsDefined(DnsServiceIP))
             {
-                writer.WritePropertyName("dnsServiceIP");
+                writer.WritePropertyName("dnsServiceIP"u8);
                 writer.WriteStringValue(DnsServiceIP);
             }
             if (Optional.IsDefined(NetworkPolicy))
             {
-                writer.WritePropertyName("networkPolicy");
+                writer.WritePropertyName("networkPolicy"u8);
                 writer.WriteStringValue(NetworkPolicy.Value.ToString());
             }
             if (Optional.IsDefined(PodCidr))
             {
-                writer.WritePropertyName("podCidr");
+                writer.WritePropertyName("podCidr"u8);
                 writer.WriteStringValue(PodCidr);
             }
             if (Optional.IsCollectionDefined(PodCidrs))
             {
-                writer.WritePropertyName("podCidrs");
+                writer.WritePropertyName("podCidrs"u8);
                 writer.WriteStartArray();
                 foreach (var item in PodCidrs)
                 {
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
             if (Optional.IsDefined(ServiceCidr))
             {
-                writer.WritePropertyName("serviceCidr");
+                writer.WritePropertyName("serviceCidr"u8);
                 writer.WriteStringValue(ServiceCidr);
             }
             if (Optional.IsCollectionDefined(ServiceCidrs))
             {
-                writer.WritePropertyName("serviceCidrs");
+                writer.WritePropertyName("serviceCidrs"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServiceCidrs)
                 {
@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static NetworkProfile DeserializeNetworkProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LoadBalancerProfile> loadBalancerProfile = default;
             Optional<LoadBalancerSku> loadBalancerSku = default;
             Optional<string> dnsServiceIP = default;
@@ -81,7 +85,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<IList<string>> serviceCidrs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("loadBalancerProfile"))
+                if (property.NameEquals("loadBalancerProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     loadBalancerProfile = LoadBalancerProfile.DeserializeLoadBalancerProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("loadBalancerSku"))
+                if (property.NameEquals("loadBalancerSku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,12 +105,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     loadBalancerSku = new LoadBalancerSku(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dnsServiceIP"))
+                if (property.NameEquals("dnsServiceIP"u8))
                 {
                     dnsServiceIP = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkPolicy"))
+                if (property.NameEquals("networkPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,12 +120,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     networkPolicy = new NetworkPolicy(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("podCidr"))
+                if (property.NameEquals("podCidr"u8))
                 {
                     podCidr = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("podCidrs"))
+                if (property.NameEquals("podCidrs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,12 +140,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     podCidrs = array;
                     continue;
                 }
-                if (property.NameEquals("serviceCidr"))
+                if (property.NameEquals("serviceCidr"u8))
                 {
                     serviceCidr = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceCidrs"))
+                if (property.NameEquals("serviceCidrs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

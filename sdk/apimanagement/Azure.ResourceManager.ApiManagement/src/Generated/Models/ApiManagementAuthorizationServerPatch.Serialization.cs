@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(AuthorizationMethods))
             {
-                writer.WritePropertyName("authorizationMethods");
+                writer.WritePropertyName("authorizationMethods"u8);
                 writer.WriteStartArray();
                 foreach (var item in AuthorizationMethods)
                 {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsCollectionDefined(ClientAuthenticationMethods))
             {
-                writer.WritePropertyName("clientAuthenticationMethod");
+                writer.WritePropertyName("clientAuthenticationMethod"u8);
                 writer.WriteStartArray();
                 foreach (var item in ClientAuthenticationMethods)
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsCollectionDefined(TokenBodyParameters))
             {
-                writer.WritePropertyName("tokenBodyParameters");
+                writer.WritePropertyName("tokenBodyParameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in TokenBodyParameters)
                 {
@@ -56,22 +56,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsDefined(TokenEndpoint))
             {
-                writer.WritePropertyName("tokenEndpoint");
+                writer.WritePropertyName("tokenEndpoint"u8);
                 writer.WriteStringValue(TokenEndpoint);
             }
             if (Optional.IsDefined(DoesSupportState))
             {
-                writer.WritePropertyName("supportState");
+                writer.WritePropertyName("supportState"u8);
                 writer.WriteBooleanValue(DoesSupportState.Value);
             }
             if (Optional.IsDefined(DefaultScope))
             {
-                writer.WritePropertyName("defaultScope");
+                writer.WritePropertyName("defaultScope"u8);
                 writer.WriteStringValue(DefaultScope);
             }
             if (Optional.IsCollectionDefined(BearerTokenSendingMethods))
             {
-                writer.WritePropertyName("bearerTokenSendingMethods");
+                writer.WritePropertyName("bearerTokenSendingMethods"u8);
                 writer.WriteStartArray();
                 foreach (var item in BearerTokenSendingMethods)
                 {
@@ -81,32 +81,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsDefined(ResourceOwnerUsername))
             {
-                writer.WritePropertyName("resourceOwnerUsername");
+                writer.WritePropertyName("resourceOwnerUsername"u8);
                 writer.WriteStringValue(ResourceOwnerUsername);
             }
             if (Optional.IsDefined(ResourceOwnerPassword))
             {
-                writer.WritePropertyName("resourceOwnerPassword");
+                writer.WritePropertyName("resourceOwnerPassword"u8);
                 writer.WriteStringValue(ResourceOwnerPassword);
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(ClientRegistrationEndpoint))
             {
-                writer.WritePropertyName("clientRegistrationEndpoint");
+                writer.WritePropertyName("clientRegistrationEndpoint"u8);
                 writer.WriteStringValue(ClientRegistrationEndpoint);
             }
             if (Optional.IsDefined(AuthorizationEndpoint))
             {
-                writer.WritePropertyName("authorizationEndpoint");
+                writer.WritePropertyName("authorizationEndpoint"u8);
                 writer.WriteStringValue(AuthorizationEndpoint);
             }
             if (Optional.IsCollectionDefined(GrantTypes))
             {
-                writer.WritePropertyName("grantTypes");
+                writer.WritePropertyName("grantTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in GrantTypes)
                 {
@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("clientId");
+                writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
             if (Optional.IsDefined(ClientSecret))
             {
-                writer.WritePropertyName("clientSecret");
+                writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
             writer.WriteEndObject();
@@ -130,6 +130,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiManagementAuthorizationServerPatch DeserializeApiManagementAuthorizationServerPatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -152,22 +156,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> clientSecret = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -177,7 +181,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -186,12 +190,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("authorizationMethods"))
+                        if (property0.NameEquals("authorizationMethods"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -206,7 +210,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             authorizationMethods = array;
                             continue;
                         }
-                        if (property0.NameEquals("clientAuthenticationMethod"))
+                        if (property0.NameEquals("clientAuthenticationMethod"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -221,7 +225,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             clientAuthenticationMethod = array;
                             continue;
                         }
-                        if (property0.NameEquals("tokenBodyParameters"))
+                        if (property0.NameEquals("tokenBodyParameters"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -236,12 +240,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             tokenBodyParameters = array;
                             continue;
                         }
-                        if (property0.NameEquals("tokenEndpoint"))
+                        if (property0.NameEquals("tokenEndpoint"u8))
                         {
                             tokenEndpoint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("supportState"))
+                        if (property0.NameEquals("supportState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -251,12 +255,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             supportState = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("defaultScope"))
+                        if (property0.NameEquals("defaultScope"u8))
                         {
                             defaultScope = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("bearerTokenSendingMethods"))
+                        if (property0.NameEquals("bearerTokenSendingMethods"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -271,32 +275,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             bearerTokenSendingMethods = array;
                             continue;
                         }
-                        if (property0.NameEquals("resourceOwnerUsername"))
+                        if (property0.NameEquals("resourceOwnerUsername"u8))
                         {
                             resourceOwnerUsername = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("resourceOwnerPassword"))
+                        if (property0.NameEquals("resourceOwnerPassword"u8))
                         {
                             resourceOwnerPassword = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("clientRegistrationEndpoint"))
+                        if (property0.NameEquals("clientRegistrationEndpoint"u8))
                         {
                             clientRegistrationEndpoint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("authorizationEndpoint"))
+                        if (property0.NameEquals("authorizationEndpoint"u8))
                         {
                             authorizationEndpoint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("grantTypes"))
+                        if (property0.NameEquals("grantTypes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -311,12 +315,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             grantTypes = array;
                             continue;
                         }
-                        if (property0.NameEquals("clientId"))
+                        if (property0.NameEquals("clientId"u8))
                         {
                             clientId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("clientSecret"))
+                        if (property0.NameEquals("clientSecret"u8))
                         {
                             clientSecret = property0.Value.GetString();
                             continue;

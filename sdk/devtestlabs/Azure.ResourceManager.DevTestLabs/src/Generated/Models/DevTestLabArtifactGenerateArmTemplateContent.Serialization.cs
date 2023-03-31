@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VmName))
             {
-                writer.WritePropertyName("virtualMachineName");
+                writer.WritePropertyName("virtualMachineName"u8);
                 writer.WriteStringValue(VmName);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsDefined(FileUploadOptions))
             {
-                writer.WritePropertyName("fileUploadOptions");
+                writer.WritePropertyName("fileUploadOptions"u8);
                 writer.WriteStringValue(FileUploadOptions.Value.ToString());
             }
             writer.WriteEndObject();

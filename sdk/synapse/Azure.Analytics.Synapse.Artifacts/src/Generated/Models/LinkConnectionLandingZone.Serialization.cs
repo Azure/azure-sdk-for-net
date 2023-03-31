@@ -20,22 +20,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedService))
             {
-                writer.WritePropertyName("linkedService");
+                writer.WritePropertyName("linkedService"u8);
                 writer.WriteObjectValue(LinkedService);
             }
             if (Optional.IsDefined(FileSystem))
             {
-                writer.WritePropertyName("fileSystem");
+                writer.WritePropertyName("fileSystem"u8);
                 writer.WriteStringValue(FileSystem);
             }
             if (Optional.IsDefined(FolderPath))
             {
-                writer.WritePropertyName("folderPath");
+                writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
             if (Optional.IsDefined(SasToken))
             {
-                writer.WritePropertyName("sasToken");
+                writer.WritePropertyName("sasToken"u8);
                 writer.WriteObjectValue(SasToken);
             }
             writer.WriteEndObject();
@@ -43,13 +43,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static LinkConnectionLandingZone DeserializeLinkConnectionLandingZone(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LinkedServiceReference> linkedService = default;
             Optional<string> fileSystem = default;
             Optional<string> folderPath = default;
             Optional<SecureString> sasToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linkedService"))
+                if (property.NameEquals("linkedService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,17 +63,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     linkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("fileSystem"))
+                if (property.NameEquals("fileSystem"u8))
                 {
                     fileSystem = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("folderPath"))
+                if (property.NameEquals("folderPath"u8))
                 {
                     folderPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sasToken"))
+                if (property.NameEquals("sasToken"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

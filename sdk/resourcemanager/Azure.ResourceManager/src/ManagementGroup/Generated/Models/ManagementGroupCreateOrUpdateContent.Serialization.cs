@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
                 {
-                    writer.WritePropertyName("displayName");
+                    writer.WritePropertyName("displayName"u8);
                     writer.WriteStringValue(DisplayName);
                 }
                 else
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             }
             if (Optional.IsDefined(Details))
             {
-                writer.WritePropertyName("details");
+                writer.WritePropertyName("details"u8);
                 writer.WriteObjectValue(Details);
             }
             writer.WriteEndObject();

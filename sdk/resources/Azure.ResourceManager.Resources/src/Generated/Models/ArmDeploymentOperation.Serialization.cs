@@ -14,22 +14,26 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ArmDeploymentOperation DeserializeArmDeploymentOperation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> operationId = default;
             Optional<ArmDeploymentOperationProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operationId"))
+                if (property.NameEquals("operationId"u8))
                 {
                     operationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

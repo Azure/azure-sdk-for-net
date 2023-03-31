@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DataSyncOption))
             {
-                writer.WritePropertyName("dataSyncOption");
+                writer.WritePropertyName("dataSyncOption"u8);
                 writer.WriteStringValue(DataSyncOption);
             }
             if (Optional.IsDefined(RecoveryVmCreationOption))
             {
-                writer.WritePropertyName("recoveryVmCreationOption");
+                writer.WritePropertyName("recoveryVmCreationOption"u8);
                 writer.WriteStringValue(RecoveryVmCreationOption);
             }
             if (Optional.IsDefined(ProviderIdForAlternateRecovery))
             {
-                writer.WritePropertyName("providerIdForAlternateRecovery");
+                writer.WritePropertyName("providerIdForAlternateRecovery"u8);
                 writer.WriteStringValue(ProviderIdForAlternateRecovery);
             }
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

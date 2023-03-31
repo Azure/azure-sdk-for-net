@@ -20,21 +20,21 @@ namespace Azure.ResourceManager.HealthcareApis
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("etag");
+                writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("resourceIdentityResolutionType");
+            writer.WritePropertyName("resourceIdentityResolutionType"u8);
             writer.WriteStringValue(ResourceIdentityResolutionType.ToString());
-            writer.WritePropertyName("fhirServiceResourceId");
+            writer.WritePropertyName("fhirServiceResourceId"u8);
             writer.WriteStringValue(FhirServiceResourceId);
-            writer.WritePropertyName("fhirMapping");
+            writer.WritePropertyName("fhirMapping"u8);
             writer.WriteObjectValue(FhirMapping);
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.HealthcareApis
 
         internal static HealthcareApisIotFhirDestinationData DeserializeHealthcareApisIotFhirDestinationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
@@ -54,7 +58,7 @@ namespace Azure.ResourceManager.HealthcareApis
             HealthcareApisIotMappingProperties fhirMapping = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +68,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,22 +78,22 @@ namespace Azure.ResourceManager.HealthcareApis
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +112,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -118,17 +122,17 @@ namespace Azure.ResourceManager.HealthcareApis
                             provisioningState = new HealthcareApisProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("resourceIdentityResolutionType"))
+                        if (property0.NameEquals("resourceIdentityResolutionType"u8))
                         {
                             resourceIdentityResolutionType = new HealthcareApisIotIdentityResolutionType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("fhirServiceResourceId"))
+                        if (property0.NameEquals("fhirServiceResourceId"u8))
                         {
                             fhirServiceResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("fhirMapping"))
+                        if (property0.NameEquals("fhirMapping"u8))
                         {
                             fhirMapping = HealthcareApisIotMappingProperties.DeserializeHealthcareApisIotMappingProperties(property0.Value);
                             continue;

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Settings))
             {
-                writer.WritePropertyName("settings");
+                writer.WritePropertyName("settings"u8);
                 writer.WriteObjectValue(Settings);
             }
             if (Optional.IsDefined(Open))
             {
-                writer.WritePropertyName("open");
+                writer.WritePropertyName("open"u8);
                 writer.WriteObjectValue(Open);
             }
             if (Optional.IsDefined(Browse))
             {
-                writer.WritePropertyName("browse");
+                writer.WritePropertyName("browse"u8);
                 writer.WriteObjectValue(Browse);
             }
             writer.WriteEndObject();
@@ -35,12 +35,16 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static SwaggerCustomDynamicTree DeserializeSwaggerCustomDynamicTree(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SwaggerCustomDynamicTreeSettings> settings = default;
             Optional<SwaggerCustomDynamicTreeCommand> open = default;
             Optional<SwaggerCustomDynamicTreeCommand> browse = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("settings"))
+                if (property.NameEquals("settings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.Logic.Models
                     settings = SwaggerCustomDynamicTreeSettings.DeserializeSwaggerCustomDynamicTreeSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("open"))
+                if (property.NameEquals("open"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.Logic.Models
                     open = SwaggerCustomDynamicTreeCommand.DeserializeSwaggerCustomDynamicTreeCommand(property.Value);
                     continue;
                 }
-                if (property.NameEquals("browse"))
+                if (property.NameEquals("browse"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

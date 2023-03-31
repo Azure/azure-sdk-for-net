@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (ContainerResourceLimits != null)
                 {
-                    writer.WritePropertyName("containerResourceLimits");
+                    writer.WritePropertyName("containerResourceLimits"u8);
                     writer.WriteObjectValue(ContainerResourceLimits);
                 }
                 else
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (ContainerResourceRequests != null)
                 {
-                    writer.WritePropertyName("containerResourceRequests");
+                    writer.WritePropertyName("containerResourceRequests"u8);
                     writer.WriteObjectValue(ContainerResourceRequests);
                 }
                 else
@@ -44,11 +44,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningContainerResourceRequirements DeserializeMachineLearningContainerResourceRequirements(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningContainerResourceSettings> containerResourceLimits = default;
             Optional<MachineLearningContainerResourceSettings> containerResourceRequests = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("containerResourceLimits"))
+                if (property.NameEquals("containerResourceLimits"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     containerResourceLimits = MachineLearningContainerResourceSettings.DeserializeMachineLearningContainerResourceSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("containerResourceRequests"))
+                if (property.NameEquals("containerResourceRequests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("createIncident");
+            writer.WritePropertyName("createIncident"u8);
             writer.WriteBooleanValue(IsIncidentCreated);
             if (Optional.IsDefined(GroupingConfiguration))
             {
-                writer.WritePropertyName("groupingConfiguration");
+                writer.WritePropertyName("groupingConfiguration"u8);
                 writer.WriteObjectValue(GroupingConfiguration);
             }
             writer.WriteEndObject();
@@ -27,16 +27,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsIncidentConfiguration DeserializeSecurityInsightsIncidentConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool createIncident = default;
             Optional<SecurityInsightsGroupingConfiguration> groupingConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("createIncident"))
+                if (property.NameEquals("createIncident"u8))
                 {
                     createIncident = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("groupingConfiguration"))
+                if (property.NameEquals("groupingConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

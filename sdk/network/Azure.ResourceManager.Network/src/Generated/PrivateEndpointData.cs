@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the PrivateEndpoint data model. </summary>
+    /// <summary>
+    /// A class representing the PrivateEndpoint data model.
+    /// Private endpoint resource.
+    /// </summary>
     public partial class PrivateEndpointData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of PrivateEndpointData. </summary>

@@ -19,54 +19,54 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteNumberValue(Status.Value);
             }
             if (Optional.IsDefined(Message))
             {
-                writer.WritePropertyName("message");
+                writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
             if (Optional.IsDefined(Author))
             {
-                writer.WritePropertyName("author");
+                writer.WritePropertyName("author"u8);
                 writer.WriteStringValue(Author);
             }
             if (Optional.IsDefined(Deployer))
             {
-                writer.WritePropertyName("deployer");
+                writer.WritePropertyName("deployer"u8);
                 writer.WriteStringValue(Deployer);
             }
             if (Optional.IsDefined(AuthorEmail))
             {
-                writer.WritePropertyName("author_email");
+                writer.WritePropertyName("author_email"u8);
                 writer.WriteStringValue(AuthorEmail);
             }
             if (Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("start_time");
+                writer.WritePropertyName("start_time"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
             if (Optional.IsDefined(EndOn))
             {
-                writer.WritePropertyName("end_time");
+                writer.WritePropertyName("end_time"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
             if (Optional.IsDefined(IsActive))
             {
-                writer.WritePropertyName("active");
+                writer.WritePropertyName("active"u8);
                 writer.WriteBooleanValue(IsActive.Value);
             }
             if (Optional.IsDefined(Details))
             {
-                writer.WritePropertyName("details");
+                writer.WritePropertyName("details"u8);
                 writer.WriteStringValue(Details);
             }
             writer.WriteEndObject();
@@ -75,6 +75,10 @@ namespace Azure.ResourceManager.AppService
 
         internal static WebAppDeploymentData DeserializeWebAppDeploymentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -91,27 +95,27 @@ namespace Azure.ResourceManager.AppService
             Optional<string> details = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -121,7 +125,7 @@ namespace Azure.ResourceManager.AppService
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,7 +134,7 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -140,27 +144,27 @@ namespace Azure.ResourceManager.AppService
                             status = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("message"))
+                        if (property0.NameEquals("message"u8))
                         {
                             message = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("author"))
+                        if (property0.NameEquals("author"u8))
                         {
                             author = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("deployer"))
+                        if (property0.NameEquals("deployer"u8))
                         {
                             deployer = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("author_email"))
+                        if (property0.NameEquals("author_email"u8))
                         {
                             authorEmail = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("start_time"))
+                        if (property0.NameEquals("start_time"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -170,7 +174,7 @@ namespace Azure.ResourceManager.AppService
                             startTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("end_time"))
+                        if (property0.NameEquals("end_time"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -180,7 +184,7 @@ namespace Azure.ResourceManager.AppService
                             endTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("active"))
+                        if (property0.NameEquals("active"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -190,7 +194,7 @@ namespace Azure.ResourceManager.AppService
                             active = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("details"))
+                        if (property0.NameEquals("details"u8))
                         {
                             details = property0.Value.GetString();
                             continue;

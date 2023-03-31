@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyIdentifier))
             {
-                writer.WritePropertyName("keyIdentifier");
+                writer.WritePropertyName("keyIdentifier"u8);
                 writer.WriteStringValue(KeyIdentifier);
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 writer.WriteStringValue(Identity);
             }
             writer.WriteEndObject();
@@ -33,16 +33,20 @@ namespace Azure.ResourceManager.Models
 
         internal static KeyVaultProperties DeserializeKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> keyIdentifier = default;
             Optional<string> identity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyIdentifier"))
+                if (property.NameEquals("keyIdentifier"u8))
                 {
                     keyIdentifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     identity = property.Value.GetString();
                     continue;

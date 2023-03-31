@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Host))
             {
-                writer.WritePropertyName("host");
+                writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
             if (Optional.IsCollectionDefined(HttpHeaders))
             {
-                writer.WritePropertyName("httpHeaders");
+                writer.WritePropertyName("httpHeaders"u8);
                 writer.WriteStartArray();
                 foreach (var item in HttpHeaders)
                 {
@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            writer.WritePropertyName("port");
+            writer.WritePropertyName("port"u8);
             writer.WriteNumberValue(Port);
             if (Optional.IsDefined(Scheme))
             {
-                writer.WritePropertyName("scheme");
+                writer.WritePropertyName("scheme"u8);
                 writer.WriteStringValue(Scheme.Value.ToString());
             }
             writer.WriteEndObject();
@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppHttpRequestInfo DeserializeContainerAppHttpRequestInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> host = default;
             Optional<IList<ContainerAppHttpHeaderInfo>> httpHeaders = default;
             Optional<string> path = default;
@@ -55,12 +59,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<ContainerAppHttpScheme> scheme = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("host"))
+                if (property.NameEquals("host"u8))
                 {
                     host = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("httpHeaders"))
+                if (property.NameEquals("httpHeaders"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,17 +79,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                     httpHeaders = array;
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     port = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("scheme"))
+                if (property.NameEquals("scheme"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

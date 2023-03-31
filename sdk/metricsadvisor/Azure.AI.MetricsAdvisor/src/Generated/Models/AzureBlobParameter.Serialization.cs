@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (ConnectionString != null)
                 {
-                    writer.WritePropertyName("connectionString");
+                    writer.WritePropertyName("connectionString"u8);
                     writer.WriteStringValue(ConnectionString);
                 }
                 else
@@ -29,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             if (Container != null)
             {
-                writer.WritePropertyName("container");
+                writer.WritePropertyName("container"u8);
                 writer.WriteStringValue(Container);
             }
             else
@@ -38,7 +38,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             if (BlobTemplate != null)
             {
-                writer.WritePropertyName("blobTemplate");
+                writer.WritePropertyName("blobTemplate"u8);
                 writer.WriteStringValue(BlobTemplate);
             }
             else
@@ -50,12 +50,16 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static AzureBlobParameter DeserializeAzureBlobParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> connectionString = default;
             string container = default;
             string blobTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectionString"))
+                if (property.NameEquals("connectionString"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +69,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     connectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("container"))
+                if (property.NameEquals("container"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +79,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     container = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("blobTemplate"))
+                if (property.NameEquals("blobTemplate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

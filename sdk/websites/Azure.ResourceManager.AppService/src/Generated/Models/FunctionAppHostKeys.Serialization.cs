@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static FunctionAppHostKeys DeserializeFunctionAppHostKeys(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> masterKey = default;
             Optional<IReadOnlyDictionary<string, string>> functionKeys = default;
             Optional<IReadOnlyDictionary<string, string>> systemKeys = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("masterKey"))
+                if (property.NameEquals("masterKey"u8))
                 {
                     masterKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("functionKeys"))
+                if (property.NameEquals("functionKeys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
                     functionKeys = dictionary;
                     continue;
                 }
-                if (property.NameEquals("systemKeys"))
+                if (property.NameEquals("systemKeys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

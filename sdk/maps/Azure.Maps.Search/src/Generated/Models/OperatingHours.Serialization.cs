@@ -15,16 +15,20 @@ namespace Azure.Maps.Search.Models
     {
         internal static OperatingHours DeserializeOperatingHours(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> mode = default;
             Optional<IReadOnlyList<OperatingHoursTimeRange>> timeRanges = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mode"))
+                if (property.NameEquals("mode"u8))
                 {
                     mode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timeRanges"))
+                if (property.NameEquals("timeRanges"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

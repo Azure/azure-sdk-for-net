@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> Defines the SAP message server properties. </summary>
+    /// <summary> Defines the SAP Message Server properties. </summary>
     public partial class MessageServerProperties
     {
         /// <summary> Initializes a new instance of MessageServerProperties. </summary>
@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Workloads.Models
         }
 
         /// <summary> Initializes a new instance of MessageServerProperties. </summary>
-        /// <param name="msPort"> The message server port. </param>
-        /// <param name="internalMsPort"> The message server internal MS port. </param>
-        /// <param name="httpPort"> The message server http port. </param>
-        /// <param name="httpsPort"> The message server https port. </param>
-        /// <param name="hostname"> The message server SAP host name. </param>
-        /// <param name="ipAddress"> The message server IP Address. </param>
-        /// <param name="health"> Defines the SAP Instance health. </param>
+        /// <param name="msPort"> Message Server port. </param>
+        /// <param name="internalMsPort"> Message Server internal MS port. </param>
+        /// <param name="httpPort"> Message Server HTTP Port. </param>
+        /// <param name="httpsPort"> Message Server HTTPS Port. </param>
+        /// <param name="hostname"> Message Server SAP Hostname. </param>
+        /// <param name="ipAddress"> Message server IP Address. </param>
+        /// <param name="health"> Defines the health of SAP Instances. </param>
         internal MessageServerProperties(long? msPort, long? internalMsPort, long? httpPort, long? httpsPort, string hostname, string ipAddress, SapHealthState? health)
         {
             MsPort = msPort;
@@ -34,19 +34,19 @@ namespace Azure.ResourceManager.Workloads.Models
             Health = health;
         }
 
-        /// <summary> The message server port. </summary>
+        /// <summary> Message Server port. </summary>
         public long? MsPort { get; }
-        /// <summary> The message server internal MS port. </summary>
+        /// <summary> Message Server internal MS port. </summary>
         public long? InternalMsPort { get; }
-        /// <summary> The message server http port. </summary>
+        /// <summary> Message Server HTTP Port. </summary>
         public long? HttpPort { get; }
-        /// <summary> The message server https port. </summary>
+        /// <summary> Message Server HTTPS Port. </summary>
         public long? HttpsPort { get; }
-        /// <summary> The message server SAP host name. </summary>
+        /// <summary> Message Server SAP Hostname. </summary>
         public string Hostname { get; }
-        /// <summary> The message server IP Address. </summary>
+        /// <summary> Message server IP Address. </summary>
         public string IPAddress { get; }
-        /// <summary> Defines the SAP Instance health. </summary>
+        /// <summary> Defines the health of SAP Instances. </summary>
         public SapHealthState? Health { get; }
     }
 }

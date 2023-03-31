@@ -8,23 +8,23 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.Email.Models
+namespace Azure.Communication.Email
 {
     public partial class EmailContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("subject");
+            writer.WritePropertyName("subject"u8);
             writer.WriteStringValue(Subject);
             if (Optional.IsDefined(PlainText))
             {
-                writer.WritePropertyName("plainText");
+                writer.WritePropertyName("plainText"u8);
                 writer.WriteStringValue(PlainText);
             }
             if (Optional.IsDefined(Html))
             {
-                writer.WritePropertyName("html");
+                writer.WritePropertyName("html"u8);
                 writer.WriteStringValue(Html);
             }
             writer.WriteEndObject();

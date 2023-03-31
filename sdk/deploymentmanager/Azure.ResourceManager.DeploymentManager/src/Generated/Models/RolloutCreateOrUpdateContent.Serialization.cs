@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("identity");
+            writer.WritePropertyName("identity"u8);
             writer.WriteObjectValue(Identity);
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -30,20 +30,20 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("buildVersion");
+            writer.WritePropertyName("buildVersion"u8);
             writer.WriteStringValue(BuildVersion);
             if (Optional.IsDefined(ArtifactSourceId))
             {
-                writer.WritePropertyName("artifactSourceId");
+                writer.WritePropertyName("artifactSourceId"u8);
                 writer.WriteStringValue(ArtifactSourceId);
             }
-            writer.WritePropertyName("targetServiceTopologyId");
+            writer.WritePropertyName("targetServiceTopologyId"u8);
             writer.WriteStringValue(TargetServiceTopologyId);
-            writer.WritePropertyName("stepGroups");
+            writer.WritePropertyName("stepGroups"u8);
             writer.WriteStartArray();
             foreach (var item in StepGroups)
             {
@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static RolloutCreateOrUpdateContent DeserializeRolloutCreateOrUpdateContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Identity identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -69,12 +73,12 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             IList<StepGroup> stepGroups = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     identity = Identity.DeserializeIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,27 +93,27 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,7 +123,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -128,22 +132,22 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("buildVersion"))
+                        if (property0.NameEquals("buildVersion"u8))
                         {
                             buildVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("artifactSourceId"))
+                        if (property0.NameEquals("artifactSourceId"u8))
                         {
                             artifactSourceId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("targetServiceTopologyId"))
+                        if (property0.NameEquals("targetServiceTopologyId"u8))
                         {
                             targetServiceTopologyId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("stepGroups"))
+                        if (property0.NameEquals("stepGroups"u8))
                         {
                             List<StepGroup> array = new List<StepGroup>();
                             foreach (var item in property0.Value.EnumerateArray())

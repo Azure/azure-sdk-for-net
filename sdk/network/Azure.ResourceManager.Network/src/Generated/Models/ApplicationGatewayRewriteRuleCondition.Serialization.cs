@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Variable))
             {
-                writer.WritePropertyName("variable");
+                writer.WritePropertyName("variable"u8);
                 writer.WriteStringValue(Variable);
             }
             if (Optional.IsDefined(Pattern))
             {
-                writer.WritePropertyName("pattern");
+                writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
             if (Optional.IsDefined(IgnoreCase))
             {
-                writer.WritePropertyName("ignoreCase");
+                writer.WritePropertyName("ignoreCase"u8);
                 writer.WriteBooleanValue(IgnoreCase.Value);
             }
             if (Optional.IsDefined(Negate))
             {
-                writer.WritePropertyName("negate");
+                writer.WritePropertyName("negate"u8);
                 writer.WriteBooleanValue(Negate.Value);
             }
             writer.WriteEndObject();
@@ -40,23 +40,27 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayRewriteRuleCondition DeserializeApplicationGatewayRewriteRuleCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> variable = default;
             Optional<string> pattern = default;
             Optional<bool> ignoreCase = default;
             Optional<bool> negate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("variable"))
+                if (property.NameEquals("variable"u8))
                 {
                     variable = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pattern"))
+                if (property.NameEquals("pattern"u8))
                 {
                     pattern = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ignoreCase"))
+                if (property.NameEquals("ignoreCase"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
                     ignoreCase = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("negate"))
+                if (property.NameEquals("negate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static FactoryPipelineRunInvokedByInfo DeserializeFactoryPipelineRunInvokedByInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> id = default;
             Optional<string> invokedByType = default;
@@ -22,27 +26,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<Guid> pipelineRunId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("invokedByType"))
+                if (property.NameEquals("invokedByType"u8))
                 {
                     invokedByType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pipelineName"))
+                if (property.NameEquals("pipelineName"u8))
                 {
                     pipelineName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pipelineRunId"))
+                if (property.NameEquals("pipelineRunId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

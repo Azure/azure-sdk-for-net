@@ -16,25 +16,29 @@ namespace Azure.IoT.TimeSeriesInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("from");
+            writer.WritePropertyName("from"u8);
             writer.WriteStringValue(From, "O");
-            writer.WritePropertyName("to");
+            writer.WritePropertyName("to"u8);
             writer.WriteStringValue(To, "O");
             writer.WriteEndObject();
         }
 
         internal static DateTimeRange DeserializeDateTimeRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset @from = default;
             DateTimeOffset to = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("from"))
+                if (property.NameEquals("from"u8))
                 {
                     @from = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("to"))
+                if (property.NameEquals("to"u8))
                 {
                     to = property.Value.GetDateTimeOffset("O");
                     continue;

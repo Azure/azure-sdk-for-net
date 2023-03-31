@@ -1284,7 +1284,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
                 int messageCount = 10;
-                ConcurrentDictionary<long, byte> sequenceNumbers = new();
 
                 await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount));
 
@@ -1296,27 +1295,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 int receivedCount = 0;
                 var tcs = new TaskCompletionSource<bool>();
                 ProcessMessageEventArgs capturedArgs = null;
+                ServiceBusReceivedMessage receivedDeferredMessage = null;
 
                 async Task ProcessMessage(ProcessMessageEventArgs args)
                 {
                     capturedArgs ??= args;
 
-                    IReadOnlyList<ServiceBusReceivedMessage> receivedDeferredMessages = null;
                     var count = Interlocked.Increment(ref receivedCount);
 
-                    // defer first two messages
-                    if (count <= 2)
+                    // defer first message
+                    if (count == 1)
                     {
                         await args.DeferMessageAsync(args.Message);
-                        sequenceNumbers[args.Message.SequenceNumber] = default;
+                        receivedDeferredMessage = (await args.GetReceiveActions().ReceiveDeferredMessagesAsync(new[] {args.Message.SequenceNumber})).Single();
                     }
-
-                    if (count == 2)
-                    {
-                        receivedDeferredMessages = await args.GetReceiveActions().ReceiveDeferredMessagesAsync(sequenceNumbers.Keys);
-                    }
-
-                    if (manualRenew && !sequenceNumbers.ContainsKey(args.Message.SequenceNumber))
+                    else if (manualRenew)
                     {
                         await args.RenewMessageLockAsync(args.Message);
                     }
@@ -1328,17 +1321,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     {
                         // do not attempt to complete the deferred message as we will only be able to complete it
                         // after receiving using ReceiveDeferredMessageAsync
-                        if (!sequenceNumbers.ContainsKey(args.Message.SequenceNumber))
+                        if (count > 1)
                         {
-                            await args.RenewMessageLockAsync(args.Message);
+                            await args.CompleteMessageAsync(args.Message);
                         }
-
-                        if (receivedDeferredMessages != null)
+                        else
                         {
-                            foreach (var message in receivedDeferredMessages)
-                            {
-                                await args.CompleteMessageAsync(message);
-                            }
+                            await args.CompleteMessageAsync(receivedDeferredMessage);
                         }
                     }
 
@@ -1365,7 +1354,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 Assert.IsNull(msg);
 
                 Assert.That(
-                    async () => await receiver.ReceiveDeferredMessagesAsync(sequenceNumbers.Keys),
+                    async () => await receiver.ReceiveDeferredMessagesAsync(new[] {receivedDeferredMessage.SequenceNumber}),
                     Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
                         .EqualTo(ServiceBusFailureReason.MessageNotFound));
             }

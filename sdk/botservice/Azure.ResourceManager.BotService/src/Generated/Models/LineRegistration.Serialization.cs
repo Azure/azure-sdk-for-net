@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ChannelSecret))
             {
-                writer.WritePropertyName("channelSecret");
+                writer.WritePropertyName("channelSecret"u8);
                 writer.WriteStringValue(ChannelSecret);
             }
             if (Optional.IsDefined(ChannelAccessToken))
             {
-                writer.WritePropertyName("channelAccessToken");
+                writer.WritePropertyName("channelAccessToken"u8);
                 writer.WriteStringValue(ChannelAccessToken);
             }
             writer.WriteEndObject();
@@ -30,22 +30,26 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static LineRegistration DeserializeLineRegistration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> generatedId = default;
             Optional<string> channelSecret = default;
             Optional<string> channelAccessToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("generatedId"))
+                if (property.NameEquals("generatedId"u8))
                 {
                     generatedId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("channelSecret"))
+                if (property.NameEquals("channelSecret"u8))
                 {
                     channelSecret = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("channelAccessToken"))
+                if (property.NameEquals("channelAccessToken"u8))
                 {
                     channelAccessToken = property.Value.GetString();
                     continue;

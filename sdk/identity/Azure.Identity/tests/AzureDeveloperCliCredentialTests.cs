@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class AzureDeveloperCliCredentialTests : CredentialTestBase
+    public class AzureDeveloperCliCredentialTests : CredentialTestBase<AzureDeveloperCliCredentialOptions>
     {
         public AzureDeveloperCliCredentialTests(bool isAsync) : base(isAsync) { }
 
@@ -20,6 +20,18 @@ namespace Azure.Identity.Tests
             var azdCliOptions = new AzureDeveloperCliCredentialOptions
             {
                 Diagnostics = { IsAccountIdentifierLoggingEnabled = options.Diagnostics.IsAccountIdentifierLoggingEnabled }
+            };
+            var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
+            var testProcess = new TestProcess { Output = processOutput };
+            return InstrumentClient(new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true), azdCliOptions));
+        }
+
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
+        {
+            var azdCliOptions = new AzureDeveloperCliCredentialOptions
+            {
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
+                TenantId = config.TenantId,
             };
             var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
             var testProcess = new TestProcess { Output = processOutput };
@@ -54,25 +66,6 @@ namespace Azure.Identity.Tests
             {
                 Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain("-tenant-id"));
             }
-        }
-
-        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
-        {
-            Console.WriteLine(parameters.ToDebugString());
-
-            var options = new AzureDeveloperCliCredentialOptions { TenantId = parameters.TenantId};
-
-            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
-            {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
-            }
-
-            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
-            var testProcess = new TestProcess { Output = processOutput };
-            AzureDeveloperCliCredential credential =
-                InstrumentClient(new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true), options));
-
-            await AssertAllowedTenantIdsEnforcedAsync(parameters, credential);
         }
 
         [Test]

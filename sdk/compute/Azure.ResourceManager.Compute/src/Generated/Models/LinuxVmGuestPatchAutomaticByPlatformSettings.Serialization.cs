@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RebootSetting))
             {
-                writer.WritePropertyName("rebootSetting");
+                writer.WritePropertyName("rebootSetting"u8);
                 writer.WriteStringValue(RebootSetting.Value.ToString());
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static LinuxVmGuestPatchAutomaticByPlatformSettings DeserializeLinuxVmGuestPatchAutomaticByPlatformSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LinuxVmGuestPatchAutomaticByPlatformRebootSetting> rebootSetting = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rebootSetting"))
+                if (property.NameEquals("rebootSetting"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyVault");
+            writer.WritePropertyName("keyVault"u8);
             writer.WriteObjectValue(KeyVault);
             if (Optional.IsDefined(SkipToken))
             {
-                writer.WritePropertyName("skipToken");
+                writer.WritePropertyName("skipToken"u8);
                 writer.WriteStringValue(SkipToken);
             }
             writer.WriteEndObject();

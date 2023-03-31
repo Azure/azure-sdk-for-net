@@ -14,11 +14,15 @@ namespace Azure.Communication.JobRouter.Models
     {
         internal static ClassificationPolicyItem DeserializeClassificationPolicyItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ClassificationPolicy> classificationPolicy = default;
             Optional<string> etag = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("classificationPolicy"))
+                if (property.NameEquals("classificationPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +32,7 @@ namespace Azure.Communication.JobRouter.Models
                     classificationPolicy = ClassificationPolicy.DeserializeClassificationPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     etag = property.Value.GetString();
                     continue;

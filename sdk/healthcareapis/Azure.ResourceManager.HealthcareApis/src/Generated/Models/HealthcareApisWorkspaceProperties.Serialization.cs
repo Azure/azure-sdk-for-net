@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             writer.WriteEndObject();
@@ -27,12 +27,16 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static HealthcareApisWorkspaceProperties DeserializeHealthcareApisWorkspaceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HealthcareApisProvisioningState> provisioningState = default;
             Optional<IReadOnlyList<HealthcareApisPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<HealthcareApisPublicNetworkAccess> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     provisioningState = new HealthcareApisProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("privateEndpointConnections"))
+                if (property.NameEquals("privateEndpointConnections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +61,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     privateEndpointConnections = array;
                     continue;
                 }
-                if (property.NameEquals("publicNetworkAccess"))
+                if (property.NameEquals("publicNetworkAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

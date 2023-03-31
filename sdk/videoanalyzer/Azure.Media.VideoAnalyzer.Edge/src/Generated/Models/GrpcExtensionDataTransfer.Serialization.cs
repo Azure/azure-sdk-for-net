@@ -17,26 +17,30 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SharedMemorySizeMiB))
             {
-                writer.WritePropertyName("sharedMemorySizeMiB");
+                writer.WritePropertyName("sharedMemorySizeMiB"u8);
                 writer.WriteStringValue(SharedMemorySizeMiB);
             }
-            writer.WritePropertyName("mode");
+            writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToString());
             writer.WriteEndObject();
         }
 
         internal static GrpcExtensionDataTransfer DeserializeGrpcExtensionDataTransfer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sharedMemorySizeMiB = default;
             GrpcExtensionDataTransferMode mode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sharedMemorySizeMiB"))
+                if (property.NameEquals("sharedMemorySizeMiB"u8))
                 {
                     sharedMemorySizeMiB = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mode"))
+                if (property.NameEquals("mode"u8))
                 {
                     mode = new GrpcExtensionDataTransferMode(property.Value.GetString());
                     continue;

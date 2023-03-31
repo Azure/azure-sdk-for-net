@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -33,56 +33,56 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AdministratorLogin))
             {
-                writer.WritePropertyName("administratorLogin");
+                writer.WritePropertyName("administratorLogin"u8);
                 writer.WriteStringValue(AdministratorLogin);
             }
             if (Optional.IsDefined(AdministratorLoginPassword))
             {
-                writer.WritePropertyName("administratorLoginPassword");
+                writer.WritePropertyName("administratorLoginPassword"u8);
                 writer.WriteStringValue(AdministratorLoginPassword);
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
             if (Optional.IsDefined(MinimalTlsVersion))
             {
-                writer.WritePropertyName("minimalTlsVersion");
+                writer.WritePropertyName("minimalTlsVersion"u8);
                 writer.WriteStringValue(MinimalTlsVersion);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
             {
-                writer.WritePropertyName("primaryUserAssignedIdentityId");
+                writer.WritePropertyName("primaryUserAssignedIdentityId"u8);
                 writer.WriteStringValue(PrimaryUserAssignedIdentityId);
             }
             if (Optional.IsDefined(FederatedClientId))
             {
-                writer.WritePropertyName("federatedClientId");
+                writer.WritePropertyName("federatedClientId"u8);
                 writer.WriteStringValue(FederatedClientId.Value);
             }
             if (Optional.IsDefined(KeyId))
             {
-                writer.WritePropertyName("keyId");
+                writer.WritePropertyName("keyId"u8);
                 writer.WriteStringValue(KeyId.AbsoluteUri);
             }
             if (Optional.IsDefined(Administrators))
             {
-                writer.WritePropertyName("administrators");
+                writer.WritePropertyName("administrators"u8);
                 writer.WriteObjectValue(Administrators);
             }
             if (Optional.IsDefined(RestrictOutboundNetworkAccess))
             {
-                writer.WritePropertyName("restrictOutboundNetworkAccess");
+                writer.WritePropertyName("restrictOutboundNetworkAccess"u8);
                 writer.WriteStringValue(RestrictOutboundNetworkAccess.Value.ToString());
             }
             writer.WriteEndObject();

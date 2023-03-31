@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Redis.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("linkedRedisCacheId");
+            writer.WritePropertyName("linkedRedisCacheId"u8);
             writer.WriteStringValue(LinkedRedisCacheId);
-            writer.WritePropertyName("linkedRedisCacheLocation");
+            writer.WritePropertyName("linkedRedisCacheLocation"u8);
             writer.WriteStringValue(LinkedRedisCacheLocation);
-            writer.WritePropertyName("serverRole");
+            writer.WritePropertyName("serverRole"u8);
             writer.WriteStringValue(ServerRole.ToSerialString());
             writer.WriteEndObject();
             writer.WriteEndObject();

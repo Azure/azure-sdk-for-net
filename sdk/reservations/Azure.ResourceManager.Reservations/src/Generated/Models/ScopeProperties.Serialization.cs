@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ScopeProperties DeserializeScopeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> scope = default;
             Optional<bool> valid = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scope"))
+                if (property.NameEquals("scope"u8))
                 {
                     scope = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("valid"))
+                if (property.NameEquals("valid"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AcsChatParticipantAddedToThreadWithUserEventData DeserializeAcsChatParticipantAddedToThreadWithUserEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> time = default;
             Optional<CommunicationIdentifierModel> addedByCommunicationIdentifier = default;
             Optional<AcsChatThreadParticipantProperties> participantAdded = default;
@@ -27,7 +31,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("time"))
+                if (property.NameEquals("time"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,7 +41,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     time = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("addedByCommunicationIdentifier"))
+                if (property.NameEquals("addedByCommunicationIdentifier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +51,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     addedByCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("participantAdded"))
+                if (property.NameEquals("participantAdded"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +61,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     participantAdded = AcsChatThreadParticipantProperties.DeserializeAcsChatThreadParticipantProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("createTime"))
+                if (property.NameEquals("createTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +71,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     createTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +81,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     version = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("recipientCommunicationIdentifier"))
+                if (property.NameEquals("recipientCommunicationIdentifier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,12 +91,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     recipientCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("transactionId"))
+                if (property.NameEquals("transactionId"u8))
                 {
                     transactionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("threadId"))
+                if (property.NameEquals("threadId"u8))
                 {
                     threadId = property.Value.GetString();
                     continue;

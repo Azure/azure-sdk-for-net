@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Artifacts))
             {
-                writer.WritePropertyName("artifacts");
+                writer.WritePropertyName("artifacts"u8);
                 writer.WriteStartArray();
                 foreach (var item in Artifacts)
                 {

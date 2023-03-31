@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(TargetType))
             {
-                writer.WritePropertyName("targetType");
+                writer.WritePropertyName("targetType"u8);
                 writer.WriteStringValue(TargetType.Value.ToString());
             }
             if (Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("startTime");
+                writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
             writer.WriteEndObject();
@@ -36,12 +36,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static BackupPolicyMigrationState DeserializeBackupPolicyMigrationState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BackupPolicyMigrationStatus> status = default;
             Optional<BackupPolicyType> targetType = default;
             Optional<DateTimeOffset> startTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     status = new BackupPolicyMigrationStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetType"))
+                if (property.NameEquals("targetType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     targetType = new BackupPolicyType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Microsoft.Extensions.Azure.csproj" />
   </ItemGroup>
 </Project>

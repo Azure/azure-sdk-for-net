@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("query");
+            writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
             if (Optional.IsCollectionDefined(Inputs))
             {
-                writer.WritePropertyName("inputs");
+                writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
             if (Optional.IsCollectionDefined(Functions))
             {
-                writer.WritePropertyName("functions");
+                writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Functions)
                 {
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("jobType");
+            writer.WritePropertyName("jobType"u8);
             writer.WriteStringValue(JobType.ToString());
             if (Optional.IsDefined(CompatibilityLevel))
             {
-                writer.WritePropertyName("compatibilityLevel");
+                writer.WritePropertyName("compatibilityLevel"u8);
                 writer.WriteStringValue(CompatibilityLevel.Value.ToString());
             }
             writer.WriteEndObject();

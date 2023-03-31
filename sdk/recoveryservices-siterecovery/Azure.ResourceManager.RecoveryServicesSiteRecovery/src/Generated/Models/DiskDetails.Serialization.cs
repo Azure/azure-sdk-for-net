@@ -14,13 +14,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static DiskDetails DeserializeDiskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> maxSizeMB = default;
             Optional<string> vhdType = default;
             Optional<string> vhdId = default;
             Optional<string> vhdName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxSizeMB"))
+                if (property.NameEquals("maxSizeMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,17 +34,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     maxSizeMB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("vhdType"))
+                if (property.NameEquals("vhdType"u8))
                 {
                     vhdType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vhdId"))
+                if (property.NameEquals("vhdId"u8))
                 {
                     vhdId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vhdName"))
+                if (property.NameEquals("vhdName"u8))
                 {
                     vhdName = property.Value.GetString();
                     continue;

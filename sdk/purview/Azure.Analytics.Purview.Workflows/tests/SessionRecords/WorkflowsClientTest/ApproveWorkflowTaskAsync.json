@@ -1,0 +1,37 @@
+{
+  "Entries": [
+    {
+        "RequestUri": "https://account-name.purview.azure.com/workflow/workflowtasks/507d9e8a-e5c4-41db-ace5-358961e0bfeb/approve-approval?api-version=2022-05-01-preview",
+        "RequestMethod": "POST",
+        "RequestHeaders": {
+            "Accept": "application/json",
+            "Authorization": "Sanitized",
+            "Connection": "keep-alive",
+            "Content-Length": "21",
+            "Content-Type": "application/json",
+            "traceparent": "00-49065ebb48444d47a420ffd9c76f7261-0baa151c7e48c045-00",
+            "User-Agent": "azsdk-net-Analytics.Purview.Workflows/1.0.0-alpha.20230113.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+            "x-ms-client-request-id": "7f78a35c0d51c1d397325f795ae2d6e8",
+            "x-ms-return-client-request-id": "true"
+        },
+        "RequestBody": {
+            "comment": "Thanks!"
+        },
+        "StatusCode": 200,
+        "ResponseHeaders": {
+            "Content-Length": "0",
+            "Date": "Thu, 19 Jan 2023 13:38:20 GMT",
+            "Server": "MicrosoftPurview",
+            "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+            "x-ms-client-request-id": "7f78a35c0d51c1d397325f795ae2d6e8",
+            "x-ms-correlation-request-id": "5de3f085-d1f6-490a-9212-f00e1ca5a7c8",
+            "x-ms-request-id": "274b52ab-e281-477a-9a61-84580964d87d"
+        },
+        "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1525834204",
+    "WORKFLOW_ENDPOINT": "https://account-name.purview.azure.com"
+  }
+}

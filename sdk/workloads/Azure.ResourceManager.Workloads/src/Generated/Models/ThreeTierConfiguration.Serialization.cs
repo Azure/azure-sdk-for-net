@@ -17,39 +17,55 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(NetworkConfiguration))
             {
-                writer.WritePropertyName("networkConfiguration");
+                writer.WritePropertyName("networkConfiguration"u8);
                 writer.WriteObjectValue(NetworkConfiguration);
             }
-            writer.WritePropertyName("centralServer");
+            writer.WritePropertyName("centralServer"u8);
             writer.WriteObjectValue(CentralServer);
-            writer.WritePropertyName("applicationServer");
+            writer.WritePropertyName("applicationServer"u8);
             writer.WriteObjectValue(ApplicationServer);
-            writer.WritePropertyName("databaseServer");
+            writer.WritePropertyName("databaseServer"u8);
             writer.WriteObjectValue(DatabaseServer);
             if (Optional.IsDefined(HighAvailabilityConfig))
             {
-                writer.WritePropertyName("highAvailabilityConfig");
+                writer.WritePropertyName("highAvailabilityConfig"u8);
                 writer.WriteObjectValue(HighAvailabilityConfig);
             }
-            writer.WritePropertyName("deploymentType");
+            if (Optional.IsDefined(StorageConfiguration))
+            {
+                writer.WritePropertyName("storageConfiguration"u8);
+                writer.WriteObjectValue(StorageConfiguration);
+            }
+            if (Optional.IsDefined(CustomResourceNames))
+            {
+                writer.WritePropertyName("customResourceNames"u8);
+                writer.WriteObjectValue(CustomResourceNames);
+            }
+            writer.WritePropertyName("deploymentType"u8);
             writer.WriteStringValue(DeploymentType.ToString());
-            writer.WritePropertyName("appResourceGroup");
+            writer.WritePropertyName("appResourceGroup"u8);
             writer.WriteStringValue(AppResourceGroup);
             writer.WriteEndObject();
         }
 
         internal static ThreeTierConfiguration DeserializeThreeTierConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NetworkConfiguration> networkConfiguration = default;
             CentralServerConfiguration centralServer = default;
             ApplicationServerConfiguration applicationServer = default;
             DatabaseConfiguration databaseServer = default;
             Optional<HighAvailabilityConfiguration> highAvailabilityConfig = default;
+            Optional<StorageConfiguration> storageConfiguration = default;
+            Optional<ThreeTierCustomResourceNames> customResourceNames = default;
             SapDeploymentType deploymentType = default;
             string appResourceGroup = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("networkConfiguration"))
+                if (property.NameEquals("networkConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,22 +75,22 @@ namespace Azure.ResourceManager.Workloads.Models
                     networkConfiguration = NetworkConfiguration.DeserializeNetworkConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("centralServer"))
+                if (property.NameEquals("centralServer"u8))
                 {
                     centralServer = CentralServerConfiguration.DeserializeCentralServerConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("applicationServer"))
+                if (property.NameEquals("applicationServer"u8))
                 {
                     applicationServer = ApplicationServerConfiguration.DeserializeApplicationServerConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("databaseServer"))
+                if (property.NameEquals("databaseServer"u8))
                 {
                     databaseServer = DatabaseConfiguration.DeserializeDatabaseConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("highAvailabilityConfig"))
+                if (property.NameEquals("highAvailabilityConfig"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,18 +100,38 @@ namespace Azure.ResourceManager.Workloads.Models
                     highAvailabilityConfig = HighAvailabilityConfiguration.DeserializeHighAvailabilityConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("deploymentType"))
+                if (property.NameEquals("storageConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    storageConfiguration = StorageConfiguration.DeserializeStorageConfiguration(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("customResourceNames"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    customResourceNames = ThreeTierCustomResourceNames.DeserializeThreeTierCustomResourceNames(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("deploymentType"u8))
                 {
                     deploymentType = new SapDeploymentType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("appResourceGroup"))
+                if (property.NameEquals("appResourceGroup"u8))
                 {
                     appResourceGroup = property.Value.GetString();
                     continue;
                 }
             }
-            return new ThreeTierConfiguration(deploymentType, appResourceGroup, networkConfiguration.Value, centralServer, applicationServer, databaseServer, highAvailabilityConfig.Value);
+            return new ThreeTierConfiguration(deploymentType, appResourceGroup, networkConfiguration.Value, centralServer, applicationServer, databaseServer, highAvailabilityConfig.Value, storageConfiguration.Value, customResourceNames.Value);
         }
     }
 }

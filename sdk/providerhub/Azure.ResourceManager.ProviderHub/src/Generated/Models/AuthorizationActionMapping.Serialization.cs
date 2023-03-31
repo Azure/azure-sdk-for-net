@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Original))
             {
-                writer.WritePropertyName("original");
+                writer.WritePropertyName("original"u8);
                 writer.WriteStringValue(Original);
             }
             if (Optional.IsDefined(Desired))
             {
-                writer.WritePropertyName("desired");
+                writer.WritePropertyName("desired"u8);
                 writer.WriteStringValue(Desired);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static AuthorizationActionMapping DeserializeAuthorizationActionMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> original = default;
             Optional<string> desired = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("original"))
+                if (property.NameEquals("original"u8))
                 {
                     original = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("desired"))
+                if (property.NameEquals("desired"u8))
                 {
                     desired = property.Value.GetString();
                     continue;

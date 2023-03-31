@@ -17,29 +17,29 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStringValue(Tags);
             }
             if (Optional.IsDefined(Order))
             {
-                writer.WritePropertyName("order");
+                writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
-            writer.WritePropertyName("packageReferenceId");
+            writer.WritePropertyName("packageReferenceId"u8);
             writer.WriteStringValue(PackageReferenceId);
             if (Optional.IsDefined(ConfigurationReference))
             {
-                writer.WritePropertyName("configurationReference");
+                writer.WritePropertyName("configurationReference"u8);
                 writer.WriteStringValue(ConfigurationReference);
             }
             if (Optional.IsDefined(TreatFailureAsDeploymentFailure))
             {
-                writer.WritePropertyName("treatFailureAsDeploymentFailure");
+                writer.WritePropertyName("treatFailureAsDeploymentFailure"u8);
                 writer.WriteBooleanValue(TreatFailureAsDeploymentFailure.Value);
             }
             if (Optional.IsDefined(EnableAutomaticUpgrade))
             {
-                writer.WritePropertyName("enableAutomaticUpgrade");
+                writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
             }
             writer.WriteEndObject();
@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineGalleryApplication DeserializeVirtualMachineGalleryApplication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tags = default;
             Optional<int> order = default;
             string packageReferenceId = default;
@@ -55,12 +59,12 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<bool> enableAutomaticUpgrade = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     tags = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("order"))
+                if (property.NameEquals("order"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,17 +74,17 @@ namespace Azure.ResourceManager.Compute.Models
                     order = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("packageReferenceId"))
+                if (property.NameEquals("packageReferenceId"u8))
                 {
                     packageReferenceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("configurationReference"))
+                if (property.NameEquals("configurationReference"u8))
                 {
                     configurationReference = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("treatFailureAsDeploymentFailure"))
+                if (property.NameEquals("treatFailureAsDeploymentFailure"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.Compute.Models
                     treatFailureAsDeploymentFailure = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableAutomaticUpgrade"))
+                if (property.NameEquals("enableAutomaticUpgrade"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

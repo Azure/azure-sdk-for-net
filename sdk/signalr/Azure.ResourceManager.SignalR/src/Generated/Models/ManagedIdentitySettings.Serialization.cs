@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SignalR.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Resource))
             {
-                writer.WritePropertyName("resource");
+                writer.WritePropertyName("resource"u8);
                 writer.WriteStringValue(Resource);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static ManagedIdentitySettings DeserializeManagedIdentitySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resource = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resource"))
+                if (property.NameEquals("resource"u8))
                 {
                     resource = property.Value.GetString();
                     continue;

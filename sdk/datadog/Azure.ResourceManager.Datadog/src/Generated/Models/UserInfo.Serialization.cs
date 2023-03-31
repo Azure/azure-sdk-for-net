@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Datadog.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(EmailAddress))
             {
-                writer.WritePropertyName("emailAddress");
+                writer.WritePropertyName("emailAddress"u8);
                 writer.WriteStringValue(EmailAddress);
             }
             if (Optional.IsDefined(PhoneNumber))
             {
-                writer.WritePropertyName("phoneNumber");
+                writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteStringValue(PhoneNumber);
             }
             writer.WriteEndObject();
@@ -35,22 +35,26 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static UserInfo DeserializeUserInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> emailAddress = default;
             Optional<string> phoneNumber = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("emailAddress"))
+                if (property.NameEquals("emailAddress"u8))
                 {
                     emailAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phoneNumber"))
+                if (property.NameEquals("phoneNumber"u8))
                 {
                     phoneNumber = property.Value.GetString();
                     continue;

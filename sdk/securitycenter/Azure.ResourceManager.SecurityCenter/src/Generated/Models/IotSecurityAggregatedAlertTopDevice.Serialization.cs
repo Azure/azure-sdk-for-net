@@ -14,17 +14,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static IotSecurityAggregatedAlertTopDevice DeserializeIotSecurityAggregatedAlertTopDevice(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> deviceId = default;
             Optional<long> alertsCount = default;
             Optional<string> lastOccurrence = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceId"))
+                if (property.NameEquals("deviceId"u8))
                 {
                     deviceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("alertsCount"))
+                if (property.NameEquals("alertsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     alertsCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("lastOccurrence"))
+                if (property.NameEquals("lastOccurrence"u8))
                 {
                     lastOccurrence = property.Value.GetString();
                     continue;

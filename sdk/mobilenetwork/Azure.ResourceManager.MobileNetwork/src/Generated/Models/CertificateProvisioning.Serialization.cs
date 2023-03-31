@@ -14,11 +14,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     {
         internal static CertificateProvisioning DeserializeCertificateProvisioning(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CertificateProvisioningState> state = default;
             Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     state = new CertificateProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("reason"))
+                if (property.NameEquals("reason"u8))
                 {
                     reason = property.Value.GetString();
                     continue;

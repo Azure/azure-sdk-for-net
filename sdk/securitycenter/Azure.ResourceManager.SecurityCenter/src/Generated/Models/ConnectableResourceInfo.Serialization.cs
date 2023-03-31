@@ -15,12 +15,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static ConnectableResourceInfo DeserializeConnectableResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<IReadOnlyList<ConnectedResourceInfo>> inboundConnectedResources = default;
             Optional<IReadOnlyList<ConnectedResourceInfo>> outboundConnectedResources = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("inboundConnectedResources"))
+                if (property.NameEquals("inboundConnectedResources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     inboundConnectedResources = array;
                     continue;
                 }
-                if (property.NameEquals("outboundConnectedResources"))
+                if (property.NameEquals("outboundConnectedResources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

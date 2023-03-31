@@ -17,12 +17,12 @@ namespace Azure.DigitalTwins.Core
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
-                writer.WritePropertyName("query");
+                writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
             if (Optional.IsDefined(ContinuationToken))
             {
-                writer.WritePropertyName("continuationToken");
+                writer.WritePropertyName("continuationToken"u8);
                 writer.WriteStringValue(ContinuationToken);
             }
             writer.WriteEndObject();

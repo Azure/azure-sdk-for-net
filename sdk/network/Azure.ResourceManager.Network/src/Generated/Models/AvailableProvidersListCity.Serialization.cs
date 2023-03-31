@@ -15,16 +15,20 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AvailableProvidersListCity DeserializeAvailableProvidersListCity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> cityName = default;
             Optional<IReadOnlyList<string>> providers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cityName"))
+                if (property.NameEquals("cityName"u8))
                 {
                     cityName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providers"))
+                if (property.NameEquals("providers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

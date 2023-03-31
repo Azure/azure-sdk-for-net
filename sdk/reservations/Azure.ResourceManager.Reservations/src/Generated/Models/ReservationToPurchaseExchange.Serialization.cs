@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationToPurchaseExchange DeserializeReservationToPurchaseExchange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> reservationOrderId = default;
             Optional<ResourceIdentifier> reservationId = default;
             Optional<ReservationPurchaseContent> properties = default;
@@ -21,7 +25,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<ReservationOperationStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("reservationOrderId"))
+                if (property.NameEquals("reservationOrderId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +35,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     reservationOrderId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("reservationId"))
+                if (property.NameEquals("reservationId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     reservationId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     properties = ReservationPurchaseContent.DeserializeReservationPurchaseContent(property.Value);
                     continue;
                 }
-                if (property.NameEquals("billingCurrencyTotal"))
+                if (property.NameEquals("billingCurrencyTotal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     billingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

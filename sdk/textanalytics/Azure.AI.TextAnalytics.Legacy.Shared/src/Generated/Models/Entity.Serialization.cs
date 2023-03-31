@@ -14,6 +14,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static Entity DeserializeEntity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string text = default;
             string category = default;
             Optional<string> subcategory = default;
@@ -22,32 +26,32 @@ namespace Azure.AI.TextAnalytics.Legacy
             double confidenceScore = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("text"))
+                if (property.NameEquals("text"u8))
                 {
                     text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
                     category = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subcategory"))
+                if (property.NameEquals("subcategory"u8))
                 {
                     subcategory = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offset"))
+                if (property.NameEquals("offset"u8))
                 {
                     offset = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("length"))
+                if (property.NameEquals("length"u8))
                 {
                     length = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("confidenceScore"))
+                if (property.NameEquals("confidenceScore"u8))
                 {
                     confidenceScore = property.Value.GetDouble();
                     continue;

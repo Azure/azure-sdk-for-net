@@ -15,11 +15,15 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static RetrieveBootDiagnosticsDataResult DeserializeRetrieveBootDiagnosticsDataResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> consoleScreenshotBlobUri = default;
             Optional<Uri> serialConsoleLogBlobUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("consoleScreenshotBlobUri"))
+                if (property.NameEquals("consoleScreenshotBlobUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
                     consoleScreenshotBlobUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("serialConsoleLogBlobUri"))
+                if (property.NameEquals("serialConsoleLogBlobUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

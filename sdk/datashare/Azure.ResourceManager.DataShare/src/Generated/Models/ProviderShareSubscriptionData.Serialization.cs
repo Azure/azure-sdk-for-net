@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.DataShare
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ExpireOn))
             {
-                writer.WritePropertyName("expirationDate");
+                writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
             writer.WriteEndObject();
@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.DataShare
 
         internal static ProviderShareSubscriptionData DeserializeProviderShareSubscriptionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -47,22 +51,22 @@ namespace Azure.ResourceManager.DataShare
             Optional<ShareSubscriptionStatus> shareSubscriptionStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.DataShare
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,22 +85,22 @@ namespace Azure.ResourceManager.DataShare
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("consumerEmail"))
+                        if (property0.NameEquals("consumerEmail"u8))
                         {
                             consumerEmail = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("consumerName"))
+                        if (property0.NameEquals("consumerName"u8))
                         {
                             consumerName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("consumerTenantName"))
+                        if (property0.NameEquals("consumerTenantName"u8))
                         {
                             consumerTenantName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("createdAt"))
+                        if (property0.NameEquals("createdAt"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -106,7 +110,7 @@ namespace Azure.ResourceManager.DataShare
                             createdAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("expirationDate"))
+                        if (property0.NameEquals("expirationDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -116,17 +120,17 @@ namespace Azure.ResourceManager.DataShare
                             expirationDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("providerEmail"))
+                        if (property0.NameEquals("providerEmail"u8))
                         {
                             providerEmail = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("providerName"))
+                        if (property0.NameEquals("providerName"u8))
                         {
                             providerName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sharedAt"))
+                        if (property0.NameEquals("sharedAt"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -136,12 +140,12 @@ namespace Azure.ResourceManager.DataShare
                             sharedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("shareSubscriptionObjectId"))
+                        if (property0.NameEquals("shareSubscriptionObjectId"u8))
                         {
                             shareSubscriptionObjectId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("shareSubscriptionStatus"))
+                        if (property0.NameEquals("shareSubscriptionStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ManagedOutboundIPProfile))
             {
-                writer.WritePropertyName("managedOutboundIPProfile");
+                writer.WritePropertyName("managedOutboundIPProfile"u8);
                 writer.WriteObjectValue(ManagedOutboundIPProfile);
             }
             if (Optional.IsCollectionDefined(EffectiveOutboundIPs))
             {
-                writer.WritePropertyName("effectiveOutboundIPs");
+                writer.WritePropertyName("effectiveOutboundIPs"u8);
                 writer.WriteStartArray();
                 foreach (var item in EffectiveOutboundIPs)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             if (Optional.IsDefined(IdleTimeoutInMinutes))
             {
-                writer.WritePropertyName("idleTimeoutInMinutes");
+                writer.WritePropertyName("idleTimeoutInMinutes"u8);
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
             }
             writer.WriteEndObject();
@@ -42,12 +42,16 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterNatGatewayProfile DeserializeManagedClusterNatGatewayProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedClusterManagedOutboundIPProfile> managedOutboundIPProfile = default;
             Optional<IList<WritableSubResource>> effectiveOutboundIPs = default;
             Optional<int> idleTimeoutInMinutes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("managedOutboundIPProfile"))
+                if (property.NameEquals("managedOutboundIPProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +61,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     managedOutboundIPProfile = ManagedClusterManagedOutboundIPProfile.DeserializeManagedClusterManagedOutboundIPProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("effectiveOutboundIPs"))
+                if (property.NameEquals("effectiveOutboundIPs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     effectiveOutboundIPs = array;
                     continue;
                 }
-                if (property.NameEquals("idleTimeoutInMinutes"))
+                if (property.NameEquals("idleTimeoutInMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

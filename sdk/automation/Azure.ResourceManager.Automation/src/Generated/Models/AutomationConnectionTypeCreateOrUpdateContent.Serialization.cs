@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Automation.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IsGlobal))
             {
-                writer.WritePropertyName("isGlobal");
+                writer.WritePropertyName("isGlobal"u8);
                 writer.WriteBooleanValue(IsGlobal.Value);
             }
-            writer.WritePropertyName("fieldDefinitions");
+            writer.WritePropertyName("fieldDefinitions"u8);
             writer.WriteStartObject();
             foreach (var item in FieldDefinitions)
             {

@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Offer))
             {
-                writer.WritePropertyName("offer");
+                writer.WritePropertyName("offer"u8);
                 writer.WriteStringValue(Offer);
             }
             if (Optional.IsDefined(Publisher))
             {
-                writer.WritePropertyName("publisher");
+                writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
             writer.WriteEndObject();
@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabVirtualMachineImageReference DeserializeLabVirtualMachineImageReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> offer = default;
             Optional<string> publisher = default;
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.LabServices.Models
             Optional<string> exactVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,27 +67,27 @@ namespace Azure.ResourceManager.LabServices.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("offer"))
+                if (property.NameEquals("offer"u8))
                 {
                     offer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publisher"))
+                if (property.NameEquals("publisher"u8))
                 {
                     publisher = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     sku = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("exactVersion"))
+                if (property.NameEquals("exactVersion"u8))
                 {
                     exactVersion = property.Value.GetString();
                     continue;

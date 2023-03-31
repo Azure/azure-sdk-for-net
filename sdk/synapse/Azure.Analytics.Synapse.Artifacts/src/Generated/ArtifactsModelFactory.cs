@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class ArtifactsModelFactory
     {
         /// <summary> Initializes a new instance of CloudError. </summary>
@@ -126,6 +126,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new MetastoreUpdationResponse(status);
         }
 
+        /// <summary> Initializes a new instance of SparkConfigurationResource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="properties"> Properties of Spark Configuration. </param>
+        /// <returns> A new <see cref="Models.SparkConfigurationResource"/> instance for mocking. </returns>
+        public static SparkConfigurationResource SparkConfigurationResource(string id = null, string name = null, string type = null, string etag = null, SparkConfiguration properties = null)
+        {
+            return new SparkConfigurationResource(id, name, type, etag, properties);
+        }
+
+        /// <summary> Initializes a new instance of SubResource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <returns> A new <see cref="Models.SubResource"/> instance for mocking. </returns>
+        public static SubResource SubResource(string id = null, string name = null, string type = null, string etag = null)
+        {
+            return new SubResource(id, name, type, etag);
+        }
+
         /// <summary> Initializes a new instance of AzureEntityResource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -215,6 +238,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new LibraryInfo(name, path, containerName, uploadedTimestamp, type, provisioningStatus, creatorId);
         }
 
+        /// <summary> Initializes a new instance of TrackedResource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <returns> A new <see cref="Models.TrackedResource"/> instance for mocking. </returns>
+        public static TrackedResource TrackedResource(string id = null, string name = null, string type = null, IDictionary<string, string> tags = null, string location = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new TrackedResource(id, name, type, tags, location);
+        }
+
+        /// <summary> Initializes a new instance of DataFlowResource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="properties">
+        /// Data flow properties.
+        /// Please note <see cref="DataFlow"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Flowlet"/> and <see cref="MappingDataFlow"/>.
+        /// </param>
+        /// <returns> A new <see cref="Models.DataFlowResource"/> instance for mocking. </returns>
+        public static DataFlowResource DataFlowResource(string id = null, string name = null, string type = null, string etag = null, DataFlow properties = null)
+        {
+            return new DataFlowResource(id, name, type, etag, properties);
+        }
+
         /// <summary> Initializes a new instance of CreateDataFlowDebugSessionResponse. </summary>
         /// <param name="sessionId"> The ID of data flow debug session. </param>
         /// <returns> A new <see cref="Models.CreateDataFlowDebugSessionResponse"/> instance for mocking. </returns>
@@ -259,6 +312,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new DataFlowDebugCommandResponse(status, data);
         }
 
+        /// <summary> Initializes a new instance of DatasetResource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="properties">
+        /// Dataset properties.
+        /// Please note <see cref="Dataset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AmazonMWSObjectDataset"/>, <see cref="AmazonRdsForOracleTableDataset"/>, <see cref="AmazonRdsForSqlServerTableDataset"/>, <see cref="AmazonRedshiftTableDataset"/>, <see cref="AmazonS3Dataset"/>, <see cref="AvroDataset"/>, <see cref="AzureBlobDataset"/>, <see cref="AzureBlobFSDataset"/>, <see cref="AzureDataExplorerTableDataset"/>, <see cref="AzureDataLakeStoreDataset"/>, <see cref="AzureDatabricksDeltaLakeDataset"/>, <see cref="AzureMariaDBTableDataset"/>, <see cref="AzureMySqlTableDataset"/>, <see cref="AzurePostgreSqlTableDataset"/>, <see cref="AzureSearchIndexDataset"/>, <see cref="AzureSqlDWTableDataset"/>, <see cref="AzureSqlMITableDataset"/>, <see cref="AzureSqlTableDataset"/>, <see cref="AzureTableDataset"/>, <see cref="BinaryDataset"/>, <see cref="CassandraTableDataset"/>, <see cref="CommonDataServiceForAppsEntityDataset"/>, <see cref="ConcurObjectDataset"/>, <see cref="CosmosDbMongoDbApiCollectionDataset"/>, <see cref="CosmosDbSqlApiCollectionDataset"/>, <see cref="CouchbaseTableDataset"/>, <see cref="CustomDataset"/>, <see cref="Db2TableDataset"/>, <see cref="DelimitedTextDataset"/>, <see cref="DocumentDbCollectionDataset"/>, <see cref="DrillTableDataset"/>, <see cref="DynamicsAXResourceDataset"/>, <see cref="DynamicsCrmEntityDataset"/>, <see cref="DynamicsEntityDataset"/>, <see cref="EloquaObjectDataset"/>, <see cref="ExcelDataset"/>, <see cref="FileShareDataset"/>, <see cref="GoogleAdWordsObjectDataset"/>, <see cref="GoogleBigQueryObjectDataset"/>, <see cref="GreenplumTableDataset"/>, <see cref="HBaseObjectDataset"/>, <see cref="HiveObjectDataset"/>, <see cref="HttpDataset"/>, <see cref="HubspotObjectDataset"/>, <see cref="ImpalaObjectDataset"/>, <see cref="InformixTableDataset"/>, <see cref="JiraObjectDataset"/>, <see cref="JsonDataset"/>, <see cref="MagentoObjectDataset"/>, <see cref="MariaDBTableDataset"/>, <see cref="MarketoObjectDataset"/>, <see cref="MicrosoftAccessTableDataset"/>, <see cref="MongoDbAtlasCollectionDataset"/>, <see cref="MongoDbCollectionDataset"/>, <see cref="MongoDbV2CollectionDataset"/>, <see cref="MySqlTableDataset"/>, <see cref="NetezzaTableDataset"/>, <see cref="ODataResourceDataset"/>, <see cref="OdbcTableDataset"/>, <see cref="Office365Dataset"/>, <see cref="OracleServiceCloudObjectDataset"/>, <see cref="OracleTableDataset"/>, <see cref="OrcDataset"/>, <see cref="ParquetDataset"/>, <see cref="PaypalObjectDataset"/>, <see cref="PhoenixObjectDataset"/>, <see cref="PostgreSqlTableDataset"/>, <see cref="PrestoObjectDataset"/>, <see cref="QuickBooksObjectDataset"/>, <see cref="RelationalTableDataset"/>, <see cref="ResponsysObjectDataset"/>, <see cref="RestResourceDataset"/>, <see cref="SalesforceMarketingCloudObjectDataset"/>, <see cref="SalesforceObjectDataset"/>, <see cref="SalesforceServiceCloudObjectDataset"/>, <see cref="SapBwCubeDataset"/>, <see cref="SapCloudForCustomerResourceDataset"/>, <see cref="SapEccResourceDataset"/>, <see cref="SapHanaTableDataset"/>, <see cref="SapOdpResourceDataset"/>, <see cref="SapOpenHubTableDataset"/>, <see cref="SapTableResourceDataset"/>, <see cref="ServiceNowObjectDataset"/>, <see cref="SharePointOnlineListResourceDataset"/>, <see cref="ShopifyObjectDataset"/>, <see cref="SnowflakeDataset"/>, <see cref="SparkObjectDataset"/>, <see cref="SqlServerTableDataset"/>, <see cref="SquareObjectDataset"/>, <see cref="SybaseTableDataset"/>, <see cref="TeradataTableDataset"/>, <see cref="VerticaTableDataset"/>, <see cref="WebTableDataset"/>, <see cref="XeroObjectDataset"/>, <see cref="XmlDataset"/> and <see cref="ZohoObjectDataset"/>.
+        /// </param>
+        /// <returns> A new <see cref="Models.DatasetResource"/> instance for mocking. </returns>
+        public static DatasetResource DatasetResource(string id = null, string name = null, string type = null, string etag = null, Dataset properties = null)
+        {
+            return new DatasetResource(id, name, type, etag, properties);
+        }
+
         /// <summary> Initializes a new instance of GitHubAccessTokenResponse. </summary>
         /// <param name="gitHubAccessToken"></param>
         /// <returns> A new <see cref="Models.GitHubAccessTokenResponse"/> instance for mocking. </returns>
@@ -276,6 +345,34 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             value ??= new List<IntegrationRuntimeResource>();
 
             return new IntegrationRuntimeListResponse(value?.ToList(), nextLink);
+        }
+
+        /// <summary> Initializes a new instance of IntegrationRuntimeResource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="properties">
+        /// Integration runtime properties.
+        /// Please note <see cref="IntegrationRuntime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
+        /// </param>
+        /// <returns> A new <see cref="Models.IntegrationRuntimeResource"/> instance for mocking. </returns>
+        public static IntegrationRuntimeResource IntegrationRuntimeResource(string id = null, string name = null, string type = null, string etag = null, IntegrationRuntime properties = null)
+        {
+            return new IntegrationRuntimeResource(id, name, type, etag, properties);
+        }
+
+        /// <summary> Initializes a new instance of LibraryResource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="properties"> Library/package properties. </param>
+        /// <returns> A new <see cref="Models.LibraryResource"/> instance for mocking. </returns>
+        public static LibraryResource LibraryResource(string id = null, string name = null, string type = null, string etag = null, LibraryResourceProperties properties = null)
+        {
+            return new LibraryResource(id, name, type, etag, properties);
         }
 
         /// <summary> Initializes a new instance of LibraryResourceProperties. </summary>
@@ -322,6 +419,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new OperationResult(status, code, message, target, details?.ToList());
         }
 
+        /// <summary> Initializes a new instance of LinkedServiceResource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="properties">
+        /// Properties of linked service.
+        /// Please note <see cref="LinkedService"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AmazonMWSLinkedService"/>, <see cref="AmazonRdsForOracleLinkedService"/>, <see cref="AmazonRdsForSqlServerLinkedService"/>, <see cref="AmazonRedshiftLinkedService"/>, <see cref="AmazonS3LinkedService"/>, <see cref="AppFiguresLinkedService"/>, <see cref="AsanaLinkedService"/>, <see cref="AzureBatchLinkedService"/>, <see cref="AzureBlobFSLinkedService"/>, <see cref="AzureBlobStorageLinkedService"/>, <see cref="AzureDataExplorerLinkedService"/>, <see cref="AzureDataLakeAnalyticsLinkedService"/>, <see cref="AzureDataLakeStoreLinkedService"/>, <see cref="AzureDatabricksLinkedService"/>, <see cref="AzureDatabricksDeltaLakeLinkedService"/>, <see cref="AzureFileStorageLinkedService"/>, <see cref="AzureFunctionLinkedService"/>, <see cref="AzureKeyVaultLinkedService"/>, <see cref="AzureMLLinkedService"/>, <see cref="AzureMLServiceLinkedService"/>, <see cref="AzureMariaDBLinkedService"/>, <see cref="AzureMySqlLinkedService"/>, <see cref="AzurePostgreSqlLinkedService"/>, <see cref="AzureSearchLinkedService"/>, <see cref="AzureSqlDWLinkedService"/>, <see cref="AzureSqlDatabaseLinkedService"/>, <see cref="AzureSqlMILinkedService"/>, <see cref="AzureStorageLinkedService"/>, <see cref="AzureSynapseArtifactsLinkedService"/>, <see cref="AzureTableStorageLinkedService"/>, <see cref="CassandraLinkedService"/>, <see cref="CommonDataServiceForAppsLinkedService"/>, <see cref="ConcurLinkedService"/>, <see cref="CosmosDbLinkedService"/>, <see cref="CosmosDbMongoDbApiLinkedService"/>, <see cref="CouchbaseLinkedService"/>, <see cref="CustomDataSourceLinkedService"/>, <see cref="DataworldLinkedService"/>, <see cref="Db2LinkedService"/>, <see cref="DrillLinkedService"/>, <see cref="DynamicsLinkedService"/>, <see cref="DynamicsAXLinkedService"/>, <see cref="DynamicsCrmLinkedService"/>, <see cref="EloquaLinkedService"/>, <see cref="FileServerLinkedService"/>, <see cref="FtpServerLinkedService"/>, <see cref="GoogleAdWordsLinkedService"/>, <see cref="GoogleBigQueryLinkedService"/>, <see cref="GoogleCloudStorageLinkedService"/>, <see cref="GoogleSheetsLinkedService"/>, <see cref="GreenplumLinkedService"/>, <see cref="HBaseLinkedService"/>, <see cref="HDInsightLinkedService"/>, <see cref="HDInsightOnDemandLinkedService"/>, <see cref="HdfsLinkedService"/>, <see cref="HiveLinkedService"/>, <see cref="HttpLinkedService"/>, <see cref="HubspotLinkedService"/>, <see cref="ImpalaLinkedService"/>, <see cref="InformixLinkedService"/>, <see cref="JiraLinkedService"/>, <see cref="MagentoLinkedService"/>, <see cref="MariaDBLinkedService"/>, <see cref="MarketoLinkedService"/>, <see cref="MicrosoftAccessLinkedService"/>, <see cref="MongoDbLinkedService"/>, <see cref="MongoDbAtlasLinkedService"/>, <see cref="MongoDbV2LinkedService"/>, <see cref="MySqlLinkedService"/>, <see cref="NetezzaLinkedService"/>, <see cref="ODataLinkedService"/>, <see cref="OdbcLinkedService"/>, <see cref="Office365LinkedService"/>, <see cref="OracleLinkedService"/>, <see cref="OracleServiceCloudLinkedService"/>, <see cref="PaypalLinkedService"/>, <see cref="PhoenixLinkedService"/>, <see cref="PostgreSqlLinkedService"/>, <see cref="PowerBIWorkspaceLinkedService"/>, <see cref="PrestoLinkedService"/>, <see cref="QuickBooksLinkedService"/>, <see cref="QuickbaseLinkedService"/>, <see cref="ResponsysLinkedService"/>, <see cref="RestServiceLinkedService"/>, <see cref="SalesforceLinkedService"/>, <see cref="SalesforceMarketingCloudLinkedService"/>, <see cref="SalesforceServiceCloudLinkedService"/>, <see cref="SapBWLinkedService"/>, <see cref="SapCloudForCustomerLinkedService"/>, <see cref="SapEccLinkedService"/>, <see cref="SapHanaLinkedService"/>, <see cref="SapOdpLinkedService"/>, <see cref="SapOpenHubLinkedService"/>, <see cref="SapTableLinkedService"/>, <see cref="ServiceNowLinkedService"/>, <see cref="SftpServerLinkedService"/>, <see cref="SharePointOnlineListLinkedService"/>, <see cref="ShopifyLinkedService"/>, <see cref="SmartsheetLinkedService"/>, <see cref="SnowflakeLinkedService"/>, <see cref="SparkLinkedService"/>, <see cref="SqlServerLinkedService"/>, <see cref="SquareLinkedService"/>, <see cref="SybaseLinkedService"/>, <see cref="TeamDeskLinkedService"/>, <see cref="TeradataLinkedService"/>, <see cref="TwilioLinkedService"/>, <see cref="VerticaLinkedService"/>, <see cref="WebLinkedService"/>, <see cref="XeroLinkedService"/>, <see cref="ZendeskLinkedService"/> and <see cref="ZohoLinkedService"/>.
+        /// </param>
+        /// <returns> A new <see cref="Models.LinkedServiceResource"/> instance for mocking. </returns>
+        public static LinkedServiceResource LinkedServiceResource(string id = null, string name = null, string type = null, string etag = null, LinkedService properties = null)
+        {
+            return new LinkedServiceResource(id, name, type, etag, properties);
+        }
+
         /// <summary> Initializes a new instance of NotebookResource. </summary>
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -332,6 +445,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static NotebookResource NotebookResource(string id = null, string name = null, string type = null, string etag = null, Notebook properties = null)
         {
             return new NotebookResource(id, name, type, etag, properties);
+        }
+
+        /// <summary> Initializes a new instance of PipelineResource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="description"> The description of the pipeline. </param>
+        /// <param name="activities">
+        /// List of activities in pipeline.
+        /// Please note <see cref="Activity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AppendVariableActivity"/>, <see cref="AzureDataExplorerCommandActivity"/>, <see cref="AzureFunctionActivity"/>, <see cref="AzureMLBatchExecutionActivity"/>, <see cref="AzureMLExecutePipelineActivity"/>, <see cref="AzureMLUpdateResourceActivity"/>, <see cref="ControlActivity"/>, <see cref="CopyActivity"/>, <see cref="CustomActivity"/>, <see cref="DataLakeAnalyticsUsqlActivity"/>, <see cref="DatabricksNotebookActivity"/>, <see cref="DatabricksSparkJarActivity"/>, <see cref="DatabricksSparkPythonActivity"/>, <see cref="DeleteActivity"/>, <see cref="ExecuteDataFlowActivity"/>, <see cref="ExecutePipelineActivity"/>, <see cref="ExecuteSsisPackageActivity"/>, <see cref="ExecutionActivity"/>, <see cref="FailActivity"/>, <see cref="FilterActivity"/>, <see cref="ForEachActivity"/>, <see cref="GetMetadataActivity"/>, <see cref="HDInsightHiveActivity"/>, <see cref="HDInsightMapReduceActivity"/>, <see cref="HDInsightPigActivity"/>, <see cref="HDInsightSparkActivity"/>, <see cref="HDInsightStreamingActivity"/>, <see cref="IfConditionActivity"/>, <see cref="LookupActivity"/>, <see cref="ScriptActivity"/>, <see cref="SetVariableActivity"/>, <see cref="SynapseSparkJobDefinitionActivity"/>, <see cref="SqlPoolStoredProcedureActivity"/>, <see cref="SqlServerStoredProcedureActivity"/>, <see cref="SwitchActivity"/>, <see cref="SynapseNotebookActivity"/>, <see cref="UntilActivity"/>, <see cref="ValidationActivity"/>, <see cref="WaitActivity"/>, <see cref="WebActivity"/> and <see cref="WebHookActivity"/>.
+        /// </param>
+        /// <param name="parameters"> List of parameters for pipeline. </param>
+        /// <param name="variables"> List of variables for pipeline. </param>
+        /// <param name="concurrency"> The max number of concurrent runs for the pipeline. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the Pipeline. </param>
+        /// <param name="runDimensions"> Dimensions emitted by Pipeline. </param>
+        /// <param name="folder"> The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.PipelineResource"/> instance for mocking. </returns>
+        public static PipelineResource PipelineResource(string id = null, string name = null, string type = null, string etag = null, string description = null, IEnumerable<Activity> activities = null, IDictionary<string, ParameterSpecification> parameters = null, IDictionary<string, VariableSpecification> variables = null, int? concurrency = null, IEnumerable<object> annotations = null, IDictionary<string, object> runDimensions = null, PipelineFolder folder = null, IDictionary<string, object> additionalProperties = null)
+        {
+            activities ??= new List<Activity>();
+            parameters ??= new Dictionary<string, ParameterSpecification>();
+            variables ??= new Dictionary<string, VariableSpecification>();
+            annotations ??= new List<object>();
+            runDimensions ??= new Dictionary<string, object>();
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new PipelineResource(id, name, type, etag, description, activities?.ToList(), parameters, variables, concurrency, annotations?.ToList(), runDimensions, folder, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of CreateRunResponse. </summary>
@@ -424,6 +568,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties ??= new Dictionary<string, object>();
 
             return new ActivityRun(pipelineName, pipelineRunId, activityName, activityType, activityRunId, linkedServiceName, status, activityRunStart, activityRunEnd, durationInMs, input, output, error, additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of SparkJobDefinitionResource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="properties"> Properties of spark job definition. </param>
+        /// <returns> A new <see cref="Models.SparkJobDefinitionResource"/> instance for mocking. </returns>
+        public static SparkJobDefinitionResource SparkJobDefinitionResource(string id = null, string name = null, string type = null, string etag = null, SparkJobDefinition properties = null)
+        {
+            return new SparkJobDefinitionResource(id, name, type, etag, properties);
         }
 
         /// <summary> Initializes a new instance of SparkBatchJob. </summary>
@@ -546,6 +702,40 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SqlPoolInfoListResult(nextLink, value?.ToList());
         }
 
+        /// <summary> Initializes a new instance of SqlPool. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="sku"> SQL pool SKU. </param>
+        /// <param name="maxSizeBytes"> Maximum size in bytes. </param>
+        /// <param name="collation"> Collation mode. </param>
+        /// <param name="sourceDatabaseId"> Source database to create from. </param>
+        /// <param name="recoverableDatabaseId"> Backup database to restore from. </param>
+        /// <param name="provisioningState"> Resource state. </param>
+        /// <param name="status"> Resource status. </param>
+        /// <param name="restorePointInTime"> Snapshot time to restore. </param>
+        /// <param name="createMode">
+        /// Specifies the mode of sql pool creation.
+        /// 
+        /// Default: regular sql pool creation.
+        /// 
+        /// PointInTimeRestore: Creates a sql pool by restoring a point in time backup of an existing sql pool. sourceDatabaseId must be specified as the resource ID of the existing sql pool, and restorePointInTime must be specified.
+        /// 
+        /// Recovery: Creates a sql pool by a geo-replicated backup. sourceDatabaseId  must be specified as the recoverableDatabaseId to restore.
+        /// 
+        /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool&apos;s original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
+        /// </param>
+        /// <param name="creationDate"> Date the SQL pool was created. </param>
+        /// <returns> A new <see cref="Models.SqlPool"/> instance for mocking. </returns>
+        public static SqlPool SqlPool(string id = null, string name = null, string type = null, IDictionary<string, string> tags = null, string location = null, Sku sku = null, long? maxSizeBytes = null, string collation = null, string sourceDatabaseId = null, string recoverableDatabaseId = null, string provisioningState = null, string status = null, string restorePointInTime = null, CreateMode? createMode = null, DateTimeOffset? creationDate = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new SqlPool(id, name, type, tags, location, sku, maxSizeBytes, collation, sourceDatabaseId, recoverableDatabaseId, provisioningState, status, restorePointInTime, createMode, creationDate);
+        }
+
         /// <summary> Initializes a new instance of SqlScriptResource. </summary>
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -556,6 +746,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static SqlScriptResource SqlScriptResource(string id = null, string name = null, string type = null, string etag = null, SqlScript properties = null)
         {
             return new SqlScriptResource(id, name, type, etag, properties);
+        }
+
+        /// <summary> Initializes a new instance of TriggerResource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="properties">
+        /// Properties of the trigger.
+        /// Please note <see cref="Trigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BlobEventsTrigger"/>, <see cref="BlobTrigger"/>, <see cref="ChainingTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="MultiplePipelineTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, <see cref="ScheduleTrigger"/> and <see cref="TumblingWindowTrigger"/>.
+        /// </param>
+        /// <returns> A new <see cref="Models.TriggerResource"/> instance for mocking. </returns>
+        public static TriggerResource TriggerResource(string id = null, string name = null, string type = null, string etag = null, Trigger properties = null)
+        {
+            return new TriggerResource(id, name, type, etag, properties);
         }
 
         /// <summary> Initializes a new instance of Trigger. </summary>
@@ -678,6 +884,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new PrivateLinkServiceConnectionState(status, description, actionsRequired);
         }
 
+        /// <summary> Initializes a new instance of ProxyResource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <returns> A new <see cref="Models.ProxyResource"/> instance for mocking. </returns>
+        public static ProxyResource ProxyResource(string id = null, string name = null, string type = null)
+        {
+            return new ProxyResource(id, name, type);
+        }
+
         /// <summary> Initializes a new instance of EncryptionDetails. </summary>
         /// <param name="doubleEncryptionEnabled"> Double Encryption enabled. </param>
         /// <param name="cmk"> Customer Managed Key Details. </param>
@@ -734,6 +950,177 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             value ??= new List<RerunTriggerResource>();
 
             return new RerunTriggerListResponse(value?.ToList(), nextLink);
+        }
+
+        /// <summary> Initializes a new instance of RerunTriggerResource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="properties"> Properties of the rerun trigger. </param>
+        /// <returns> A new <see cref="Models.RerunTriggerResource"/> instance for mocking. </returns>
+        public static RerunTriggerResource RerunTriggerResource(string id = null, string name = null, string type = null, string etag = null, RerunTumblingWindowTrigger properties = null)
+        {
+            return new RerunTriggerResource(id, name, type, etag, properties);
+        }
+
+        /// <summary> Initializes a new instance of RerunTumblingWindowTrigger. </summary>
+        /// <param name="description"> Trigger description. </param>
+        /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="parentTrigger"> The parent trigger reference. </param>
+        /// <param name="requestedStartTime"> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
+        /// <param name="requestedEndTime"> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
+        /// <param name="rerunConcurrency"> The max number of parallel time windows (ready for execution) for which a rerun is triggered. </param>
+        /// <returns> A new <see cref="Models.RerunTumblingWindowTrigger"/> instance for mocking. </returns>
+        public static RerunTumblingWindowTrigger RerunTumblingWindowTrigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, object parentTrigger = null, DateTimeOffset requestedStartTime = default, DateTimeOffset requestedEndTime = default, int rerunConcurrency = default)
+        {
+            annotations ??= new List<object>();
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new RerunTumblingWindowTrigger("RerunTumblingWindowTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, parentTrigger, requestedStartTime, requestedEndTime, rerunConcurrency);
+        }
+
+        /// <summary> Initializes a new instance of MultiplePipelineTrigger. </summary>
+        /// <param name="description"> Trigger description. </param>
+        /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="pipelines"> Pipelines that need to be started. </param>
+        /// <returns> A new <see cref="Models.MultiplePipelineTrigger"/> instance for mocking. </returns>
+        public static MultiplePipelineTrigger MultiplePipelineTrigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, IEnumerable<TriggerPipelineReference> pipelines = null)
+        {
+            annotations ??= new List<object>();
+            additionalProperties ??= new Dictionary<string, object>();
+            pipelines ??= new List<TriggerPipelineReference>();
+
+            return new MultiplePipelineTrigger("MultiplePipelineTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of ScheduleTrigger. </summary>
+        /// <param name="description"> Trigger description. </param>
+        /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="pipelines"> Pipelines that need to be started. </param>
+        /// <param name="recurrence"> Recurrence schedule configuration. </param>
+        /// <returns> A new <see cref="Models.ScheduleTrigger"/> instance for mocking. </returns>
+        public static ScheduleTrigger ScheduleTrigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, IEnumerable<TriggerPipelineReference> pipelines = null, ScheduleTriggerRecurrence recurrence = null)
+        {
+            annotations ??= new List<object>();
+            additionalProperties ??= new Dictionary<string, object>();
+            pipelines ??= new List<TriggerPipelineReference>();
+
+            return new ScheduleTrigger("ScheduleTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), recurrence);
+        }
+
+        /// <summary> Initializes a new instance of BlobTrigger. </summary>
+        /// <param name="description"> Trigger description. </param>
+        /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="pipelines"> Pipelines that need to be started. </param>
+        /// <param name="folderPath"> The path of the container/folder that will trigger the pipeline. </param>
+        /// <param name="maxConcurrency"> The max number of parallel files to handle when it is triggered. </param>
+        /// <param name="linkedService"> The Azure Storage linked service reference. </param>
+        /// <returns> A new <see cref="Models.BlobTrigger"/> instance for mocking. </returns>
+        public static BlobTrigger BlobTrigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, IEnumerable<TriggerPipelineReference> pipelines = null, string folderPath = null, int maxConcurrency = default, LinkedServiceReference linkedService = null)
+        {
+            annotations ??= new List<object>();
+            additionalProperties ??= new Dictionary<string, object>();
+            pipelines ??= new List<TriggerPipelineReference>();
+
+            return new BlobTrigger("BlobTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), folderPath, maxConcurrency, linkedService);
+        }
+
+        /// <summary> Initializes a new instance of BlobEventsTrigger. </summary>
+        /// <param name="description"> Trigger description. </param>
+        /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="pipelines"> Pipelines that need to be started. </param>
+        /// <param name="blobPathBeginsWith"> The blob path must begin with the pattern provided for trigger to fire. For example, &apos;/records/blobs/december/&apos; will only fire the trigger for blobs in the december folder under the records container. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith. </param>
+        /// <param name="blobPathEndsWith"> The blob path must end with the pattern provided for trigger to fire. For example, &apos;december/boxes.csv&apos; will only fire the trigger for blobs named boxes in a december folder. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith. </param>
+        /// <param name="ignoreEmptyBlobs"> If set to true, blobs with zero bytes will be ignored. </param>
+        /// <param name="events"> The type of events that cause this trigger to fire. </param>
+        /// <param name="scope"> The ARM resource ID of the Storage Account. </param>
+        /// <returns> A new <see cref="Models.BlobEventsTrigger"/> instance for mocking. </returns>
+        public static BlobEventsTrigger BlobEventsTrigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, IEnumerable<TriggerPipelineReference> pipelines = null, string blobPathBeginsWith = null, string blobPathEndsWith = null, bool? ignoreEmptyBlobs = null, IEnumerable<BlobEventType> events = null, string scope = null)
+        {
+            annotations ??= new List<object>();
+            additionalProperties ??= new Dictionary<string, object>();
+            pipelines ??= new List<TriggerPipelineReference>();
+            events ??= new List<BlobEventType>();
+
+            return new BlobEventsTrigger("BlobEventsTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), blobPathBeginsWith, blobPathEndsWith, ignoreEmptyBlobs, events?.ToList(), scope);
+        }
+
+        /// <summary> Initializes a new instance of CustomEventsTrigger. </summary>
+        /// <param name="description"> Trigger description. </param>
+        /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="pipelines"> Pipelines that need to be started. </param>
+        /// <param name="subjectBeginsWith"> The event subject must begin with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith. </param>
+        /// <param name="subjectEndsWith"> The event subject must end with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith. </param>
+        /// <param name="events"> The list of event types that cause this trigger to fire. </param>
+        /// <param name="scope"> The ARM resource ID of the Azure Event Grid Topic. </param>
+        /// <returns> A new <see cref="Models.CustomEventsTrigger"/> instance for mocking. </returns>
+        public static CustomEventsTrigger CustomEventsTrigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, IEnumerable<TriggerPipelineReference> pipelines = null, string subjectBeginsWith = null, string subjectEndsWith = null, IEnumerable<object> events = null, string scope = null)
+        {
+            annotations ??= new List<object>();
+            additionalProperties ??= new Dictionary<string, object>();
+            pipelines ??= new List<TriggerPipelineReference>();
+            events ??= new List<object>();
+
+            return new CustomEventsTrigger("CustomEventsTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), subjectBeginsWith, subjectEndsWith, events?.ToList(), scope);
+        }
+
+        /// <summary> Initializes a new instance of TumblingWindowTrigger. </summary>
+        /// <param name="description"> Trigger description. </param>
+        /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="pipeline"> Pipeline for which runs are created when an event is fired for trigger window that is ready. </param>
+        /// <param name="frequency"> The frequency of the time windows. </param>
+        /// <param name="interval"> The interval of the time windows. The minimum interval allowed is 15 Minutes. </param>
+        /// <param name="startTime"> The start time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported. </param>
+        /// <param name="endTime"> The end time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported. </param>
+        /// <param name="delay"> Specifies how long the trigger waits past due time before triggering new run. It doesn&apos;t alter window start and end time. The default is 0. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="maxConcurrency"> The max number of parallel time windows (ready for execution) for which a new run is triggered. </param>
+        /// <param name="retryPolicy"> Retry policy that will be applied for failed pipeline runs. </param>
+        /// <param name="dependsOn">
+        /// Triggers that this trigger depends on. Only tumbling window triggers are supported.
+        /// Please note <see cref="DependencyReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SelfDependencyTumblingWindowTriggerReference"/>, <see cref="TriggerDependencyReference"/> and <see cref="TumblingWindowTriggerDependencyReference"/>.
+        /// </param>
+        /// <returns> A new <see cref="Models.TumblingWindowTrigger"/> instance for mocking. </returns>
+        public static TumblingWindowTrigger TumblingWindowTrigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, TriggerPipelineReference pipeline = null, TumblingWindowFrequency frequency = default, int interval = default, DateTimeOffset startTime = default, DateTimeOffset? endTime = null, object delay = null, int maxConcurrency = default, RetryPolicy retryPolicy = null, IEnumerable<DependencyReference> dependsOn = null)
+        {
+            annotations ??= new List<object>();
+            additionalProperties ??= new Dictionary<string, object>();
+            dependsOn ??= new List<DependencyReference>();
+
+            return new TumblingWindowTrigger("TumblingWindowTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipeline, frequency, interval, startTime, endTime, delay, maxConcurrency, retryPolicy, dependsOn?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of ChainingTrigger. </summary>
+        /// <param name="description"> Trigger description. </param>
+        /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="pipeline"> Pipeline for which runs are created when all upstream pipelines complete successfully. </param>
+        /// <param name="dependsOn"> Upstream Pipelines. </param>
+        /// <param name="runDimension"> Run Dimension property that needs to be emitted by upstream pipelines. </param>
+        /// <returns> A new <see cref="Models.ChainingTrigger"/> instance for mocking. </returns>
+        public static ChainingTrigger ChainingTrigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, TriggerPipelineReference pipeline = null, IEnumerable<PipelineReference> dependsOn = null, string runDimension = null)
+        {
+            annotations ??= new List<object>();
+            additionalProperties ??= new Dictionary<string, object>();
+            dependsOn ??= new List<PipelineReference>();
+
+            return new ChainingTrigger("ChainingTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipeline, dependsOn?.ToList(), runDimension);
         }
 
         /// <summary> Initializes a new instance of ManagedIntegrationRuntime. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,22 +18,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(UniqueName))
             {
-                writer.WritePropertyName("uniqueName");
+                writer.WritePropertyName("uniqueName"u8);
                 writer.WriteStringValue(UniqueName);
             }
             if (Optional.IsDefined(AadTenantId))
             {
-                writer.WritePropertyName("aadTenantId");
-                writer.WriteStringValue(AadTenantId);
+                writer.WritePropertyName("aadTenantId"u8);
+                writer.WriteStringValue(AadTenantId.Value);
             }
             if (Optional.IsDefined(ServicePrincipalClientId))
             {
-                writer.WritePropertyName("servicePrincipalClientId");
+                writer.WritePropertyName("servicePrincipalClientId"u8);
                 writer.WriteStringValue(ServicePrincipalClientId);
             }
             if (Optional.IsDefined(Audience))
             {
-                writer.WritePropertyName("audience");
+                writer.WritePropertyName("audience"u8);
                 writer.WriteStringValue(Audience);
             }
             writer.WriteEndObject();
@@ -40,34 +41,43 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static ContainerIdentityInfo DeserializeContainerIdentityInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> uniqueName = default;
-            Optional<string> aadTenantId = default;
+            Optional<Guid> aadTenantId = default;
             Optional<string> servicePrincipalClientId = default;
             Optional<string> audience = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("uniqueName"))
+                if (property.NameEquals("uniqueName"u8))
                 {
                     uniqueName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("aadTenantId"))
+                if (property.NameEquals("aadTenantId"u8))
                 {
-                    aadTenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    aadTenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("servicePrincipalClientId"))
+                if (property.NameEquals("servicePrincipalClientId"u8))
                 {
                     servicePrincipalClientId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("audience"))
+                if (property.NameEquals("audience"u8))
                 {
                     audience = property.Value.GetString();
                     continue;
                 }
             }
-            return new ContainerIdentityInfo(uniqueName.Value, aadTenantId.Value, servicePrincipalClientId.Value, audience.Value);
+            return new ContainerIdentityInfo(uniqueName.Value, Optional.ToNullable(aadTenantId), servicePrincipalClientId.Value, audience.Value);
         }
     }
 }

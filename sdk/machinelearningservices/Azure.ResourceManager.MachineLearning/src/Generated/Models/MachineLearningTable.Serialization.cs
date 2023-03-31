@@ -21,10 +21,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (ReferencedUris != null)
                 {
-                    writer.WritePropertyName("referencedUris");
+                    writer.WritePropertyName("referencedUris"u8);
                     writer.WriteStartArray();
                     foreach (var item in ReferencedUris)
                     {
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
                         writer.WriteStringValue(item.AbsoluteUri);
                     }
                     writer.WriteEndArray();
@@ -34,25 +39,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("referencedUris");
                 }
             }
-            writer.WritePropertyName("dataType");
+            writer.WritePropertyName("dataType"u8);
             writer.WriteStringValue(DataType.ToString());
-            writer.WritePropertyName("dataUri");
+            writer.WritePropertyName("dataUri"u8);
             writer.WriteStringValue(DataUri.AbsoluteUri);
             if (Optional.IsDefined(IsAnonymous))
             {
-                writer.WritePropertyName("isAnonymous");
+                writer.WritePropertyName("isAnonymous"u8);
                 writer.WriteBooleanValue(IsAnonymous.Value);
             }
             if (Optional.IsDefined(IsArchived))
             {
-                writer.WritePropertyName("isArchived");
+                writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
-                    writer.WritePropertyName("description");
+                    writer.WritePropertyName("description"u8);
                     writer.WriteStringValue(Description);
                 }
                 else
@@ -64,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties != null)
                 {
-                    writer.WritePropertyName("properties");
+                    writer.WritePropertyName("properties"u8);
                     writer.WriteStartObject();
                     foreach (var item in Properties)
                     {
@@ -82,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Tags != null)
                 {
-                    writer.WritePropertyName("tags");
+                    writer.WritePropertyName("tags"u8);
                     writer.WriteStartObject();
                     foreach (var item in Tags)
                     {
@@ -101,6 +106,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningTable DeserializeMachineLearningTable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<Uri>> referencedUris = default;
             MachineLearningDataType dataType = default;
             Uri dataUri = default;
@@ -111,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("referencedUris"))
+                if (property.NameEquals("referencedUris"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -121,22 +130,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<Uri> array = new List<Uri>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Uri(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new Uri(item.GetString()));
+                        }
                     }
                     referencedUris = array;
                     continue;
                 }
-                if (property.NameEquals("dataType"))
+                if (property.NameEquals("dataType"u8))
                 {
                     dataType = new MachineLearningDataType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dataUri"))
+                if (property.NameEquals("dataUri"u8))
                 {
                     dataUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("isAnonymous"))
+                if (property.NameEquals("isAnonymous"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -146,7 +162,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     isAnonymous = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isArchived"))
+                if (property.NameEquals("isArchived"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -156,7 +172,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     isArchived = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -166,7 +182,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -176,19 +192,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -198,14 +207,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateEndpoint))
             {
-                writer.WritePropertyName("privateEndpoint");
+                writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
             if (Optional.IsCollectionDefined(GroupIds))
             {
-                writer.WritePropertyName("groupIds");
+                writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in GroupIds)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
-                writer.WritePropertyName("privateLinkServiceConnectionState");
+                writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);
             }
             writer.WriteEndObject();
@@ -42,13 +42,17 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         internal static DigitalTwinsPrivateEndpointConnectionProperties DeserializeDigitalTwinsPrivateEndpointConnectionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DigitalTwinsPrivateLinkResourceProvisioningState?> provisioningState = default;
             Optional<SubResource> privateEndpoint = default;
             Optional<IList<string>> groupIds = default;
             Optional<DigitalTwinsPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     provisioningState = new DigitalTwinsPrivateLinkResourceProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("privateEndpoint"))
+                if (property.NameEquals("privateEndpoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     privateEndpoint = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("groupIds"))
+                if (property.NameEquals("groupIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +87,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     groupIds = array;
                     continue;
                 }
-                if (property.NameEquals("privateLinkServiceConnectionState"))
+                if (property.NameEquals("privateLinkServiceConnectionState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

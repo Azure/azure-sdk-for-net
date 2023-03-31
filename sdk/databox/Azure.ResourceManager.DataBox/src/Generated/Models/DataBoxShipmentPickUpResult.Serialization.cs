@@ -15,16 +15,20 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataBoxShipmentPickUpResult DeserializeDataBoxShipmentPickUpResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> confirmationNumber = default;
             Optional<DateTimeOffset> readyByTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("confirmationNumber"))
+                if (property.NameEquals("confirmationNumber"u8))
                 {
                     confirmationNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("readyByTime"))
+                if (property.NameEquals("readyByTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

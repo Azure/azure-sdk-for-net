@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Addresses))
             {
-                writer.WritePropertyName("addresses");
+                writer.WritePropertyName("addresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in Addresses)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(Count))
             {
-                writer.WritePropertyName("count");
+                writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
             writer.WriteEndObject();
@@ -36,11 +36,15 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static HubPublicIPAddresses DeserializeHubPublicIPAddresses(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<AzureFirewallPublicIPAddress>> addresses = default;
             Optional<int> count = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("addresses"))
+                if (property.NameEquals("addresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
                     addresses = array;
                     continue;
                 }
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,11 +15,15 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static FactoryPipelineRunsQueryResult DeserializeFactoryPipelineRunsQueryResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<FactoryPipelineRunInfo> value = default;
             Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<FactoryPipelineRunInfo> array = new List<FactoryPipelineRunInfo>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("continuationToken"))
+                if (property.NameEquals("continuationToken"u8))
                 {
                     continuationToken = property.Value.GetString();
                     continue;

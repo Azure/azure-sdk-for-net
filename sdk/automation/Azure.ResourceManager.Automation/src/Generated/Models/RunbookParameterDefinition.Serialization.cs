@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RunbookParameterType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RunbookParameterType);
             }
             if (Optional.IsDefined(IsMandatory))
             {
-                writer.WritePropertyName("isMandatory");
+                writer.WritePropertyName("isMandatory"u8);
                 writer.WriteBooleanValue(IsMandatory.Value);
             }
             if (Optional.IsDefined(Position))
             {
-                writer.WritePropertyName("position");
+                writer.WritePropertyName("position"u8);
                 writer.WriteNumberValue(Position.Value);
             }
             if (Optional.IsDefined(DefaultValue))
             {
-                writer.WritePropertyName("defaultValue");
+                writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
             }
             writer.WriteEndObject();
@@ -40,18 +40,22 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static RunbookParameterDefinition DeserializeRunbookParameterDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<bool> isMandatory = default;
             Optional<int> position = default;
             Optional<string> defaultValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isMandatory"))
+                if (property.NameEquals("isMandatory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.Automation.Models
                     isMandatory = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("position"))
+                if (property.NameEquals("position"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.Automation.Models
                     position = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("defaultValue"))
+                if (property.NameEquals("defaultValue"u8))
                 {
                     defaultValue = property.Value.GetString();
                     continue;

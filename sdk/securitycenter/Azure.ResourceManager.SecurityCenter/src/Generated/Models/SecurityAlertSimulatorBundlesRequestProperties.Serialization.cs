@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Bundles))
             {
-                writer.WritePropertyName("bundles");
+                writer.WritePropertyName("bundles"u8);
                 writer.WriteStartArray();
                 foreach (var item in Bundles)
                 {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             foreach (var item in AdditionalProperties)
             {

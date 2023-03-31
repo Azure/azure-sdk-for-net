@@ -15,30 +15,34 @@ namespace Azure.Maps.Search.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("geometry");
+            writer.WritePropertyName("geometry"u8);
             writer.WriteObjectValue(Geometry);
             if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("properties");
+                writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(FeatureType))
             {
-                writer.WritePropertyName("featureType");
+                writer.WritePropertyName("featureType"u8);
                 writer.WriteStringValue(FeatureType);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToSerialString());
             writer.WriteEndObject();
         }
 
         internal static GeoJsonFeature DeserializeGeoJsonFeature(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             GeoJsonGeometry geometry = default;
             Optional<object> properties = default;
             Optional<string> id = default;
@@ -46,12 +50,12 @@ namespace Azure.Maps.Search.Models
             GeoJsonObjectType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("geometry"))
+                if (property.NameEquals("geometry"u8))
                 {
                     geometry = GeoJsonGeometry.DeserializeGeoJsonGeometry(property.Value);
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,17 +65,17 @@ namespace Azure.Maps.Search.Models
                     properties = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("featureType"))
+                if (property.NameEquals("featureType"u8))
                 {
                     featureType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString().ToGeoJsonObjectType();
                     continue;

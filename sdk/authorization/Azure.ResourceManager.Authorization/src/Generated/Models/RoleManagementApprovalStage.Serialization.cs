@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ApprovalStageTimeOutInDays))
             {
-                writer.WritePropertyName("approvalStageTimeOutInDays");
+                writer.WritePropertyName("approvalStageTimeOutInDays"u8);
                 writer.WriteNumberValue(ApprovalStageTimeOutInDays.Value);
             }
             if (Optional.IsDefined(IsApproverJustificationRequired))
             {
-                writer.WritePropertyName("isApproverJustificationRequired");
+                writer.WritePropertyName("isApproverJustificationRequired"u8);
                 writer.WriteBooleanValue(IsApproverJustificationRequired.Value);
             }
             if (Optional.IsDefined(EscalationTimeInMinutes))
             {
-                writer.WritePropertyName("escalationTimeInMinutes");
+                writer.WritePropertyName("escalationTimeInMinutes"u8);
                 writer.WriteNumberValue(EscalationTimeInMinutes.Value);
             }
             if (Optional.IsCollectionDefined(PrimaryApprovers))
             {
-                writer.WritePropertyName("primaryApprovers");
+                writer.WritePropertyName("primaryApprovers"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrimaryApprovers)
                 {
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             if (Optional.IsDefined(IsEscalationEnabled))
             {
-                writer.WritePropertyName("isEscalationEnabled");
+                writer.WritePropertyName("isEscalationEnabled"u8);
                 writer.WriteBooleanValue(IsEscalationEnabled.Value);
             }
             if (Optional.IsCollectionDefined(EscalationApprovers))
             {
-                writer.WritePropertyName("escalationApprovers");
+                writer.WritePropertyName("escalationApprovers"u8);
                 writer.WriteStartArray();
                 foreach (var item in EscalationApprovers)
                 {
@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleManagementApprovalStage DeserializeRoleManagementApprovalStage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> approvalStageTimeOutInDays = default;
             Optional<bool> isApproverJustificationRequired = default;
             Optional<int> escalationTimeInMinutes = default;
@@ -69,7 +73,7 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<IList<RoleManagementUserInfo>> escalationApprovers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("approvalStageTimeOutInDays"))
+                if (property.NameEquals("approvalStageTimeOutInDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +83,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     approvalStageTimeOutInDays = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("isApproverJustificationRequired"))
+                if (property.NameEquals("isApproverJustificationRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +93,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     isApproverJustificationRequired = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("escalationTimeInMinutes"))
+                if (property.NameEquals("escalationTimeInMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     escalationTimeInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("primaryApprovers"))
+                if (property.NameEquals("primaryApprovers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +118,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     primaryApprovers = array;
                     continue;
                 }
-                if (property.NameEquals("isEscalationEnabled"))
+                if (property.NameEquals("isEscalationEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +128,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     isEscalationEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("escalationApprovers"))
+                if (property.NameEquals("escalationApprovers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

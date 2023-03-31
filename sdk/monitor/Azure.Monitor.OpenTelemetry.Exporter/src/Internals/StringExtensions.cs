@@ -16,6 +16,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// <param name="input">A string to be evaluated.</param>
         /// <param name="maxLength">A specified length which is used to evaluate the input string.</param>
         /// <returns>The input string if less than max length, or a substring that begins at 0.</returns>
+        [return: System.Diagnostics.CodeAnalysis.NotNullIfNotNull(nameof(input))]
         public static string? Truncate(this string? input, int maxLength)
         {
             if (input == null)

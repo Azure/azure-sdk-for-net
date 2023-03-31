@@ -15,16 +15,20 @@ namespace Azure.AI.OpenAI
     {
         internal static EmbeddingsUsage DeserializeEmbeddingsUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int promptTokens = default;
             int totalTokens = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("prompt_tokens"))
+                if (property.NameEquals("prompt_tokens"u8))
                 {
                     promptTokens = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("total_tokens"))
+                if (property.NameEquals("total_tokens"u8))
                 {
                     totalTokens = property.Value.GetInt32();
                     continue;

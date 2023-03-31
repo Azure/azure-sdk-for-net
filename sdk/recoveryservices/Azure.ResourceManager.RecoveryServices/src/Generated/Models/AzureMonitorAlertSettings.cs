@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Initializes a new instance of AzureMonitorAlertSettings. </summary>
         /// <param name="alertsForAllJobFailures"></param>
-        internal AzureMonitorAlertSettings(AlertsState? alertsForAllJobFailures)
+        internal AzureMonitorAlertSettings(RecoveryServicesAlertsState? alertsForAllJobFailures)
         {
             AlertsForAllJobFailures = alertsForAllJobFailures;
         }
 
         /// <summary> Gets or sets the alerts for all job failures. </summary>
-        public AlertsState? AlertsForAllJobFailures { get; set; }
+        public RecoveryServicesAlertsState? AlertsForAllJobFailures { get; set; }
     }
 }

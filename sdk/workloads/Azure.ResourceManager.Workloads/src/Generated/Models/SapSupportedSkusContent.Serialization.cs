@@ -15,19 +15,19 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("appLocation");
+            writer.WritePropertyName("appLocation"u8);
             writer.WriteStringValue(AppLocation);
-            writer.WritePropertyName("environment");
+            writer.WritePropertyName("environment"u8);
             writer.WriteStringValue(Environment.ToString());
-            writer.WritePropertyName("sapProduct");
+            writer.WritePropertyName("sapProduct"u8);
             writer.WriteStringValue(SapProduct.ToString());
-            writer.WritePropertyName("deploymentType");
+            writer.WritePropertyName("deploymentType"u8);
             writer.WriteStringValue(DeploymentType.ToString());
-            writer.WritePropertyName("databaseType");
+            writer.WritePropertyName("databaseType"u8);
             writer.WriteStringValue(DatabaseType.ToString());
             if (Optional.IsDefined(HighAvailabilityType))
             {
-                writer.WritePropertyName("highAvailabilityType");
+                writer.WritePropertyName("highAvailabilityType"u8);
                 writer.WriteStringValue(HighAvailabilityType.Value.ToString());
             }
             writer.WriteEndObject();

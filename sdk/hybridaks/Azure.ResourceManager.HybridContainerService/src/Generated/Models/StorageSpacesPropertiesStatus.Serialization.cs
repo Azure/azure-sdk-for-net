@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningStatus))
             {
-                writer.WritePropertyName("provisioningStatus");
+                writer.WritePropertyName("provisioningStatus"u8);
                 writer.WriteObjectValue(ProvisioningStatus);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static StorageSpacesPropertiesStatus DeserializeStorageSpacesPropertiesStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageSpacesPropertiesStatusProvisioningStatus> provisioningStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningStatus"))
+                if (property.NameEquals("provisioningStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -14,10 +14,14 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
     {
         internal static SqlQueryStringDataModel DeserializeSqlQueryStringDataModel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> query = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("query"))
+                if (property.NameEquals("query"u8))
                 {
                     query = property.Value.GetString();
                     continue;

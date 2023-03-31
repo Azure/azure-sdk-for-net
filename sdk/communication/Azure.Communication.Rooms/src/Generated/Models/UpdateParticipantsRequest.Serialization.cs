@@ -15,7 +15,7 @@ namespace Azure.Communication.Rooms
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("participants");
+            writer.WritePropertyName("participants"u8);
             writer.WriteStartArray();
             foreach (var item in Participants)
             {

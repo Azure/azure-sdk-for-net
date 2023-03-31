@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("scalingMechanism");
+            writer.WritePropertyName("scalingMechanism"u8);
             writer.WriteObjectValue(ScalingMechanism);
-            writer.WritePropertyName("scalingTrigger");
+            writer.WritePropertyName("scalingTrigger"u8);
             writer.WriteObjectValue(ScalingTrigger);
             writer.WriteEndObject();
         }
 
         internal static ManagedServiceScalingPolicy DeserializeManagedServiceScalingPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ManagedServiceScalingMechanism scalingMechanism = default;
             ManagedServiceScalingTrigger scalingTrigger = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scalingMechanism"))
+                if (property.NameEquals("scalingMechanism"u8))
                 {
                     scalingMechanism = ManagedServiceScalingMechanism.DeserializeManagedServiceScalingMechanism(property.Value);
                     continue;
                 }
-                if (property.NameEquals("scalingTrigger"))
+                if (property.NameEquals("scalingTrigger"u8))
                 {
                     scalingTrigger = ManagedServiceScalingTrigger.DeserializeManagedServiceScalingTrigger(property.Value);
                     continue;

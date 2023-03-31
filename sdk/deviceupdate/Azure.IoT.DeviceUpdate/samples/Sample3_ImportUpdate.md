@@ -12,7 +12,7 @@ For the sample below, use proper `account-id` and `instance-id`. You can find th
 
 ```C# Snippet:AzDeviceUpdateSample2_CreateDeviceUpdateClient
 Uri endpoint = new Uri("https://<account-id>.api.adu.microsoft.com");
-string instanceId = "<instance-id>"
+string instanceId = "<instance-id>";
 TokenCredential credentials = new DefaultAzureCredential();
 DeviceUpdateClient client = new DeviceUpdateClient(endpoint, instanceId, credentials);
 ```

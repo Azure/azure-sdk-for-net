@@ -15,10 +15,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static SecurityGroupViewResult DeserializeSecurityGroupViewResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SecurityGroupNetworkInterface>> networkInterfaces = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("networkInterfaces"))
+                if (property.NameEquals("networkInterfaces"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

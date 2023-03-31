@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.IotHub.Models
 
         public static IotHubJobStatus ToIotHubJobStatus(this string value)
         {
-            if (string.Equals(value, "unknown", StringComparison.InvariantCultureIgnoreCase)) return IotHubJobStatus.Unknown;
-            if (string.Equals(value, "enqueued", StringComparison.InvariantCultureIgnoreCase)) return IotHubJobStatus.Enqueued;
-            if (string.Equals(value, "running", StringComparison.InvariantCultureIgnoreCase)) return IotHubJobStatus.Running;
-            if (string.Equals(value, "completed", StringComparison.InvariantCultureIgnoreCase)) return IotHubJobStatus.Completed;
-            if (string.Equals(value, "failed", StringComparison.InvariantCultureIgnoreCase)) return IotHubJobStatus.Failed;
-            if (string.Equals(value, "cancelled", StringComparison.InvariantCultureIgnoreCase)) return IotHubJobStatus.Cancelled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unknown")) return IotHubJobStatus.Unknown;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "enqueued")) return IotHubJobStatus.Enqueued;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "running")) return IotHubJobStatus.Running;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed")) return IotHubJobStatus.Completed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed")) return IotHubJobStatus.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "cancelled")) return IotHubJobStatus.Cancelled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IotHubJobStatus value.");
         }
     }

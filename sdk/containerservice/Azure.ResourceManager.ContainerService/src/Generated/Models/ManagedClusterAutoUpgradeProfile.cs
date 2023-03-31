@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Auto upgrade profile for a managed cluster. </summary>
-    internal partial class ManagedClusterAutoUpgradeProfile
+    public partial class ManagedClusterAutoUpgradeProfile
     {
         /// <summary> Initializes a new instance of ManagedClusterAutoUpgradeProfile. </summary>
         public ManagedClusterAutoUpgradeProfile()
@@ -17,12 +17,16 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of ManagedClusterAutoUpgradeProfile. </summary>
         /// <param name="upgradeChannel"> For more information see [setting the AKS cluster auto-upgrade channel](https://docs.microsoft.com/azure/aks/upgrade-cluster#set-auto-upgrade-channel). </param>
-        internal ManagedClusterAutoUpgradeProfile(UpgradeChannel? upgradeChannel)
+        /// <param name="nodeOSUpgradeChannel"> The default is Unmanaged, but may change to either NodeImage or SecurityPatch at GA. </param>
+        internal ManagedClusterAutoUpgradeProfile(UpgradeChannel? upgradeChannel, ManagedClusterNodeOSUpgradeChannel? nodeOSUpgradeChannel)
         {
             UpgradeChannel = upgradeChannel;
+            NodeOSUpgradeChannel = nodeOSUpgradeChannel;
         }
 
         /// <summary> For more information see [setting the AKS cluster auto-upgrade channel](https://docs.microsoft.com/azure/aks/upgrade-cluster#set-auto-upgrade-channel). </summary>
         public UpgradeChannel? UpgradeChannel { get; set; }
+        /// <summary> The default is Unmanaged, but may change to either NodeImage or SecurityPatch at GA. </summary>
+        public ManagedClusterNodeOSUpgradeChannel? NodeOSUpgradeChannel { get; set; }
     }
 }

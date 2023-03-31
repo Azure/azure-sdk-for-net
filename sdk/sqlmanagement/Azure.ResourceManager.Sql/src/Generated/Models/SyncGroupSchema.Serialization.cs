@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tables))
             {
-                writer.WritePropertyName("tables");
+                writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
                 foreach (var item in Tables)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             if (Optional.IsDefined(MasterSyncMemberName))
             {
-                writer.WritePropertyName("masterSyncMemberName");
+                writer.WritePropertyName("masterSyncMemberName"u8);
                 writer.WriteStringValue(MasterSyncMemberName);
             }
             writer.WriteEndObject();
@@ -36,11 +36,15 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SyncGroupSchema DeserializeSyncGroupSchema(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SyncGroupSchemaTable>> tables = default;
             Optional<string> masterSyncMemberName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tables"))
+                if (property.NameEquals("tables"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.Sql.Models
                     tables = array;
                     continue;
                 }
-                if (property.NameEquals("masterSyncMemberName"))
+                if (property.NameEquals("masterSyncMemberName"u8))
                 {
                     masterSyncMemberName = property.Value.GetString();
                     continue;

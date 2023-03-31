@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ServerAppSecret))
             {
-                writer.WritePropertyName("serverAppSecret");
+                writer.WritePropertyName("serverAppSecret"u8);
                 writer.WriteStringValue(ServerAppSecret);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static AADProfileSecret DeserializeAADProfileSecret(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serverAppSecret = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serverAppSecret"))
+                if (property.NameEquals("serverAppSecret"u8))
                 {
                     serverAppSecret = property.Value.GetString();
                     continue;

@@ -17,12 +17,12 @@ namespace Azure.IoT.Hub.Service.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryThumbprint))
             {
-                writer.WritePropertyName("primaryThumbprint");
+                writer.WritePropertyName("primaryThumbprint"u8);
                 writer.WriteStringValue(PrimaryThumbprint);
             }
             if (Optional.IsDefined(SecondaryThumbprint))
             {
-                writer.WritePropertyName("secondaryThumbprint");
+                writer.WritePropertyName("secondaryThumbprint"u8);
                 writer.WriteStringValue(SecondaryThumbprint);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.IoT.Hub.Service.Models
 
         internal static X509Thumbprint DeserializeX509Thumbprint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primaryThumbprint = default;
             Optional<string> secondaryThumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryThumbprint"))
+                if (property.NameEquals("primaryThumbprint"u8))
                 {
                     primaryThumbprint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryThumbprint"))
+                if (property.NameEquals("secondaryThumbprint"u8))
                 {
                     secondaryThumbprint = property.Value.GetString();
                     continue;

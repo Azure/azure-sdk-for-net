@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (Uri != null)
                 {
-                    writer.WritePropertyName("url");
+                    writer.WritePropertyName("url"u8);
                     writer.WriteStringValue(Uri.AbsoluteUri);
                 }
                 else
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (TimeoutInSeconds != null)
                 {
-                    writer.WritePropertyName("timeoutInSeconds");
+                    writer.WritePropertyName("timeoutInSeconds"u8);
                     writer.WriteNumberValue(TimeoutInSeconds.Value);
                 }
                 else
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (SyncIntervalInSeconds != null)
                 {
-                    writer.WritePropertyName("syncIntervalInSeconds");
+                    writer.WritePropertyName("syncIntervalInSeconds"u8);
                     writer.WriteNumberValue(SyncIntervalInSeconds.Value);
                 }
                 else
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (RepositoryRef != null)
                 {
-                    writer.WritePropertyName("repositoryRef");
+                    writer.WritePropertyName("repositoryRef"u8);
                     writer.WriteObjectValue(RepositoryRef);
                 }
                 else
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (SshKnownHosts != null)
                 {
-                    writer.WritePropertyName("sshKnownHosts");
+                    writer.WritePropertyName("sshKnownHosts"u8);
                     writer.WriteStringValue(SshKnownHosts);
                 }
                 else
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (HttpsUser != null)
                 {
-                    writer.WritePropertyName("httpsUser");
+                    writer.WritePropertyName("httpsUser"u8);
                     writer.WriteStringValue(HttpsUser);
                 }
                 else
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (HttpsCACert != null)
                 {
-                    writer.WritePropertyName("httpsCACert");
+                    writer.WritePropertyName("httpsCACert"u8);
                     writer.WriteStringValue(HttpsCACert);
                 }
                 else
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (LocalAuthRef != null)
                 {
-                    writer.WritePropertyName("localAuthRef");
+                    writer.WritePropertyName("localAuthRef"u8);
                     writer.WriteStringValue(LocalAuthRef);
                 }
                 else

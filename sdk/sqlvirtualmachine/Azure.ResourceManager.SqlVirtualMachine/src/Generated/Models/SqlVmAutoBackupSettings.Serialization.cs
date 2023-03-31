@@ -19,57 +19,57 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enable");
+                writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(IsEncryptionEnabled))
             {
-                writer.WritePropertyName("enableEncryption");
+                writer.WritePropertyName("enableEncryption"u8);
                 writer.WriteBooleanValue(IsEncryptionEnabled.Value);
             }
             if (Optional.IsDefined(RetentionPeriodInDays))
             {
-                writer.WritePropertyName("retentionPeriod");
+                writer.WritePropertyName("retentionPeriod"u8);
                 writer.WriteNumberValue(RetentionPeriodInDays.Value);
             }
             if (Optional.IsDefined(StorageAccountUri))
             {
-                writer.WritePropertyName("storageAccountUrl");
+                writer.WritePropertyName("storageAccountUrl"u8);
                 writer.WriteStringValue(StorageAccountUri.AbsoluteUri);
             }
             if (Optional.IsDefined(StorageContainerName))
             {
-                writer.WritePropertyName("storageContainerName");
+                writer.WritePropertyName("storageContainerName"u8);
                 writer.WriteStringValue(StorageContainerName);
             }
             if (Optional.IsDefined(StorageAccessKey))
             {
-                writer.WritePropertyName("storageAccessKey");
+                writer.WritePropertyName("storageAccessKey"u8);
                 writer.WriteStringValue(StorageAccessKey);
             }
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
+                writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
             if (Optional.IsDefined(AreSystemDbsIncludedInBackup))
             {
-                writer.WritePropertyName("backupSystemDbs");
+                writer.WritePropertyName("backupSystemDbs"u8);
                 writer.WriteBooleanValue(AreSystemDbsIncludedInBackup.Value);
             }
             if (Optional.IsDefined(BackupScheduleType))
             {
-                writer.WritePropertyName("backupScheduleType");
+                writer.WritePropertyName("backupScheduleType"u8);
                 writer.WriteStringValue(BackupScheduleType.Value.ToString());
             }
             if (Optional.IsDefined(FullBackupFrequency))
             {
-                writer.WritePropertyName("fullBackupFrequency");
+                writer.WritePropertyName("fullBackupFrequency"u8);
                 writer.WriteStringValue(FullBackupFrequency.Value.ToString());
             }
             if (Optional.IsCollectionDefined(DaysOfWeek))
             {
-                writer.WritePropertyName("daysOfWeek");
+                writer.WritePropertyName("daysOfWeek"u8);
                 writer.WriteStartArray();
                 foreach (var item in DaysOfWeek)
                 {
@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
             if (Optional.IsDefined(FullBackupStartHour))
             {
-                writer.WritePropertyName("fullBackupStartTime");
+                writer.WritePropertyName("fullBackupStartTime"u8);
                 writer.WriteNumberValue(FullBackupStartHour.Value);
             }
             if (Optional.IsDefined(FullBackupWindowHours))
             {
-                writer.WritePropertyName("fullBackupWindowHours");
+                writer.WritePropertyName("fullBackupWindowHours"u8);
                 writer.WriteNumberValue(FullBackupWindowHours.Value);
             }
             if (Optional.IsDefined(LogBackupFrequency))
             {
-                writer.WritePropertyName("logBackupFrequency");
+                writer.WritePropertyName("logBackupFrequency"u8);
                 writer.WriteNumberValue(LogBackupFrequency.Value);
             }
             writer.WriteEndObject();
@@ -97,6 +97,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlVmAutoBackupSettings DeserializeSqlVmAutoBackupSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enable = default;
             Optional<bool> enableEncryption = default;
             Optional<int> retentionPeriod = default;
@@ -113,7 +117,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<int> logBackupFrequency = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enable"))
+                if (property.NameEquals("enable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +127,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     enable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableEncryption"))
+                if (property.NameEquals("enableEncryption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,7 +137,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     enableEncryption = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("retentionPeriod"))
+                if (property.NameEquals("retentionPeriod"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -143,7 +147,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     retentionPeriod = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("storageAccountUrl"))
+                if (property.NameEquals("storageAccountUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -153,22 +157,22 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     storageAccountUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageContainerName"))
+                if (property.NameEquals("storageContainerName"u8))
                 {
                     storageContainerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageAccessKey"))
+                if (property.NameEquals("storageAccessKey"u8))
                 {
                     storageAccessKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("backupSystemDbs"))
+                if (property.NameEquals("backupSystemDbs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -178,7 +182,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     backupSystemDbs = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("backupScheduleType"))
+                if (property.NameEquals("backupScheduleType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -188,7 +192,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     backupScheduleType = new SqVmBackupScheduleType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("fullBackupFrequency"))
+                if (property.NameEquals("fullBackupFrequency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -198,7 +202,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     fullBackupFrequency = new SqlVmFullBackupFrequency(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("daysOfWeek"))
+                if (property.NameEquals("daysOfWeek"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -213,7 +217,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     daysOfWeek = array;
                     continue;
                 }
-                if (property.NameEquals("fullBackupStartTime"))
+                if (property.NameEquals("fullBackupStartTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -223,7 +227,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     fullBackupStartTime = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("fullBackupWindowHours"))
+                if (property.NameEquals("fullBackupWindowHours"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -233,7 +237,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     fullBackupWindowHours = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("logBackupFrequency"))
+                if (property.NameEquals("logBackupFrequency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -28,34 +28,34 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(SubnetId))
             {
-                writer.WritePropertyName("subnetId");
+                writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
             if (Optional.IsDefined(DomainName))
             {
-                writer.WritePropertyName("domainName");
+                writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
             if (Optional.IsDefined(OrganizationUnit))
             {
-                writer.WritePropertyName("organizationUnit");
+                writer.WritePropertyName("organizationUnit"u8);
                 writer.WriteStringValue(OrganizationUnit);
             }
             if (Optional.IsDefined(DomainUsername))
             {
-                writer.WritePropertyName("domainUsername");
+                writer.WritePropertyName("domainUsername"u8);
                 writer.WriteStringValue(DomainUsername);
             }
             if (Optional.IsDefined(DomainPassword))
             {
-                writer.WritePropertyName("domainPassword");
+                writer.WritePropertyName("domainPassword"u8);
                 writer.WriteStringValue(DomainPassword);
             }
             writer.WriteEndObject();

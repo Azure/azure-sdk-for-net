@@ -17,42 +17,42 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(AppId))
             {
-                writer.WritePropertyName("appId");
+                writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
             if (Optional.IsDefined(AppProtocol))
             {
-                writer.WritePropertyName("appProtocol");
+                writer.WritePropertyName("appProtocol"u8);
                 writer.WriteStringValue(AppProtocol.Value.ToString());
             }
             if (Optional.IsDefined(AppPort))
             {
-                writer.WritePropertyName("appPort");
+                writer.WritePropertyName("appPort"u8);
                 writer.WriteNumberValue(AppPort.Value);
             }
             if (Optional.IsDefined(HttpReadBufferSize))
             {
-                writer.WritePropertyName("httpReadBufferSize");
+                writer.WritePropertyName("httpReadBufferSize"u8);
                 writer.WriteNumberValue(HttpReadBufferSize.Value);
             }
             if (Optional.IsDefined(HttpMaxRequestSize))
             {
-                writer.WritePropertyName("httpMaxRequestSize");
+                writer.WritePropertyName("httpMaxRequestSize"u8);
                 writer.WriteNumberValue(HttpMaxRequestSize.Value);
             }
             if (Optional.IsDefined(LogLevel))
             {
-                writer.WritePropertyName("logLevel");
+                writer.WritePropertyName("logLevel"u8);
                 writer.WriteStringValue(LogLevel.Value.ToString());
             }
             if (Optional.IsDefined(IsApiLoggingEnabled))
             {
-                writer.WritePropertyName("enableApiLogging");
+                writer.WritePropertyName("enableApiLogging"u8);
                 writer.WriteBooleanValue(IsApiLoggingEnabled.Value);
             }
             writer.WriteEndObject();
@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppDaprConfiguration DeserializeContainerAppDaprConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<string> appId = default;
             Optional<ContainerAppProtocol> appProtocol = default;
@@ -70,7 +74,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<bool> enableApiLogging = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,12 +84,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("appId"))
+                if (property.NameEquals("appId"u8))
                 {
                     appId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("appProtocol"))
+                if (property.NameEquals("appProtocol"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,7 +99,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     appProtocol = new ContainerAppProtocol(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("appPort"))
+                if (property.NameEquals("appPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,7 +109,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     appPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("httpReadBufferSize"))
+                if (property.NameEquals("httpReadBufferSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -115,7 +119,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     httpReadBufferSize = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("httpMaxRequestSize"))
+                if (property.NameEquals("httpMaxRequestSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -125,7 +129,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     httpMaxRequestSize = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("logLevel"))
+                if (property.NameEquals("logLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -135,7 +139,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     logLevel = new ContainerAppDaprLogLevel(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("enableApiLogging"))
+                if (property.NameEquals("enableApiLogging"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

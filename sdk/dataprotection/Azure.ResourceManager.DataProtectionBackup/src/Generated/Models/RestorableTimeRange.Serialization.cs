@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("startTime");
+            writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartOn, "O");
-            writer.WritePropertyName("endTime");
+            writer.WritePropertyName("endTime"u8);
             writer.WriteStringValue(EndOn, "O");
             if (Optional.IsDefined(ObjectType))
             {
-                writer.WritePropertyName("objectType");
+                writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
             }
             writer.WriteEndObject();
@@ -30,22 +30,26 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static RestorableTimeRange DeserializeRestorableTimeRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
             Optional<string> objectType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;

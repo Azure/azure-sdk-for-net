@@ -15,16 +15,20 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkStatementCollection DeserializeSparkStatementCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int totalStatements = default;
             Optional<IReadOnlyList<SparkStatement>> statements = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("total_statements"))
+                if (property.NameEquals("total_statements"u8))
                 {
                     totalStatements = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("statements"))
+                if (property.NameEquals("statements"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

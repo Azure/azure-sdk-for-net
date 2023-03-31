@@ -1,17 +1,34 @@
 # Release History
 
-## 1.9.0-beta.2 (Unreleased)
+## 1.9.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.9.0-beta.2 (2023-02-21)
 
 ### Features Added
  - Allow `VisualStudioCredential` on non-Windows platforms
- - Added `AzureDeveloperCredential` for Azure Developer CLI
+ - Added `AzureDeveloperCliCredential` for Azure Developer CLI
+ - Added `WorkloadIdentityCredential` to support Azure Workload Identity authentication
+ - Added `WorkloadIdentityCredential` and `AzureDeveloperCliCredential` to the `DefaultAzureCredential` authentication flow.
+
+### Bugs Fixed
+- Fixed `ManagedIdentityCredential` authentication in sovereign clouds for services specifying `TenantId` through authentication challenge [#34077](https://github.com/Azure/azure-sdk-for-net/issues/34077)
 
 ### Breaking Changes
 - Previously, if environment variables for username and password auth are set in addition to the AZURE_CLIENT_CERTIFICATE_PATH, EnvironmentCredential would select the `UsernamePasswordCredential`. After this change, `ClientCertificateCredential` will be selected, which is consistent with all other languages. This is potentially a behavioral breaking change.
 
-### Bugs Fixed
-- Fixed error message parsing in `AzurePowerShellCredential` which would misinterpret AAD errors with the need to install PowerShell.
+## 1.8.2 (2023-02-08)
 
+### Bugs Fixed
+- Fixed error message parsing in `AzurePowerShellCredential` which would misinterpret AAD errors with the need to install PowerShell. [#31998](https://github.com/Azure/azure-sdk-for-net/issues/31998)
+- Fix regional endpoint validation error when using `ManagedIdentityCredential`. [#32498])(https://github.com/Azure/azure-sdk-for-net/issues/32498)
 
 ## 1.8.1 (2023-01-13)
 

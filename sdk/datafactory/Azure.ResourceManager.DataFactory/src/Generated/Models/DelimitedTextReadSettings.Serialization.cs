@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SkipLineCount))
             {
-                writer.WritePropertyName("skipLineCount");
+                writer.WritePropertyName("skipLineCount"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SkipLineCount);
 #else
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(CompressionProperties))
             {
-                writer.WritePropertyName("compressionProperties");
+                writer.WritePropertyName("compressionProperties"u8);
                 writer.WriteObjectValue(CompressionProperties);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FormatReadSettingsType);
             foreach (var item in AdditionalProperties)
             {
@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DelimitedTextReadSettings DeserializeDelimitedTextReadSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> skipLineCount = default;
             Optional<CompressionReadSettings> compressionProperties = default;
             string type = default;
@@ -54,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("skipLineCount"))
+                if (property.NameEquals("skipLineCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     skipLineCount = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("compressionProperties"))
+                if (property.NameEquals("compressionProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     compressionProperties = CompressionReadSettings.DeserializeCompressionReadSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

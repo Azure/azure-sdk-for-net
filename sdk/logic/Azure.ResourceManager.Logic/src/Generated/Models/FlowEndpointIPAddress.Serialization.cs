@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CidrAddress))
             {
-                writer.WritePropertyName("address");
+                writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(CidrAddress);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static FlowEndpointIPAddress DeserializeFlowEndpointIPAddress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> address = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("address"))
+                if (property.NameEquals("address"u8))
                 {
                     address = property.Value.GetString();
                     continue;

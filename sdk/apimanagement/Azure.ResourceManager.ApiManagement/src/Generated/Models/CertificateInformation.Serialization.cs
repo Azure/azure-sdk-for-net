@@ -16,33 +16,37 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("expiry");
+            writer.WritePropertyName("expiry"u8);
             writer.WriteStringValue(ExpireOn, "O");
-            writer.WritePropertyName("thumbprint");
+            writer.WritePropertyName("thumbprint"u8);
             writer.WriteStringValue(Thumbprint);
-            writer.WritePropertyName("subject");
+            writer.WritePropertyName("subject"u8);
             writer.WriteStringValue(Subject);
             writer.WriteEndObject();
         }
 
         internal static CertificateInformation DeserializeCertificateInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset expiry = default;
             string thumbprint = default;
             string subject = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("expiry"))
+                if (property.NameEquals("expiry"u8))
                 {
                     expiry = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("thumbprint"))
+                if (property.NameEquals("thumbprint"u8))
                 {
                     thumbprint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subject"))
+                if (property.NameEquals("subject"u8))
                 {
                     subject = property.Value.GetString();
                     continue;

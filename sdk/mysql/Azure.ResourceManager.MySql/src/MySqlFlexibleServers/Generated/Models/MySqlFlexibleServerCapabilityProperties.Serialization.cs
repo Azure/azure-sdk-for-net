@@ -15,18 +15,22 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     {
         internal static MySqlFlexibleServerCapabilityProperties DeserializeMySqlFlexibleServerCapabilityProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> zone = default;
             Optional<IReadOnlyList<string>> supportedHAMode = default;
             Optional<IReadOnlyList<string>> supportedGeoBackupRegions = default;
             Optional<IReadOnlyList<MySqlFlexibleServerEditionCapability>> supportedFlexibleServerEditions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("zone"))
+                if (property.NameEquals("zone"u8))
                 {
                     zone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportedHAMode"))
+                if (property.NameEquals("supportedHAMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     supportedHAMode = array;
                     continue;
                 }
-                if (property.NameEquals("supportedGeoBackupRegions"))
+                if (property.NameEquals("supportedGeoBackupRegions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     supportedGeoBackupRegions = array;
                     continue;
                 }
-                if (property.NameEquals("supportedFlexibleServerEditions"))
+                if (property.NameEquals("supportedFlexibleServerEditions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

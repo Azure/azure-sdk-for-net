@@ -16,16 +16,20 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static CopyResult DeserializeCopyResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Guid modelId = default;
             Optional<IReadOnlyList<FormRecognizerError>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("modelId"))
+                if (property.NameEquals("modelId"u8))
                 {
                     modelId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

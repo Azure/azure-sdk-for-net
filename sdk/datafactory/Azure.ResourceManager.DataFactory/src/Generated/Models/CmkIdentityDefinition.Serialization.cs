@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(UserAssignedIdentity))
             {
-                writer.WritePropertyName("userAssignedIdentity");
+                writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(UserAssignedIdentity);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static CmkIdentityDefinition DeserializeCmkIdentityDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> userAssignedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userAssignedIdentity"))
+                if (property.NameEquals("userAssignedIdentity"u8))
                 {
                     userAssignedIdentity = property.Value.GetString();
                     continue;

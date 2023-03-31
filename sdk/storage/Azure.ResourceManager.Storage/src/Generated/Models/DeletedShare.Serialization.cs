@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("deletedShareName");
+            writer.WritePropertyName("deletedShareName"u8);
             writer.WriteStringValue(DeletedShareName);
-            writer.WritePropertyName("deletedShareVersion");
+            writer.WritePropertyName("deletedShareVersion"u8);
             writer.WriteStringValue(DeletedShareVersion);
             writer.WriteEndObject();
         }

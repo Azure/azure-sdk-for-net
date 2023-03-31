@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static DeletedAutomationAccount DeserializeDeletedAutomationAccount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -27,7 +31,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<DateTimeOffset> deletionTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,22 +41,22 @@ namespace Azure.ResourceManager.Automation.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +66,7 @@ namespace Azure.ResourceManager.Automation.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.Automation.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("automationAccountResourceId"))
+                        if (property0.NameEquals("automationAccountResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -81,17 +85,17 @@ namespace Azure.ResourceManager.Automation.Models
                             automationAccountResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("automationAccountId"))
+                        if (property0.NameEquals("automationAccountId"u8))
                         {
                             automationAccountId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("location"))
+                        if (property0.NameEquals("location"u8))
                         {
                             location0 = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("deletionTime"))
+                        if (property0.NameEquals("deletionTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

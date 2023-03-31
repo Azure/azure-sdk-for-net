@@ -18,32 +18,32 @@ namespace Azure.ResourceManager.Quantum.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProviderId))
             {
-                writer.WritePropertyName("providerId");
+                writer.WritePropertyName("providerId"u8);
                 writer.WriteStringValue(ProviderId);
             }
             if (Optional.IsDefined(ProviderSku))
             {
-                writer.WritePropertyName("providerSku");
+                writer.WritePropertyName("providerSku"u8);
                 writer.WriteStringValue(ProviderSku);
             }
             if (Optional.IsDefined(InstanceUri))
             {
-                writer.WritePropertyName("instanceUri");
+                writer.WritePropertyName("instanceUri"u8);
                 writer.WriteStringValue(InstanceUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ApplicationName))
             {
-                writer.WritePropertyName("applicationName");
+                writer.WritePropertyName("applicationName"u8);
                 writer.WriteStringValue(ApplicationName);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(ResourceUsageId))
             {
-                writer.WritePropertyName("resourceUsageId");
+                writer.WritePropertyName("resourceUsageId"u8);
                 writer.WriteStringValue(ResourceUsageId);
             }
             writer.WriteEndObject();
@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Quantum.Models
 
         internal static Provider DeserializeProvider(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> providerId = default;
             Optional<string> providerSku = default;
             Optional<Uri> instanceUri = default;
@@ -59,17 +63,17 @@ namespace Azure.ResourceManager.Quantum.Models
             Optional<string> resourceUsageId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("providerId"))
+                if (property.NameEquals("providerId"u8))
                 {
                     providerId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providerSku"))
+                if (property.NameEquals("providerSku"u8))
                 {
                     providerSku = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceUri"))
+                if (property.NameEquals("instanceUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,12 +83,12 @@ namespace Azure.ResourceManager.Quantum.Models
                     instanceUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("applicationName"))
+                if (property.NameEquals("applicationName"u8))
                 {
                     applicationName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +98,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     provisioningState = new Status(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceUsageId"))
+                if (property.NameEquals("resourceUsageId"u8))
                 {
                     resourceUsageId = property.Value.GetString();
                     continue;

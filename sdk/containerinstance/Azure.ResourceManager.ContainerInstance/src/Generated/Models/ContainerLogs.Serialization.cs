@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static ContainerLogs DeserializeContainerLogs(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> content = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("content"))
+                if (property.NameEquals("content"u8))
                 {
                     content = property.Value.GetString();
                     continue;

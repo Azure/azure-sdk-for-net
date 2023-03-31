@@ -17,21 +17,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(MinimumTimeStamp))
             {
-                writer.WritePropertyName("minimumTimeStamp");
+                writer.WritePropertyName("minimumTimeStamp"u8);
                 writer.WriteStringValue(MinimumTimeStamp.Value, "O");
             }
             if (Optional.IsDefined(MaximumTimeStamp))
             {
-                writer.WritePropertyName("maximumTimeStamp");
+                writer.WritePropertyName("maximumTimeStamp"u8);
                 writer.WriteStringValue(MaximumTimeStamp.Value, "O");
             }
             if (Optional.IsDefined(Include))
             {
-                writer.WritePropertyName("include");
+                writer.WritePropertyName("include"u8);
                 writer.WriteStringValue(Include);
             }
             writer.WriteEndObject();
@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static TriggerSupportPackageContent DeserializeTriggerSupportPackageContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -49,22 +53,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<string> include = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +87,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("minimumTimeStamp"))
+                        if (property0.NameEquals("minimumTimeStamp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -93,7 +97,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             minimumTimeStamp = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("maximumTimeStamp"))
+                        if (property0.NameEquals("maximumTimeStamp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -103,7 +107,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             maximumTimeStamp = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("include"))
+                        if (property0.NameEquals("include"u8))
                         {
                             include = property0.Value.GetString();
                             continue;

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Configuration))
             {
-                writer.WritePropertyName("configuration");
+                writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
             }
             writer.WriteEndObject();
@@ -25,16 +25,20 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         internal static GuestConfigurationAssignmentInfo DeserializeGuestConfigurationAssignmentInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<GuestConfigurationInfo> configuration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("configuration"))
+                if (property.NameEquals("configuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(LoadBalancingSettings))
             {
-                writer.WritePropertyName("loadBalancingSettings");
+                writer.WritePropertyName("loadBalancingSettings"u8);
                 writer.WriteObjectValue(LoadBalancingSettings);
             }
             if (Optional.IsDefined(HealthProbeSettings))
             {
-                writer.WritePropertyName("healthProbeSettings");
+                writer.WritePropertyName("healthProbeSettings"u8);
                 writer.WriteObjectValue(HealthProbeSettings);
             }
             if (Optional.IsDefined(TrafficRestorationTimeInMinutes))
             {
                 if (TrafficRestorationTimeInMinutes != null)
                 {
-                    writer.WritePropertyName("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
+                    writer.WritePropertyName("trafficRestorationTimeToHealedOrNewEndpointsInMinutes"u8);
                     writer.WriteNumberValue(TrafficRestorationTimeInMinutes.Value);
                 }
                 else
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(SessionAffinityState))
             {
-                writer.WritePropertyName("sessionAffinityState");
+                writer.WritePropertyName("sessionAffinityState"u8);
                 writer.WriteStringValue(SessionAffinityState.Value.ToString());
             }
             writer.WriteEndObject();

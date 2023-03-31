@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EnabledProtocols))
             {
-                writer.WritePropertyName("enabledProtocols");
+                writer.WritePropertyName("enabledProtocols"u8);
                 writer.WriteObjectValue(EnabledProtocols);
             }
             if (Optional.IsCollectionDefined(ClearTracks))
             {
-                writer.WritePropertyName("clearTracks");
+                writer.WritePropertyName("clearTracks"u8);
                 writer.WriteStartArray();
                 foreach (var item in ClearTracks)
                 {
@@ -33,17 +33,17 @@ namespace Azure.ResourceManager.Media.Models
             }
             if (Optional.IsDefined(ContentKeys))
             {
-                writer.WritePropertyName("contentKeys");
+                writer.WritePropertyName("contentKeys"u8);
                 writer.WriteObjectValue(ContentKeys);
             }
             if (Optional.IsDefined(Drm))
             {
-                writer.WritePropertyName("drm");
+                writer.WritePropertyName("drm"u8);
                 writer.WriteObjectValue(Drm);
             }
             if (Optional.IsDefined(ClearKeyEncryptionConfiguration))
             {
-                writer.WritePropertyName("clearKeyEncryptionConfiguration");
+                writer.WritePropertyName("clearKeyEncryptionConfiguration"u8);
                 writer.WriteObjectValue(ClearKeyEncryptionConfiguration);
             }
             writer.WriteEndObject();
@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static CommonEncryptionCbcs DeserializeCommonEncryptionCbcs(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MediaEnabledProtocols> enabledProtocols = default;
             Optional<IList<MediaTrackSelection>> clearTracks = default;
             Optional<StreamingPolicyContentKeys> contentKeys = default;
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<ClearKeyEncryptionConfiguration> clearKeyEncryptionConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabledProtocols"))
+                if (property.NameEquals("enabledProtocols"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.Media.Models
                     enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value);
                     continue;
                 }
-                if (property.NameEquals("clearTracks"))
+                if (property.NameEquals("clearTracks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +87,7 @@ namespace Azure.ResourceManager.Media.Models
                     clearTracks = array;
                     continue;
                 }
-                if (property.NameEquals("contentKeys"))
+                if (property.NameEquals("contentKeys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +97,7 @@ namespace Azure.ResourceManager.Media.Models
                     contentKeys = StreamingPolicyContentKeys.DeserializeStreamingPolicyContentKeys(property.Value);
                     continue;
                 }
-                if (property.NameEquals("drm"))
+                if (property.NameEquals("drm"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +107,7 @@ namespace Azure.ResourceManager.Media.Models
                     drm = CbcsDrmConfiguration.DeserializeCbcsDrmConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("clearKeyEncryptionConfiguration"))
+                if (property.NameEquals("clearKeyEncryptionConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

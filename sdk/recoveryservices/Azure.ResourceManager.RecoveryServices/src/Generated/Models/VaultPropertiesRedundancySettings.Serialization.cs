@@ -20,11 +20,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static VaultPropertiesRedundancySettings DeserializeVaultPropertiesRedundancySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StandardTierStorageRedundancy> standardTierStorageRedundancy = default;
             Optional<CrossRegionRestore> crossRegionRestore = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("standardTierStorageRedundancy"))
+                if (property.NameEquals("standardTierStorageRedundancy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     standardTierStorageRedundancy = new StandardTierStorageRedundancy(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("crossRegionRestore"))
+                if (property.NameEquals("crossRegionRestore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

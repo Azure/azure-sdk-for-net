@@ -14,17 +14,21 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static BasicArmDependency DeserializeBasicArmDependency(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<ResourceType> resourceType = default;
             Optional<string> resourceName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.Resources.Models
                     resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceName"))
+                if (property.NameEquals("resourceName"u8))
                 {
                     resourceName = property.Value.GetString();
                     continue;

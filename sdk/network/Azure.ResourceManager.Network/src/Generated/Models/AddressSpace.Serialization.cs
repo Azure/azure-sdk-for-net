@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AddressPrefixes))
             {
-                writer.WritePropertyName("addressPrefixes");
+                writer.WritePropertyName("addressPrefixes"u8);
                 writer.WriteStartArray();
                 foreach (var item in AddressPrefixes)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AddressSpace DeserializeAddressSpace(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> addressPrefixes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("addressPrefixes"))
+                if (property.NameEquals("addressPrefixes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

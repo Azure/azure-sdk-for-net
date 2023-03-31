@@ -16,20 +16,26 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             double amount = default;
             Optional<string> currencySymbol = default;
+            Optional<string> currencyCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("amount"))
+                if (property.NameEquals("amount"u8))
                 {
                     amount = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("currencySymbol"))
+                if (property.NameEquals("currencySymbol"u8))
                 {
                     currencySymbol = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("currencyCode"u8))
+                {
+                    currencyCode = property.Value.GetString();
+                    continue;
+                }
             }
-            return new CurrencyValue(amount, currencySymbol.Value);
+            return new CurrencyValue(amount, currencySymbol.Value, currencyCode.Value);
         }
     }
 }

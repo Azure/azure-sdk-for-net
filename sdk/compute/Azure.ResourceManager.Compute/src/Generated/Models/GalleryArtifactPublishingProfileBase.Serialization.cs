@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(TargetRegions))
             {
-                writer.WritePropertyName("targetRegions");
+                writer.WritePropertyName("targetRegions"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetRegions)
                 {
@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(ReplicaCount))
             {
-                writer.WritePropertyName("replicaCount");
+                writer.WritePropertyName("replicaCount"u8);
                 writer.WriteNumberValue(ReplicaCount.Value);
             }
             if (Optional.IsDefined(IsExcludedFromLatest))
             {
-                writer.WritePropertyName("excludeFromLatest");
+                writer.WritePropertyName("excludeFromLatest"u8);
                 writer.WriteBooleanValue(IsExcludedFromLatest.Value);
             }
             if (Optional.IsDefined(EndOfLifeOn))
             {
-                writer.WritePropertyName("endOfLifeDate");
+                writer.WritePropertyName("endOfLifeDate"u8);
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
             if (Optional.IsDefined(StorageAccountType))
             {
-                writer.WritePropertyName("storageAccountType");
+                writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
             if (Optional.IsDefined(ReplicationMode))
             {
-                writer.WritePropertyName("replicationMode");
+                writer.WritePropertyName("replicationMode"u8);
                 writer.WriteStringValue(ReplicationMode.Value.ToString());
             }
             if (Optional.IsCollectionDefined(TargetExtendedLocations))
             {
-                writer.WritePropertyName("targetExtendedLocations");
+                writer.WritePropertyName("targetExtendedLocations"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetExtendedLocations)
                 {
@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryArtifactPublishingProfileBase DeserializeGalleryArtifactPublishingProfileBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<TargetRegion>> targetRegions = default;
             Optional<int> replicaCount = default;
             Optional<bool> excludeFromLatest = default;
@@ -77,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IList<GalleryTargetExtendedLocation>> targetExtendedLocations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetRegions"))
+                if (property.NameEquals("targetRegions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
                     targetRegions = array;
                     continue;
                 }
-                if (property.NameEquals("replicaCount"))
+                if (property.NameEquals("replicaCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,7 +106,7 @@ namespace Azure.ResourceManager.Compute.Models
                     replicaCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("excludeFromLatest"))
+                if (property.NameEquals("excludeFromLatest"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                     excludeFromLatest = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("publishedDate"))
+                if (property.NameEquals("publishedDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
                     publishedDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endOfLifeDate"))
+                if (property.NameEquals("endOfLifeDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
                     endOfLifeDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("storageAccountType"))
+                if (property.NameEquals("storageAccountType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -142,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
                     storageAccountType = new ImageStorageAccountType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("replicationMode"))
+                if (property.NameEquals("replicationMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -152,7 +156,7 @@ namespace Azure.ResourceManager.Compute.Models
                     replicationMode = new GalleryReplicationMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetExtendedLocations"))
+                if (property.NameEquals("targetExtendedLocations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

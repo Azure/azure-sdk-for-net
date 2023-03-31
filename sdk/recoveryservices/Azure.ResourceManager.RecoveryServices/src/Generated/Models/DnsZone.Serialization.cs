@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SubResource))
             {
-                writer.WritePropertyName("subResource");
+                writer.WritePropertyName("subResource"u8);
                 writer.WriteStringValue(SubResource.Value.ToString());
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static DnsZone DeserializeDnsZone(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VaultSubResourceType> subResource = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subResource"))
+                if (property.NameEquals("subResource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

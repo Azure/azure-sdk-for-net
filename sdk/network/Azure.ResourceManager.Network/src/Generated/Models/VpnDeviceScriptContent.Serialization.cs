@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Vendor))
             {
-                writer.WritePropertyName("vendor");
+                writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
             if (Optional.IsDefined(DeviceFamily))
             {
-                writer.WritePropertyName("deviceFamily");
+                writer.WritePropertyName("deviceFamily"u8);
                 writer.WriteStringValue(DeviceFamily);
             }
             if (Optional.IsDefined(FirmwareVersion))
             {
-                writer.WritePropertyName("firmwareVersion");
+                writer.WritePropertyName("firmwareVersion"u8);
                 writer.WriteStringValue(FirmwareVersion);
             }
             writer.WriteEndObject();

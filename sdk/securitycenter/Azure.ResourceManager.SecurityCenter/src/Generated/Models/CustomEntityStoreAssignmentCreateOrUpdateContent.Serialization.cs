@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Principal))
             {
-                writer.WritePropertyName("principal");
+                writer.WritePropertyName("principal"u8);
                 writer.WriteStringValue(Principal);
             }
             writer.WriteEndObject();

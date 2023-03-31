@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("resourceId");
+            writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
             if (Optional.IsDefined(HomeTenantId))
             {
-                writer.WritePropertyName("homeTenantId");
+                writer.WritePropertyName("homeTenantId"u8);
                 writer.WriteStringValue(HomeTenantId);
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WriteEndObject();
@@ -32,23 +32,27 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceManagementEntity DeserializeResourceManagementEntity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string resourceId = default;
             Optional<string> homeTenantId = default;
             Optional<AzureLocation> location = default;
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("homeTenantId"))
+                if (property.NameEquals("homeTenantId"u8))
                 {
                     homeTenantId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;

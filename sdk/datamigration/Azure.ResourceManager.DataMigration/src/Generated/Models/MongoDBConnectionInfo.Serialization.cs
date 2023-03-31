@@ -15,68 +15,68 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("connectionString");
+            writer.WritePropertyName("connectionString"u8);
             writer.WriteStringValue(ConnectionString);
             if (Optional.IsDefined(DataSource))
             {
-                writer.WritePropertyName("dataSource");
+                writer.WritePropertyName("dataSource"u8);
                 writer.WriteStringValue(DataSource);
             }
             if (Optional.IsDefined(EncryptConnection))
             {
-                writer.WritePropertyName("encryptConnection");
+                writer.WritePropertyName("encryptConnection"u8);
                 writer.WriteBooleanValue(EncryptConnection.Value);
             }
             if (Optional.IsDefined(ServerBrandVersion))
             {
-                writer.WritePropertyName("serverBrandVersion");
+                writer.WritePropertyName("serverBrandVersion"u8);
                 writer.WriteStringValue(ServerBrandVersion);
             }
             if (Optional.IsDefined(ServerVersion))
             {
-                writer.WritePropertyName("serverVersion");
+                writer.WritePropertyName("serverVersion"u8);
                 writer.WriteStringValue(ServerVersion);
             }
             if (Optional.IsDefined(ServerName))
             {
-                writer.WritePropertyName("serverName");
+                writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
             if (Optional.IsDefined(TrustServerCertificate))
             {
-                writer.WritePropertyName("trustServerCertificate");
+                writer.WritePropertyName("trustServerCertificate"u8);
                 writer.WriteBooleanValue(TrustServerCertificate.Value);
             }
             if (Optional.IsDefined(EnforceSSL))
             {
-                writer.WritePropertyName("enforceSSL");
+                writer.WritePropertyName("enforceSSL"u8);
                 writer.WriteBooleanValue(EnforceSSL.Value);
             }
             if (Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port");
+                writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
             if (Optional.IsDefined(AdditionalSettings))
             {
-                writer.WritePropertyName("additionalSettings");
+                writer.WritePropertyName("additionalSettings"u8);
                 writer.WriteStringValue(AdditionalSettings);
             }
             if (Optional.IsDefined(Authentication))
             {
-                writer.WritePropertyName("authentication");
+                writer.WritePropertyName("authentication"u8);
                 writer.WriteStringValue(Authentication.Value.ToString());
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ConnectionInfoType);
             if (Optional.IsDefined(UserName))
             {
-                writer.WritePropertyName("userName");
+                writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
+                writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
             writer.WriteEndObject();
@@ -84,6 +84,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MongoDBConnectionInfo DeserializeMongoDBConnectionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string connectionString = default;
             Optional<string> dataSource = default;
             Optional<bool> encryptConnection = default;
@@ -100,17 +104,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> password = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectionString"))
+                if (property.NameEquals("connectionString"u8))
                 {
                     connectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataSource"))
+                if (property.NameEquals("dataSource"u8))
                 {
                     dataSource = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptConnection"))
+                if (property.NameEquals("encryptConnection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,22 +124,22 @@ namespace Azure.ResourceManager.DataMigration.Models
                     encryptConnection = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("serverBrandVersion"))
+                if (property.NameEquals("serverBrandVersion"u8))
                 {
                     serverBrandVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverVersion"))
+                if (property.NameEquals("serverVersion"u8))
                 {
                     serverVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverName"))
+                if (property.NameEquals("serverName"u8))
                 {
                     serverName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trustServerCertificate"))
+                if (property.NameEquals("trustServerCertificate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -145,7 +149,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     trustServerCertificate = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enforceSSL"))
+                if (property.NameEquals("enforceSSL"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -155,7 +159,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     enforceSSL = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -165,12 +169,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     port = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("additionalSettings"))
+                if (property.NameEquals("additionalSettings"u8))
                 {
                     additionalSettings = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authentication"))
+                if (property.NameEquals("authentication"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -180,17 +184,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                     authentication = new AuthenticationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userName"))
+                if (property.NameEquals("userName"u8))
                 {
                     userName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
                     continue;

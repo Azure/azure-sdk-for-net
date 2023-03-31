@@ -15,10 +15,14 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static AutomationKeyListResult DeserializeAutomationKeyListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AutomationKey>> keys = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keys"))
+                if (property.NameEquals("keys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

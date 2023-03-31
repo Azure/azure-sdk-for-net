@@ -14,11 +14,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static AppPlatformCustomDomainValidateResult DeserializeAppPlatformCustomDomainValidateResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isValid = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isValid"))
+                if (property.NameEquals("isValid"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     isValid = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;

@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("documents");
+            writer.WritePropertyName("documents"u8);
             writer.WriteStartArray();
             foreach (var item in Documents)
             {

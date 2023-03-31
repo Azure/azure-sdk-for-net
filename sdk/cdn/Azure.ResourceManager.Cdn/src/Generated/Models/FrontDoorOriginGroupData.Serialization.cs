@@ -17,23 +17,23 @@ namespace Azure.ResourceManager.Cdn
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(LoadBalancingSettings))
             {
-                writer.WritePropertyName("loadBalancingSettings");
+                writer.WritePropertyName("loadBalancingSettings"u8);
                 writer.WriteObjectValue(LoadBalancingSettings);
             }
             if (Optional.IsDefined(HealthProbeSettings))
             {
-                writer.WritePropertyName("healthProbeSettings");
+                writer.WritePropertyName("healthProbeSettings"u8);
                 writer.WriteObjectValue(HealthProbeSettings);
             }
             if (Optional.IsDefined(TrafficRestorationTimeInMinutes))
             {
                 if (TrafficRestorationTimeInMinutes != null)
                 {
-                    writer.WritePropertyName("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
+                    writer.WritePropertyName("trafficRestorationTimeToHealedOrNewEndpointsInMinutes"u8);
                     writer.WriteNumberValue(TrafficRestorationTimeInMinutes.Value);
                 }
                 else
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(SessionAffinityState))
             {
-                writer.WritePropertyName("sessionAffinityState");
+                writer.WritePropertyName("sessionAffinityState"u8);
                 writer.WriteStringValue(SessionAffinityState.Value.ToString());
             }
             writer.WriteEndObject();
@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.Cdn
 
         internal static FrontDoorOriginGroupData DeserializeFrontDoorOriginGroupData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -65,22 +69,22 @@ namespace Azure.ResourceManager.Cdn
             Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.Cdn
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,12 +103,12 @@ namespace Azure.ResourceManager.Cdn
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("profileName"))
+                        if (property0.NameEquals("profileName"u8))
                         {
                             profileName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("loadBalancingSettings"))
+                        if (property0.NameEquals("loadBalancingSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -114,7 +118,7 @@ namespace Azure.ResourceManager.Cdn
                             loadBalancingSettings = LoadBalancingSettings.DeserializeLoadBalancingSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("healthProbeSettings"))
+                        if (property0.NameEquals("healthProbeSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -124,7 +128,7 @@ namespace Azure.ResourceManager.Cdn
                             healthProbeSettings = HealthProbeSettings.DeserializeHealthProbeSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("trafficRestorationTimeToHealedOrNewEndpointsInMinutes"))
+                        if (property0.NameEquals("trafficRestorationTimeToHealedOrNewEndpointsInMinutes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -134,7 +138,7 @@ namespace Azure.ResourceManager.Cdn
                             trafficRestorationTimeToHealedOrNewEndpointsInMinutes = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("sessionAffinityState"))
+                        if (property0.NameEquals("sessionAffinityState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -144,7 +148,7 @@ namespace Azure.ResourceManager.Cdn
                             sessionAffinityState = new EnabledState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -154,7 +158,7 @@ namespace Azure.ResourceManager.Cdn
                             provisioningState = new FrontDoorProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("deploymentStatus"))
+                        if (property0.NameEquals("deploymentStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

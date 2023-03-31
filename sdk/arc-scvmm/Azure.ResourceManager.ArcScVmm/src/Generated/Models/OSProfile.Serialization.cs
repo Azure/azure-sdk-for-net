@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AdminPassword))
             {
-                writer.WritePropertyName("adminPassword");
+                writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
             if (Optional.IsDefined(ComputerName))
             {
-                writer.WritePropertyName("computerName");
+                writer.WritePropertyName("computerName"u8);
                 writer.WriteStringValue(ComputerName);
             }
             writer.WriteEndObject();
@@ -30,23 +30,27 @@ namespace Azure.ResourceManager.ArcScVmm.Models
 
         internal static OSProfile DeserializeOSProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> adminPassword = default;
             Optional<string> computerName = default;
             Optional<OSType> osType = default;
             Optional<string> osName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("adminPassword"))
+                if (property.NameEquals("adminPassword"u8))
                 {
                     adminPassword = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("computerName"))
+                if (property.NameEquals("computerName"u8))
                 {
                     computerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     osType = new OSType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("osName"))
+                if (property.NameEquals("osName"u8))
                 {
                     osName = property.Value.GetString();
                     continue;

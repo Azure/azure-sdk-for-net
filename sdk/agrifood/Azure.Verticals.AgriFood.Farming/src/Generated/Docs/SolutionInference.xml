@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="CancelAsync(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CancelAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2022-11-01-preview>);
+
+var data = new {
+    requestPath = "<requestPath>",
+};
+
+Response response = await client.CancelAsync("<solutionId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("<test>").ToString());
+]]></code>
+This sample shows how to call CancelAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2022-11-01-preview>);
+
+var data = new {
+    requestPath = "<requestPath>",
+    partnerRequestBody = new {
+        key = new {},
+    },
+};
+
+Response response = await client.CancelAsync("<solutionId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("<test>").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request payload.
+
+Request Body:
+
+Schema for <c>SolutionInference</c>:
+<code>{
+  requestPath: string, # Required. RequestPath containing the api-version, query parameters and path route to be called for partner request.
+Expected format is &quot;/{api-version}/{resourceExposedByPartner}/{customerDefinedJobId}?query1=value1&quot;.
+Not following this format may result into validation errors.
+  partnerRequestBody: Dictionary&lt;string, any&gt;, # Optional. Api input parameters required by partner to trigger/cancel job request.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Cancel(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call Cancel with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2022-11-01-preview>);
+
+var data = new {
+    requestPath = "<requestPath>",
+};
+
+Response response = client.Cancel("<solutionId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("<test>").ToString());
+]]></code>
+This sample shows how to call Cancel with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2022-11-01-preview>);
+
+var data = new {
+    requestPath = "<requestPath>",
+    partnerRequestBody = new {
+        key = new {},
+    },
+};
+
+Response response = client.Cancel("<solutionId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("<test>").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request payload.
+
+Request Body:
+
+Schema for <c>SolutionInference</c>:
+<code>{
+  requestPath: string, # Required. RequestPath containing the api-version, query parameters and path route to be called for partner request.
+Expected format is &quot;/{api-version}/{resourceExposedByPartner}/{customerDefinedJobId}?query1=value1&quot;.
+Not following this format may result into validation errors.
+  partnerRequestBody: Dictionary&lt;string, any&gt;, # Optional. Api input parameters required by partner to trigger/cancel job request.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="FetchAsync(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call FetchAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2022-11-01-preview>);
+
+var data = new {
+    requestPath = "<requestPath>",
+};
+
+Response response = await client.FetchAsync("<solutionId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("<test>").ToString());
+]]></code>
+This sample shows how to call FetchAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2022-11-01-preview>);
+
+var data = new {
+    requestPath = "<requestPath>",
+    partnerRequestBody = new {
+        key = new {},
+    },
+};
+
+Response response = await client.FetchAsync("<solutionId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("<test>").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request payload.
+
+Request Body:
+
+Schema for <c>SolutionInference</c>:
+<code>{
+  requestPath: string, # Required. RequestPath containing the api-version, query parameters and path route to be called for partner request.
+Expected format is &quot;/{api-version}/{resourceExposedByPartner}/{customerDefinedJobId}?query1=value1&quot;.
+Not following this format may result into validation errors.
+  partnerRequestBody: Dictionary&lt;string, any&gt;, # Optional. Api input parameters required by partner to trigger/cancel job request.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Fetch(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call Fetch with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2022-11-01-preview>);
+
+var data = new {
+    requestPath = "<requestPath>",
+};
+
+Response response = client.Fetch("<solutionId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("<test>").ToString());
+]]></code>
+This sample shows how to call Fetch with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2022-11-01-preview>);
+
+var data = new {
+    requestPath = "<requestPath>",
+    partnerRequestBody = new {
+        key = new {},
+    },
+};
+
+Response response = client.Fetch("<solutionId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("<test>").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request payload.
+
+Request Body:
+
+Schema for <c>SolutionInference</c>:
+<code>{
+  requestPath: string, # Required. RequestPath containing the api-version, query parameters and path route to be called for partner request.
+Expected format is &quot;/{api-version}/{resourceExposedByPartner}/{customerDefinedJobId}?query1=value1&quot;.
+Not following this format may result into validation errors.
+  partnerRequestBody: Dictionary&lt;string, any&gt;, # Optional. Api input parameters required by partner to trigger/cancel job request.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateOrUpdateAsync(WaitUntil,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrUpdateAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2022-11-01-preview>);
+
+var data = new {
+    requestPath = "<requestPath>",
+};
+
+var operation = await client.CreateOrUpdateAsync(WaitUntil.Completed, "<solutionId>", RequestContent.Create(data));
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("<test>").ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2022-11-01-preview>);
+
+var data = new {
+    requestPath = "<requestPath>",
+    partnerRequestBody = new {
+        key = new {},
+    },
+};
+
+var operation = await client.CreateOrUpdateAsync(WaitUntil.Completed, "<solutionId>", RequestContent.Create(data));
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("<test>").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request payload.
+
+Request Body:
+
+Schema for <c>SolutionInference</c>:
+<code>{
+  requestPath: string, # Required. RequestPath containing the api-version, query parameters and path route to be called for partner request.
+Expected format is &quot;/{api-version}/{resourceExposedByPartner}/{customerDefinedJobId}?query1=value1&quot;.
+Not following this format may result into validation errors.
+  partnerRequestBody: Dictionary&lt;string, any&gt;, # Optional. Api input parameters required by partner to trigger/cancel job request.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateOrUpdate(WaitUntil,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrUpdate with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2022-11-01-preview>);
+
+var data = new {
+    requestPath = "<requestPath>",
+};
+
+var operation = client.CreateOrUpdate(WaitUntil.Completed, "<solutionId>", RequestContent.Create(data));
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("<test>").ToString());
+]]></code>
+This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2022-11-01-preview>);
+
+var data = new {
+    requestPath = "<requestPath>",
+    partnerRequestBody = new {
+        key = new {},
+    },
+};
+
+var operation = client.CreateOrUpdate(WaitUntil.Completed, "<solutionId>", RequestContent.Create(data));
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("<test>").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request payload.
+
+Request Body:
+
+Schema for <c>SolutionInference</c>:
+<code>{
+  requestPath: string, # Required. RequestPath containing the api-version, query parameters and path route to be called for partner request.
+Expected format is &quot;/{api-version}/{resourceExposedByPartner}/{customerDefinedJobId}?query1=value1&quot;.
+Not following this format may result into validation errors.
+  partnerRequestBody: Dictionary&lt;string, any&gt;, # Optional. Api input parameters required by partner to trigger/cancel job request.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>

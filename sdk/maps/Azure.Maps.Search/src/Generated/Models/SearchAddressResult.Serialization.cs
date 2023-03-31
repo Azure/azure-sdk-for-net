@@ -15,11 +15,15 @@ namespace Azure.Maps.Search.Models
     {
         internal static SearchAddressResult DeserializeSearchAddressResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SearchSummary> summary = default;
             Optional<IReadOnlyList<SearchAddressResultItem>> results = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("summary"))
+                if (property.NameEquals("summary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.Maps.Search.Models
                     summary = SearchSummary.DeserializeSearchSummary(property.Value);
                     continue;
                 }
-                if (property.NameEquals("results"))
+                if (property.NameEquals("results"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

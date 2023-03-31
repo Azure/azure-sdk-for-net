@@ -13,125 +13,126 @@ namespace Azure.Core.Experimental.Perf.Benchmarks
     {
         // From https://learn.microsoft.com/rest/api/cognitiveservices-textanalytics/3.1preview4/sentiment/sentiment?tabs=HTTP#examples
         private static BinaryData _documentSentiment = BinaryData.FromString(
-            @"
+            """
             {
-  ""documents"": [
+  "documents": [
     {
-      ""confidenceScores"": {
-        ""negative"": 0,
-        ""neutral"": 0,
-        ""positive"": 1
+      "confidenceScores": {
+        "negative": 0,
+        "neutral": 0,
+        "positive": 1
       },
-      ""id"": ""1"",
-      ""sentences"": [
+      "id": "1",
+      "sentences": [
         {
-          ""targets"": [
+          "targets": [
             {
-              ""confidenceScores"": {
-                ""negative"": 0,
-                ""positive"": 1
+              "confidenceScores": {
+                "negative": 0,
+                "positive": 1
               },
-              ""length"": 10,
-              ""offset"": 6,
-              ""relations"": [
+              "length": 10,
+              "offset": 6,
+              "relations": [
                 {
-                  ""ref"": ""#/documents/0/sentences/0/assessments/0"",
-                  ""relationType"": ""assessment""
+                  "ref": "#/documents/0/sentences/0/assessments/0",
+                  "relationType": "assessment"
                 }
               ],
-              ""sentiment"": ""positive"",
-              ""text"": ""atmosphere""
+              "sentiment": "positive",
+              "text": "atmosphere"
             }
           ],
-          ""confidenceScores"": {
-    ""negative"": 0,
-            ""neutral"": 0,
-            ""positive"": 1
+          "confidenceScores": {
+    "negative": 0,
+            "neutral": 0,
+            "positive": 1
           },
-          ""length"": 17,
-          ""offset"": 0,
-          ""assessments"": [
+          "length": 17,
+          "offset": 0,
+          "assessments": [
             {
-              ""confidenceScores"": {
-                ""negative"": 0,
-                ""positive"": 1
+              "confidenceScores": {
+                "negative": 0,
+                "positive": 1
               },
-              ""isNegated"": false,
-              ""length"": 5,
-              ""offset"": 0,
-              ""sentiment"": ""positive"",
-              ""text"": ""great""
+              "isNegated": false,
+              "length": 5,
+              "offset": 0,
+              "sentiment": "positive",
+              "text": "great"
             }
           ],
-          ""sentiment"": ""positive"",
-          ""text"": ""Great atmosphere.""
+          "sentiment": "positive",
+          "text": "Great atmosphere."
         },
         {
-    ""targets"": [
+    "targets": [
             {
-        ""confidenceScores"": {
-            ""negative"": 0.01,
-                ""positive"": 0.99
+        "confidenceScores": {
+            "negative": 0.01,
+                "positive": 0.99
               },
-              ""length"": 11,
-              ""offset"": 37,
-              ""relations"": [
+              "length": 11,
+              "offset": 37,
+              "relations": [
                 {
-            ""ref"": ""#/documents/0/sentences/1/assessments/0"",
-                  ""relationType"": ""assessment""
+            "ref": "#/documents/0/sentences/1/assessments/0",
+                  "relationType": "assessment"
                 }
               ],
-              ""sentiment"": ""positive"",
-              ""text"": ""restaurants""
+              "sentiment": "positive",
+              "text": "restaurants"
             },
             {
-        ""confidenceScores"": {
-            ""negative"": 0.01,
-                ""positive"": 0.99
+        "confidenceScores": {
+            "negative": 0.01,
+                "positive": 0.99
               },
-              ""length"": 6,
-              ""offset"": 50,
-              ""relations"": [
+              "length": 6,
+              "offset": 50,
+              "relations": [
                 {
-            ""ref"": ""#/documents/0/sentences/1/assessments/0"",
-                  ""relationType"": ""assessment""
+            "ref": "#/documents/0/sentences/1/assessments/0",
+                  "relationType": "assessment"
                 }
               ],
-              ""sentiment"": ""positive"",
-              ""text"": ""hotels""
+              "sentiment": "positive",
+              "text": "hotels"
             }
           ],
-          ""confidenceScores"": {
-        ""negative"": 0.01,
-            ""neutral"": 0.86,
-            ""positive"": 0.13
+          "confidenceScores": {
+        "negative": 0.01,
+            "neutral": 0.86,
+            "positive": 0.13
           },
-          ""length"": 52,
-          ""offset"": 18,
-          ""assessments"": [
+          "length": 52,
+          "offset": 18,
+          "assessments": [
             {
-        ""confidenceScores"": {
-            ""negative"": 0.01,
-                ""positive"": 0.99
+        "confidenceScores": {
+            "negative": 0.01,
+                "positive": 0.99
               },
-              ""isNegated"": false,
-              ""length"": 15,
-              ""offset"": 18,
-              ""sentiment"": ""positive"",
-              ""text"": ""Close to plenty""
+              "isNegated": false,
+              "length": 15,
+              "offset": 18,
+              "sentiment": "positive",
+              "text": "Close to plenty"
             }
           ],
-          ""sentiment"": ""neutral"",
-          ""text"": ""Close to plenty of restaurants, hotels, and transit!""
+          "sentiment": "neutral",
+          "text": "Close to plenty of restaurants, hotels, and transit!"
         }
       ],
-      ""sentiment"": ""positive"",
-      ""warnings"": []
+      "sentiment": "positive",
+      "warnings": []
     }
   ],
-  ""errors"": [],
-  ""modelVersion"": ""2020-04-01""
-}");
+  "errors": [],
+  "modelVersion": "2020-04-01"
+}
+""");
 
         /// <summary>
         /// An example of a large Json response.

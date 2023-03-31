@@ -15,16 +15,20 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static SuggestRelationshipLinksResponse DeserializeSuggestRelationshipLinksResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> interactionName = default;
             Optional<IReadOnlyList<RelationshipsLookup>> suggestedRelationships = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("interactionName"))
+                if (property.NameEquals("interactionName"u8))
                 {
                     interactionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("suggestedRelationships"))
+                if (property.NameEquals("suggestedRelationships"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

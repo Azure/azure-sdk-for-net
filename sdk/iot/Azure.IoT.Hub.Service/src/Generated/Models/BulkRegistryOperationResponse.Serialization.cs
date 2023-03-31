@@ -15,12 +15,16 @@ namespace Azure.IoT.Hub.Service.Models
     {
         internal static BulkRegistryOperationResponse DeserializeBulkRegistryOperationResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isSuccessful = default;
             Optional<IReadOnlyList<DeviceRegistryOperationError>> errors = default;
             Optional<IReadOnlyList<DeviceRegistryOperationWarning>> warnings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isSuccessful"))
+                if (property.NameEquals("isSuccessful"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +34,7 @@ namespace Azure.IoT.Hub.Service.Models
                     isSuccessful = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.IoT.Hub.Service.Models
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("warnings"))
+                if (property.NameEquals("warnings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

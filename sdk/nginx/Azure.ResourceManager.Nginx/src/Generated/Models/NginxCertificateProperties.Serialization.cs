@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Nginx.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyVirtualPath))
             {
-                writer.WritePropertyName("keyVirtualPath");
+                writer.WritePropertyName("keyVirtualPath"u8);
                 writer.WriteStringValue(KeyVirtualPath);
             }
             if (Optional.IsDefined(CertificateVirtualPath))
             {
-                writer.WritePropertyName("certificateVirtualPath");
+                writer.WritePropertyName("certificateVirtualPath"u8);
                 writer.WriteStringValue(CertificateVirtualPath);
             }
             if (Optional.IsDefined(KeyVaultSecretId))
             {
-                writer.WritePropertyName("keyVaultSecretId");
+                writer.WritePropertyName("keyVaultSecretId"u8);
                 writer.WriteStringValue(KeyVaultSecretId);
             }
             writer.WriteEndObject();
@@ -35,13 +35,17 @@ namespace Azure.ResourceManager.Nginx.Models
 
         internal static NginxCertificateProperties DeserializeNginxCertificateProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> keyVirtualPath = default;
             Optional<string> certificateVirtualPath = default;
             Optional<string> keyVaultSecretId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,17 +55,17 @@ namespace Azure.ResourceManager.Nginx.Models
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyVirtualPath"))
+                if (property.NameEquals("keyVirtualPath"u8))
                 {
                     keyVirtualPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("certificateVirtualPath"))
+                if (property.NameEquals("certificateVirtualPath"u8))
                 {
                     certificateVirtualPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVaultSecretId"))
+                if (property.NameEquals("keyVaultSecretId"u8))
                 {
                     keyVaultSecretId = property.Value.GetString();
                     continue;

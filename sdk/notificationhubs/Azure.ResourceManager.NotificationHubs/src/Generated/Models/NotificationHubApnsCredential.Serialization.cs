@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ApnsCertificate))
             {
-                writer.WritePropertyName("apnsCertificate");
+                writer.WritePropertyName("apnsCertificate"u8);
                 writer.WriteStringValue(ApnsCertificate);
             }
             if (Optional.IsDefined(CertificateKey))
             {
-                writer.WritePropertyName("certificateKey");
+                writer.WritePropertyName("certificateKey"u8);
                 writer.WriteStringValue(CertificateKey);
             }
             if (Optional.IsDefined(Endpoint))
             {
-                writer.WritePropertyName("endpoint");
+                writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
             if (Optional.IsDefined(Thumbprint))
             {
-                writer.WritePropertyName("thumbprint");
+                writer.WritePropertyName("thumbprint"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Thumbprint);
 #else
@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
             if (Optional.IsDefined(KeyId))
             {
-                writer.WritePropertyName("keyId");
+                writer.WritePropertyName("keyId"u8);
                 writer.WriteStringValue(KeyId);
             }
             if (Optional.IsDefined(AppName))
             {
-                writer.WritePropertyName("appName");
+                writer.WritePropertyName("appName"u8);
                 writer.WriteStringValue(AppName);
             }
             if (Optional.IsDefined(AppId))
             {
-                writer.WritePropertyName("appId");
+                writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
             if (Optional.IsDefined(Token))
             {
-                writer.WritePropertyName("token");
+                writer.WritePropertyName("token"u8);
                 writer.WriteStringValue(Token);
             }
             writer.WriteEndObject();
@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static NotificationHubApnsCredential DeserializeNotificationHubApnsCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> apnsCertificate = default;
             Optional<string> certificateKey = default;
             Optional<Uri> endpoint = default;
@@ -78,7 +82,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Optional<string> token = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,17 +91,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("apnsCertificate"))
+                        if (property0.NameEquals("apnsCertificate"u8))
                         {
                             apnsCertificate = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("certificateKey"))
+                        if (property0.NameEquals("certificateKey"u8))
                         {
                             certificateKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("endpoint"))
+                        if (property0.NameEquals("endpoint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -107,7 +111,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                             endpoint = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("thumbprint"))
+                        if (property0.NameEquals("thumbprint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -117,22 +121,22 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                             thumbprint = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("keyId"))
+                        if (property0.NameEquals("keyId"u8))
                         {
                             keyId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("appName"))
+                        if (property0.NameEquals("appName"u8))
                         {
                             appName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("appId"))
+                        if (property0.NameEquals("appId"u8))
                         {
                             appId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("token"))
+                        if (property0.NameEquals("token"u8))
                         {
                             token = property0.Value.GetString();
                             continue;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static OperationalInsightsSearchSchemaValue DeserializeOperationalInsightsSearchSchemaValue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> displayName = default;
             Optional<string> type = default;
@@ -24,37 +28,37 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<IReadOnlyList<string>> ownerType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("indexed"))
+                if (property.NameEquals("indexed"u8))
                 {
                     indexed = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("stored"))
+                if (property.NameEquals("stored"u8))
                 {
                     stored = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("facet"))
+                if (property.NameEquals("facet"u8))
                 {
                     facet = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("ownerType"))
+                if (property.NameEquals("ownerType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("fabricDiscoveryMachineId");
+            writer.WritePropertyName("fabricDiscoveryMachineId"u8);
             writer.WriteStringValue(FabricDiscoveryMachineId);
             if (Optional.IsCollectionDefined(DisksToInclude))
             {
-                writer.WritePropertyName("disksToInclude");
+                writer.WritePropertyName("disksToInclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in DisksToInclude)
                 {
@@ -29,79 +29,79 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             if (Optional.IsDefined(DisksDefault))
             {
-                writer.WritePropertyName("disksDefault");
+                writer.WritePropertyName("disksDefault"u8);
                 writer.WriteObjectValue(DisksDefault);
             }
-            writer.WritePropertyName("targetResourceGroupId");
+            writer.WritePropertyName("targetResourceGroupId"u8);
             writer.WriteStringValue(TargetResourceGroupId);
             if (Optional.IsDefined(TargetNetworkId))
             {
-                writer.WritePropertyName("targetNetworkId");
+                writer.WritePropertyName("targetNetworkId"u8);
                 writer.WriteStringValue(TargetNetworkId);
             }
             if (Optional.IsDefined(TestNetworkId))
             {
-                writer.WritePropertyName("testNetworkId");
+                writer.WritePropertyName("testNetworkId"u8);
                 writer.WriteStringValue(TestNetworkId);
             }
             if (Optional.IsDefined(TargetSubnetName))
             {
-                writer.WritePropertyName("targetSubnetName");
+                writer.WritePropertyName("targetSubnetName"u8);
                 writer.WriteStringValue(TargetSubnetName);
             }
             if (Optional.IsDefined(TestSubnetName))
             {
-                writer.WritePropertyName("testSubnetName");
+                writer.WritePropertyName("testSubnetName"u8);
                 writer.WriteStringValue(TestSubnetName);
             }
             if (Optional.IsDefined(TargetVmName))
             {
-                writer.WritePropertyName("targetVmName");
+                writer.WritePropertyName("targetVmName"u8);
                 writer.WriteStringValue(TargetVmName);
             }
             if (Optional.IsDefined(TargetVmSize))
             {
-                writer.WritePropertyName("targetVmSize");
+                writer.WritePropertyName("targetVmSize"u8);
                 writer.WriteStringValue(TargetVmSize);
             }
             if (Optional.IsDefined(LicenseType))
             {
-                writer.WritePropertyName("licenseType");
+                writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
             if (Optional.IsDefined(TargetAvailabilitySetId))
             {
-                writer.WritePropertyName("targetAvailabilitySetId");
+                writer.WritePropertyName("targetAvailabilitySetId"u8);
                 writer.WriteStringValue(TargetAvailabilitySetId);
             }
             if (Optional.IsDefined(TargetAvailabilityZone))
             {
-                writer.WritePropertyName("targetAvailabilityZone");
+                writer.WritePropertyName("targetAvailabilityZone"u8);
                 writer.WriteStringValue(TargetAvailabilityZone);
             }
             if (Optional.IsDefined(TargetProximityPlacementGroupId))
             {
-                writer.WritePropertyName("targetProximityPlacementGroupId");
+                writer.WritePropertyName("targetProximityPlacementGroupId"u8);
                 writer.WriteStringValue(TargetProximityPlacementGroupId);
             }
             if (Optional.IsDefined(TargetBootDiagnosticsStorageAccountId))
             {
-                writer.WritePropertyName("targetBootDiagnosticsStorageAccountId");
+                writer.WritePropertyName("targetBootDiagnosticsStorageAccountId"u8);
                 writer.WriteStringValue(TargetBootDiagnosticsStorageAccountId);
             }
             if (Optional.IsDefined(RunAsAccountId))
             {
-                writer.WritePropertyName("runAsAccountId");
+                writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);
             }
-            writer.WritePropertyName("processServerId");
+            writer.WritePropertyName("processServerId"u8);
             writer.WriteStringValue(ProcessServerId);
             if (Optional.IsDefined(MultiVmGroupName))
             {
-                writer.WritePropertyName("multiVmGroupName");
+                writer.WritePropertyName("multiVmGroupName"u8);
                 writer.WriteStringValue(MultiVmGroupName);
             }
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

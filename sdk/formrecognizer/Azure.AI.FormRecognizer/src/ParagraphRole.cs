@@ -5,5 +5,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     public readonly partial struct ParagraphRole
     {
+        /// <summary>
+        /// formulaBlock.
+        /// </summary>
+        internal static ParagraphRole FormulaBlock { get; } = new ParagraphRole(FormulaBlockValue);
     }
 }

@@ -14,12 +14,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static AppPlatformSupportedRuntimeVersion DeserializeAppPlatformSupportedRuntimeVersion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformSupportedRuntimeValue> value = default;
             Optional<AppPlatformSupportedRuntimePlatform> platform = default;
             Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     value = new AppPlatformSupportedRuntimeValue(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("platform"))
+                if (property.NameEquals("platform"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +43,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     platform = new AppPlatformSupportedRuntimePlatform(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Peering.Models
     {
         internal static PeeringReceivedRoute DeserializePeeringReceivedRoute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> prefix = default;
             Optional<string> nextHop = default;
             Optional<string> asPath = default;
@@ -23,37 +27,37 @@ namespace Azure.ResourceManager.Peering.Models
             Optional<string> receivedTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("prefix"))
+                if (property.NameEquals("prefix"u8))
                 {
                     prefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nextHop"))
+                if (property.NameEquals("nextHop"u8))
                 {
                     nextHop = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("asPath"))
+                if (property.NameEquals("asPath"u8))
                 {
                     asPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("originAsValidationState"))
+                if (property.NameEquals("originAsValidationState"u8))
                 {
                     originAsValidationState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rpkiValidationState"))
+                if (property.NameEquals("rpkiValidationState"u8))
                 {
                     rpkiValidationState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trustAnchor"))
+                if (property.NameEquals("trustAnchor"u8))
                 {
                     trustAnchor = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("receivedTimestamp"))
+                if (property.NameEquals("receivedTimestamp"u8))
                 {
                     receivedTimestamp = property.Value.GetString();
                     continue;

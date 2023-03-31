@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ObjectId))
             {
-                writer.WritePropertyName("objectId");
+                writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId.Value);
             }
             if (Optional.IsDefined(ObjectType))
             {
-                writer.WritePropertyName("objectType");
+                writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType.Value.ToString());
             }
             if (Optional.IsDefined(MaxDegreeOfParallelismPerJob))
             {
-                writer.WritePropertyName("maxDegreeOfParallelismPerJob");
+                writer.WritePropertyName("maxDegreeOfParallelismPerJob"u8);
                 writer.WriteNumberValue(MaxDegreeOfParallelismPerJob.Value);
             }
             if (Optional.IsDefined(MinPriorityPerJob))
             {
-                writer.WritePropertyName("minPriorityPerJob");
+                writer.WritePropertyName("minPriorityPerJob"u8);
                 writer.WriteNumberValue(MinPriorityPerJob.Value);
             }
             writer.WriteEndObject();

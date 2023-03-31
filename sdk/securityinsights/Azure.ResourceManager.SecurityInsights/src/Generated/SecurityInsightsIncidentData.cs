@@ -14,7 +14,10 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary> A class representing the SecurityInsightsIncident data model. </summary>
+    /// <summary>
+    /// A class representing the SecurityInsightsIncident data model.
+    /// Represents an incident in Azure Security Insights.
+    /// </summary>
     public partial class SecurityInsightsIncidentData : ResourceData
     {
         /// <summary> Initializes a new instance of SecurityInsightsIncidentData. </summary>

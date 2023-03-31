@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -28,29 +28,29 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DeploymentTargetId))
             {
-                writer.WritePropertyName("deploymentTargetId");
+                writer.WritePropertyName("deploymentTargetId"u8);
                 writer.WriteStringValue(DeploymentTargetId);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(CreatorRoleAssignment))
             {
-                writer.WritePropertyName("creatorRoleAssignment");
+                writer.WritePropertyName("creatorRoleAssignment"u8);
                 writer.WriteObjectValue(CreatorRoleAssignment);
             }
             if (Optional.IsCollectionDefined(UserRoleAssignments))
             {
-                writer.WritePropertyName("userRoleAssignments");
+                writer.WritePropertyName("userRoleAssignments"u8);
                 writer.WriteStartObject();
                 foreach (var item in UserRoleAssignments)
                 {

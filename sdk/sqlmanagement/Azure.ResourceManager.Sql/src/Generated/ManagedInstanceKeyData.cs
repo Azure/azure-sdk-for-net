@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the ManagedInstanceKey data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedInstanceKey data model.
+    /// A managed instance key.
+    /// </summary>
     public partial class ManagedInstanceKeyData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedInstanceKeyData. </summary>

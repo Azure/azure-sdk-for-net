@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PathPattern))
             {
-                writer.WritePropertyName("pathPattern");
+                writer.WritePropertyName("pathPattern"u8);
                 writer.WriteStringValue(PathPattern);
             }
             if (Optional.IsDefined(DateFormat))
             {
-                writer.WritePropertyName("dateFormat");
+                writer.WritePropertyName("dateFormat"u8);
                 writer.WriteStringValue(DateFormat);
             }
             if (Optional.IsDefined(TimeFormat))
             {
-                writer.WritePropertyName("timeFormat");
+                writer.WritePropertyName("timeFormat"u8);
                 writer.WriteStringValue(TimeFormat);
             }
             if (Optional.IsDefined(RefreshInterval))
             {
-                writer.WritePropertyName("refreshInterval");
+                writer.WritePropertyName("refreshInterval"u8);
                 writer.WriteStringValue(RefreshInterval);
             }
             if (Optional.IsDefined(RefreshType))
             {
-                writer.WritePropertyName("refreshType");
+                writer.WritePropertyName("refreshType"u8);
                 writer.WriteStringValue(RefreshType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamingJobRefreshConfiguration DeserializeStreamingJobRefreshConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> pathPattern = default;
             Optional<string> dateFormat = default;
             Optional<string> timeFormat = default;
@@ -52,27 +56,27 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<DataRefreshType> refreshType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("pathPattern"))
+                if (property.NameEquals("pathPattern"u8))
                 {
                     pathPattern = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dateFormat"))
+                if (property.NameEquals("dateFormat"u8))
                 {
                     dateFormat = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timeFormat"))
+                if (property.NameEquals("timeFormat"u8))
                 {
                     timeFormat = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("refreshInterval"))
+                if (property.NameEquals("refreshInterval"u8))
                 {
                     refreshInterval = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("refreshType"))
+                if (property.NameEquals("refreshType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

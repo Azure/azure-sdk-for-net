@@ -1,11 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.Threading;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
@@ -18,10 +15,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     {
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
-        private readonly AzureMonitorPersistentStorage _persistentStorage;
-        private AzureMonitorResource _resource;
+        private AzureMonitorResource? _resource;
+        private bool _disposed;
 
-        public AzureMonitorLogExporter(AzureMonitorExporterOptions options, TokenCredential credential = null) : this(new AzureMonitorTransmitter(options, credential))
+        public AzureMonitorLogExporter(AzureMonitorExporterOptions options) : this(TransmitterFactory.Instance.Get(options))
         {
         }
 
@@ -29,36 +26,47 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
             _transmitter = transmitter;
             _instrumentationKey = transmitter.InstrumentationKey;
-
-            if (transmitter is AzureMonitorTransmitter azureMonitorTransmitter && azureMonitorTransmitter._fileBlobProvider != null)
-            {
-                _persistentStorage = new AzureMonitorPersistentStorage(transmitter);
-            }
         }
 
-        internal AzureMonitorResource LogResource => _resource ??= ParentProvider.GetResource().UpdateRoleNameAndInstance();
+        internal AzureMonitorResource? LogResource => _resource ??= ParentProvider?.GetResource().UpdateRoleNameAndInstance();
 
         /// <inheritdoc/>
         public override ExportResult Export(in Batch<LogRecord> batch)
         {
-            _persistentStorage?.StartExporterTimer();
-
             // Prevent Azure Monitor's HTTP operations from being instrumented.
             using var scope = SuppressInstrumentationScope.Begin();
+
+            ExportResult exportResult = ExportResult.Failure;
 
             try
             {
                 var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, LogResource, _instrumentationKey);
-                var exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
-                _persistentStorage?.StopExporterTimerAndTransmitFromStorage();
-
-                return exportResult;
+                if (telemetryItems.Count > 0)
+                {
+                    exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
+                }
             }
             catch (Exception ex)
             {
                 AzureMonitorExporterEventSource.Log.WriteError("FailedToExport", ex);
-                return ExportResult.Failure;
             }
+
+            return exportResult;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _transmitter?.Dispose();
+                }
+
+                _disposed = true;
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

@@ -18,25 +18,29 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (KeyValue != null)
             {
-                writer.WritePropertyName("keyValue");
+                writer.WritePropertyName("keyValue"u8);
                 writer.WriteBase64StringValue(KeyValue, "D");
             }
             else
             {
                 writer.WriteNull("keyValue");
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
 
         internal static ContentKeyPolicySymmetricTokenKey DeserializeContentKeyPolicySymmetricTokenKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             byte[] keyValue = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyValue"))
+                if (property.NameEquals("keyValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.Media.Models
                     keyValue = property.Value.GetBytesFromBase64("D");
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;

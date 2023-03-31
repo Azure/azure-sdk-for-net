@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("storageAccountBlobUrl");
+            writer.WritePropertyName("storageAccountBlobUrl"u8);
             writer.WriteStringValue(StorageAccountBlobUri.AbsoluteUri);
             writer.WriteEndObject();
         }

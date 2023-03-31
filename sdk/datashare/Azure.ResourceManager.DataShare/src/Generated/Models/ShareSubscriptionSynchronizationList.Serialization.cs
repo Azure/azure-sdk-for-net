@@ -15,16 +15,20 @@ namespace Azure.ResourceManager.DataShare.Models
     {
         internal static ShareSubscriptionSynchronizationList DeserializeShareSubscriptionSynchronizationList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             IReadOnlyList<ShareSubscriptionSynchronization> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<ShareSubscriptionSynchronization> array = new List<ShareSubscriptionSynchronization>();
                     foreach (var item in property.Value.EnumerateArray())

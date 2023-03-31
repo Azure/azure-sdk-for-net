@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static DscReportResourceNavigation DeserializeDscReportResourceNavigation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = property.Value.GetString();
                     continue;

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(NetworkInterfaces))
             {
-                writer.WritePropertyName("networkInterfaces");
+                writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {

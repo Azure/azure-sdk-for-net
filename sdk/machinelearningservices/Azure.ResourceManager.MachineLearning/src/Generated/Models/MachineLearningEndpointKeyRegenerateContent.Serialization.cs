@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyType");
+            writer.WritePropertyName("keyType"u8);
             writer.WriteStringValue(KeyType.ToString());
             if (Optional.IsDefined(KeyValue))
             {
                 if (KeyValue != null)
                 {
-                    writer.WritePropertyName("keyValue");
+                    writer.WritePropertyName("keyValue"u8);
                     writer.WriteStringValue(KeyValue);
                 }
                 else

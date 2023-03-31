@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.Peering
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Prefix))
             {
-                writer.WritePropertyName("prefix");
+                writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
             if (Optional.IsDefined(PeeringServicePrefixKey))
             {
-                writer.WritePropertyName("peeringServicePrefixKey");
+                writer.WritePropertyName("peeringServicePrefixKey"u8);
                 writer.WriteStringValue(PeeringServicePrefixKey);
             }
             writer.WriteEndObject();
@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Peering
 
         internal static PeeringServicePrefixData DeserializePeeringServicePrefixData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -49,22 +53,22 @@ namespace Azure.ResourceManager.Peering
             Optional<PeeringProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.Peering
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,12 +87,12 @@ namespace Azure.ResourceManager.Peering
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("prefix"))
+                        if (property0.NameEquals("prefix"u8))
                         {
                             prefix = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("prefixValidationState"))
+                        if (property0.NameEquals("prefixValidationState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -98,7 +102,7 @@ namespace Azure.ResourceManager.Peering
                             prefixValidationState = new PeeringPrefixValidationState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("learnedType"))
+                        if (property0.NameEquals("learnedType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -108,12 +112,12 @@ namespace Azure.ResourceManager.Peering
                             learnedType = new PeeringLearnedType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("errorMessage"))
+                        if (property0.NameEquals("errorMessage"u8))
                         {
                             errorMessage = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("events"))
+                        if (property0.NameEquals("events"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -128,12 +132,12 @@ namespace Azure.ResourceManager.Peering
                             events = array;
                             continue;
                         }
-                        if (property0.NameEquals("peeringServicePrefixKey"))
+                        if (property0.NameEquals("peeringServicePrefixKey"u8))
                         {
                             peeringServicePrefixKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

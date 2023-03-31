@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the WebSiteAnalysisDefinition data model. </summary>
+    /// <summary>
+    /// A class representing the WebSiteAnalysisDefinition data model.
+    /// Definition of Analysis
+    /// </summary>
     public partial class WebSiteAnalysisDefinitionData : ResourceData
     {
         /// <summary> Initializes a new instance of WebSiteAnalysisDefinitionData. </summary>

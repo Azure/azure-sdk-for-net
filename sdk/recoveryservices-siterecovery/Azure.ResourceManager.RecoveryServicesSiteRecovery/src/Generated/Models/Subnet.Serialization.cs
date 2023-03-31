@@ -15,22 +15,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static Subnet DeserializeSubnet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> friendlyName = default;
             Optional<IReadOnlyList<string>> addressList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("addressList"))
+                if (property.NameEquals("addressList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

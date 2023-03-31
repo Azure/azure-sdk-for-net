@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AccountId))
             {
-                writer.WritePropertyName("accountId");
+                writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
             if (Optional.IsDefined(RegionId))
             {
-                writer.WritePropertyName("regionId");
+                writer.WritePropertyName("regionId"u8);
                 writer.WriteStringValue(RegionId);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceAccountInfo DeserializeDynatraceAccountInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> accountId = default;
             Optional<string> regionId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountId"))
+                if (property.NameEquals("accountId"u8))
                 {
                     accountId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("regionId"))
+                if (property.NameEquals("regionId"u8))
                 {
                     regionId = property.Value.GetString();
                     continue;

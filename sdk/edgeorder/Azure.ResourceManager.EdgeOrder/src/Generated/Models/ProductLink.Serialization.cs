@@ -15,11 +15,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static ProductLink DeserializeProductLink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProductLinkType> linkType = default;
             Optional<Uri> linkUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linkType"))
+                if (property.NameEquals("linkType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     linkType = new ProductLinkType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("linkUrl"))
+                if (property.NameEquals("linkUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary> A class representing the Pool data model. </summary>
+    /// <summary>
+    /// A class representing the Pool data model.
+    /// A pool of Virtual Machines.
+    /// </summary>
     public partial class PoolData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of PoolData. </summary>

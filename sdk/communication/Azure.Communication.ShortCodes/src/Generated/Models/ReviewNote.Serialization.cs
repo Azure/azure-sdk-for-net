@@ -18,12 +18,12 @@ namespace Azure.Communication.ShortCodes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Message))
             {
-                writer.WritePropertyName("message");
+                writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
             if (Optional.IsDefined(Date))
             {
-                writer.WritePropertyName("date");
+                writer.WritePropertyName("date"u8);
                 writer.WriteStringValue(Date.Value, "O");
             }
             writer.WriteEndObject();
@@ -31,16 +31,20 @@ namespace Azure.Communication.ShortCodes.Models
 
         internal static ReviewNote DeserializeReviewNote(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             Optional<DateTimeOffset> date = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("date"))
+                if (property.NameEquals("date"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

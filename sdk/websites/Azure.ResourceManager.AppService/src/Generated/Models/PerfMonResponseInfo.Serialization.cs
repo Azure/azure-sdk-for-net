@@ -14,22 +14,26 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static PerfMonResponseInfo DeserializePerfMonResponseInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<PerfMonSet> data = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("data"))
+                if (property.NameEquals("data"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

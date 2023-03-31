@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("source");
+            writer.WritePropertyName("source"u8);
             writer.WriteObjectValue(Source);
             if (Optional.IsCollectionDefined(TargetTags))
             {
-                writer.WritePropertyName("targetTags");
+                writer.WritePropertyName("targetTags"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetTags)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             if (Optional.IsCollectionDefined(UntaggedTargetRepositories))
             {
-                writer.WritePropertyName("untaggedTargetRepositories");
+                writer.WritePropertyName("untaggedTargetRepositories"u8);
                 writer.WriteStartArray();
                 foreach (var item in UntaggedTargetRepositories)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             if (Optional.IsDefined(Mode))
             {
-                writer.WritePropertyName("mode");
+                writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
             writer.WriteEndObject();

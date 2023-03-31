@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Enabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled);
             }
             if (Optional.IsDefined(ProvisioningInfo))
             {
-                writer.WritePropertyName("provisioningInfo");
+                writer.WritePropertyName("provisioningInfo"u8);
                 writer.WriteObjectValue(ProvisioningInfo);
             }
             writer.WriteEndObject();
@@ -30,17 +30,21 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
 
         internal static SensorIntegration DeserializeSensorIntegration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> enabled = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<ErrorResponse> provisioningInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     enabled = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioningInfo"))
+                if (property.NameEquals("provisioningInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

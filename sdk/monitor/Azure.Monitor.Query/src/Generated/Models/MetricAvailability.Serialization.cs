@@ -15,11 +15,15 @@ namespace Azure.Monitor.Query.Models
     {
         internal static MetricAvailability DeserializeMetricAvailability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSpan> timeGrain = default;
             Optional<TimeSpan> retention = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timeGrain"))
+                if (property.NameEquals("timeGrain"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.Monitor.Query.Models
                     timeGrain = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("retention"))
+                if (property.NameEquals("retention"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

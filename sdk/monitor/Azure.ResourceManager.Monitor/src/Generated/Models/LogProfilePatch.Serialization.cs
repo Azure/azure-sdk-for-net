@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccountId))
             {
                 if (StorageAccountId != null)
                 {
-                    writer.WritePropertyName("storageAccountId");
+                    writer.WritePropertyName("storageAccountId"u8);
                     writer.WriteStringValue(StorageAccountId);
                 }
                 else
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (ServiceBusRuleId != null)
                 {
-                    writer.WritePropertyName("serviceBusRuleId");
+                    writer.WritePropertyName("serviceBusRuleId"u8);
                     writer.WriteStringValue(ServiceBusRuleId);
                 }
                 else
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(Locations))
             {
-                writer.WritePropertyName("locations");
+                writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(Categories))
             {
-                writer.WritePropertyName("categories");
+                writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsDefined(RetentionPolicy))
             {
-                writer.WritePropertyName("retentionPolicy");
+                writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
             }
             writer.WriteEndObject();

@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> Returns a <see cref="EventHubsNetworkRuleSetResource" /> object. </returns>
         public virtual EventHubsNetworkRuleSetResource GetEventHubsNetworkRuleSet()
         {
-            return new EventHubsNetworkRuleSetResource(Client, new ResourceIdentifier(Id.ToString() + "/networkRuleSets/default"));
+            return new EventHubsNetworkRuleSetResource(Client, Id.AppendChildResource("networkRuleSets", "default"));
         }
 
         /// <summary> Gets a collection of EventHubsNamespaceAuthorizationRuleResources in the EventHubsNamespace. </summary>

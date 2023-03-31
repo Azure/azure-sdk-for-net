@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MemoryInGB))
             {
-                writer.WritePropertyName("memoryInGB");
+                writer.WritePropertyName("memoryInGB"u8);
                 writer.WriteNumberValue(MemoryInGB.Value);
             }
             if (Optional.IsDefined(Cpu))
             {
-                writer.WritePropertyName("cpu");
+                writer.WritePropertyName("cpu"u8);
                 writer.WriteNumberValue(Cpu.Value);
             }
             if (Optional.IsDefined(Gpu))
             {
-                writer.WritePropertyName("gpu");
+                writer.WritePropertyName("gpu"u8);
                 writer.WriteObjectValue(Gpu);
             }
             writer.WriteEndObject();
@@ -35,12 +35,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerResourceLimits DeserializeContainerResourceLimits(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> memoryInGB = default;
             Optional<double> cpu = default;
             Optional<ContainerGpuResourceInfo> gpu = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("memoryInGB"))
+                if (property.NameEquals("memoryInGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     memoryInGB = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("cpu"))
+                if (property.NameEquals("cpu"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     cpu = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("gpu"))
+                if (property.NameEquals("gpu"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

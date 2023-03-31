@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("frontendIpConfigurations");
+            writer.WritePropertyName("frontendIpConfigurations"u8);
             writer.WriteStartArray();
             foreach (var item in FrontendIPConfigurations)
             {
@@ -38,12 +38,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static CloudServiceLoadBalancerConfiguration DeserializeCloudServiceLoadBalancerConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             string name = default;
             IList<LoadBalancerFrontendIPConfiguration> frontendIPConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,12 +57,12 @@ namespace Azure.ResourceManager.Compute.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("frontendIpConfigurations"))
+                        if (property0.NameEquals("frontendIpConfigurations"u8))
                         {
                             List<LoadBalancerFrontendIPConfiguration> array = new List<LoadBalancerFrontendIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())

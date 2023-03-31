@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VirtualNetworkResourceId))
             {
-                writer.WritePropertyName("virtualNetworkResourceId");
+                writer.WritePropertyName("virtualNetworkResourceId"u8);
                 writer.WriteStringValue(VirtualNetworkResourceId);
             }
             writer.WriteEndObject();

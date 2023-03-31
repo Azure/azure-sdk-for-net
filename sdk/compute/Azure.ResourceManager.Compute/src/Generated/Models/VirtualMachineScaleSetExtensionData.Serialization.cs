@@ -19,6 +19,10 @@ namespace Azure.ResourceManager.Compute
 
         internal static VirtualMachineScaleSetExtensionData DeserializeVirtualMachineScaleSetExtensionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -37,22 +41,22 @@ namespace Azure.ResourceManager.Compute
             Optional<KeyVaultSecretReference> protectedSettingsFromKeyVault = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +66,7 @@ namespace Azure.ResourceManager.Compute
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,27 +75,27 @@ namespace Azure.ResourceManager.Compute
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("forceUpdateTag"))
+                        if (property0.NameEquals("forceUpdateTag"u8))
                         {
                             forceUpdateTag = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("publisher"))
+                        if (property0.NameEquals("publisher"u8))
                         {
                             publisher = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("type"))
+                        if (property0.NameEquals("type"u8))
                         {
                             type0 = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("typeHandlerVersion"))
+                        if (property0.NameEquals("typeHandlerVersion"u8))
                         {
                             typeHandlerVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("autoUpgradeMinorVersion"))
+                        if (property0.NameEquals("autoUpgradeMinorVersion"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -101,7 +105,7 @@ namespace Azure.ResourceManager.Compute
                             autoUpgradeMinorVersion = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("enableAutomaticUpgrade"))
+                        if (property0.NameEquals("enableAutomaticUpgrade"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -111,7 +115,7 @@ namespace Azure.ResourceManager.Compute
                             enableAutomaticUpgrade = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("settings"))
+                        if (property0.NameEquals("settings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -121,7 +125,7 @@ namespace Azure.ResourceManager.Compute
                             settings = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("protectedSettings"))
+                        if (property0.NameEquals("protectedSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -131,12 +135,12 @@ namespace Azure.ResourceManager.Compute
                             protectedSettings = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisionAfterExtensions"))
+                        if (property0.NameEquals("provisionAfterExtensions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -151,7 +155,7 @@ namespace Azure.ResourceManager.Compute
                             provisionAfterExtensions = array;
                             continue;
                         }
-                        if (property0.NameEquals("suppressFailures"))
+                        if (property0.NameEquals("suppressFailures"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -161,7 +165,7 @@ namespace Azure.ResourceManager.Compute
                             suppressFailures = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("protectedSettingsFromKeyVault"))
+                        if (property0.NameEquals("protectedSettingsFromKeyVault"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

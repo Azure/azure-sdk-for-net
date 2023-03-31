@@ -63,7 +63,7 @@ namespace Azure.AI.TextAnalytics
         /// in the result. If not set, the <see cref="AnalyzeHealthcareEntitiesResult.FhirBundle"/> will not be produced. For additional information, see
         /// <see href="https://www.hl7.org/fhir/overview.html"/>.
         /// </summary>
-        public WellKnownFhirVersion? FhirVersion { get; set; }
+        public FhirVersion? FhirVersion { get; set; }
 
         /// <summary>
         /// The document type, which can be provided as a hint to improve the production of the <see cref="AnalyzeHealthcareEntitiesResult.FhirBundle"/> when

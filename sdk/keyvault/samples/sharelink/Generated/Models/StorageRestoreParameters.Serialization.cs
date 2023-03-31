@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("value");
+            writer.WritePropertyName("value"u8);
             writer.WriteBase64StringValue(StorageBundleBackup, "U");
             writer.WriteEndObject();
         }

@@ -21,69 +21,69 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtensionId))
             {
-                writer.WritePropertyName("extension_id");
+                writer.WritePropertyName("extension_id"u8);
                 writer.WriteStringValue(ExtensionId);
             }
             if (Optional.IsDefined(Title))
             {
-                writer.WritePropertyName("title");
+                writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
             if (Optional.IsDefined(ExtensionType))
             {
-                writer.WritePropertyName("extension_type");
+                writer.WritePropertyName("extension_type"u8);
                 writer.WriteStringValue(ExtensionType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Summary))
             {
-                writer.WritePropertyName("summary");
+                writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
             if (Optional.IsDefined(ExtensionUri))
             {
-                writer.WritePropertyName("extension_url");
+                writer.WritePropertyName("extension_url"u8);
                 writer.WriteStringValue(ExtensionUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ProjectUri))
             {
-                writer.WritePropertyName("project_url");
+                writer.WritePropertyName("project_url"u8);
                 writer.WriteStringValue(ProjectUri.AbsoluteUri);
             }
             if (Optional.IsDefined(IconUri))
             {
-                writer.WritePropertyName("icon_url");
+                writer.WritePropertyName("icon_url"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
             if (Optional.IsDefined(LicenseUri))
             {
-                writer.WritePropertyName("license_url");
+                writer.WritePropertyName("license_url"u8);
                 writer.WriteStringValue(LicenseUri.AbsoluteUri);
             }
             if (Optional.IsDefined(FeedUri))
             {
-                writer.WritePropertyName("feed_url");
+                writer.WritePropertyName("feed_url"u8);
                 writer.WriteStringValue(FeedUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(Authors))
             {
-                writer.WritePropertyName("authors");
+                writer.WritePropertyName("authors"u8);
                 writer.WriteStartArray();
                 foreach (var item in Authors)
                 {
@@ -93,42 +93,42 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsDefined(InstallerCommandLineParams))
             {
-                writer.WritePropertyName("installer_command_line_params");
+                writer.WritePropertyName("installer_command_line_params"u8);
                 writer.WriteStringValue(InstallerCommandLineParams);
             }
             if (Optional.IsDefined(PublishedOn))
             {
-                writer.WritePropertyName("published_date_time");
+                writer.WritePropertyName("published_date_time"u8);
                 writer.WriteStringValue(PublishedOn.Value, "O");
             }
             if (Optional.IsDefined(DownloadCount))
             {
-                writer.WritePropertyName("download_count");
+                writer.WritePropertyName("download_count"u8);
                 writer.WriteNumberValue(DownloadCount.Value);
             }
             if (Optional.IsDefined(LocalIsLatestVersion))
             {
-                writer.WritePropertyName("local_is_latest_version");
+                writer.WritePropertyName("local_is_latest_version"u8);
                 writer.WriteBooleanValue(LocalIsLatestVersion.Value);
             }
             if (Optional.IsDefined(LocalPath))
             {
-                writer.WritePropertyName("local_path");
+                writer.WritePropertyName("local_path"u8);
                 writer.WriteStringValue(LocalPath);
             }
             if (Optional.IsDefined(InstalledOn))
             {
-                writer.WritePropertyName("installed_date_time");
+                writer.WritePropertyName("installed_date_time"u8);
                 writer.WriteStringValue(InstalledOn.Value, "O");
             }
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
             if (Optional.IsDefined(Comment))
             {
-                writer.WritePropertyName("comment");
+                writer.WritePropertyName("comment"u8);
                 writer.WriteStringValue(Comment);
             }
             writer.WriteEndObject();
@@ -137,6 +137,10 @@ namespace Azure.ResourceManager.AppService
 
         internal static SiteExtensionInfoData DeserializeSiteExtensionInfoData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -164,27 +168,27 @@ namespace Azure.ResourceManager.AppService
             Optional<string> comment = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -194,7 +198,7 @@ namespace Azure.ResourceManager.AppService
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -203,17 +207,17 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("extension_id"))
+                        if (property0.NameEquals("extension_id"u8))
                         {
                             extensionId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("title"))
+                        if (property0.NameEquals("title"u8))
                         {
                             title = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("extension_type"))
+                        if (property0.NameEquals("extension_type"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -223,22 +227,22 @@ namespace Azure.ResourceManager.AppService
                             extensionType = property0.Value.GetString().ToSiteExtensionType();
                             continue;
                         }
-                        if (property0.NameEquals("summary"))
+                        if (property0.NameEquals("summary"u8))
                         {
                             summary = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("version"))
+                        if (property0.NameEquals("version"u8))
                         {
                             version = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("extension_url"))
+                        if (property0.NameEquals("extension_url"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -248,7 +252,7 @@ namespace Azure.ResourceManager.AppService
                             extensionUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("project_url"))
+                        if (property0.NameEquals("project_url"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -258,7 +262,7 @@ namespace Azure.ResourceManager.AppService
                             projectUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("icon_url"))
+                        if (property0.NameEquals("icon_url"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -268,7 +272,7 @@ namespace Azure.ResourceManager.AppService
                             iconUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("license_url"))
+                        if (property0.NameEquals("license_url"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -278,7 +282,7 @@ namespace Azure.ResourceManager.AppService
                             licenseUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("feed_url"))
+                        if (property0.NameEquals("feed_url"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -288,7 +292,7 @@ namespace Azure.ResourceManager.AppService
                             feedUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("authors"))
+                        if (property0.NameEquals("authors"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -303,12 +307,12 @@ namespace Azure.ResourceManager.AppService
                             authors = array;
                             continue;
                         }
-                        if (property0.NameEquals("installer_command_line_params"))
+                        if (property0.NameEquals("installer_command_line_params"u8))
                         {
                             installerCommandLineParams = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("published_date_time"))
+                        if (property0.NameEquals("published_date_time"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -318,7 +322,7 @@ namespace Azure.ResourceManager.AppService
                             publishedDateTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("download_count"))
+                        if (property0.NameEquals("download_count"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -328,7 +332,7 @@ namespace Azure.ResourceManager.AppService
                             downloadCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("local_is_latest_version"))
+                        if (property0.NameEquals("local_is_latest_version"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -338,12 +342,12 @@ namespace Azure.ResourceManager.AppService
                             localIsLatestVersion = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("local_path"))
+                        if (property0.NameEquals("local_path"u8))
                         {
                             localPath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("installed_date_time"))
+                        if (property0.NameEquals("installed_date_time"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -353,12 +357,12 @@ namespace Azure.ResourceManager.AppService
                             installedDateTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("comment"))
+                        if (property0.NameEquals("comment"u8))
                         {
                             comment = property0.Value.GetString();
                             continue;

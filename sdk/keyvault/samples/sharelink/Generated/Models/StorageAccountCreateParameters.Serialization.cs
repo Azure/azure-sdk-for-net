@@ -15,25 +15,25 @@ namespace Azure.Security.KeyVault.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("resourceId");
+            writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
-            writer.WritePropertyName("activeKeyName");
+            writer.WritePropertyName("activeKeyName"u8);
             writer.WriteStringValue(ActiveKeyName);
-            writer.WritePropertyName("autoRegenerateKey");
+            writer.WritePropertyName("autoRegenerateKey"u8);
             writer.WriteBooleanValue(AutoRegenerateKey);
             if (Optional.IsDefined(RegenerationPeriod))
             {
-                writer.WritePropertyName("regenerationPeriod");
+                writer.WritePropertyName("regenerationPeriod"u8);
                 writer.WriteStringValue(RegenerationPeriod);
             }
             if (Optional.IsDefined(StorageAccountAttributes))
             {
-                writer.WritePropertyName("attributes");
+                writer.WritePropertyName("attributes"u8);
                 writer.WriteObjectValue(StorageAccountAttributes);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {

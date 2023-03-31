@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BucketName))
             {
-                writer.WritePropertyName("bucketName");
+                writer.WritePropertyName("bucketName"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(BucketName);
 #else
@@ -28,18 +28,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Version);
 #else
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Version.ToString()).RootElement);
 #endif
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetLocationType);
             if (Optional.IsDefined(FolderPath))
             {
-                writer.WritePropertyName("folderPath");
+                writer.WritePropertyName("folderPath"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(FolderPath);
 #else
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(FileName))
             {
-                writer.WritePropertyName("fileName");
+                writer.WritePropertyName("fileName"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(FileName);
 #else
@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AmazonS3CompatibleLocation DeserializeAmazonS3CompatibleLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> bucketName = default;
             Optional<BinaryData> version = default;
             string type = default;
@@ -78,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("bucketName"))
+                if (property.NameEquals("bucketName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     bucketName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,12 +102,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     version = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("folderPath"))
+                if (property.NameEquals("folderPath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     folderPath = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("fileName"))
+                if (property.NameEquals("fileName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

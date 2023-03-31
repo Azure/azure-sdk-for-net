@@ -17,33 +17,33 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("operator");
+            writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(Operator.ToString());
-            writer.WritePropertyName("alertSensitivity");
+            writer.WritePropertyName("alertSensitivity"u8);
             writer.WriteStringValue(AlertSensitivity.ToString());
-            writer.WritePropertyName("failingPeriods");
+            writer.WritePropertyName("failingPeriods"u8);
             writer.WriteObjectValue(FailingPeriods);
             if (Optional.IsDefined(IgnoreDataBefore))
             {
-                writer.WritePropertyName("ignoreDataBefore");
+                writer.WritePropertyName("ignoreDataBefore"u8);
                 writer.WriteStringValue(IgnoreDataBefore.Value, "O");
             }
-            writer.WritePropertyName("criterionType");
+            writer.WritePropertyName("criterionType"u8);
             writer.WriteStringValue(CriterionType.ToString());
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("metricName");
+            writer.WritePropertyName("metricName"u8);
             writer.WriteStringValue(MetricName);
             if (Optional.IsDefined(MetricNamespace))
             {
-                writer.WritePropertyName("metricNamespace");
+                writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
             }
-            writer.WritePropertyName("timeAggregation");
+            writer.WritePropertyName("timeAggregation"u8);
             writer.WriteStringValue(TimeAggregation.ToString());
             if (Optional.IsCollectionDefined(Dimensions))
             {
-                writer.WritePropertyName("dimensions");
+                writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsDefined(SkipMetricValidation))
             {
-                writer.WritePropertyName("skipMetricValidation");
+                writer.WritePropertyName("skipMetricValidation"u8);
                 writer.WriteBooleanValue(SkipMetricValidation.Value);
             }
             foreach (var item in AdditionalProperties)
@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static DynamicMetricCriteria DeserializeDynamicMetricCriteria(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DynamicThresholdOperator @operator = default;
             DynamicThresholdSensitivity alertSensitivity = default;
             DynamicThresholdFailingPeriods failingPeriods = default;
@@ -85,22 +89,22 @@ namespace Azure.ResourceManager.Monitor.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operator"))
+                if (property.NameEquals("operator"u8))
                 {
                     @operator = new DynamicThresholdOperator(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("alertSensitivity"))
+                if (property.NameEquals("alertSensitivity"u8))
                 {
                     alertSensitivity = new DynamicThresholdSensitivity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("failingPeriods"))
+                if (property.NameEquals("failingPeriods"u8))
                 {
                     failingPeriods = DynamicThresholdFailingPeriods.DeserializeDynamicThresholdFailingPeriods(property.Value);
                     continue;
                 }
-                if (property.NameEquals("ignoreDataBefore"))
+                if (property.NameEquals("ignoreDataBefore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,32 +114,32 @@ namespace Azure.ResourceManager.Monitor.Models
                     ignoreDataBefore = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("criterionType"))
+                if (property.NameEquals("criterionType"u8))
                 {
                     criterionType = new CriterionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricName"))
+                if (property.NameEquals("metricName"u8))
                 {
                     metricName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricNamespace"))
+                if (property.NameEquals("metricNamespace"u8))
                 {
                     metricNamespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timeAggregation"))
+                if (property.NameEquals("timeAggregation"u8))
                 {
                     timeAggregation = new MetricCriteriaTimeAggregationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dimensions"))
+                if (property.NameEquals("dimensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -150,7 +154,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     dimensions = array;
                     continue;
                 }
-                if (property.NameEquals("skipMetricValidation"))
+                if (property.NameEquals("skipMetricValidation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

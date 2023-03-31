@@ -28,7 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
                     if (TryCreateTelemetryDirectory(path: environmentVars["LOCALAPPDATA"]?.ToString(), createdDirectoryPath: out dirPath)
                         || TryCreateTelemetryDirectory(path: environmentVars["TEMP"]?.ToString(), createdDirectoryPath: out dirPath))
                     {
-                        s_defaultStorageDirectory = dirPath!;
+                        s_defaultStorageDirectory = dirPath;
                         return s_defaultStorageDirectory;
                     }
                 }
@@ -38,7 +38,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
                         || TryCreateTelemetryDirectory(path: "/var/tmp/", createdDirectoryPath: out dirPath)
                         || TryCreateTelemetryDirectory(path: "/tmp/", createdDirectoryPath: out dirPath))
                     {
-                        s_defaultStorageDirectory = dirPath!;
+                        s_defaultStorageDirectory = dirPath;
                         return s_defaultStorageDirectory;
                     }
                 }
@@ -53,7 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
         /// <param name="path">Base directory.</param>
         /// <param name="createdDirectoryPath">Full directory.</param>
         /// <returns><see langword= "true"/> if directory is created.</returns>
-        private static bool TryCreateTelemetryDirectory(string? path, out string? createdDirectoryPath)
+        private static bool TryCreateTelemetryDirectory(string? path, [System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out string? createdDirectoryPath)
         {
             createdDirectoryPath = null;
             if (path == null)

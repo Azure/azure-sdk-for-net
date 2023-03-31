@@ -16,13 +16,17 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static AddressValidationOutput DeserializeAddressValidationOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataBoxValidationInputDiscriminator> validationType = default;
             Optional<ResponseError> error = default;
             Optional<AddressValidationStatus> validationStatus = default;
             Optional<IReadOnlyList<DataBoxShippingAddress>> alternateAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +35,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("validationType"))
+                        if (property0.NameEquals("validationType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             validationType = property0.Value.GetString().ToDataBoxValidationInputDiscriminator();
                             continue;
                         }
-                        if (property0.NameEquals("error"))
+                        if (property0.NameEquals("error"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             error = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("validationStatus"))
+                        if (property0.NameEquals("validationStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             validationStatus = property0.Value.GetString().ToAddressValidationStatus();
                             continue;
                         }
-                        if (property0.NameEquals("alternateAddresses"))
+                        if (property0.NameEquals("alternateAddresses"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

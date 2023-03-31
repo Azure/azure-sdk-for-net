@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("bindingType");
+            writer.WritePropertyName("bindingType"u8);
             writer.WriteStringValue(BindingType);
             writer.WriteEndObject();
         }

@@ -16,15 +16,15 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            writer.WritePropertyName("fieldName");
+            writer.WritePropertyName("fieldName"u8);
             writer.WriteStringValue(FieldName);
-            writer.WritePropertyName("boost");
+            writer.WritePropertyName("boost"u8);
             writer.WriteNumberValue(Boost);
             if (Optional.IsDefined(Interpolation))
             {
-                writer.WritePropertyName("interpolation");
+                writer.WritePropertyName("interpolation"u8);
                 writer.WriteStringValue(Interpolation.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -32,6 +32,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static ScoringFunction DeserializeScoringFunction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

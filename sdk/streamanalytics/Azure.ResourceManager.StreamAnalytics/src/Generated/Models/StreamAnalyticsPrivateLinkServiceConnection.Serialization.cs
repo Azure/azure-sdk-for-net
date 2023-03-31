@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateLinkServiceId))
             {
-                writer.WritePropertyName("privateLinkServiceId");
+                writer.WritePropertyName("privateLinkServiceId"u8);
                 writer.WriteStringValue(PrivateLinkServiceId);
             }
             if (Optional.IsCollectionDefined(GroupIds))
             {
-                writer.WritePropertyName("groupIds");
+                writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in GroupIds)
                 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
-                writer.WritePropertyName("privateLinkServiceConnectionState");
+                writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);
             }
             writer.WriteEndObject();
@@ -44,13 +44,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamAnalyticsPrivateLinkServiceConnection DeserializeStreamAnalyticsPrivateLinkServiceConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> privateLinkServiceId = default;
             Optional<IList<string>> groupIds = default;
             Optional<string> requestMessage = default;
             Optional<StreamAnalyticsPrivateLinkConnectionState> privateLinkServiceConnectionState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +63,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("privateLinkServiceId"))
+                        if (property0.NameEquals("privateLinkServiceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -69,7 +73,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             privateLinkServiceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("groupIds"))
+                        if (property0.NameEquals("groupIds"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -84,12 +88,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             groupIds = array;
                             continue;
                         }
-                        if (property0.NameEquals("requestMessage"))
+                        if (property0.NameEquals("requestMessage"u8))
                         {
                             requestMessage = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("privateLinkServiceConnectionState"))
+                        if (property0.NameEquals("privateLinkServiceConnectionState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

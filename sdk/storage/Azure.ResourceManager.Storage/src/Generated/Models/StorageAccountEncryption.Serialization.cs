@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Services))
             {
-                writer.WritePropertyName("services");
+                writer.WritePropertyName("services"u8);
                 writer.WriteObjectValue(Services);
             }
             if (Optional.IsDefined(KeySource))
             {
-                writer.WritePropertyName("keySource");
+                writer.WritePropertyName("keySource"u8);
                 writer.WriteStringValue(KeySource.Value.ToString());
             }
             if (Optional.IsDefined(RequireInfrastructureEncryption))
             {
-                writer.WritePropertyName("requireInfrastructureEncryption");
+                writer.WritePropertyName("requireInfrastructureEncryption"u8);
                 writer.WriteBooleanValue(RequireInfrastructureEncryption.Value);
             }
             if (Optional.IsDefined(KeyVaultProperties))
             {
-                writer.WritePropertyName("keyvaultproperties");
+                writer.WritePropertyName("keyvaultproperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
             if (Optional.IsDefined(EncryptionIdentity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(EncryptionIdentity);
             }
             writer.WriteEndObject();
@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageAccountEncryption DeserializeStorageAccountEncryption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageAccountEncryptionServices> services = default;
             Optional<StorageAccountKeySource> keySource = default;
             Optional<bool> requireInfrastructureEncryption = default;
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<StorageAccountEncryptionIdentity> identity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("services"))
+                if (property.NameEquals("services"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +66,7 @@ namespace Azure.ResourceManager.Storage.Models
                     services = StorageAccountEncryptionServices.DeserializeStorageAccountEncryptionServices(property.Value);
                     continue;
                 }
-                if (property.NameEquals("keySource"))
+                if (property.NameEquals("keySource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.Storage.Models
                     keySource = new StorageAccountKeySource(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("requireInfrastructureEncryption"))
+                if (property.NameEquals("requireInfrastructureEncryption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +86,7 @@ namespace Azure.ResourceManager.Storage.Models
                     requireInfrastructureEncryption = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("keyvaultproperties"))
+                if (property.NameEquals("keyvaultproperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.Storage.Models
                     keyvaultproperties = StorageAccountKeyVaultProperties.DeserializeStorageAccountKeyVaultProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

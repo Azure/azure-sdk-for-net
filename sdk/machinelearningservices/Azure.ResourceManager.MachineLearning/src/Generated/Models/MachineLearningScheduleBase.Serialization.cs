@@ -14,12 +14,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningScheduleBase DeserializeMachineLearningScheduleBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<MachineLearningScheduleProvisioningState> provisioningStatus = default;
             Optional<MachineLearningScheduleStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningStatus"))
+                if (property.NameEquals("provisioningStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     provisioningStatus = new MachineLearningScheduleProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,7 +15,7 @@ namespace Azure.AI.AnomalyDetector
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("series");
+            writer.WritePropertyName("series"u8);
             writer.WriteStartArray();
             foreach (var item in Series)
             {
@@ -26,7 +26,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (Granularity != null)
                 {
-                    writer.WritePropertyName("granularity");
+                    writer.WritePropertyName("granularity"u8);
                     writer.WriteStringValue(Granularity.Value.ToSerialString());
                 }
                 else
@@ -38,7 +38,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (CustomInterval != null)
                 {
-                    writer.WritePropertyName("customInterval");
+                    writer.WritePropertyName("customInterval"u8);
                     writer.WriteNumberValue(CustomInterval.Value);
                 }
                 else
@@ -50,7 +50,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (Period != null)
                 {
-                    writer.WritePropertyName("period");
+                    writer.WritePropertyName("period"u8);
                     writer.WriteNumberValue(Period.Value);
                 }
                 else
@@ -62,7 +62,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (MaxAnomalyRatio != null)
                 {
-                    writer.WritePropertyName("maxAnomalyRatio");
+                    writer.WritePropertyName("maxAnomalyRatio"u8);
                     writer.WriteNumberValue(MaxAnomalyRatio.Value);
                 }
                 else
@@ -74,7 +74,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (Sensitivity != null)
                 {
-                    writer.WritePropertyName("sensitivity");
+                    writer.WritePropertyName("sensitivity"u8);
                     writer.WriteNumberValue(Sensitivity.Value);
                 }
                 else
@@ -86,7 +86,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (ImputeMode != null)
                 {
-                    writer.WritePropertyName("imputeMode");
+                    writer.WritePropertyName("imputeMode"u8);
                     writer.WriteStringValue(ImputeMode.Value.ToString());
                 }
                 else
@@ -98,7 +98,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (ImputeFixedValue != null)
                 {
-                    writer.WritePropertyName("imputeFixedValue");
+                    writer.WritePropertyName("imputeFixedValue"u8);
                     writer.WriteNumberValue(ImputeFixedValue.Value);
                 }
                 else

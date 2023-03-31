@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing the ThroughputSetting data model. </summary>
+    /// <summary>
+    /// A class representing the ThroughputSetting data model.
+    /// An Azure Cosmos DB resource throughput.
+    /// </summary>
     public partial class ThroughputSettingData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ThroughputSettingData. </summary>

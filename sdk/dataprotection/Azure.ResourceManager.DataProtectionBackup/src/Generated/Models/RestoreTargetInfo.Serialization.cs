@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("datasourceInfo");
+            writer.WritePropertyName("datasourceInfo"u8);
             writer.WriteObjectValue(DataSourceInfo);
             if (Optional.IsDefined(DataSourceSetInfo))
             {
-                writer.WritePropertyName("datasourceSetInfo");
+                writer.WritePropertyName("datasourceSetInfo"u8);
                 writer.WriteObjectValue(DataSourceSetInfo);
             }
             if (Optional.IsDefined(DataSourceAuthCredentials))
             {
-                writer.WritePropertyName("datasourceAuthCredentials");
+                writer.WritePropertyName("datasourceAuthCredentials"u8);
                 writer.WriteObjectValue(DataSourceAuthCredentials);
             }
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
-            writer.WritePropertyName("recoveryOption");
+            writer.WritePropertyName("recoveryOption"u8);
             writer.WriteStringValue(RecoverySetting.ToString());
             if (Optional.IsDefined(RestoreLocation))
             {
-                writer.WritePropertyName("restoreLocation");
+                writer.WritePropertyName("restoreLocation"u8);
                 writer.WriteStringValue(RestoreLocation.Value);
             }
             writer.WriteEndObject();

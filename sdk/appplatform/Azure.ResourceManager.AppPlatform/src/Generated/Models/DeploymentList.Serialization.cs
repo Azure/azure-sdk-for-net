@@ -15,10 +15,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static DeploymentList DeserializeDeploymentList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ResourceIdentifier>> deployments = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deployments"))
+                if (property.NameEquals("deployments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +32,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ResourceIdentifier(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
                     }
                     deployments = array;
                     continue;

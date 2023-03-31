@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Permission))
             {
-                writer.WritePropertyName("permissions");
+                writer.WritePropertyName("permissions"u8);
                 writer.WriteStringValue(Permission.Value.ToString());
             }
             if (Optional.IsDefined(CommunityGalleryInfo))
             {
-                writer.WritePropertyName("communityGalleryInfo");
+                writer.WritePropertyName("communityGalleryInfo"u8);
                 writer.WriteObjectValue(CommunityGalleryInfo);
             }
             writer.WriteEndObject();
@@ -31,12 +31,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static SharingProfile DeserializeSharingProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GallerySharingPermissionType> permissions = default;
             Optional<IReadOnlyList<SharingProfileGroup>> groups = default;
             Optional<CommunityGalleryInfo> communityGalleryInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("permissions"))
+                if (property.NameEquals("permissions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                     permissions = new GallerySharingPermissionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("groups"))
+                if (property.NameEquals("groups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
                     groups = array;
                     continue;
                 }
-                if (property.NameEquals("communityGalleryInfo"))
+                if (property.NameEquals("communityGalleryInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

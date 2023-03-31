@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.BotService.Models
     {
         internal static ServiceProviderParameterMetadataConstraints DeserializeServiceProviderParameterMetadataConstraints(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> required = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("required"))
+                if (property.NameEquals("required"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

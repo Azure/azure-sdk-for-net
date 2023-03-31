@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static EdgeKubernetesNodeInfo DeserializeEdgeKubernetesNodeInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<EdgeKubernetesNodeType> type = default;
             Optional<IReadOnlyList<EdgeKubernetesIPConfiguration>> ipConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +39,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     type = new EdgeKubernetesNodeType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ipConfiguration"))
+                if (property.NameEquals("ipConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

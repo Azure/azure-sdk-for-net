@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DigitalTwins.Models;
 
 namespace Azure.ResourceManager.DigitalTwins
 {
@@ -164,15 +165,16 @@ namespace Azure.ResourceManager.DigitalTwins
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cleanupConnectionArtifacts"> Specifies whether or not to attempt to clean up artifacts that were created in order to establish a connection to the time series database. This is a best-effort attempt that will fail if appropriate permissions are not in place. Setting this to &apos;true&apos; does not delete any recorded data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<TimeSeriesDatabaseConnectionResource>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TimeSeriesDatabaseConnectionResource>> DeleteAsync(WaitUntil waitUntil, CleanupConnectionArtifact? cleanupConnectionArtifacts = null, CancellationToken cancellationToken = default)
         {
             using var scope = _timeSeriesDatabaseConnectionClientDiagnostics.CreateScope("TimeSeriesDatabaseConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _timeSeriesDatabaseConnectionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DigitalTwinsArmOperation<TimeSeriesDatabaseConnectionResource>(new TimeSeriesDatabaseConnectionOperationSource(Client), _timeSeriesDatabaseConnectionClientDiagnostics, Pipeline, _timeSeriesDatabaseConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _timeSeriesDatabaseConnectionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cleanupConnectionArtifacts, cancellationToken).ConfigureAwait(false);
+                var operation = new DigitalTwinsArmOperation<TimeSeriesDatabaseConnectionResource>(new TimeSeriesDatabaseConnectionOperationSource(Client), _timeSeriesDatabaseConnectionClientDiagnostics, Pipeline, _timeSeriesDatabaseConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cleanupConnectionArtifacts).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -198,15 +200,16 @@ namespace Azure.ResourceManager.DigitalTwins
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cleanupConnectionArtifacts"> Specifies whether or not to attempt to clean up artifacts that were created in order to establish a connection to the time series database. This is a best-effort attempt that will fail if appropriate permissions are not in place. Setting this to &apos;true&apos; does not delete any recorded data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<TimeSeriesDatabaseConnectionResource> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TimeSeriesDatabaseConnectionResource> Delete(WaitUntil waitUntil, CleanupConnectionArtifact? cleanupConnectionArtifacts = null, CancellationToken cancellationToken = default)
         {
             using var scope = _timeSeriesDatabaseConnectionClientDiagnostics.CreateScope("TimeSeriesDatabaseConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = _timeSeriesDatabaseConnectionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DigitalTwinsArmOperation<TimeSeriesDatabaseConnectionResource>(new TimeSeriesDatabaseConnectionOperationSource(Client), _timeSeriesDatabaseConnectionClientDiagnostics, Pipeline, _timeSeriesDatabaseConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _timeSeriesDatabaseConnectionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cleanupConnectionArtifacts, cancellationToken);
+                var operation = new DigitalTwinsArmOperation<TimeSeriesDatabaseConnectionResource>(new TimeSeriesDatabaseConnectionOperationSource(Client), _timeSeriesDatabaseConnectionClientDiagnostics, Pipeline, _timeSeriesDatabaseConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cleanupConnectionArtifacts).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

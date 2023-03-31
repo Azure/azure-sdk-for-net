@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VaultResource created on azure
-            // for more information of creating VaultResource, please refer to the document of VaultResource
+            // this example assumes you already have this RecoveryServicesVaultResource created on azure
+            // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
             string subscriptionId = "6c48fa17-39c7-45f1-90ac-47a587128ace";
             string resourceGroupName = "petesting";
             string vaultName = "pemsi-ecy-rsv2";
-            ResourceIdentifier vaultResourceId = VaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
-            VaultResource vault = client.GetVaultResource(vaultResourceId);
+            ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
+            RecoveryServicesVaultResource recoveryServicesVault = client.GetRecoveryServicesVaultResource(recoveryServicesVaultResourceId);
 
             // get the collection of this RecoveryServicesPrivateLinkResource
-            RecoveryServicesPrivateLinkResourceCollection collection = vault.GetRecoveryServicesPrivateLinkResources();
+            RecoveryServicesPrivateLinkResourceCollection collection = recoveryServicesVault.GetRecoveryServicesPrivateLinkResources();
 
             // invoke the operation and iterate over the result
             await foreach (RecoveryServicesPrivateLinkResource item in collection.GetAllAsync())
@@ -66,16 +66,16 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VaultResource created on azure
-            // for more information of creating VaultResource, please refer to the document of VaultResource
+            // this example assumes you already have this RecoveryServicesVaultResource created on azure
+            // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
             string subscriptionId = "6c48fa17-39c7-45f1-90ac-47a587128ace";
             string resourceGroupName = "petesting";
             string vaultName = "pemsi-ecy-rsv2";
-            ResourceIdentifier vaultResourceId = VaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
-            VaultResource vault = client.GetVaultResource(vaultResourceId);
+            ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
+            RecoveryServicesVaultResource recoveryServicesVault = client.GetRecoveryServicesVaultResource(recoveryServicesVaultResourceId);
 
             // get the collection of this RecoveryServicesPrivateLinkResource
-            RecoveryServicesPrivateLinkResourceCollection collection = vault.GetRecoveryServicesPrivateLinkResources();
+            RecoveryServicesPrivateLinkResourceCollection collection = recoveryServicesVault.GetRecoveryServicesPrivateLinkResources();
 
             // invoke the operation
             string privateLinkResourceName = "backupResource";
@@ -101,16 +101,16 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VaultResource created on azure
-            // for more information of creating VaultResource, please refer to the document of VaultResource
+            // this example assumes you already have this RecoveryServicesVaultResource created on azure
+            // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
             string subscriptionId = "6c48fa17-39c7-45f1-90ac-47a587128ace";
             string resourceGroupName = "petesting";
             string vaultName = "pemsi-ecy-rsv2";
-            ResourceIdentifier vaultResourceId = VaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
-            VaultResource vault = client.GetVaultResource(vaultResourceId);
+            ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
+            RecoveryServicesVaultResource recoveryServicesVault = client.GetRecoveryServicesVaultResource(recoveryServicesVaultResourceId);
 
             // get the collection of this RecoveryServicesPrivateLinkResource
-            RecoveryServicesPrivateLinkResourceCollection collection = vault.GetRecoveryServicesPrivateLinkResources();
+            RecoveryServicesPrivateLinkResourceCollection collection = recoveryServicesVault.GetRecoveryServicesPrivateLinkResources();
 
             // invoke the operation
             string privateLinkResourceName = "backupResource";

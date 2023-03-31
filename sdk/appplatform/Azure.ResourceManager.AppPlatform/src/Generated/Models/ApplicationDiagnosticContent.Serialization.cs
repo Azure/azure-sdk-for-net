@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AppInstance))
             {
-                writer.WritePropertyName("appInstance");
+                writer.WritePropertyName("appInstance"u8);
                 writer.WriteStringValue(AppInstance);
             }
             if (Optional.IsDefined(FilePath))
             {
-                writer.WritePropertyName("filePath");
+                writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
             if (Optional.IsDefined(DurationValue))
             {
-                writer.WritePropertyName("duration");
+                writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(DurationValue);
             }
             writer.WriteEndObject();

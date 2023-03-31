@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (MaxConcurrentTrials != null)
                 {
-                    writer.WritePropertyName("maxConcurrentTrials");
+                    writer.WritePropertyName("maxConcurrentTrials"u8);
                     writer.WriteNumberValue(MaxConcurrentTrials.Value);
                 }
                 else
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (MaxTotalTrials != null)
                 {
-                    writer.WritePropertyName("maxTotalTrials");
+                    writer.WritePropertyName("maxTotalTrials"u8);
                     writer.WriteNumberValue(MaxTotalTrials.Value);
                 }
                 else
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (TrialTimeout != null)
                 {
-                    writer.WritePropertyName("trialTimeout");
+                    writer.WritePropertyName("trialTimeout"u8);
                     writer.WriteStringValue(TrialTimeout.Value, "P");
                 }
                 else
@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("trialTimeout");
                 }
             }
-            writer.WritePropertyName("jobLimitsType");
+            writer.WritePropertyName("jobLimitsType"u8);
             writer.WriteStringValue(JobLimitsType.ToString());
             if (Optional.IsDefined(Timeout))
             {
                 if (Timeout != null)
                 {
-                    writer.WritePropertyName("timeout");
+                    writer.WritePropertyName("timeout"u8);
                     writer.WriteStringValue(Timeout.Value, "P");
                 }
                 else
@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningSweepJobLimits DeserializeMachineLearningSweepJobLimits(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int?> maxConcurrentTrials = default;
             Optional<int?> maxTotalTrials = default;
             Optional<TimeSpan?> trialTimeout = default;
@@ -78,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<TimeSpan?> timeout = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxConcurrentTrials"))
+                if (property.NameEquals("maxConcurrentTrials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     maxConcurrentTrials = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxTotalTrials"))
+                if (property.NameEquals("maxTotalTrials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     maxTotalTrials = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("trialTimeout"))
+                if (property.NameEquals("trialTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,12 +112,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     trialTimeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("jobLimitsType"))
+                if (property.NameEquals("jobLimitsType"u8))
                 {
                     jobLimitsType = new JobLimitsType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("timeout"))
+                if (property.NameEquals("timeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

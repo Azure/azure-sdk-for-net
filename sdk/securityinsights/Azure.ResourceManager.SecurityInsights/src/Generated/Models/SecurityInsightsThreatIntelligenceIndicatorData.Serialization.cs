@@ -19,18 +19,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("etag");
+                writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ThreatIntelligenceTags))
             {
-                writer.WritePropertyName("threatIntelligenceTags");
+                writer.WritePropertyName("threatIntelligenceTags"u8);
                 writer.WriteStartArray();
                 foreach (var item in ThreatIntelligenceTags)
                 {
@@ -40,27 +40,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             if (Optional.IsDefined(LastUpdatedOn))
             {
-                writer.WritePropertyName("lastUpdatedTimeUtc");
+                writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(Source))
             {
-                writer.WritePropertyName("source");
+                writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(IndicatorTypes))
             {
-                writer.WritePropertyName("indicatorTypes");
+                writer.WritePropertyName("indicatorTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in IndicatorTypes)
                 {
@@ -70,22 +70,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             if (Optional.IsDefined(Pattern))
             {
-                writer.WritePropertyName("pattern");
+                writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
             if (Optional.IsDefined(PatternType))
             {
-                writer.WritePropertyName("patternType");
+                writer.WritePropertyName("patternType"u8);
                 writer.WriteStringValue(PatternType);
             }
             if (Optional.IsDefined(PatternVersion))
             {
-                writer.WritePropertyName("patternVersion");
+                writer.WritePropertyName("patternVersion"u8);
                 writer.WriteStringValue(PatternVersion);
             }
             if (Optional.IsCollectionDefined(KillChainPhases))
             {
-                writer.WritePropertyName("killChainPhases");
+                writer.WritePropertyName("killChainPhases"u8);
                 writer.WriteStartArray();
                 foreach (var item in KillChainPhases)
                 {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             if (Optional.IsCollectionDefined(ParsedPattern))
             {
-                writer.WritePropertyName("parsedPattern");
+                writer.WritePropertyName("parsedPattern"u8);
                 writer.WriteStartArray();
                 foreach (var item in ParsedPattern)
                 {
@@ -105,27 +105,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             if (Optional.IsDefined(ExternalId))
             {
-                writer.WritePropertyName("externalId");
+                writer.WritePropertyName("externalId"u8);
                 writer.WriteStringValue(ExternalId);
             }
             if (Optional.IsDefined(CreatedByRef))
             {
-                writer.WritePropertyName("createdByRef");
+                writer.WritePropertyName("createdByRef"u8);
                 writer.WriteStringValue(CreatedByRef);
             }
             if (Optional.IsDefined(IsDefanged))
             {
-                writer.WritePropertyName("defanged");
+                writer.WritePropertyName("defanged"u8);
                 writer.WriteBooleanValue(IsDefanged.Value);
             }
             if (Optional.IsDefined(ExternalLastUpdatedOn))
             {
-                writer.WritePropertyName("externalLastUpdatedTimeUtc");
+                writer.WritePropertyName("externalLastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(ExternalLastUpdatedOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(ExternalReferences))
             {
-                writer.WritePropertyName("externalReferences");
+                writer.WritePropertyName("externalReferences"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExternalReferences)
                 {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             if (Optional.IsCollectionDefined(GranularMarkings))
             {
-                writer.WritePropertyName("granularMarkings");
+                writer.WritePropertyName("granularMarkings"u8);
                 writer.WriteStartArray();
                 foreach (var item in GranularMarkings)
                 {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             if (Optional.IsCollectionDefined(Labels))
             {
-                writer.WritePropertyName("labels");
+                writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
                 foreach (var item in Labels)
                 {
@@ -155,17 +155,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             if (Optional.IsDefined(IsRevoked))
             {
-                writer.WritePropertyName("revoked");
+                writer.WritePropertyName("revoked"u8);
                 writer.WriteBooleanValue(IsRevoked.Value);
             }
             if (Optional.IsDefined(Confidence))
             {
-                writer.WritePropertyName("confidence");
+                writer.WritePropertyName("confidence"u8);
                 writer.WriteNumberValue(Confidence.Value);
             }
             if (Optional.IsCollectionDefined(ObjectMarkingRefs))
             {
-                writer.WritePropertyName("objectMarkingRefs");
+                writer.WritePropertyName("objectMarkingRefs"u8);
                 writer.WriteStartArray();
                 foreach (var item in ObjectMarkingRefs)
                 {
@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             if (Optional.IsDefined(Language))
             {
-                writer.WritePropertyName("language");
+                writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
             if (Optional.IsCollectionDefined(ThreatTypes))
             {
-                writer.WritePropertyName("threatTypes");
+                writer.WritePropertyName("threatTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in ThreatTypes)
                 {
@@ -190,31 +190,36 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             if (Optional.IsDefined(ValidFrom))
             {
-                writer.WritePropertyName("validFrom");
+                writer.WritePropertyName("validFrom"u8);
                 writer.WriteStringValue(ValidFrom.Value, "O");
             }
             if (Optional.IsDefined(ValidUntil))
             {
-                writer.WritePropertyName("validUntil");
+                writer.WritePropertyName("validUntil"u8);
                 writer.WriteStringValue(ValidUntil.Value, "O");
             }
             if (Optional.IsDefined(CreatedOn))
             {
-                writer.WritePropertyName("created");
+                writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(Modified))
             {
-                writer.WritePropertyName("modified");
+                writer.WritePropertyName("modified"u8);
                 writer.WriteStringValue(Modified);
             }
             if (Optional.IsCollectionDefined(Extensions))
             {
-                writer.WritePropertyName("extensions");
+                writer.WritePropertyName("extensions"u8);
                 writer.WriteStartObject();
                 foreach (var item in Extensions)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
@@ -229,6 +234,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsThreatIntelligenceIndicatorData DeserializeSecurityInsightsThreatIntelligenceIndicatorData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ThreatIntelligenceResourceInnerKind kind = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
@@ -267,12 +276,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<IDictionary<string, BinaryData>> extensions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new ThreatIntelligenceResourceInnerKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -282,32 +291,32 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -316,7 +325,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("additionalData"))
+                        if (property0.NameEquals("additionalData"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -326,17 +335,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
                             }
                             additionalData = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("friendlyName"))
+                        if (property0.NameEquals("friendlyName"u8))
                         {
                             friendlyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("threatIntelligenceTags"))
+                        if (property0.NameEquals("threatIntelligenceTags"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -351,7 +367,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             threatIntelligenceTags = array;
                             continue;
                         }
-                        if (property0.NameEquals("lastUpdatedTimeUtc"))
+                        if (property0.NameEquals("lastUpdatedTimeUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -361,22 +377,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             lastUpdatedTimeUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("source"))
+                        if (property0.NameEquals("source"u8))
                         {
                             source = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("indicatorTypes"))
+                        if (property0.NameEquals("indicatorTypes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -391,22 +407,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             indicatorTypes = array;
                             continue;
                         }
-                        if (property0.NameEquals("pattern"))
+                        if (property0.NameEquals("pattern"u8))
                         {
                             pattern = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("patternType"))
+                        if (property0.NameEquals("patternType"u8))
                         {
                             patternType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("patternVersion"))
+                        if (property0.NameEquals("patternVersion"u8))
                         {
                             patternVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("killChainPhases"))
+                        if (property0.NameEquals("killChainPhases"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -421,7 +437,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             killChainPhases = array;
                             continue;
                         }
-                        if (property0.NameEquals("parsedPattern"))
+                        if (property0.NameEquals("parsedPattern"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -436,17 +452,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             parsedPattern = array;
                             continue;
                         }
-                        if (property0.NameEquals("externalId"))
+                        if (property0.NameEquals("externalId"u8))
                         {
                             externalId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("createdByRef"))
+                        if (property0.NameEquals("createdByRef"u8))
                         {
                             createdByRef = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("defanged"))
+                        if (property0.NameEquals("defanged"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -456,7 +472,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             defanged = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("externalLastUpdatedTimeUtc"))
+                        if (property0.NameEquals("externalLastUpdatedTimeUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -466,7 +482,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             externalLastUpdatedTimeUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("externalReferences"))
+                        if (property0.NameEquals("externalReferences"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -481,7 +497,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             externalReferences = array;
                             continue;
                         }
-                        if (property0.NameEquals("granularMarkings"))
+                        if (property0.NameEquals("granularMarkings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -496,7 +512,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             granularMarkings = array;
                             continue;
                         }
-                        if (property0.NameEquals("labels"))
+                        if (property0.NameEquals("labels"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -511,7 +527,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             labels = array;
                             continue;
                         }
-                        if (property0.NameEquals("revoked"))
+                        if (property0.NameEquals("revoked"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -521,7 +537,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             revoked = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("confidence"))
+                        if (property0.NameEquals("confidence"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -531,7 +547,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             confidence = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("objectMarkingRefs"))
+                        if (property0.NameEquals("objectMarkingRefs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -546,12 +562,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             objectMarkingRefs = array;
                             continue;
                         }
-                        if (property0.NameEquals("language"))
+                        if (property0.NameEquals("language"u8))
                         {
                             language = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("threatTypes"))
+                        if (property0.NameEquals("threatTypes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -566,7 +582,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             threatTypes = array;
                             continue;
                         }
-                        if (property0.NameEquals("validFrom"))
+                        if (property0.NameEquals("validFrom"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -576,7 +592,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             validFrom = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("validUntil"))
+                        if (property0.NameEquals("validUntil"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -586,7 +602,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             validUntil = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("created"))
+                        if (property0.NameEquals("created"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -596,12 +612,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             created = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("modified"))
+                        if (property0.NameEquals("modified"u8))
                         {
                             modified = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("extensions"))
+                        if (property0.NameEquals("extensions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -611,7 +627,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
                             }
                             extensions = dictionary;
                             continue;

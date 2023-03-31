@@ -16,6 +16,7 @@ namespace Azure.Identity
     /// types if enabled will be tried, in order:
     /// <list type="bullet">
     /// <item><description><see cref="EnvironmentCredential"/></description></item>
+    /// <item><description><see cref="WorkloadIdentityCredential"/></description></item>
     /// <item><description><see cref="ManagedIdentityCredential"/></description></item>
     /// <item><description><see cref="AzureDeveloperCliCredential"/></description></item>
     /// <item><description><see cref="SharedTokenCacheCredential"/></description></item>
@@ -55,7 +56,7 @@ namespace Azure.Identity
         private readonly CredentialPipeline _pipeline;
         private readonly AsyncLockWithValue<TokenCredential> _credentialLock;
 
-        private TokenCredential[] _sources;
+        internal TokenCredential[] _sources;
 
         internal DefaultAzureCredential() : this(false) { }
 

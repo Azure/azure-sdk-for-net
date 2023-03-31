@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Grafana.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MonitorWorkspaceResourceId))
             {
-                writer.WritePropertyName("azureMonitorWorkspaceResourceId");
+                writer.WritePropertyName("azureMonitorWorkspaceResourceId"u8);
                 writer.WriteStringValue(MonitorWorkspaceResourceId);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.Grafana.Models
 
         internal static MonitorWorkspaceIntegration DeserializeMonitorWorkspaceIntegration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> azureMonitorWorkspaceResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("azureMonitorWorkspaceResourceId"))
+                if (property.NameEquals("azureMonitorWorkspaceResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

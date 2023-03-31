@@ -1,4 +1,8 @@
 parameters:
+- name: LanguageVersion
+  displayName: LanguageVersion (6, 7)
+  type: string
+  default: '7'
 - name: PackageVersions
   displayName: PackageVersions (regex of package versions to run)
   type: string
@@ -15,6 +19,9 @@ parameters:
   displayName: Iterations (times to run each test)
   type: number
   default: '5'
+- name: Profile
+  type: boolean
+  default: false
 - name: AdditionalArguments
   displayName: AdditionalArguments (passed to PerfAutomation)
   type: string
@@ -23,10 +30,11 @@ parameters:
 extends:
   template: /eng/pipelines/templates/jobs/perf.yml
   parameters:
+    LanguageVersion: ${{ parameters.LanguageVersion }}
     ServiceDirectory: storage/Azure.Storage.Files.Shares
-    Services: "^storage-file-share$"
     PackageVersions: ${{ parameters.PackageVersions }}
     Tests: ${{ parameters.Tests }}
     Arguments: ${{ parameters.Arguments }}
     Iterations: ${{ parameters.Iterations }}
+    Profile: ${{ parameters.Profile }}
     AdditionalArguments: ${{ parameters.AdditionalArguments }}

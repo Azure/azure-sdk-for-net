@@ -18,42 +18,42 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DatabaseName))
             {
-                writer.WritePropertyName("databaseName");
+                writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
             if (Optional.IsDefined(ProtectedItemsCount))
             {
-                writer.WritePropertyName("protectedItemsCount");
+                writer.WritePropertyName("protectedItemsCount"u8);
                 writer.WriteNumberValue(ProtectedItemsCount.Value);
             }
             if (Optional.IsDefined(ProtectedServersCount))
             {
-                writer.WritePropertyName("protectedServersCount");
+                writer.WritePropertyName("protectedServersCount"u8);
                 writer.WriteNumberValue(ProtectedServersCount.Value);
             }
             if (Optional.IsDefined(DiskCount))
             {
-                writer.WritePropertyName("diskCount");
+                writer.WritePropertyName("diskCount"u8);
                 writer.WriteNumberValue(DiskCount.Value);
             }
             if (Optional.IsDefined(UsedDiskSpace))
             {
-                writer.WritePropertyName("usedDiskSpace");
+                writer.WritePropertyName("usedDiskSpace"u8);
                 writer.WriteNumberValue(UsedDiskSpace.Value);
             }
             if (Optional.IsDefined(AvailableDiskSpace))
             {
-                writer.WritePropertyName("availableDiskSpace");
+                writer.WritePropertyName("availableDiskSpace"u8);
                 writer.WriteNumberValue(AvailableDiskSpace.Value);
             }
             if (Optional.IsDefined(RefreshedOn))
             {
-                writer.WritePropertyName("refreshedAt");
+                writer.WritePropertyName("refreshedAt"u8);
                 writer.WriteStringValue(RefreshedOn.Value, "O");
             }
             if (Optional.IsDefined(AzureProtectedInstances))
             {
-                writer.WritePropertyName("azureProtectedInstances");
+                writer.WritePropertyName("azureProtectedInstances"u8);
                 writer.WriteNumberValue(AzureProtectedInstances.Value);
             }
             writer.WriteEndObject();
@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupEngineExtendedInfo DeserializeBackupEngineExtendedInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> databaseName = default;
             Optional<int> protectedItemsCount = default;
             Optional<int> protectedServersCount = default;
@@ -71,12 +75,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<int> azureProtectedInstances = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("databaseName"))
+                if (property.NameEquals("databaseName"u8))
                 {
                     databaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectedItemsCount"))
+                if (property.NameEquals("protectedItemsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +90,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectedItemsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("protectedServersCount"))
+                if (property.NameEquals("protectedServersCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectedServersCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("diskCount"))
+                if (property.NameEquals("diskCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     diskCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("usedDiskSpace"))
+                if (property.NameEquals("usedDiskSpace"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     usedDiskSpace = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("availableDiskSpace"))
+                if (property.NameEquals("availableDiskSpace"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     availableDiskSpace = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("refreshedAt"))
+                if (property.NameEquals("refreshedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,7 +140,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     refreshedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("azureProtectedInstances"))
+                if (property.NameEquals("azureProtectedInstances"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -68,7 +68,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-fe37a759-940d-25fc-b679-f355a31d15d4/test-directory-568ffe88-c844-a559-c1ba-8c4e4ffd26d7?sv=2021-12-02&st=2021-02-19T18%3A04%3A43Z&se=2021-02-19T20%3A04%3A43Z&sr=b&sp=racwd&sig=Sanitized&action=getAccessControl",
+      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-fe37a759-940d-25fc-b679-f355a31d15d4/test-directory-568ffe88-c844-a559-c1ba-8c4e4ffd26d7?sv=2022-11-02&st=2021-02-19T18%3A04%3A43Z&se=2021-02-19T20%3A04%3A43Z&sr=b&sp=racwd&sig=Sanitized&action=getAccessControl",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Accept": "application/json",

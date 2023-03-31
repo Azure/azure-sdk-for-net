@@ -31,11 +31,25 @@ namespace Azure.ResourceManager.Automanage
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ConfigurationProfileAssignmentResources in the ArmResource. </summary>
-        /// <returns> An object representing collection of ConfigurationProfileAssignmentResources and their operations over a ConfigurationProfileAssignmentResource. </returns>
-        public virtual ConfigurationProfileAssignmentCollection GetConfigurationProfileAssignments()
+        /// <summary> Gets a collection of AutomanageVmConfigurationProfileAssignmentResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of AutomanageVmConfigurationProfileAssignmentResources and their operations over a AutomanageVmConfigurationProfileAssignmentResource. </returns>
+        public virtual AutomanageVmConfigurationProfileAssignmentCollection GetAutomanageVmConfigurationProfileAssignments()
         {
-            return GetCachedClient(Client => new ConfigurationProfileAssignmentCollection(Client, Id));
+            return GetCachedClient(Client => new AutomanageVmConfigurationProfileAssignmentCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of AutomanageHcrpConfigurationProfileAssignmentResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of AutomanageHcrpConfigurationProfileAssignmentResources and their operations over a AutomanageHcrpConfigurationProfileAssignmentResource. </returns>
+        public virtual AutomanageHcrpConfigurationProfileAssignmentCollection GetAutomanageHcrpConfigurationProfileAssignments()
+        {
+            return GetCachedClient(Client => new AutomanageHcrpConfigurationProfileAssignmentCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of AutomanageHciClusterConfigurationProfileAssignmentResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of AutomanageHciClusterConfigurationProfileAssignmentResources and their operations over a AutomanageHciClusterConfigurationProfileAssignmentResource. </returns>
+        public virtual AutomanageHciClusterConfigurationProfileAssignmentCollection GetAutomanageHciClusterConfigurationProfileAssignments()
+        {
+            return GetCachedClient(Client => new AutomanageHciClusterConfigurationProfileAssignmentCollection(Client, Id));
         }
     }
 }

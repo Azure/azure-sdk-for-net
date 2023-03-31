@@ -15,11 +15,11 @@ namespace Azure.Communication.Rooms
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("communicationIdentifier");
+            writer.WritePropertyName("communicationIdentifier"u8);
             writer.WriteObjectValue(CommunicationIdentifier);
             if (Optional.IsDefined(Role))
             {
-                writer.WritePropertyName("role");
+                writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
             }
             writer.WriteEndObject();
@@ -27,16 +27,20 @@ namespace Azure.Communication.Rooms
 
         internal static RoomParticipantInternal DeserializeRoomParticipantInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CommunicationIdentifierModel communicationIdentifier = default;
             Optional<RoleType> role = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("communicationIdentifier"))
+                if (property.NameEquals("communicationIdentifier"u8))
                 {
                     communicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("role"))
+                if (property.NameEquals("role"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

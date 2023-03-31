@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static HealthcareDicomImageDeletedEventData DeserializeHealthcareDicomImageDeletedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> imageStudyInstanceUid = default;
             Optional<string> imageSeriesInstanceUid = default;
             Optional<string> imageSopInstanceUid = default;
@@ -24,27 +28,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<long> sequenceNumber = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("imageStudyInstanceUid"))
+                if (property.NameEquals("imageStudyInstanceUid"u8))
                 {
                     imageStudyInstanceUid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("imageSeriesInstanceUid"))
+                if (property.NameEquals("imageSeriesInstanceUid"u8))
                 {
                     imageSeriesInstanceUid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("imageSopInstanceUid"))
+                if (property.NameEquals("imageSopInstanceUid"u8))
                 {
                     imageSopInstanceUid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceHostName"))
+                if (property.NameEquals("serviceHostName"u8))
                 {
                     serviceHostName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sequenceNumber"))
+                if (property.NameEquals("sequenceNumber"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,26 +17,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryAvailabilitySetId))
             {
-                writer.WritePropertyName("recoveryAvailabilitySetId");
+                writer.WritePropertyName("recoveryAvailabilitySetId"u8);
                 writer.WriteStringValue(RecoveryAvailabilitySetId);
             }
-            writer.WritePropertyName("resourceType");
+            writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
             writer.WriteEndObject();
         }
 
         internal static ExistingRecoveryAvailabilitySet DeserializeExistingRecoveryAvailabilitySet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recoveryAvailabilitySetId = default;
             string resourceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryAvailabilitySetId"))
+                if (property.NameEquals("recoveryAvailabilitySetId"u8))
                 {
                     recoveryAvailabilitySetId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;

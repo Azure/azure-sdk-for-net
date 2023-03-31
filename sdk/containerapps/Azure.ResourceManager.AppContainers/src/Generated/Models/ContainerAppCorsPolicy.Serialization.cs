@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("allowedOrigins");
+            writer.WritePropertyName("allowedOrigins"u8);
             writer.WriteStartArray();
             foreach (var item in AllowedOrigins)
             {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(AllowedMethods))
             {
-                writer.WritePropertyName("allowedMethods");
+                writer.WritePropertyName("allowedMethods"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedMethods)
                 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             if (Optional.IsCollectionDefined(AllowedHeaders))
             {
-                writer.WritePropertyName("allowedHeaders");
+                writer.WritePropertyName("allowedHeaders"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedHeaders)
                 {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             if (Optional.IsCollectionDefined(ExposeHeaders))
             {
-                writer.WritePropertyName("exposeHeaders");
+                writer.WritePropertyName("exposeHeaders"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExposeHeaders)
                 {
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             if (Optional.IsDefined(MaxAge))
             {
-                writer.WritePropertyName("maxAge");
+                writer.WritePropertyName("maxAge"u8);
                 writer.WriteNumberValue(MaxAge.Value);
             }
             if (Optional.IsDefined(AllowCredentials))
             {
-                writer.WritePropertyName("allowCredentials");
+                writer.WritePropertyName("allowCredentials"u8);
                 writer.WriteBooleanValue(AllowCredentials.Value);
             }
             writer.WriteEndObject();
@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppCorsPolicy DeserializeContainerAppCorsPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> allowedOrigins = default;
             Optional<IList<string>> allowedMethods = default;
             Optional<IList<string>> allowedHeaders = default;
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<bool> allowCredentials = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowedOrigins"))
+                if (property.NameEquals("allowedOrigins"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -86,7 +90,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     allowedOrigins = array;
                     continue;
                 }
-                if (property.NameEquals("allowedMethods"))
+                if (property.NameEquals("allowedMethods"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +105,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     allowedMethods = array;
                     continue;
                 }
-                if (property.NameEquals("allowedHeaders"))
+                if (property.NameEquals("allowedHeaders"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,7 +120,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     allowedHeaders = array;
                     continue;
                 }
-                if (property.NameEquals("exposeHeaders"))
+                if (property.NameEquals("exposeHeaders"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -131,7 +135,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     exposeHeaders = array;
                     continue;
                 }
-                if (property.NameEquals("maxAge"))
+                if (property.NameEquals("maxAge"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -141,7 +145,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     maxAge = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("allowCredentials"))
+                if (property.NameEquals("allowCredentials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

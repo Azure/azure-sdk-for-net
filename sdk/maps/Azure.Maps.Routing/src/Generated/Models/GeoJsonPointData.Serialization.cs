@@ -15,7 +15,7 @@ namespace Azure.Maps.Routing.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("coordinates");
+            writer.WritePropertyName("coordinates"u8);
             writer.WriteStartArray();
             foreach (var item in Coordinates)
             {

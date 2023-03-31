@@ -15,10 +15,14 @@ namespace Azure.Communication.CallAutomation
     {
         internal static CollectTonesResult DeserializeCollectTonesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DtmfTone>> tones = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tones"))
+                if (property.NameEquals("tones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

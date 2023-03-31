@@ -17,33 +17,37 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AppLocation))
             {
-                writer.WritePropertyName("appLocation");
+                writer.WritePropertyName("appLocation"u8);
                 writer.WriteStringValue(AppLocation.Value);
             }
             if (Optional.IsDefined(InfrastructureConfiguration))
             {
-                writer.WritePropertyName("infrastructureConfiguration");
+                writer.WritePropertyName("infrastructureConfiguration"u8);
                 writer.WriteObjectValue(InfrastructureConfiguration);
             }
             if (Optional.IsDefined(SoftwareConfiguration))
             {
-                writer.WritePropertyName("softwareConfiguration");
+                writer.WritePropertyName("softwareConfiguration"u8);
                 writer.WriteObjectValue(SoftwareConfiguration);
             }
-            writer.WritePropertyName("configurationType");
+            writer.WritePropertyName("configurationType"u8);
             writer.WriteStringValue(ConfigurationType.ToString());
             writer.WriteEndObject();
         }
 
         internal static DeploymentConfiguration DeserializeDeploymentConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> appLocation = default;
             Optional<InfrastructureConfiguration> infrastructureConfiguration = default;
             Optional<SoftwareConfiguration> softwareConfiguration = default;
             SapConfigurationType configurationType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("appLocation"))
+                if (property.NameEquals("appLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     appLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("infrastructureConfiguration"))
+                if (property.NameEquals("infrastructureConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +67,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     infrastructureConfiguration = InfrastructureConfiguration.DeserializeInfrastructureConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("softwareConfiguration"))
+                if (property.NameEquals("softwareConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +77,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     softwareConfiguration = SoftwareConfiguration.DeserializeSoftwareConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("configurationType"))
+                if (property.NameEquals("configurationType"u8))
                 {
                     configurationType = new SapConfigurationType(property.Value.GetString());
                     continue;

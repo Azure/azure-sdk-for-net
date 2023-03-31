@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Elastic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ElasticCloudUser))
             {
-                writer.WritePropertyName("elasticCloudUser");
+                writer.WritePropertyName("elasticCloudUser"u8);
                 writer.WriteObjectValue(ElasticCloudUser);
             }
             if (Optional.IsDefined(ElasticCloudDeployment))
             {
-                writer.WritePropertyName("elasticCloudDeployment");
+                writer.WritePropertyName("elasticCloudDeployment"u8);
                 writer.WriteObjectValue(ElasticCloudDeployment);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static ElasticProperties DeserializeElasticProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ElasticCloudUser> elasticCloudUser = default;
             Optional<ElasticCloudDeployment> elasticCloudDeployment = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("elasticCloudUser"))
+                if (property.NameEquals("elasticCloudUser"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     elasticCloudUser = ElasticCloudUser.DeserializeElasticCloudUser(property.Value);
                     continue;
                 }
-                if (property.NameEquals("elasticCloudDeployment"))
+                if (property.NameEquals("elasticCloudDeployment"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

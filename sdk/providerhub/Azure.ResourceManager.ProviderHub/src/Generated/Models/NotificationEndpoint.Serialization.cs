@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(NotificationDestination))
             {
-                writer.WritePropertyName("notificationDestination");
+                writer.WritePropertyName("notificationDestination"u8);
                 writer.WriteStringValue(NotificationDestination);
             }
             if (Optional.IsCollectionDefined(Locations))
             {
-                writer.WritePropertyName("locations");
+                writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
@@ -36,16 +36,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static NotificationEndpoint DeserializeNotificationEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> notificationDestination = default;
             Optional<IList<string>> locations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("notificationDestination"))
+                if (property.NameEquals("notificationDestination"u8))
                 {
                     notificationDestination = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("locations"))
+                if (property.NameEquals("locations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

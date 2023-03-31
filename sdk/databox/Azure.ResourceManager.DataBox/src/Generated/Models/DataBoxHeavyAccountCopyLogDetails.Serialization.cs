@@ -15,18 +15,22 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataBoxHeavyAccountCopyLogDetails DeserializeDataBoxHeavyAccountCopyLogDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> accountName = default;
             Optional<IReadOnlyList<string>> copyLogLink = default;
             Optional<IReadOnlyList<string>> copyVerboseLogLink = default;
             DataBoxOrderType copyLogDetailsType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountName"))
+                if (property.NameEquals("accountName"u8))
                 {
                     accountName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("copyLogLink"))
+                if (property.NameEquals("copyLogLink"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     copyLogLink = array;
                     continue;
                 }
-                if (property.NameEquals("copyVerboseLogLink"))
+                if (property.NameEquals("copyVerboseLogLink"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     copyVerboseLogLink = array;
                     continue;
                 }
-                if (property.NameEquals("copyLogDetailsType"))
+                if (property.NameEquals("copyLogDetailsType"u8))
                 {
                     copyLogDetailsType = property.Value.GetString().ToDataBoxOrderType();
                     continue;

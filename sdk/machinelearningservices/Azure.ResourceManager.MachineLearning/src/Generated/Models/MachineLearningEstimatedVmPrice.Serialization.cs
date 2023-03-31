@@ -14,22 +14,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningEstimatedVmPrice DeserializeMachineLearningEstimatedVmPrice(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             double retailPrice = default;
             MachineLearningVmPriceOSType osType = default;
             MachineLearningVmTier vmTier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("retailPrice"))
+                if (property.NameEquals("retailPrice"u8))
                 {
                     retailPrice = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = new MachineLearningVmPriceOSType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("vmTier"))
+                if (property.NameEquals("vmTier"u8))
                 {
                     vmTier = new MachineLearningVmTier(property.Value.GetString());
                     continue;

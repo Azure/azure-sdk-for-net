@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DiskId))
             {
-                writer.WritePropertyName("diskId");
+                writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
             if (Optional.IsDefined(LogStorageAccountId))
             {
-                writer.WritePropertyName("logStorageAccountId");
+                writer.WritePropertyName("logStorageAccountId"u8);
                 writer.WriteStringValue(LogStorageAccountId);
             }
             if (Optional.IsDefined(DiskType))
             {
-                writer.WritePropertyName("diskType");
+                writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
             }
             if (Optional.IsDefined(DiskEncryptionSetId))
             {
-                writer.WritePropertyName("diskEncryptionSetId");
+                writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
             writer.WriteEndObject();

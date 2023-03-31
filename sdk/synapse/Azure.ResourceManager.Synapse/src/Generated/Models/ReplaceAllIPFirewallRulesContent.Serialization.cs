@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(IPFirewallRules))
             {
-                writer.WritePropertyName("ipFirewallRules");
+                writer.WritePropertyName("ipFirewallRules"u8);
                 writer.WriteStartObject();
                 foreach (var item in IPFirewallRules)
                 {

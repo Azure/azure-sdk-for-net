@@ -14,11 +14,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningVirtualMachineSecrets DeserializeMachineLearningVirtualMachineSecrets(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningVmSshCredentials> administratorAccount = default;
             ComputeType computeType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("administratorAccount"))
+                if (property.NameEquals("administratorAccount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     administratorAccount = MachineLearningVmSshCredentials.DeserializeMachineLearningVmSshCredentials(property.Value);
                     continue;
                 }
-                if (property.NameEquals("computeType"))
+                if (property.NameEquals("computeType"u8))
                 {
                     computeType = new ComputeType(property.Value.GetString());
                     continue;

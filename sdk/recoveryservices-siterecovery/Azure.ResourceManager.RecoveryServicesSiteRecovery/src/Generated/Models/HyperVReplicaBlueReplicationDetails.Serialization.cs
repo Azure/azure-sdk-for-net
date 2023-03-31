@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static HyperVReplicaBlueReplicationDetails DeserializeHyperVReplicaBlueReplicationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> lastReplicatedTime = default;
             Optional<IReadOnlyList<VmNicDetails>> vmNics = default;
             Optional<string> vmId = default;
@@ -26,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastReplicatedTime"))
+                if (property.NameEquals("lastReplicatedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     lastReplicatedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("vmNics"))
+                if (property.NameEquals("vmNics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,22 +55,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     vmNics = array;
                     continue;
                 }
-                if (property.NameEquals("vmId"))
+                if (property.NameEquals("vmId"u8))
                 {
                     vmId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmProtectionState"))
+                if (property.NameEquals("vmProtectionState"u8))
                 {
                     vmProtectionState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmProtectionStateDescription"))
+                if (property.NameEquals("vmProtectionStateDescription"u8))
                 {
                     vmProtectionStateDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("initialReplicationDetails"))
+                if (property.NameEquals("initialReplicationDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     initialReplicationDetails = InitialReplicationDetails.DeserializeInitialReplicationDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("vMDiskDetails"))
+                if (property.NameEquals("vMDiskDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     vmDiskDetails = array;
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

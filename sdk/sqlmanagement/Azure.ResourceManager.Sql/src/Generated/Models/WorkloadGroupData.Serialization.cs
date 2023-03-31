@@ -16,36 +16,36 @@ namespace Azure.ResourceManager.Sql
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(MinResourcePercent))
             {
-                writer.WritePropertyName("minResourcePercent");
+                writer.WritePropertyName("minResourcePercent"u8);
                 writer.WriteNumberValue(MinResourcePercent.Value);
             }
             if (Optional.IsDefined(MaxResourcePercent))
             {
-                writer.WritePropertyName("maxResourcePercent");
+                writer.WritePropertyName("maxResourcePercent"u8);
                 writer.WriteNumberValue(MaxResourcePercent.Value);
             }
             if (Optional.IsDefined(MinResourcePercentPerRequest))
             {
-                writer.WritePropertyName("minResourcePercentPerRequest");
+                writer.WritePropertyName("minResourcePercentPerRequest"u8);
                 writer.WriteNumberValue(MinResourcePercentPerRequest.Value);
             }
             if (Optional.IsDefined(MaxResourcePercentPerRequest))
             {
-                writer.WritePropertyName("maxResourcePercentPerRequest");
+                writer.WritePropertyName("maxResourcePercentPerRequest"u8);
                 writer.WriteNumberValue(MaxResourcePercentPerRequest.Value);
             }
             if (Optional.IsDefined(Importance))
             {
-                writer.WritePropertyName("importance");
+                writer.WritePropertyName("importance"u8);
                 writer.WriteStringValue(Importance);
             }
             if (Optional.IsDefined(QueryExecutionTimeout))
             {
-                writer.WritePropertyName("queryExecutionTimeout");
+                writer.WritePropertyName("queryExecutionTimeout"u8);
                 writer.WriteNumberValue(QueryExecutionTimeout.Value);
             }
             writer.WriteEndObject();
@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static WorkloadGroupData DeserializeWorkloadGroupData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -66,22 +70,22 @@ namespace Azure.ResourceManager.Sql
             Optional<int> queryExecutionTimeout = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.Sql
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +104,7 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("minResourcePercent"))
+                        if (property0.NameEquals("minResourcePercent"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -110,7 +114,7 @@ namespace Azure.ResourceManager.Sql
                             minResourcePercent = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("maxResourcePercent"))
+                        if (property0.NameEquals("maxResourcePercent"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -120,7 +124,7 @@ namespace Azure.ResourceManager.Sql
                             maxResourcePercent = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("minResourcePercentPerRequest"))
+                        if (property0.NameEquals("minResourcePercentPerRequest"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -130,7 +134,7 @@ namespace Azure.ResourceManager.Sql
                             minResourcePercentPerRequest = property0.Value.GetDouble();
                             continue;
                         }
-                        if (property0.NameEquals("maxResourcePercentPerRequest"))
+                        if (property0.NameEquals("maxResourcePercentPerRequest"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -140,12 +144,12 @@ namespace Azure.ResourceManager.Sql
                             maxResourcePercentPerRequest = property0.Value.GetDouble();
                             continue;
                         }
-                        if (property0.NameEquals("importance"))
+                        if (property0.NameEquals("importance"u8))
                         {
                             importance = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("queryExecutionTimeout"))
+                        if (property0.NameEquals("queryExecutionTimeout"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

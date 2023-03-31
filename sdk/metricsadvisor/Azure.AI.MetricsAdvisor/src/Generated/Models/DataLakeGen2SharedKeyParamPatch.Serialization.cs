@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AccountKey))
             {
-                writer.WritePropertyName("accountKey");
+                writer.WritePropertyName("accountKey"u8);
                 writer.WriteStringValue(AccountKey);
             }
             writer.WriteEndObject();

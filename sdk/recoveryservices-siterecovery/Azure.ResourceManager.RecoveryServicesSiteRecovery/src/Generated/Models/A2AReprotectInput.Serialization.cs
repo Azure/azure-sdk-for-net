@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryContainerId))
             {
-                writer.WritePropertyName("recoveryContainerId");
+                writer.WritePropertyName("recoveryContainerId"u8);
                 writer.WriteStringValue(RecoveryContainerId);
             }
             if (Optional.IsCollectionDefined(VmDisks))
             {
-                writer.WritePropertyName("vmDisks");
+                writer.WritePropertyName("vmDisks"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmDisks)
                 {
@@ -32,25 +32,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             if (Optional.IsDefined(RecoveryResourceGroupId))
             {
-                writer.WritePropertyName("recoveryResourceGroupId");
+                writer.WritePropertyName("recoveryResourceGroupId"u8);
                 writer.WriteStringValue(RecoveryResourceGroupId);
             }
             if (Optional.IsDefined(RecoveryCloudServiceId))
             {
-                writer.WritePropertyName("recoveryCloudServiceId");
+                writer.WritePropertyName("recoveryCloudServiceId"u8);
                 writer.WriteStringValue(RecoveryCloudServiceId);
             }
             if (Optional.IsDefined(RecoveryAvailabilitySetId))
             {
-                writer.WritePropertyName("recoveryAvailabilitySetId");
+                writer.WritePropertyName("recoveryAvailabilitySetId"u8);
                 writer.WriteStringValue(RecoveryAvailabilitySetId);
             }
             if (Optional.IsDefined(PolicyId))
             {
-                writer.WritePropertyName("policyId");
+                writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

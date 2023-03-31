@@ -116,7 +116,6 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
-        [Ignore("To be implemented.")]
         public void CanTestPropertyForNull()
         {
             dynamic jsonData = new BinaryData("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } }").ToDynamic();

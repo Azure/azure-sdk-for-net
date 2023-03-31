@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Threading;
 using Xunit;
 using static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper;
-using payloads = Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart;
+using Payloads = Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 {
@@ -75,10 +75,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             switch (responseType)
             {
-                case ResponseTypes.String: return payloads.TokenIssuanceStart.ActionResponse;
+                case ResponseTypes.String: return Payloads.TokenIssuanceStart.TokenIssuanceStart.ActionResponse;
                 case ResponseTypes.HttpResponse: return CreateHttpResponse(streamWriter);
                 case ResponseTypes.HttpResponseMessage: return CreateHttpResponseMessage();
-                case ResponseTypes.AuthEventResponse: return new TestAuthResponse(HttpStatusCode.OK, payloads.TokenIssuanceStart.ActionResponse);
+                case ResponseTypes.AuthEventResponse: return new TestAuthResponse(HttpStatusCode.OK, Payloads.TokenIssuanceStart.TokenIssuanceStart.ActionResponse);
                 case ResponseTypes.Unknown: return new object();
                 default: return null;
             }
@@ -94,9 +94,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 case ResponseTypes.String:
                 case ResponseTypes.HttpResponse:
                 case ResponseTypes.HttpResponseMessage:
-                    return (code: HttpStatusCode.OK, payloads.TokenIssuanceStart.ExpectedPayload);
+                    return (code: HttpStatusCode.OK, Payloads.TokenIssuanceStart.TokenIssuanceStart.ExpectedPayload);
                 case ResponseTypes.AuthEventResponse:
-                    return (code: HttpStatusCode.OK, payloads.TokenIssuanceStart.ActionResponse);
+                    return (code: HttpStatusCode.OK, Payloads.TokenIssuanceStart.TokenIssuanceStart.ActionResponse);
                 case ResponseTypes.Unknown:
                     return (code: HttpStatusCode.InternalServerError, @"{'errors':['Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return.']}");
                 default:
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             var response = new DefaultHttpContext().Response;
 
-            sw.Write(payloads.TokenIssuanceStart.ActionResponse);
+            sw.Write(Payloads.TokenIssuanceStart.TokenIssuanceStart.ActionResponse);
             sw.Flush();
 
             response.Body = sw.BaseStream;
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(payloads.TokenIssuanceStart.ActionResponse)
+                Content = new StringContent(Payloads.TokenIssuanceStart.TokenIssuanceStart.ActionResponse)
             };
         }
 

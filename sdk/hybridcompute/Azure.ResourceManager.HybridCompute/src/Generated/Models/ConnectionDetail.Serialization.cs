@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         internal static ConnectionDetail DeserializeConnectionDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> privateIPAddress = default;
             Optional<string> linkIdentifier = default;
@@ -21,27 +25,27 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Optional<string> memberName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateIpAddress"))
+                if (property.NameEquals("privateIpAddress"u8))
                 {
                     privateIPAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("linkIdentifier"))
+                if (property.NameEquals("linkIdentifier"u8))
                 {
                     linkIdentifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("groupId"))
+                if (property.NameEquals("groupId"u8))
                 {
                     groupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("memberName"))
+                if (property.NameEquals("memberName"u8))
                 {
                     memberName = property.Value.GetString();
                     continue;

@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("vhdPrefix");
+            writer.WritePropertyName("vhdPrefix"u8);
             writer.WriteStringValue(VhdPrefix);
-            writer.WritePropertyName("destinationContainerName");
+            writer.WritePropertyName("destinationContainerName"u8);
             writer.WriteStringValue(DestinationContainerName);
-            writer.WritePropertyName("overwriteVhds");
+            writer.WritePropertyName("overwriteVhds"u8);
             writer.WriteBooleanValue(OverwriteVhds);
             writer.WriteEndObject();
         }

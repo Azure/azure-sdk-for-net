@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static SqlMetricAvailability DeserializeSqlMetricAvailability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> retention = default;
             Optional<string> timeGrain = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("retention"))
+                if (property.NameEquals("retention"u8))
                 {
                     retention = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timeGrain"))
+                if (property.NameEquals("timeGrain"u8))
                 {
                     timeGrain = property.Value.GetString();
                     continue;

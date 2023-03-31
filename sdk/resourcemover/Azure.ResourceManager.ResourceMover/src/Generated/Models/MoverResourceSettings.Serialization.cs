@@ -15,15 +15,19 @@ namespace Azure.ResourceManager.ResourceMover.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("resourceType");
+            writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            writer.WritePropertyName("targetResourceName");
+            writer.WritePropertyName("targetResourceName"u8);
             writer.WriteStringValue(TargetResourceName);
             writer.WriteEndObject();
         }
 
         internal static MoverResourceSettings DeserializeMoverResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("resourceType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Protocol))
             {
-                writer.WritePropertyName("protocol");
+                writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol);
             }
             if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("url");
+                writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -31,16 +31,20 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static LiveEventEndpoint DeserializeLiveEventEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> protocol = default;
             Optional<Uri> uri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("protocol"))
+                if (property.NameEquals("protocol"u8))
                 {
                     protocol = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

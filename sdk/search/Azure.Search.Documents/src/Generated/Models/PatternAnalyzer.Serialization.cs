@@ -18,22 +18,22 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LowerCaseTerms))
             {
-                writer.WritePropertyName("lowercase");
+                writer.WritePropertyName("lowercase"u8);
                 writer.WriteBooleanValue(LowerCaseTerms.Value);
             }
             if (Optional.IsDefined(Pattern))
             {
-                writer.WritePropertyName("pattern");
+                writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
             if (Optional.IsDefined(FlagsInternal))
             {
-                writer.WritePropertyName("flags");
+                writer.WritePropertyName("flags"u8);
                 writer.WriteStringValue(FlagsInternal);
             }
             if (Optional.IsCollectionDefined(Stopwords))
             {
-                writer.WritePropertyName("stopwords");
+                writer.WritePropertyName("stopwords"u8);
                 writer.WriteStartArray();
                 foreach (var item in Stopwords)
                 {
@@ -41,15 +41,19 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WriteEndObject();
         }
 
         internal static PatternAnalyzer DeserializePatternAnalyzer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> lowercase = default;
             Optional<string> pattern = default;
             Optional<string> flags = default;
@@ -58,7 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lowercase"))
+                if (property.NameEquals("lowercase"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,17 +72,17 @@ namespace Azure.Search.Documents.Indexes.Models
                     lowercase = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("pattern"))
+                if (property.NameEquals("pattern"u8))
                 {
                     pattern = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("flags"))
+                if (property.NameEquals("flags"u8))
                 {
                     flags = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stopwords"))
+                if (property.NameEquals("stopwords"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,12 +97,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     stopwords = array;
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;

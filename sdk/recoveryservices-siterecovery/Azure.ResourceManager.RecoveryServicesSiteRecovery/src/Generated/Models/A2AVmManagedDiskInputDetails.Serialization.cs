@@ -15,30 +15,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("diskId");
+            writer.WritePropertyName("diskId"u8);
             writer.WriteStringValue(DiskId);
-            writer.WritePropertyName("primaryStagingAzureStorageAccountId");
+            writer.WritePropertyName("primaryStagingAzureStorageAccountId"u8);
             writer.WriteStringValue(PrimaryStagingAzureStorageAccountId);
-            writer.WritePropertyName("recoveryResourceGroupId");
+            writer.WritePropertyName("recoveryResourceGroupId"u8);
             writer.WriteStringValue(RecoveryResourceGroupId);
             if (Optional.IsDefined(RecoveryReplicaDiskAccountType))
             {
-                writer.WritePropertyName("recoveryReplicaDiskAccountType");
+                writer.WritePropertyName("recoveryReplicaDiskAccountType"u8);
                 writer.WriteStringValue(RecoveryReplicaDiskAccountType);
             }
             if (Optional.IsDefined(RecoveryTargetDiskAccountType))
             {
-                writer.WritePropertyName("recoveryTargetDiskAccountType");
+                writer.WritePropertyName("recoveryTargetDiskAccountType"u8);
                 writer.WriteStringValue(RecoveryTargetDiskAccountType);
             }
             if (Optional.IsDefined(RecoveryDiskEncryptionSetId))
             {
-                writer.WritePropertyName("recoveryDiskEncryptionSetId");
+                writer.WritePropertyName("recoveryDiskEncryptionSetId"u8);
                 writer.WriteStringValue(RecoveryDiskEncryptionSetId);
             }
             if (Optional.IsDefined(DiskEncryptionInfo))
             {
-                writer.WritePropertyName("diskEncryptionInfo");
+                writer.WritePropertyName("diskEncryptionInfo"u8);
                 writer.WriteObjectValue(DiskEncryptionInfo);
             }
             writer.WriteEndObject();

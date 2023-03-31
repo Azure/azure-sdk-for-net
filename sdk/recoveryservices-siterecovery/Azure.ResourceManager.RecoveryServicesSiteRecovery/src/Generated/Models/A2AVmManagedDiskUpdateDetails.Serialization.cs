@@ -17,32 +17,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DiskId))
             {
-                writer.WritePropertyName("diskId");
+                writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
             if (Optional.IsDefined(RecoveryTargetDiskAccountType))
             {
-                writer.WritePropertyName("recoveryTargetDiskAccountType");
+                writer.WritePropertyName("recoveryTargetDiskAccountType"u8);
                 writer.WriteStringValue(RecoveryTargetDiskAccountType);
             }
             if (Optional.IsDefined(RecoveryReplicaDiskAccountType))
             {
-                writer.WritePropertyName("recoveryReplicaDiskAccountType");
+                writer.WritePropertyName("recoveryReplicaDiskAccountType"u8);
                 writer.WriteStringValue(RecoveryReplicaDiskAccountType);
             }
             if (Optional.IsDefined(DiskEncryptionInfo))
             {
-                writer.WritePropertyName("diskEncryptionInfo");
+                writer.WritePropertyName("diskEncryptionInfo"u8);
                 writer.WriteObjectValue(DiskEncryptionInfo);
             }
             if (Optional.IsDefined(FailoverDiskName))
             {
-                writer.WritePropertyName("failoverDiskName");
+                writer.WritePropertyName("failoverDiskName"u8);
                 writer.WriteStringValue(FailoverDiskName);
             }
             if (Optional.IsDefined(TfoDiskName))
             {
-                writer.WritePropertyName("tfoDiskName");
+                writer.WritePropertyName("tfoDiskName"u8);
                 writer.WriteStringValue(TfoDiskName);
             }
             writer.WriteEndObject();

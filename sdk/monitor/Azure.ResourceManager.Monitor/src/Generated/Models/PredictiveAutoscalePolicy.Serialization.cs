@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("scaleMode");
+            writer.WritePropertyName("scaleMode"u8);
             writer.WriteStringValue(ScaleMode.ToSerialString());
             if (Optional.IsDefined(ScaleLookAheadTime))
             {
-                writer.WritePropertyName("scaleLookAheadTime");
+                writer.WritePropertyName("scaleLookAheadTime"u8);
                 writer.WriteStringValue(ScaleLookAheadTime.Value, "P");
             }
             writer.WriteEndObject();
@@ -28,16 +28,20 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static PredictiveAutoscalePolicy DeserializePredictiveAutoscalePolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PredictiveAutoscalePolicyScaleMode scaleMode = default;
             Optional<TimeSpan> scaleLookAheadTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scaleMode"))
+                if (property.NameEquals("scaleMode"u8))
                 {
                     scaleMode = property.Value.GetString().ToPredictiveAutoscalePolicyScaleMode();
                     continue;
                 }
-                if (property.NameEquals("scaleLookAheadTime"))
+                if (property.NameEquals("scaleLookAheadTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

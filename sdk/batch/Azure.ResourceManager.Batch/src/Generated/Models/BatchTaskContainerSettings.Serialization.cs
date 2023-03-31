@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ContainerRunOptions))
             {
-                writer.WritePropertyName("containerRunOptions");
+                writer.WritePropertyName("containerRunOptions"u8);
                 writer.WriteStringValue(ContainerRunOptions);
             }
-            writer.WritePropertyName("imageName");
+            writer.WritePropertyName("imageName"u8);
             writer.WriteStringValue(ImageName);
             if (Optional.IsDefined(Registry))
             {
-                writer.WritePropertyName("registry");
+                writer.WritePropertyName("registry"u8);
                 writer.WriteObjectValue(Registry);
             }
             if (Optional.IsDefined(WorkingDirectory))
             {
-                writer.WritePropertyName("workingDirectory");
+                writer.WritePropertyName("workingDirectory"u8);
                 writer.WriteStringValue(WorkingDirectory.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -37,23 +37,27 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchTaskContainerSettings DeserializeBatchTaskContainerSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> containerRunOptions = default;
             string imageName = default;
             Optional<BatchVmContainerRegistry> registry = default;
             Optional<BatchContainerWorkingDirectory> workingDirectory = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("containerRunOptions"))
+                if (property.NameEquals("containerRunOptions"u8))
                 {
                     containerRunOptions = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("imageName"))
+                if (property.NameEquals("imageName"u8))
                 {
                     imageName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("registry"))
+                if (property.NameEquals("registry"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +67,7 @@ namespace Azure.ResourceManager.Batch.Models
                     registry = BatchVmContainerRegistry.DeserializeBatchVmContainerRegistry(property.Value);
                     continue;
                 }
-                if (property.NameEquals("workingDirectory"))
+                if (property.NameEquals("workingDirectory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

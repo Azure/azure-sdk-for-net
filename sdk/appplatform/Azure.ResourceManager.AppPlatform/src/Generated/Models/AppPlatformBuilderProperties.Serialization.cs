@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Stack))
             {
-                writer.WritePropertyName("stack");
+                writer.WritePropertyName("stack"u8);
                 writer.WriteObjectValue(Stack);
             }
             if (Optional.IsCollectionDefined(BuildpackGroups))
             {
-                writer.WritePropertyName("buildpackGroups");
+                writer.WritePropertyName("buildpackGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in BuildpackGroups)
                 {
@@ -36,12 +36,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformBuilderProperties DeserializeAppPlatformBuilderProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformBuilderProvisioningState> provisioningState = default;
             Optional<AppPlatformClusterStackProperties> stack = default;
             Optional<IList<BuildpacksGroupProperties>> buildpackGroups = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     provisioningState = new AppPlatformBuilderProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("stack"))
+                if (property.NameEquals("stack"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     stack = AppPlatformClusterStackProperties.DeserializeAppPlatformClusterStackProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("buildpackGroups"))
+                if (property.NameEquals("buildpackGroups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

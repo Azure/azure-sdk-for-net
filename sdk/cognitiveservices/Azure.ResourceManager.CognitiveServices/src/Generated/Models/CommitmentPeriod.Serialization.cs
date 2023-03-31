@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Tier))
             {
-                writer.WritePropertyName("tier");
+                writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
             if (Optional.IsDefined(Count))
             {
-                writer.WritePropertyName("count");
+                writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
             writer.WriteEndObject();
@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CommitmentPeriod DeserializeCommitmentPeriod(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tier = default;
             Optional<int> count = default;
             Optional<CommitmentQuota> quota = default;
@@ -38,12 +42,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<DateTimeOffset> endDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     tier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     count = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("quota"))
+                if (property.NameEquals("quota"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +67,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     quota = CommitmentQuota.DeserializeCommitmentQuota(property.Value);
                     continue;
                 }
-                if (property.NameEquals("startDate"))
+                if (property.NameEquals("startDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +77,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     startDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endDate"))
+                if (property.NameEquals("endDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

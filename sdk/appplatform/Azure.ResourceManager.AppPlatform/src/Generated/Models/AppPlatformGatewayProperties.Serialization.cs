@@ -19,32 +19,32 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsPublic))
             {
-                writer.WritePropertyName("public");
+                writer.WritePropertyName("public"u8);
                 writer.WriteBooleanValue(IsPublic.Value);
             }
             if (Optional.IsDefined(IsHttpsOnly))
             {
-                writer.WritePropertyName("httpsOnly");
+                writer.WritePropertyName("httpsOnly"u8);
                 writer.WriteBooleanValue(IsHttpsOnly.Value);
             }
             if (Optional.IsDefined(SsoProperties))
             {
-                writer.WritePropertyName("ssoProperties");
+                writer.WritePropertyName("ssoProperties"u8);
                 writer.WriteObjectValue(SsoProperties);
             }
             if (Optional.IsDefined(ApiMetadataProperties))
             {
-                writer.WritePropertyName("apiMetadataProperties");
+                writer.WritePropertyName("apiMetadataProperties"u8);
                 writer.WriteObjectValue(ApiMetadataProperties);
             }
             if (Optional.IsDefined(CorsProperties))
             {
-                writer.WritePropertyName("corsProperties");
+                writer.WritePropertyName("corsProperties"u8);
                 writer.WriteObjectValue(CorsProperties);
             }
             if (Optional.IsDefined(ResourceRequests))
             {
-                writer.WritePropertyName("resourceRequests");
+                writer.WritePropertyName("resourceRequests"u8);
                 writer.WriteObjectValue(ResourceRequests);
             }
             writer.WriteEndObject();
@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformGatewayProperties DeserializeAppPlatformGatewayProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformGatewayProvisioningState> provisioningState = default;
             Optional<bool> @public = default;
             Optional<Uri> uri = default;
@@ -64,7 +68,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<AppPlatformGatewayOperatorProperties> operatorProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     provisioningState = new AppPlatformGatewayProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("public"))
+                if (property.NameEquals("public"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +88,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     @public = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +98,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("httpsOnly"))
+                if (property.NameEquals("httpsOnly"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     httpsOnly = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("ssoProperties"))
+                if (property.NameEquals("ssoProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +118,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     ssoProperties = AppPlatformSsoProperties.DeserializeAppPlatformSsoProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("apiMetadataProperties"))
+                if (property.NameEquals("apiMetadataProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +128,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     apiMetadataProperties = AppPlatformGatewayApiMetadataProperties.DeserializeAppPlatformGatewayApiMetadataProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("corsProperties"))
+                if (property.NameEquals("corsProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -134,7 +138,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     corsProperties = AppPlatformGatewayCorsProperties.DeserializeAppPlatformGatewayCorsProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("resourceRequests"))
+                if (property.NameEquals("resourceRequests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -144,7 +148,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     resourceRequests = AppPlatformGatewayResourceRequirements.DeserializeAppPlatformGatewayResourceRequirements(property.Value);
                     continue;
                 }
-                if (property.NameEquals("instances"))
+                if (property.NameEquals("instances"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -159,7 +163,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     instances = array;
                     continue;
                 }
-                if (property.NameEquals("operatorProperties"))
+                if (property.NameEquals("operatorProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

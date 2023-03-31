@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyPropertyNames");
+            writer.WritePropertyName("keyPropertyNames"u8);
             writer.WriteStartArray();
             foreach (var item in KeyPropertyNames)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("strongIdName");
+            writer.WritePropertyName("strongIdName"u8);
             writer.WriteStringValue(StrongIdName);
             if (Optional.IsCollectionDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
                 foreach (var item in DisplayName)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             if (Optional.IsCollectionDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
                 foreach (var item in Description)
                 {
@@ -52,13 +52,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static StrongId DeserializeStrongId(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> keyPropertyNames = default;
             string strongIdName = default;
             Optional<IDictionary<string, string>> displayName = default;
             Optional<IDictionary<string, string>> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyPropertyNames"))
+                if (property.NameEquals("keyPropertyNames"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -68,12 +72,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     keyPropertyNames = array;
                     continue;
                 }
-                if (property.NameEquals("strongIdName"))
+                if (property.NameEquals("strongIdName"u8))
                 {
                     strongIdName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +92,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     displayName = dictionary;
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

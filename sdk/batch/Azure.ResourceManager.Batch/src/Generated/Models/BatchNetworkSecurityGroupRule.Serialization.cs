@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.Batch.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("priority");
+            writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
-            writer.WritePropertyName("access");
+            writer.WritePropertyName("access"u8);
             writer.WriteStringValue(Access.ToSerialString());
-            writer.WritePropertyName("sourceAddressPrefix");
+            writer.WritePropertyName("sourceAddressPrefix"u8);
             writer.WriteStringValue(SourceAddressPrefix);
             if (Optional.IsCollectionDefined(SourcePortRanges))
             {
-                writer.WritePropertyName("sourcePortRanges");
+                writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();
                 foreach (var item in SourcePortRanges)
                 {
@@ -37,28 +37,32 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchNetworkSecurityGroupRule DeserializeBatchNetworkSecurityGroupRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int priority = default;
             BatchNetworkSecurityGroupRuleAccess access = default;
             string sourceAddressPrefix = default;
             Optional<IList<string>> sourcePortRanges = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("priority"))
+                if (property.NameEquals("priority"u8))
                 {
                     priority = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("access"))
+                if (property.NameEquals("access"u8))
                 {
                     access = property.Value.GetString().ToBatchNetworkSecurityGroupRuleAccess();
                     continue;
                 }
-                if (property.NameEquals("sourceAddressPrefix"))
+                if (property.NameEquals("sourceAddressPrefix"u8))
                 {
                     sourceAddressPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourcePortRanges"))
+                if (property.NameEquals("sourcePortRanges"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

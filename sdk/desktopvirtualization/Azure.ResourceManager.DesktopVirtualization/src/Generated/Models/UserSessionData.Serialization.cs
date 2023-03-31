@@ -18,31 +18,31 @@ namespace Azure.ResourceManager.DesktopVirtualization
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(UserPrincipalName))
             {
-                writer.WritePropertyName("userPrincipalName");
+                writer.WritePropertyName("userPrincipalName"u8);
                 writer.WriteStringValue(UserPrincipalName);
             }
             if (Optional.IsDefined(ApplicationType))
             {
-                writer.WritePropertyName("applicationType");
+                writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType.Value.ToString());
             }
             if (Optional.IsDefined(SessionState))
             {
-                writer.WritePropertyName("sessionState");
+                writer.WritePropertyName("sessionState"u8);
                 writer.WriteStringValue(SessionState.Value.ToString());
             }
             if (Optional.IsDefined(ActiveDirectoryUserName))
             {
-                writer.WritePropertyName("activeDirectoryUserName");
+                writer.WritePropertyName("activeDirectoryUserName"u8);
                 writer.WriteStringValue(ActiveDirectoryUserName);
             }
             if (Optional.IsDefined(CreateOn))
             {
-                writer.WritePropertyName("createTime");
+                writer.WritePropertyName("createTime"u8);
                 writer.WriteStringValue(CreateOn.Value, "O");
             }
             writer.WriteEndObject();
@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         internal static UserSessionData DeserializeUserSessionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -63,22 +67,22 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<DateTimeOffset> createTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +92,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,17 +101,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("objectId"))
+                        if (property0.NameEquals("objectId"u8))
                         {
                             objectId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("userPrincipalName"))
+                        if (property0.NameEquals("userPrincipalName"u8))
                         {
                             userPrincipalName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("applicationType"))
+                        if (property0.NameEquals("applicationType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -117,7 +121,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             applicationType = new VirtualApplicationType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("sessionState"))
+                        if (property0.NameEquals("sessionState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -127,12 +131,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             sessionState = new UserSessionState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("activeDirectoryUserName"))
+                        if (property0.NameEquals("activeDirectoryUserName"u8))
                         {
                             activeDirectoryUserName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("createTime"))
+                        if (property0.NameEquals("createTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

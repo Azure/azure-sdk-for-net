@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Begin))
             {
-                writer.WritePropertyName("begin");
+                writer.WritePropertyName("begin"u8);
                 writer.WriteNumberValue(Begin.Value);
             }
             if (Optional.IsDefined(End))
             {
-                writer.WritePropertyName("end");
+                writer.WritePropertyName("end"u8);
                 writer.WriteNumberValue(End.Value);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static HttpErrorRange DeserializeHttpErrorRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> begin = default;
             Optional<int> end = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("begin"))
+                if (property.NameEquals("begin"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     begin = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("end"))
+                if (property.NameEquals("end"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

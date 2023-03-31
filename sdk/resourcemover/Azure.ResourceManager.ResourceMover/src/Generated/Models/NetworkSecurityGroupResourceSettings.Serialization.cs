@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             if (Optional.IsCollectionDefined(SecurityRules))
             {
-                writer.WritePropertyName("securityRules");
+                writer.WritePropertyName("securityRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in SecurityRules)
                 {
@@ -37,22 +37,26 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("resourceType");
+            writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            writer.WritePropertyName("targetResourceName");
+            writer.WritePropertyName("targetResourceName"u8);
             writer.WriteStringValue(TargetResourceName);
             writer.WriteEndObject();
         }
 
         internal static NetworkSecurityGroupResourceSettings DeserializeNetworkSecurityGroupResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             Optional<IList<NetworkSecurityGroupSecurityRule>> securityRules = default;
             string resourceType = default;
             string targetResourceName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +71,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("securityRules"))
+                if (property.NameEquals("securityRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,12 +86,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     securityRules = array;
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourceName"))
+                if (property.NameEquals("targetResourceName"u8))
                 {
                     targetResourceName = property.Value.GetString();
                     continue;

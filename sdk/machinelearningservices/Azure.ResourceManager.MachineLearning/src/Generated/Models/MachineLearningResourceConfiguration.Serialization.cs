@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(InstanceCount))
             {
-                writer.WritePropertyName("instanceCount");
+                writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
             }
             if (Optional.IsDefined(InstanceType))
             {
                 if (InstanceType != null)
                 {
-                    writer.WritePropertyName("instanceType");
+                    writer.WritePropertyName("instanceType"u8);
                     writer.WriteStringValue(InstanceType);
                 }
                 else
@@ -38,11 +38,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties != null)
                 {
-                    writer.WritePropertyName("properties");
+                    writer.WritePropertyName("properties"u8);
                     writer.WriteStartObject();
                     foreach (var item in Properties)
                     {
                         writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
@@ -61,12 +66,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningResourceConfiguration DeserializeMachineLearningResourceConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> instanceCount = default;
             Optional<string> instanceType = default;
             Optional<IDictionary<string, BinaryData>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("instanceCount"))
+                if (property.NameEquals("instanceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     instanceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +105,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
                     }
                     properties = dictionary;
                     continue;

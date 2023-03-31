@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CurrentResourceId))
             {
-                writer.WritePropertyName("currentResourceId");
+                writer.WritePropertyName("currentResourceId"u8);
                 writer.WriteStringValue(CurrentResourceId);
             }
             if (Optional.IsDefined(TargetResourceId))
             {
-                writer.WritePropertyName("targetResourceId");
+                writer.WritePropertyName("targetResourceId"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
             writer.WriteEndObject();

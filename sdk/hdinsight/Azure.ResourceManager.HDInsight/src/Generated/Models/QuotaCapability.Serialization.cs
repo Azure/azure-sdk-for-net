@@ -15,12 +15,16 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static QuotaCapability DeserializeQuotaCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> coresUsed = default;
             Optional<long> maxCoresAllowed = default;
             Optional<IReadOnlyList<RegionalQuotaCapability>> regionalQuotas = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("coresUsed"))
+                if (property.NameEquals("coresUsed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     coresUsed = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("maxCoresAllowed"))
+                if (property.NameEquals("maxCoresAllowed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     maxCoresAllowed = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("regionalQuotas"))
+                if (property.NameEquals("regionalQuotas"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

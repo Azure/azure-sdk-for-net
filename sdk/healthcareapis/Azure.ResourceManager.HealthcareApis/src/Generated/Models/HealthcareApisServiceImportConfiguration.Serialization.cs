@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IntegrationDataStore))
             {
-                writer.WritePropertyName("integrationDataStore");
+                writer.WritePropertyName("integrationDataStore"u8);
                 writer.WriteStringValue(IntegrationDataStore);
             }
             if (Optional.IsDefined(IsInitialImportMode))
             {
-                writer.WritePropertyName("initialImportMode");
+                writer.WritePropertyName("initialImportMode"u8);
                 writer.WriteBooleanValue(IsInitialImportMode.Value);
             }
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WriteEndObject();
@@ -35,17 +35,21 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static HealthcareApisServiceImportConfiguration DeserializeHealthcareApisServiceImportConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> integrationDataStore = default;
             Optional<bool> initialImportMode = default;
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("integrationDataStore"))
+                if (property.NameEquals("integrationDataStore"u8))
                 {
                     integrationDataStore = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("initialImportMode"))
+                if (property.NameEquals("initialImportMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     initialImportMode = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

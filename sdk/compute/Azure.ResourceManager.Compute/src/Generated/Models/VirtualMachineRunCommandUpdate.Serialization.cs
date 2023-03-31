@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Source))
             {
-                writer.WritePropertyName("source");
+                writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsCollectionDefined(ProtectedParameters))
             {
-                writer.WritePropertyName("protectedParameters");
+                writer.WritePropertyName("protectedParameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in ProtectedParameters)
                 {
@@ -55,32 +55,32 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(AsyncExecution))
             {
-                writer.WritePropertyName("asyncExecution");
+                writer.WritePropertyName("asyncExecution"u8);
                 writer.WriteBooleanValue(AsyncExecution.Value);
             }
             if (Optional.IsDefined(RunAsUser))
             {
-                writer.WritePropertyName("runAsUser");
+                writer.WritePropertyName("runAsUser"u8);
                 writer.WriteStringValue(RunAsUser);
             }
             if (Optional.IsDefined(RunAsPassword))
             {
-                writer.WritePropertyName("runAsPassword");
+                writer.WritePropertyName("runAsPassword"u8);
                 writer.WriteStringValue(RunAsPassword);
             }
             if (Optional.IsDefined(TimeoutInSeconds))
             {
-                writer.WritePropertyName("timeoutInSeconds");
+                writer.WritePropertyName("timeoutInSeconds"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
             if (Optional.IsDefined(OutputBlobUri))
             {
-                writer.WritePropertyName("outputBlobUri");
+                writer.WritePropertyName("outputBlobUri"u8);
                 writer.WriteStringValue(OutputBlobUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ErrorBlobUri))
             {
-                writer.WritePropertyName("errorBlobUri");
+                writer.WritePropertyName("errorBlobUri"u8);
                 writer.WriteStringValue(ErrorBlobUri.AbsoluteUri);
             }
             writer.WriteEndObject();

@@ -15,10 +15,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         [JsonPropertyName("companyName")]
         public string CompanyName { get; set; }
 
-        /// <summary>Gets the country.</summary>
-        /// <value>The country.</value>
-        [JsonPropertyName("country")]
-        public string Country { get; set; }
+        /// <summary>Gets or sets the created date and time.</summary>
+        /// <value>The created date and time.</value>
+        [JsonPropertyName("createdDateTime")]
+        public string CreatedDateTime { get; set; }
 
         /// <summary>Gets the display name.</summary>
         /// <value>The display name.</value>

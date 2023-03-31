@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Vendor))
             {
-                writer.WritePropertyName("vendor");
+                writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
             if (Optional.IsDefined(BundledScaleUnit))
             {
-                writer.WritePropertyName("bundledScaleUnit");
+                writer.WritePropertyName("bundledScaleUnit"u8);
                 writer.WriteStringValue(BundledScaleUnit);
             }
             if (Optional.IsDefined(MarketPlaceVersion))
             {
-                writer.WritePropertyName("marketPlaceVersion");
+                writer.WritePropertyName("marketPlaceVersion"u8);
                 writer.WriteStringValue(MarketPlaceVersion);
             }
             writer.WriteEndObject();
@@ -35,22 +35,26 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VirtualApplianceSkuProperties DeserializeVirtualApplianceSkuProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vendor = default;
             Optional<string> bundledScaleUnit = default;
             Optional<string> marketPlaceVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vendor"))
+                if (property.NameEquals("vendor"u8))
                 {
                     vendor = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("bundledScaleUnit"))
+                if (property.NameEquals("bundledScaleUnit"u8))
                 {
                     bundledScaleUnit = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("marketPlaceVersion"))
+                if (property.NameEquals("marketPlaceVersion"u8))
                 {
                     marketPlaceVersion = property.Value.GetString();
                     continue;

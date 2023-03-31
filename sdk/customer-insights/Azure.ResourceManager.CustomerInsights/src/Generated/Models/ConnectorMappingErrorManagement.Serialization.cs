@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("errorManagementType");
+            writer.WritePropertyName("errorManagementType"u8);
             writer.WriteStringValue(ErrorManagementType.ToSerialString());
             if (Optional.IsDefined(ErrorLimit))
             {
-                writer.WritePropertyName("errorLimit");
+                writer.WritePropertyName("errorLimit"u8);
                 writer.WriteNumberValue(ErrorLimit.Value);
             }
             writer.WriteEndObject();
@@ -27,16 +27,20 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static ConnectorMappingErrorManagement DeserializeConnectorMappingErrorManagement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ErrorManagementType errorManagementType = default;
             Optional<int> errorLimit = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errorManagementType"))
+                if (property.NameEquals("errorManagementType"u8))
                 {
                     errorManagementType = property.Value.GetString().ToErrorManagementType();
                     continue;
                 }
-                if (property.NameEquals("errorLimit"))
+                if (property.NameEquals("errorLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

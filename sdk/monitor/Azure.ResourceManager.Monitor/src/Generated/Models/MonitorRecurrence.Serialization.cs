@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("frequency");
+            writer.WritePropertyName("frequency"u8);
             writer.WriteStringValue(Frequency.ToSerialString());
-            writer.WritePropertyName("schedule");
+            writer.WritePropertyName("schedule"u8);
             writer.WriteObjectValue(Schedule);
             writer.WriteEndObject();
         }
 
         internal static MonitorRecurrence DeserializeMonitorRecurrence(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RecurrenceFrequency frequency = default;
             RecurrentSchedule schedule = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("frequency"))
+                if (property.NameEquals("frequency"u8))
                 {
                     frequency = property.Value.GetString().ToRecurrenceFrequency();
                     continue;
                 }
-                if (property.NameEquals("schedule"))
+                if (property.NameEquals("schedule"u8))
                 {
                     schedule = RecurrentSchedule.DeserializeRecurrentSchedule(property.Value);
                     continue;

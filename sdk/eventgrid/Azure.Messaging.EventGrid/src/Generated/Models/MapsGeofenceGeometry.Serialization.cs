@@ -14,6 +14,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MapsGeofenceGeometry DeserializeMapsGeofenceGeometry(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> deviceId = default;
             Optional<float> distance = default;
             Optional<string> geometryId = default;
@@ -22,12 +26,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> udId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceId"))
+                if (property.NameEquals("deviceId"u8))
                 {
                     deviceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("distance"))
+                if (property.NameEquals("distance"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,12 +41,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     distance = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("geometryId"))
+                if (property.NameEquals("geometryId"u8))
                 {
                     geometryId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nearestLat"))
+                if (property.NameEquals("nearestLat"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +56,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     nearestLat = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("nearestLon"))
+                if (property.NameEquals("nearestLon"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +66,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     nearestLon = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("udId"))
+                if (property.NameEquals("udId"u8))
                 {
                     udId = property.Value.GetString();
                     continue;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     {
         internal static LinkerValidateOperationResult DeserializeLinkerValidateOperationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> resourceId = default;
             Optional<string> status = default;
             Optional<string> linkerName = default;
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             Optional<IReadOnlyList<LinkerValidationResultItemInfo>> validationDetail = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,7 +42,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +52,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +61,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("linkerName"))
+                        if (property0.NameEquals("linkerName"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -67,7 +71,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                             linkerName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("isConnectionAvailable"))
+                        if (property0.NameEquals("isConnectionAvailable"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -77,7 +81,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                             isConnectionAvailable = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("reportStartTimeUtc"))
+                        if (property0.NameEquals("reportStartTimeUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -87,7 +91,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                             reportStartTimeUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("reportEndTimeUtc"))
+                        if (property0.NameEquals("reportEndTimeUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -97,7 +101,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                             reportEndTimeUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("sourceId"))
+                        if (property0.NameEquals("sourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -107,7 +111,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                             sourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("targetId"))
+                        if (property0.NameEquals("targetId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -117,7 +121,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                             targetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("authType"))
+                        if (property0.NameEquals("authType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -127,7 +131,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                             authType = new LinkerAuthType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("validationDetail"))
+                        if (property0.NameEquals("validationDetail"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

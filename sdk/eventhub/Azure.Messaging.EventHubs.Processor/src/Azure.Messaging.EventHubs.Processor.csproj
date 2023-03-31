@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers.  This library extends its Event Processor with durable storage for checkpoint information using Azure Blob storage.  For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
-    <Version>5.8.0-beta.1</Version>
+    <Version>5.9.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>5.7.5</ApiCompatVersion>
+    <ApiCompatVersion>5.8.1</ApiCompatVersion>
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;Event Processor;EventProcessor;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -36,6 +36,8 @@
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="SharedSource\Azure.Core" />
     <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="SharedSource\Azure.Core" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="SharedSource\Azure.Core" />
+    <Compile Include="$(AzureCoreSharedSources)MessagingClientDiagnostics.cs" LinkBase="SharedSource\Azure.Core" />
+    <Compile Include="$(AzureCoreSharedSources)MessagingDiagnosticOperation.cs" LinkBase="SharedSource\Azure.Core" />
   </ItemGroup>
 
   <!--Embed the shared resources -->

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VirtualNetworkUsage DeserializeVirtualNetworkUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> currentValue = default;
             Optional<ResourceIdentifier> id = default;
             Optional<double> limit = default;
@@ -21,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> unit = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("currentValue"))
+                if (property.NameEquals("currentValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
                     currentValue = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
                     limit = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
                     name = VirtualNetworkUsageName.DeserializeVirtualNetworkUsageName(property.Value);
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     unit = property.Value.GetString();
                     continue;

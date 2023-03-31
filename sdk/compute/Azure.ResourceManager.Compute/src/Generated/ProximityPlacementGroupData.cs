@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the ProximityPlacementGroup data model. </summary>
+    /// <summary>
+    /// A class representing the ProximityPlacementGroup data model.
+    /// Specifies information about the proximity placement group.
+    /// </summary>
     public partial class ProximityPlacementGroupData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ProximityPlacementGroupData. </summary>

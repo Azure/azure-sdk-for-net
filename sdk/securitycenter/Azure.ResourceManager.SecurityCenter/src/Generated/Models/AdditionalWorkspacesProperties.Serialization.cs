@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Workspace))
             {
-                writer.WritePropertyName("workspace");
+                writer.WritePropertyName("workspace"u8);
                 writer.WriteStringValue(Workspace);
             }
             if (Optional.IsDefined(WorkspaceType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(WorkspaceType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(DataTypes))
             {
-                writer.WritePropertyName("dataTypes");
+                writer.WritePropertyName("dataTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataTypes)
                 {
@@ -41,17 +41,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AdditionalWorkspacesProperties DeserializeAdditionalWorkspacesProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> workspace = default;
             Optional<AdditionalWorkspaceType> type = default;
             Optional<IList<AdditionalWorkspaceDataType>> dataTypes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("workspace"))
+                if (property.NameEquals("workspace"u8))
                 {
                     workspace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     type = new AdditionalWorkspaceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dataTypes"))
+                if (property.NameEquals("dataTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("commandType");
+            writer.WritePropertyName("commandType"u8);
             writer.WriteStringValue(CommandType.ToString());
             writer.WriteEndObject();
         }
 
         internal static CommandProperties DeserializeCommandProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("commandType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

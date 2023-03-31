@@ -11,14 +11,13 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples
     {
         [Test]
+        [Ignore("Disabled per request of the service team")]
         public async Task DynamicClassifyBatchConvenienceAsync()
         {
-            // Create a text analytics client.
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            // Get the documents.
             string documentA =
                 "“The Microsoft Adaptive Accessories are intended to remove the barriers that traditional mice and"
                 + " keyboards may present to people with limited mobility,” says Gabi Michel, director of Accessible"
@@ -32,6 +31,15 @@ namespace Azure.AI.TextAnalytics.Samples
 
             string documentC = string.Empty;
 
+            // Prepare the input of the text analysis operation. You can add multiple documents to this list and
+            // perform the same operation on all of them simultaneously.
+            List<string> batchedDocuments = new()
+            {
+                documentA,
+                documentB,
+                documentC
+            };
+
             // Specify the categories that the documents can be classified with.
             List<string> categories = new()
             {
@@ -42,29 +50,21 @@ namespace Azure.AI.TextAnalytics.Samples
                 "Technology"
             };
 
-            List<string> documents = new()
-            {
-                documentA,
-                documentB,
-                documentC
-            };
-
-            Response<DynamicClassifyDocumentResultCollection> response = await client.DynamicClassifyBatchAsync(documents, categories);
-            DynamicClassifyDocumentResultCollection batchResults = response.Value;
+            Response<DynamicClassifyDocumentResultCollection> response = await client.DynamicClassifyBatchAsync(batchedDocuments, categories);
+            DynamicClassifyDocumentResultCollection results = response.Value;
 
             int i = 0;
-            Console.WriteLine($"Results of \"Dynamic Classification\" Model, version: \"{batchResults.ModelVersion}\"");
+            Console.WriteLine($"Dynamic Classify, model version: \"{results.ModelVersion}\"");
             Console.WriteLine();
 
-            foreach (ClassifyDocumentResult documentResult in batchResults)
+            foreach (ClassifyDocumentResult documentResult in results)
             {
-                Console.WriteLine($"On document with Text: \"{documents[i++]}\"");
-                Console.WriteLine();
+                Console.WriteLine($"Result for document with Text = \"{batchedDocuments[i++]}\"");
 
                 if (documentResult.HasError)
                 {
-                    Console.WriteLine("  Error!");
-                    Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}.");
+                    Console.WriteLine($"  Error!");
+                    Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
                     Console.WriteLine($"  Message: {documentResult.Error.Message}");
                     Console.WriteLine();
                     continue;
@@ -73,7 +73,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 foreach (ClassificationCategory classification in documentResult.ClassificationCategories)
                 {
                     Console.WriteLine($"  Category: {classification.Category}");
-                    Console.WriteLine($"  ConfidenceScore: {classification.ConfidenceScore}.");
+                    Console.WriteLine($"  ConfidenceScore: {classification.ConfidenceScore}");
                     Console.WriteLine();
                 }
             }

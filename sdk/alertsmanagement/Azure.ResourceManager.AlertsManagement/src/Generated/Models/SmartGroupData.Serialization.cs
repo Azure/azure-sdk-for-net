@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.AlertsManagement
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AlertsCount))
             {
-                writer.WritePropertyName("alertsCount");
+                writer.WritePropertyName("alertsCount"u8);
                 writer.WriteNumberValue(AlertsCount.Value);
             }
             if (Optional.IsCollectionDefined(Resources))
             {
-                writer.WritePropertyName("resources");
+                writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AlertsManagement
             }
             if (Optional.IsCollectionDefined(ResourceTypes))
             {
-                writer.WritePropertyName("resourceTypes");
+                writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypes)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AlertsManagement
             }
             if (Optional.IsCollectionDefined(ResourceGroups))
             {
-                writer.WritePropertyName("resourceGroups");
+                writer.WritePropertyName("resourceGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceGroups)
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AlertsManagement
             }
             if (Optional.IsCollectionDefined(MonitorServices))
             {
-                writer.WritePropertyName("monitorServices");
+                writer.WritePropertyName("monitorServices"u8);
                 writer.WriteStartArray();
                 foreach (var item in MonitorServices)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AlertsManagement
             }
             if (Optional.IsCollectionDefined(MonitorConditions))
             {
-                writer.WritePropertyName("monitorConditions");
+                writer.WritePropertyName("monitorConditions"u8);
                 writer.WriteStartArray();
                 foreach (var item in MonitorConditions)
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AlertsManagement
             }
             if (Optional.IsCollectionDefined(AlertStates))
             {
-                writer.WritePropertyName("alertStates");
+                writer.WritePropertyName("alertStates"u8);
                 writer.WriteStartArray();
                 foreach (var item in AlertStates)
                 {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AlertsManagement
             }
             if (Optional.IsCollectionDefined(AlertSeverities))
             {
-                writer.WritePropertyName("alertSeverities");
+                writer.WritePropertyName("alertSeverities"u8);
                 writer.WriteStartArray();
                 foreach (var item in AlertSeverities)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AlertsManagement
             }
             if (Optional.IsDefined(NextLink))
             {
-                writer.WritePropertyName("nextLink");
+                writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
             writer.WriteEndObject();
@@ -107,6 +107,10 @@ namespace Azure.ResourceManager.AlertsManagement
 
         internal static SmartGroupData DeserializeSmartGroupData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -127,22 +131,22 @@ namespace Azure.ResourceManager.AlertsManagement
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -152,7 +156,7 @@ namespace Azure.ResourceManager.AlertsManagement
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -161,7 +165,7 @@ namespace Azure.ResourceManager.AlertsManagement
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("alertsCount"))
+                        if (property0.NameEquals("alertsCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -171,7 +175,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             alertsCount = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("smartGroupState"))
+                        if (property0.NameEquals("smartGroupState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -181,7 +185,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             smartGroupState = new SmartGroupState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("severity"))
+                        if (property0.NameEquals("severity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -191,7 +195,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             severity = new ServiceAlertSeverity(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("startDateTime"))
+                        if (property0.NameEquals("startDateTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -201,7 +205,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             startDateTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastModifiedDateTime"))
+                        if (property0.NameEquals("lastModifiedDateTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -211,12 +215,12 @@ namespace Azure.ResourceManager.AlertsManagement
                             lastModifiedDateTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastModifiedUserName"))
+                        if (property0.NameEquals("lastModifiedUserName"u8))
                         {
                             lastModifiedUserName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("resources"))
+                        if (property0.NameEquals("resources"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -231,7 +235,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             resources = array;
                             continue;
                         }
-                        if (property0.NameEquals("resourceTypes"))
+                        if (property0.NameEquals("resourceTypes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -246,7 +250,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             resourceTypes = array;
                             continue;
                         }
-                        if (property0.NameEquals("resourceGroups"))
+                        if (property0.NameEquals("resourceGroups"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -261,7 +265,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             resourceGroups = array;
                             continue;
                         }
-                        if (property0.NameEquals("monitorServices"))
+                        if (property0.NameEquals("monitorServices"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -276,7 +280,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             monitorServices = array;
                             continue;
                         }
-                        if (property0.NameEquals("monitorConditions"))
+                        if (property0.NameEquals("monitorConditions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -291,7 +295,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             monitorConditions = array;
                             continue;
                         }
-                        if (property0.NameEquals("alertStates"))
+                        if (property0.NameEquals("alertStates"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -306,7 +310,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             alertStates = array;
                             continue;
                         }
-                        if (property0.NameEquals("alertSeverities"))
+                        if (property0.NameEquals("alertSeverities"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -321,7 +325,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             alertSeverities = array;
                             continue;
                         }
-                        if (property0.NameEquals("nextLink"))
+                        if (property0.NameEquals("nextLink"u8))
                         {
                             nextLink = property0.Value.GetString();
                             continue;

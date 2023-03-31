@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BindingType))
             {
-                writer.WritePropertyName("bindingType");
+                writer.WritePropertyName("bindingType"u8);
                 writer.WriteStringValue(BindingType.Value.ToString());
             }
             if (Optional.IsDefined(LaunchProperties))
             {
-                writer.WritePropertyName("launchProperties");
+                writer.WritePropertyName("launchProperties"u8);
                 writer.WriteObjectValue(LaunchProperties);
             }
             writer.WriteEndObject();
@@ -30,12 +30,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformBuildpackBindingProperties DeserializeAppPlatformBuildpackBindingProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BuildpackBindingType> bindingType = default;
             Optional<BuildpackBindingProvisioningState> provisioningState = default;
             Optional<BuildpackBindingLaunchProperties> launchProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("bindingType"))
+                if (property.NameEquals("bindingType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     bindingType = new BuildpackBindingType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     provisioningState = new BuildpackBindingProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("launchProperties"))
+                if (property.NameEquals("launchProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

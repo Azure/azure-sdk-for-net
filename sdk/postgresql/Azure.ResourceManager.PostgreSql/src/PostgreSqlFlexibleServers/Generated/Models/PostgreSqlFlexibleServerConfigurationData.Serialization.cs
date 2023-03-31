@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
             if (Optional.IsDefined(Source))
             {
-                writer.WritePropertyName("source");
+                writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
             writer.WriteEndObject();
@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         internal static PostgreSqlFlexibleServerConfigurationData DeserializePostgreSqlFlexibleServerConfigurationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -52,22 +56,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             Optional<string> documentationLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +81,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,22 +90,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("value"))
+                        if (property0.NameEquals("value"u8))
                         {
                             value = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("defaultValue"))
+                        if (property0.NameEquals("defaultValue"u8))
                         {
                             defaultValue = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("dataType"))
+                        if (property0.NameEquals("dataType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -111,17 +115,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             dataType = new PostgreSqlFlexibleServerConfigurationDataType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("allowedValues"))
+                        if (property0.NameEquals("allowedValues"u8))
                         {
                             allowedValues = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("source"))
+                        if (property0.NameEquals("source"u8))
                         {
                             source = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("isDynamicConfig"))
+                        if (property0.NameEquals("isDynamicConfig"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -131,7 +135,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             isDynamicConfig = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("isReadOnly"))
+                        if (property0.NameEquals("isReadOnly"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -141,7 +145,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             isReadOnly = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("isConfigPendingRestart"))
+                        if (property0.NameEquals("isConfigPendingRestart"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -151,12 +155,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             isConfigPendingRestart = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("unit"))
+                        if (property0.NameEquals("unit"u8))
                         {
                             unit = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("documentationLink"))
+                        if (property0.NameEquals("documentationLink"u8))
                         {
                             documentationLink = property0.Value.GetString();
                             continue;

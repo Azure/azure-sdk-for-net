@@ -15,46 +15,46 @@ namespace Azure.ResourceManager.Automation.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RepoUri))
             {
-                writer.WritePropertyName("repoUrl");
+                writer.WritePropertyName("repoUrl"u8);
                 writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Branch))
             {
-                writer.WritePropertyName("branch");
+                writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
             if (Optional.IsDefined(FolderPath))
             {
-                writer.WritePropertyName("folderPath");
+                writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
             if (Optional.IsDefined(IsAutoSyncEnabled))
             {
-                writer.WritePropertyName("autoSync");
+                writer.WritePropertyName("autoSync"u8);
                 writer.WriteBooleanValue(IsAutoSyncEnabled.Value);
             }
             if (Optional.IsDefined(IsAutoPublishRunbookEnabled))
             {
-                writer.WritePropertyName("publishRunbook");
+                writer.WritePropertyName("publishRunbook"u8);
                 writer.WriteBooleanValue(IsAutoPublishRunbookEnabled.Value);
             }
             if (Optional.IsDefined(SourceType))
             {
-                writer.WritePropertyName("sourceType");
+                writer.WritePropertyName("sourceType"u8);
                 writer.WriteStringValue(SourceType.Value.ToString());
             }
             if (Optional.IsDefined(SecurityToken))
             {
-                writer.WritePropertyName("securityToken");
+                writer.WritePropertyName("securityToken"u8);
                 writer.WriteObjectValue(SecurityToken);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();

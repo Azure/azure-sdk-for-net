@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("contextUri");
+            writer.WritePropertyName("contextUri"u8);
             writer.WriteStringValue(ContextUri.AbsoluteUri);
             if (Optional.IsDefined(DockerfilePath))
             {
-                writer.WritePropertyName("dockerfilePath");
+                writer.WritePropertyName("dockerfilePath"u8);
                 writer.WriteStringValue(DockerfilePath);
             }
             writer.WriteEndObject();
@@ -28,16 +28,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningBuildContext DeserializeMachineLearningBuildContext(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri contextUri = default;
             Optional<string> dockerfilePath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("contextUri"))
+                if (property.NameEquals("contextUri"u8))
                 {
                     contextUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dockerfilePath"))
+                if (property.NameEquals("dockerfilePath"u8))
                 {
                     dockerfilePath = property.Value.GetString();
                     continue;

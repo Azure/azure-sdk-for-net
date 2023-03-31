@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IsSafeFailover))
             {
-                writer.WritePropertyName("IsSafeFailover");
+                writer.WritePropertyName("IsSafeFailover"u8);
                 writer.WriteBooleanValue(IsSafeFailover.Value);
             }
             writer.WriteEndObject();

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DailyQuotaInGB))
             {
-                writer.WritePropertyName("dailyQuotaGb");
+                writer.WritePropertyName("dailyQuotaGb"u8);
                 writer.WriteNumberValue(DailyQuotaInGB.Value);
             }
             writer.WriteEndObject();
@@ -25,12 +25,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static OperationalInsightsWorkspaceCapping DeserializeOperationalInsightsWorkspaceCapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> dailyQuotaGb = default;
             Optional<string> quotaNextResetTime = default;
             Optional<OperationalInsightsDataIngestionStatus> dataIngestionStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dailyQuotaGb"))
+                if (property.NameEquals("dailyQuotaGb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,12 +44,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     dailyQuotaGb = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("quotaNextResetTime"))
+                if (property.NameEquals("quotaNextResetTime"u8))
                 {
                     quotaNextResetTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataIngestionStatus"))
+                if (property.NameEquals("dataIngestionStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

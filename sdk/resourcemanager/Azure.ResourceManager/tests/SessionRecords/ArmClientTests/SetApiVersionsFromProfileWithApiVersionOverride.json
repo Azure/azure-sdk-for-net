@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-91ba0f3129369b4e8cfd6be2e18077c1-e82bf2995362c043-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0-alpha.20230105.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "4d007e088010fb4190a09e15405cf954",
+        "traceparent": "00-e8f884a429042a0dd2ac8e6bf180f54d-85f01d0422a07eaf-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0-alpha.20230202.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c754001c3993580e4a5bb782fcde8268",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "343",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 05 Jan 2023 02:34:33 GMT",
+        "Date": "Thu, 02 Feb 2023 16:20:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f1bc6ccf-d750-459d-9047-914a3f96dab6",
-        "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "f1bc6ccf-d750-459d-9047-914a3f96dab6",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230105T023433Z:f1bc6ccf-d750-459d-9047-914a3f96dab6"
+        "x-ms-correlation-request-id": "ac4fa1ae-ee2c-46f6-8690-5e8744c4a469",
+        "x-ms-ratelimit-remaining-subscription-reads": "11982",
+        "x-ms-request-id": "ac4fa1ae-ee2c-46f6-8690-5e8744c4a469",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230202T162004Z:ac4fa1ae-ee2c-46f6-8690-5e8744c4a469"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -43,7 +43,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "846921837",
+    "RandomSeed": "363054491",
     "RESOURCE_MANAGER_URL": "https://management.azure.com",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }

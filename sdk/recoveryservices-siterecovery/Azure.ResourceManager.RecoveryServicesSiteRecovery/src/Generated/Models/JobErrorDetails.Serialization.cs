@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static JobErrorDetails DeserializeJobErrorDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServiceError> serviceErrorDetails = default;
             Optional<ProviderError> providerErrorDetails = default;
             Optional<string> errorLevel = default;
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> taskId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceErrorDetails"))
+                if (property.NameEquals("serviceErrorDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     serviceErrorDetails = ServiceError.DeserializeServiceError(property.Value);
                     continue;
                 }
-                if (property.NameEquals("providerErrorDetails"))
+                if (property.NameEquals("providerErrorDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,12 +46,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     providerErrorDetails = ProviderError.DeserializeProviderError(property.Value);
                     continue;
                 }
-                if (property.NameEquals("errorLevel"))
+                if (property.NameEquals("errorLevel"u8))
                 {
                     errorLevel = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("creationTime"))
+                if (property.NameEquals("creationTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     creationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("taskId"))
+                if (property.NameEquals("taskId"u8))
                 {
                     taskId = property.Value.GetString();
                     continue;

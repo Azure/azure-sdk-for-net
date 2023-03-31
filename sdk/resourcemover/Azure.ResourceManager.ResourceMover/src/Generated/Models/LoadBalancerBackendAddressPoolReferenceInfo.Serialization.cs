@@ -17,26 +17,30 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("sourceArmResourceId");
+            writer.WritePropertyName("sourceArmResourceId"u8);
             writer.WriteStringValue(SourceArmResourceId);
             writer.WriteEndObject();
         }
 
         internal static LoadBalancerBackendAddressPoolReferenceInfo DeserializeLoadBalancerBackendAddressPoolReferenceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             ResourceIdentifier sourceArmResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceArmResourceId"))
+                if (property.NameEquals("sourceArmResourceId"u8))
                 {
                     sourceArmResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;

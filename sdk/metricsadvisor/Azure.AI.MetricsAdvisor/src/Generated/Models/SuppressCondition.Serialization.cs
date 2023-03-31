@@ -15,25 +15,29 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("minNumber");
+            writer.WritePropertyName("minNumber"u8);
             writer.WriteNumberValue(MinimumNumber);
-            writer.WritePropertyName("minRatio");
+            writer.WritePropertyName("minRatio"u8);
             writer.WriteNumberValue(MinimumRatio);
             writer.WriteEndObject();
         }
 
         internal static SuppressCondition DeserializeSuppressCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int minNumber = default;
             double minRatio = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minNumber"))
+                if (property.NameEquals("minNumber"u8))
                 {
                     minNumber = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minRatio"))
+                if (property.NameEquals("minRatio"u8))
                 {
                     minRatio = property.Value.GetDouble();
                     continue;

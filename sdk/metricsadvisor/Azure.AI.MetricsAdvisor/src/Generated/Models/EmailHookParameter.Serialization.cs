@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("toList");
+            writer.WritePropertyName("toList"u8);
             writer.WriteStartArray();
             foreach (var item in ToList)
             {
@@ -28,10 +28,14 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static EmailHookParameter DeserializeEmailHookParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> toList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("toList"))
+                if (property.NameEquals("toList"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())

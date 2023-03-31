@@ -85,6 +85,7 @@ namespace Azure.Storage.DataMovement
         /// The current status of each job part.
         /// </summary>
         public StorageTransferStatus JobPartStatus { get; set; }
+        private object _statusLock = new object();
 
         /// <summary>
         /// Optional. If the length is known, we log it instead of doing a GetProperties call on the
@@ -206,10 +207,18 @@ namespace Azure.Storage.DataMovement
         /// <param name="transferStatus"></param>
         internal async Task OnTransferStatusChanged(StorageTransferStatus transferStatus)
         {
-            if (transferStatus != StorageTransferStatus.None
-                && JobPartStatus != transferStatus)
+            bool statusChanged = false;
+            lock (_statusLock)
             {
-                JobPartStatus = transferStatus;
+                if (transferStatus != StorageTransferStatus.None
+                    && JobPartStatus != transferStatus)
+                {
+                    statusChanged = true;
+                    JobPartStatus = transferStatus;
+                }
+            }
+            if (statusChanged)
+            {
                 if (JobPartStatus == StorageTransferStatus.Completed)
                 {
                     await InvokeSingleCompletedArg().ConfigureAwait(false);

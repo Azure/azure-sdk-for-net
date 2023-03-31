@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static Correlation DeserializeCorrelation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clientTrackingId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientTrackingId"))
+                if (property.NameEquals("clientTrackingId"u8))
                 {
                     clientTrackingId = property.Value.GetString();
                     continue;

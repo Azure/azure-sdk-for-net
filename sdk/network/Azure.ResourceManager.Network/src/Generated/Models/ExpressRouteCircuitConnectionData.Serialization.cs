@@ -20,39 +20,39 @@ namespace Azure.ResourceManager.Network
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ExpressRouteCircuitPeering))
             {
-                writer.WritePropertyName("expressRouteCircuitPeering");
+                writer.WritePropertyName("expressRouteCircuitPeering"u8);
                 JsonSerializer.Serialize(writer, ExpressRouteCircuitPeering);
             }
             if (Optional.IsDefined(PeerExpressRouteCircuitPeering))
             {
-                writer.WritePropertyName("peerExpressRouteCircuitPeering");
+                writer.WritePropertyName("peerExpressRouteCircuitPeering"u8);
                 JsonSerializer.Serialize(writer, PeerExpressRouteCircuitPeering);
             }
             if (Optional.IsDefined(AddressPrefix))
             {
-                writer.WritePropertyName("addressPrefix");
+                writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
             if (Optional.IsDefined(AuthorizationKey))
             {
-                writer.WritePropertyName("authorizationKey");
+                writer.WritePropertyName("authorizationKey"u8);
                 writer.WriteStringValue(AuthorizationKey);
             }
             if (Optional.IsDefined(IPv6CircuitConnectionConfig))
             {
-                writer.WritePropertyName("ipv6CircuitConnectionConfig");
+                writer.WritePropertyName("ipv6CircuitConnectionConfig"u8);
                 writer.WriteObjectValue(IPv6CircuitConnectionConfig);
             }
             writer.WriteEndObject();
@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.Network
 
         internal static ExpressRouteCircuitConnectionData DeserializeExpressRouteCircuitConnectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.Network
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +88,7 @@ namespace Azure.ResourceManager.Network
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,12 +98,12 @@ namespace Azure.ResourceManager.Network
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,7 +113,7 @@ namespace Azure.ResourceManager.Network
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +122,7 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("expressRouteCircuitPeering"))
+                        if (property0.NameEquals("expressRouteCircuitPeering"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -128,7 +132,7 @@ namespace Azure.ResourceManager.Network
                             expressRouteCircuitPeering = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("peerExpressRouteCircuitPeering"))
+                        if (property0.NameEquals("peerExpressRouteCircuitPeering"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -138,17 +142,17 @@ namespace Azure.ResourceManager.Network
                             peerExpressRouteCircuitPeering = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("addressPrefix"))
+                        if (property0.NameEquals("addressPrefix"u8))
                         {
                             addressPrefix = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("authorizationKey"))
+                        if (property0.NameEquals("authorizationKey"u8))
                         {
                             authorizationKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("ipv6CircuitConnectionConfig"))
+                        if (property0.NameEquals("ipv6CircuitConnectionConfig"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -158,7 +162,7 @@ namespace Azure.ResourceManager.Network
                             ipv6CircuitConnectionConfig = IPv6CircuitConnectionConfig.DeserializeIPv6CircuitConnectionConfig(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("circuitConnectionStatus"))
+                        if (property0.NameEquals("circuitConnectionStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -168,7 +172,7 @@ namespace Azure.ResourceManager.Network
                             circuitConnectionStatus = new CircuitConnectionStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

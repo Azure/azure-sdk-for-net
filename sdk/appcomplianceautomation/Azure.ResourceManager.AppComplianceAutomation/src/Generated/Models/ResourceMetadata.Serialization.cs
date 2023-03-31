@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("resourceId");
+            writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
             if (Optional.IsDefined(ResourceType))
             {
-                writer.WritePropertyName("resourceType");
+                writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
             if (Optional.IsDefined(ResourceKind))
             {
-                writer.WritePropertyName("resourceKind");
+                writer.WritePropertyName("resourceKind"u8);
                 writer.WriteStringValue(ResourceKind);
             }
             if (Optional.IsDefined(ResourceName))
             {
-                writer.WritePropertyName("resourceName");
+                writer.WritePropertyName("resourceName"u8);
                 writer.WriteStringValue(ResourceName);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         internal static ResourceMetadata DeserializeResourceMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string resourceId = default;
             Optional<string> resourceType = default;
             Optional<string> resourceKind = default;
@@ -56,27 +60,27 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceKind"))
+                if (property.NameEquals("resourceKind"u8))
                 {
                     resourceKind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceName"))
+                if (property.NameEquals("resourceName"u8))
                 {
                     resourceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

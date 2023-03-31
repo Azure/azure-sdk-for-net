@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EntityType))
             {
-                writer.WritePropertyName("entityType");
+                writer.WritePropertyName("entityType"u8);
                 writer.WriteStringValue(EntityType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(FieldMappings))
             {
-                writer.WritePropertyName("fieldMappings");
+                writer.WritePropertyName("fieldMappings"u8);
                 writer.WriteStartArray();
                 foreach (var item in FieldMappings)
                 {
@@ -36,11 +36,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsAlertRuleEntityMapping DeserializeSecurityInsightsAlertRuleEntityMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SecurityInsightsAlertRuleEntityMappingType> entityType = default;
             Optional<IList<SecurityInsightsFieldMapping>> fieldMappings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("entityType"))
+                if (property.NameEquals("entityType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     entityType = new SecurityInsightsAlertRuleEntityMappingType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("fieldMappings"))
+                if (property.NameEquals("fieldMappings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

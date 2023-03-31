@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         internal static GuestConfigurationVmssVmInfo DeserializeGuestConfigurationVmssVmInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> vmId = default;
             Optional<ResourceIdentifier> vmResourceId = default;
             Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Optional<DateTimeOffset?> lastComplianceChecked = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vmId"))
+                if (property.NameEquals("vmId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,7 +42,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     vmId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("vmResourceId"))
+                if (property.NameEquals("vmResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +52,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     vmResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("complianceStatus"))
+                if (property.NameEquals("complianceStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     complianceStatus = new AssignedGuestConfigurationMachineComplianceStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("latestReportId"))
+                if (property.NameEquals("latestReportId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     latestReportId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("lastComplianceChecked"))
+                if (property.NameEquals("lastComplianceChecked"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

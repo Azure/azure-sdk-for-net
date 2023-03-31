@@ -15,10 +15,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ApplicationGatewayBackendHealth DeserializeApplicationGatewayBackendHealth(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ApplicationGatewayBackendHealthPool>> backendAddressPools = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("backendAddressPools"))
+                if (property.NameEquals("backendAddressPools"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

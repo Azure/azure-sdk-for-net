@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(NetworkInterfaces))
             {
-                writer.WritePropertyName("networkInterfaces");
+                writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(NetworkApiVersion))
             {
-                writer.WritePropertyName("networkApiVersion");
+                writer.WritePropertyName("networkApiVersion"u8);
                 writer.WriteStringValue(NetworkApiVersion.Value.ToString());
             }
             if (Optional.IsCollectionDefined(NetworkInterfaceConfigurations))
             {
-                writer.WritePropertyName("networkInterfaceConfigurations");
+                writer.WritePropertyName("networkInterfaceConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaceConfigurations)
                 {
@@ -46,12 +46,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineNetworkProfile DeserializeVirtualMachineNetworkProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<VirtualMachineNetworkInterfaceReference>> networkInterfaces = default;
             Optional<NetworkApiVersion> networkApiVersion = default;
             Optional<IList<VirtualMachineNetworkInterfaceConfiguration>> networkInterfaceConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("networkInterfaces"))
+                if (property.NameEquals("networkInterfaces"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
                     networkInterfaces = array;
                     continue;
                 }
-                if (property.NameEquals("networkApiVersion"))
+                if (property.NameEquals("networkApiVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
                     networkApiVersion = new NetworkApiVersion(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("networkInterfaceConfigurations"))
+                if (property.NameEquals("networkInterfaceConfigurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

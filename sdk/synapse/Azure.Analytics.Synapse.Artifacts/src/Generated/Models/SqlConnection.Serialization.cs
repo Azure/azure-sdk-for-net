@@ -21,22 +21,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Type))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(PoolName))
             {
-                writer.WritePropertyName("poolName");
+                writer.WritePropertyName("poolName"u8);
                 writer.WriteStringValue(PoolName);
             }
             if (Optional.IsDefined(DatabaseName))
             {
-                writer.WritePropertyName("databaseName");
+                writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
             foreach (var item in AdditionalProperties)
@@ -49,6 +49,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SqlConnection DeserializeSqlConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlConnectionType> type = default;
             Optional<string> name = default;
             Optional<string> poolName = default;
@@ -57,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,17 +71,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     type = new SqlConnectionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("poolName"))
+                if (property.NameEquals("poolName"u8))
                 {
                     poolName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databaseName"))
+                if (property.NameEquals("databaseName"u8))
                 {
                     databaseName = property.Value.GetString();
                     continue;

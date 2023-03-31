@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static BackupSetInfo DeserializeBackupSetInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> backupSetId = default;
             Optional<string> firstLsn = default;
             Optional<string> lastLsn = default;
@@ -28,22 +32,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<bool> isBackupRestored = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("backupSetId"))
+                if (property.NameEquals("backupSetId"u8))
                 {
                     backupSetId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("firstLsn"))
+                if (property.NameEquals("firstLsn"u8))
                 {
                     firstLsn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastLsn"))
+                if (property.NameEquals("lastLsn"u8))
                 {
                     lastLsn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastModifiedTime"))
+                if (property.NameEquals("lastModifiedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     lastModifiedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("backupType"))
+                if (property.NameEquals("backupType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +67,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     backupType = new BackupType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("listOfBackupFiles"))
+                if (property.NameEquals("listOfBackupFiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,12 +82,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     listOfBackupFiles = array;
                     continue;
                 }
-                if (property.NameEquals("databaseName"))
+                if (property.NameEquals("databaseName"u8))
                 {
                     databaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("backupStartDate"))
+                if (property.NameEquals("backupStartDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +97,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     backupStartDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("backupFinishedDate"))
+                if (property.NameEquals("backupFinishedDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +107,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     backupFinishedDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("isBackupRestored"))
+                if (property.NameEquals("isBackupRestored"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

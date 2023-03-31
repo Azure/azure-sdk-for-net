@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AdminGroupObjectIds))
             {
-                writer.WritePropertyName("adminGroupObjectIDs");
+                writer.WritePropertyName("adminGroupObjectIDs"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdminGroupObjectIds)
                 {
@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
             if (Optional.IsDefined(ClientAppId))
             {
-                writer.WritePropertyName("clientAppID");
+                writer.WritePropertyName("clientAppID"u8);
                 writer.WriteStringValue(ClientAppId);
             }
             if (Optional.IsDefined(EnableAzureRbac))
             {
-                writer.WritePropertyName("enableAzureRbac");
+                writer.WritePropertyName("enableAzureRbac"u8);
                 writer.WriteBooleanValue(EnableAzureRbac.Value);
             }
             if (Optional.IsDefined(Managed))
             {
-                writer.WritePropertyName("managed");
+                writer.WritePropertyName("managed"u8);
                 writer.WriteBooleanValue(Managed.Value);
             }
             if (Optional.IsDefined(ServerAppId))
             {
-                writer.WritePropertyName("serverAppID");
+                writer.WritePropertyName("serverAppID"u8);
                 writer.WriteStringValue(ServerAppId);
             }
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantID");
+                writer.WritePropertyName("tenantID"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(ServerAppSecret))
             {
-                writer.WritePropertyName("serverAppSecret");
+                writer.WritePropertyName("serverAppSecret"u8);
                 writer.WriteStringValue(ServerAppSecret);
             }
             writer.WriteEndObject();
@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static AADProfile DeserializeAADProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> adminGroupObjectIds = default;
             Optional<string> clientAppId = default;
             Optional<bool> enableAzureRbac = default;
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<string> serverAppSecret = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("adminGroupObjectIDs"))
+                if (property.NameEquals("adminGroupObjectIDs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,12 +90,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     adminGroupObjectIds = array;
                     continue;
                 }
-                if (property.NameEquals("clientAppID"))
+                if (property.NameEquals("clientAppID"u8))
                 {
                     clientAppId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enableAzureRbac"))
+                if (property.NameEquals("enableAzureRbac"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +105,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     enableAzureRbac = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("managed"))
+                if (property.NameEquals("managed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,12 +115,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     managed = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("serverAppID"))
+                if (property.NameEquals("serverAppID"u8))
                 {
                     serverAppId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tenantID"))
+                if (property.NameEquals("tenantID"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,7 +130,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("serverAppSecret"))
+                if (property.NameEquals("serverAppSecret"u8))
                 {
                     serverAppSecret = property.Value.GetString();
                     continue;

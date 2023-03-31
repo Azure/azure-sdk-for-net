@@ -16,19 +16,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("authenticationType");
+            writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             writer.WriteEndObject();
         }
 
         internal static UnknownAuthenticationDetailsProperties DeserializeUnknownAuthenticationDetailsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
             Optional<IReadOnlyList<SecurityCenterCloudPermission>> grantedPermissions = default;
             AuthenticationType authenticationType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("authenticationProvisioningState"))
+                if (property.NameEquals("authenticationProvisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     authenticationProvisioningState = new AuthenticationProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("grantedPermissions"))
+                if (property.NameEquals("grantedPermissions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     grantedPermissions = array;
                     continue;
                 }
-                if (property.NameEquals("authenticationType"))
+                if (property.NameEquals("authenticationType"u8))
                 {
                     authenticationType = new AuthenticationType(property.Value.GetString());
                     continue;

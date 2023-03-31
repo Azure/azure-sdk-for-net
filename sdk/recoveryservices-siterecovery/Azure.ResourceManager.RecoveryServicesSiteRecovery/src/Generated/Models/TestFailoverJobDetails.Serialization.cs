@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static TestFailoverJobDetails DeserializeTestFailoverJobDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> testFailoverStatus = default;
             Optional<string> comments = default;
             Optional<string> networkName = default;
@@ -25,32 +29,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("testFailoverStatus"))
+                if (property.NameEquals("testFailoverStatus"u8))
                 {
                     testFailoverStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("comments"))
+                if (property.NameEquals("comments"u8))
                 {
                     comments = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkName"))
+                if (property.NameEquals("networkName"u8))
                 {
                     networkName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkFriendlyName"))
+                if (property.NameEquals("networkFriendlyName"u8))
                 {
                     networkFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkType"))
+                if (property.NameEquals("networkType"u8))
                 {
                     networkType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectedItemDetails"))
+                if (property.NameEquals("protectedItemDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,12 +69,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     protectedItemDetails = array;
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("affectedObjectDetails"))
+                if (property.NameEquals("affectedObjectDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

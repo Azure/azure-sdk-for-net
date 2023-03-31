@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.Resources
             writer.WriteStartObject();
             if (Optional.IsDefined(ManagedBy))
             {
-                writer.WritePropertyName("managedBy");
+                writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -40,25 +40,25 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("lockLevel");
+            writer.WritePropertyName("lockLevel"u8);
             writer.WriteStringValue(LockLevel.ToSerialString());
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("isEnabled");
+                writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsCollectionDefined(Authorizations))
             {
-                writer.WritePropertyName("authorizations");
+                writer.WritePropertyName("authorizations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Authorizations)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Resources
             }
             if (Optional.IsCollectionDefined(Artifacts))
             {
-                writer.WritePropertyName("artifacts");
+                writer.WritePropertyName("artifacts"u8);
                 writer.WriteStartArray();
                 foreach (var item in Artifacts)
                 {
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.Resources
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(PackageFileUri))
             {
-                writer.WritePropertyName("packageFileUri");
+                writer.WritePropertyName("packageFileUri"u8);
                 writer.WriteStringValue(PackageFileUri.AbsoluteUri);
             }
             if (Optional.IsDefined(MainTemplate))
             {
-                writer.WritePropertyName("mainTemplate");
+                writer.WritePropertyName("mainTemplate"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(MainTemplate);
 #else
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Resources
             }
             if (Optional.IsDefined(CreateUiDefinition))
             {
-                writer.WritePropertyName("createUiDefinition");
+                writer.WritePropertyName("createUiDefinition"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(CreateUiDefinition);
 #else
@@ -106,27 +106,27 @@ namespace Azure.ResourceManager.Resources
             }
             if (Optional.IsDefined(NotificationPolicy))
             {
-                writer.WritePropertyName("notificationPolicy");
+                writer.WritePropertyName("notificationPolicy"u8);
                 writer.WriteObjectValue(NotificationPolicy);
             }
             if (Optional.IsDefined(LockingPolicy))
             {
-                writer.WritePropertyName("lockingPolicy");
+                writer.WritePropertyName("lockingPolicy"u8);
                 writer.WriteObjectValue(LockingPolicy);
             }
             if (Optional.IsDefined(DeploymentPolicy))
             {
-                writer.WritePropertyName("deploymentPolicy");
+                writer.WritePropertyName("deploymentPolicy"u8);
                 writer.WriteObjectValue(DeploymentPolicy);
             }
             if (Optional.IsDefined(ManagementPolicy))
             {
-                writer.WritePropertyName("managementPolicy");
+                writer.WritePropertyName("managementPolicy"u8);
                 writer.WriteObjectValue(ManagementPolicy);
             }
             if (Optional.IsCollectionDefined(Policies))
             {
-                writer.WritePropertyName("policies");
+                writer.WritePropertyName("policies"u8);
                 writer.WriteStartArray();
                 foreach (var item in Policies)
                 {
@@ -140,6 +140,10 @@ namespace Azure.ResourceManager.Resources
 
         internal static ArmApplicationDefinitionData DeserializeArmApplicationDefinitionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> managedBy = default;
             Optional<ArmApplicationSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -164,12 +168,12 @@ namespace Azure.ResourceManager.Resources
             Optional<IList<ArmApplicationPolicy>> policies = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("managedBy"))
+                if (property.NameEquals("managedBy"u8))
                 {
                     managedBy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -179,7 +183,7 @@ namespace Azure.ResourceManager.Resources
                     sku = ArmApplicationSku.DeserializeArmApplicationSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -194,27 +198,27 @@ namespace Azure.ResourceManager.Resources
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -224,7 +228,7 @@ namespace Azure.ResourceManager.Resources
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -233,17 +237,17 @@ namespace Azure.ResourceManager.Resources
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("lockLevel"))
+                        if (property0.NameEquals("lockLevel"u8))
                         {
                             lockLevel = property0.Value.GetString().ToArmApplicationLockLevel();
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("isEnabled"))
+                        if (property0.NameEquals("isEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -253,7 +257,7 @@ namespace Azure.ResourceManager.Resources
                             isEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("authorizations"))
+                        if (property0.NameEquals("authorizations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -268,7 +272,7 @@ namespace Azure.ResourceManager.Resources
                             authorizations = array;
                             continue;
                         }
-                        if (property0.NameEquals("artifacts"))
+                        if (property0.NameEquals("artifacts"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -283,12 +287,12 @@ namespace Azure.ResourceManager.Resources
                             artifacts = array;
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("packageFileUri"))
+                        if (property0.NameEquals("packageFileUri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -298,7 +302,7 @@ namespace Azure.ResourceManager.Resources
                             packageFileUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("mainTemplate"))
+                        if (property0.NameEquals("mainTemplate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -308,7 +312,7 @@ namespace Azure.ResourceManager.Resources
                             mainTemplate = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("createUiDefinition"))
+                        if (property0.NameEquals("createUiDefinition"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -318,7 +322,7 @@ namespace Azure.ResourceManager.Resources
                             createUiDefinition = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("notificationPolicy"))
+                        if (property0.NameEquals("notificationPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -328,7 +332,7 @@ namespace Azure.ResourceManager.Resources
                             notificationPolicy = ArmApplicationNotificationPolicy.DeserializeArmApplicationNotificationPolicy(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("lockingPolicy"))
+                        if (property0.NameEquals("lockingPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -338,7 +342,7 @@ namespace Azure.ResourceManager.Resources
                             lockingPolicy = ArmApplicationPackageLockingPolicy.DeserializeArmApplicationPackageLockingPolicy(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("deploymentPolicy"))
+                        if (property0.NameEquals("deploymentPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -348,7 +352,7 @@ namespace Azure.ResourceManager.Resources
                             deploymentPolicy = ArmApplicationDeploymentPolicy.DeserializeArmApplicationDeploymentPolicy(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("managementPolicy"))
+                        if (property0.NameEquals("managementPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -358,7 +362,7 @@ namespace Azure.ResourceManager.Resources
                             managementPolicy = ArmApplicationManagementPolicy.DeserializeArmApplicationManagementPolicy(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("policies"))
+                        if (property0.NameEquals("policies"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

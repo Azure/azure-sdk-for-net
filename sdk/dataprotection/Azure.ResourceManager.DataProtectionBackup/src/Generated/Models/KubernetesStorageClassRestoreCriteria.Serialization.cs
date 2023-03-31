@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SelectedStorageClassName))
             {
-                writer.WritePropertyName("selectedStorageClassName");
+                writer.WritePropertyName("selectedStorageClassName"u8);
                 writer.WriteStringValue(SelectedStorageClassName);
             }
             if (Optional.IsDefined(Provisioner))
             {
-                writer.WritePropertyName("provisioner");
+                writer.WritePropertyName("provisioner"u8);
                 writer.WriteStringValue(Provisioner);
             }
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
         }

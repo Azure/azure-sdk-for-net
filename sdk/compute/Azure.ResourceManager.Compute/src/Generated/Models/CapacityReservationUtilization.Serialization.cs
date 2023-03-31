@@ -16,11 +16,15 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static CapacityReservationUtilization DeserializeCapacityReservationUtilization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> currentCapacity = default;
             Optional<IReadOnlyList<SubResource>> virtualMachinesAllocated = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("currentCapacity"))
+                if (property.NameEquals("currentCapacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
                     currentCapacity = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("virtualMachinesAllocated"))
+                if (property.NameEquals("virtualMachinesAllocated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

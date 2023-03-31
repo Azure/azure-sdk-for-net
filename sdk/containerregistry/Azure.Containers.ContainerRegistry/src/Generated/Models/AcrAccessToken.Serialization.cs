@@ -14,10 +14,14 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static AcrAccessToken DeserializeAcrAccessToken(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> accessToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("access_token"))
+                if (property.NameEquals("access_token"u8))
                 {
                     accessToken = property.Value.GetString();
                     continue;

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(GradeName))
             {
-                writer.WritePropertyName("gradeName");
+                writer.WritePropertyName("gradeName"u8);
                 writer.WriteStringValue(GradeName);
             }
             if (Optional.IsDefined(MinScoreThreshold))
             {
-                writer.WritePropertyName("minScoreThreshold");
+                writer.WritePropertyName("minScoreThreshold"u8);
                 writer.WriteNumberValue(MinScoreThreshold.Value);
             }
             if (Optional.IsDefined(MaxScoreThreshold))
             {
-                writer.WritePropertyName("maxScoreThreshold");
+                writer.WritePropertyName("maxScoreThreshold"u8);
                 writer.WriteNumberValue(MaxScoreThreshold.Value);
             }
             writer.WriteEndObject();
@@ -35,17 +35,21 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static PredictionGradesItem DeserializePredictionGradesItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> gradeName = default;
             Optional<int> minScoreThreshold = default;
             Optional<int> maxScoreThreshold = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("gradeName"))
+                if (property.NameEquals("gradeName"u8))
                 {
                     gradeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("minScoreThreshold"))
+                if (property.NameEquals("minScoreThreshold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     minScoreThreshold = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxScoreThreshold"))
+                if (property.NameEquals("maxScoreThreshold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

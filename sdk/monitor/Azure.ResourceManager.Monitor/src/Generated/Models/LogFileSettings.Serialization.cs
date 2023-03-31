@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Text))
             {
-                writer.WritePropertyName("text");
+                writer.WritePropertyName("text"u8);
                 writer.WriteObjectValue(Text);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static LogFileSettings DeserializeLogFileSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LogFileSettingsText> text = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("text"))
+                if (property.NameEquals("text"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

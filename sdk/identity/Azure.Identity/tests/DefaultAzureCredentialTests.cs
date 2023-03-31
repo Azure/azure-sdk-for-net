@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,6 +24,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+
         public void ValidateCtorNoOptions()
         {
             var cred = new DefaultAzureCredential();
@@ -30,14 +32,14 @@ namespace Azure.Identity.Tests
             TokenCredential[] sources = cred._sources();
 
             Assert.NotNull(sources);
-            Assert.AreEqual(sources.Length, 9);
+            Assert.AreEqual(sources.Length, 7);
             Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
-            Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[1]);
-            Assert.IsInstanceOf(typeof(AzureDeveloperCliCredential), sources[2]);
-            Assert.IsInstanceOf(typeof(VisualStudioCredential), sources[3]);
-            Assert.IsInstanceOf(typeof(AzureCliCredential), sources[4]);
-            Assert.IsInstanceOf(typeof(AzurePowerShellCredential), sources[5]);
-            Assert.IsNull(sources[8]);
+            Assert.IsInstanceOf(typeof(WorkloadIdentityCredential), sources[1]);
+            Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[2]);
+            Assert.IsInstanceOf(typeof(AzureDeveloperCliCredential), sources[3]);
+            Assert.IsInstanceOf(typeof(VisualStudioCredential), sources[4]);
+            Assert.IsInstanceOf(typeof(AzureCliCredential), sources[5]);
+            Assert.IsInstanceOf(typeof(AzurePowerShellCredential), sources[6]);
         }
 
         [Test]
@@ -48,27 +50,25 @@ namespace Azure.Identity.Tests
             TokenCredential[] sources = cred._sources();
 
             Assert.NotNull(sources);
-            Assert.AreEqual(sources.Length, 9);
+            Assert.AreEqual(sources.Length, includeInteractive ? 8 : 7);
 
             Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
-            Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[1]);
-            Assert.IsInstanceOf(typeof(AzureDeveloperCliCredential), sources[2]);
-            Assert.IsInstanceOf(typeof(VisualStudioCredential), sources[3]);
-            Assert.IsInstanceOf(typeof(AzureCliCredential), sources[4]);
-            Assert.IsInstanceOf(typeof(AzurePowerShellCredential), sources[5]);
+            Assert.IsInstanceOf(typeof(WorkloadIdentityCredential), sources[1]);
+            Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[2]);
+            Assert.IsInstanceOf(typeof(AzureDeveloperCliCredential), sources[3]);
+            Assert.IsInstanceOf(typeof(VisualStudioCredential), sources[4]);
+            Assert.IsInstanceOf(typeof(AzureCliCredential), sources[5]);
+            Assert.IsInstanceOf(typeof(AzurePowerShellCredential), sources[6]);
 
             if (includeInteractive)
             {
-                Assert.IsInstanceOf(typeof(InteractiveBrowserCredential), sources[6]);
-            }
-            else
-            {
-                Assert.IsNull(sources[6]);
+                Assert.IsInstanceOf(typeof(InteractiveBrowserCredential), sources[7]);
             }
         }
 
         [Test]
         public void ValidateAllUnavailable([Values(true, false)] bool excludeEnvironmentCredential,
+                                           [Values(true, false)] bool excludeWorkloadIdentityCredential,
                                            [Values(true, false)] bool excludeManagedIdentityCredential,
                                            [Values(true, false)] bool excludeDeveloperCliCredential,
                                            [Values(true, false)] bool excludeSharedTokenCacheCredential,
@@ -78,7 +78,7 @@ namespace Azure.Identity.Tests
                                            [Values(true, false)] bool excludePowerShellCredential,
                                            [Values(true, false)] bool excludeInteractiveBrowserCredential)
         {
-            if (excludeEnvironmentCredential && excludeManagedIdentityCredential && excludeDeveloperCliCredential && excludeSharedTokenCacheCredential && excludeVisualStudioCredential && excludeVisualStudioCodeCredential && excludeCliCredential && excludeInteractiveBrowserCredential)
+            if (excludeEnvironmentCredential && excludeWorkloadIdentityCredential && excludeManagedIdentityCredential && excludeDeveloperCliCredential && excludeSharedTokenCacheCredential && excludeVisualStudioCredential && excludeVisualStudioCodeCredential && excludeCliCredential && excludeInteractiveBrowserCredential)
             {
                 Assert.Pass();
             }
@@ -86,6 +86,7 @@ namespace Azure.Identity.Tests
             var options = new DefaultAzureCredentialOptions
             {
                 ExcludeEnvironmentCredential = excludeEnvironmentCredential,
+                ExcludeWorkloadIdentityCredential = excludeWorkloadIdentityCredential,
                 ExcludeManagedIdentityCredential = excludeManagedIdentityCredential,
                 ExcludeAzureDeveloperCliCredential = excludeDeveloperCliCredential,
                 ExcludeSharedTokenCacheCredential = excludeSharedTokenCacheCredential,
@@ -105,6 +106,8 @@ namespace Azure.Identity.Tests
             credFactory.OnCreateEnvironmentCredential = c =>
                 SetupMockForException(c);
             credFactory.OnCreateInteractiveBrowserCredential = c =>
+                SetupMockForException(c);
+            credFactory.OnCreateWorkloadIdentityCredential = c =>
                 SetupMockForException(c);
             credFactory.OnCreateManagedIdentityCredential = c =>
                 SetupMockForException(c);
@@ -128,6 +131,10 @@ namespace Azure.Identity.Tests
             if (!excludeEnvironmentCredential)
             {
                 Assert.True(ex.Message.Contains("EnvironmentCredential Unavailable"));
+            }
+            if (!excludeWorkloadIdentityCredential)
+            {
+                Assert.True(ex.Message.Contains("WorkloadIdentityCredential Unavailable"));
             }
             if (!excludeManagedIdentityCredential)
             {
@@ -170,6 +177,7 @@ namespace Azure.Identity.Tests
             var options = new DefaultAzureCredentialOptions
             {
                 ExcludeEnvironmentCredential = false,
+                ExcludeWorkloadIdentityCredential = false,
                 ExcludeManagedIdentityCredential = false,
                 ExcludeAzureDeveloperCliCredential = false,
                 ExcludeSharedTokenCacheCredential = false,
@@ -198,6 +206,8 @@ namespace Azure.Identity.Tests
             }
 
             credFactory.OnCreateEnvironmentCredential = c =>
+                SetupMockForException(c);
+            credFactory.OnCreateWorkloadIdentityCredential = c =>
                 SetupMockForException(c);
             credFactory.OnCreateManagedIdentityCredential = c =>
                 SetupMockForException(c);
@@ -237,7 +247,9 @@ namespace Azure.Identity.Tests
             yield return new object[] { typeof(AzureCliCredential) };
             yield return new object[] { typeof(InteractiveBrowserCredential) };
             yield return new object[] { typeof(ManagedIdentityCredential) };
+            yield return new object[] { typeof(AzurePowerShellCredential) };
             yield return new object[] { typeof(AzureDeveloperCliCredential) };
+            yield return new object[] { typeof(WorkloadIdentityCredential) };
         }
 
         [Test]
@@ -298,6 +310,7 @@ namespace Azure.Identity.Tests
             var options = new DefaultAzureCredentialOptions
             {
                 ExcludeEnvironmentCredential = false,
+                ExcludeWorkloadIdentityCredential= false,
                 ExcludeManagedIdentityCredential = false,
                 ExcludeAzureDeveloperCliCredential = false,
                 ExcludeSharedTokenCacheCredential = false,
@@ -315,6 +328,134 @@ namespace Azure.Identity.Tests
             await cred.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
             Assert.That(messages, Has.Some.Match(availableCredential.Name).And.Some.Match("DefaultAzureCredential credential selected"));
+        }
+
+        [Test]
+        [TestCaseSource(nameof(AllCredentialTypes))]
+        public void DisableMetadataDiscoveryOptionIsHonoredWhenTrue(Type availableCredential)
+        {
+            Type targetCredOptionsType = GetTargetCredentialOptionType(availableCredential);
+
+            if (!typeof(ISupportsDisableInstanceDiscovery).IsAssignableFrom(targetCredOptionsType))
+            {
+                Assert.Ignore($"Credential {availableCredential.Name} does not support disabling instance discovery");
+            }
+
+            using (new TestEnvVar(new Dictionary<string, string> {
+                    { "AZURE_CLIENT_ID", "mockclientid" },
+                    { "AZURE_CLIENT_SECRET", null},
+                    { "AZURE_TENANT_ID", "mocktenantid" },
+                    {"AZURE_USERNAME", "mockusername" },
+                    { "AZURE_PASSWORD", "mockpassword" },
+                    { "AZURE_CLIENT_CERTIFICATE_PATH", null },
+                    { "AZURE_FEDERATED_TOKEN_FILE", "/temp/token" } }))
+            {
+                DefaultAzureCredentialOptions options = GetDacOptions(availableCredential, true);
+
+                var credential = new DefaultAzureCredential(options);
+                Assert.AreEqual(1, credential._sources.Length);
+                var targetCred = credential._sources[0];
+                bool DisableInstanceDiscovery = CredentialTestHelpers.ExtractMsalDisableInstanceDiscoveryProperty(targetCred);
+
+                Assert.IsTrue(DisableInstanceDiscovery);
+            }
+        }
+
+        [Test]
+        [TestCaseSource(nameof(AllCredentialTypes))]
+        public void DisableMetadataDiscoveryOptionIsHonoredWhenFalse(Type availableCredential)
+        {
+            Type targetCredOptionsType = GetTargetCredentialOptionType(availableCredential);
+
+            if (!typeof(ISupportsDisableInstanceDiscovery).IsAssignableFrom(targetCredOptionsType))
+            {
+                Assert.Ignore($"Credential {availableCredential.Name} does not support disabling instance discovery");
+            }
+
+            using (new TestEnvVar(new Dictionary<string, string> {
+                    { "AZURE_CLIENT_ID", "mockclientid" },
+                    { "AZURE_CLIENT_SECRET", null},
+                    { "AZURE_TENANT_ID", "mocktenantid" },
+                    {"AZURE_USERNAME", "mockusername" },
+                    { "AZURE_PASSWORD", "mockpassword" },
+                    { "AZURE_CLIENT_CERTIFICATE_PATH", null },
+                    { "AZURE_FEDERATED_TOKEN_FILE", "c:/temp/token" } }))
+            {
+                DefaultAzureCredentialOptions options = GetDacOptions(availableCredential, false);
+                var credential = new DefaultAzureCredential(options);
+                Assert.AreEqual(1, credential._sources.Length);
+                var targetCred = credential._sources[0];
+                bool DisableInstanceDiscovery = CredentialTestHelpers.ExtractMsalDisableInstanceDiscoveryProperty(targetCred);
+
+                Assert.IsFalse(DisableInstanceDiscovery);
+            }
+        }
+
+        [Test]
+        [TestCaseSource(nameof(AllCredentialTypes))]
+        public void AdditionallyAllowedTenantsOptionIsHonored(Type availableCredential)
+        {
+            using (new TestEnvVar(new Dictionary<string, string> {
+                    { "AZURE_CLIENT_ID", "mockclientid" },
+                    { "AZURE_CLIENT_SECRET", null},
+                    { "AZURE_TENANT_ID", "mocktenantid" },
+                    {"AZURE_USERNAME", "mockusername" },
+                    { "AZURE_PASSWORD", "mockpassword" },
+                    { "AZURE_CLIENT_CERTIFICATE_PATH", null },
+                    { "AZURE_FEDERATED_TOKEN_FILE", "c:/temp/token" }
+            }))
+            {
+                DefaultAzureCredentialOptions options = GetDacOptions(availableCredential, false);
+                var additionalTenant = Guid.NewGuid().ToString();
+                options.AdditionallyAllowedTenants.Add(additionalTenant);
+
+                var credential = new DefaultAzureCredential(options);
+                Assert.AreEqual(1, credential._sources.Length);
+                var targetCred = credential._sources[0];
+                if (targetCred is SharedTokenCacheCredential || targetCred is ManagedIdentityCredential)
+                {
+                    Assert.Ignore($"Credential {availableCredential.Name} does not support additional tenants");
+                }
+                string[] additionallyAllowedTenantIds = CredentialTestHelpers.ExtractAdditionalTenantProperty(targetCred);
+
+                CollectionAssert.Contains(additionallyAllowedTenantIds, additionalTenant);
+            }
+        }
+
+        private static DefaultAzureCredentialOptions GetDacOptions(Type availableCredential, bool disableInstanceDiscovery)
+        {
+            return new DefaultAzureCredentialOptions
+            {
+                ExcludeEnvironmentCredential = availableCredential != typeof(EnvironmentCredential),
+                ExcludeWorkloadIdentityCredential = availableCredential != typeof(WorkloadIdentityCredential),
+                ExcludeManagedIdentityCredential = availableCredential != typeof(ManagedIdentityCredential),
+                ExcludeAzureDeveloperCliCredential = availableCredential != typeof(AzureDeveloperCliCredential),
+                ExcludeSharedTokenCacheCredential = availableCredential != typeof(SharedTokenCacheCredential),
+                ExcludeVisualStudioCredential = availableCredential != typeof(VisualStudioCredential),
+                ExcludeVisualStudioCodeCredential = availableCredential != typeof(VisualStudioCodeCredential),
+                ExcludeAzureCliCredential = availableCredential != typeof(AzureCliCredential),
+                ExcludeAzurePowerShellCredential = availableCredential != typeof(AzurePowerShellCredential),
+                ExcludeInteractiveBrowserCredential = availableCredential != typeof(InteractiveBrowserCredential),
+                DisableInstanceDiscovery = disableInstanceDiscovery
+            };
+        }
+
+        private static Type GetTargetCredentialOptionType(Type availableCredential)
+        {
+            return availableCredential.Name switch
+            {
+                "SharedTokenCacheCredential" => typeof(SharedTokenCacheCredentialOptions),
+                "VisualStudioCredential" => typeof(VisualStudioCredentialOptions),
+                "VisualStudioCodeCredential" => typeof(VisualStudioCodeCredentialOptions),
+                "AzureCliCredential" => typeof(AzureCliCredentialOptions),
+                "AzurePowerShellCredential" => typeof(AzurePowerShellCredentialOptions),
+                "InteractiveBrowserCredential" => typeof(InteractiveBrowserCredentialOptions),
+                "WorkloadIdentityCredential" => typeof(WorkloadIdentityCredentialOptions),
+                "ManagedIdentityCredential" => typeof(TokenCredentialOptions),
+                "AzureDeveloperCliCredential" => typeof(AzureDeveloperCliCredentialOptions),
+                "EnvironmentCredential" => typeof(EnvironmentCredentialOptions),
+                _ => throw new InvalidOperationException($"Unexpected credential type {availableCredential.Name}")
+            };
         }
 
         internal MockDefaultAzureCredentialFactory GetMockDefaultAzureCredentialFactory(DefaultAzureCredentialOptions options, Type availableCredential, AccessToken expToken, List<Type> calledCredentials)
@@ -340,6 +481,8 @@ namespace Azure.Identity.Tests
             }
 
             credFactory.OnCreateEnvironmentCredential = c =>
+                SetupMockForException(c);
+            credFactory.OnCreateWorkloadIdentityCredential = c =>
                 SetupMockForException(c);
             credFactory.OnCreateManagedIdentityCredential = c =>
                 SetupMockForException(c);

@@ -18,22 +18,32 @@ namespace Azure.IoT.Hub.Service.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Desired))
             {
-                writer.WritePropertyName("desired");
+                writer.WritePropertyName("desired"u8);
                 writer.WriteStartObject();
                 foreach (var item in Desired)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsCollectionDefined(Reported))
             {
-                writer.WritePropertyName("reported");
+                writer.WritePropertyName("reported"u8);
                 writer.WriteStartObject();
                 foreach (var item in Reported)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -43,11 +53,15 @@ namespace Azure.IoT.Hub.Service.Models
 
         internal static TwinProperties DeserializeTwinProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, object>> desired = default;
             Optional<IDictionary<string, object>> reported = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("desired"))
+                if (property.NameEquals("desired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,12 +71,19 @@ namespace Azure.IoT.Hub.Service.Models
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetObject());
+                        }
                     }
                     desired = dictionary;
                     continue;
                 }
-                if (property.NameEquals("reported"))
+                if (property.NameEquals("reported"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +93,14 @@ namespace Azure.IoT.Hub.Service.Models
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetObject());
+                        }
                     }
                     reported = dictionary;
                     continue;

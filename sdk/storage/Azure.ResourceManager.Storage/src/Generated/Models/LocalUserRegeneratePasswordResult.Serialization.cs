@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static LocalUserRegeneratePasswordResult DeserializeLocalUserRegeneratePasswordResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sshPassword = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sshPassword"))
+                if (property.NameEquals("sshPassword"u8))
                 {
                     sshPassword = property.Value.GetString();
                     continue;

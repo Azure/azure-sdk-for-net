@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryKekCertificatePfx))
             {
-                writer.WritePropertyName("primaryKekCertificatePfx");
+                writer.WritePropertyName("primaryKekCertificatePfx"u8);
                 writer.WriteStringValue(PrimaryKekCertificatePfx);
             }
             if (Optional.IsDefined(SecondaryKekCertificatePfx))
             {
-                writer.WritePropertyName("secondaryKekCertificatePfx");
+                writer.WritePropertyName("secondaryKekCertificatePfx"u8);
                 writer.WriteStringValue(SecondaryKekCertificatePfx);
             }
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

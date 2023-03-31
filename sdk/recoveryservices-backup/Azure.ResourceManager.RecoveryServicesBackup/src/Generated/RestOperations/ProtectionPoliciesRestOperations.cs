@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="policyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProtectionPolicyResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string policyName, CancellationToken cancellationToken = default)
+        public async Task<Response<BackupProtectionPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string policyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -82,13 +82,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 case 200:
                     {
-                        ProtectionPolicyResourceData value = default;
+                        BackupProtectionPolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProtectionPolicyResourceData.DeserializeProtectionPolicyResourceData(document.RootElement);
+                        value = BackupProtectionPolicyData.DeserializeBackupProtectionPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProtectionPolicyResourceData)null, message.Response);
+                    return Response.FromValue((BackupProtectionPolicyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="policyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProtectionPolicyResourceData> Get(string subscriptionId, string resourceGroupName, string vaultName, string policyName, CancellationToken cancellationToken = default)
+        public Response<BackupProtectionPolicyData> Get(string subscriptionId, string resourceGroupName, string vaultName, string policyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -118,19 +118,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 case 200:
                     {
-                        ProtectionPolicyResourceData value = default;
+                        BackupProtectionPolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProtectionPolicyResourceData.DeserializeProtectionPolicyResourceData(document.RootElement);
+                        value = BackupProtectionPolicyData.DeserializeBackupProtectionPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProtectionPolicyResourceData)null, message.Response);
+                    return Response.FromValue((BackupProtectionPolicyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, string policyName, ProtectionPolicyResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, string policyName, BackupProtectionPolicyData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="policyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProtectionPolicyResourceData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string policyName, ProtectionPolicyResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<BackupProtectionPolicyData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string policyName, BackupProtectionPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -182,13 +182,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 case 200:
                     {
-                        ProtectionPolicyResourceData value = default;
+                        BackupProtectionPolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProtectionPolicyResourceData.DeserializeProtectionPolicyResourceData(document.RootElement);
+                        value = BackupProtectionPolicyData.DeserializeBackupProtectionPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 202:
-                    return Response.FromValue((ProtectionPolicyResourceData)null, message.Response);
+                    return Response.FromValue((BackupProtectionPolicyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="policyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProtectionPolicyResourceData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string vaultName, string policyName, ProtectionPolicyResourceData data, CancellationToken cancellationToken = default)
+        public Response<BackupProtectionPolicyData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string vaultName, string policyName, BackupProtectionPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -220,13 +220,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 case 200:
                     {
-                        ProtectionPolicyResourceData value = default;
+                        BackupProtectionPolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProtectionPolicyResourceData.DeserializeProtectionPolicyResourceData(document.RootElement);
+                        value = BackupProtectionPolicyData.DeserializeBackupProtectionPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 202:
-                    return Response.FromValue((ProtectionPolicyResourceData)null, message.Response);
+                    return Response.FromValue((BackupProtectionPolicyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

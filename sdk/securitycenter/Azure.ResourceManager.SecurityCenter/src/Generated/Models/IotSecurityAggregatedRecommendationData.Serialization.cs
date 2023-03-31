@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RecommendationName))
             {
-                writer.WritePropertyName("recommendationName");
+                writer.WritePropertyName("recommendationName"u8);
                 writer.WriteStringValue(RecommendationName);
             }
             writer.WriteEndObject();
@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static IotSecurityAggregatedRecommendationData DeserializeIotSecurityAggregatedRecommendationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -59,7 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<string> logAnalyticsQuery = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,22 +78,22 @@ namespace Azure.ResourceManager.SecurityCenter
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,37 +112,37 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("recommendationName"))
+                        if (property0.NameEquals("recommendationName"u8))
                         {
                             recommendationName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("recommendationDisplayName"))
+                        if (property0.NameEquals("recommendationDisplayName"u8))
                         {
                             recommendationDisplayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("recommendationTypeId"))
+                        if (property0.NameEquals("recommendationTypeId"u8))
                         {
                             recommendationTypeId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("detectedBy"))
+                        if (property0.NameEquals("detectedBy"u8))
                         {
                             detectedBy = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("remediationSteps"))
+                        if (property0.NameEquals("remediationSteps"u8))
                         {
                             remediationSteps = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("reportedSeverity"))
+                        if (property0.NameEquals("reportedSeverity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -148,7 +152,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             reportedSeverity = new ReportedSeverity(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("healthyDevices"))
+                        if (property0.NameEquals("healthyDevices"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -158,7 +162,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             healthyDevices = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("unhealthyDeviceCount"))
+                        if (property0.NameEquals("unhealthyDeviceCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -168,7 +172,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             unhealthyDeviceCount = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("logAnalyticsQuery"))
+                        if (property0.NameEquals("logAnalyticsQuery"u8))
                         {
                             logAnalyticsQuery = property0.Value.GetString();
                             continue;

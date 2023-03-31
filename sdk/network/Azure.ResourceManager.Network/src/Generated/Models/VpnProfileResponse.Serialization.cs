@@ -15,10 +15,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VpnProfileResponse DeserializeVpnProfileResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> profileUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("profileUrl"))
+                if (property.NameEquals("profileUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

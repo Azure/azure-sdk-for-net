@@ -14,6 +14,10 @@ namespace Azure.AI.Language.QuestionAnswering
     {
         internal static TextAnswer DeserializeTextAnswer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> answer = default;
             Optional<double> confidenceScore = default;
             Optional<string> id = default;
@@ -22,12 +26,12 @@ namespace Azure.AI.Language.QuestionAnswering
             Optional<int> length = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("answer"))
+                if (property.NameEquals("answer"u8))
                 {
                     answer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("confidenceScore"))
+                if (property.NameEquals("confidenceScore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,12 +41,12 @@ namespace Azure.AI.Language.QuestionAnswering
                     confidenceScore = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("answerSpan"))
+                if (property.NameEquals("answerSpan"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +56,7 @@ namespace Azure.AI.Language.QuestionAnswering
                     answerSpan = AnswerSpan.DeserializeAnswerSpan(property.Value);
                     continue;
                 }
-                if (property.NameEquals("offset"))
+                if (property.NameEquals("offset"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +66,7 @@ namespace Azure.AI.Language.QuestionAnswering
                     offset = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("length"))
+                if (property.NameEquals("length"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

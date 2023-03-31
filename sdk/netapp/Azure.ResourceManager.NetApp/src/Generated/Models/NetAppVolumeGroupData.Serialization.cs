@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.NetApp
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(GroupMetaData))
             {
-                writer.WritePropertyName("groupMetaData");
+                writer.WritePropertyName("groupMetaData"u8);
                 writer.WriteObjectValue(GroupMetaData);
             }
             if (Optional.IsCollectionDefined(Volumes))
             {
-                writer.WritePropertyName("volumes");
+                writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Volumes)
                 {
@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.NetApp
 
         internal static NetAppVolumeGroupData DeserializeNetAppVolumeGroupData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.NetApp
             Optional<IList<NetAppVolumeGroupVolume>> volumes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,22 +70,22 @@ namespace Azure.ResourceManager.NetApp
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.NetApp
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,12 +104,12 @@ namespace Azure.ResourceManager.NetApp
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("groupMetaData"))
+                        if (property0.NameEquals("groupMetaData"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -115,7 +119,7 @@ namespace Azure.ResourceManager.NetApp
                             groupMetaData = NetAppVolumeGroupMetadata.DeserializeNetAppVolumeGroupMetadata(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("volumes"))
+                        if (property0.NameEquals("volumes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -14,10 +14,14 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static AnalyzeJobDisplayName DeserializeAnalyzeJobDisplayName(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;

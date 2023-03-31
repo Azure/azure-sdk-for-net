@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.Quantum.Models
     {
         internal static ProviderPropertiesManagedApplication DeserializeProviderPropertiesManagedApplication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> publisherId = default;
             Optional<string> offerId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publisherId"))
+                if (property.NameEquals("publisherId"u8))
                 {
                     publisherId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offerId"))
+                if (property.NameEquals("offerId"u8))
                 {
                     offerId = property.Value.GetString();
                     continue;

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("uri");
+                writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicContentLink DeserializeLogicContentLink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> uri = default;
             Optional<string> contentVersion = default;
             Optional<long> contentSize = default;
@@ -33,7 +37,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<BinaryData> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("uri"))
+                if (property.NameEquals("uri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,12 +47,12 @@ namespace Azure.ResourceManager.Logic.Models
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("contentVersion"))
+                if (property.NameEquals("contentVersion"u8))
                 {
                     contentVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("contentSize"))
+                if (property.NameEquals("contentSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.Logic.Models
                     contentSize = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("contentHash"))
+                if (property.NameEquals("contentHash"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.Logic.Models
                     contentHash = LogicContentHash.DeserializeLogicContentHash(property.Value);
                     continue;
                 }
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CertificateUri))
             {
-                writer.WritePropertyName("certificateUrl");
+                writer.WritePropertyName("certificateUrl"u8);
                 writer.WriteStringValue(CertificateUri.AbsoluteUri);
             }
             if (Optional.IsDefined(CertificateStore))
             {
-                writer.WritePropertyName("certificateStore");
+                writer.WritePropertyName("certificateStore"u8);
                 writer.WriteStringValue(CertificateStore);
             }
             writer.WriteEndObject();
@@ -31,11 +31,15 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VaultCertificate DeserializeVaultCertificate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> certificateUrl = default;
             Optional<string> certificateStore = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("certificateUrl"))
+                if (property.NameEquals("certificateUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
                     certificateUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("certificateStore"))
+                if (property.NameEquals("certificateStore"u8))
                 {
                     certificateStore = property.Value.GetString();
                     continue;

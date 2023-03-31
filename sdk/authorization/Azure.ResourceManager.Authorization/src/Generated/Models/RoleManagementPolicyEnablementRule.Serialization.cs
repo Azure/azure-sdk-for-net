@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(EnablementRules))
             {
-                writer.WritePropertyName("enabledRules");
+                writer.WritePropertyName("enabledRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in EnablementRules)
                 {
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            writer.WritePropertyName("ruleType");
+            writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
             if (Optional.IsDefined(Target))
             {
-                writer.WritePropertyName("target");
+                writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
             }
             writer.WriteEndObject();
@@ -43,13 +43,17 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleManagementPolicyEnablementRule DeserializeRoleManagementPolicyEnablementRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<RoleAssignmentEnablementRuleType>> enabledRules = default;
             Optional<string> id = default;
             RoleManagementPolicyRuleType ruleType = default;
             Optional<RoleManagementPolicyRuleTarget> target = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabledRules"))
+                if (property.NameEquals("enabledRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,17 +68,17 @@ namespace Azure.ResourceManager.Authorization.Models
                     enabledRules = array;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ruleType"))
+                if (property.NameEquals("ruleType"u8))
                 {
                     ruleType = new RoleManagementPolicyRuleType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

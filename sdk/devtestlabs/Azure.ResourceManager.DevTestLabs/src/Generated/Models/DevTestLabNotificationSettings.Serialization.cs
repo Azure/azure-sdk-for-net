@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(TimeInMinutes))
             {
-                writer.WritePropertyName("timeInMinutes");
+                writer.WritePropertyName("timeInMinutes"u8);
                 writer.WriteNumberValue(TimeInMinutes.Value);
             }
             if (Optional.IsDefined(WebhookUri))
             {
-                writer.WritePropertyName("webhookUrl");
+                writer.WritePropertyName("webhookUrl"u8);
                 writer.WriteStringValue(WebhookUri.AbsoluteUri);
             }
             if (Optional.IsDefined(EmailRecipient))
             {
-                writer.WritePropertyName("emailRecipient");
+                writer.WritePropertyName("emailRecipient"u8);
                 writer.WriteStringValue(EmailRecipient);
             }
             if (Optional.IsDefined(NotificationLocale))
             {
-                writer.WritePropertyName("notificationLocale");
+                writer.WritePropertyName("notificationLocale"u8);
                 writer.WriteStringValue(NotificationLocale);
             }
             writer.WriteEndObject();
@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabNotificationSettings DeserializeDevTestLabNotificationSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DevTestLabEnableStatus> status = default;
             Optional<int> timeInMinutes = default;
             Optional<Uri> webhookUrl = default;
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<string> notificationLocale = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +67,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     status = new DevTestLabEnableStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("timeInMinutes"))
+                if (property.NameEquals("timeInMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +77,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     timeInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("webhookUrl"))
+                if (property.NameEquals("webhookUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,12 +87,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     webhookUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("emailRecipient"))
+                if (property.NameEquals("emailRecipient"u8))
                 {
                     emailRecipient = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("notificationLocale"))
+                if (property.NameEquals("notificationLocale"u8))
                 {
                     notificationLocale = property.Value.GetString();
                     continue;

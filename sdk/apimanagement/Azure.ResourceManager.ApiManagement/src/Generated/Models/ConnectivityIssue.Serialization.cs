@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ConnectivityIssue DeserializeConnectivityIssue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IssueOrigin> origin = default;
             Optional<IssueSeverity> severity = default;
             Optional<IssueType> type = default;
             Optional<IReadOnlyList<IDictionary<string, string>>> context = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("origin"))
+                if (property.NameEquals("origin"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +35,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     origin = new IssueOrigin(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("severity"))
+                if (property.NameEquals("severity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     severity = new IssueSeverity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     type = new IssueType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("context"))
+                if (property.NameEquals("context"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,12 +65,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<IDictionary<string, string>> array = new List<IDictionary<string, string>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                        foreach (var property0 in item.EnumerateObject())
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
+                            array.Add(null);
                         }
-                        array.Add(dictionary);
+                        else
+                        {
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property0 in item.EnumerateObject())
+                            {
+                                dictionary.Add(property0.Name, property0.Value.GetString());
+                            }
+                            array.Add(dictionary);
+                        }
                     }
                     context = array;
                     continue;

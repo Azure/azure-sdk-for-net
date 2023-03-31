@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Table))
             {
-                writer.WritePropertyName("table");
+                writer.WritePropertyName("table"u8);
                 writer.WriteObjectValue(Table);
             }
             if (Optional.IsDefined(RenderingProperties))
             {
-                writer.WritePropertyName("renderingProperties");
+                writer.WritePropertyName("renderingProperties"u8);
                 writer.WriteObjectValue(RenderingProperties);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppDiagnosticsDataApiResult DeserializeContainerAppDiagnosticsDataApiResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppDiagnosticDataTableResult> table = default;
             Optional<ContainerAppDiagnosticRendering> renderingProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("table"))
+                if (property.NameEquals("table"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     table = ContainerAppDiagnosticDataTableResult.DeserializeContainerAppDiagnosticDataTableResult(property.Value);
                     continue;
                 }
-                if (property.NameEquals("renderingProperties"))
+                if (property.NameEquals("renderingProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

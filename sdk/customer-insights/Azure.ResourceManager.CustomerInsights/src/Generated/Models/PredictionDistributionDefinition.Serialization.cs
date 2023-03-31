@@ -15,12 +15,16 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static PredictionDistributionDefinition DeserializePredictionDistributionDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> totalPositives = default;
             Optional<long> totalNegatives = default;
             Optional<IReadOnlyList<PredictionDistributionDefinitionDistributionsItem>> distributions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("totalPositives"))
+                if (property.NameEquals("totalPositives"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     totalPositives = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalNegatives"))
+                if (property.NameEquals("totalNegatives"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     totalNegatives = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("distributions"))
+                if (property.NameEquals("distributions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DnsSuffix))
             {
-                writer.WritePropertyName("dnsSuffix");
+                writer.WritePropertyName("dnsSuffix"u8);
                 writer.WriteStringValue(DnsSuffix);
             }
             if (Optional.IsDefined(CertificateValue))
             {
-                writer.WritePropertyName("certificateValue");
+                writer.WritePropertyName("certificateValue"u8);
                 writer.WriteBase64StringValue(CertificateValue, "D");
             }
             if (Optional.IsDefined(CertificatePassword))
             {
-                writer.WritePropertyName("certificatePassword");
+                writer.WritePropertyName("certificatePassword"u8);
                 writer.WriteStringValue(CertificatePassword);
             }
             writer.WriteEndObject();
@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppCustomDomainConfiguration DeserializeContainerAppCustomDomainConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> customDomainVerificationId = default;
             Optional<string> dnsSuffix = default;
             Optional<byte[]> certificateValue = default;
@@ -45,17 +49,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> subjectName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("customDomainVerificationId"))
+                if (property.NameEquals("customDomainVerificationId"u8))
                 {
                     customDomainVerificationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dnsSuffix"))
+                if (property.NameEquals("dnsSuffix"u8))
                 {
                     dnsSuffix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("certificateValue"))
+                if (property.NameEquals("certificateValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,12 +69,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                     certificateValue = property.Value.GetBytesFromBase64("D");
                     continue;
                 }
-                if (property.NameEquals("certificatePassword"))
+                if (property.NameEquals("certificatePassword"u8))
                 {
                     certificatePassword = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expirationDate"))
+                if (property.NameEquals("expirationDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,12 +84,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                     expirationDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("thumbprint"))
+                if (property.NameEquals("thumbprint"u8))
                 {
                     thumbprint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subjectName"))
+                if (property.NameEquals("subjectName"u8))
                 {
                     subjectName = property.Value.GetString();
                     continue;

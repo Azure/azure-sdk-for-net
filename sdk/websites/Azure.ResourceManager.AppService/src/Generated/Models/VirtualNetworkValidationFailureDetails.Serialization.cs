@@ -19,24 +19,24 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Message))
             {
-                writer.WritePropertyName("message");
+                writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
             if (Optional.IsDefined(IsFailed))
             {
-                writer.WritePropertyName("failed");
+                writer.WritePropertyName("failed"u8);
                 writer.WriteBooleanValue(IsFailed.Value);
             }
             if (Optional.IsCollectionDefined(FailedTests))
             {
-                writer.WritePropertyName("failedTests");
+                writer.WritePropertyName("failedTests"u8);
                 writer.WriteStartArray();
                 foreach (var item in FailedTests)
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(Warnings))
             {
-                writer.WritePropertyName("warnings");
+                writer.WritePropertyName("warnings"u8);
                 writer.WriteStartArray();
                 foreach (var item in Warnings)
                 {
@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static VirtualNetworkValidationFailureDetails DeserializeVirtualNetworkValidationFailureDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -71,27 +75,27 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IList<VirtualNetworkValidationTestFailure>> warnings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +105,7 @@ namespace Azure.ResourceManager.AppService.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,12 +114,12 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("message"))
+                        if (property0.NameEquals("message"u8))
                         {
                             message = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("failed"))
+                        if (property0.NameEquals("failed"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -125,7 +129,7 @@ namespace Azure.ResourceManager.AppService.Models
                             failed = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("failedTests"))
+                        if (property0.NameEquals("failedTests"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -140,7 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
                             failedTests = array;
                             continue;
                         }
-                        if (property0.NameEquals("warnings"))
+                        if (property0.NameEquals("warnings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

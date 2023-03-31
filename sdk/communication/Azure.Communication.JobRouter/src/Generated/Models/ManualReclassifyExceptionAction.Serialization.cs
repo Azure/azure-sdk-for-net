@@ -18,17 +18,17 @@ namespace Azure.Communication.JobRouter
             writer.WriteStartObject();
             if (Optional.IsDefined(QueueId))
             {
-                writer.WritePropertyName("queueId");
+                writer.WritePropertyName("queueId"u8);
                 writer.WriteStringValue(QueueId);
             }
             if (Optional.IsDefined(Priority))
             {
-                writer.WritePropertyName("priority");
+                writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
             if (Optional.IsCollectionDefined(WorkerSelectors))
             {
-                writer.WritePropertyName("workerSelectors");
+                writer.WritePropertyName("workerSelectors"u8);
                 writer.WriteStartArray();
                 foreach (var item in WorkerSelectors)
                 {
@@ -36,25 +36,29 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             writer.WriteEndObject();
         }
 
         internal static ManualReclassifyExceptionAction DeserializeManualReclassifyExceptionAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> queueId = default;
             Optional<int> priority = default;
             Optional<IList<WorkerSelector>> workerSelectors = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("queueId"))
+                if (property.NameEquals("queueId"u8))
                 {
                     queueId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("priority"))
+                if (property.NameEquals("priority"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +68,7 @@ namespace Azure.Communication.JobRouter
                     priority = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("workerSelectors"))
+                if (property.NameEquals("workerSelectors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +83,7 @@ namespace Azure.Communication.JobRouter
                     workerSelectors = array;
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;

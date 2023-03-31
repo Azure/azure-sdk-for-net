@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Domains))
             {
-                writer.WritePropertyName("domains");
+                writer.WritePropertyName("domains"u8);
                 writer.WriteStartArray();
                 foreach (var item in Domains)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsCollectionDefined(PatternsToMatch))
             {
-                writer.WritePropertyName("patternsToMatch");
+                writer.WritePropertyName("patternsToMatch"u8);
                 writer.WriteStartArray();
                 foreach (var item in PatternsToMatch)
                 {
@@ -41,11 +41,15 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static SecurityPolicyWebApplicationFirewallAssociation DeserializeSecurityPolicyWebApplicationFirewallAssociation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<FrontDoorActivatedResourceInfo>> domains = default;
             Optional<IList<string>> patternsToMatch = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("domains"))
+                if (property.NameEquals("domains"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     domains = array;
                     continue;
                 }
-                if (property.NameEquals("patternsToMatch"))
+                if (property.NameEquals("patternsToMatch"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

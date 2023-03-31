@@ -18,16 +18,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("streamName");
+            writer.WritePropertyName("streamName"u8);
             writer.WriteStringValue(StreamName);
             if (Optional.IsDefined(RowLimits))
             {
-                writer.WritePropertyName("rowLimits");
+                writer.WritePropertyName("rowLimits"u8);
                 writer.WriteNumberValue(RowLimits.Value);
             }
             if (Optional.IsCollectionDefined(Columns))
             {
-                writer.WritePropertyName("columns");
+                writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
                 foreach (var item in Columns)
                 {
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsDefined(Expression))
             {
-                writer.WritePropertyName("expression");
+                writer.WritePropertyName("expression"u8);
                 writer.WriteStringValue(Expression);
             }
             writer.WriteEndObject();

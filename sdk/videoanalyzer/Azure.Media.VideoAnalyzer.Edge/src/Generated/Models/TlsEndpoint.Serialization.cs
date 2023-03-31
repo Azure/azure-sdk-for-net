@@ -17,28 +17,32 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TrustedCertificates))
             {
-                writer.WritePropertyName("trustedCertificates");
+                writer.WritePropertyName("trustedCertificates"u8);
                 writer.WriteObjectValue(TrustedCertificates);
             }
             if (Optional.IsDefined(ValidationOptions))
             {
-                writer.WritePropertyName("validationOptions");
+                writer.WritePropertyName("validationOptions"u8);
                 writer.WriteObjectValue(ValidationOptions);
             }
-            writer.WritePropertyName("@type");
+            writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Credentials))
             {
-                writer.WritePropertyName("credentials");
+                writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
-            writer.WritePropertyName("url");
+            writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Url);
             writer.WriteEndObject();
         }
 
         internal static TlsEndpoint DeserializeTlsEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CertificateSource> trustedCertificates = default;
             Optional<TlsValidationOptions> validationOptions = default;
             string type = default;
@@ -46,7 +50,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             string url = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("trustedCertificates"))
+                if (property.NameEquals("trustedCertificates"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     trustedCertificates = CertificateSource.DeserializeCertificateSource(property.Value);
                     continue;
                 }
-                if (property.NameEquals("validationOptions"))
+                if (property.NameEquals("validationOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,12 +70,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     validationOptions = TlsValidationOptions.DeserializeTlsValidationOptions(property.Value);
                     continue;
                 }
-                if (property.NameEquals("@type"))
+                if (property.NameEquals("@type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("credentials"))
+                if (property.NameEquals("credentials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,7 +85,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     credentials = CredentialsBase.DeserializeCredentialsBase(property.Value);
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     url = property.Value.GetString();
                     continue;

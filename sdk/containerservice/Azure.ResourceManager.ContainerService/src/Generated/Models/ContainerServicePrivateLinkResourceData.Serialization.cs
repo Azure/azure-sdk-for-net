@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(ResourceType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             if (Optional.IsDefined(GroupId))
             {
-                writer.WritePropertyName("groupId");
+                writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
             if (Optional.IsCollectionDefined(RequiredMembers))
             {
-                writer.WritePropertyName("requiredMembers");
+                writer.WritePropertyName("requiredMembers"u8);
                 writer.WriteStartArray();
                 foreach (var item in RequiredMembers)
                 {
@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServicePrivateLinkResourceData DeserializeContainerServicePrivateLinkResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -59,7 +63,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<ResourceIdentifier> privateLinkServiceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,12 +73,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,12 +88,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("groupId"))
+                if (property.NameEquals("groupId"u8))
                 {
                     groupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requiredMembers"))
+                if (property.NameEquals("requiredMembers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     requiredMembers = array;
                     continue;
                 }
-                if (property.NameEquals("privateLinkServiceID"))
+                if (property.NameEquals("privateLinkServiceID"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

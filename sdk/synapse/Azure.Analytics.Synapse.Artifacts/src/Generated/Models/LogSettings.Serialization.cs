@@ -20,27 +20,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EnableCopyActivityLog))
             {
-                writer.WritePropertyName("enableCopyActivityLog");
+                writer.WritePropertyName("enableCopyActivityLog"u8);
                 writer.WriteObjectValue(EnableCopyActivityLog);
             }
             if (Optional.IsDefined(CopyActivityLogSettings))
             {
-                writer.WritePropertyName("copyActivityLogSettings");
+                writer.WritePropertyName("copyActivityLogSettings"u8);
                 writer.WriteObjectValue(CopyActivityLogSettings);
             }
-            writer.WritePropertyName("logLocationSettings");
+            writer.WritePropertyName("logLocationSettings"u8);
             writer.WriteObjectValue(LogLocationSettings);
             writer.WriteEndObject();
         }
 
         internal static LogSettings DeserializeLogSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> enableCopyActivityLog = default;
             Optional<CopyActivityLogSettings> copyActivityLogSettings = default;
             LogLocationSettings logLocationSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enableCopyActivityLog"))
+                if (property.NameEquals("enableCopyActivityLog"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     enableCopyActivityLog = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("copyActivityLogSettings"))
+                if (property.NameEquals("copyActivityLogSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     copyActivityLogSettings = CopyActivityLogSettings.DeserializeCopyActivityLogSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("logLocationSettings"))
+                if (property.NameEquals("logLocationSettings"u8))
                 {
                     logLocationSettings = LogLocationSettings.DeserializeLogLocationSettings(property.Value);
                     continue;

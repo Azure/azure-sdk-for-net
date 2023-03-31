@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MinMatchingValue))
             {
-                writer.WritePropertyName("minMatchingValue");
+                writer.WritePropertyName("minMatchingValue"u8);
                 writer.WriteStringValue(MinMatchingValue);
             }
             if (Optional.IsDefined(MaxMatchingValue))
             {
-                writer.WritePropertyName("maxMatchingValue");
+                writer.WritePropertyName("maxMatchingValue"u8);
                 writer.WriteStringValue(MaxMatchingValue);
             }
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
         }

@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.StoragePool.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sku");
+            writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             if (Optional.IsDefined(ManagedBy))
             {
-                writer.WritePropertyName("managedBy");
+                writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
             if (Optional.IsCollectionDefined(ManagedByExtended))
             {
-                writer.WritePropertyName("managedByExtended");
+                writer.WritePropertyName("managedByExtended"u8);
                 writer.WriteStartArray();
                 foreach (var item in ManagedByExtended)
                 {
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AvailabilityZones))
             {
-                writer.WritePropertyName("availabilityZones");
+                writer.WritePropertyName("availabilityZones"u8);
                 writer.WriteStartArray();
                 foreach (var item in AvailabilityZones)
                 {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
             if (Optional.IsCollectionDefined(Disks))
             {
-                writer.WritePropertyName("disks");
+                writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("subnetId");
+            writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
             if (Optional.IsCollectionDefined(AdditionalCapabilities))
             {
-                writer.WritePropertyName("additionalCapabilities");
+                writer.WritePropertyName("additionalCapabilities"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdditionalCapabilities)
                 {

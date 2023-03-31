@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PartitionColumnName))
             {
-                writer.WritePropertyName("partitionColumnName");
+                writer.WritePropertyName("partitionColumnName"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(PartitionColumnName);
 #else
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(PartitionUpperBound))
             {
-                writer.WritePropertyName("partitionUpperBound");
+                writer.WritePropertyName("partitionUpperBound"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(PartitionUpperBound);
 #else
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(PartitionLowerBound))
             {
-                writer.WritePropertyName("partitionLowerBound");
+                writer.WritePropertyName("partitionLowerBound"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(PartitionLowerBound);
 #else
@@ -48,12 +48,16 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SqlPartitionSettings DeserializeSqlPartitionSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> partitionColumnName = default;
             Optional<BinaryData> partitionUpperBound = default;
             Optional<BinaryData> partitionLowerBound = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("partitionColumnName"))
+                if (property.NameEquals("partitionColumnName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     partitionColumnName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("partitionUpperBound"))
+                if (property.NameEquals("partitionUpperBound"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     partitionUpperBound = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("partitionLowerBound"))
+                if (property.NameEquals("partitionLowerBound"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

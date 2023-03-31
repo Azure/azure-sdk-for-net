@@ -17,37 +17,41 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceCodeListDirectoryVersion))
             {
-                writer.WritePropertyName("serviceCodeListDirectoryVersion");
+                writer.WritePropertyName("serviceCodeListDirectoryVersion"u8);
                 writer.WriteStringValue(ServiceCodeListDirectoryVersion);
             }
             if (Optional.IsDefined(CharacterEncoding))
             {
-                writer.WritePropertyName("characterEncoding");
+                writer.WritePropertyName("characterEncoding"u8);
                 writer.WriteStringValue(CharacterEncoding);
             }
-            writer.WritePropertyName("protocolVersion");
+            writer.WritePropertyName("protocolVersion"u8);
             writer.WriteNumberValue(ProtocolVersion);
-            writer.WritePropertyName("dataElementSeparator");
+            writer.WritePropertyName("dataElementSeparator"u8);
             writer.WriteNumberValue(DataElementSeparator);
-            writer.WritePropertyName("componentSeparator");
+            writer.WritePropertyName("componentSeparator"u8);
             writer.WriteNumberValue(ComponentSeparator);
-            writer.WritePropertyName("segmentTerminator");
+            writer.WritePropertyName("segmentTerminator"u8);
             writer.WriteNumberValue(SegmentTerminator);
-            writer.WritePropertyName("releaseIndicator");
+            writer.WritePropertyName("releaseIndicator"u8);
             writer.WriteNumberValue(ReleaseIndicator);
-            writer.WritePropertyName("repetitionSeparator");
+            writer.WritePropertyName("repetitionSeparator"u8);
             writer.WriteNumberValue(RepetitionSeparator);
-            writer.WritePropertyName("characterSet");
+            writer.WritePropertyName("characterSet"u8);
             writer.WriteStringValue(CharacterSet.ToString());
-            writer.WritePropertyName("decimalPointIndicator");
+            writer.WritePropertyName("decimalPointIndicator"u8);
             writer.WriteStringValue(DecimalPointIndicator.ToSerialString());
-            writer.WritePropertyName("segmentTerminatorSuffix");
+            writer.WritePropertyName("segmentTerminatorSuffix"u8);
             writer.WriteStringValue(SegmentTerminatorSuffix.ToSerialString());
             writer.WriteEndObject();
         }
 
         internal static EdifactFramingSettings DeserializeEdifactFramingSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serviceCodeListDirectoryVersion = default;
             Optional<string> characterEncoding = default;
             int protocolVersion = default;
@@ -61,57 +65,57 @@ namespace Azure.ResourceManager.Logic.Models
             SegmentTerminatorSuffix segmentTerminatorSuffix = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceCodeListDirectoryVersion"))
+                if (property.NameEquals("serviceCodeListDirectoryVersion"u8))
                 {
                     serviceCodeListDirectoryVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("characterEncoding"))
+                if (property.NameEquals("characterEncoding"u8))
                 {
                     characterEncoding = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protocolVersion"))
+                if (property.NameEquals("protocolVersion"u8))
                 {
                     protocolVersion = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("dataElementSeparator"))
+                if (property.NameEquals("dataElementSeparator"u8))
                 {
                     dataElementSeparator = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("componentSeparator"))
+                if (property.NameEquals("componentSeparator"u8))
                 {
                     componentSeparator = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("segmentTerminator"))
+                if (property.NameEquals("segmentTerminator"u8))
                 {
                     segmentTerminator = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("releaseIndicator"))
+                if (property.NameEquals("releaseIndicator"u8))
                 {
                     releaseIndicator = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("repetitionSeparator"))
+                if (property.NameEquals("repetitionSeparator"u8))
                 {
                     repetitionSeparator = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("characterSet"))
+                if (property.NameEquals("characterSet"u8))
                 {
                     characterSet = new EdifactCharacterSet(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("decimalPointIndicator"))
+                if (property.NameEquals("decimalPointIndicator"u8))
                 {
                     decimalPointIndicator = property.Value.GetString().ToEdifactDecimalIndicator();
                     continue;
                 }
-                if (property.NameEquals("segmentTerminatorSuffix"))
+                if (property.NameEquals("segmentTerminatorSuffix"u8))
                 {
                     segmentTerminatorSuffix = property.Value.GetString().ToSegmentTerminatorSuffix();
                     continue;

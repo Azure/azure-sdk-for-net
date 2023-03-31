@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AcsSmsReceivedEventData DeserializeAcsSmsReceivedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             Optional<DateTimeOffset> receivedTimestamp = default;
             Optional<string> messageId = default;
@@ -24,12 +28,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> to = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("receivedTimestamp"))
+                if (property.NameEquals("receivedTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,17 +43,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     receivedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("messageId"))
+                if (property.NameEquals("messageId"u8))
                 {
                     messageId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("from"))
+                if (property.NameEquals("from"u8))
                 {
                     @from = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("to"))
+                if (property.NameEquals("to"u8))
                 {
                     to = property.Value.GetString();
                     continue;

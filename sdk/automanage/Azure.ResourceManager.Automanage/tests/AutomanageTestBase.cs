@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.Automanage.Models;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources;
@@ -26,11 +27,13 @@ namespace Azure.ResourceManager.Automanage.Tests
         protected AutomanageTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            IgnoreApiVersionInResourcesOperations();
         }
 
         protected AutomanageTestBase(bool isAsync)
             : base(isAsync)
         {
+            IgnoreApiVersionInResourcesOperations();
         }
 
         [SetUp]
@@ -66,7 +69,7 @@ namespace Azure.ResourceManager.Automanage.Tests
         /// <param name="collection">Configruation profile collection to perform actions against</param>
         /// <param name="profileName">Desired configuration profile name</param>
         /// <returns>ConfigurationProfileResource</returns>
-        protected async Task<ConfigurationProfileResource> CreateConfigurationProfile(ConfigurationProfileCollection collection, string profileName)
+        protected async Task<AutomanageConfigurationProfileResource> CreateConfigurationProfile(AutomanageConfigurationProfileCollection collection, string profileName)
         {
             string configuration = "{" +
                 "\"Antimalware/Enable\":true," +
@@ -84,7 +87,7 @@ namespace Azure.ResourceManager.Automanage.Tests
                 "\"BootDiagnostics/Enable\":true" +
             "}";
 
-            ConfigurationProfileData data = new ConfigurationProfileData(DefaultLocation)
+            AutomanageConfigurationProfileData data = new AutomanageConfigurationProfileData(DefaultLocation)
             {
                 Configuration = new BinaryData(configuration)
             };
@@ -99,13 +102,15 @@ namespace Azure.ResourceManager.Automanage.Tests
         /// <param name="vmId">The ID of the Virtual Machine to assign a profile to</param>
         /// <param name="profileId">ID of desired configuration profile to use</param>
         /// <returns>ConfigurationProfileAssignmentResource</returns>
-        protected async Task<ConfigurationProfileAssignmentResource> CreateAssignment(ResourceIdentifier vmId, string profileId)
+        protected async Task<AutomanageVmConfigurationProfileAssignmentResource> CreateAssignment(ResourceIdentifier vmId, string profileId)
         {
-            var data = new ConfigurationProfileAssignmentData();
-            data.Properties = new ConfigurationProfileAssignmentProperties() { ConfigurationProfile = profileId };
+            var data = new AutomanageConfigurationProfileAssignmentData()
+            {
+                Properties = new AutomanageConfigurationProfileAssignmentProperties() { ConfigurationProfile = new ResourceIdentifier(profileId) }
+            };
 
             // fetch assignments collection
-            var collection = ArmClient.GetConfigurationProfileAssignments(vmId);
+            var collection = ArmClient.GetAutomanageVmConfigurationProfileAssignments(vmId);
             var assignment = await collection.CreateOrUpdateAsync(WaitUntil.Completed, "default", data);
 
             return assignment.Value;
@@ -140,6 +145,17 @@ namespace Azure.ResourceManager.Automanage.Tests
             var vmId = deployment.Properties.OutputResources.Select(sub => sub.Id).First(id => id.ResourceType == VirtualMachineResource.ResourceType);
 
             return vmId;
+        }
+
+        private void IgnoreApiVersionInResourcesOperations()
+        {
+            // Ignore the api-version of deployment operations
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/providers/Microsoft.Resources/deployments/[^/]+(/operationStatuses/[^/]+)?pi-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
         }
     }
 }

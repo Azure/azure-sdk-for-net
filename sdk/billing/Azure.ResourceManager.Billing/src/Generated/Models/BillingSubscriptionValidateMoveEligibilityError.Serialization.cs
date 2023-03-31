@@ -14,12 +14,16 @@ namespace Azure.ResourceManager.Billing.Models
     {
         internal static BillingSubscriptionValidateMoveEligibilityError DeserializeBillingSubscriptionValidateMoveEligibilityError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SubscriptionTransferValidationErrorCode> code = default;
             Optional<string> message = default;
             Optional<string> details = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,12 +33,12 @@ namespace Azure.ResourceManager.Billing.Models
                     code = new SubscriptionTransferValidationErrorCode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("details"))
+                if (property.NameEquals("details"u8))
                 {
                     details = property.Value.GetString();
                     continue;

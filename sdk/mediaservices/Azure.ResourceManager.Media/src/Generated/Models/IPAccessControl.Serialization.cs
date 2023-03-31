@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AllowedIPs))
             {
-                writer.WritePropertyName("allow");
+                writer.WritePropertyName("allow"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedIPs)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static IPAccessControl DeserializeIPAccessControl(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<IPRange>> allow = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allow"))
+                if (property.NameEquals("allow"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

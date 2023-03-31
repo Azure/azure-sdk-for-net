@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         }
 
         /// <summary> Specifies the authentication type. </summary>
-        public AuthType? AuthType { get; set; }
+        public RecoveryServicesAuthType? AuthType { get; set; }
         /// <summary> The base64 encoded certificate raw data string. </summary>
         public byte[] Certificate { get; set; }
     }

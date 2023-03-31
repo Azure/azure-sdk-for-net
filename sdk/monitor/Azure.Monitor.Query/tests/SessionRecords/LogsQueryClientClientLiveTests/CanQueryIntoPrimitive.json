@@ -1,24 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/50e32c19-2b4b-4152-b97e-0e02441cae60/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/314be15c-6065-462b-a0dc-8fe1213796f2/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "124",
+        "Content-Length": "125",
         "Content-Type": "application/json",
-        "traceparent": "00-5f4da9e7c767a34bad4357b81b2ded06-faf9b07e75b93f43-00",
-        "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210513.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19042 )"
-        ],
-        "x-ms-client-request-id": "360a26067b2bd173b12121597e434b7c",
+        "traceparent": "00-0483ef9edfebb44f8fdebf42ad7f05f1-e54e7e517da3454e-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "ecc9224b3a3bf8bf67f0af1b740b0855",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "query": "datatable (DateTime: datetime) [ datetime(2015-12-31 23:59:59.9) ]",
-        "timespan": "2021-05-03T00:00:00.0000000Z/P7D"
+        "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -27,10 +24,10 @@
         "Connection": "keep-alive",
         "Content-Length": "123",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 May 2021 21:58:01 GMT",
+        "Date": "Tue, 14 Mar 2023 21:52:50 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6b5d48d5bb-9gwvp",
+        "Via": "1.1 draft-oms-85c67bc895-swtcr",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -53,24 +50,21 @@
       }
     },
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/50e32c19-2b4b-4152-b97e-0e02441cae60/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/314be15c-6065-462b-a0dc-8fe1213796f2/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "90",
+        "Content-Length": "91",
         "Content-Type": "application/json",
-        "traceparent": "00-b5e15e23ff887444a918a67bf1cca014-8910d5c6649b5b49-00",
-        "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210513.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19042 )"
-        ],
-        "x-ms-client-request-id": "7afe957899156f2b14643fb684bb7ab4",
+        "traceparent": "00-fb8d31dc3b122045ad5fbef2db440590-edf269b31697f640-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "ff6ccc21de18eeb18351886c23cfd3f9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "query": "datatable (Bool: bool) [ false ]",
-        "timespan": "2021-05-03T00:00:00.0000000Z/P7D"
+        "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -79,10 +73,10 @@
         "Connection": "keep-alive",
         "Content-Length": "96",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 May 2021 21:58:02 GMT",
+        "Date": "Tue, 14 Mar 2023 21:52:51 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6b5d48d5bb-jjh2f",
+        "Via": "1.1 draft-oms-85c67bc895-72gl4",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -105,24 +99,21 @@
       }
     },
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/50e32c19-2b4b-4152-b97e-0e02441cae60/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/314be15c-6065-462b-a0dc-8fe1213796f2/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "127",
+        "Content-Length": "128",
         "Content-Type": "application/json",
-        "traceparent": "00-945a4386c880644c8b65f626f8f7c321-15ff0bb855844e4d-00",
-        "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210513.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19042 )"
-        ],
-        "x-ms-client-request-id": "aa15cb20adf75a8e3095f8d0d19c0170",
+        "traceparent": "00-cf366fac859ec042bf306383fa6869b8-edb4e60b303fea4b-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "f9b32d39cd86d26e49cccf6ef47f3866",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "query": "datatable (Guid: guid) [ guid(74be27de-1e4e-49d9-b579-fe0b331d3642) ]",
-        "timespan": "2021-05-03T00:00:00.0000000Z/P7D"
+        "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -131,10 +122,10 @@
         "Connection": "keep-alive",
         "Content-Length": "129",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 May 2021 21:58:03 GMT",
+        "Date": "Tue, 14 Mar 2023 21:52:52 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6b5d48d5bb-ts28d",
+        "Via": "1.1 draft-oms-85c67bc895-vvwmc",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -157,24 +148,21 @@
       }
     },
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/50e32c19-2b4b-4152-b97e-0e02441cae60/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/314be15c-6065-462b-a0dc-8fe1213796f2/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "88",
+        "Content-Length": "89",
         "Content-Type": "application/json",
-        "traceparent": "00-f3a1b4a9069508409a1fe65b2437ce04-2e8bc8d0ab0b8643-00",
-        "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210513.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19042 )"
-        ],
-        "x-ms-client-request-id": "ca1d71cf0fd76df9fb9a21c73bbd4df6",
+        "traceparent": "00-0f93991d32d3d440a2bd85f8fc771977-ac6fe84e0b838c47-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "70fb88671fbd6cc670db69eab152d497",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "query": "datatable (Int: int) [ 12345 ]",
-        "timespan": "2021-05-03T00:00:00.0000000Z/P7D"
+        "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -183,10 +171,10 @@
         "Connection": "keep-alive",
         "Content-Length": "94",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 May 2021 21:58:04 GMT",
+        "Date": "Tue, 14 Mar 2023 21:52:53 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6b5d48d5bb-l4cfq",
+        "Via": "1.1 draft-oms-85c67bc895-6vmd5",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -209,24 +197,21 @@
       }
     },
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/50e32c19-2b4b-4152-b97e-0e02441cae60/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/314be15c-6065-462b-a0dc-8fe1213796f2/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "98",
+        "Content-Length": "99",
         "Content-Type": "application/json",
-        "traceparent": "00-e6135f721fe7984d89495e01b6318bec-117a6644be5b0642-00",
-        "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210513.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19042 )"
-        ],
-        "x-ms-client-request-id": "b3396ca7a02eca8407a34a80a15a9d78",
+        "traceparent": "00-2f4ce2bff50dd040aae6ea4b24dcf558-830fd6e1289b2d45-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "46e1b51c0f5753ce5d99b54c0f43fa03",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "query": "datatable (Long: long) [ 1234567890123 ]",
-        "timespan": "2021-05-03T00:00:00.0000000Z/P7D"
+        "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -235,10 +220,10 @@
         "Connection": "keep-alive",
         "Content-Length": "104",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 May 2021 21:58:05 GMT",
+        "Date": "Tue, 14 Mar 2023 21:52:54 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6b5d48d5bb-mr2wh",
+        "Via": "1.1 draft-oms-85c67bc895-nznzz",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -261,24 +246,21 @@
       }
     },
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/50e32c19-2b4b-4152-b97e-0e02441cae60/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/314be15c-6065-462b-a0dc-8fe1213796f2/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "99",
+        "Content-Length": "100",
         "Content-Type": "application/json",
-        "traceparent": "00-50c9561b5d236a45a2d8f1a1b7aa5da0-b89609c27dcdd241-00",
-        "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210513.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19042 )"
-        ],
-        "x-ms-client-request-id": "12e7cf63af9d10dcd1a8ae5c8cc71f73",
+        "traceparent": "00-78e9d81756c4ce4aacb4300491624bc7-1a1ff54f03a8fe48-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "9a05221863d41a3c674689ab638420f6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "query": "datatable (Double: double) [ 12345.6789 ]",
-        "timespan": "2021-05-03T00:00:00.0000000Z/P7D"
+        "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -287,10 +269,10 @@
         "Connection": "keep-alive",
         "Content-Length": "103",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 May 2021 21:58:05 GMT",
+        "Date": "Tue, 14 Mar 2023 21:52:54 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6b5d48d5bb-x7gkh",
+        "Via": "1.1 draft-oms-85c67bc895-mfqh6",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -313,24 +295,21 @@
       }
     },
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/50e32c19-2b4b-4152-b97e-0e02441cae60/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/314be15c-6065-462b-a0dc-8fe1213796f2/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "113",
+        "Content-Length": "114",
         "Content-Type": "application/json",
-        "traceparent": "00-514c1875df666a4aab00517b593f82e4-b2fc730d435c5d45-00",
-        "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210513.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19042 )"
-        ],
-        "x-ms-client-request-id": "642801474e632e42ed52c333c579cca0",
+        "traceparent": "00-3824ce2072645b4082b4bbfde4089166-164a30fb5db3b847-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "3e5237f7f19e570eb9a7122369795d2d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "query": "datatable (String: string) [ \u0022string value\u0022 ]",
-        "timespan": "2021-05-03T00:00:00.0000000Z/P7D"
+        "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -339,10 +318,10 @@
         "Connection": "keep-alive",
         "Content-Length": "109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 May 2021 21:58:05 GMT",
+        "Date": "Tue, 14 Mar 2023 21:52:55 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6b5d48d5bb-rj4n8",
+        "Via": "1.1 draft-oms-85c67bc895-v45d5",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -365,24 +344,21 @@
       }
     },
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/50e32c19-2b4b-4152-b97e-0e02441cae60/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/314be15c-6065-462b-a0dc-8fe1213796f2/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "96",
+        "Content-Length": "97",
         "Content-Type": "application/json",
-        "traceparent": "00-8ccd7941e737044c8c1366ba634db2bd-11b9b0f5f4262f43-00",
-        "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210513.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19042 )"
-        ],
-        "x-ms-client-request-id": "6c63a8fd3bd6f7589029e186f1273e40",
+        "traceparent": "00-1b1c5a3846f6b34ba91a16940b57980c-c3d5f3d1d240464c-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "8fd165e1394cb9c379c6df118623f0d9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "query": "datatable (Timespan: timespan) [ 10s ]",
-        "timespan": "2021-05-03T00:00:00.0000000Z/P7D"
+        "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -391,10 +367,10 @@
         "Connection": "keep-alive",
         "Content-Length": "109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 May 2021 21:58:06 GMT",
+        "Date": "Tue, 14 Mar 2023 21:52:58 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6b5d48d5bb-g68cd",
+        "Via": "1.1 draft-oms-85c67bc895-f792v",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -417,24 +393,21 @@
       }
     },
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/50e32c19-2b4b-4152-b97e-0e02441cae60/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/314be15c-6065-462b-a0dc-8fe1213796f2/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "107",
+        "Content-Length": "108",
         "Content-Type": "application/json",
-        "traceparent": "00-11eb9f3070d3e14fb0ac569f802caadd-aa5c3f19554afc49-00",
-        "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210513.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19042 )"
-        ],
-        "x-ms-client-request-id": "9f38d684383215158cb8254beca84b57",
+        "traceparent": "00-04b2c37c57470e4c88317d36e6cb4a12-c0efc6d75ff36c42-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "d854be78bbf0266513ade02d5018b0ed",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "query": "datatable (Decimal: decimal) [ decimal(0.10101) ]",
-        "timespan": "2021-05-03T00:00:00.0000000Z/P7D"
+        "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -443,10 +416,10 @@
         "Connection": "keep-alive",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 May 2021 21:58:06 GMT",
+        "Date": "Tue, 14 Mar 2023 21:52:59 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6b5d48d5bb-wbgvd",
+        "Via": "1.1 draft-oms-85c67bc895-69q49",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -470,9 +443,10 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-05-13T14:58:01.4919911-07:00",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "DateTimeOffsetNow": "2023-03-14T14:52:46.9569717-07:00",
     "LOGS_ENDPOINT": "https://api.loganalytics.io",
-    "RandomSeed": "1457666448",
-    "WORKSPACE_ID": "50e32c19-2b4b-4152-b97e-0e02441cae60"
+    "RandomSeed": "1339765273",
+    "WORKSPACE_ID": "314be15c-6065-462b-a0dc-8fe1213796f2"
   }
 }

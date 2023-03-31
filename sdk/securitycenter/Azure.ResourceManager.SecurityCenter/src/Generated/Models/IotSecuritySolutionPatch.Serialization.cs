@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(UserDefinedResources))
             {
-                writer.WritePropertyName("userDefinedResources");
+                writer.WritePropertyName("userDefinedResources"u8);
                 writer.WriteObjectValue(UserDefinedResources);
             }
             if (Optional.IsCollectionDefined(RecommendationsConfiguration))
             {
-                writer.WritePropertyName("recommendationsConfiguration");
+                writer.WritePropertyName("recommendationsConfiguration"u8);
                 writer.WriteStartArray();
                 foreach (var item in RecommendationsConfiguration)
                 {
@@ -50,12 +50,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static IotSecuritySolutionPatch DeserializeIotSecuritySolutionPatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             Optional<UserDefinedResourcesProperties> userDefinedResources = default;
             Optional<IList<RecommendationConfigurationProperties>> recommendationsConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("userDefinedResources"))
+                        if (property0.NameEquals("userDefinedResources"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -89,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             userDefinedResources = UserDefinedResourcesProperties.DeserializeUserDefinedResourcesProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("recommendationsConfiguration"))
+                        if (property0.NameEquals("recommendationsConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

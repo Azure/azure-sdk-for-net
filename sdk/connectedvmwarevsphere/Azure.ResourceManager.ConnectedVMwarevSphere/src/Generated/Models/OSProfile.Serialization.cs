@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ComputerName))
             {
-                writer.WritePropertyName("computerName");
+                writer.WritePropertyName("computerName"u8);
                 writer.WriteStringValue(ComputerName);
             }
             if (Optional.IsDefined(AdminUsername))
             {
-                writer.WritePropertyName("adminUsername");
+                writer.WritePropertyName("adminUsername"u8);
                 writer.WriteStringValue(AdminUsername);
             }
             if (Optional.IsDefined(AdminPassword))
             {
-                writer.WritePropertyName("adminPassword");
+                writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
             if (Optional.IsDefined(OSType))
             {
-                writer.WritePropertyName("osType");
+                writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static OSProfile DeserializeOSProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> computerName = default;
             Optional<string> adminUsername = default;
             Optional<string> adminPassword = default;
@@ -50,22 +54,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Optional<string> toolsVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("computerName"))
+                if (property.NameEquals("computerName"u8))
                 {
                     computerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("adminUsername"))
+                if (property.NameEquals("adminUsername"u8))
                 {
                     adminUsername = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("adminPassword"))
+                if (property.NameEquals("adminPassword"u8))
                 {
                     adminPassword = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,22 +79,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     osType = new OSType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("osName"))
+                if (property.NameEquals("osName"u8))
                 {
                     osName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("toolsRunningStatus"))
+                if (property.NameEquals("toolsRunningStatus"u8))
                 {
                     toolsRunningStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("toolsVersionStatus"))
+                if (property.NameEquals("toolsVersionStatus"u8))
                 {
                     toolsVersionStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("toolsVersion"))
+                if (property.NameEquals("toolsVersion"u8))
                 {
                     toolsVersion = property.Value.GetString();
                     continue;

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(OutputStartMode))
             {
-                writer.WritePropertyName("outputStartMode");
+                writer.WritePropertyName("outputStartMode"u8);
                 writer.WriteStringValue(OutputStartMode.Value.ToString());
             }
             if (Optional.IsDefined(OutputStartOn))
             {
-                writer.WritePropertyName("outputStartTime");
+                writer.WritePropertyName("outputStartTime"u8);
                 writer.WriteStringValue(OutputStartOn.Value, "O");
             }
             writer.WriteEndObject();

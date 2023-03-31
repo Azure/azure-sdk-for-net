@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SshPublicAccess))
             {
-                writer.WritePropertyName("sshPublicAccess");
+                writer.WritePropertyName("sshPublicAccess"u8);
                 writer.WriteStringValue(SshPublicAccess.Value.ToString());
             }
             if (Optional.IsDefined(AdminPublicKey))
             {
-                writer.WritePropertyName("adminPublicKey");
+                writer.WritePropertyName("adminPublicKey"u8);
                 writer.WriteStringValue(AdminPublicKey);
             }
             writer.WriteEndObject();
@@ -30,13 +30,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningComputeInstanceSshSettings DeserializeMachineLearningComputeInstanceSshSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningSshPublicAccess> sshPublicAccess = default;
             Optional<string> adminUserName = default;
             Optional<int> sshPort = default;
             Optional<string> adminPublicKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sshPublicAccess"))
+                if (property.NameEquals("sshPublicAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,12 +50,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     sshPublicAccess = new MachineLearningSshPublicAccess(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("adminUserName"))
+                if (property.NameEquals("adminUserName"u8))
                 {
                     adminUserName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sshPort"))
+                if (property.NameEquals("sshPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     sshPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("adminPublicKey"))
+                if (property.NameEquals("adminPublicKey"u8))
                 {
                     adminPublicKey = property.Value.GetString();
                     continue;

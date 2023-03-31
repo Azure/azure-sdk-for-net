@@ -14,13 +14,17 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static NetAppVolumeReplication DeserializeNetAppVolumeReplication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NetAppEndpointType> endpointType = default;
             Optional<NetAppReplicationSchedule> replicationSchedule = default;
             ResourceIdentifier remoteVolumeResourceId = default;
             Optional<string> remoteVolumeRegion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endpointType"))
+                if (property.NameEquals("endpointType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     endpointType = new NetAppEndpointType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("replicationSchedule"))
+                if (property.NameEquals("replicationSchedule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,12 +44,12 @@ namespace Azure.ResourceManager.NetApp.Models
                     replicationSchedule = new NetAppReplicationSchedule(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("remoteVolumeResourceId"))
+                if (property.NameEquals("remoteVolumeResourceId"u8))
                 {
                     remoteVolumeResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("remoteVolumeRegion"))
+                if (property.NameEquals("remoteVolumeRegion"u8))
                 {
                     remoteVolumeRegion = property.Value.GetString();
                     continue;

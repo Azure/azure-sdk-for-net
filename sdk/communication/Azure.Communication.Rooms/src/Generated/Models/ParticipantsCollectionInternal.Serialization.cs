@@ -15,10 +15,14 @@ namespace Azure.Communication.Rooms
     {
         internal static ParticipantsCollectionInternal DeserializeParticipantsCollectionInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<RoomParticipantInternal> participants = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("participants"))
+                if (property.NameEquals("participants"u8))
                 {
                     List<RoomParticipantInternal> array = new List<RoomParticipantInternal>();
                     foreach (var item in property.Value.EnumerateArray())

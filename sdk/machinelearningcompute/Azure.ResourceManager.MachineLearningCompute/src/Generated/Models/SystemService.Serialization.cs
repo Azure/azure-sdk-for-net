@@ -15,29 +15,33 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("systemServiceType");
+            writer.WritePropertyName("systemServiceType"u8);
             writer.WriteStringValue(SystemServiceType.ToString());
             writer.WriteEndObject();
         }
 
         internal static SystemService DeserializeSystemService(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SystemServiceType systemServiceType = default;
             Optional<string> publicIPAddress = default;
             Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("systemServiceType"))
+                if (property.NameEquals("systemServiceType"u8))
                 {
                     systemServiceType = new SystemServiceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("publicIpAddress"))
+                if (property.NameEquals("publicIpAddress"u8))
                 {
                     publicIPAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;

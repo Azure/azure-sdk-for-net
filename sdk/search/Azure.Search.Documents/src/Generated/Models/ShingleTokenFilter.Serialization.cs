@@ -17,43 +17,47 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxShingleSize))
             {
-                writer.WritePropertyName("maxShingleSize");
+                writer.WritePropertyName("maxShingleSize"u8);
                 writer.WriteNumberValue(MaxShingleSize.Value);
             }
             if (Optional.IsDefined(MinShingleSize))
             {
-                writer.WritePropertyName("minShingleSize");
+                writer.WritePropertyName("minShingleSize"u8);
                 writer.WriteNumberValue(MinShingleSize.Value);
             }
             if (Optional.IsDefined(OutputUnigrams))
             {
-                writer.WritePropertyName("outputUnigrams");
+                writer.WritePropertyName("outputUnigrams"u8);
                 writer.WriteBooleanValue(OutputUnigrams.Value);
             }
             if (Optional.IsDefined(OutputUnigramsIfNoShingles))
             {
-                writer.WritePropertyName("outputUnigramsIfNoShingles");
+                writer.WritePropertyName("outputUnigramsIfNoShingles"u8);
                 writer.WriteBooleanValue(OutputUnigramsIfNoShingles.Value);
             }
             if (Optional.IsDefined(TokenSeparator))
             {
-                writer.WritePropertyName("tokenSeparator");
+                writer.WritePropertyName("tokenSeparator"u8);
                 writer.WriteStringValue(TokenSeparator);
             }
             if (Optional.IsDefined(FilterToken))
             {
-                writer.WritePropertyName("filterToken");
+                writer.WritePropertyName("filterToken"u8);
                 writer.WriteStringValue(FilterToken);
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WriteEndObject();
         }
 
         internal static ShingleTokenFilter DeserializeShingleTokenFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxShingleSize = default;
             Optional<int> minShingleSize = default;
             Optional<bool> outputUnigrams = default;
@@ -64,7 +68,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxShingleSize"))
+                if (property.NameEquals("maxShingleSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +78,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     maxShingleSize = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minShingleSize"))
+                if (property.NameEquals("minShingleSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +88,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     minShingleSize = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("outputUnigrams"))
+                if (property.NameEquals("outputUnigrams"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +98,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     outputUnigrams = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("outputUnigramsIfNoShingles"))
+                if (property.NameEquals("outputUnigramsIfNoShingles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,22 +108,22 @@ namespace Azure.Search.Documents.Indexes.Models
                     outputUnigramsIfNoShingles = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("tokenSeparator"))
+                if (property.NameEquals("tokenSeparator"u8))
                 {
                     tokenSeparator = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filterToken"))
+                if (property.NameEquals("filterToken"u8))
                 {
                     filterToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;

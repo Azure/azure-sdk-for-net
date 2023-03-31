@@ -1,0 +1,22 @@
+matrix:
+  scenarios:
+    consumer:
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+      scenarioName: "Consumer"
+    eventprod:
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+      scenarioName: "EventProd"
+    buffprod:
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+      scenarioName: "BuffProd"
+    burstbuffprod:
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+      scenarioName: "BurstBuffProd"
+    processor:
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+      scenarioName: "Processor"

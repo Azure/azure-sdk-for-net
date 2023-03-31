@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(JwtClaimChecks))
             {
-                writer.WritePropertyName("jwtClaimChecks");
+                writer.WritePropertyName("jwtClaimChecks"u8);
                 writer.WriteObjectValue(JwtClaimChecks);
             }
             if (Optional.IsCollectionDefined(AllowedAudiences))
             {
-                writer.WritePropertyName("allowedAudiences");
+                writer.WritePropertyName("allowedAudiences"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedAudiences)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             if (Optional.IsDefined(DefaultAuthorizationPolicy))
             {
-                writer.WritePropertyName("defaultAuthorizationPolicy");
+                writer.WritePropertyName("defaultAuthorizationPolicy"u8);
                 writer.WriteObjectValue(DefaultAuthorizationPolicy);
             }
             writer.WriteEndObject();
@@ -41,12 +41,16 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppAzureActiveDirectoryValidationConfiguration DeserializeContainerAppAzureActiveDirectoryValidationConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppJwtClaimChecks> jwtClaimChecks = default;
             Optional<IList<string>> allowedAudiences = default;
             Optional<ContainerAppDefaultAuthorizationPolicy> defaultAuthorizationPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jwtClaimChecks"))
+                if (property.NameEquals("jwtClaimChecks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     jwtClaimChecks = ContainerAppJwtClaimChecks.DeserializeContainerAppJwtClaimChecks(property.Value);
                     continue;
                 }
-                if (property.NameEquals("allowedAudiences"))
+                if (property.NameEquals("allowedAudiences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     allowedAudiences = array;
                     continue;
                 }
-                if (property.NameEquals("defaultAuthorizationPolicy"))
+                if (property.NameEquals("defaultAuthorizationPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

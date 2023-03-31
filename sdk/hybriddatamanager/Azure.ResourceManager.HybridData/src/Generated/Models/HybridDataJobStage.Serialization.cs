@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.HybridData.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StageName))
             {
-                writer.WritePropertyName("stageName");
+                writer.WritePropertyName("stageName"u8);
                 writer.WriteStringValue(StageName);
             }
-            writer.WritePropertyName("stageStatus");
+            writer.WritePropertyName("stageStatus"u8);
             writer.WriteStringValue(StageStatus.ToSerialString());
             if (Optional.IsDefined(JobStageDetails))
             {
-                writer.WritePropertyName("jobStageDetails");
+                writer.WritePropertyName("jobStageDetails"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(JobStageDetails);
 #else
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HybridData.Models
             }
             if (Optional.IsCollectionDefined(ErrorDetails))
             {
-                writer.WritePropertyName("errorDetails");
+                writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in ErrorDetails)
                 {
@@ -48,23 +48,27 @@ namespace Azure.ResourceManager.HybridData.Models
 
         internal static HybridDataJobStage DeserializeHybridDataJobStage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> stageName = default;
             HybridDataJobStatus stageStatus = default;
             Optional<BinaryData> jobStageDetails = default;
             Optional<IList<HybridDataJobErrorDetails>> errorDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("stageName"))
+                if (property.NameEquals("stageName"u8))
                 {
                     stageName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stageStatus"))
+                if (property.NameEquals("stageStatus"u8))
                 {
                     stageStatus = property.Value.GetString().ToHybridDataJobStatus();
                     continue;
                 }
-                if (property.NameEquals("jobStageDetails"))
+                if (property.NameEquals("jobStageDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.HybridData.Models
                     jobStageDetails = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("errorDetails"))
+                if (property.NameEquals("errorDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

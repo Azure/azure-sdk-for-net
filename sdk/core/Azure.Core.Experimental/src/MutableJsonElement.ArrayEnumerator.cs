@@ -1,15 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Text;
 using System.Text.Json;
 
-namespace Azure.Core.Dynamic
+namespace Azure.Core.Json
 {
     public partial struct MutableJsonElement
     {
@@ -25,7 +22,7 @@ namespace Azure.Core.Dynamic
 
             internal ArrayEnumerator(MutableJsonElement element)
             {
-                Debug.Assert(element.ValueKind == JsonValueKind.Array);
+                element.EnsureArray();
 
                 _element = element;
                 _length = element._element.GetArrayLength();

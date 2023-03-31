@@ -18,51 +18,51 @@ namespace Azure.ResourceManager.ApiManagement
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Title))
             {
-                writer.WritePropertyName("title");
+                writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(ResourceUri))
             {
-                writer.WritePropertyName("resourceId");
+                writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("properties");
+                writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
             if (Optional.IsDefined(Credentials))
             {
-                writer.WritePropertyName("credentials");
+                writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
             if (Optional.IsDefined(Proxy))
             {
-                writer.WritePropertyName("proxy");
+                writer.WritePropertyName("proxy"u8);
                 writer.WriteObjectValue(Proxy);
             }
             if (Optional.IsDefined(Tls))
             {
-                writer.WritePropertyName("tls");
+                writer.WritePropertyName("tls"u8);
                 writer.WriteObjectValue(Tls);
             }
             if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("url");
+                writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(Protocol))
             {
-                writer.WritePropertyName("protocol");
+                writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
             writer.WriteEndObject();
@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static ApiManagementBackendData DeserializeApiManagementBackendData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -86,22 +90,22 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<BackendProtocol> protocol = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,7 +115,7 @@ namespace Azure.ResourceManager.ApiManagement
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,17 +124,17 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("title"))
+                        if (property0.NameEquals("title"u8))
                         {
                             title = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("resourceId"))
+                        if (property0.NameEquals("resourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -140,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement
                             resourceId = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("properties"))
+                        if (property0.NameEquals("properties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -150,7 +154,7 @@ namespace Azure.ResourceManager.ApiManagement
                             properties = BackendProperties.DeserializeBackendProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("credentials"))
+                        if (property0.NameEquals("credentials"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -160,7 +164,7 @@ namespace Azure.ResourceManager.ApiManagement
                             credentials = BackendCredentialsContract.DeserializeBackendCredentialsContract(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("proxy"))
+                        if (property0.NameEquals("proxy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -170,7 +174,7 @@ namespace Azure.ResourceManager.ApiManagement
                             proxy = BackendProxyContract.DeserializeBackendProxyContract(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("tls"))
+                        if (property0.NameEquals("tls"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -180,7 +184,7 @@ namespace Azure.ResourceManager.ApiManagement
                             tls = BackendTlsProperties.DeserializeBackendTlsProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("url"))
+                        if (property0.NameEquals("url"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -190,7 +194,7 @@ namespace Azure.ResourceManager.ApiManagement
                             uri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("protocol"))
+                        if (property0.NameEquals("protocol"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

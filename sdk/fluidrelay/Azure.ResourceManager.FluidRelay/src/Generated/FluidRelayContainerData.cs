@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FluidRelay
 {
-    /// <summary> A class representing the FluidRelayContainer data model. </summary>
+    /// <summary>
+    /// A class representing the FluidRelayContainer data model.
+    /// A FluidRelay Container.
+    /// </summary>
     public partial class FluidRelayContainerData : ResourceData
     {
         /// <summary> Initializes a new instance of FluidRelayContainerData. </summary>

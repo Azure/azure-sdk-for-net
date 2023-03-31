@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IP))
             {
-                writer.WritePropertyName("ip");
+                writer.WritePropertyName("ip"u8);
                 writer.WriteStringValue(IP);
             }
             if (Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port");
+                writer.WritePropertyName("port"u8);
                 writer.WriteStringValue(Port);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static ProxyServerProperties DeserializeProxyServerProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ip = default;
             Optional<string> port = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ip"))
+                if (property.NameEquals("ip"u8))
                 {
                     ip = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     port = property.Value.GetString();
                     continue;

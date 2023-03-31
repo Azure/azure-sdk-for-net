@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("copyAfter");
+            writer.WritePropertyName("copyAfter"u8);
             writer.WriteObjectValue(CopyAfter);
-            writer.WritePropertyName("dataStore");
+            writer.WritePropertyName("dataStore"u8);
             writer.WriteObjectValue(DataStore);
             writer.WriteEndObject();
         }
 
         internal static TargetCopySetting DeserializeTargetCopySetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataProtectionBackupCopySetting copyAfter = default;
             DataStoreInfoBase dataStore = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("copyAfter"))
+                if (property.NameEquals("copyAfter"u8))
                 {
                     copyAfter = DataProtectionBackupCopySetting.DeserializeDataProtectionBackupCopySetting(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataStore"))
+                if (property.NameEquals("dataStore"u8))
                 {
                     dataStore = DataStoreInfoBase.DeserializeDataStoreInfoBase(property.Value);
                     continue;

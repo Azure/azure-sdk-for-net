@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("osType");
+            writer.WritePropertyName("osType"u8);
             writer.WriteStringValue(OSType.ToString());
             writer.WriteEndObject();
         }
 
         internal static OSConfiguration DeserializeOSConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("osType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

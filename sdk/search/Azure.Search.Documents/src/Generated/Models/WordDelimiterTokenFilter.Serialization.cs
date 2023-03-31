@@ -18,52 +18,52 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(GenerateWordParts))
             {
-                writer.WritePropertyName("generateWordParts");
+                writer.WritePropertyName("generateWordParts"u8);
                 writer.WriteBooleanValue(GenerateWordParts.Value);
             }
             if (Optional.IsDefined(GenerateNumberParts))
             {
-                writer.WritePropertyName("generateNumberParts");
+                writer.WritePropertyName("generateNumberParts"u8);
                 writer.WriteBooleanValue(GenerateNumberParts.Value);
             }
             if (Optional.IsDefined(CatenateWords))
             {
-                writer.WritePropertyName("catenateWords");
+                writer.WritePropertyName("catenateWords"u8);
                 writer.WriteBooleanValue(CatenateWords.Value);
             }
             if (Optional.IsDefined(CatenateNumbers))
             {
-                writer.WritePropertyName("catenateNumbers");
+                writer.WritePropertyName("catenateNumbers"u8);
                 writer.WriteBooleanValue(CatenateNumbers.Value);
             }
             if (Optional.IsDefined(CatenateAll))
             {
-                writer.WritePropertyName("catenateAll");
+                writer.WritePropertyName("catenateAll"u8);
                 writer.WriteBooleanValue(CatenateAll.Value);
             }
             if (Optional.IsDefined(SplitOnCaseChange))
             {
-                writer.WritePropertyName("splitOnCaseChange");
+                writer.WritePropertyName("splitOnCaseChange"u8);
                 writer.WriteBooleanValue(SplitOnCaseChange.Value);
             }
             if (Optional.IsDefined(PreserveOriginal))
             {
-                writer.WritePropertyName("preserveOriginal");
+                writer.WritePropertyName("preserveOriginal"u8);
                 writer.WriteBooleanValue(PreserveOriginal.Value);
             }
             if (Optional.IsDefined(SplitOnNumerics))
             {
-                writer.WritePropertyName("splitOnNumerics");
+                writer.WritePropertyName("splitOnNumerics"u8);
                 writer.WriteBooleanValue(SplitOnNumerics.Value);
             }
             if (Optional.IsDefined(StemEnglishPossessive))
             {
-                writer.WritePropertyName("stemEnglishPossessive");
+                writer.WritePropertyName("stemEnglishPossessive"u8);
                 writer.WriteBooleanValue(StemEnglishPossessive.Value);
             }
             if (Optional.IsCollectionDefined(ProtectedWords))
             {
-                writer.WritePropertyName("protectedWords");
+                writer.WritePropertyName("protectedWords"u8);
                 writer.WriteStartArray();
                 foreach (var item in ProtectedWords)
                 {
@@ -71,15 +71,19 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WriteEndObject();
         }
 
         internal static WordDelimiterTokenFilter DeserializeWordDelimiterTokenFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> generateWordParts = default;
             Optional<bool> generateNumberParts = default;
             Optional<bool> catenateWords = default;
@@ -94,7 +98,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("generateWordParts"))
+                if (property.NameEquals("generateWordParts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +108,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     generateWordParts = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("generateNumberParts"))
+                if (property.NameEquals("generateNumberParts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +118,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     generateNumberParts = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("catenateWords"))
+                if (property.NameEquals("catenateWords"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +128,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     catenateWords = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("catenateNumbers"))
+                if (property.NameEquals("catenateNumbers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -134,7 +138,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     catenateNumbers = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("catenateAll"))
+                if (property.NameEquals("catenateAll"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -144,7 +148,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     catenateAll = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("splitOnCaseChange"))
+                if (property.NameEquals("splitOnCaseChange"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,7 +158,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     splitOnCaseChange = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("preserveOriginal"))
+                if (property.NameEquals("preserveOriginal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -164,7 +168,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     preserveOriginal = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("splitOnNumerics"))
+                if (property.NameEquals("splitOnNumerics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -174,7 +178,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     splitOnNumerics = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("stemEnglishPossessive"))
+                if (property.NameEquals("stemEnglishPossessive"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -184,7 +188,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     stemEnglishPossessive = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("protectedWords"))
+                if (property.NameEquals("protectedWords"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -199,12 +203,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     protectedWords = array;
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;

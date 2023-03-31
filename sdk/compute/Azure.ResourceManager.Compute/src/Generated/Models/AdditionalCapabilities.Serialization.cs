@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(UltraSsdEnabled))
             {
-                writer.WritePropertyName("ultraSSDEnabled");
+                writer.WritePropertyName("ultraSSDEnabled"u8);
                 writer.WriteBooleanValue(UltraSsdEnabled.Value);
             }
             if (Optional.IsDefined(HibernationEnabled))
             {
-                writer.WritePropertyName("hibernationEnabled");
+                writer.WritePropertyName("hibernationEnabled"u8);
                 writer.WriteBooleanValue(HibernationEnabled.Value);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static AdditionalCapabilities DeserializeAdditionalCapabilities(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> ultraSsdEnabled = default;
             Optional<bool> hibernationEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ultraSSDEnabled"))
+                if (property.NameEquals("ultraSSDEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
                     ultraSsdEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("hibernationEnabled"))
+                if (property.NameEquals("hibernationEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

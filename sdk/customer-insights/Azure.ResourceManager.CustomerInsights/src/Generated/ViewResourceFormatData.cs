@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    /// <summary> A class representing the ViewResourceFormat data model. </summary>
+    /// <summary>
+    /// A class representing the ViewResourceFormat data model.
+    /// The view resource format.
+    /// </summary>
     public partial class ViewResourceFormatData : ResourceData
     {
         /// <summary> Initializes a new instance of ViewResourceFormatData. </summary>

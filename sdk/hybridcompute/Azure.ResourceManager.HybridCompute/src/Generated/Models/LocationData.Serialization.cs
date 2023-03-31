@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.HybridCompute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(City))
             {
-                writer.WritePropertyName("city");
+                writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
             if (Optional.IsDefined(District))
             {
-                writer.WritePropertyName("district");
+                writer.WritePropertyName("district"u8);
                 writer.WriteStringValue(District);
             }
             if (Optional.IsDefined(CountryOrRegion))
             {
-                writer.WritePropertyName("countryOrRegion");
+                writer.WritePropertyName("countryOrRegion"u8);
                 writer.WriteStringValue(CountryOrRegion);
             }
             writer.WriteEndObject();
@@ -37,28 +37,32 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static LocationData DeserializeLocationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> city = default;
             Optional<string> district = default;
             Optional<string> countryOrRegion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("city"))
+                if (property.NameEquals("city"u8))
                 {
                     city = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("district"))
+                if (property.NameEquals("district"u8))
                 {
                     district = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("countryOrRegion"))
+                if (property.NameEquals("countryOrRegion"u8))
                 {
                     countryOrRegion = property.Value.GetString();
                     continue;

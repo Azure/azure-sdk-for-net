@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RetentionTimeInDays))
             {
-                writer.WritePropertyName("retentionTimeInDays");
+                writer.WritePropertyName("retentionTimeInDays"u8);
                 writer.WriteNumberValue(RetentionTimeInDays.Value);
             }
             if (Optional.IsDefined(PartitionCount))
             {
-                writer.WritePropertyName("partitionCount");
+                writer.WritePropertyName("partitionCount"u8);
                 writer.WriteNumberValue(PartitionCount.Value);
             }
             writer.WriteEndObject();
@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static EventHubCompatibleEndpointProperties DeserializeEventHubCompatibleEndpointProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> retentionTimeInDays = default;
             Optional<int> partitionCount = default;
             Optional<IReadOnlyList<string>> partitionIds = default;
@@ -38,7 +42,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<string> endpoint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("retentionTimeInDays"))
+                if (property.NameEquals("retentionTimeInDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +52,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     retentionTimeInDays = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("partitionCount"))
+                if (property.NameEquals("partitionCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     partitionCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("partitionIds"))
+                if (property.NameEquals("partitionIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,12 +77,12 @@ namespace Azure.ResourceManager.IotHub.Models
                     partitionIds = array;
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpoint"))
+                if (property.NameEquals("endpoint"u8))
                 {
                     endpoint = property.Value.GetString();
                     continue;

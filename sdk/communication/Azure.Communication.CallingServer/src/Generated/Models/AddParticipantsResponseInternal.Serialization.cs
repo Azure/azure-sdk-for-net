@@ -15,11 +15,15 @@ namespace Azure.Communication.CallingServer
     {
         internal static AddParticipantsResponseInternal DeserializeAddParticipantsResponseInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AcsCallParticipantInternal>> participants = default;
             Optional<string> operationContext = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("participants"))
+                if (property.NameEquals("participants"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +38,7 @@ namespace Azure.Communication.CallingServer
                     participants = array;
                     continue;
                 }
-                if (property.NameEquals("operationContext"))
+                if (property.NameEquals("operationContext"u8))
                 {
                     operationContext = property.Value.GetString();
                     continue;

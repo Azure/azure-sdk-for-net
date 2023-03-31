@@ -10,7 +10,7 @@ For the sample below, you can set `accountEndpoint` and `instance` in an environ
 
 ```C# Snippet:AzDeviceUpdateSample5_CreateDeviceManagementClient
 Uri endpoint = new Uri("https://<account-id>.api.adu.microsoft.com");
-string instanceId = "<instance-id>"
+string instanceId = "<instance-id>";
 TokenCredential credentials = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, instanceId, credentials);
 ```

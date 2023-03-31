@@ -14,18 +14,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static CommunicationIdentifierModel DeserializeCommunicationIdentifierModel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> rawId = default;
             Optional<CommunicationUserIdentifierModel> communicationUser = default;
             Optional<PhoneNumberIdentifierModel> phoneNumber = default;
             Optional<MicrosoftTeamsUserIdentifierModel> microsoftTeamsUser = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rawId"))
+                if (property.NameEquals("rawId"u8))
                 {
                     rawId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("communicationUser"))
+                if (property.NameEquals("communicationUser"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +39,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     communicationUser = CommunicationUserIdentifierModel.DeserializeCommunicationUserIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("phoneNumber"))
+                if (property.NameEquals("phoneNumber"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     phoneNumber = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("microsoftTeamsUser"))
+                if (property.NameEquals("microsoftTeamsUser"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ExecutionFrequencyInSeconds))
             {
-                writer.WritePropertyName("executionFrequencyInSeconds");
+                writer.WritePropertyName("executionFrequencyInSeconds"u8);
                 writer.WriteNumberValue(ExecutionFrequencyInSeconds.Value);
             }
             writer.WriteEndObject();

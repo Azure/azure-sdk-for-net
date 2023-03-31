@@ -20,26 +20,26 @@ namespace Azure.ResourceManager.Storage
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultEncryptionScope))
             {
-                writer.WritePropertyName("defaultEncryptionScope");
+                writer.WritePropertyName("defaultEncryptionScope"u8);
                 writer.WriteStringValue(DefaultEncryptionScope);
             }
             if (Optional.IsDefined(PreventEncryptionScopeOverride))
             {
-                writer.WritePropertyName("denyEncryptionScopeOverride");
+                writer.WritePropertyName("denyEncryptionScopeOverride"u8);
                 writer.WriteBooleanValue(PreventEncryptionScopeOverride.Value);
             }
             if (Optional.IsDefined(PublicAccess))
             {
-                writer.WritePropertyName("publicAccess");
+                writer.WritePropertyName("publicAccess"u8);
                 writer.WriteStringValue(PublicAccess.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
                 foreach (var item in Metadata)
                 {
@@ -50,17 +50,17 @@ namespace Azure.ResourceManager.Storage
             }
             if (Optional.IsDefined(ImmutableStorageWithVersioning))
             {
-                writer.WritePropertyName("immutableStorageWithVersioning");
+                writer.WritePropertyName("immutableStorageWithVersioning"u8);
                 writer.WriteObjectValue(ImmutableStorageWithVersioning);
             }
             if (Optional.IsDefined(EnableNfsV3RootSquash))
             {
-                writer.WritePropertyName("enableNfsV3RootSquash");
+                writer.WritePropertyName("enableNfsV3RootSquash"u8);
                 writer.WriteBooleanValue(EnableNfsV3RootSquash.Value);
             }
             if (Optional.IsDefined(EnableNfsV3AllSquash))
             {
-                writer.WritePropertyName("enableNfsV3AllSquash");
+                writer.WritePropertyName("enableNfsV3AllSquash"u8);
                 writer.WriteBooleanValue(EnableNfsV3AllSquash.Value);
             }
             writer.WriteEndObject();
@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.Storage
 
         internal static BlobContainerData DeserializeBlobContainerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -95,7 +99,7 @@ namespace Azure.ResourceManager.Storage
             Optional<bool> enableNfsV3AllSquash = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,22 +109,22 @@ namespace Azure.ResourceManager.Storage
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,7 +134,7 @@ namespace Azure.ResourceManager.Storage
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,12 +143,12 @@ namespace Azure.ResourceManager.Storage
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("version"))
+                        if (property0.NameEquals("version"u8))
                         {
                             version = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("deleted"))
+                        if (property0.NameEquals("deleted"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -154,7 +158,7 @@ namespace Azure.ResourceManager.Storage
                             deleted = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("deletedTime"))
+                        if (property0.NameEquals("deletedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -164,7 +168,7 @@ namespace Azure.ResourceManager.Storage
                             deletedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("remainingRetentionDays"))
+                        if (property0.NameEquals("remainingRetentionDays"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -174,12 +178,12 @@ namespace Azure.ResourceManager.Storage
                             remainingRetentionDays = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("defaultEncryptionScope"))
+                        if (property0.NameEquals("defaultEncryptionScope"u8))
                         {
                             defaultEncryptionScope = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("denyEncryptionScopeOverride"))
+                        if (property0.NameEquals("denyEncryptionScopeOverride"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -189,7 +193,7 @@ namespace Azure.ResourceManager.Storage
                             denyEncryptionScopeOverride = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("publicAccess"))
+                        if (property0.NameEquals("publicAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -199,7 +203,7 @@ namespace Azure.ResourceManager.Storage
                             publicAccess = property0.Value.GetString().ToStoragePublicAccessType();
                             continue;
                         }
-                        if (property0.NameEquals("lastModifiedTime"))
+                        if (property0.NameEquals("lastModifiedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -209,7 +213,7 @@ namespace Azure.ResourceManager.Storage
                             lastModifiedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("leaseStatus"))
+                        if (property0.NameEquals("leaseStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -219,7 +223,7 @@ namespace Azure.ResourceManager.Storage
                             leaseStatus = new StorageLeaseStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("leaseState"))
+                        if (property0.NameEquals("leaseState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -229,7 +233,7 @@ namespace Azure.ResourceManager.Storage
                             leaseState = new StorageLeaseState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("leaseDuration"))
+                        if (property0.NameEquals("leaseDuration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -239,7 +243,7 @@ namespace Azure.ResourceManager.Storage
                             leaseDuration = new StorageLeaseDurationType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("metadata"))
+                        if (property0.NameEquals("metadata"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -254,7 +258,7 @@ namespace Azure.ResourceManager.Storage
                             metadata = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("immutabilityPolicy"))
+                        if (property0.NameEquals("immutabilityPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -264,7 +268,7 @@ namespace Azure.ResourceManager.Storage
                             immutabilityPolicy = BlobContainerImmutabilityPolicy.DeserializeBlobContainerImmutabilityPolicy(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("legalHold"))
+                        if (property0.NameEquals("legalHold"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -274,7 +278,7 @@ namespace Azure.ResourceManager.Storage
                             legalHold = LegalHoldProperties.DeserializeLegalHoldProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("hasLegalHold"))
+                        if (property0.NameEquals("hasLegalHold"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -284,7 +288,7 @@ namespace Azure.ResourceManager.Storage
                             hasLegalHold = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("hasImmutabilityPolicy"))
+                        if (property0.NameEquals("hasImmutabilityPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -294,7 +298,7 @@ namespace Azure.ResourceManager.Storage
                             hasImmutabilityPolicy = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("immutableStorageWithVersioning"))
+                        if (property0.NameEquals("immutableStorageWithVersioning"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -304,7 +308,7 @@ namespace Azure.ResourceManager.Storage
                             immutableStorageWithVersioning = ImmutableStorageWithVersioning.DeserializeImmutableStorageWithVersioning(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("enableNfsV3RootSquash"))
+                        if (property0.NameEquals("enableNfsV3RootSquash"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -314,7 +318,7 @@ namespace Azure.ResourceManager.Storage
                             enableNfsV3RootSquash = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("enableNfsV3AllSquash"))
+                        if (property0.NameEquals("enableNfsV3AllSquash"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

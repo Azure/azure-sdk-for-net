@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(InstanceSize))
             {
-                writer.WritePropertyName("instanceSize");
+                writer.WritePropertyName("instanceSize"u8);
                 writer.WriteStringValue(InstanceSize.Value.ToString());
             }
             if (Optional.IsDefined(InstanceCount))
             {
-                writer.WritePropertyName("instanceCount");
+                writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
             }
-            writer.WritePropertyName("serviceType");
+            writer.WritePropertyName("serviceType"u8);
             writer.WriteStringValue(ServiceType.ToString());
             foreach (var item in AdditionalProperties)
             {
@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBServiceProperties DeserializeCosmosDBServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("serviceType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

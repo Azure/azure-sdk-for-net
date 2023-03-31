@@ -15,25 +15,29 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("highWaterMarkColumnName");
+            writer.WritePropertyName("highWaterMarkColumnName"u8);
             writer.WriteStringValue(HighWaterMarkColumnName);
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
             writer.WriteEndObject();
         }
 
         internal static HighWaterMarkChangeDetectionPolicy DeserializeHighWaterMarkChangeDetectionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string highWaterMarkColumnName = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("highWaterMarkColumnName"))
+                if (property.NameEquals("highWaterMarkColumnName"u8))
                 {
                     highWaterMarkColumnName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;

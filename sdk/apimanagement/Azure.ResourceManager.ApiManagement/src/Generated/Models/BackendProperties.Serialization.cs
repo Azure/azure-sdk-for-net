@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceFabricCluster))
             {
-                writer.WritePropertyName("serviceFabricCluster");
+                writer.WritePropertyName("serviceFabricCluster"u8);
                 writer.WriteObjectValue(ServiceFabricCluster);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static BackendProperties DeserializeBackendProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BackendServiceFabricClusterProperties> serviceFabricCluster = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceFabricCluster"))
+                if (property.NameEquals("serviceFabricCluster"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

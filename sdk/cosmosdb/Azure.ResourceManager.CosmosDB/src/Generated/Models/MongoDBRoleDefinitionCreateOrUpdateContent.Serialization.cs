@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RoleName))
             {
-                writer.WritePropertyName("roleName");
+                writer.WritePropertyName("roleName"u8);
                 writer.WriteStringValue(RoleName);
             }
             if (Optional.IsDefined(DefinitionType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DefinitionType.Value.ToSerialString());
             }
             if (Optional.IsDefined(DatabaseName))
             {
-                writer.WritePropertyName("databaseName");
+                writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
             if (Optional.IsCollectionDefined(Privileges))
             {
-                writer.WritePropertyName("privileges");
+                writer.WritePropertyName("privileges"u8);
                 writer.WriteStartArray();
                 foreach (var item in Privileges)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             if (Optional.IsCollectionDefined(Roles))
             {
-                writer.WritePropertyName("roles");
+                writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();
                 foreach (var item in Roles)
                 {

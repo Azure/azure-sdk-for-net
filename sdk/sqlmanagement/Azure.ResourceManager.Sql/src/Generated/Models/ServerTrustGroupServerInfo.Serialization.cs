@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.Sql.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("serverId");
+            writer.WritePropertyName("serverId"u8);
             writer.WriteStringValue(ServerId);
             writer.WriteEndObject();
         }
 
         internal static ServerTrustGroupServerInfo DeserializeServerTrustGroupServerInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier serverId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serverId"))
+                if (property.NameEquals("serverId"u8))
                 {
                     serverId = new ResourceIdentifier(property.Value.GetString());
                     continue;

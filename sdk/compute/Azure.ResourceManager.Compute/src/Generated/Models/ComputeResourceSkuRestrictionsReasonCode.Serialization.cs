@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Compute.Models
 
         public static ComputeResourceSkuRestrictionsReasonCode ToComputeResourceSkuRestrictionsReasonCode(this string value)
         {
-            if (string.Equals(value, "QuotaId", StringComparison.InvariantCultureIgnoreCase)) return ComputeResourceSkuRestrictionsReasonCode.QuotaId;
-            if (string.Equals(value, "NotAvailableForSubscription", StringComparison.InvariantCultureIgnoreCase)) return ComputeResourceSkuRestrictionsReasonCode.NotAvailableForSubscription;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "QuotaId")) return ComputeResourceSkuRestrictionsReasonCode.QuotaId;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotAvailableForSubscription")) return ComputeResourceSkuRestrictionsReasonCode.NotAvailableForSubscription;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ComputeResourceSkuRestrictionsReasonCode value.");
         }
     }

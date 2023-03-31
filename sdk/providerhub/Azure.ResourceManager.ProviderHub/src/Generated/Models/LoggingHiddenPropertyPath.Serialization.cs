@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(HiddenPathsOnRequest))
             {
-                writer.WritePropertyName("hiddenPathsOnRequest");
+                writer.WritePropertyName("hiddenPathsOnRequest"u8);
                 writer.WriteStartArray();
                 foreach (var item in HiddenPathsOnRequest)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             if (Optional.IsCollectionDefined(HiddenPathsOnResponse))
             {
-                writer.WritePropertyName("hiddenPathsOnResponse");
+                writer.WritePropertyName("hiddenPathsOnResponse"u8);
                 writer.WriteStartArray();
                 foreach (var item in HiddenPathsOnResponse)
                 {
@@ -41,11 +41,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static LoggingHiddenPropertyPath DeserializeLoggingHiddenPropertyPath(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> hiddenPathsOnRequest = default;
             Optional<IList<string>> hiddenPathsOnResponse = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hiddenPathsOnRequest"))
+                if (property.NameEquals("hiddenPathsOnRequest"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     hiddenPathsOnRequest = array;
                     continue;
                 }
-                if (property.NameEquals("hiddenPathsOnResponse"))
+                if (property.NameEquals("hiddenPathsOnResponse"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

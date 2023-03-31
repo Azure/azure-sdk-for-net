@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DestinationType))
             {
-                writer.WritePropertyName("destinationType");
+                writer.WritePropertyName("destinationType"u8);
                 writer.WriteStringValue(DestinationType);
             }
             if (Optional.IsCollectionDefined(Destinations))
             {
-                writer.WritePropertyName("destinations");
+                writer.WritePropertyName("destinations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Destinations)
                 {
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(NextHopType))
             {
-                writer.WritePropertyName("nextHopType");
+                writer.WritePropertyName("nextHopType"u8);
                 writer.WriteStringValue(NextHopType);
             }
             if (Optional.IsCollectionDefined(NextHops))
             {
-                writer.WritePropertyName("nextHops");
+                writer.WritePropertyName("nextHops"u8);
                 writer.WriteStartArray();
                 foreach (var item in NextHops)
                 {
@@ -51,18 +51,22 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VirtualHubRouteV2 DeserializeVirtualHubRouteV2(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> destinationType = default;
             Optional<IList<string>> destinations = default;
             Optional<string> nextHopType = default;
             Optional<IList<string>> nextHops = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("destinationType"))
+                if (property.NameEquals("destinationType"u8))
                 {
                     destinationType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("destinations"))
+                if (property.NameEquals("destinations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,12 +81,12 @@ namespace Azure.ResourceManager.Network.Models
                     destinations = array;
                     continue;
                 }
-                if (property.NameEquals("nextHopType"))
+                if (property.NameEquals("nextHopType"u8))
                 {
                     nextHopType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nextHops"))
+                if (property.NameEquals("nextHops"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

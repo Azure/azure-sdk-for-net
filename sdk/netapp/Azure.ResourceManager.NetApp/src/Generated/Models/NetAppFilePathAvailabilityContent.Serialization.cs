@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.NetApp.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("subnetId");
+            writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
             writer.WriteEndObject();
         }

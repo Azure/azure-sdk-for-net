@@ -15,7 +15,7 @@ namespace Azure.MixedReality.RemoteRendering
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("settings");
+            writer.WritePropertyName("settings"u8);
             writer.WriteObjectValue(Settings);
             writer.WriteEndObject();
         }

@@ -19,32 +19,32 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(PrivateIPAddress))
             {
-                writer.WritePropertyName("privateIpAddress");
+                writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
             }
             if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
-                writer.WritePropertyName("privateIpAllocationMethod");
+                writer.WritePropertyName("privateIpAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod);
             }
             if (Optional.IsDefined(Subnet))
             {
-                writer.WritePropertyName("subnet");
+                writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet);
             }
             if (Optional.IsDefined(IsPrimary))
             {
-                writer.WritePropertyName("primary");
+                writer.WritePropertyName("primary"u8);
                 writer.WriteBooleanValue(IsPrimary.Value);
             }
             if (Optional.IsCollectionDefined(LoadBalancerBackendAddressPools))
             {
-                writer.WritePropertyName("loadBalancerBackendAddressPools");
+                writer.WritePropertyName("loadBalancerBackendAddressPools"u8);
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerBackendAddressPools)
                 {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             if (Optional.IsCollectionDefined(LoadBalancerNatRules))
             {
-                writer.WritePropertyName("loadBalancerNatRules");
+                writer.WritePropertyName("loadBalancerNatRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerNatRules)
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             if (Optional.IsDefined(PublicIP))
             {
-                writer.WritePropertyName("publicIp");
+                writer.WritePropertyName("publicIp"u8);
                 writer.WriteObjectValue(PublicIP);
             }
             writer.WriteEndObject();
@@ -72,6 +72,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static NicIPConfigurationResourceSettings DeserializeNicIPConfigurationResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IPAddress> privateIPAddress = default;
             Optional<string> privateIPAllocationMethod = default;
@@ -82,12 +86,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<PublicIPReferenceInfo> publicIP = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateIpAddress"))
+                if (property.NameEquals("privateIpAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,12 +101,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     privateIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("privateIpAllocationMethod"))
+                if (property.NameEquals("privateIpAllocationMethod"u8))
                 {
                     privateIPAllocationMethod = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subnet"))
+                if (property.NameEquals("subnet"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,7 +116,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     subnet = SubnetReferenceInfo.DeserializeSubnetReferenceInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("primary"))
+                if (property.NameEquals("primary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,7 +126,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     primary = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("loadBalancerBackendAddressPools"))
+                if (property.NameEquals("loadBalancerBackendAddressPools"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -137,7 +141,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     loadBalancerBackendAddressPools = array;
                     continue;
                 }
-                if (property.NameEquals("loadBalancerNatRules"))
+                if (property.NameEquals("loadBalancerNatRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -152,7 +156,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     loadBalancerNatRules = array;
                     continue;
                 }
-                if (property.NameEquals("publicIp"))
+                if (property.NameEquals("publicIp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

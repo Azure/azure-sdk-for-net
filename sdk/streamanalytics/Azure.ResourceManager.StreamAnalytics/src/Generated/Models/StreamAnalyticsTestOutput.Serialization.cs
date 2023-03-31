@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("output");
+            writer.WritePropertyName("output"u8);
             writer.WriteObjectValue(Output);
             writer.WriteEndObject();
         }

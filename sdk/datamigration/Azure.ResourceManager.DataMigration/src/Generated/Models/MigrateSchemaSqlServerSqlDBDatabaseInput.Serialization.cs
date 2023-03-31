@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(TargetDatabaseName))
             {
-                writer.WritePropertyName("targetDatabaseName");
+                writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
             if (Optional.IsDefined(SchemaSetting))
             {
-                writer.WritePropertyName("schemaSetting");
+                writer.WritePropertyName("schemaSetting"u8);
                 writer.WriteObjectValue(SchemaSetting);
             }
             writer.WriteEndObject();
@@ -40,28 +40,32 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSchemaSqlServerSqlDBDatabaseInput DeserializeMigrateSchemaSqlServerSqlDBDatabaseInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> id = default;
             Optional<string> targetDatabaseName = default;
             Optional<SchemaMigrationSetting> schemaSetting = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetDatabaseName"))
+                if (property.NameEquals("targetDatabaseName"u8))
                 {
                     targetDatabaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("schemaSetting"))
+                if (property.NameEquals("schemaSetting"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

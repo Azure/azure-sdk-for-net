@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -26,41 +26,41 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Eula))
             {
-                writer.WritePropertyName("eula");
+                writer.WritePropertyName("eula"u8);
                 writer.WriteStringValue(Eula);
             }
             if (Optional.IsDefined(PrivacyStatementUri))
             {
-                writer.WritePropertyName("privacyStatementUri");
+                writer.WritePropertyName("privacyStatementUri"u8);
                 writer.WriteStringValue(PrivacyStatementUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ReleaseNoteUri))
             {
-                writer.WritePropertyName("releaseNoteUri");
+                writer.WritePropertyName("releaseNoteUri"u8);
                 writer.WriteStringValue(ReleaseNoteUri.AbsoluteUri);
             }
             if (Optional.IsDefined(EndOfLifeOn))
             {
-                writer.WritePropertyName("endOfLifeDate");
+                writer.WritePropertyName("endOfLifeDate"u8);
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
             if (Optional.IsDefined(SupportedOSType))
             {
-                writer.WritePropertyName("supportedOSType");
+                writer.WritePropertyName("supportedOSType"u8);
                 writer.WriteStringValue(SupportedOSType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(CustomActions))
             {
-                writer.WritePropertyName("customActions");
+                writer.WritePropertyName("customActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomActions)
                 {

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal static ComplianceReportItem DeserializeComplianceReportItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> categoryName = default;
             Optional<string> controlId = default;
             Optional<string> controlName = default;
@@ -29,22 +33,22 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<string> statusChangeDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("categoryName"))
+                if (property.NameEquals("categoryName"u8))
                 {
                     categoryName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("controlId"))
+                if (property.NameEquals("controlId"u8))
                 {
                     controlId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("controlName"))
+                if (property.NameEquals("controlName"u8))
                 {
                     controlName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("controlType"))
+                if (property.NameEquals("controlType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +58,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     controlType = new ControlType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("complianceState"))
+                if (property.NameEquals("complianceState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,42 +68,42 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     complianceState = new ComplianceState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policyId"))
+                if (property.NameEquals("policyId"u8))
                 {
                     policyId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyDisplayName"))
+                if (property.NameEquals("policyDisplayName"u8))
                 {
                     policyDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyDescription"))
+                if (property.NameEquals("policyDescription"u8))
                 {
                     policyDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceGroup"))
+                if (property.NameEquals("resourceGroup"u8))
                 {
                     resourceGroup = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statusChangeDate"))
+                if (property.NameEquals("statusChangeDate"u8))
                 {
                     statusChangeDate = property.Value.GetString();
                     continue;

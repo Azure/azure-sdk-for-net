@@ -15,11 +15,15 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static HealthcareTaskResult DeserializeHealthcareTaskResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HealthcareResult> results = default;
             Optional<IReadOnlyList<TextAnalyticsError>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("results"))
+                if (property.NameEquals("results"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     results = HealthcareResult.DeserializeHealthcareResult(property.Value);
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

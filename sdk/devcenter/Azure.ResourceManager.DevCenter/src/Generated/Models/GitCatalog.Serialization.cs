@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.DevCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("uri");
+                writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(Branch))
             {
-                writer.WritePropertyName("branch");
+                writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
             if (Optional.IsDefined(SecretIdentifier))
             {
-                writer.WritePropertyName("secretIdentifier");
+                writer.WritePropertyName("secretIdentifier"u8);
                 writer.WriteStringValue(SecretIdentifier);
             }
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             writer.WriteEndObject();
@@ -41,13 +41,17 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         internal static GitCatalog DeserializeGitCatalog(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> uri = default;
             Optional<string> branch = default;
             Optional<string> secretIdentifier = default;
             Optional<string> path = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("uri"))
+                if (property.NameEquals("uri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,17 +61,17 @@ namespace Azure.ResourceManager.DevCenter.Models
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("branch"))
+                if (property.NameEquals("branch"u8))
                 {
                     branch = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secretIdentifier"))
+                if (property.NameEquals("secretIdentifier"u8))
                 {
                     secretIdentifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;

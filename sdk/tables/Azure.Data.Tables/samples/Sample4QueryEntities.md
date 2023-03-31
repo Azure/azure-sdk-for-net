@@ -8,14 +8,13 @@ A `TableClient` is needed to perform table-level operations like inserting and d
 - Call `GetTableClient` from the `TableServiceClient` with the table name.
 
 ```C# Snippet:TablesSample1GetTableClient
-string tableName = "OfficeSupplies1p2";
-var tableClient = serviceClient.GetTableClient(tableName);
+var tableClient2 = serviceClient.GetTableClient(tableName);
 ```
 
 - Create a `TableClient` with a SAS URI, an endpoint and `TableSharedKeyCredential`, or a connection string.
 
 ```C# Snippet:TablesSample1CreateTableClient
-var tableClient = new TableClient(
+var tableClient3 = new TableClient(
     new Uri(storageUri),
     tableName,
     new TableSharedKeyCredential(accountName, storageAccountKey));
@@ -49,9 +48,9 @@ The `QueryFilter` class handles all the type escaping for you.
 
 ```C# Snippet:TablesSample4QueryEntitiesFilterWithQueryFilter
 // The CreateQueryFilter method is also available to assist with properly formatting and escaping OData queries.
-Pageable<TableEntity> queryResultsFilter = tableClient.Query<TableEntity>(filter: TableClient.CreateQueryFilter($"PartitionKey eq {partitionKey}"));
+var queryResultsFilter2 = tableClient.Query<TableEntity>(filter: TableClient.CreateQueryFilter($"PartitionKey eq {partitionKey}"));
 // Iterate the <see cref="Pageable"> to access all queried entities.
-foreach (TableEntity qEntity in queryResultsFilter)
+foreach (TableEntity qEntity in queryResultsFilter2)
 {
     Console.WriteLine($"{qEntity.GetString("Product")}: {qEntity.GetDouble("Price")}");
 }

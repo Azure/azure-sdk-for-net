@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(VaultCriticalOperationExclusionList))
             {
-                writer.WritePropertyName("vaultCriticalOperationExclusionList");
+                writer.WritePropertyName("vaultCriticalOperationExclusionList"u8);
                 writer.WriteStartArray();
                 foreach (var item in VaultCriticalOperationExclusionList)
                 {
@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static ResourceGuardProperties DeserializeResourceGuardProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataProtectionBackupProvisioningState> provisioningState = default;
             Optional<bool> allowAutoApprovals = default;
             Optional<IReadOnlyList<ResourceGuardOperationDetails>> resourceGuardOperations = default;
@@ -38,7 +42,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +52,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     provisioningState = new DataProtectionBackupProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("allowAutoApprovals"))
+                if (property.NameEquals("allowAutoApprovals"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     allowAutoApprovals = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("resourceGuardOperations"))
+                if (property.NameEquals("resourceGuardOperations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +77,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     resourceGuardOperations = array;
                     continue;
                 }
-                if (property.NameEquals("vaultCriticalOperationExclusionList"))
+                if (property.NameEquals("vaultCriticalOperationExclusionList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +92,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     vaultCriticalOperationExclusionList = array;
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;

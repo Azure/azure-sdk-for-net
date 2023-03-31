@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsReadyForMove))
             {
-                writer.WritePropertyName("isReadyForMove");
+                writer.WritePropertyName("isReadyForMove"u8);
                 writer.WriteBooleanValue(IsReadyForMove.Value);
             }
             if (Optional.IsDefined(AdditionalInfo))
             {
-                writer.WritePropertyName("additionalInfo");
+                writer.WritePropertyName("additionalInfo"u8);
                 writer.WriteStringValue(AdditionalInfo);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static RecoveryPointMoveReadinessInfo DeserializeRecoveryPointMoveReadinessInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isReadyForMove = default;
             Optional<string> additionalInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isReadyForMove"))
+                if (property.NameEquals("isReadyForMove"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     isReadyForMove = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("additionalInfo"))
+                if (property.NameEquals("additionalInfo"u8))
                 {
                     additionalInfo = property.Value.GetString();
                     continue;

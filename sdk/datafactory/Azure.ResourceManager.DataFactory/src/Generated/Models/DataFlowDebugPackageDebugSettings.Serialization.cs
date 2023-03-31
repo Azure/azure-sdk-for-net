@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(SourceSettings))
             {
-                writer.WritePropertyName("sourceSettings");
+                writer.WritePropertyName("sourceSettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in SourceSettings)
                 {
@@ -27,11 +27,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
@@ -42,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(DatasetParameters))
             {
-                writer.WritePropertyName("datasetParameters");
+                writer.WritePropertyName("datasetParameters"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DatasetParameters);
 #else

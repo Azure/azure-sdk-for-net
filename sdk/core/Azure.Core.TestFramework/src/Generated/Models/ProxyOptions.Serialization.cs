@@ -17,7 +17,7 @@ namespace Azure.Core.TestFramework.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Transport))
             {
-                writer.WritePropertyName("Transport");
+                writer.WritePropertyName("Transport"u8);
                 writer.WriteObjectValue(Transport);
             }
             writer.WriteEndObject();

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(BaseSizeTiB))
             {
-                writer.WritePropertyName("baseSizeTiB");
+                writer.WritePropertyName("baseSizeTiB"u8);
                 writer.WriteNumberValue(BaseSizeTiB.Value);
             }
             if (Optional.IsDefined(ExtendedCapacitySizeTiB))
             {
-                writer.WritePropertyName("extendedCapacitySizeTiB");
+                writer.WritePropertyName("extendedCapacitySizeTiB"u8);
                 writer.WriteNumberValue(ExtendedCapacitySizeTiB.Value);
             }
             writer.WriteEndObject();

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("odata.type");
+            writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType.ToString());
             foreach (var item in AdditionalProperties)
             {
@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MetricAlertCriteria DeserializeMetricAlertCriteria(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("odata.type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Support.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("firstName");
+            writer.WritePropertyName("firstName"u8);
             writer.WriteStringValue(FirstName);
-            writer.WritePropertyName("lastName");
+            writer.WritePropertyName("lastName"u8);
             writer.WriteStringValue(LastName);
-            writer.WritePropertyName("preferredContactMethod");
+            writer.WritePropertyName("preferredContactMethod"u8);
             writer.WriteStringValue(PreferredContactMethod.ToString());
-            writer.WritePropertyName("primaryEmailAddress");
+            writer.WritePropertyName("primaryEmailAddress"u8);
             writer.WriteStringValue(PrimaryEmailAddress);
             if (Optional.IsCollectionDefined(AdditionalEmailAddresses))
             {
-                writer.WritePropertyName("additionalEmailAddresses");
+                writer.WritePropertyName("additionalEmailAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdditionalEmailAddresses)
                 {
@@ -36,20 +36,24 @@ namespace Azure.ResourceManager.Support.Models
             }
             if (Optional.IsDefined(PhoneNumber))
             {
-                writer.WritePropertyName("phoneNumber");
+                writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteStringValue(PhoneNumber);
             }
-            writer.WritePropertyName("preferredTimeZone");
+            writer.WritePropertyName("preferredTimeZone"u8);
             writer.WriteStringValue(PreferredTimeZone);
-            writer.WritePropertyName("country");
+            writer.WritePropertyName("country"u8);
             writer.WriteStringValue(Country);
-            writer.WritePropertyName("preferredSupportLanguage");
+            writer.WritePropertyName("preferredSupportLanguage"u8);
             writer.WriteStringValue(PreferredSupportLanguage);
             writer.WriteEndObject();
         }
 
         internal static SupportContactProfile DeserializeSupportContactProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string firstName = default;
             string lastName = default;
             PreferredContactMethod preferredContactMethod = default;
@@ -61,27 +65,27 @@ namespace Azure.ResourceManager.Support.Models
             string preferredSupportLanguage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("firstName"))
+                if (property.NameEquals("firstName"u8))
                 {
                     firstName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastName"))
+                if (property.NameEquals("lastName"u8))
                 {
                     lastName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("preferredContactMethod"))
+                if (property.NameEquals("preferredContactMethod"u8))
                 {
                     preferredContactMethod = new PreferredContactMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("primaryEmailAddress"))
+                if (property.NameEquals("primaryEmailAddress"u8))
                 {
                     primaryEmailAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("additionalEmailAddresses"))
+                if (property.NameEquals("additionalEmailAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,22 +100,22 @@ namespace Azure.ResourceManager.Support.Models
                     additionalEmailAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("phoneNumber"))
+                if (property.NameEquals("phoneNumber"u8))
                 {
                     phoneNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("preferredTimeZone"))
+                if (property.NameEquals("preferredTimeZone"u8))
                 {
                     preferredTimeZone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("country"))
+                if (property.NameEquals("country"u8))
                 {
                     country = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("preferredSupportLanguage"))
+                if (property.NameEquals("preferredSupportLanguage"u8))
                 {
                     preferredSupportLanguage = property.Value.GetString();
                     continue;

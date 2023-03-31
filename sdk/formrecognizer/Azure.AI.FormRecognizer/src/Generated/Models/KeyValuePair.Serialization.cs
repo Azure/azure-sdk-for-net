@@ -14,28 +14,32 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static KeyValuePair DeserializeKeyValuePair(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> label = default;
             KeyValueElement key = default;
             KeyValueElement value = default;
             float confidence = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = KeyValueElement.DeserializeKeyValueElement(property.Value);
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = KeyValueElement.DeserializeKeyValueElement(property.Value);
                     continue;
                 }
-                if (property.NameEquals("confidence"))
+                if (property.NameEquals("confidence"u8))
                 {
                     confidence = property.Value.GetSingle();
                     continue;

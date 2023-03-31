@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridConnectivity
 {
-    /// <summary> A class representing the EndpointResource data model. </summary>
+    /// <summary>
+    /// A class representing the EndpointResource data model.
+    /// The endpoint for the target resource.
+    /// </summary>
     public partial class EndpointResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of EndpointResourceData. </summary>

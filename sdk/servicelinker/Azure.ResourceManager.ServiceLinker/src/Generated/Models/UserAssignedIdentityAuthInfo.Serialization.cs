@@ -17,37 +17,41 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("clientId");
+                writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
             if (Optional.IsDefined(SubscriptionId))
             {
-                writer.WritePropertyName("subscriptionId");
+                writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            writer.WritePropertyName("authType");
+            writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToString());
             writer.WriteEndObject();
         }
 
         internal static UserAssignedIdentityAuthInfo DeserializeUserAssignedIdentityAuthInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clientId = default;
             Optional<string> subscriptionId = default;
             LinkerAuthType authType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientId"))
+                if (property.NameEquals("clientId"u8))
                 {
                     clientId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authType"))
+                if (property.NameEquals("authType"u8))
                 {
                     authType = new LinkerAuthType(property.Value.GetString());
                     continue;

@@ -18,27 +18,32 @@ namespace Azure.ResourceManager.Media
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AlternateId))
             {
-                writer.WritePropertyName("alternateId");
+                writer.WritePropertyName("alternateId"u8);
                 writer.WriteStringValue(AlternateId);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Container))
             {
-                writer.WritePropertyName("container");
+                writer.WritePropertyName("container"u8);
                 writer.WriteStringValue(Container);
             }
             if (Optional.IsDefined(StorageAccountName))
             {
-                writer.WritePropertyName("storageAccountName");
+                writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);
+            }
+            if (Optional.IsDefined(EncryptionScope))
+            {
+                writer.WritePropertyName("encryptionScope"u8);
+                writer.WriteStringValue(EncryptionScope);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -46,6 +51,10 @@ namespace Azure.ResourceManager.Media
 
         internal static MediaAssetData DeserializeMediaAssetData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -58,24 +67,25 @@ namespace Azure.ResourceManager.Media
             Optional<string> container = default;
             Optional<string> storageAccountName = default;
             Optional<MediaAssetStorageEncryptionFormat> storageEncryptionFormat = default;
+            Optional<string> encryptionScope = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +95,7 @@ namespace Azure.ResourceManager.Media
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +104,7 @@ namespace Azure.ResourceManager.Media
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("assetId"))
+                        if (property0.NameEquals("assetId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -104,7 +114,7 @@ namespace Azure.ResourceManager.Media
                             assetId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("created"))
+                        if (property0.NameEquals("created"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -114,7 +124,7 @@ namespace Azure.ResourceManager.Media
                             created = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastModified"))
+                        if (property0.NameEquals("lastModified"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -124,27 +134,27 @@ namespace Azure.ResourceManager.Media
                             lastModified = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("alternateId"))
+                        if (property0.NameEquals("alternateId"u8))
                         {
                             alternateId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("container"))
+                        if (property0.NameEquals("container"u8))
                         {
                             container = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("storageAccountName"))
+                        if (property0.NameEquals("storageAccountName"u8))
                         {
                             storageAccountName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("storageEncryptionFormat"))
+                        if (property0.NameEquals("storageEncryptionFormat"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -154,11 +164,16 @@ namespace Azure.ResourceManager.Media
                             storageEncryptionFormat = new MediaAssetStorageEncryptionFormat(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("encryptionScope"u8))
+                        {
+                            encryptionScope = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new MediaAssetData(id, name, type, systemData.Value, Optional.ToNullable(assetId), Optional.ToNullable(created), Optional.ToNullable(lastModified), alternateId.Value, description.Value, container.Value, storageAccountName.Value, Optional.ToNullable(storageEncryptionFormat));
+            return new MediaAssetData(id, name, type, systemData.Value, Optional.ToNullable(assetId), Optional.ToNullable(created), Optional.ToNullable(lastModified), alternateId.Value, description.Value, container.Value, storageAccountName.Value, Optional.ToNullable(storageEncryptionFormat), encryptionScope.Value);
         }
     }
 }

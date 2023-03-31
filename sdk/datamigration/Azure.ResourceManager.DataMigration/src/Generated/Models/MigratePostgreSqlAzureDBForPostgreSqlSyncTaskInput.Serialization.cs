@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("selectedDatabases");
+            writer.WritePropertyName("selectedDatabases"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("targetConnectionInfo");
+            writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo);
-            writer.WritePropertyName("sourceConnectionInfo");
+            writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo);
             if (Optional.IsDefined(EncryptedKeyForSecureFields))
             {
-                writer.WritePropertyName("encryptedKeyForSecureFields");
+                writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
             }
             writer.WriteEndObject();
@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput> selectedDatabases = default;
             PostgreSqlConnectionInfo targetConnectionInfo = default;
             PostgreSqlConnectionInfo sourceConnectionInfo = default;
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<DateTimeOffset> startedOn = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("selectedDatabases"))
+                if (property.NameEquals("selectedDatabases"u8))
                 {
                     List<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput> array = new List<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -55,22 +59,22 @@ namespace Azure.ResourceManager.DataMigration.Models
                     selectedDatabases = array;
                     continue;
                 }
-                if (property.NameEquals("targetConnectionInfo"))
+                if (property.NameEquals("targetConnectionInfo"u8))
                 {
                     targetConnectionInfo = PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sourceConnectionInfo"))
+                if (property.NameEquals("sourceConnectionInfo"u8))
                 {
                     sourceConnectionInfo = PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("encryptedKeyForSecureFields"))
+                if (property.NameEquals("encryptedKeyForSecureFields"u8))
                 {
                     encryptedKeyForSecureFields = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startedOn"))
+                if (property.NameEquals("startedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

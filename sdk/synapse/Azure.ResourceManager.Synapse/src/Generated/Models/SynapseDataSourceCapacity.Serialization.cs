@@ -14,28 +14,32 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseDataSourceCapacity DeserializeSynapseDataSourceCapacity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SynapseDataSourceScaleType scaleType = default;
             int minimum = default;
             int maximum = default;
             int @default = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scaleType"))
+                if (property.NameEquals("scaleType"u8))
                 {
                     scaleType = new SynapseDataSourceScaleType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("minimum"))
+                if (property.NameEquals("minimum"u8))
                 {
                     minimum = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maximum"))
+                if (property.NameEquals("maximum"u8))
                 {
                     maximum = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("default"))
+                if (property.NameEquals("default"u8))
                 {
                     @default = property.Value.GetInt32();
                     continue;

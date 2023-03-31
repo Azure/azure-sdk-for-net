@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Body))
             {
-                writer.WritePropertyName("body");
+                writer.WritePropertyName("body"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Body);
 #else
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(StatusCodes))
             {
-                writer.WritePropertyName("statusCodes");
+                writer.WritePropertyName("statusCodes"u8);
                 writer.WriteStartArray();
                 foreach (var item in StatusCodes)
                 {
@@ -41,11 +41,15 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayProbeHealthResponseMatch DeserializeApplicationGatewayProbeHealthResponseMatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> body = default;
             Optional<IList<string>> statusCodes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("body"))
+                if (property.NameEquals("body"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
                     body = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("statusCodes"))
+                if (property.NameEquals("statusCodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

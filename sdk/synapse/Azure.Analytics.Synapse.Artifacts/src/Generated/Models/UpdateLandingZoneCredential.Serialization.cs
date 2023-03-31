@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SasToken))
             {
-                writer.WritePropertyName("sasToken");
+                writer.WritePropertyName("sasToken"u8);
                 writer.WriteObjectValue(SasToken);
             }
             writer.WriteEndObject();

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DataConnectionName))
             {
-                writer.WritePropertyName("dataConnectionName");
+                writer.WritePropertyName("dataConnectionName"u8);
                 writer.WriteStringValue(DataConnectionName);
             }
             if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("properties");
+                writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
             writer.WriteEndObject();

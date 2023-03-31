@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("variableName");
+            writer.WritePropertyName("variableName"u8);
             writer.WriteStringValue(VariableName.ToString());
             if (Optional.IsDefined(Selector))
             {
-                writer.WritePropertyName("selector");
+                writer.WritePropertyName("selector"u8);
                 writer.WriteStringValue(Selector);
             }
             writer.WriteEndObject();
@@ -27,16 +27,20 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static MatchVariable DeserializeMatchVariable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WebApplicationFirewallMatchVariable variableName = default;
             Optional<string> selector = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("variableName"))
+                if (property.NameEquals("variableName"u8))
                 {
                     variableName = new WebApplicationFirewallMatchVariable(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("selector"))
+                if (property.NameEquals("selector"u8))
                 {
                     selector = property.Value.GetString();
                     continue;

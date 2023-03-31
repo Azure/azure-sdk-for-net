@@ -544,9 +544,9 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
 }
 
 function Get-dotnet-EmitterName() {
-  return "@azure-tools/cadl-csharp"
+  return "@azure-tools/typespec-csharp"
 }
 
 function Get-dotnet-EmitterAdditionalOptions([string]$projectDirectory) {
-  return "--option @azure-tools/cadl-csharp.emitter-output-dir=$projectDirectory/src"
+  return "--option @azure-tools/typespec-csharp.emitter-output-dir=$projectDirectory/src"
 }

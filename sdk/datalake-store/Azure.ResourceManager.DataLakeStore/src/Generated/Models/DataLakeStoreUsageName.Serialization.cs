@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     {
         internal static DataLakeStoreUsageName DeserializeDataLakeStoreUsageName(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> value = default;
             Optional<string> localizedValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("localizedValue"))
+                if (property.NameEquals("localizedValue"u8))
                 {
                     localizedValue = property.Value.GetString();
                     continue;

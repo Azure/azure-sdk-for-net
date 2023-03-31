@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RetentionInMb))
             {
-                writer.WritePropertyName("retentionInMb");
+                writer.WritePropertyName("retentionInMb"u8);
                 writer.WriteNumberValue(RetentionInMb.Value);
             }
             if (Optional.IsDefined(RetentionInDays))
             {
-                writer.WritePropertyName("retentionInDays");
+                writer.WritePropertyName("retentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);
             }
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WriteEndObject();
@@ -35,12 +35,16 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static FileSystemHttpLogsConfig DeserializeFileSystemHttpLogsConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> retentionInMb = default;
             Optional<int> retentionInDays = default;
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("retentionInMb"))
+                if (property.NameEquals("retentionInMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
                     retentionInMb = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("retentionInDays"))
+                if (property.NameEquals("retentionInDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
                     retentionInDays = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

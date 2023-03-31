@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("source");
+            writer.WritePropertyName("source"u8);
             writer.WriteObjectValue(Source);
-            writer.WritePropertyName("destination");
+            writer.WritePropertyName("destination"u8);
             writer.WriteObjectValue(Destination);
             if (Optional.IsDefined(PreferredIPVersion))
             {
-                writer.WritePropertyName("preferredIPVersion");
+                writer.WritePropertyName("preferredIPVersion"u8);
                 writer.WriteStringValue(PreferredIPVersion.Value.ToString());
             }
             if (Optional.IsDefined(Protocol))
             {
-                writer.WritePropertyName("protocol");
+                writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
             if (Optional.IsDefined(ProtocolConfiguration))
             {
-                writer.WritePropertyName("protocolConfiguration");
+                writer.WritePropertyName("protocolConfiguration"u8);
                 writer.WriteObjectValue(ProtocolConfiguration);
             }
             writer.WriteEndObject();

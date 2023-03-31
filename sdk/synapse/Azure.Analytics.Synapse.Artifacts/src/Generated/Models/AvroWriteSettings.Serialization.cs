@@ -21,25 +21,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RecordName))
             {
-                writer.WritePropertyName("recordName");
+                writer.WritePropertyName("recordName"u8);
                 writer.WriteStringValue(RecordName);
             }
             if (Optional.IsDefined(RecordNamespace))
             {
-                writer.WritePropertyName("recordNamespace");
+                writer.WritePropertyName("recordNamespace"u8);
                 writer.WriteStringValue(RecordNamespace);
             }
             if (Optional.IsDefined(MaxRowsPerFile))
             {
-                writer.WritePropertyName("maxRowsPerFile");
+                writer.WritePropertyName("maxRowsPerFile"u8);
                 writer.WriteObjectValue(MaxRowsPerFile);
             }
             if (Optional.IsDefined(FileNamePrefix))
             {
-                writer.WritePropertyName("fileNamePrefix");
+                writer.WritePropertyName("fileNamePrefix"u8);
                 writer.WriteObjectValue(FileNamePrefix);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             foreach (var item in AdditionalProperties)
             {
@@ -51,6 +51,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AvroWriteSettings DeserializeAvroWriteSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recordName = default;
             Optional<string> recordNamespace = default;
             Optional<object> maxRowsPerFile = default;
@@ -60,17 +64,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recordName"))
+                if (property.NameEquals("recordName"u8))
                 {
                     recordName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recordNamespace"))
+                if (property.NameEquals("recordNamespace"u8))
                 {
                     recordNamespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxRowsPerFile"))
+                if (property.NameEquals("maxRowsPerFile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +84,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     maxRowsPerFile = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("fileNamePrefix"))
+                if (property.NameEquals("fileNamePrefix"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +94,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     fileNamePrefix = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

@@ -15,10 +15,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AvailableProvidersList DeserializeAvailableProvidersList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<AvailableProvidersListCountry> countries = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("countries"))
+                if (property.NameEquals("countries"u8))
                 {
                     List<AvailableProvidersListCountry> array = new List<AvailableProvidersListCountry>();
                     foreach (var item in property.Value.EnumerateArray())

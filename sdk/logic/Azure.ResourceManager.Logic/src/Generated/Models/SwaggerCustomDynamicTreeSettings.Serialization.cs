@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CanSelectParentNodes))
             {
-                writer.WritePropertyName("CanSelectParentNodes");
+                writer.WritePropertyName("CanSelectParentNodes"u8);
                 writer.WriteBooleanValue(CanSelectParentNodes.Value);
             }
             if (Optional.IsDefined(CanSelectLeafNodes))
             {
-                writer.WritePropertyName("CanSelectLeafNodes");
+                writer.WritePropertyName("CanSelectLeafNodes"u8);
                 writer.WriteBooleanValue(CanSelectLeafNodes.Value);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static SwaggerCustomDynamicTreeSettings DeserializeSwaggerCustomDynamicTreeSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> canSelectParentNodes = default;
             Optional<bool> canSelectLeafNodes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("CanSelectParentNodes"))
+                if (property.NameEquals("CanSelectParentNodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.Logic.Models
                     canSelectParentNodes = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("CanSelectLeafNodes"))
+                if (property.NameEquals("CanSelectLeafNodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

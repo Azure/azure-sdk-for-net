@@ -18,14 +18,19 @@ namespace Azure.ResourceManager.OperationalInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(StorageAccountIds))
             {
-                writer.WritePropertyName("storageAccountIds");
+                writer.WritePropertyName("storageAccountIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in StorageAccountIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -36,6 +41,10 @@ namespace Azure.ResourceManager.OperationalInsights
 
         internal static OperationalInsightsLinkedStorageAccountsData DeserializeOperationalInsightsLinkedStorageAccountsData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -44,22 +53,22 @@ namespace Azure.ResourceManager.OperationalInsights
             Optional<IList<ResourceIdentifier>> storageAccountIds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +78,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +87,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("dataSourceType"))
+                        if (property0.NameEquals("dataSourceType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -88,7 +97,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             dataSourceType = property0.Value.GetString().ToOperationalInsightsDataSourceType();
                             continue;
                         }
-                        if (property0.NameEquals("storageAccountIds"))
+                        if (property0.NameEquals("storageAccountIds"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -98,7 +107,14 @@ namespace Azure.ResourceManager.OperationalInsights
                             List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new ResourceIdentifier(item.GetString()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
                             }
                             storageAccountIds = array;
                             continue;

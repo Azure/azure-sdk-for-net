@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static DataBoxEdgeUpdateDetails DeserializeDataBoxEdgeUpdateDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> updateTitle = default;
             Optional<double> updateSize = default;
             Optional<DataBoxEdgeUpdateType> updateType = default;
@@ -25,12 +29,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<DataBoxEdgeUpdateStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("updateTitle"))
+                if (property.NameEquals("updateTitle"u8))
                 {
                     updateTitle = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("updateSize"))
+                if (property.NameEquals("updateSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     updateSize = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("updateType"))
+                if (property.NameEquals("updateType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,17 +54,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     updateType = new DataBoxEdgeUpdateType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetVersion"))
+                if (property.NameEquals("targetVersion"u8))
                 {
                     targetVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("friendlyVersionNumber"))
+                if (property.NameEquals("friendlyVersionNumber"u8))
                 {
                     friendlyVersionNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("estimatedInstallTimeInMins"))
+                if (property.NameEquals("estimatedInstallTimeInMins"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +74,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     estimatedInstallTimeInMins = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rebootBehavior"))
+                if (property.NameEquals("rebootBehavior"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +84,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     rebootBehavior = new InstallRebootBehavior(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("installationImpact"))
+                if (property.NameEquals("installationImpact"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     installationImpact = new InstallationImpact(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

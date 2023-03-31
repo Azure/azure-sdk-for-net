@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.ApiManagement
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ApiId))
             {
-                writer.WritePropertyName("apiId");
+                writer.WritePropertyName("apiId"u8);
                 writer.WriteStringValue(ApiId);
             }
             if (Optional.IsDefined(Notes))
             {
-                writer.WritePropertyName("notes");
+                writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
             writer.WriteEndObject();
@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static ApiReleaseData DeserializeApiReleaseData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -45,22 +49,22 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<string> notes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +74,7 @@ namespace Azure.ResourceManager.ApiManagement
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("apiId"))
+                        if (property0.NameEquals("apiId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -89,7 +93,7 @@ namespace Azure.ResourceManager.ApiManagement
                             apiId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("createdDateTime"))
+                        if (property0.NameEquals("createdDateTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.ApiManagement
                             createdDateTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("updatedDateTime"))
+                        if (property0.NameEquals("updatedDateTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -109,7 +113,7 @@ namespace Azure.ResourceManager.ApiManagement
                             updatedDateTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("notes"))
+                        if (property0.NameEquals("notes"u8))
                         {
                             notes = property0.Value.GetString();
                             continue;

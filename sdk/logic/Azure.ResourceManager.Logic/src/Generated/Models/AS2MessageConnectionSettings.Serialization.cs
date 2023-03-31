@@ -15,41 +15,45 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("ignoreCertificateNameMismatch");
+            writer.WritePropertyName("ignoreCertificateNameMismatch"u8);
             writer.WriteBooleanValue(IgnoreCertificateNameMismatch);
-            writer.WritePropertyName("supportHttpStatusCodeContinue");
+            writer.WritePropertyName("supportHttpStatusCodeContinue"u8);
             writer.WriteBooleanValue(SupportHttpStatusCodeContinue);
-            writer.WritePropertyName("keepHttpConnectionAlive");
+            writer.WritePropertyName("keepHttpConnectionAlive"u8);
             writer.WriteBooleanValue(KeepHttpConnectionAlive);
-            writer.WritePropertyName("unfoldHttpHeaders");
+            writer.WritePropertyName("unfoldHttpHeaders"u8);
             writer.WriteBooleanValue(UnfoldHttpHeaders);
             writer.WriteEndObject();
         }
 
         internal static AS2MessageConnectionSettings DeserializeAS2MessageConnectionSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool ignoreCertificateNameMismatch = default;
             bool supportHttpStatusCodeContinue = default;
             bool keepHttpConnectionAlive = default;
             bool unfoldHttpHeaders = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ignoreCertificateNameMismatch"))
+                if (property.NameEquals("ignoreCertificateNameMismatch"u8))
                 {
                     ignoreCertificateNameMismatch = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("supportHttpStatusCodeContinue"))
+                if (property.NameEquals("supportHttpStatusCodeContinue"u8))
                 {
                     supportHttpStatusCodeContinue = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("keepHttpConnectionAlive"))
+                if (property.NameEquals("keepHttpConnectionAlive"u8))
                 {
                     keepHttpConnectionAlive = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("unfoldHttpHeaders"))
+                if (property.NameEquals("unfoldHttpHeaders"u8))
                 {
                     unfoldHttpHeaders = property.Value.GetBoolean();
                     continue;

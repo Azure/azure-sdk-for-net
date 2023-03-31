@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ElasticPoolPerformanceLevelCapability DeserializeElasticPoolPerformanceLevelCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PerformanceLevelCapability> performanceLevel = default;
             Optional<SqlSku> sku = default;
             Optional<IReadOnlyList<LicenseTypeCapability>> supportedLicenseTypes = default;
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("performanceLevel"))
+                if (property.NameEquals("performanceLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +43,7 @@ namespace Azure.ResourceManager.Sql.Models
                     performanceLevel = PerformanceLevelCapability.DeserializePerformanceLevelCapability(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +53,7 @@ namespace Azure.ResourceManager.Sql.Models
                     sku = SqlSku.DeserializeSqlSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("supportedLicenseTypes"))
+                if (property.NameEquals("supportedLicenseTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +68,7 @@ namespace Azure.ResourceManager.Sql.Models
                     supportedLicenseTypes = array;
                     continue;
                 }
-                if (property.NameEquals("maxDatabaseCount"))
+                if (property.NameEquals("maxDatabaseCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.Sql.Models
                     maxDatabaseCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("includedMaxSize"))
+                if (property.NameEquals("includedMaxSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +88,7 @@ namespace Azure.ResourceManager.Sql.Models
                     includedMaxSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
                     continue;
                 }
-                if (property.NameEquals("supportedMaxSizes"))
+                if (property.NameEquals("supportedMaxSizes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.Sql.Models
                     supportedMaxSizes = array;
                     continue;
                 }
-                if (property.NameEquals("supportedPerDatabaseMaxSizes"))
+                if (property.NameEquals("supportedPerDatabaseMaxSizes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +118,7 @@ namespace Azure.ResourceManager.Sql.Models
                     supportedPerDatabaseMaxSizes = array;
                     continue;
                 }
-                if (property.NameEquals("supportedPerDatabaseMaxPerformanceLevels"))
+                if (property.NameEquals("supportedPerDatabaseMaxPerformanceLevels"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,7 +133,7 @@ namespace Azure.ResourceManager.Sql.Models
                     supportedPerDatabaseMaxPerformanceLevels = array;
                     continue;
                 }
-                if (property.NameEquals("zoneRedundant"))
+                if (property.NameEquals("zoneRedundant"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,7 +143,7 @@ namespace Azure.ResourceManager.Sql.Models
                     zoneRedundant = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("supportedMaintenanceConfigurations"))
+                if (property.NameEquals("supportedMaintenanceConfigurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,7 +158,7 @@ namespace Azure.ResourceManager.Sql.Models
                     supportedMaintenanceConfigurations = array;
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -164,7 +168,7 @@ namespace Azure.ResourceManager.Sql.Models
                     status = property.Value.GetString().ToSqlCapabilityStatus();
                     continue;
                 }
-                if (property.NameEquals("reason"))
+                if (property.NameEquals("reason"u8))
                 {
                     reason = property.Value.GetString();
                     continue;

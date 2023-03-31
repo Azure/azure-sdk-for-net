@@ -21,32 +21,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CatalogInfo))
             {
-                writer.WritePropertyName("catalogInfo");
+                writer.WritePropertyName("catalogInfo"u8);
                 writer.WriteObjectValue(CatalogInfo);
             }
             if (Optional.IsDefined(LicenseType))
             {
-                writer.WritePropertyName("licenseType");
+                writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
             if (Optional.IsDefined(CustomSetupScriptProperties))
             {
-                writer.WritePropertyName("customSetupScriptProperties");
+                writer.WritePropertyName("customSetupScriptProperties"u8);
                 writer.WriteObjectValue(CustomSetupScriptProperties);
             }
             if (Optional.IsDefined(DataProxyProperties))
             {
-                writer.WritePropertyName("dataProxyProperties");
+                writer.WritePropertyName("dataProxyProperties"u8);
                 writer.WriteObjectValue(DataProxyProperties);
             }
             if (Optional.IsDefined(Edition))
             {
-                writer.WritePropertyName("edition");
+                writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ExpressCustomSetupProperties))
             {
-                writer.WritePropertyName("expressCustomSetupProperties");
+                writer.WritePropertyName("expressCustomSetupProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExpressCustomSetupProperties)
                 {
@@ -64,6 +64,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static IntegrationRuntimeSsisProperties DeserializeIntegrationRuntimeSsisProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IntegrationRuntimeSsisCatalogInfo> catalogInfo = default;
             Optional<IntegrationRuntimeLicenseType> licenseType = default;
             Optional<IntegrationRuntimeCustomSetupScriptProperties> customSetupScriptProperties = default;
@@ -74,7 +78,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("catalogInfo"))
+                if (property.NameEquals("catalogInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +88,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     catalogInfo = IntegrationRuntimeSsisCatalogInfo.DeserializeIntegrationRuntimeSsisCatalogInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("licenseType"))
+                if (property.NameEquals("licenseType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +98,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     licenseType = new IntegrationRuntimeLicenseType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("customSetupScriptProperties"))
+                if (property.NameEquals("customSetupScriptProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +108,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     customSetupScriptProperties = IntegrationRuntimeCustomSetupScriptProperties.DeserializeIntegrationRuntimeCustomSetupScriptProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataProxyProperties"))
+                if (property.NameEquals("dataProxyProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +118,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     dataProxyProperties = IntegrationRuntimeDataProxyProperties.DeserializeIntegrationRuntimeDataProxyProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("edition"))
+                if (property.NameEquals("edition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +128,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     edition = new IntegrationRuntimeEdition(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("expressCustomSetupProperties"))
+                if (property.NameEquals("expressCustomSetupProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

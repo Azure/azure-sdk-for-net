@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Mode))
             {
-                writer.WritePropertyName("mode");
+                writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
             if (Optional.IsDefined(IPAddressVersion))
             {
-                writer.WritePropertyName("ipAddressVersion");
+                writer.WritePropertyName("ipAddressVersion"u8);
                 writer.WriteStringValue(IPAddressVersion.Value.ToSerialString());
             }
             if (Optional.IsDefined(PublicIPAddress))
             {
-                writer.WritePropertyName("publicIPAddress");
+                writer.WritePropertyName("publicIPAddress"u8);
                 JsonSerializer.Serialize(writer, PublicIPAddress);
             }
             writer.WriteEndObject();

@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static AppPlatformConfigurationServiceSettingsValidateResult DeserializeAppPlatformConfigurationServiceSettingsValidateResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformConfigurationServiceGitValidateResult> gitPropertyValidationResult = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("gitPropertyValidationResult"))
+                if (property.NameEquals("gitPropertyValidationResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

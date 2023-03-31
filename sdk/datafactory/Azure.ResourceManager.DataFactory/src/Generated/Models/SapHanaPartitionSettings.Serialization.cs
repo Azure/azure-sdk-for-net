@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PartitionColumnName))
             {
-                writer.WritePropertyName("partitionColumnName");
+                writer.WritePropertyName("partitionColumnName"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(PartitionColumnName);
 #else
@@ -30,10 +30,14 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SapHanaPartitionSettings DeserializeSapHanaPartitionSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> partitionColumnName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("partitionColumnName"))
+                if (property.NameEquals("partitionColumnName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

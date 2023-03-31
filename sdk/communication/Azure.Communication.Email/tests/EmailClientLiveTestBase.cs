@@ -4,30 +4,36 @@
 using System;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Identity;
 
 namespace Azure.Communication.Email.Tests
 {
     internal class EmailClientLiveTestBase : RecordedTestBase<EmailClientTestEnvironment>
     {
+        private const string URIDomainNameReplacerRegEx = @"https://([^/?]+)";
+        private const string URIRoomsIdReplacerRegEx = @"emails/operations/.*?api";
+
         public EmailClientLiveTestBase(bool isAsync) : base(isAsync)
         {
             SanitizedHeaders.Add("x-ms-content-sha256");
-            SanitizedHeaders.Add("repeatability-first-sent");
-            SanitizedHeaders.Add("repeatability-request-id");
+            SanitizedHeaders.Add("Operation-Id");
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx, "https://sanitized.communication.azure.com"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIRoomsIdReplacerRegEx, "emails/operations/sanitizedId?api"));
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Operation-Location", "https://sanitized.communication.azure.com/emails/operations/sanitizedId?api-version=2023-03-31"));
         }
 
         protected EmailClient CreateEmailClient()
         {
             #region Snippet:Azure_Communication_Email_CreateEmailClient
             //@@var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
-            //@@EmailClient client = new EmailClient(connectionString);
+            //@@EmailClient emailClient = new EmailClient(connectionString);
             #endregion Snippet:Azure_Communication_Email_CreateEmailClient
 
             var connectionString = TestEnvironment.CommunicationConnectionStringEmail;
-            var client = new EmailClient(connectionString, CreateEmailClientOptionsWithCorrelationVectorLogs());
+            var emailClient = new EmailClient(connectionString, CreateEmailClientOptionsWithCorrelationVectorLogs());
 
-            return InstrumentClient(client);
+            return InstrumentClient(emailClient);
         }
 
         public EmailClient CreateSmsClientWithToken()
@@ -45,12 +51,12 @@ namespace Azure.Communication.Email.Tests
                 //@@ TokenCredential tokenCredential = new DefaultAzureCredential();
                 /*@@*/
                 tokenCredential = new DefaultAzureCredential();
-                //@@ EmailClient client = new EmailClient(new Uri(endpoint), tokenCredential);
+                //@@ EmailClient emailClient = new EmailClient(new Uri(endpoint), tokenCredential);
                 #endregion Snippet:Azure_Communication_Email_CreateEmailClientWithToken
             }
 
-            EmailClient client = new EmailClient(endpoint, tokenCredential, CreateEmailClientOptionsWithCorrelationVectorLogs());
-            return InstrumentClient(client);
+            EmailClient emailClient = new EmailClient(endpoint, tokenCredential, CreateEmailClientOptionsWithCorrelationVectorLogs());
+            return InstrumentClient(emailClient);
         }
 
         protected EmailClientOptions CreateEmailClientOptionsWithCorrelationVectorLogs()

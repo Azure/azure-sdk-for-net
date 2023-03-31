@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel DeserializeMigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sourceDatabaseName = default;
             Optional<DatabaseMigrationState> migrationState = default;
             Optional<DateTimeOffset> startedOn = default;
@@ -31,12 +35,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceDatabaseName"))
+                if (property.NameEquals("sourceDatabaseName"u8))
                 {
                     sourceDatabaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("migrationState"))
+                if (property.NameEquals("migrationState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     migrationState = new DatabaseMigrationState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("startedOn"))
+                if (property.NameEquals("startedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     startedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endedOn"))
+                if (property.NameEquals("endedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     endedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("fullBackupSetInfo"))
+                if (property.NameEquals("fullBackupSetInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     fullBackupSetInfo = BackupSetInfo.DeserializeBackupSetInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("lastRestoredBackupSetInfo"))
+                if (property.NameEquals("lastRestoredBackupSetInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +90,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     lastRestoredBackupSetInfo = BackupSetInfo.DeserializeBackupSetInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("activeBackupSets"))
+                if (property.NameEquals("activeBackupSets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,17 +105,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                     activeBackupSets = array;
                     continue;
                 }
-                if (property.NameEquals("containerName"))
+                if (property.NameEquals("containerName"u8))
                 {
                     containerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorPrefix"))
+                if (property.NameEquals("errorPrefix"u8))
                 {
                     errorPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isFullBackupRestored"))
+                if (property.NameEquals("isFullBackupRestored"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -121,7 +125,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     isFullBackupRestored = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("exceptionsAndWarnings"))
+                if (property.NameEquals("exceptionsAndWarnings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,12 +140,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     exceptionsAndWarnings = array;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultType"))
+                if (property.NameEquals("resultType"u8))
                 {
                     resultType = property.Value.GetString();
                     continue;

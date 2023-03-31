@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Maintenance.Models
     {
         internal static MaintenanceUpdate DeserializeMaintenanceUpdate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MaintenanceScope> maintenanceScope = default;
             Optional<MaintenanceImpactType> impactType = default;
             Optional<MaintenanceUpdateStatus> status = default;
@@ -23,7 +27,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             Optional<ResourceIdentifier> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maintenanceScope"))
+                if (property.NameEquals("maintenanceScope"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,7 +37,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     maintenanceScope = new MaintenanceScope(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("impactType"))
+                if (property.NameEquals("impactType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +47,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     impactType = new MaintenanceImpactType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     status = new MaintenanceUpdateStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("impactDurationInSec"))
+                if (property.NameEquals("impactDurationInSec"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +67,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     impactDurationInSec = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("notBefore"))
+                if (property.NameEquals("notBefore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +77,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     notBefore = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +86,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("resourceId"))
+                        if (property0.NameEquals("resourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

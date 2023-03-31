@@ -14,11 +14,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static A2AUnprotectedDiskDetails DeserializeA2AUnprotectedDiskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> diskLunId = default;
             Optional<AutoProtectionOfDataDisk> diskAutoProtectionStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskLunId"))
+                if (property.NameEquals("diskLunId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     diskLunId = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("diskAutoProtectionStatus"))
+                if (property.NameEquals("diskAutoProtectionStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

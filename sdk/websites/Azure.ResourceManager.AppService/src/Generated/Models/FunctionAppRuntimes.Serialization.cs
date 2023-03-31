@@ -14,11 +14,15 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static FunctionAppRuntimes DeserializeFunctionAppRuntimes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FunctionAppRuntimeSettings> linuxRuntimeSettings = default;
             Optional<FunctionAppRuntimeSettings> windowsRuntimeSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linuxRuntimeSettings"))
+                if (property.NameEquals("linuxRuntimeSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.AppService.Models
                     linuxRuntimeSettings = FunctionAppRuntimeSettings.DeserializeFunctionAppRuntimeSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("windowsRuntimeSettings"))
+                if (property.NameEquals("windowsRuntimeSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

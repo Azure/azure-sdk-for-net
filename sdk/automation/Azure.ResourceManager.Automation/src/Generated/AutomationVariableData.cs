@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary> A class representing the AutomationVariable data model. </summary>
+    /// <summary>
+    /// A class representing the AutomationVariable data model.
+    /// Definition of the variable.
+    /// </summary>
     public partial class AutomationVariableData : ResourceData
     {
         /// <summary> Initializes a new instance of AutomationVariableData. </summary>

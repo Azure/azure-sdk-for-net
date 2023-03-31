@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PublicKeys))
             {
-                writer.WritePropertyName("publicKeys");
+                writer.WritePropertyName("publicKeys"u8);
                 writer.WriteStartArray();
                 foreach (var item in PublicKeys)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SshConfiguration DeserializeSshConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SshPublicKey>> publicKeys = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publicKeys"))
+                if (property.NameEquals("publicKeys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DestinationType))
             {
-                writer.WritePropertyName("destinationType");
+                writer.WritePropertyName("destinationType"u8);
                 writer.WriteStringValue(DestinationType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.NetworkFunction.Models
 
         internal static EmissionPolicyDestination DeserializeEmissionPolicyDestination(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EmissionDestinationType> destinationType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("destinationType"))
+                if (property.NameEquals("destinationType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

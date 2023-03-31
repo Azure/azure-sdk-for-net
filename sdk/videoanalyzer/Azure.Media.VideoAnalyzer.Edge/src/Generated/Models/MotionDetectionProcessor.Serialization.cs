@@ -18,24 +18,24 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Sensitivity))
             {
-                writer.WritePropertyName("sensitivity");
+                writer.WritePropertyName("sensitivity"u8);
                 writer.WriteStringValue(Sensitivity.Value.ToString());
             }
             if (Optional.IsDefined(OutputMotionRegion))
             {
-                writer.WritePropertyName("outputMotionRegion");
+                writer.WritePropertyName("outputMotionRegion"u8);
                 writer.WriteBooleanValue(OutputMotionRegion.Value);
             }
             if (Optional.IsDefined(EventAggregationWindow))
             {
-                writer.WritePropertyName("eventAggregationWindow");
+                writer.WritePropertyName("eventAggregationWindow"u8);
                 writer.WriteStringValue(EventAggregationWindow);
             }
-            writer.WritePropertyName("@type");
+            writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("inputs");
+            writer.WritePropertyName("inputs"u8);
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
@@ -47,6 +47,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static MotionDetectionProcessor DeserializeMotionDetectionProcessor(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MotionDetectionSensitivity> sensitivity = default;
             Optional<bool> outputMotionRegion = default;
             Optional<string> eventAggregationWindow = default;
@@ -55,7 +59,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             IList<NodeInput> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sensitivity"))
+                if (property.NameEquals("sensitivity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +69,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     sensitivity = new MotionDetectionSensitivity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("outputMotionRegion"))
+                if (property.NameEquals("outputMotionRegion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,22 +79,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     outputMotionRegion = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("eventAggregationWindow"))
+                if (property.NameEquals("eventAggregationWindow"u8))
                 {
                     eventAggregationWindow = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@type"))
+                if (property.NameEquals("@type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("inputs"))
+                if (property.NameEquals("inputs"u8))
                 {
                     List<NodeInput> array = new List<NodeInput>();
                     foreach (var item in property.Value.EnumerateArray())

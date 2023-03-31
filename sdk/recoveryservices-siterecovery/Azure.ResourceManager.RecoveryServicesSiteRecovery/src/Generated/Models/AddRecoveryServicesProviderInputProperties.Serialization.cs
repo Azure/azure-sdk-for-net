@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("machineName");
+            writer.WritePropertyName("machineName"u8);
             writer.WriteStringValue(MachineName);
             if (Optional.IsDefined(MachineId))
             {
-                writer.WritePropertyName("machineId");
+                writer.WritePropertyName("machineId"u8);
                 writer.WriteStringValue(MachineId);
             }
             if (Optional.IsDefined(BiosId))
             {
-                writer.WritePropertyName("biosId");
+                writer.WritePropertyName("biosId"u8);
                 writer.WriteStringValue(BiosId);
             }
-            writer.WritePropertyName("authenticationIdentityInput");
+            writer.WritePropertyName("authenticationIdentityInput"u8);
             writer.WriteObjectValue(AuthenticationIdentityInput);
-            writer.WritePropertyName("resourceAccessIdentityInput");
+            writer.WritePropertyName("resourceAccessIdentityInput"u8);
             writer.WriteObjectValue(ResourceAccessIdentityInput);
             if (Optional.IsDefined(DataPlaneAuthenticationIdentityInput))
             {
-                writer.WritePropertyName("dataPlaneAuthenticationIdentityInput");
+                writer.WritePropertyName("dataPlaneAuthenticationIdentityInput"u8);
                 writer.WriteObjectValue(DataPlaneAuthenticationIdentityInput);
             }
             writer.WriteEndObject();

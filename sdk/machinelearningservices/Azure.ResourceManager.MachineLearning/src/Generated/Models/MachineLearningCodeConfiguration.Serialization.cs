@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (CodeId != null)
                 {
-                    writer.WritePropertyName("codeId");
+                    writer.WritePropertyName("codeId"u8);
                     writer.WriteStringValue(CodeId);
                 }
                 else
@@ -27,18 +27,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("codeId");
                 }
             }
-            writer.WritePropertyName("scoringScript");
+            writer.WritePropertyName("scoringScript"u8);
             writer.WriteStringValue(ScoringScript);
             writer.WriteEndObject();
         }
 
         internal static MachineLearningCodeConfiguration DeserializeMachineLearningCodeConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> codeId = default;
             string scoringScript = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("codeId"))
+                if (property.NameEquals("codeId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     codeId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scoringScript"))
+                if (property.NameEquals("scoringScript"u8))
                 {
                     scoringScript = property.Value.GetString();
                     continue;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static RunbookTestJob DeserializeRunbookTestJob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> creationTime = default;
             Optional<string> status = default;
             Optional<string> statusDetails = default;
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<int> logActivityTrace = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("creationTime"))
+                if (property.NameEquals("creationTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,22 +43,22 @@ namespace Azure.ResourceManager.Automation.Models
                     creationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statusDetails"))
+                if (property.NameEquals("statusDetails"u8))
                 {
                     statusDetails = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runOn"))
+                if (property.NameEquals("runOn"u8))
                 {
                     runOn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +68,7 @@ namespace Azure.ResourceManager.Automation.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,12 +78,12 @@ namespace Azure.ResourceManager.Automation.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("exception"))
+                if (property.NameEquals("exception"u8))
                 {
                     exception = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastModifiedTime"))
+                if (property.NameEquals("lastModifiedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +93,7 @@ namespace Azure.ResourceManager.Automation.Models
                     lastModifiedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastStatusModifiedTime"))
+                if (property.NameEquals("lastStatusModifiedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.Automation.Models
                     lastStatusModifiedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +118,7 @@ namespace Azure.ResourceManager.Automation.Models
                     parameters = dictionary;
                     continue;
                 }
-                if (property.NameEquals("logActivityTrace"))
+                if (property.NameEquals("logActivityTrace"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -19,32 +19,32 @@ namespace Azure.ResourceManager.Blueprint.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             if (Optional.IsDefined(Action))
             {
-                writer.WritePropertyName("action");
+                writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action);
             }
             if (Optional.IsDefined(JobId))
             {
-                writer.WritePropertyName("jobId");
+                writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
             if (Optional.IsDefined(JobState))
             {
-                writer.WritePropertyName("jobState");
+                writer.WritePropertyName("jobState"u8);
                 writer.WriteStringValue(JobState);
             }
             if (Optional.IsDefined(Result))
             {
-                writer.WritePropertyName("result");
+                writer.WritePropertyName("result"u8);
                 writer.WriteObjectValue(Result);
             }
             if (Optional.IsCollectionDefined(History))
             {
-                writer.WritePropertyName("history");
+                writer.WritePropertyName("history"u8);
                 writer.WriteStartArray();
                 foreach (var item in History)
                 {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
             if (Optional.IsDefined(RequestUri))
             {
-                writer.WritePropertyName("requestUri");
+                writer.WritePropertyName("requestUri"u8);
                 writer.WriteStringValue(RequestUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static AssignmentDeploymentJob DeserializeAssignmentDeploymentJob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             Optional<string> action = default;
             Optional<string> jobId = default;
@@ -71,27 +75,27 @@ namespace Azure.ResourceManager.Blueprint.Models
             Optional<Uri> requestUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     action = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobId"))
+                if (property.NameEquals("jobId"u8))
                 {
                     jobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobState"))
+                if (property.NameEquals("jobState"u8))
                 {
                     jobState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("result"))
+                if (property.NameEquals("result"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +105,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     result = AssignmentDeploymentJobResult.DeserializeAssignmentDeploymentJobResult(property.Value);
                     continue;
                 }
-                if (property.NameEquals("history"))
+                if (property.NameEquals("history"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,7 +120,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     history = array;
                     continue;
                 }
-                if (property.NameEquals("requestUri"))
+                if (property.NameEquals("requestUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

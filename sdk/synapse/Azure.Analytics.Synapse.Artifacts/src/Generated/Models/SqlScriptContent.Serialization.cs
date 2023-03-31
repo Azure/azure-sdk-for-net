@@ -19,21 +19,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("query");
+            writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
             if (Optional.IsDefined(CurrentConnection))
             {
-                writer.WritePropertyName("currentConnection");
+                writer.WritePropertyName("currentConnection"u8);
                 writer.WriteObjectValue(CurrentConnection);
             }
             if (Optional.IsDefined(ResultLimit))
             {
-                writer.WritePropertyName("resultLimit");
+                writer.WritePropertyName("resultLimit"u8);
                 writer.WriteNumberValue(ResultLimit.Value);
             }
             if (Optional.IsDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
             foreach (var item in AdditionalProperties)
@@ -46,6 +46,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SqlScriptContent DeserializeSqlScriptContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string query = default;
             Optional<SqlConnection> currentConnection = default;
             Optional<int> resultLimit = default;
@@ -54,12 +58,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("query"))
+                if (property.NameEquals("query"u8))
                 {
                     query = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("currentConnection"))
+                if (property.NameEquals("currentConnection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +73,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     currentConnection = SqlConnection.DeserializeSqlConnection(property.Value);
                     continue;
                 }
-                if (property.NameEquals("resultLimit"))
+                if (property.NameEquals("resultLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +83,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     resultLimit = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

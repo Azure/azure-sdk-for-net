@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static ComplianceSegment DeserializeComplianceSegment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> segmentType = default;
             Optional<double> percentage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("segmentType"))
+                if (property.NameEquals("segmentType"u8))
                 {
                     segmentType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("percentage"))
+                if (property.NameEquals("percentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

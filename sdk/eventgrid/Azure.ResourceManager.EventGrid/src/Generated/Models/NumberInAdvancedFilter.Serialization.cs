@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Values))
             {
-                writer.WritePropertyName("values");
+                writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("operatorType");
+            writer.WritePropertyName("operatorType"u8);
             writer.WriteStringValue(OperatorType.ToString());
             if (Optional.IsDefined(Key))
             {
-                writer.WritePropertyName("key");
+                writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
             writer.WriteEndObject();
@@ -38,12 +38,16 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static NumberInAdvancedFilter DeserializeNumberInAdvancedFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<double>> values = default;
             AdvancedFilterOperatorType operatorType = default;
             Optional<string> key = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("values"))
+                if (property.NameEquals("values"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,12 +62,12 @@ namespace Azure.ResourceManager.EventGrid.Models
                     values = array;
                     continue;
                 }
-                if (property.NameEquals("operatorType"))
+                if (property.NameEquals("operatorType"u8))
                 {
                     operatorType = new AdvancedFilterOperatorType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = property.Value.GetString();
                     continue;

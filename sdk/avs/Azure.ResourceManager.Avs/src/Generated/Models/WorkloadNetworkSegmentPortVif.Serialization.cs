@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static WorkloadNetworkSegmentPortVif DeserializeWorkloadNetworkSegmentPortVif(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> portName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("portName"))
+                if (property.NameEquals("portName"u8))
                 {
                     portName = property.Value.GetString();
                     continue;

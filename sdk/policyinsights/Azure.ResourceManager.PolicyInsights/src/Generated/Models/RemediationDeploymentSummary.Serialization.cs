@@ -14,12 +14,16 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static RemediationDeploymentSummary DeserializeRemediationDeploymentSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> totalDeployments = default;
             Optional<int> successfulDeployments = default;
             Optional<int> failedDeployments = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("totalDeployments"))
+                if (property.NameEquals("totalDeployments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     totalDeployments = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("successfulDeployments"))
+                if (property.NameEquals("successfulDeployments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +43,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     successfulDeployments = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("failedDeployments"))
+                if (property.NameEquals("failedDeployments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,32 +18,36 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsDefault))
             {
-                writer.WritePropertyName("isDefault");
+                writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            writer.WritePropertyName("lifecycles");
+            writer.WritePropertyName("lifecycles"u8);
             writer.WriteStartArray();
             foreach (var item in Lifecycles)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
         }
 
         internal static DataProtectionRetentionRule DeserializeDataProtectionRetentionRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isDefault = default;
             IList<SourceLifeCycle> lifecycles = default;
             string name = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isDefault"))
+                if (property.NameEquals("isDefault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     isDefault = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("lifecycles"))
+                if (property.NameEquals("lifecycles"u8))
                 {
                     List<SourceLifeCycle> array = new List<SourceLifeCycle>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -63,12 +67,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     lifecycles = array;
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;

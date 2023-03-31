@@ -15,11 +15,15 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static GetInstancesPage DeserializeGetInstancesPage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<TimeSeriesInstance>> instances = default;
             Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("instances"))
+                if (property.NameEquals("instances"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +38,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     instances = array;
                     continue;
                 }
-                if (property.NameEquals("continuationToken"))
+                if (property.NameEquals("continuationToken"u8))
                 {
                     continuationToken = property.Value.GetString();
                     continue;

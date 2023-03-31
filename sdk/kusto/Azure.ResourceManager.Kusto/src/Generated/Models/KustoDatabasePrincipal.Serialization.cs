@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.Kusto.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("role");
+            writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role.ToString());
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(PrincipalType.ToString());
             if (Optional.IsDefined(Fqn))
             {
-                writer.WritePropertyName("fqn");
+                writer.WritePropertyName("fqn"u8);
                 writer.WriteStringValue(Fqn);
             }
             if (Optional.IsDefined(Email))
             {
-                writer.WritePropertyName("email");
+                writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
             if (Optional.IsDefined(AppId))
             {
-                writer.WritePropertyName("appId");
+                writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
             writer.WriteEndObject();
@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoDatabasePrincipal DeserializeKustoDatabasePrincipal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             KustoDatabasePrincipalRole role = default;
             string name = default;
             KustoDatabasePrincipalType type = default;
@@ -50,37 +54,37 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<string> tenantName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("role"))
+                if (property.NameEquals("role"u8))
                 {
                     role = new KustoDatabasePrincipalRole(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new KustoDatabasePrincipalType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("fqn"))
+                if (property.NameEquals("fqn"u8))
                 {
                     fqn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("email"))
+                if (property.NameEquals("email"u8))
                 {
                     email = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("appId"))
+                if (property.NameEquals("appId"u8))
                 {
                     appId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tenantName"))
+                if (property.NameEquals("tenantName"u8))
                 {
                     tenantName = property.Value.GetString();
                     continue;

@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServices
 {
-    /// <summary> A class representing the RecoveryServicesPrivateLinkResource data model. </summary>
+    /// <summary>
+    /// A class representing the RecoveryServicesPrivateLinkResource data model.
+    /// Information of the private link resource.
+    /// </summary>
     public partial class RecoveryServicesPrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of RecoveryServicesPrivateLinkResourceData. </summary>

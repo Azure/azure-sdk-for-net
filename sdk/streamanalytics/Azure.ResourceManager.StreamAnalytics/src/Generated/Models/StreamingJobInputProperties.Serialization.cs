@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(InputPropertiesType);
             if (Optional.IsDefined(Serialization))
             {
-                writer.WritePropertyName("serialization");
+                writer.WritePropertyName("serialization"u8);
                 writer.WriteObjectValue(Serialization);
             }
             if (Optional.IsDefined(Compression))
             {
-                writer.WritePropertyName("compression");
+                writer.WritePropertyName("compression"u8);
                 writer.WriteObjectValue(Compression);
             }
             if (Optional.IsDefined(PartitionKey))
             {
-                writer.WritePropertyName("partitionKey");
+                writer.WritePropertyName("partitionKey"u8);
                 writer.WriteStringValue(PartitionKey);
             }
             if (Optional.IsDefined(WatermarkSettings))
             {
-                writer.WritePropertyName("watermarkSettings");
+                writer.WritePropertyName("watermarkSettings"u8);
                 writer.WriteObjectValue(WatermarkSettings);
             }
             writer.WriteEndObject();
@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamingJobInputProperties DeserializeStreamingJobInputProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

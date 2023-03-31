@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (Branch != null)
                 {
-                    writer.WritePropertyName("branch");
+                    writer.WritePropertyName("branch"u8);
                     writer.WriteStringValue(Branch);
                 }
                 else
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (Tag != null)
                 {
-                    writer.WritePropertyName("tag");
+                    writer.WritePropertyName("tag"u8);
                     writer.WriteStringValue(Tag);
                 }
                 else
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (Semver != null)
                 {
-                    writer.WritePropertyName("semver");
+                    writer.WritePropertyName("semver"u8);
                     writer.WriteStringValue(Semver);
                 }
                 else
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (Commit != null)
                 {
-                    writer.WritePropertyName("commit");
+                    writer.WritePropertyName("commit"u8);
                     writer.WriteStringValue(Commit);
                 }
                 else
@@ -68,13 +68,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         internal static KubernetesGitRepositoryRef DeserializeKubernetesGitRepositoryRef(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> branch = default;
             Optional<string> tag = default;
             Optional<string> semver = default;
             Optional<string> commit = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("branch"))
+                if (property.NameEquals("branch"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +88,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     branch = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tag"))
+                if (property.NameEquals("tag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +98,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     tag = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("semver"))
+                if (property.NameEquals("semver"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     semver = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("commit"))
+                if (property.NameEquals("commit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

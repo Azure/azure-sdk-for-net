@@ -15,12 +15,16 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static GeoReplicationStatistics DeserializeGeoReplicationStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GeoReplicationStatus> status = default;
             Optional<DateTimeOffset> lastSyncTime = default;
             Optional<bool> canFailover = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.Storage.Models
                     status = new GeoReplicationStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("lastSyncTime"))
+                if (property.NameEquals("lastSyncTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Storage.Models
                     lastSyncTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("canFailover"))
+                if (property.NameEquals("canFailover"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

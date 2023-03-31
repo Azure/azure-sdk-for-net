@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("adminUserName");
+            writer.WritePropertyName("adminUserName"u8);
             writer.WriteStringValue(AdminUserName);
             if (Optional.IsDefined(AdminUserSshPublicKey))
             {
-                writer.WritePropertyName("adminUserSshPublicKey");
+                writer.WritePropertyName("adminUserSshPublicKey"u8);
                 writer.WriteStringValue(AdminUserSshPublicKey);
             }
             if (Optional.IsDefined(AdminUserPassword))
             {
-                writer.WritePropertyName("adminUserPassword");
+                writer.WritePropertyName("adminUserPassword"u8);
                 writer.WriteStringValue(AdminUserPassword);
             }
             writer.WriteEndObject();
@@ -32,22 +32,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningUserAccountCredentials DeserializeMachineLearningUserAccountCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string adminUserName = default;
             Optional<string> adminUserSshPublicKey = default;
             Optional<string> adminUserPassword = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("adminUserName"))
+                if (property.NameEquals("adminUserName"u8))
                 {
                     adminUserName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("adminUserSshPublicKey"))
+                if (property.NameEquals("adminUserSshPublicKey"u8))
                 {
                     adminUserSshPublicKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("adminUserPassword"))
+                if (property.NameEquals("adminUserPassword"u8))
                 {
                     adminUserPassword = property.Value.GetString();
                     continue;

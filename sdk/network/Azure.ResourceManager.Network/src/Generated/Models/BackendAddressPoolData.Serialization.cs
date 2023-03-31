@@ -21,24 +21,24 @@ namespace Azure.ResourceManager.Network
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(TunnelInterfaces))
             {
-                writer.WritePropertyName("tunnelInterfaces");
+                writer.WritePropertyName("tunnelInterfaces"u8);
                 writer.WriteStartArray();
                 foreach (var item in TunnelInterfaces)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsCollectionDefined(LoadBalancerBackendAddresses))
             {
-                writer.WritePropertyName("loadBalancerBackendAddresses");
+                writer.WritePropertyName("loadBalancerBackendAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerBackendAddresses)
                 {
@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.Network
 
         internal static BackendAddressPoolData DeserializeBackendAddressPoolData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.Network
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +90,7 @@ namespace Azure.ResourceManager.Network
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,12 +100,12 @@ namespace Azure.ResourceManager.Network
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,7 +115,7 @@ namespace Azure.ResourceManager.Network
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +124,7 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("location"))
+                        if (property0.NameEquals("location"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -130,7 +134,7 @@ namespace Azure.ResourceManager.Network
                             location = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("tunnelInterfaces"))
+                        if (property0.NameEquals("tunnelInterfaces"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -145,7 +149,7 @@ namespace Azure.ResourceManager.Network
                             tunnelInterfaces = array;
                             continue;
                         }
-                        if (property0.NameEquals("loadBalancerBackendAddresses"))
+                        if (property0.NameEquals("loadBalancerBackendAddresses"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -160,7 +164,7 @@ namespace Azure.ResourceManager.Network
                             loadBalancerBackendAddresses = array;
                             continue;
                         }
-                        if (property0.NameEquals("backendIPConfigurations"))
+                        if (property0.NameEquals("backendIPConfigurations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -175,7 +179,7 @@ namespace Azure.ResourceManager.Network
                             backendIPConfigurations = array;
                             continue;
                         }
-                        if (property0.NameEquals("loadBalancingRules"))
+                        if (property0.NameEquals("loadBalancingRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -190,7 +194,7 @@ namespace Azure.ResourceManager.Network
                             loadBalancingRules = array;
                             continue;
                         }
-                        if (property0.NameEquals("outboundRule"))
+                        if (property0.NameEquals("outboundRule"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -200,7 +204,7 @@ namespace Azure.ResourceManager.Network
                             outboundRule = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("outboundRules"))
+                        if (property0.NameEquals("outboundRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -215,7 +219,7 @@ namespace Azure.ResourceManager.Network
                             outboundRules = array;
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

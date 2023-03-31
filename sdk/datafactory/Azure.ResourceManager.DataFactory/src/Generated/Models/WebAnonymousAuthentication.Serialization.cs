@@ -16,29 +16,33 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("url");
+            writer.WritePropertyName("url"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Uri);
 #else
             JsonSerializer.Serialize(writer, JsonDocument.Parse(Uri.ToString()).RootElement);
 #endif
-            writer.WritePropertyName("authenticationType");
+            writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             writer.WriteEndObject();
         }
 
         internal static WebAnonymousAuthentication DeserializeWebAnonymousAuthentication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BinaryData url = default;
             WebAuthenticationType authenticationType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     url = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("authenticationType"))
+                if (property.NameEquals("authenticationType"u8))
                 {
                     authenticationType = new WebAuthenticationType(property.Value.GetString());
                     continue;

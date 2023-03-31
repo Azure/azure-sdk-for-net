@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(OptInHeaders))
             {
-                writer.WritePropertyName("optInHeaders");
+                writer.WritePropertyName("optInHeaders"u8);
                 writer.WriteStringValue(OptInHeaders.Value.ToString());
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceProviderManifestRequestHeaderOptions DeserializeResourceProviderManifestRequestHeaderOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OptInHeaderType> optInHeaders = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("optInHeaders"))
+                if (property.NameEquals("optInHeaders"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

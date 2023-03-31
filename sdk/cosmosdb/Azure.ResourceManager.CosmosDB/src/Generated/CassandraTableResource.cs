@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CassandraTableThroughputSettingResource" /> object. </returns>
         public virtual CassandraTableThroughputSettingResource GetCassandraTableThroughputSetting()
         {
-            return new CassandraTableThroughputSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/throughputSettings/default"));
+            return new CassandraTableThroughputSettingResource(Client, Id.AppendChildResource("throughputSettings", "default"));
         }
 
         /// <summary>

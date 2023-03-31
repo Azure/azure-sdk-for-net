@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LocationData))
             {
-                writer.WritePropertyName("locationData");
+                writer.WritePropertyName("locationData"u8);
                 writer.WriteObjectValue(LocationData);
             }
             if (Optional.IsDefined(OSProfile))
             {
-                writer.WritePropertyName("osProfile");
+                writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
             if (Optional.IsDefined(CloudMetadata))
             {
-                writer.WritePropertyName("cloudMetadata");
+                writer.WritePropertyName("cloudMetadata"u8);
                 writer.WriteObjectValue(CloudMetadata);
             }
             if (Optional.IsDefined(ParentClusterResourceId))
             {
-                writer.WritePropertyName("parentClusterResourceId");
+                writer.WritePropertyName("parentClusterResourceId"u8);
                 writer.WriteStringValue(ParentClusterResourceId);
             }
             if (Optional.IsDefined(PrivateLinkScopeResourceId))
             {
-                writer.WritePropertyName("privateLinkScopeResourceId");
+                writer.WritePropertyName("privateLinkScopeResourceId"u8);
                 writer.WriteStringValue(PrivateLinkScopeResourceId);
             }
             writer.WriteEndObject();

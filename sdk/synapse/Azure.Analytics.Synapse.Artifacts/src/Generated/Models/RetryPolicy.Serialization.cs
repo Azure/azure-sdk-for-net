@@ -20,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Count))
             {
-                writer.WritePropertyName("count");
+                writer.WritePropertyName("count"u8);
                 writer.WriteObjectValue(Count);
             }
             if (Optional.IsDefined(IntervalInSeconds))
             {
-                writer.WritePropertyName("intervalInSeconds");
+                writer.WritePropertyName("intervalInSeconds"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
             }
             writer.WriteEndObject();
@@ -33,11 +33,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static RetryPolicy DeserializeRetryPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> count = default;
             Optional<int> intervalInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     count = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("intervalInSeconds"))
+                if (property.NameEquals("intervalInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static LogicWorkflowTriggerCallbackQueryParameterInfo DeserializeLogicWorkflowTriggerCallbackQueryParameterInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> apiVersion = default;
             Optional<string> sp = default;
             Optional<string> sv = default;
@@ -21,27 +25,27 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> se = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("api-version"))
+                if (property.NameEquals("api-version"u8))
                 {
                     apiVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sp"))
+                if (property.NameEquals("sp"u8))
                 {
                     sp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sv"))
+                if (property.NameEquals("sv"u8))
                 {
                     sv = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sig"))
+                if (property.NameEquals("sig"u8))
                 {
                     sig = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("se"))
+                if (property.NameEquals("se"u8))
                 {
                     se = property.Value.GetString();
                     continue;

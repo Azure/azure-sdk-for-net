@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="HybridConnectionLimitResource" /> object. </returns>
         public virtual HybridConnectionLimitResource GetHybridConnectionLimit()
         {
-            return new HybridConnectionLimitResource(Client, new ResourceIdentifier(Id.ToString() + "/hybridConnectionPlanLimits/limit"));
+            return new HybridConnectionLimitResource(Client, Id.AppendChildResource("hybridConnectionPlanLimits", "limit"));
         }
 
         /// <summary> Gets a collection of AppServicePlanVirtualNetworkConnectionResources in the AppServicePlan. </summary>

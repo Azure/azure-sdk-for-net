@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Allow))
             {
-                writer.WritePropertyName("allow");
+                writer.WritePropertyName("allow"u8);
                 writer.WriteStartArray();
                 foreach (var item in Allow)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
             if (Optional.IsCollectionDefined(Deny))
             {
-                writer.WritePropertyName("deny");
+                writer.WritePropertyName("deny"u8);
                 writer.WriteStartArray();
                 foreach (var item in Deny)
                 {
@@ -41,11 +41,15 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static PublicNetworkAcls DeserializePublicNetworkAcls(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<WebPubSubRequestType>> allow = default;
             Optional<IList<WebPubSubRequestType>> deny = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allow"))
+                if (property.NameEquals("allow"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     allow = array;
                     continue;
                 }
-                if (property.NameEquals("deny"))
+                if (property.NameEquals("deny"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

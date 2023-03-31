@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Reservations.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ReservationId))
             {
-                writer.WritePropertyName("reservationId");
+                writer.WritePropertyName("reservationId"u8);
                 writer.WriteStringValue(ReservationId);
             }
             if (Optional.IsDefined(Quantity))
             {
-                writer.WritePropertyName("quantity");
+                writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
             writer.WriteEndObject();

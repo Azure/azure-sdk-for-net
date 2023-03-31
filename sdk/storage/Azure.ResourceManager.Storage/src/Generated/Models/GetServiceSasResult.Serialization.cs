@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static GetServiceSasResult DeserializeGetServiceSasResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serviceSasToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceSasToken"))
+                if (property.NameEquals("serviceSasToken"u8))
                 {
                     serviceSasToken = property.Value.GetString();
                     continue;

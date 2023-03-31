@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         public static SecurityAlertsSuppressionRuleState ToSecurityAlertsSuppressionRuleState(this string value)
         {
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return SecurityAlertsSuppressionRuleState.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return SecurityAlertsSuppressionRuleState.Disabled;
-            if (string.Equals(value, "Expired", StringComparison.InvariantCultureIgnoreCase)) return SecurityAlertsSuppressionRuleState.Expired;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return SecurityAlertsSuppressionRuleState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return SecurityAlertsSuppressionRuleState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Expired")) return SecurityAlertsSuppressionRuleState.Expired;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SecurityAlertsSuppressionRuleState value.");
         }
     }

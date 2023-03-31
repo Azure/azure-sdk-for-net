@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SymmetricKey))
             {
-                writer.WritePropertyName("symmetricKey");
+                writer.WritePropertyName("symmetricKey"u8);
                 writer.WriteObjectValue(SymmetricKey);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static Authentication DeserializeAuthentication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataBoxEdgeSymmetricKey> symmetricKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("symmetricKey"))
+                if (property.NameEquals("symmetricKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

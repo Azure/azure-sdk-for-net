@@ -19,21 +19,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Policy))
             {
-                writer.WritePropertyName("policy");
+                writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
-                writer.WritePropertyName("dependsOn");
+                writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsCollectionDefined(UserProperties))
             {
-                writer.WritePropertyName("userProperties");
+                writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
@@ -51,28 +51,28 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("dataFlow");
+            writer.WritePropertyName("dataFlow"u8);
             writer.WriteObjectValue(DataFlow);
             if (Optional.IsDefined(Staging))
             {
-                writer.WritePropertyName("staging");
+                writer.WritePropertyName("staging"u8);
                 writer.WriteObjectValue(Staging);
             }
             if (Optional.IsDefined(IntegrationRuntime))
             {
-                writer.WritePropertyName("integrationRuntime");
+                writer.WritePropertyName("integrationRuntime"u8);
                 writer.WriteObjectValue(IntegrationRuntime);
             }
             if (Optional.IsDefined(Compute))
             {
-                writer.WritePropertyName("compute");
+                writer.WritePropertyName("compute"u8);
                 writer.WriteObjectValue(Compute);
             }
             if (Optional.IsDefined(TraceLevel))
             {
-                writer.WritePropertyName("traceLevel");
+                writer.WritePropertyName("traceLevel"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(TraceLevel);
 #else
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(ContinueOnError))
             {
-                writer.WritePropertyName("continueOnError");
+                writer.WritePropertyName("continueOnError"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ContinueOnError);
 #else
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(RunConcurrently))
             {
-                writer.WritePropertyName("runConcurrently");
+                writer.WritePropertyName("runConcurrently"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(RunConcurrently);
 #else
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(SourceStagingConcurrency))
             {
-                writer.WritePropertyName("sourceStagingConcurrency");
+                writer.WritePropertyName("sourceStagingConcurrency"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SourceStagingConcurrency);
 #else
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsCollectionDefined(Sinks))
             {
-                writer.WritePropertyName("sinks");
+                writer.WritePropertyName("sinks"u8);
                 writer.WriteStartObject();
                 foreach (var item in Sinks)
                 {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsCollectionDefined(Queries))
             {
-                writer.WritePropertyName("queries");
+                writer.WritePropertyName("queries"u8);
                 writer.WriteStartArray();
                 foreach (var item in Queries)
                 {
@@ -142,6 +142,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ExecuteWranglingDataflowActivity DeserializeExecuteWranglingDataflowActivity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
@@ -162,7 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("policy"))
+                if (property.NameEquals("policy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -172,22 +176,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                     policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dependsOn"))
+                if (property.NameEquals("dependsOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -202,7 +206,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     dependsOn = array;
                     continue;
                 }
-                if (property.NameEquals("userProperties"))
+                if (property.NameEquals("userProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -217,7 +221,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     userProperties = array;
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -226,12 +230,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("dataFlow"))
+                        if (property0.NameEquals("dataFlow"u8))
                         {
                             dataFlow = DataFlowReference.DeserializeDataFlowReference(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("staging"))
+                        if (property0.NameEquals("staging"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -241,7 +245,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             staging = DataFlowStagingInfo.DeserializeDataFlowStagingInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("integrationRuntime"))
+                        if (property0.NameEquals("integrationRuntime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -251,7 +255,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             integrationRuntime = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("compute"))
+                        if (property0.NameEquals("compute"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -261,7 +265,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             compute = ExecuteDataFlowActivityTypePropertiesCompute.DeserializeExecuteDataFlowActivityTypePropertiesCompute(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("traceLevel"))
+                        if (property0.NameEquals("traceLevel"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -271,7 +275,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             traceLevel = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("continueOnError"))
+                        if (property0.NameEquals("continueOnError"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -281,7 +285,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             continueOnError = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("runConcurrently"))
+                        if (property0.NameEquals("runConcurrently"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -291,7 +295,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             runConcurrently = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("sourceStagingConcurrency"))
+                        if (property0.NameEquals("sourceStagingConcurrency"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -301,7 +305,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             sourceStagingConcurrency = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("sinks"))
+                        if (property0.NameEquals("sinks"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -316,7 +320,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             sinks = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("queries"))
+                        if (property0.NameEquals("queries"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

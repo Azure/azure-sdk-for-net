@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.Quota.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Limit))
             {
-                writer.WritePropertyName("limit");
+                writer.WritePropertyName("limit"u8);
                 writer.WriteObjectValue(Limit);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
             if (Optional.IsDefined(ResourceType))
             {
-                writer.WritePropertyName("resourceType");
+                writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
             if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("properties");
+                writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Properties);
 #else
@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Quota.Models
 
         internal static QuotaProperties DeserializeQuotaProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LimitJsonObject> limit = default;
             Optional<string> unit = default;
             Optional<ResourceName> name = default;
@@ -54,7 +58,7 @@ namespace Azure.ResourceManager.Quota.Models
             Optional<BinaryData> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,12 +68,12 @@ namespace Azure.ResourceManager.Quota.Models
                     limit = LimitJsonObject.DeserializeLimitJsonObject(property.Value);
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     unit = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,17 +83,17 @@ namespace Azure.ResourceManager.Quota.Models
                     name = ResourceName.DeserializeResourceName(property.Value);
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("quotaPeriod"))
+                if (property.NameEquals("quotaPeriod"u8))
                 {
                     quotaPeriod = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isQuotaApplicable"))
+                if (property.NameEquals("isQuotaApplicable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.Quota.Models
                     isQuotaApplicable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

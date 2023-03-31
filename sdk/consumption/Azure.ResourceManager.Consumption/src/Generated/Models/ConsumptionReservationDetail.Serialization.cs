@@ -18,6 +18,10 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static ConsumptionReservationDetail DeserializeConsumptionReservationDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
@@ -37,7 +41,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<string> kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +51,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,22 +66,22 @@ namespace Azure.ResourceManager.Consumption.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +91,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,32 +100,32 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("reservationOrderId"))
+                        if (property0.NameEquals("reservationOrderId"u8))
                         {
                             reservationOrderId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("instanceFlexibilityRatio"))
+                        if (property0.NameEquals("instanceFlexibilityRatio"u8))
                         {
                             instanceFlexibilityRatio = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("instanceFlexibilityGroup"))
+                        if (property0.NameEquals("instanceFlexibilityGroup"u8))
                         {
                             instanceFlexibilityGroup = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("reservationId"))
+                        if (property0.NameEquals("reservationId"u8))
                         {
                             reservationId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("skuName"))
+                        if (property0.NameEquals("skuName"u8))
                         {
                             skuName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("reservedHours"))
+                        if (property0.NameEquals("reservedHours"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -131,7 +135,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             reservedHours = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("usageDate"))
+                        if (property0.NameEquals("usageDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -141,7 +145,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             usageDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("usedHours"))
+                        if (property0.NameEquals("usedHours"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -151,7 +155,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             usedHours = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("instanceId"))
+                        if (property0.NameEquals("instanceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -161,7 +165,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             instanceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("totalReservedQuantity"))
+                        if (property0.NameEquals("totalReservedQuantity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -171,7 +175,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             totalReservedQuantity = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("kind"))
+                        if (property0.NameEquals("kind"u8))
                         {
                             kind = property0.Value.GetString();
                             continue;

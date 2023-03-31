@@ -15,19 +15,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("gitHubAccessCode");
+            writer.WritePropertyName("gitHubAccessCode"u8);
             writer.WriteStringValue(GitHubAccessCode);
             if (Optional.IsDefined(GitHubClientId))
             {
-                writer.WritePropertyName("gitHubClientId");
+                writer.WritePropertyName("gitHubClientId"u8);
                 writer.WriteStringValue(GitHubClientId);
             }
             if (Optional.IsDefined(GitHubClientSecret))
             {
-                writer.WritePropertyName("gitHubClientSecret");
+                writer.WritePropertyName("gitHubClientSecret"u8);
                 writer.WriteObjectValue(GitHubClientSecret);
             }
-            writer.WritePropertyName("gitHubAccessTokenBaseUrl");
+            writer.WritePropertyName("gitHubAccessTokenBaseUrl"u8);
             writer.WriteStringValue(GitHubAccessTokenBaseUri.AbsoluteUri);
             writer.WriteEndObject();
         }

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         internal static LabVirtualMachineConnectionProfile DeserializeLabVirtualMachineConnectionProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IPAddress> privateIPAddress = default;
             Optional<string> sshAuthority = default;
             Optional<Uri> sshInBrowserUrl = default;
@@ -25,7 +29,7 @@ namespace Azure.ResourceManager.LabServices.Models
             Optional<string> nonAdminUsername = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("privateIpAddress"))
+                if (property.NameEquals("privateIpAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,12 +39,12 @@ namespace Azure.ResourceManager.LabServices.Models
                     privateIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sshAuthority"))
+                if (property.NameEquals("sshAuthority"u8))
                 {
                     sshAuthority = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sshInBrowserUrl"))
+                if (property.NameEquals("sshInBrowserUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,12 +54,12 @@ namespace Azure.ResourceManager.LabServices.Models
                     sshInBrowserUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rdpAuthority"))
+                if (property.NameEquals("rdpAuthority"u8))
                 {
                     rdpAuthority = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rdpInBrowserUrl"))
+                if (property.NameEquals("rdpInBrowserUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,12 +69,12 @@ namespace Azure.ResourceManager.LabServices.Models
                     rdpInBrowserUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("adminUsername"))
+                if (property.NameEquals("adminUsername"u8))
                 {
                     adminUsername = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nonAdminUsername"))
+                if (property.NameEquals("nonAdminUsername"u8))
                 {
                     nonAdminUsername = property.Value.GetString();
                     continue;

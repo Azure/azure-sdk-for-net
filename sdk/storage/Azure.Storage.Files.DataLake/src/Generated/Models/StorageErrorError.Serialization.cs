@@ -30,16 +30,20 @@ namespace Azure.Storage.Files.DataLake.Models
 
         internal static StorageErrorError DeserializeStorageErrorError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("Code"))
+                if (property.NameEquals("Code"u8))
                 {
                     code = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("Message"))
+                if (property.NameEquals("Message"u8))
                 {
                     message = property.Value.GetString();
                     continue;

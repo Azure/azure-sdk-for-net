@@ -17,32 +17,36 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VCenter))
             {
-                writer.WritePropertyName("vCenter");
+                writer.WritePropertyName("vCenter"u8);
                 writer.WriteStringValue(VCenter);
             }
-            writer.WritePropertyName("addonType");
+            writer.WritePropertyName("addonType"u8);
             writer.WriteStringValue(AddonType.ToString());
             writer.WriteEndObject();
         }
 
         internal static AddonArcProperties DeserializeAddonArcProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vCenter = default;
             AddonType addonType = default;
             Optional<AddonProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vCenter"))
+                if (property.NameEquals("vCenter"u8))
                 {
                     vCenter = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("addonType"))
+                if (property.NameEquals("addonType"u8))
                 {
                     addonType = new AddonType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

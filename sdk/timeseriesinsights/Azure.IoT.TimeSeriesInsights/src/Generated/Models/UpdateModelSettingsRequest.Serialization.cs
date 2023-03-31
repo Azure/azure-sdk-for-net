@@ -17,12 +17,12 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(DefaultTypeId))
             {
-                writer.WritePropertyName("defaultTypeId");
+                writer.WritePropertyName("defaultTypeId"u8);
                 writer.WriteStringValue(DefaultTypeId);
             }
             writer.WriteEndObject();

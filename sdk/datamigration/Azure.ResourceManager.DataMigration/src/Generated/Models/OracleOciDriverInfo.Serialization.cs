@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static OracleOciDriverInfo DeserializeOracleOciDriverInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> driverName = default;
             Optional<string> driverSize = default;
             Optional<string> archiveChecksum = default;
@@ -23,32 +27,32 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IReadOnlyList<string>> supportedOracleVersions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("driverName"))
+                if (property.NameEquals("driverName"u8))
                 {
                     driverName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("driverSize"))
+                if (property.NameEquals("driverSize"u8))
                 {
                     driverSize = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("archiveChecksum"))
+                if (property.NameEquals("archiveChecksum"u8))
                 {
                     archiveChecksum = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("oracleChecksum"))
+                if (property.NameEquals("oracleChecksum"u8))
                 {
                     oracleChecksum = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("assemblyVersion"))
+                if (property.NameEquals("assemblyVersion"u8))
                 {
                     assemblyVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportedOracleVersions"))
+                if (property.NameEquals("supportedOracleVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

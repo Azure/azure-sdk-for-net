@@ -14,12 +14,16 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static RenewProperties DeserializeRenewProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ReservationPurchaseContent> purchaseProperties = default;
             Optional<RenewPropertiesPricingCurrencyTotal> pricingCurrencyTotal = default;
             Optional<RenewPropertiesBillingCurrencyTotal> billingCurrencyTotal = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("purchaseProperties"))
+                if (property.NameEquals("purchaseProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     purchaseProperties = ReservationPurchaseContent.DeserializeReservationPurchaseContent(property.Value);
                     continue;
                 }
-                if (property.NameEquals("pricingCurrencyTotal"))
+                if (property.NameEquals("pricingCurrencyTotal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +43,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     pricingCurrencyTotal = RenewPropertiesPricingCurrencyTotal.DeserializeRenewPropertiesPricingCurrencyTotal(property.Value);
                     continue;
                 }
-                if (property.NameEquals("billingCurrencyTotal"))
+                if (property.NameEquals("billingCurrencyTotal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

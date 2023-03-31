@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
             if (Optional.IsDefined(StartupType))
             {
-                writer.WritePropertyName("startupType");
+                writer.WritePropertyName("startupType"u8);
                 writer.WriteStringValue(StartupType);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static HybridComputeServiceStatus DeserializeHybridComputeServiceStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             Optional<string> startupType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startupType"))
+                if (property.NameEquals("startupType"u8))
                 {
                     startupType = property.Value.GetString();
                     continue;

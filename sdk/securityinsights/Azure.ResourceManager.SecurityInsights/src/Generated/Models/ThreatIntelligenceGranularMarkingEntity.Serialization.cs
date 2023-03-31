@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Language))
             {
-                writer.WritePropertyName("language");
+                writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
             if (Optional.IsDefined(MarkingRef))
             {
-                writer.WritePropertyName("markingRef");
+                writer.WritePropertyName("markingRef"u8);
                 writer.WriteNumberValue(MarkingRef.Value);
             }
             if (Optional.IsCollectionDefined(Selectors))
             {
-                writer.WritePropertyName("selectors");
+                writer.WritePropertyName("selectors"u8);
                 writer.WriteStartArray();
                 foreach (var item in Selectors)
                 {
@@ -41,17 +41,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static ThreatIntelligenceGranularMarkingEntity DeserializeThreatIntelligenceGranularMarkingEntity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> language = default;
             Optional<int> markingRef = default;
             Optional<IList<string>> selectors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("language"))
+                if (property.NameEquals("language"u8))
                 {
                     language = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("markingRef"))
+                if (property.NameEquals("markingRef"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     markingRef = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("selectors"))
+                if (property.NameEquals("selectors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PurviewResourceId))
             {
-                writer.WritePropertyName("purviewResourceId");
+                writer.WritePropertyName("purviewResourceId"u8);
                 writer.WriteStringValue(PurviewResourceId);
             }
             writer.WriteEndObject();
@@ -28,10 +28,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static PurviewConfiguration DeserializePurviewConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> purviewResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("purviewResourceId"))
+                if (property.NameEquals("purviewResourceId"u8))
                 {
                     purviewResourceId = property.Value.GetString();
                     continue;

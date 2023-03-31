@@ -17,25 +17,25 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BaseImageTriggerType))
             {
-                writer.WritePropertyName("baseImageTriggerType");
+                writer.WritePropertyName("baseImageTriggerType"u8);
                 writer.WriteStringValue(BaseImageTriggerType.Value.ToString());
             }
             if (Optional.IsDefined(UpdateTriggerEndpoint))
             {
-                writer.WritePropertyName("updateTriggerEndpoint");
+                writer.WritePropertyName("updateTriggerEndpoint"u8);
                 writer.WriteStringValue(UpdateTriggerEndpoint);
             }
             if (Optional.IsDefined(UpdateTriggerPayloadType))
             {
-                writer.WritePropertyName("updateTriggerPayloadType");
+                writer.WritePropertyName("updateTriggerPayloadType"u8);
                 writer.WriteStringValue(UpdateTriggerPayloadType.Value.ToString());
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WriteEndObject();
         }

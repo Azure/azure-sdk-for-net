@@ -13,7 +13,10 @@ using Azure.ResourceManager.ServiceNetworking.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
-    /// <summary> A class representing the Association data model. </summary>
+    /// <summary>
+    /// A class representing the Association data model.
+    /// Association Subresource of Traffic Controller
+    /// </summary>
     public partial class AssociationData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AssociationData. </summary>

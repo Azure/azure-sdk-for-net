@@ -21,48 +21,53 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RunCommand))
             {
-                writer.WritePropertyName("run_command");
+                writer.WritePropertyName("run_command"u8);
                 writer.WriteStringValue(RunCommand);
             }
             if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("url");
+                writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(ExtraInfoUri))
             {
-                writer.WritePropertyName("extra_info_url");
+                writer.WritePropertyName("extra_info_url"u8);
                 writer.WriteStringValue(ExtraInfoUri.AbsoluteUri);
             }
             if (Optional.IsDefined(WebJobType))
             {
-                writer.WritePropertyName("web_job_type");
+                writer.WritePropertyName("web_job_type"u8);
                 writer.WriteStringValue(WebJobType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Error))
             {
-                writer.WritePropertyName("error");
+                writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
             }
             if (Optional.IsDefined(IsUsingSdk))
             {
-                writer.WritePropertyName("using_sdk");
+                writer.WritePropertyName("using_sdk"u8);
                 writer.WriteBooleanValue(IsUsingSdk.Value);
             }
             if (Optional.IsCollectionDefined(Settings))
             {
-                writer.WritePropertyName("settings");
+                writer.WritePropertyName("settings"u8);
                 writer.WriteStartObject();
                 foreach (var item in Settings)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
@@ -77,6 +82,10 @@ namespace Azure.ResourceManager.AppService
 
         internal static WebJobData DeserializeWebJobData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -91,27 +100,27 @@ namespace Azure.ResourceManager.AppService
             Optional<IDictionary<string, BinaryData>> settings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -121,7 +130,7 @@ namespace Azure.ResourceManager.AppService
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,12 +139,12 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("run_command"))
+                        if (property0.NameEquals("run_command"u8))
                         {
                             runCommand = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("url"))
+                        if (property0.NameEquals("url"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -145,7 +154,7 @@ namespace Azure.ResourceManager.AppService
                             url = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("extra_info_url"))
+                        if (property0.NameEquals("extra_info_url"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -155,7 +164,7 @@ namespace Azure.ResourceManager.AppService
                             extraInfoUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("web_job_type"))
+                        if (property0.NameEquals("web_job_type"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -165,12 +174,12 @@ namespace Azure.ResourceManager.AppService
                             webJobType = property0.Value.GetString().ToWebJobType();
                             continue;
                         }
-                        if (property0.NameEquals("error"))
+                        if (property0.NameEquals("error"u8))
                         {
                             error = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("using_sdk"))
+                        if (property0.NameEquals("using_sdk"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -180,7 +189,7 @@ namespace Azure.ResourceManager.AppService
                             usingSdk = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("settings"))
+                        if (property0.NameEquals("settings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -190,7 +199,14 @@ namespace Azure.ResourceManager.AppService
                             Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
                             }
                             settings = dictionary;
                             continue;

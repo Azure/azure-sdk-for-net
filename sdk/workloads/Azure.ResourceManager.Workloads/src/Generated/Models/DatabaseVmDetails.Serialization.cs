@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -14,11 +16,16 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static DatabaseVmDetails DeserializeDatabaseVmDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> virtualMachineId = default;
             Optional<SapVirtualInstanceStatus> status = default;
+            Optional<IReadOnlyList<SubResource>> storageDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("virtualMachineId"))
+                if (property.NameEquals("virtualMachineId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +35,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     virtualMachineId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,8 +45,23 @@ namespace Azure.ResourceManager.Workloads.Models
                     status = new SapVirtualInstanceStatus(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("storageDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<SubResource> array = new List<SubResource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                    }
+                    storageDetails = array;
+                    continue;
+                }
             }
-            return new DatabaseVmDetails(virtualMachineId.Value, Optional.ToNullable(status));
+            return new DatabaseVmDetails(virtualMachineId.Value, Optional.ToNullable(status), Optional.ToList(storageDetails));
         }
     }
 }

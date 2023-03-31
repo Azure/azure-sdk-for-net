@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.Elastic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FirstName))
             {
-                writer.WritePropertyName("firstName");
+                writer.WritePropertyName("firstName"u8);
                 writer.WriteStringValue(FirstName);
             }
             if (Optional.IsDefined(LastName))
             {
-                writer.WritePropertyName("lastName");
+                writer.WritePropertyName("lastName"u8);
                 writer.WriteStringValue(LastName);
             }
             if (Optional.IsDefined(CompanyName))
             {
-                writer.WritePropertyName("companyName");
+                writer.WritePropertyName("companyName"u8);
                 writer.WriteStringValue(CompanyName);
             }
             if (Optional.IsDefined(EmailAddress))
             {
-                writer.WritePropertyName("emailAddress");
+                writer.WritePropertyName("emailAddress"u8);
                 writer.WriteStringValue(EmailAddress);
             }
             if (Optional.IsDefined(CompanyInfo))
             {
-                writer.WritePropertyName("companyInfo");
+                writer.WritePropertyName("companyInfo"u8);
                 writer.WriteObjectValue(CompanyInfo);
             }
             writer.WriteEndObject();
@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static UserInfo DeserializeUserInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> firstName = default;
             Optional<string> lastName = default;
             Optional<string> companyName = default;
@@ -52,27 +56,27 @@ namespace Azure.ResourceManager.Elastic.Models
             Optional<CompanyInfo> companyInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("firstName"))
+                if (property.NameEquals("firstName"u8))
                 {
                     firstName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastName"))
+                if (property.NameEquals("lastName"u8))
                 {
                     lastName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("companyName"))
+                if (property.NameEquals("companyName"u8))
                 {
                     companyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("emailAddress"))
+                if (property.NameEquals("emailAddress"u8))
                 {
                     emailAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("companyInfo"))
+                if (property.NameEquals("companyInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

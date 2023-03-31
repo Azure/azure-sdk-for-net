@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceRepository))
             {
-                writer.WritePropertyName("sourceRepository");
+                writer.WritePropertyName("sourceRepository"u8);
                 writer.WriteObjectValue(SourceRepository);
             }
             if (Optional.IsCollectionDefined(SourceTriggerEvents))
             {
-                writer.WritePropertyName("sourceTriggerEvents");
+                writer.WritePropertyName("sourceTriggerEvents"u8);
                 writer.WriteStartArray();
                 foreach (var item in SourceTriggerEvents)
                 {
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WriteEndObject();
         }

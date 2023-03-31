@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("startTime");
+                writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
             if (Optional.IsDefined(EndOn))
             {
-                writer.WritePropertyName("endTime");
+                writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Events))
             {
-                writer.WritePropertyName("events");
+                writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(Solutions))
             {
-                writer.WritePropertyName("solutions");
+                writer.WritePropertyName("solutions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Solutions)
                 {
@@ -52,13 +52,17 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AbnormalTimePeriod DeserializeAbnormalTimePeriod(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<IList<DetectorAbnormalTimePeriod>> events = default;
             Optional<IList<DiagnosticSolution>> solutions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("events"))
+                if (property.NameEquals("events"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +97,7 @@ namespace Azure.ResourceManager.AppService.Models
                     events = array;
                     continue;
                 }
-                if (property.NameEquals("solutions"))
+                if (property.NameEquals("solutions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

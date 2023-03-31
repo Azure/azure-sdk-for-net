@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryKeyUri))
             {
-                writer.WritePropertyName("primaryKeyURI");
+                writer.WritePropertyName("primaryKeyURI"u8);
                 writer.WriteStringValue(PrimaryKeyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
             {
-                writer.WritePropertyName("primaryUserAssignedIdentityId");
+                writer.WritePropertyName("primaryUserAssignedIdentityId"u8);
                 writer.WriteStringValue(PrimaryUserAssignedIdentityId);
             }
             if (Optional.IsDefined(KeyType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(KeyType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -36,12 +36,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         internal static PostgreSqlFlexibleServerDataEncryption DeserializePostgreSqlFlexibleServerDataEncryption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> primaryKeyUri = default;
             Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
             Optional<PostgreSqlFlexibleServerKeyType> type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryKeyURI"))
+                if (property.NameEquals("primaryKeyURI"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     primaryKeyUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("primaryUserAssignedIdentityId"))
+                if (property.NameEquals("primaryUserAssignedIdentityId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     primaryUserAssignedIdentityId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

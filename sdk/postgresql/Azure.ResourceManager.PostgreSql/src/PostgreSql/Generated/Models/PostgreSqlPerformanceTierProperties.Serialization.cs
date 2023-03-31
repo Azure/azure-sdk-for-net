@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
     {
         internal static PostgreSqlPerformanceTierProperties DeserializePostgreSqlPerformanceTierProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<int> maxBackupRetentionDays = default;
             Optional<int> minBackupRetentionDays = default;
@@ -25,12 +29,12 @@ namespace Azure.ResourceManager.PostgreSql.Models
             Optional<IReadOnlyList<PostgreSqlPerformanceTierServiceLevelObjectives>> serviceLevelObjectives = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxBackupRetentionDays"))
+                if (property.NameEquals("maxBackupRetentionDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     maxBackupRetentionDays = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minBackupRetentionDays"))
+                if (property.NameEquals("minBackupRetentionDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     minBackupRetentionDays = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxStorageMB"))
+                if (property.NameEquals("maxStorageMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     maxStorageMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minLargeStorageMB"))
+                if (property.NameEquals("minLargeStorageMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +74,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     minLargeStorageMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxLargeStorageMB"))
+                if (property.NameEquals("maxLargeStorageMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +84,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     maxLargeStorageMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minStorageMB"))
+                if (property.NameEquals("minStorageMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     minStorageMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("serviceLevelObjectives"))
+                if (property.NameEquals("serviceLevelObjectives"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

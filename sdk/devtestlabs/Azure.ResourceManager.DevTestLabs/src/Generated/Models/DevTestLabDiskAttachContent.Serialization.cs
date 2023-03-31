@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LeasedByLabVmId))
             {
-                writer.WritePropertyName("leasedByLabVmId");
+                writer.WritePropertyName("leasedByLabVmId"u8);
                 writer.WriteStringValue(LeasedByLabVmId);
             }
             writer.WriteEndObject();

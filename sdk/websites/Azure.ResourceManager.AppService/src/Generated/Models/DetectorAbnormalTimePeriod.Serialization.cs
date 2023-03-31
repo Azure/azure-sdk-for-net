@@ -19,35 +19,40 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("startTime");
+                writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
             if (Optional.IsDefined(EndOn))
             {
-                writer.WritePropertyName("endTime");
+                writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
             if (Optional.IsDefined(Message))
             {
-                writer.WritePropertyName("message");
+                writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
             if (Optional.IsDefined(Source))
             {
-                writer.WritePropertyName("source");
+                writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
             if (Optional.IsDefined(Priority))
             {
-                writer.WritePropertyName("priority");
+                writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
             if (Optional.IsCollectionDefined(MetaData))
             {
-                writer.WritePropertyName("metaData");
+                writer.WritePropertyName("metaData"u8);
                 writer.WriteStartArray();
                 foreach (var item in MetaData)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartArray();
                     foreach (var item0 in item)
                     {
@@ -59,12 +64,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(IssueType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IssueType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Solutions))
             {
-                writer.WritePropertyName("solutions");
+                writer.WritePropertyName("solutions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Solutions)
                 {
@@ -77,6 +82,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DetectorAbnormalTimePeriod DeserializeDetectorAbnormalTimePeriod(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<string> message = default;
@@ -87,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IList<DiagnosticSolution>> solutions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +106,7 @@ namespace Azure.ResourceManager.AppService.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,17 +116,17 @@ namespace Azure.ResourceManager.AppService.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     source = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("priority"))
+                if (property.NameEquals("priority"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -127,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
                     priority = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("metaData"))
+                if (property.NameEquals("metaData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -137,17 +146,24 @@ namespace Azure.ResourceManager.AppService.Models
                     List<IList<AppServiceNameValuePair>> array = new List<IList<AppServiceNameValuePair>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
-                        foreach (var item0 in item.EnumerateArray())
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                            array.Add(null);
                         }
-                        array.Add(array0);
+                        else
+                        {
+                            List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
+                            foreach (var item0 in item.EnumerateArray())
+                            {
+                                array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                            }
+                            array.Add(array0);
+                        }
                     }
                     metaData = array;
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -157,7 +173,7 @@ namespace Azure.ResourceManager.AppService.Models
                     type = property.Value.GetString().ToDetectorIssueType();
                     continue;
                 }
-                if (property.NameEquals("solutions"))
+                if (property.NameEquals("solutions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

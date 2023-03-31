@@ -29,9 +29,6 @@ namespace Azure.Data.Tables.Samples
 
             #region Snippet:TablesSample1CreateTable
             // Create a new table. The TableItem class stores properties of the created table.
-#if SNIPPET
-            string tableName = "OfficeSupplies1p1";
-#endif
             TableItem table = serviceClient.CreateTableIfNotExists(tableName);
             Console.WriteLine($"The created table's name is {table.Name}.");
             #endregion
@@ -46,39 +43,29 @@ namespace Azure.Data.Tables.Samples
 
             #region Snippet:TablesSample1DeleteTable
             // Deletes the table made previously.
-#if SNIPPET
-            string tableName = "OfficeSupplies1p1";
-#endif
             serviceClient.DeleteTable(tableName);
             #endregion
 
             #region Snippet:TablesSample1GetTableClient
-#if SNIPPET
-            string tableName = "OfficeSupplies1p2";
-            var tableClient = serviceClient.GetTableClient(tableName);
-#else
+#if !SNIPPET
             tableName = "OfficeSupplies1p2" + _random.Next();
-            tableClient = serviceClient.GetTableClient(tableName);
 #endif
+            var tableClient2 = serviceClient.GetTableClient(tableName);
             #endregion
 
             #region Snippet:TablesSample1CreateTableClient
-#if SNIPPET
-            var tableClient = new TableClient(
-#else
-            tableClient = new TableClient(
-#endif
+            var tableClient3 = new TableClient(
                 new Uri(storageUri),
                 tableName,
                 new TableSharedKeyCredential(accountName, storageAccountKey));
             #endregion
 
             #region Snippet:TablesSample1TableClientCreateTable
-            tableClient.CreateIfNotExists();
+            tableClient3.CreateIfNotExists();
             #endregion
 
             #region Snippet:TablesSample1TableClientDeleteTable
-            tableClient.Delete();
+            tableClient3.Delete();
             #endregion
         }
     }

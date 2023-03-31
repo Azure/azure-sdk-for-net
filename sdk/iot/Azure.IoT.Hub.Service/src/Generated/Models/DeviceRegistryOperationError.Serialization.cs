@@ -14,6 +14,10 @@ namespace Azure.IoT.Hub.Service.Models
     {
         internal static DeviceRegistryOperationError DeserializeDeviceRegistryOperationError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> deviceId = default;
             Optional<DeviceRegistryOperationErrorCode> errorCode = default;
             Optional<string> errorStatus = default;
@@ -21,12 +25,12 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<string> operation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceId"))
+                if (property.NameEquals("deviceId"u8))
                 {
                     deviceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorCode"))
+                if (property.NameEquals("errorCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,17 +40,17 @@ namespace Azure.IoT.Hub.Service.Models
                     errorCode = new DeviceRegistryOperationErrorCode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("errorStatus"))
+                if (property.NameEquals("errorStatus"u8))
                 {
                     errorStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("moduleId"))
+                if (property.NameEquals("moduleId"u8))
                 {
                     moduleId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operation"))
+                if (property.NameEquals("operation"u8))
                 {
                     operation = property.Value.GetString();
                     continue;

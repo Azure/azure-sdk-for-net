@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("isEnabled");
+                writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(RetentionDays))
             {
-                writer.WritePropertyName("retentionDays");
+                writer.WritePropertyName("retentionDays"u8);
                 writer.WriteNumberValue(RetentionDays.Value);
             }
             if (Optional.IsDefined(LogAnalyticsResources))
             {
-                writer.WritePropertyName("logAnalyticsResources");
+                writer.WritePropertyName("logAnalyticsResources"u8);
                 writer.WriteObjectValue(LogAnalyticsResources);
             }
             writer.WriteEndObject();
@@ -35,12 +35,16 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPolicyInsights DeserializeFirewallPolicyInsights(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isEnabled = default;
             Optional<int> retentionDays = default;
             Optional<FirewallPolicyLogAnalyticsResources> logAnalyticsResources = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isEnabled"))
+                if (property.NameEquals("isEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("retentionDays"))
+                if (property.NameEquals("retentionDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
                     retentionDays = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("logAnalyticsResources"))
+                if (property.NameEquals("logAnalyticsResources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

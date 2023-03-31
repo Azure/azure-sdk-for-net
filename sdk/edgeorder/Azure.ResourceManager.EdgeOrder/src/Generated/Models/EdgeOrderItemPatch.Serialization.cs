@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -26,21 +26,21 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ForwardAddress))
             {
-                writer.WritePropertyName("forwardAddress");
+                writer.WritePropertyName("forwardAddress"u8);
                 writer.WriteObjectValue(ForwardAddress);
             }
             if (Optional.IsDefined(Preferences))
             {
-                writer.WritePropertyName("preferences");
+                writer.WritePropertyName("preferences"u8);
                 writer.WriteObjectValue(Preferences);
             }
             if (Optional.IsCollectionDefined(NotificationEmailList))
             {
-                writer.WritePropertyName("notificationEmailList");
+                writer.WritePropertyName("notificationEmailList"u8);
                 writer.WriteStartArray();
                 foreach (var item in NotificationEmailList)
                 {

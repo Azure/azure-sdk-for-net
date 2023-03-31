@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("mode");
+            writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToString());
             writer.WriteEndObject();
         }
 
         internal static TargetRollingWindowSize DeserializeTargetRollingWindowSize(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("mode", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

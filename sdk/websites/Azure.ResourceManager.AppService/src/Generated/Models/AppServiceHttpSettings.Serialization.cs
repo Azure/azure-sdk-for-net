@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsHttpsRequired))
             {
-                writer.WritePropertyName("requireHttps");
+                writer.WritePropertyName("requireHttps"u8);
                 writer.WriteBooleanValue(IsHttpsRequired.Value);
             }
             if (Optional.IsDefined(Routes))
             {
-                writer.WritePropertyName("routes");
+                writer.WritePropertyName("routes"u8);
                 writer.WriteObjectValue(Routes);
             }
             if (Optional.IsDefined(ForwardProxy))
             {
-                writer.WritePropertyName("forwardProxy");
+                writer.WritePropertyName("forwardProxy"u8);
                 writer.WriteObjectValue(ForwardProxy);
             }
             writer.WriteEndObject();
@@ -35,12 +35,16 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceHttpSettings DeserializeAppServiceHttpSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> requireHttps = default;
             Optional<AppServiceHttpSettingsRoutes> routes = default;
             Optional<AppServiceForwardProxy> forwardProxy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("requireHttps"))
+                if (property.NameEquals("requireHttps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
                     requireHttps = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("routes"))
+                if (property.NameEquals("routes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
                     routes = AppServiceHttpSettingsRoutes.DeserializeAppServiceHttpSettingsRoutes(property.Value);
                     continue;
                 }
-                if (property.NameEquals("forwardProxy"))
+                if (property.NameEquals("forwardProxy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

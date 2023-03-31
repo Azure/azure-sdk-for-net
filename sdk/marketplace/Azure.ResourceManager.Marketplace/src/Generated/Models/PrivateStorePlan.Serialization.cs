@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Accessibility))
             {
-                writer.WritePropertyName("accessibility");
+                writer.WritePropertyName("accessibility"u8);
                 writer.WriteStringValue(Accessibility.Value.ToString());
             }
             writer.WriteEndObject();
@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         internal static PrivateStorePlan DeserializePrivateStorePlan(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> skuId = default;
             Optional<string> planId = default;
             Optional<string> planDisplayName = default;
@@ -33,22 +37,22 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<string> stackType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("skuId"))
+                if (property.NameEquals("skuId"u8))
                 {
                     skuId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("planId"))
+                if (property.NameEquals("planId"u8))
                 {
                     planId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("planDisplayName"))
+                if (property.NameEquals("planDisplayName"u8))
                 {
                     planDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accessibility"))
+                if (property.NameEquals("accessibility"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,12 +62,12 @@ namespace Azure.ResourceManager.Marketplace.Models
                     accessibility = new PrivateStorePlanAccessibility(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("altStackReference"))
+                if (property.NameEquals("altStackReference"u8))
                 {
                     altStackReference = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stackType"))
+                if (property.NameEquals("stackType"u8))
                 {
                     stackType = property.Value.GetString();
                     continue;

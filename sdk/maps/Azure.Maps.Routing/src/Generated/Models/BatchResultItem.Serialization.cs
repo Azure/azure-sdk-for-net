@@ -14,10 +14,14 @@ namespace Azure.Maps.Routing.Models
     {
         internal static BatchResultItem DeserializeBatchResultItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> statusCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("statusCode"))
+                if (property.NameEquals("statusCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

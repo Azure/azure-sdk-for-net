@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static CognitiveServicesSkuAvailabilityList DeserializeCognitiveServicesSkuAvailabilityList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             Optional<string> type = default;
             Optional<string> skuName = default;
@@ -22,22 +26,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("skuName"))
+                if (property.NameEquals("skuName"u8))
                 {
                     skuName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("skuAvailable"))
+                if (property.NameEquals("skuAvailable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,12 +51,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     skuAvailable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("reason"))
+                if (property.NameEquals("reason"u8))
                 {
                     reason = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;

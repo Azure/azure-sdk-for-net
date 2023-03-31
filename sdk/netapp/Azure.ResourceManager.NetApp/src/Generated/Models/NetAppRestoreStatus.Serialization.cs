@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static NetAppRestoreStatus DeserializeNetAppRestoreStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> healthy = default;
             Optional<NetAppRelationshipStatus> relationshipStatus = default;
             Optional<NetAppMirrorState> mirrorState = default;
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<long> totalTransferBytes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("healthy"))
+                if (property.NameEquals("healthy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +36,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     healthy = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("relationshipStatus"))
+                if (property.NameEquals("relationshipStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     relationshipStatus = new NetAppRelationshipStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("mirrorState"))
+                if (property.NameEquals("mirrorState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,17 +56,17 @@ namespace Azure.ResourceManager.NetApp.Models
                     mirrorState = new NetAppMirrorState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("unhealthyReason"))
+                if (property.NameEquals("unhealthyReason"u8))
                 {
                     unhealthyReason = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     errorMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("totalTransferBytes"))
+                if (property.NameEquals("totalTransferBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

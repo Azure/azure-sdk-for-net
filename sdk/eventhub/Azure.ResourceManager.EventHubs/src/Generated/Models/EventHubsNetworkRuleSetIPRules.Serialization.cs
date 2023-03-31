@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IPMask))
             {
-                writer.WritePropertyName("ipMask");
+                writer.WritePropertyName("ipMask"u8);
                 writer.WriteStringValue(IPMask);
             }
             if (Optional.IsDefined(Action))
             {
-                writer.WritePropertyName("action");
+                writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EventHubsNetworkRuleSetIPRules DeserializeEventHubsNetworkRuleSetIPRules(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ipMask = default;
             Optional<EventHubsNetworkRuleIPAction> action = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ipMask"))
+                if (property.NameEquals("ipMask"u8))
                 {
                     ipMask = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

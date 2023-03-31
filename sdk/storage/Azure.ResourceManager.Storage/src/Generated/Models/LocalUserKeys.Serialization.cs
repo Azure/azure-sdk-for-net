@@ -15,11 +15,15 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static LocalUserKeys DeserializeLocalUserKeys(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StorageSshPublicKey>> sshAuthorizedKeys = default;
             Optional<string> sharedKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sshAuthorizedKeys"))
+                if (property.NameEquals("sshAuthorizedKeys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
                     sshAuthorizedKeys = array;
                     continue;
                 }
-                if (property.NameEquals("sharedKey"))
+                if (property.NameEquals("sharedKey"u8))
                 {
                     sharedKey = property.Value.GetString();
                     continue;

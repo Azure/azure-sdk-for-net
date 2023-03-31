@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DeployerVmPackages))
             {
-                writer.WritePropertyName("deployerVmPackages");
+                writer.WritePropertyName("deployerVmPackages"u8);
                 writer.WriteObjectValue(DeployerVmPackages);
             }
             if (Optional.IsDefined(SapFqdn))
             {
-                writer.WritePropertyName("sapFqdn");
+                writer.WritePropertyName("sapFqdn"u8);
                 writer.WriteStringValue(SapFqdn);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static OSSapConfiguration DeserializeOSSapConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DeployerVmPackages> deployerVmPackages = default;
             Optional<string> sapFqdn = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deployerVmPackages"))
+                if (property.NameEquals("deployerVmPackages"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     deployerVmPackages = DeployerVmPackages.DeserializeDeployerVmPackages(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sapFqdn"))
+                if (property.NameEquals("sapFqdn"u8))
                 {
                     sapFqdn = property.Value.GetString();
                     continue;

@@ -17,34 +17,34 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProbeAction))
             {
-                writer.WritePropertyName("probeAction");
+                writer.WritePropertyName("probeAction"u8);
                 writer.WriteObjectValue(ProbeAction);
             }
-            writer.WritePropertyName("disableProbe");
+            writer.WritePropertyName("disableProbe"u8);
             writer.WriteBooleanValue(IsProbeDisabled);
             if (Optional.IsDefined(InitialDelayInSeconds))
             {
-                writer.WritePropertyName("initialDelaySeconds");
+                writer.WritePropertyName("initialDelaySeconds"u8);
                 writer.WriteNumberValue(InitialDelayInSeconds.Value);
             }
             if (Optional.IsDefined(PeriodInSeconds))
             {
-                writer.WritePropertyName("periodSeconds");
+                writer.WritePropertyName("periodSeconds"u8);
                 writer.WriteNumberValue(PeriodInSeconds.Value);
             }
             if (Optional.IsDefined(TimeoutInSeconds))
             {
-                writer.WritePropertyName("timeoutSeconds");
+                writer.WritePropertyName("timeoutSeconds"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
             if (Optional.IsDefined(FailureThreshold))
             {
-                writer.WritePropertyName("failureThreshold");
+                writer.WritePropertyName("failureThreshold"u8);
                 writer.WriteNumberValue(FailureThreshold.Value);
             }
             if (Optional.IsDefined(SuccessThreshold))
             {
-                writer.WritePropertyName("successThreshold");
+                writer.WritePropertyName("successThreshold"u8);
                 writer.WriteNumberValue(SuccessThreshold.Value);
             }
             writer.WriteEndObject();
@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppInstanceProbe DeserializeAppInstanceProbe(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppInstanceProbeAction> probeAction = default;
             bool disableProbe = default;
             Optional<int> initialDelaySeconds = default;
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<int> successThreshold = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("probeAction"))
+                if (property.NameEquals("probeAction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,12 +75,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     probeAction = AppInstanceProbeAction.DeserializeAppInstanceProbeAction(property.Value);
                     continue;
                 }
-                if (property.NameEquals("disableProbe"))
+                if (property.NameEquals("disableProbe"u8))
                 {
                     disableProbe = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("initialDelaySeconds"))
+                if (property.NameEquals("initialDelaySeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +90,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     initialDelaySeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("periodSeconds"))
+                if (property.NameEquals("periodSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +100,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     periodSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("timeoutSeconds"))
+                if (property.NameEquals("timeoutSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,7 +110,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     timeoutSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("failureThreshold"))
+                if (property.NameEquals("failureThreshold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,7 +120,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     failureThreshold = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("successThreshold"))
+                if (property.NameEquals("successThreshold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

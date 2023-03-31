@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static BuiltInAuthenticationProvider ToBuiltInAuthenticationProvider(this string value)
         {
-            if (string.Equals(value, "AzureActiveDirectory", StringComparison.InvariantCultureIgnoreCase)) return BuiltInAuthenticationProvider.AzureActiveDirectory;
-            if (string.Equals(value, "Facebook", StringComparison.InvariantCultureIgnoreCase)) return BuiltInAuthenticationProvider.Facebook;
-            if (string.Equals(value, "Google", StringComparison.InvariantCultureIgnoreCase)) return BuiltInAuthenticationProvider.Google;
-            if (string.Equals(value, "MicrosoftAccount", StringComparison.InvariantCultureIgnoreCase)) return BuiltInAuthenticationProvider.MicrosoftAccount;
-            if (string.Equals(value, "Twitter", StringComparison.InvariantCultureIgnoreCase)) return BuiltInAuthenticationProvider.Twitter;
-            if (string.Equals(value, "Github", StringComparison.InvariantCultureIgnoreCase)) return BuiltInAuthenticationProvider.Github;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureActiveDirectory")) return BuiltInAuthenticationProvider.AzureActiveDirectory;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Facebook")) return BuiltInAuthenticationProvider.Facebook;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Google")) return BuiltInAuthenticationProvider.Google;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MicrosoftAccount")) return BuiltInAuthenticationProvider.MicrosoftAccount;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Twitter")) return BuiltInAuthenticationProvider.Twitter;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Github")) return BuiltInAuthenticationProvider.Github;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BuiltInAuthenticationProvider value.");
         }
     }

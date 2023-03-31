@@ -15,6 +15,10 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteInstruction DeserializeRouteInstruction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> routeOffsetInMeters = default;
             Optional<int> travelTimeInSeconds = default;
             Optional<LatLongPair> point = default;
@@ -36,7 +40,7 @@ namespace Azure.Maps.Routing.Models
             Optional<string> combinedMessage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("routeOffsetInMeters"))
+                if (property.NameEquals("routeOffsetInMeters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.Maps.Routing.Models
                     routeOffsetInMeters = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("travelTimeInSeconds"))
+                if (property.NameEquals("travelTimeInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.Maps.Routing.Models
                     travelTimeInSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("point"))
+                if (property.NameEquals("point"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +70,7 @@ namespace Azure.Maps.Routing.Models
                     point = LatLongPair.DeserializeLatLongPair(property.Value);
                     continue;
                 }
-                if (property.NameEquals("pointIndex"))
+                if (property.NameEquals("pointIndex"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +80,7 @@ namespace Azure.Maps.Routing.Models
                     pointIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("instructionType"))
+                if (property.NameEquals("instructionType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +90,7 @@ namespace Azure.Maps.Routing.Models
                     instructionType = new GuidanceInstructionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("roadNumbers"))
+                if (property.NameEquals("roadNumbers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,32 +105,32 @@ namespace Azure.Maps.Routing.Models
                     roadNumbers = array;
                     continue;
                 }
-                if (property.NameEquals("exitNumber"))
+                if (property.NameEquals("exitNumber"u8))
                 {
                     exitNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("street"))
+                if (property.NameEquals("street"u8))
                 {
                     street = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("signpostText"))
+                if (property.NameEquals("signpostText"u8))
                 {
                     signpostText = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("countryCode"))
+                if (property.NameEquals("countryCode"u8))
                 {
                     countryCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stateCode"))
+                if (property.NameEquals("stateCode"u8))
                 {
                     stateCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("junctionType"))
+                if (property.NameEquals("junctionType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,7 +140,7 @@ namespace Azure.Maps.Routing.Models
                     junctionType = new JunctionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("turnAngleInDecimalDegrees"))
+                if (property.NameEquals("turnAngleInDecimalDegrees"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -146,12 +150,12 @@ namespace Azure.Maps.Routing.Models
                     turnAngleInDecimalDegrees = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("roundaboutExitNumber"))
+                if (property.NameEquals("roundaboutExitNumber"u8))
                 {
                     roundaboutExitNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("possibleCombineWithNext"))
+                if (property.NameEquals("possibleCombineWithNext"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -161,7 +165,7 @@ namespace Azure.Maps.Routing.Models
                     possibleCombineWithNext = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("drivingSide"))
+                if (property.NameEquals("drivingSide"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -171,7 +175,7 @@ namespace Azure.Maps.Routing.Models
                     drivingSide = new DrivingSide(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("maneuver"))
+                if (property.NameEquals("maneuver"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -181,12 +185,12 @@ namespace Azure.Maps.Routing.Models
                     maneuver = new GuidanceManeuver(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("combinedMessage"))
+                if (property.NameEquals("combinedMessage"u8))
                 {
                     combinedMessage = property.Value.GetString();
                     continue;

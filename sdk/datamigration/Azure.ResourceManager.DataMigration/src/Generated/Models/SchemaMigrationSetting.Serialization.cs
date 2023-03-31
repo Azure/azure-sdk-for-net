@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SchemaOption))
             {
-                writer.WritePropertyName("schemaOption");
+                writer.WritePropertyName("schemaOption"u8);
                 writer.WriteStringValue(SchemaOption.Value.ToString());
             }
             if (Optional.IsDefined(FileId))
             {
-                writer.WritePropertyName("fileId");
+                writer.WritePropertyName("fileId"u8);
                 writer.WriteStringValue(FileId);
             }
             if (Optional.IsDefined(FileName))
             {
-                writer.WritePropertyName("fileName");
+                writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
             writer.WriteEndObject();
@@ -35,12 +35,16 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static SchemaMigrationSetting DeserializeSchemaMigrationSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SchemaMigrationOption> schemaOption = default;
             Optional<string> fileId = default;
             Optional<string> fileName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("schemaOption"))
+                if (property.NameEquals("schemaOption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,12 +54,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     schemaOption = new SchemaMigrationOption(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("fileId"))
+                if (property.NameEquals("fileId"u8))
                 {
                     fileId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fileName"))
+                if (property.NameEquals("fileName"u8))
                 {
                     fileName = property.Value.GetString();
                     continue;

@@ -20,17 +20,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static IotSecurityDeviceAlert DeserializeIotSecurityDeviceAlert(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> alertDisplayName = default;
             Optional<ReportedSeverity> reportedSeverity = default;
             Optional<long> alertsCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("alertDisplayName"))
+                if (property.NameEquals("alertDisplayName"u8))
                 {
                     alertDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reportedSeverity"))
+                if (property.NameEquals("reportedSeverity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     reportedSeverity = new ReportedSeverity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("alertsCount"))
+                if (property.NameEquals("alertsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

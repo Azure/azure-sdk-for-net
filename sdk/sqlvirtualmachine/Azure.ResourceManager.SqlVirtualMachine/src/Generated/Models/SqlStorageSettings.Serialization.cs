@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Luns))
             {
-                writer.WritePropertyName("luns");
+                writer.WritePropertyName("luns"u8);
                 writer.WriteStartArray();
                 foreach (var item in Luns)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
             if (Optional.IsDefined(DefaultFilePath))
             {
-                writer.WritePropertyName("defaultFilePath");
+                writer.WritePropertyName("defaultFilePath"u8);
                 writer.WriteStringValue(DefaultFilePath);
             }
             writer.WriteEndObject();
@@ -36,11 +36,15 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlStorageSettings DeserializeSqlStorageSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<int>> luns = default;
             Optional<string> defaultFilePath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("luns"))
+                if (property.NameEquals("luns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     luns = array;
                     continue;
                 }
-                if (property.NameEquals("defaultFilePath"))
+                if (property.NameEquals("defaultFilePath"u8))
                 {
                     defaultFilePath = property.Value.GetString();
                     continue;

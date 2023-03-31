@@ -29,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 {
                     // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
 
-                    Properties.Add(new KeyValuePair<string, string>(tag.Key, tag.Value.ToString().Truncate(SchemaConstants.MetricsData_Properties_MaxValueLength)!));
+                    Properties.Add(new KeyValuePair<string, string>(tag.Key, tag.Value.ToString().Truncate(SchemaConstants.MetricsData_Properties_MaxValueLength)));
                 }
             }
         }

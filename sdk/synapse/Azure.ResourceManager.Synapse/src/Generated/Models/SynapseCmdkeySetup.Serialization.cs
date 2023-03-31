@@ -16,23 +16,23 @@ namespace Azure.ResourceManager.Synapse.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CustomSetupBaseType);
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("targetName");
+            writer.WritePropertyName("targetName"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(TargetName);
 #else
             JsonSerializer.Serialize(writer, JsonDocument.Parse(TargetName.ToString()).RootElement);
 #endif
-            writer.WritePropertyName("userName");
+            writer.WritePropertyName("userName"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(UserName);
 #else
             JsonSerializer.Serialize(writer, JsonDocument.Parse(UserName.ToString()).RootElement);
 #endif
-            writer.WritePropertyName("password");
+            writer.WritePropertyName("password"u8);
             writer.WriteObjectValue(Password);
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -40,18 +40,22 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseCmdkeySetup DeserializeSynapseCmdkeySetup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             BinaryData targetName = default;
             BinaryData userName = default;
             SynapseSecretBase password = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,17 +64,17 @@ namespace Azure.ResourceManager.Synapse.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("targetName"))
+                        if (property0.NameEquals("targetName"u8))
                         {
                             targetName = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("userName"))
+                        if (property0.NameEquals("userName"u8))
                         {
                             userName = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("password"))
+                        if (property0.NameEquals("password"u8))
                         {
                             password = SynapseSecretBase.DeserializeSynapseSecretBase(property0.Value);
                             continue;

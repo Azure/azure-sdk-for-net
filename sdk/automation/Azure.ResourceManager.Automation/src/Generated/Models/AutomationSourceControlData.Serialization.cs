@@ -18,51 +18,51 @@ namespace Azure.ResourceManager.Automation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RepoUri))
             {
-                writer.WritePropertyName("repoUrl");
+                writer.WritePropertyName("repoUrl"u8);
                 writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Branch))
             {
-                writer.WritePropertyName("branch");
+                writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
             if (Optional.IsDefined(FolderPath))
             {
-                writer.WritePropertyName("folderPath");
+                writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
             if (Optional.IsDefined(IsAutoSyncEnabled))
             {
-                writer.WritePropertyName("autoSync");
+                writer.WritePropertyName("autoSync"u8);
                 writer.WriteBooleanValue(IsAutoSyncEnabled.Value);
             }
             if (Optional.IsDefined(IsAutoPublishRunbookEnabled))
             {
-                writer.WritePropertyName("publishRunbook");
+                writer.WritePropertyName("publishRunbook"u8);
                 writer.WriteBooleanValue(IsAutoPublishRunbookEnabled.Value);
             }
             if (Optional.IsDefined(SourceType))
             {
-                writer.WritePropertyName("sourceType");
+                writer.WritePropertyName("sourceType"u8);
                 writer.WriteStringValue(SourceType.Value.ToString());
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(CreatedOn))
             {
-                writer.WritePropertyName("creationTime");
+                writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(LastModifiedOn))
             {
-                writer.WritePropertyName("lastModifiedTime");
+                writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             writer.WriteEndObject();
@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.Automation
 
         internal static AutomationSourceControlData DeserializeAutomationSourceControlData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -86,22 +90,22 @@ namespace Azure.ResourceManager.Automation
             Optional<DateTimeOffset> lastModifiedTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,7 +115,7 @@ namespace Azure.ResourceManager.Automation
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +124,7 @@ namespace Azure.ResourceManager.Automation
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("repoUrl"))
+                        if (property0.NameEquals("repoUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -130,17 +134,17 @@ namespace Azure.ResourceManager.Automation
                             repoUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("branch"))
+                        if (property0.NameEquals("branch"u8))
                         {
                             branch = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("folderPath"))
+                        if (property0.NameEquals("folderPath"u8))
                         {
                             folderPath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("autoSync"))
+                        if (property0.NameEquals("autoSync"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -150,7 +154,7 @@ namespace Azure.ResourceManager.Automation
                             autoSync = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("publishRunbook"))
+                        if (property0.NameEquals("publishRunbook"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -160,7 +164,7 @@ namespace Azure.ResourceManager.Automation
                             publishRunbook = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("sourceType"))
+                        if (property0.NameEquals("sourceType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -170,12 +174,12 @@ namespace Azure.ResourceManager.Automation
                             sourceType = new SourceControlSourceType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("creationTime"))
+                        if (property0.NameEquals("creationTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -185,7 +189,7 @@ namespace Azure.ResourceManager.Automation
                             creationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastModifiedTime"))
+                        if (property0.NameEquals("lastModifiedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

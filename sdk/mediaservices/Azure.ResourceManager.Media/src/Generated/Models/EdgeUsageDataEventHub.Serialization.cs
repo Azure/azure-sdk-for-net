@@ -14,22 +14,26 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static EdgeUsageDataEventHub DeserializeEdgeUsageDataEventHub(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> @namespace = default;
             Optional<string> token = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("namespace"))
+                if (property.NameEquals("namespace"u8))
                 {
                     @namespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("token"))
+                if (property.NameEquals("token"u8))
                 {
                     token = property.Value.GetString();
                     continue;

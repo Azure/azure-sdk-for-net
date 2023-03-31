@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InMageDiskDetails DeserializeInMageDiskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> diskId = default;
             Optional<string> diskName = default;
             Optional<string> diskSizeInMB = default;
@@ -23,32 +27,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<DiskVolumeDetails>> volumeList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskId"))
+                if (property.NameEquals("diskId"u8))
                 {
                     diskId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskName"))
+                if (property.NameEquals("diskName"u8))
                 {
                     diskName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskSizeInMB"))
+                if (property.NameEquals("diskSizeInMB"u8))
                 {
                     diskSizeInMB = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskType"))
+                if (property.NameEquals("diskType"u8))
                 {
                     diskType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskConfiguration"))
+                if (property.NameEquals("diskConfiguration"u8))
                 {
                     diskConfiguration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("volumeList"))
+                if (property.NameEquals("volumeList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

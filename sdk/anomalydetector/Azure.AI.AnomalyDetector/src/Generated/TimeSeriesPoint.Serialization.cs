@@ -19,7 +19,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (Timestamp != null)
                 {
-                    writer.WritePropertyName("timestamp");
+                    writer.WritePropertyName("timestamp"u8);
                     writer.WriteStringValue(Timestamp.Value, "O");
                 }
                 else
@@ -27,7 +27,7 @@ namespace Azure.AI.AnomalyDetector
                     writer.WriteNull("timestamp");
                 }
             }
-            writer.WritePropertyName("value");
+            writer.WritePropertyName("value"u8);
             writer.WriteNumberValue(Value);
             writer.WriteEndObject();
         }

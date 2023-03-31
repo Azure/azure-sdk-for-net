@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -17,25 +18,30 @@ namespace Azure.ResourceManager.BotService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("siteName");
+            if (Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
+            }
+            writer.WritePropertyName("siteName"u8);
             writer.WriteStringValue(SiteName);
-            writer.WritePropertyName("isEnabled");
+            writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             if (Optional.IsDefined(IsEndpointParametersEnabled))
             {
-                writer.WritePropertyName("isEndpointParametersEnabled");
+                writer.WritePropertyName("isEndpointParametersEnabled"u8);
                 writer.WriteBooleanValue(IsEndpointParametersEnabled.Value);
             }
             if (Optional.IsDefined(IsDetailedLoggingEnabled))
             {
-                writer.WritePropertyName("isDetailedLoggingEnabled");
+                writer.WritePropertyName("isDetailedLoggingEnabled"u8);
                 writer.WriteBooleanValue(IsDetailedLoggingEnabled.Value);
             }
             if (Optional.IsDefined(IsBlockUserUploadEnabled))
             {
                 if (IsBlockUserUploadEnabled != null)
                 {
-                    writer.WritePropertyName("isBlockUserUploadEnabled");
+                    writer.WritePropertyName("isBlockUserUploadEnabled"u8);
                     writer.WriteBooleanValue(IsBlockUserUploadEnabled.Value);
                 }
                 else
@@ -45,37 +51,37 @@ namespace Azure.ResourceManager.BotService.Models
             }
             if (Optional.IsDefined(IsNoStorageEnabled))
             {
-                writer.WritePropertyName("isNoStorageEnabled");
+                writer.WritePropertyName("isNoStorageEnabled"u8);
                 writer.WriteBooleanValue(IsNoStorageEnabled.Value);
             }
             if (Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("eTag");
+                writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(AppId))
             {
-                writer.WritePropertyName("appId");
+                writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
             if (Optional.IsDefined(IsV1Enabled))
             {
-                writer.WritePropertyName("isV1Enabled");
+                writer.WritePropertyName("isV1Enabled"u8);
                 writer.WriteBooleanValue(IsV1Enabled.Value);
             }
             if (Optional.IsDefined(IsV3Enabled))
             {
-                writer.WritePropertyName("isV3Enabled");
+                writer.WritePropertyName("isV3Enabled"u8);
                 writer.WriteBooleanValue(IsV3Enabled.Value);
             }
             if (Optional.IsDefined(IsSecureSiteEnabled))
             {
-                writer.WritePropertyName("isSecureSiteEnabled");
+                writer.WritePropertyName("isSecureSiteEnabled"u8);
                 writer.WriteBooleanValue(IsSecureSiteEnabled.Value);
             }
             if (Optional.IsCollectionDefined(TrustedOrigins))
             {
-                writer.WritePropertyName("trustedOrigins");
+                writer.WritePropertyName("trustedOrigins"u8);
                 writer.WriteStartArray();
                 foreach (var item in TrustedOrigins)
                 {
@@ -83,9 +89,14 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(IsWebChatSpeechEnabled))
+            {
+                writer.WritePropertyName("isWebChatSpeechEnabled"u8);
+                writer.WriteBooleanValue(IsWebChatSpeechEnabled.Value);
+            }
             if (Optional.IsDefined(IsWebchatPreviewEnabled))
             {
-                writer.WritePropertyName("isWebchatPreviewEnabled");
+                writer.WritePropertyName("isWebchatPreviewEnabled"u8);
                 writer.WriteBooleanValue(IsWebchatPreviewEnabled.Value);
             }
             writer.WriteEndObject();
@@ -93,6 +104,11 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static DirectLineSite DeserializeDirectLineSite(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<Guid> tenantId = default;
             Optional<string> siteId = default;
             string siteName = default;
             Optional<string> key = default;
@@ -109,35 +125,46 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<bool> isV3Enabled = default;
             Optional<bool> isSecureSiteEnabled = default;
             Optional<IList<string>> trustedOrigins = default;
+            Optional<bool> isWebChatSpeechEnabled = default;
             Optional<bool> isWebchatPreviewEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("siteId"))
+                if (property.NameEquals("tenantId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
+                    continue;
+                }
+                if (property.NameEquals("siteId"u8))
                 {
                     siteId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("siteName"))
+                if (property.NameEquals("siteName"u8))
                 {
                     siteName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("key2"))
+                if (property.NameEquals("key2"u8))
                 {
                     key2 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isEnabled"))
+                if (property.NameEquals("isEnabled"u8))
                 {
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isTokenEnabled"))
+                if (property.NameEquals("isTokenEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -147,7 +174,7 @@ namespace Azure.ResourceManager.BotService.Models
                     isTokenEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isEndpointParametersEnabled"))
+                if (property.NameEquals("isEndpointParametersEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -157,7 +184,7 @@ namespace Azure.ResourceManager.BotService.Models
                     isEndpointParametersEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isDetailedLoggingEnabled"))
+                if (property.NameEquals("isDetailedLoggingEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -167,7 +194,7 @@ namespace Azure.ResourceManager.BotService.Models
                     isDetailedLoggingEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isBlockUserUploadEnabled"))
+                if (property.NameEquals("isBlockUserUploadEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -177,7 +204,7 @@ namespace Azure.ResourceManager.BotService.Models
                     isBlockUserUploadEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isNoStorageEnabled"))
+                if (property.NameEquals("isNoStorageEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -187,7 +214,7 @@ namespace Azure.ResourceManager.BotService.Models
                     isNoStorageEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("eTag"))
+                if (property.NameEquals("eTag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -197,12 +224,12 @@ namespace Azure.ResourceManager.BotService.Models
                     eTag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("appId"))
+                if (property.NameEquals("appId"u8))
                 {
                     appId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isV1Enabled"))
+                if (property.NameEquals("isV1Enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -212,7 +239,7 @@ namespace Azure.ResourceManager.BotService.Models
                     isV1Enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isV3Enabled"))
+                if (property.NameEquals("isV3Enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -222,7 +249,7 @@ namespace Azure.ResourceManager.BotService.Models
                     isV3Enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isSecureSiteEnabled"))
+                if (property.NameEquals("isSecureSiteEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -232,7 +259,7 @@ namespace Azure.ResourceManager.BotService.Models
                     isSecureSiteEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("trustedOrigins"))
+                if (property.NameEquals("trustedOrigins"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -247,7 +274,17 @@ namespace Azure.ResourceManager.BotService.Models
                     trustedOrigins = array;
                     continue;
                 }
-                if (property.NameEquals("isWebchatPreviewEnabled"))
+                if (property.NameEquals("isWebChatSpeechEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    isWebChatSpeechEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("isWebchatPreviewEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -258,7 +295,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new DirectLineSite(siteId.Value, siteName, key.Value, key2.Value, isEnabled, Optional.ToNullable(isTokenEnabled), Optional.ToNullable(isEndpointParametersEnabled), Optional.ToNullable(isDetailedLoggingEnabled), Optional.ToNullable(isBlockUserUploadEnabled), Optional.ToNullable(isNoStorageEnabled), Optional.ToNullable(eTag), appId.Value, Optional.ToNullable(isV1Enabled), Optional.ToNullable(isV3Enabled), Optional.ToNullable(isSecureSiteEnabled), Optional.ToList(trustedOrigins), Optional.ToNullable(isWebchatPreviewEnabled));
+            return new DirectLineSite(Optional.ToNullable(tenantId), siteId.Value, siteName, key.Value, key2.Value, isEnabled, Optional.ToNullable(isTokenEnabled), Optional.ToNullable(isEndpointParametersEnabled), Optional.ToNullable(isDetailedLoggingEnabled), Optional.ToNullable(isBlockUserUploadEnabled), Optional.ToNullable(isNoStorageEnabled), Optional.ToNullable(eTag), appId.Value, Optional.ToNullable(isV1Enabled), Optional.ToNullable(isV3Enabled), Optional.ToNullable(isSecureSiteEnabled), Optional.ToList(trustedOrigins), Optional.ToNullable(isWebChatSpeechEnabled), Optional.ToNullable(isWebchatPreviewEnabled));
         }
     }
 }

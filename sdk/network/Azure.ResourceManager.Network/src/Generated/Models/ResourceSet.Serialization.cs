@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Subscriptions))
             {
-                writer.WritePropertyName("subscriptions");
+                writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Subscriptions)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ResourceSet DeserializeResourceSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> subscriptions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subscriptions"))
+                if (property.NameEquals("subscriptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

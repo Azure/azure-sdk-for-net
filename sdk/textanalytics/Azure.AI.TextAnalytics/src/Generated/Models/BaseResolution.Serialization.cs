@@ -16,20 +16,23 @@ namespace Azure.AI.TextAnalytics
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("resolutionKind");
+            writer.WritePropertyName("resolutionKind"u8);
             writer.WriteStringValue(ResolutionKind.ToString());
             writer.WriteEndObject();
         }
 
         internal static BaseResolution DeserializeBaseResolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("resolutionKind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
                     case "AgeResolution": return AgeResolution.DeserializeAgeResolution(element);
                     case "AreaResolution": return AreaResolution.DeserializeAreaResolution(element);
-                    case "BooleanResolution": return BooleanResolution.DeserializeBooleanResolution(element);
                     case "CurrencyResolution": return CurrencyResolution.DeserializeCurrencyResolution(element);
                     case "DateTimeResolution": return DateTimeResolution.DeserializeDateTimeResolution(element);
                     case "InformationResolution": return InformationResolution.DeserializeInformationResolution(element);

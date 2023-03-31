@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.BotService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("displayName");
+            writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(IconUri))
             {
-                writer.WritePropertyName("iconUrl");
+                writer.WritePropertyName("iconUrl"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
             if (Endpoint != null)
             {
-                writer.WritePropertyName("endpoint");
-                writer.WriteStringValue(Endpoint);
+                writer.WritePropertyName("endpoint"u8);
+                writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
             else
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
             if (Optional.IsCollectionDefined(AllSettings))
             {
-                writer.WritePropertyName("allSettings");
+                writer.WritePropertyName("allSettings"u8);
                 writer.WriteStartObject();
                 foreach (var item in AllSettings)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
@@ -63,44 +63,44 @@ namespace Azure.ResourceManager.BotService.Models
             }
             if (Optional.IsDefined(ManifestUri))
             {
-                writer.WritePropertyName("manifestUrl");
+                writer.WritePropertyName("manifestUrl"u8);
                 writer.WriteStringValue(ManifestUri.AbsoluteUri);
             }
             if (Optional.IsDefined(MsaAppType))
             {
-                writer.WritePropertyName("msaAppType");
+                writer.WritePropertyName("msaAppType"u8);
                 writer.WriteStringValue(MsaAppType.Value.ToString());
             }
-            writer.WritePropertyName("msaAppId");
+            writer.WritePropertyName("msaAppId"u8);
             writer.WriteStringValue(MsaAppId);
             if (Optional.IsDefined(MsaAppTenantId))
             {
-                writer.WritePropertyName("msaAppTenantId");
+                writer.WritePropertyName("msaAppTenantId"u8);
                 writer.WriteStringValue(MsaAppTenantId);
             }
             if (Optional.IsDefined(MsaAppMSIResourceId))
             {
-                writer.WritePropertyName("msaAppMSIResourceId");
+                writer.WritePropertyName("msaAppMSIResourceId"u8);
                 writer.WriteStringValue(MsaAppMSIResourceId);
             }
             if (Optional.IsDefined(DeveloperAppInsightKey))
             {
-                writer.WritePropertyName("developerAppInsightKey");
+                writer.WritePropertyName("developerAppInsightKey"u8);
                 writer.WriteStringValue(DeveloperAppInsightKey);
             }
             if (Optional.IsDefined(DeveloperAppInsightsApiKey))
             {
-                writer.WritePropertyName("developerAppInsightsApiKey");
+                writer.WritePropertyName("developerAppInsightsApiKey"u8);
                 writer.WriteStringValue(DeveloperAppInsightsApiKey);
             }
             if (Optional.IsDefined(DeveloperAppInsightsApplicationId))
             {
-                writer.WritePropertyName("developerAppInsightsApplicationId");
+                writer.WritePropertyName("developerAppInsightsApplicationId"u8);
                 writer.WriteStringValue(DeveloperAppInsightsApplicationId);
             }
             if (Optional.IsCollectionDefined(LuisAppIds))
             {
-                writer.WritePropertyName("luisAppIds");
+                writer.WritePropertyName("luisAppIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in LuisAppIds)
                 {
@@ -110,62 +110,69 @@ namespace Azure.ResourceManager.BotService.Models
             }
             if (Optional.IsDefined(LuisKey))
             {
-                writer.WritePropertyName("luisKey");
+                writer.WritePropertyName("luisKey"u8);
                 writer.WriteStringValue(LuisKey);
             }
             if (Optional.IsDefined(IsCmekEnabled))
             {
-                writer.WritePropertyName("isCmekEnabled");
+                writer.WritePropertyName("isCmekEnabled"u8);
                 writer.WriteBooleanValue(IsCmekEnabled.Value);
             }
             if (Optional.IsDefined(CmekKeyVaultUri))
             {
-                writer.WritePropertyName("cmekKeyVaultUrl");
+                writer.WritePropertyName("cmekKeyVaultUrl"u8);
                 writer.WriteStringValue(CmekKeyVaultUri.AbsoluteUri);
             }
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             if (Optional.IsDefined(IsStreamingSupported))
             {
-                writer.WritePropertyName("isStreamingSupported");
+                writer.WritePropertyName("isStreamingSupported"u8);
                 writer.WriteBooleanValue(IsStreamingSupported.Value);
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
-                writer.WritePropertyName("disableLocalAuth");
-                writer.WriteBooleanValue(DisableLocalAuth.Value);
+                writer.WritePropertyName("disableLocalAuth"u8);
+                writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
             if (Optional.IsDefined(SchemaTransformationVersion))
             {
-                writer.WritePropertyName("schemaTransformationVersion");
-                writer.WriteStringValue(SchemaTransformationVersion);
+                if (SchemaTransformationVersion != null)
+                {
+                    writer.WritePropertyName("schemaTransformationVersion"u8);
+                    writer.WriteStringValue(SchemaTransformationVersion);
+                }
+                else
+                {
+                    writer.WriteNull("schemaTransformationVersion");
+                }
             }
             if (Optional.IsDefined(StorageResourceId))
             {
-                writer.WritePropertyName("storageResourceId");
+                writer.WritePropertyName("storageResourceId"u8);
                 writer.WriteStringValue(StorageResourceId);
             }
             if (Optional.IsDefined(OpenWithHint))
             {
-                writer.WritePropertyName("openWithHint");
+                writer.WritePropertyName("openWithHint"u8);
                 writer.WriteStringValue(OpenWithHint);
             }
             if (Optional.IsDefined(AppPasswordHint))
             {
-                writer.WritePropertyName("appPasswordHint");
+                writer.WritePropertyName("appPasswordHint"u8);
                 writer.WriteStringValue(AppPasswordHint);
             }
             if (Optional.IsDefined(PublishingCredentials))
             {
-                writer.WritePropertyName("publishingCredentials");
+                writer.WritePropertyName("publishingCredentials"u8);
                 writer.WriteStringValue(PublishingCredentials);
             }
             writer.WriteEndObject();
@@ -173,18 +180,22 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static BotProperties DeserializeBotProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string displayName = default;
             Optional<string> description = default;
             Optional<Uri> iconUrl = default;
-            string endpoint = default;
+            Uri endpoint = default;
             Optional<string> endpointVersion = default;
             Optional<IDictionary<string, string>> allSettings = default;
             Optional<IDictionary<string, string>> parameters = default;
             Optional<Uri> manifestUrl = default;
-            Optional<MsaAppType> msaAppType = default;
+            Optional<BotMsaAppType> msaAppType = default;
             string msaAppId = default;
             Optional<string> msaAppTenantId = default;
-            Optional<string> msaAppMSIResourceId = default;
+            Optional<ResourceIdentifier> msaAppMSIResourceId = default;
             Optional<IReadOnlyList<string>> configuredChannels = default;
             Optional<IReadOnlyList<string>> enabledChannels = default;
             Optional<string> developerAppInsightKey = default;
@@ -196,13 +207,13 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<Uri> cmekKeyVaultUrl = default;
             Optional<string> cmekEncryptionStatus = default;
             Optional<Guid> tenantId = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<BotServicePublicNetworkAccess> publicNetworkAccess = default;
             Optional<bool> isStreamingSupported = default;
             Optional<bool> isDeveloperAppInsightsApiKeySet = default;
             Optional<string> migrationToken = default;
             Optional<bool> disableLocalAuth = default;
             Optional<string> schemaTransformationVersion = default;
-            Optional<string> storageResourceId = default;
+            Optional<ResourceIdentifier> storageResourceId = default;
             Optional<IReadOnlyList<BotServicePrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<string> openWithHint = default;
             Optional<string> appPasswordHint = default;
@@ -210,17 +221,17 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<string> publishingCredentials = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("iconUrl"))
+                if (property.NameEquals("iconUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -230,22 +241,22 @@ namespace Azure.ResourceManager.BotService.Models
                     iconUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("endpoint"))
+                if (property.NameEquals("endpoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         endpoint = null;
                         continue;
                     }
-                    endpoint = property.Value.GetString();
+                    endpoint = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("endpointVersion"))
+                if (property.NameEquals("endpointVersion"u8))
                 {
                     endpointVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("allSettings"))
+                if (property.NameEquals("allSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -260,7 +271,7 @@ namespace Azure.ResourceManager.BotService.Models
                     allSettings = dictionary;
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -275,7 +286,7 @@ namespace Azure.ResourceManager.BotService.Models
                     parameters = dictionary;
                     continue;
                 }
-                if (property.NameEquals("manifestUrl"))
+                if (property.NameEquals("manifestUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -285,32 +296,37 @@ namespace Azure.ResourceManager.BotService.Models
                     manifestUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("msaAppType"))
+                if (property.NameEquals("msaAppType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    msaAppType = new MsaAppType(property.Value.GetString());
+                    msaAppType = new BotMsaAppType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("msaAppId"))
+                if (property.NameEquals("msaAppId"u8))
                 {
                     msaAppId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("msaAppTenantId"))
+                if (property.NameEquals("msaAppTenantId"u8))
                 {
                     msaAppTenantId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("msaAppMSIResourceId"))
+                if (property.NameEquals("msaAppMSIResourceId"u8))
                 {
-                    msaAppMSIResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    msaAppMSIResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("configuredChannels"))
+                if (property.NameEquals("configuredChannels"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -325,7 +341,7 @@ namespace Azure.ResourceManager.BotService.Models
                     configuredChannels = array;
                     continue;
                 }
-                if (property.NameEquals("enabledChannels"))
+                if (property.NameEquals("enabledChannels"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -340,22 +356,22 @@ namespace Azure.ResourceManager.BotService.Models
                     enabledChannels = array;
                     continue;
                 }
-                if (property.NameEquals("developerAppInsightKey"))
+                if (property.NameEquals("developerAppInsightKey"u8))
                 {
                     developerAppInsightKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("developerAppInsightsApiKey"))
+                if (property.NameEquals("developerAppInsightsApiKey"u8))
                 {
                     developerAppInsightsApiKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("developerAppInsightsApplicationId"))
+                if (property.NameEquals("developerAppInsightsApplicationId"u8))
                 {
                     developerAppInsightsApplicationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("luisAppIds"))
+                if (property.NameEquals("luisAppIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -370,12 +386,12 @@ namespace Azure.ResourceManager.BotService.Models
                     luisAppIds = array;
                     continue;
                 }
-                if (property.NameEquals("luisKey"))
+                if (property.NameEquals("luisKey"u8))
                 {
                     luisKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isCmekEnabled"))
+                if (property.NameEquals("isCmekEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -385,7 +401,7 @@ namespace Azure.ResourceManager.BotService.Models
                     isCmekEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("cmekKeyVaultUrl"))
+                if (property.NameEquals("cmekKeyVaultUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -395,12 +411,12 @@ namespace Azure.ResourceManager.BotService.Models
                     cmekKeyVaultUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cmekEncryptionStatus"))
+                if (property.NameEquals("cmekEncryptionStatus"u8))
                 {
                     cmekEncryptionStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -410,17 +426,17 @@ namespace Azure.ResourceManager.BotService.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("publicNetworkAccess"))
+                if (property.NameEquals("publicNetworkAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccess(property.Value.GetString());
+                    publicNetworkAccess = new BotServicePublicNetworkAccess(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("isStreamingSupported"))
+                if (property.NameEquals("isStreamingSupported"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -430,7 +446,7 @@ namespace Azure.ResourceManager.BotService.Models
                     isStreamingSupported = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isDeveloperAppInsightsApiKeySet"))
+                if (property.NameEquals("isDeveloperAppInsightsApiKeySet"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -440,12 +456,12 @@ namespace Azure.ResourceManager.BotService.Models
                     isDeveloperAppInsightsApiKeySet = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("migrationToken"))
+                if (property.NameEquals("migrationToken"u8))
                 {
                     migrationToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("disableLocalAuth"))
+                if (property.NameEquals("disableLocalAuth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -455,17 +471,27 @@ namespace Azure.ResourceManager.BotService.Models
                     disableLocalAuth = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("schemaTransformationVersion"))
+                if (property.NameEquals("schemaTransformationVersion"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        schemaTransformationVersion = null;
+                        continue;
+                    }
                     schemaTransformationVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageResourceId"))
+                if (property.NameEquals("storageResourceId"u8))
                 {
-                    storageResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    storageResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("privateEndpointConnections"))
+                if (property.NameEquals("privateEndpointConnections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -480,22 +506,22 @@ namespace Azure.ResourceManager.BotService.Models
                     privateEndpointConnections = array;
                     continue;
                 }
-                if (property.NameEquals("openWithHint"))
+                if (property.NameEquals("openWithHint"u8))
                 {
                     openWithHint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("appPasswordHint"))
+                if (property.NameEquals("appPasswordHint"u8))
                 {
                     appPasswordHint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     provisioningState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publishingCredentials"))
+                if (property.NameEquals("publishingCredentials"u8))
                 {
                     publishingCredentials = property.Value.GetString();
                     continue;

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(OutgoingIPAddresses))
             {
-                writer.WritePropertyName("outgoingIpAddresses");
+                writer.WritePropertyName("outgoingIpAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in OutgoingIPAddresses)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
             if (Optional.IsCollectionDefined(AccessEndpointIPAddresses))
             {
-                writer.WritePropertyName("accessEndpointIpAddresses");
+                writer.WritePropertyName("accessEndpointIpAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in AccessEndpointIPAddresses)
                 {
@@ -41,11 +41,15 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static FlowEndpoints DeserializeFlowEndpoints(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<FlowEndpointIPAddress>> outgoingIPAddresses = default;
             Optional<IList<FlowEndpointIPAddress>> accessEndpointIPAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("outgoingIpAddresses"))
+                if (property.NameEquals("outgoingIpAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.Logic.Models
                     outgoingIPAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("accessEndpointIpAddresses"))
+                if (property.NameEquals("accessEndpointIpAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

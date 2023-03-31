@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static WebAppMSDeployLogEntryType ToWebAppMSDeployLogEntryType(this string value)
         {
-            if (string.Equals(value, "Message", StringComparison.InvariantCultureIgnoreCase)) return WebAppMSDeployLogEntryType.Message;
-            if (string.Equals(value, "Warning", StringComparison.InvariantCultureIgnoreCase)) return WebAppMSDeployLogEntryType.Warning;
-            if (string.Equals(value, "Error", StringComparison.InvariantCultureIgnoreCase)) return WebAppMSDeployLogEntryType.Error;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Message")) return WebAppMSDeployLogEntryType.Message;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Warning")) return WebAppMSDeployLogEntryType.Warning;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Error")) return WebAppMSDeployLogEntryType.Error;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WebAppMSDeployLogEntryType value.");
         }
     }

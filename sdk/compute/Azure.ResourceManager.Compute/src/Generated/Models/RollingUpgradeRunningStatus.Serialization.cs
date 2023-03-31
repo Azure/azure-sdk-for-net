@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static RollingUpgradeRunningStatus DeserializeRollingUpgradeRunningStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RollingUpgradeStatusCode> code = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<RollingUpgradeActionType> lastAction = default;
             Optional<DateTimeOffset> lastActionTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
                     code = property.Value.GetString().ToRollingUpgradeStatusCode();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastAction"))
+                if (property.NameEquals("lastAction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
                     lastAction = property.Value.GetString().ToRollingUpgradeActionType();
                     continue;
                 }
-                if (property.NameEquals("lastActionTime"))
+                if (property.NameEquals("lastActionTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

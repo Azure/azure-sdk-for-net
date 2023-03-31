@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Request))
             {
-                writer.WritePropertyName("request");
+                writer.WritePropertyName("request"u8);
                 writer.WriteStartArray();
                 foreach (var item in Request)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             if (Optional.IsCollectionDefined(Response))
             {
-                writer.WritePropertyName("response");
+                writer.WritePropertyName("response"u8);
                 writer.WriteStartArray();
                 foreach (var item in Response)
                 {
@@ -41,11 +41,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceTypeExtensionOptionsResourceCreationBegin DeserializeResourceTypeExtensionOptionsResourceCreationBegin(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ExtensionOptionType>> request = default;
             Optional<IList<ExtensionOptionType>> response = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("request"))
+                if (property.NameEquals("request"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     request = array;
                     continue;
                 }
-                if (property.NameEquals("response"))
+                if (property.NameEquals("response"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

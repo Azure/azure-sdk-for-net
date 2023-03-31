@@ -15,33 +15,37 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("matchVariable");
+            writer.WritePropertyName("matchVariable"u8);
             writer.WriteStringValue(MatchVariable);
-            writer.WritePropertyName("selectorMatchOperator");
+            writer.WritePropertyName("selectorMatchOperator"u8);
             writer.WriteStringValue(SelectorMatchOperator);
-            writer.WritePropertyName("selector");
+            writer.WritePropertyName("selector"u8);
             writer.WriteStringValue(Selector);
             writer.WriteEndObject();
         }
 
         internal static ApplicationGatewayFirewallExclusion DeserializeApplicationGatewayFirewallExclusion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string matchVariable = default;
             string selectorMatchOperator = default;
             string selector = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("matchVariable"))
+                if (property.NameEquals("matchVariable"u8))
                 {
                     matchVariable = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("selectorMatchOperator"))
+                if (property.NameEquals("selectorMatchOperator"u8))
                 {
                     selectorMatchOperator = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("selector"))
+                if (property.NameEquals("selector"u8))
                 {
                     selector = property.Value.GetString();
                     continue;

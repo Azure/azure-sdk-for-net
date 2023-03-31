@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ContentLinkDefinition))
             {
-                writer.WritePropertyName("contentLinkDefinition");
+                writer.WritePropertyName("contentLinkDefinition"u8);
                 writer.WriteObjectValue(ContentLinkDefinition);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationServiceEnvironmentManagedApiDeploymentParameters DeserializeIntegrationServiceEnvironmentManagedApiDeploymentParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LogicContentLink> contentLinkDefinition = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("contentLinkDefinition"))
+                if (property.NameEquals("contentLinkDefinition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

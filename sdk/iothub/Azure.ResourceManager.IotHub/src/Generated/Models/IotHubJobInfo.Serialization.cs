@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         internal static IotHubJobInfo DeserializeIotHubJobInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> jobId = default;
             Optional<DateTimeOffset> startTimeUtc = default;
             Optional<DateTimeOffset> endTimeUtc = default;
@@ -25,12 +29,12 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<string> parentJobId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobId"))
+                if (property.NameEquals("jobId"u8))
                 {
                     jobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTimeUtc"))
+                if (property.NameEquals("startTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     startTimeUtc = property.Value.GetDateTimeOffset("R");
                     continue;
                 }
-                if (property.NameEquals("endTimeUtc"))
+                if (property.NameEquals("endTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     endTimeUtc = property.Value.GetDateTimeOffset("R");
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     type = new IotHubJobType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,17 +74,17 @@ namespace Azure.ResourceManager.IotHub.Models
                     status = property.Value.GetString().ToIotHubJobStatus();
                     continue;
                 }
-                if (property.NameEquals("failureReason"))
+                if (property.NameEquals("failureReason"u8))
                 {
                     failureReason = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statusMessage"))
+                if (property.NameEquals("statusMessage"u8))
                 {
                     statusMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parentJobId"))
+                if (property.NameEquals("parentJobId"u8))
                 {
                     parentJobId = property.Value.GetString();
                     continue;

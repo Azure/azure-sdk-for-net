@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("automaticOSUpgradeSupported");
+            writer.WritePropertyName("automaticOSUpgradeSupported"u8);
             writer.WriteBooleanValue(AutomaticOSUpgradeSupported);
             writer.WriteEndObject();
         }
 
         internal static AutomaticOSUpgradeProperties DeserializeAutomaticOSUpgradeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool automaticOSUpgradeSupported = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("automaticOSUpgradeSupported"))
+                if (property.NameEquals("automaticOSUpgradeSupported"u8))
                 {
                     automaticOSUpgradeSupported = property.Value.GetBoolean();
                     continue;

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -28,59 +28,59 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxSizeBytes))
             {
-                writer.WritePropertyName("maxSizeBytes");
+                writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteNumberValue(MaxSizeBytes.Value);
             }
             if (Optional.IsDefined(Collation))
             {
-                writer.WritePropertyName("collation");
+                writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
             if (Optional.IsDefined(SourceDatabaseId))
             {
-                writer.WritePropertyName("sourceDatabaseId");
+                writer.WritePropertyName("sourceDatabaseId"u8);
                 writer.WriteStringValue(SourceDatabaseId);
             }
             if (Optional.IsDefined(RecoverableDatabaseId))
             {
-                writer.WritePropertyName("recoverableDatabaseId");
+                writer.WritePropertyName("recoverableDatabaseId"u8);
                 writer.WriteStringValue(RecoverableDatabaseId);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
             if (Optional.IsDefined(RestorePointInTime))
             {
-                writer.WritePropertyName("restorePointInTime");
+                writer.WritePropertyName("restorePointInTime"u8);
                 writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
             if (Optional.IsDefined(CreateMode))
             {
-                writer.WritePropertyName("createMode");
+                writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
             if (Optional.IsDefined(StorageAccountType))
             {
-                writer.WritePropertyName("storageAccountType");
+                writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
             if (Optional.IsDefined(SourceDatabaseDeletionOn))
             {
-                writer.WritePropertyName("sourceDatabaseDeletionDate");
+                writer.WritePropertyName("sourceDatabaseDeletionDate"u8);
                 writer.WriteStringValue(SourceDatabaseDeletionOn.Value, "O");
             }
             writer.WriteEndObject();

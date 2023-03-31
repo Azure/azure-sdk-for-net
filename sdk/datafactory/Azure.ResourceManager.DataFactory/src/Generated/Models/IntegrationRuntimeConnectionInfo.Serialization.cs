@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static IntegrationRuntimeConnectionInfo DeserializeIntegrationRuntimeConnectionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serviceToken = default;
             Optional<string> identityCertThumbprint = default;
             Optional<Uri> hostServiceUri = default;
@@ -26,17 +30,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceToken"))
+                if (property.NameEquals("serviceToken"u8))
                 {
                     serviceToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identityCertThumbprint"))
+                if (property.NameEquals("identityCertThumbprint"u8))
                 {
                     identityCertThumbprint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hostServiceUri"))
+                if (property.NameEquals("hostServiceUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,17 +50,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                     hostServiceUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publicKey"))
+                if (property.NameEquals("publicKey"u8))
                 {
                     publicKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isIdentityCertExprired"))
+                if (property.NameEquals("isIdentityCertExprired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

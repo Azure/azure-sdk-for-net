@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("slice");
-            JsonSerializer.Serialize(writer, Slice); writer.WritePropertyName("defaultDataNetwork");
-            JsonSerializer.Serialize(writer, DefaultDataNetwork); writer.WritePropertyName("dataNetworkConfigurations");
+            writer.WritePropertyName("slice"u8);
+            JsonSerializer.Serialize(writer, Slice); writer.WritePropertyName("defaultDataNetwork"u8);
+            JsonSerializer.Serialize(writer, DefaultDataNetwork); writer.WritePropertyName("dataNetworkConfigurations"u8);
             writer.WriteStartArray();
             foreach (var item in DataNetworkConfigurations)
             {
@@ -31,22 +31,26 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static SliceConfiguration DeserializeSliceConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WritableSubResource slice = default;
             WritableSubResource defaultDataNetwork = default;
             IList<DataNetworkConfiguration> dataNetworkConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("slice"))
+                if (property.NameEquals("slice"u8))
                 {
                     slice = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("defaultDataNetwork"))
+                if (property.NameEquals("defaultDataNetwork"u8))
                 {
                     defaultDataNetwork = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("dataNetworkConfigurations"))
+                if (property.NameEquals("dataNetworkConfigurations"u8))
                 {
                     List<DataNetworkConfiguration> array = new List<DataNetworkConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())

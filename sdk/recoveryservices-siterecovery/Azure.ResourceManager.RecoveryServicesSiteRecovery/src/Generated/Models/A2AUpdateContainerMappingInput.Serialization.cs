@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AgentAutoUpdateStatus))
             {
-                writer.WritePropertyName("agentAutoUpdateStatus");
+                writer.WritePropertyName("agentAutoUpdateStatus"u8);
                 writer.WriteStringValue(AgentAutoUpdateStatus.Value.ToString());
             }
             if (Optional.IsDefined(AutomationAccountArmId))
             {
-                writer.WritePropertyName("automationAccountArmId");
+                writer.WritePropertyName("automationAccountArmId"u8);
                 writer.WriteStringValue(AutomationAccountArmId);
             }
             if (Optional.IsDefined(AutomationAccountAuthenticationType))
             {
-                writer.WritePropertyName("automationAccountAuthenticationType");
+                writer.WritePropertyName("automationAccountAuthenticationType"u8);
                 writer.WriteStringValue(AutomationAccountAuthenticationType.Value.ToString());
             }
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

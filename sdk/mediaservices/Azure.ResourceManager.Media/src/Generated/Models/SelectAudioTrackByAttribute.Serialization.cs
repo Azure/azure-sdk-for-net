@@ -15,27 +15,31 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("attribute");
+            writer.WritePropertyName("attribute"u8);
             writer.WriteStringValue(Attribute.ToString());
-            writer.WritePropertyName("filter");
+            writer.WritePropertyName("filter"u8);
             writer.WriteStringValue(Filter.ToString());
             if (Optional.IsDefined(FilterValue))
             {
-                writer.WritePropertyName("filterValue");
+                writer.WritePropertyName("filterValue"u8);
                 writer.WriteStringValue(FilterValue);
             }
             if (Optional.IsDefined(ChannelMapping))
             {
-                writer.WritePropertyName("channelMapping");
+                writer.WritePropertyName("channelMapping"u8);
                 writer.WriteStringValue(ChannelMapping.Value.ToString());
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
 
         internal static SelectAudioTrackByAttribute DeserializeSelectAudioTrackByAttribute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TrackAttribute attribute = default;
             TrackAttributeFilter filter = default;
             Optional<string> filterValue = default;
@@ -43,22 +47,22 @@ namespace Azure.ResourceManager.Media.Models
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("attribute"))
+                if (property.NameEquals("attribute"u8))
                 {
                     attribute = new TrackAttribute(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("filter"))
+                if (property.NameEquals("filter"u8))
                 {
                     filter = new TrackAttributeFilter(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("filterValue"))
+                if (property.NameEquals("filterValue"u8))
                 {
                     filterValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("channelMapping"))
+                if (property.NameEquals("channelMapping"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.Media.Models
                     channelMapping = new ChannelMapping(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;

@@ -16,21 +16,21 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(Resolution))
             {
-                writer.WritePropertyName("resolution");
+                writer.WritePropertyName("resolution"u8);
                 writer.WriteObjectValue(Resolution);
             }
             if (Optional.IsDefined(PlaceholderImageUri))
             {
-                writer.WritePropertyName("placeholderImageUri");
+                writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
             }
             if (Optional.IsDefined(ScalingMode))
             {
-                writer.WritePropertyName("scalingMode");
+                writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());
             }
             writer.WriteEndObject();
@@ -38,18 +38,22 @@ namespace Azure.Communication.MediaComposition
 
         internal static UnknownLayout DeserializeUnknownLayout(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LayoutType kind = "Unknown";
             Optional<LayoutResolution> resolution = default;
             Optional<string> placeholderImageUri = default;
             Optional<ScalingMode> scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new LayoutType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resolution"))
+                if (property.NameEquals("resolution"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,12 +63,12 @@ namespace Azure.Communication.MediaComposition
                     resolution = LayoutResolution.DeserializeLayoutResolution(property.Value);
                     continue;
                 }
-                if (property.NameEquals("placeholderImageUri"))
+                if (property.NameEquals("placeholderImageUri"u8))
                 {
                     placeholderImageUri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scalingMode"))
+                if (property.NameEquals("scalingMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

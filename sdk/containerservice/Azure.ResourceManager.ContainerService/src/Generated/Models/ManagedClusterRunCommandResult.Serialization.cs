@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static ManagedClusterRunCommandResult DeserializeManagedClusterRunCommandResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> provisioningState = default;
             Optional<int> exitCode = default;
@@ -24,12 +28,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,12 +42,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("exitCode"))
+                        if (property0.NameEquals("exitCode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                             exitCode = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("startedAt"))
+                        if (property0.NameEquals("startedAt"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -63,7 +67,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                             startedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("finishedAt"))
+                        if (property0.NameEquals("finishedAt"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -73,12 +77,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                             finishedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("logs"))
+                        if (property0.NameEquals("logs"u8))
                         {
                             logs = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("reason"))
+                        if (property0.NameEquals("reason"u8))
                         {
                             reason = property0.Value.GetString();
                             continue;

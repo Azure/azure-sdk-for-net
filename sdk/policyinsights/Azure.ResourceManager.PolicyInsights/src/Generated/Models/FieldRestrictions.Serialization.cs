@@ -15,16 +15,20 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static FieldRestrictions DeserializeFieldRestrictions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> field = default;
             Optional<IReadOnlyList<FieldRestriction>> restrictions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("field"))
+                if (property.NameEquals("field"u8))
                 {
                     field = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("restrictions"))
+                if (property.NameEquals("restrictions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

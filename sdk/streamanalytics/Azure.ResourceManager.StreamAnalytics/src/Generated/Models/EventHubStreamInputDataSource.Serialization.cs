@@ -15,48 +15,48 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StreamInputDataSourceType);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceBusNamespace))
             {
-                writer.WritePropertyName("serviceBusNamespace");
+                writer.WritePropertyName("serviceBusNamespace"u8);
                 writer.WriteStringValue(ServiceBusNamespace);
             }
             if (Optional.IsDefined(SharedAccessPolicyName))
             {
-                writer.WritePropertyName("sharedAccessPolicyName");
+                writer.WritePropertyName("sharedAccessPolicyName"u8);
                 writer.WriteStringValue(SharedAccessPolicyName);
             }
             if (Optional.IsDefined(SharedAccessPolicyKey))
             {
-                writer.WritePropertyName("sharedAccessPolicyKey");
+                writer.WritePropertyName("sharedAccessPolicyKey"u8);
                 writer.WriteStringValue(SharedAccessPolicyKey);
             }
             if (Optional.IsDefined(AuthenticationMode))
             {
-                writer.WritePropertyName("authenticationMode");
+                writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
             if (Optional.IsDefined(EventHubName))
             {
-                writer.WritePropertyName("eventHubName");
+                writer.WritePropertyName("eventHubName"u8);
                 writer.WriteStringValue(EventHubName);
             }
             if (Optional.IsDefined(PartitionCount))
             {
-                writer.WritePropertyName("partitionCount");
+                writer.WritePropertyName("partitionCount"u8);
                 writer.WriteNumberValue(PartitionCount.Value);
             }
             if (Optional.IsDefined(ConsumerGroupName))
             {
-                writer.WritePropertyName("consumerGroupName");
+                writer.WritePropertyName("consumerGroupName"u8);
                 writer.WriteStringValue(ConsumerGroupName);
             }
             if (Optional.IsDefined(PrefetchCount))
             {
-                writer.WritePropertyName("prefetchCount");
+                writer.WritePropertyName("prefetchCount"u8);
                 writer.WriteNumberValue(PrefetchCount.Value);
             }
             writer.WriteEndObject();
@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static EventHubStreamInputDataSource DeserializeEventHubStreamInputDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> serviceBusNamespace = default;
             Optional<string> sharedAccessPolicyName = default;
@@ -76,12 +80,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<int> prefetchCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,22 +94,22 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("serviceBusNamespace"))
+                        if (property0.NameEquals("serviceBusNamespace"u8))
                         {
                             serviceBusNamespace = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sharedAccessPolicyName"))
+                        if (property0.NameEquals("sharedAccessPolicyName"u8))
                         {
                             sharedAccessPolicyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sharedAccessPolicyKey"))
+                        if (property0.NameEquals("sharedAccessPolicyKey"u8))
                         {
                             sharedAccessPolicyKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("authenticationMode"))
+                        if (property0.NameEquals("authenticationMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -115,12 +119,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             authenticationMode = new StreamAnalyticsAuthenticationMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("eventHubName"))
+                        if (property0.NameEquals("eventHubName"u8))
                         {
                             eventHubName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("partitionCount"))
+                        if (property0.NameEquals("partitionCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -130,12 +134,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             partitionCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("consumerGroupName"))
+                        if (property0.NameEquals("consumerGroupName"u8))
                         {
                             consumerGroupName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("prefetchCount"))
+                        if (property0.NameEquals("prefetchCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

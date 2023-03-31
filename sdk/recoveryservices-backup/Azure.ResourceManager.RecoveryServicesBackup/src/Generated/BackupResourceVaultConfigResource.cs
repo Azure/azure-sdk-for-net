@@ -19,10 +19,10 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     /// <summary>
-    /// A Class representing a BackupResourceVaultConfigResource along with the instance operations that can be performed on it.
+    /// A Class representing a BackupResourceVaultConfig along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BackupResourceVaultConfigResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetBackupResourceVaultConfigResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetBackupResourceVaultConfigResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetBackupResourceVaultConfig method.
     /// </summary>
     public partial class BackupResourceVaultConfigResource : ArmResource
     {
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _backupResourceVaultConfigResourceBackupResourceVaultConfigsClientDiagnostics;
-        private readonly BackupResourceVaultConfigsRestOperations _backupResourceVaultConfigResourceBackupResourceVaultConfigsRestClient;
-        private readonly BackupResourceVaultConfigResourceData _data;
+        private readonly ClientDiagnostics _backupResourceVaultConfigClientDiagnostics;
+        private readonly BackupResourceVaultConfigsRestOperations _backupResourceVaultConfigRestClient;
+        private readonly BackupResourceVaultConfigData _data;
 
         /// <summary> Initializes a new instance of the <see cref="BackupResourceVaultConfigResource"/> class for mocking. </summary>
         protected BackupResourceVaultConfigResource()
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary> Initializes a new instance of the <see cref = "BackupResourceVaultConfigResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BackupResourceVaultConfigResource(ArmClient client, BackupResourceVaultConfigResourceData data) : this(client, data.Id)
+        internal BackupResourceVaultConfigResource(ArmClient client, BackupResourceVaultConfigData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BackupResourceVaultConfigResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _backupResourceVaultConfigResourceBackupResourceVaultConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string backupResourceVaultConfigResourceBackupResourceVaultConfigsApiVersion);
-            _backupResourceVaultConfigResourceBackupResourceVaultConfigsRestClient = new BackupResourceVaultConfigsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, backupResourceVaultConfigResourceBackupResourceVaultConfigsApiVersion);
+            _backupResourceVaultConfigClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string backupResourceVaultConfigApiVersion);
+            _backupResourceVaultConfigRestClient = new BackupResourceVaultConfigsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, backupResourceVaultConfigApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual BackupResourceVaultConfigResourceData Data
+        public virtual BackupResourceVaultConfigData Data
         {
             get
             {
@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BackupResourceVaultConfigResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _backupResourceVaultConfigResourceBackupResourceVaultConfigsClientDiagnostics.CreateScope("BackupResourceVaultConfigResource.Get");
+            using var scope = _backupResourceVaultConfigClientDiagnostics.CreateScope("BackupResourceVaultConfigResource.Get");
             scope.Start();
             try
             {
-                var response = await _backupResourceVaultConfigResourceBackupResourceVaultConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _backupResourceVaultConfigRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BackupResourceVaultConfigResource(Client, response.Value), response.GetRawResponse());
@@ -136,11 +136,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BackupResourceVaultConfigResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _backupResourceVaultConfigResourceBackupResourceVaultConfigsClientDiagnostics.CreateScope("BackupResourceVaultConfigResource.Get");
+            using var scope = _backupResourceVaultConfigClientDiagnostics.CreateScope("BackupResourceVaultConfigResource.Get");
             scope.Start();
             try
             {
-                var response = _backupResourceVaultConfigResourceBackupResourceVaultConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _backupResourceVaultConfigRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BackupResourceVaultConfigResource(Client, response.Value), response.GetRawResponse());
@@ -168,15 +168,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="data"> resource config request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<BackupResourceVaultConfigResource>> UpdateAsync(BackupResourceVaultConfigResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupResourceVaultConfigResource>> UpdateAsync(BackupResourceVaultConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _backupResourceVaultConfigResourceBackupResourceVaultConfigsClientDiagnostics.CreateScope("BackupResourceVaultConfigResource.Update");
+            using var scope = _backupResourceVaultConfigClientDiagnostics.CreateScope("BackupResourceVaultConfigResource.Update");
             scope.Start();
             try
             {
-                var response = await _backupResourceVaultConfigResourceBackupResourceVaultConfigsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _backupResourceVaultConfigRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new BackupResourceVaultConfigResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,15 +202,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="data"> resource config request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<BackupResourceVaultConfigResource> Update(BackupResourceVaultConfigResourceData data, CancellationToken cancellationToken = default)
+        public virtual Response<BackupResourceVaultConfigResource> Update(BackupResourceVaultConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _backupResourceVaultConfigResourceBackupResourceVaultConfigsClientDiagnostics.CreateScope("BackupResourceVaultConfigResource.Update");
+            using var scope = _backupResourceVaultConfigClientDiagnostics.CreateScope("BackupResourceVaultConfigResource.Update");
             scope.Start();
             try
             {
-                var response = _backupResourceVaultConfigResourceBackupResourceVaultConfigsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
+                var response = _backupResourceVaultConfigRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
                 return Response.FromValue(new BackupResourceVaultConfigResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _backupResourceVaultConfigResourceBackupResourceVaultConfigsClientDiagnostics.CreateScope("BackupResourceVaultConfigResource.AddTag");
+            using var scope = _backupResourceVaultConfigClientDiagnostics.CreateScope("BackupResourceVaultConfigResource.AddTag");
             scope.Start();
             try
             {
@@ -251,13 +251,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _backupResourceVaultConfigResourceBackupResourceVaultConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _backupResourceVaultConfigRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new BackupResourceVaultConfigResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new BackupResourceVaultConfigResourceData(current.Location);
+                    var patch = new BackupResourceVaultConfigData(current.Location);
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _backupResourceVaultConfigResourceBackupResourceVaultConfigsClientDiagnostics.CreateScope("BackupResourceVaultConfigResource.AddTag");
+            using var scope = _backupResourceVaultConfigClientDiagnostics.CreateScope("BackupResourceVaultConfigResource.AddTag");
             scope.Start();
             try
             {
@@ -305,13 +305,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _backupResourceVaultConfigResourceBackupResourceVaultConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                    var originalResponse = _backupResourceVaultConfigRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                     return Response.FromValue(new BackupResourceVaultConfigResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new BackupResourceVaultConfigResourceData(current.Location);
+                    var patch = new BackupResourceVaultConfigData(current.Location);
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _backupResourceVaultConfigResourceBackupResourceVaultConfigsClientDiagnostics.CreateScope("BackupResourceVaultConfigResource.SetTags");
+            using var scope = _backupResourceVaultConfigClientDiagnostics.CreateScope("BackupResourceVaultConfigResource.SetTags");
             scope.Start();
             try
             {
@@ -358,13 +358,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _backupResourceVaultConfigResourceBackupResourceVaultConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _backupResourceVaultConfigRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new BackupResourceVaultConfigResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new BackupResourceVaultConfigResourceData(current.Location);
+                    var patch = new BackupResourceVaultConfigData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _backupResourceVaultConfigResourceBackupResourceVaultConfigsClientDiagnostics.CreateScope("BackupResourceVaultConfigResource.SetTags");
+            using var scope = _backupResourceVaultConfigClientDiagnostics.CreateScope("BackupResourceVaultConfigResource.SetTags");
             scope.Start();
             try
             {
@@ -407,13 +407,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _backupResourceVaultConfigResourceBackupResourceVaultConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                    var originalResponse = _backupResourceVaultConfigRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                     return Response.FromValue(new BackupResourceVaultConfigResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new BackupResourceVaultConfigResourceData(current.Location);
+                    var patch = new BackupResourceVaultConfigData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _backupResourceVaultConfigResourceBackupResourceVaultConfigsClientDiagnostics.CreateScope("BackupResourceVaultConfigResource.RemoveTag");
+            using var scope = _backupResourceVaultConfigClientDiagnostics.CreateScope("BackupResourceVaultConfigResource.RemoveTag");
             scope.Start();
             try
             {
@@ -455,13 +455,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _backupResourceVaultConfigResourceBackupResourceVaultConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _backupResourceVaultConfigRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new BackupResourceVaultConfigResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new BackupResourceVaultConfigResourceData(current.Location);
+                    var patch = new BackupResourceVaultConfigData(current.Location);
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _backupResourceVaultConfigResourceBackupResourceVaultConfigsClientDiagnostics.CreateScope("BackupResourceVaultConfigResource.RemoveTag");
+            using var scope = _backupResourceVaultConfigClientDiagnostics.CreateScope("BackupResourceVaultConfigResource.RemoveTag");
             scope.Start();
             try
             {
@@ -507,13 +507,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _backupResourceVaultConfigResourceBackupResourceVaultConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                    var originalResponse = _backupResourceVaultConfigRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                     return Response.FromValue(new BackupResourceVaultConfigResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new BackupResourceVaultConfigResourceData(current.Location);
+                    var patch = new BackupResourceVaultConfigData(current.Location);
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

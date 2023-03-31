@@ -17,37 +17,37 @@ namespace Azure.ResourceManager.DataBoxEdge
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("alias");
+            writer.WritePropertyName("alias"u8);
             writer.WriteStringValue(Alias);
             if (Optional.IsDefined(UserName))
             {
-                writer.WritePropertyName("userName");
+                writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
             if (Optional.IsDefined(AccountKey))
             {
-                writer.WritePropertyName("accountKey");
+                writer.WritePropertyName("accountKey"u8);
                 writer.WriteObjectValue(AccountKey);
             }
             if (Optional.IsDefined(ConnectionString))
             {
-                writer.WritePropertyName("connectionString");
+                writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            writer.WritePropertyName("sslStatus");
+            writer.WritePropertyName("sslStatus"u8);
             writer.WriteStringValue(SslStatus.ToString());
             if (Optional.IsDefined(BlobDomainName))
             {
-                writer.WritePropertyName("blobDomainName");
+                writer.WritePropertyName("blobDomainName"u8);
                 writer.WriteStringValue(BlobDomainName);
             }
-            writer.WritePropertyName("accountType");
+            writer.WritePropertyName("accountType"u8);
             writer.WriteStringValue(AccountType.ToString());
             if (Optional.IsDefined(StorageAccountId))
             {
-                writer.WritePropertyName("storageAccountId");
+                writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
             writer.WriteEndObject();
@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         internal static DataBoxEdgeStorageAccountCredentialData DeserializeDataBoxEdgeStorageAccountCredentialData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -70,22 +74,22 @@ namespace Azure.ResourceManager.DataBoxEdge
             Optional<ResourceIdentifier> storageAccountId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,7 +99,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,17 +108,17 @@ namespace Azure.ResourceManager.DataBoxEdge
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("alias"))
+                        if (property0.NameEquals("alias"u8))
                         {
                             @alias = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("userName"))
+                        if (property0.NameEquals("userName"u8))
                         {
                             userName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("accountKey"))
+                        if (property0.NameEquals("accountKey"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -124,27 +128,27 @@ namespace Azure.ResourceManager.DataBoxEdge
                             accountKey = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("connectionString"))
+                        if (property0.NameEquals("connectionString"u8))
                         {
                             connectionString = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sslStatus"))
+                        if (property0.NameEquals("sslStatus"u8))
                         {
                             sslStatus = new DataBoxEdgeStorageAccountSslStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("blobDomainName"))
+                        if (property0.NameEquals("blobDomainName"u8))
                         {
                             blobDomainName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("accountType"))
+                        if (property0.NameEquals("accountType"u8))
                         {
                             accountType = new DataBoxEdgeStorageAccountType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("storageAccountId"))
+                        if (property0.NameEquals("storageAccountId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

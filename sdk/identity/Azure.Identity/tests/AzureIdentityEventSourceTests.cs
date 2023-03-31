@@ -161,7 +161,7 @@ namespace Azure.Identity.Tests
                 SilentAuthFactory = (_, _) => throw new MockClientException(expExMessage)
             };
 
-            var credential = InstrumentClient(new DeviceCodeCredential((_, _) => { return Task.CompletedTask; }, default, Guid.NewGuid().ToString(), default, default, mockMsalClient));
+            var credential = InstrumentClient(new DeviceCodeCredential((_, _) => { return Task.CompletedTask; }, default, Guid.NewGuid().ToString(), new(), default, mockMsalClient));
 
             var method = "DeviceCodeCredential.GetToken";
 

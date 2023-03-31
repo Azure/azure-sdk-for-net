@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("action");
+            writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToString());
             if (Optional.IsDefined(LeaseId))
             {
-                writer.WritePropertyName("leaseId");
+                writer.WritePropertyName("leaseId"u8);
                 writer.WriteStringValue(LeaseId);
             }
             if (Optional.IsDefined(BreakPeriod))
             {
-                writer.WritePropertyName("breakPeriod");
+                writer.WritePropertyName("breakPeriod"u8);
                 writer.WriteNumberValue(BreakPeriod.Value);
             }
             if (Optional.IsDefined(LeaseDuration))
             {
-                writer.WritePropertyName("leaseDuration");
+                writer.WritePropertyName("leaseDuration"u8);
                 writer.WriteNumberValue(LeaseDuration.Value);
             }
             if (Optional.IsDefined(ProposedLeaseId))
             {
-                writer.WritePropertyName("proposedLeaseId");
+                writer.WritePropertyName("proposedLeaseId"u8);
                 writer.WriteStringValue(ProposedLeaseId);
             }
             writer.WriteEndObject();

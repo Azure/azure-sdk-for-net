@@ -18,6 +18,10 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static ConsumptionAggregatedCostResult DeserializeConsumptionAggregatedCostResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
@@ -36,7 +40,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<IReadOnlyList<string>> excludedSubscriptions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,22 +65,22 @@ namespace Azure.ResourceManager.Consumption.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +90,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,12 +99,12 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("billingPeriodId"))
+                        if (property0.NameEquals("billingPeriodId"u8))
                         {
                             billingPeriodId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("usageStart"))
+                        if (property0.NameEquals("usageStart"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -110,7 +114,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             usageStart = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("usageEnd"))
+                        if (property0.NameEquals("usageEnd"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -120,7 +124,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             usageEnd = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("azureCharges"))
+                        if (property0.NameEquals("azureCharges"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -130,7 +134,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             azureCharges = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("marketplaceCharges"))
+                        if (property0.NameEquals("marketplaceCharges"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -140,7 +144,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             marketplaceCharges = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("chargesBilledSeparately"))
+                        if (property0.NameEquals("chargesBilledSeparately"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -150,12 +154,12 @@ namespace Azure.ResourceManager.Consumption.Models
                             chargesBilledSeparately = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("currency"))
+                        if (property0.NameEquals("currency"u8))
                         {
                             currency = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("children"))
+                        if (property0.NameEquals("children"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -170,7 +174,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             children = array;
                             continue;
                         }
-                        if (property0.NameEquals("includedSubscriptions"))
+                        if (property0.NameEquals("includedSubscriptions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -185,7 +189,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             includedSubscriptions = array;
                             continue;
                         }
-                        if (property0.NameEquals("excludedSubscriptions"))
+                        if (property0.NameEquals("excludedSubscriptions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

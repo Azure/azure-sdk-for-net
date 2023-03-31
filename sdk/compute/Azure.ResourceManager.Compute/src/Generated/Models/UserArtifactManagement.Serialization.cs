@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("install");
+            writer.WritePropertyName("install"u8);
             writer.WriteStringValue(Install);
-            writer.WritePropertyName("remove");
+            writer.WritePropertyName("remove"u8);
             writer.WriteStringValue(Remove);
             if (Optional.IsDefined(Update))
             {
-                writer.WritePropertyName("update");
+                writer.WritePropertyName("update"u8);
                 writer.WriteStringValue(Update);
             }
             writer.WriteEndObject();
@@ -29,22 +29,26 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static UserArtifactManagement DeserializeUserArtifactManagement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string install = default;
             string @remove = default;
             Optional<string> update = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("install"))
+                if (property.NameEquals("install"u8))
                 {
                     install = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("remove"))
+                if (property.NameEquals("remove"u8))
                 {
                     @remove = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("update"))
+                if (property.NameEquals("update"u8))
                 {
                     update = property.Value.GetString();
                     continue;

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MessageTitle))
             {
-                writer.WritePropertyName("messageTitle");
+                writer.WritePropertyName("messageTitle"u8);
                 writer.WriteStringValue(MessageTitle);
             }
             if (Optional.IsDefined(MessageBody))
             {
-                writer.WritePropertyName("messageBody");
+                writer.WritePropertyName("messageBody"u8);
                 writer.WriteStringValue(MessageBody);
             }
             writer.WriteEndObject();

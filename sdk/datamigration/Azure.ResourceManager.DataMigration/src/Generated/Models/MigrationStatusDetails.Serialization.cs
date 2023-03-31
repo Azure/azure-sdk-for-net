@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MigrationStatusDetails DeserializeMigrationStatusDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> migrationState = default;
             Optional<SqlBackupSetInfo> fullBackupSetInfo = default;
             Optional<SqlBackupSetInfo> lastRestoredBackupSetInfo = default;
@@ -30,12 +34,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<int> pendingLogBackupsCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("migrationState"))
+                if (property.NameEquals("migrationState"u8))
                 {
                     migrationState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fullBackupSetInfo"))
+                if (property.NameEquals("fullBackupSetInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     fullBackupSetInfo = SqlBackupSetInfo.DeserializeSqlBackupSetInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("lastRestoredBackupSetInfo"))
+                if (property.NameEquals("lastRestoredBackupSetInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     lastRestoredBackupSetInfo = SqlBackupSetInfo.DeserializeSqlBackupSetInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("activeBackupSets"))
+                if (property.NameEquals("activeBackupSets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +74,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     activeBackupSets = array;
                     continue;
                 }
-                if (property.NameEquals("invalidFiles"))
+                if (property.NameEquals("invalidFiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,12 +89,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     invalidFiles = array;
                     continue;
                 }
-                if (property.NameEquals("blobContainerName"))
+                if (property.NameEquals("blobContainerName"u8))
                 {
                     blobContainerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isFullBackupRestored"))
+                if (property.NameEquals("isFullBackupRestored"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,17 +104,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                     isFullBackupRestored = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("restoreBlockingReason"))
+                if (property.NameEquals("restoreBlockingReason"u8))
                 {
                     restoreBlockingReason = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("completeRestoreErrorMessage"))
+                if (property.NameEquals("completeRestoreErrorMessage"u8))
                 {
                     completeRestoreErrorMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fileUploadBlockingErrors"))
+                if (property.NameEquals("fileUploadBlockingErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -125,17 +129,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                     fileUploadBlockingErrors = array;
                     continue;
                 }
-                if (property.NameEquals("currentRestoringFilename"))
+                if (property.NameEquals("currentRestoringFilename"u8))
                 {
                     currentRestoringFilename = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastRestoredFilename"))
+                if (property.NameEquals("lastRestoredFilename"u8))
                 {
                     lastRestoredFilename = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pendingLogBackupsCount"))
+                if (property.NameEquals("pendingLogBackupsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

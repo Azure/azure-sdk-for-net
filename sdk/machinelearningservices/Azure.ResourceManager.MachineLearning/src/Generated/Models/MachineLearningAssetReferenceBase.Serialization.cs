@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("referenceType");
+            writer.WritePropertyName("referenceType"u8);
             writer.WriteStringValue(ReferenceType.ToString());
             writer.WriteEndObject();
         }
 
         internal static MachineLearningAssetReferenceBase DeserializeMachineLearningAssetReferenceBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("referenceType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

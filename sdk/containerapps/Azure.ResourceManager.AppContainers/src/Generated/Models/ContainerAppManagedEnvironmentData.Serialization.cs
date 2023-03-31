@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.AppContainers
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -40,43 +40,43 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DaprAIInstrumentationKey))
             {
-                writer.WritePropertyName("daprAIInstrumentationKey");
+                writer.WritePropertyName("daprAIInstrumentationKey"u8);
                 writer.WriteStringValue(DaprAIInstrumentationKey);
             }
             if (Optional.IsDefined(DaprAIConnectionString))
             {
-                writer.WritePropertyName("daprAIConnectionString");
+                writer.WritePropertyName("daprAIConnectionString"u8);
                 writer.WriteStringValue(DaprAIConnectionString);
             }
             if (Optional.IsDefined(VnetConfiguration))
             {
-                writer.WritePropertyName("vnetConfiguration");
+                writer.WritePropertyName("vnetConfiguration"u8);
                 writer.WriteObjectValue(VnetConfiguration);
             }
             if (Optional.IsDefined(AppLogsConfiguration))
             {
-                writer.WritePropertyName("appLogsConfiguration");
+                writer.WritePropertyName("appLogsConfiguration"u8);
                 writer.WriteObjectValue(AppLogsConfiguration);
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {
-                writer.WritePropertyName("zoneRedundant");
+                writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (Optional.IsDefined(CustomDomainConfiguration))
             {
-                writer.WritePropertyName("customDomainConfiguration");
+                writer.WritePropertyName("customDomainConfiguration"u8);
                 writer.WriteObjectValue(CustomDomainConfiguration);
             }
             if (Optional.IsCollectionDefined(WorkloadProfiles))
             {
-                writer.WritePropertyName("workloadProfiles");
+                writer.WritePropertyName("workloadProfiles"u8);
                 writer.WriteStartArray();
                 foreach (var item in WorkloadProfiles)
                 {
@@ -90,6 +90,10 @@ namespace Azure.ResourceManager.AppContainers
 
         internal static ContainerAppManagedEnvironmentData DeserializeContainerAppManagedEnvironmentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             Optional<EnvironmentSkuProperties> sku = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -112,12 +116,12 @@ namespace Azure.ResourceManager.AppContainers
             Optional<IList<ContainerAppWorkloadProfile>> workloadProfiles = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -127,7 +131,7 @@ namespace Azure.ResourceManager.AppContainers
                     sku = EnvironmentSkuProperties.DeserializeEnvironmentSkuProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -142,27 +146,27 @@ namespace Azure.ResourceManager.AppContainers
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -172,7 +176,7 @@ namespace Azure.ResourceManager.AppContainers
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -181,7 +185,7 @@ namespace Azure.ResourceManager.AppContainers
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -191,17 +195,17 @@ namespace Azure.ResourceManager.AppContainers
                             provisioningState = new ContainerAppEnvironmentProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("daprAIInstrumentationKey"))
+                        if (property0.NameEquals("daprAIInstrumentationKey"u8))
                         {
                             daprAIInstrumentationKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("daprAIConnectionString"))
+                        if (property0.NameEquals("daprAIConnectionString"u8))
                         {
                             daprAIConnectionString = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("vnetConfiguration"))
+                        if (property0.NameEquals("vnetConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -211,17 +215,17 @@ namespace Azure.ResourceManager.AppContainers
                             vnetConfiguration = ContainerAppVnetConfiguration.DeserializeContainerAppVnetConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("deploymentErrors"))
+                        if (property0.NameEquals("deploymentErrors"u8))
                         {
                             deploymentErrors = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("defaultDomain"))
+                        if (property0.NameEquals("defaultDomain"u8))
                         {
                             defaultDomain = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("staticIp"))
+                        if (property0.NameEquals("staticIp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -231,7 +235,7 @@ namespace Azure.ResourceManager.AppContainers
                             staticIP = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("appLogsConfiguration"))
+                        if (property0.NameEquals("appLogsConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -241,7 +245,7 @@ namespace Azure.ResourceManager.AppContainers
                             appLogsConfiguration = ContainerAppLogsConfiguration.DeserializeContainerAppLogsConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("zoneRedundant"))
+                        if (property0.NameEquals("zoneRedundant"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -251,7 +255,7 @@ namespace Azure.ResourceManager.AppContainers
                             zoneRedundant = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("customDomainConfiguration"))
+                        if (property0.NameEquals("customDomainConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -261,12 +265,12 @@ namespace Azure.ResourceManager.AppContainers
                             customDomainConfiguration = ContainerAppCustomDomainConfiguration.DeserializeContainerAppCustomDomainConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("eventStreamEndpoint"))
+                        if (property0.NameEquals("eventStreamEndpoint"u8))
                         {
                             eventStreamEndpoint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("workloadProfiles"))
+                        if (property0.NameEquals("workloadProfiles"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

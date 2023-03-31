@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("credentialsType");
+            writer.WritePropertyName("credentialsType"u8);
             writer.WriteStringValue(CredentialsType.ToString());
             writer.WriteEndObject();
         }
 
         internal static MachineLearningDatastoreCredentials DeserializeMachineLearningDatastoreCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("credentialsType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

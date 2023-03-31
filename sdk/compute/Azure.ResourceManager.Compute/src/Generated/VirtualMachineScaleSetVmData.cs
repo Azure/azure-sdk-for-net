@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the VirtualMachineScaleSetVm data model. </summary>
+    /// <summary>
+    /// A class representing the VirtualMachineScaleSetVm data model.
+    /// Describes a virtual machine scale set virtual machine.
+    /// </summary>
     public partial class VirtualMachineScaleSetVmData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVmData. </summary>

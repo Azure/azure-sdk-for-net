@@ -16,30 +16,25 @@ namespace Azure.AI.OpenAI
     public partial class Completions
     {
         /// <summary> Initializes a new instance of Completions. </summary>
-        /// <param name="object"> Object for completion response. </param>
         /// <param name="usage"> Usage counts for tokens input using the completions API. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="object"/> or <paramref name="usage"/> is null. </exception>
-        internal Completions(string @object, CompletionsUsage usage)
+        /// <exception cref="ArgumentNullException"> <paramref name="usage"/> is null. </exception>
+        internal Completions(CompletionsUsage usage)
         {
-            Argument.AssertNotNull(@object, nameof(@object));
             Argument.AssertNotNull(usage, nameof(usage));
 
-            Object = @object;
             Choices = new ChangeTrackingList<Choice>();
             Usage = usage;
         }
 
         /// <summary> Initializes a new instance of Completions. </summary>
         /// <param name="id"> Id for completion response. </param>
-        /// <param name="object"> Object for completion response. </param>
         /// <param name="created"> Created time for completion response. </param>
         /// <param name="model"> Model used for completion response. </param>
         /// <param name="choices"> Array of choices returned containing text completions to prompts sent. </param>
         /// <param name="usage"> Usage counts for tokens input using the completions API. </param>
-        internal Completions(string id, string @object, int? created, string model, IReadOnlyList<Choice> choices, CompletionsUsage usage)
+        internal Completions(string id, int? created, string model, IReadOnlyList<Choice> choices, CompletionsUsage usage)
         {
             Id = id;
-            Object = @object;
             Created = created;
             Model = model;
             Choices = choices.ToList();
@@ -49,7 +44,8 @@ namespace Azure.AI.OpenAI
         /// <summary> Id for completion response. </summary>
         public string Id { get; }
         /// <summary> Object for completion response. </summary>
-        public string Object { get; }
+        internal string Object { get; } = "text_completion";
+
         /// <summary> Created time for completion response. </summary>
         public int? Created { get; }
         /// <summary> Model used for completion response. </summary>

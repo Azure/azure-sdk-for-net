@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Source))
             {
-                writer.WritePropertyName("source");
+                writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
             if (Optional.IsDefined(DetectorDefinition))
             {
-                writer.WritePropertyName("detectorDefinition");
+                writer.WritePropertyName("detectorDefinition"u8);
                 writer.WriteObjectValue(DetectorDefinition);
             }
             if (Optional.IsCollectionDefined(Metrics))
             {
-                writer.WritePropertyName("metrics");
+                writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
@@ -38,10 +38,15 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(Data))
             {
-                writer.WritePropertyName("data");
+                writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartArray();
                     foreach (var item0 in item)
                     {
@@ -53,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(DetectorMetaData))
             {
-                writer.WritePropertyName("detectorMetaData");
+                writer.WritePropertyName("detectorMetaData"u8);
                 writer.WriteObjectValue(DetectorMetaData);
             }
             writer.WriteEndObject();
@@ -61,6 +66,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AnalysisDetectorEvidences DeserializeAnalysisDetectorEvidences(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> source = default;
             Optional<DetectorDefinition> detectorDefinition = default;
             Optional<IList<DiagnosticMetricSet>> metrics = default;
@@ -68,12 +77,12 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<DetectorMetadata> detectorMetaData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     source = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("detectorDefinition"))
+                if (property.NameEquals("detectorDefinition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +92,7 @@ namespace Azure.ResourceManager.AppService.Models
                     detectorDefinition = DetectorDefinition.DeserializeDetectorDefinition(property.Value);
                     continue;
                 }
-                if (property.NameEquals("metrics"))
+                if (property.NameEquals("metrics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +107,7 @@ namespace Azure.ResourceManager.AppService.Models
                     metrics = array;
                     continue;
                 }
-                if (property.NameEquals("data"))
+                if (property.NameEquals("data"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,17 +117,24 @@ namespace Azure.ResourceManager.AppService.Models
                     List<IList<AppServiceNameValuePair>> array = new List<IList<AppServiceNameValuePair>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
-                        foreach (var item0 in item.EnumerateArray())
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                            array.Add(null);
                         }
-                        array.Add(array0);
+                        else
+                        {
+                            List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
+                            foreach (var item0 in item.EnumerateArray())
+                            {
+                                array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                            }
+                            array.Add(array0);
+                        }
                     }
                     data = array;
                     continue;
                 }
-                if (property.NameEquals("detectorMetaData"))
+                if (property.NameEquals("detectorMetaData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

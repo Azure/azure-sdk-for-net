@@ -16,23 +16,23 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("hookType");
+            writer.WritePropertyName("hookType"u8);
             writer.WriteStringValue(HookKind.ToString());
-            writer.WritePropertyName("hookName");
+            writer.WritePropertyName("hookName"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(InternalExternalLink))
             {
-                writer.WritePropertyName("externalLink");
+                writer.WritePropertyName("externalLink"u8);
                 writer.WriteStringValue(InternalExternalLink);
             }
             if (Optional.IsCollectionDefined(Administrators))
             {
-                writer.WritePropertyName("admins");
+                writer.WritePropertyName("admins"u8);
                 writer.WriteStartArray();
                 foreach (var item in Administrators)
                 {
@@ -45,6 +45,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static UnknownHookInfo DeserializeUnknownHookInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             NotificationHookKind hookType = "Unknown";
             Optional<string> hookId = default;
             string hookName = default;
@@ -53,32 +57,32 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<IList<string>> admins = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hookType"))
+                if (property.NameEquals("hookType"u8))
                 {
                     hookType = new NotificationHookKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hookId"))
+                if (property.NameEquals("hookId"u8))
                 {
                     hookId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hookName"))
+                if (property.NameEquals("hookName"u8))
                 {
                     hookName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("externalLink"))
+                if (property.NameEquals("externalLink"u8))
                 {
                     externalLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("admins"))
+                if (property.NameEquals("admins"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

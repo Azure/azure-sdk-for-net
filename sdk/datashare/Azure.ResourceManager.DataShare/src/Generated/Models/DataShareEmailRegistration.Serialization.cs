@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ActivationCode))
             {
-                writer.WritePropertyName("activationCode");
+                writer.WritePropertyName("activationCode"u8);
                 writer.WriteStringValue(ActivationCode);
             }
             writer.WriteEndObject();
@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static DataShareEmailRegistration DeserializeDataShareEmailRegistration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> activationCode = default;
             Optional<DateTimeOffset> activationExpirationDate = default;
             Optional<string> email = default;
@@ -33,12 +37,12 @@ namespace Azure.ResourceManager.DataShare.Models
             Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("activationCode"))
+                if (property.NameEquals("activationCode"u8))
                 {
                     activationCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("activationExpirationDate"))
+                if (property.NameEquals("activationExpirationDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,12 +52,12 @@ namespace Azure.ResourceManager.DataShare.Models
                     activationExpirationDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("email"))
+                if (property.NameEquals("email"u8))
                 {
                     email = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("registrationStatus"))
+                if (property.NameEquals("registrationStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +67,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     registrationStatus = new DataShareEmailRegistrationStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

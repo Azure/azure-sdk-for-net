@@ -18,56 +18,70 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Hostname))
             {
-                writer.WritePropertyName("hostname");
+                writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
             if (Optional.IsDefined(DBName))
             {
-                writer.WritePropertyName("dbName");
+                writer.WritePropertyName("dbName"u8);
                 writer.WriteStringValue(DBName);
             }
             if (Optional.IsDefined(SqlPort))
             {
-                writer.WritePropertyName("sqlPort");
+                writer.WritePropertyName("sqlPort"u8);
                 writer.WriteStringValue(SqlPort);
             }
             if (Optional.IsDefined(InstanceNumber))
             {
-                writer.WritePropertyName("instanceNumber");
+                writer.WritePropertyName("instanceNumber"u8);
                 writer.WriteStringValue(InstanceNumber);
             }
             if (Optional.IsDefined(DBUsername))
             {
-                writer.WritePropertyName("dbUsername");
+                writer.WritePropertyName("dbUsername"u8);
                 writer.WriteStringValue(DBUsername);
             }
             if (Optional.IsDefined(DBPassword))
             {
-                writer.WritePropertyName("dbPassword");
+                writer.WritePropertyName("dbPassword"u8);
                 writer.WriteStringValue(DBPassword);
             }
             if (Optional.IsDefined(DBPasswordUri))
             {
-                writer.WritePropertyName("dbPasswordUri");
+                writer.WritePropertyName("dbPasswordUri"u8);
                 writer.WriteStringValue(DBPasswordUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(DBSslCertificateUri))
+            if (Optional.IsDefined(SslCertificateUri))
             {
-                writer.WritePropertyName("dbSslCertificateUri");
-                writer.WriteStringValue(DBSslCertificateUri.AbsoluteUri);
+                writer.WritePropertyName("sslCertificateUri"u8);
+                writer.WriteStringValue(SslCertificateUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SslHostNameInCertificate))
             {
-                writer.WritePropertyName("sslHostNameInCertificate");
+                writer.WritePropertyName("sslHostNameInCertificate"u8);
                 writer.WriteStringValue(SslHostNameInCertificate);
             }
-            writer.WritePropertyName("providerType");
+            if (Optional.IsDefined(SslPreference))
+            {
+                writer.WritePropertyName("sslPreference"u8);
+                writer.WriteStringValue(SslPreference.Value.ToString());
+            }
+            if (Optional.IsDefined(SapSid))
+            {
+                writer.WritePropertyName("sapSid"u8);
+                writer.WriteStringValue(SapSid);
+            }
+            writer.WritePropertyName("providerType"u8);
             writer.WriteStringValue(ProviderType);
             writer.WriteEndObject();
         }
 
         internal static HanaDBProviderInstanceProperties DeserializeHanaDBProviderInstanceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> hostname = default;
             Optional<string> dbName = default;
             Optional<string> sqlPort = default;
@@ -75,42 +89,44 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<string> dbUsername = default;
             Optional<string> dbPassword = default;
             Optional<Uri> dbPasswordUri = default;
-            Optional<Uri> dbSslCertificateUri = default;
+            Optional<Uri> sslCertificateUri = default;
             Optional<string> sslHostNameInCertificate = default;
+            Optional<SslPreference> sslPreference = default;
+            Optional<string> sapSid = default;
             string providerType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hostname"))
+                if (property.NameEquals("hostname"u8))
                 {
                     hostname = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dbName"))
+                if (property.NameEquals("dbName"u8))
                 {
                     dbName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sqlPort"))
+                if (property.NameEquals("sqlPort"u8))
                 {
                     sqlPort = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceNumber"))
+                if (property.NameEquals("instanceNumber"u8))
                 {
                     instanceNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dbUsername"))
+                if (property.NameEquals("dbUsername"u8))
                 {
                     dbUsername = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dbPassword"))
+                if (property.NameEquals("dbPassword"u8))
                 {
                     dbPassword = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dbPasswordUri"))
+                if (property.NameEquals("dbPasswordUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,28 +136,43 @@ namespace Azure.ResourceManager.Workloads.Models
                     dbPasswordUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dbSslCertificateUri"))
+                if (property.NameEquals("sslCertificateUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dbSslCertificateUri = null;
+                        sslCertificateUri = null;
                         continue;
                     }
-                    dbSslCertificateUri = new Uri(property.Value.GetString());
+                    sslCertificateUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sslHostNameInCertificate"))
+                if (property.NameEquals("sslHostNameInCertificate"u8))
                 {
                     sslHostNameInCertificate = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providerType"))
+                if (property.NameEquals("sslPreference"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sslPreference = new SslPreference(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sapSid"u8))
+                {
+                    sapSid = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("providerType"u8))
                 {
                     providerType = property.Value.GetString();
                     continue;
                 }
             }
-            return new HanaDBProviderInstanceProperties(providerType, hostname.Value, dbName.Value, sqlPort.Value, instanceNumber.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, dbSslCertificateUri.Value, sslHostNameInCertificate.Value);
+            return new HanaDBProviderInstanceProperties(providerType, hostname.Value, dbName.Value, sqlPort.Value, instanceNumber.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, sslCertificateUri.Value, sslHostNameInCertificate.Value, Optional.ToNullable(sslPreference), sapSid.Value);
         }
     }
 }

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ExpressRouteCircuitRoutesTable DeserializeExpressRouteCircuitRoutesTable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> network = default;
             Optional<string> nextHop = default;
             Optional<string> locPrf = default;
@@ -21,22 +25,22 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> path = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("network"))
+                if (property.NameEquals("network"u8))
                 {
                     network = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nextHop"))
+                if (property.NameEquals("nextHop"u8))
                 {
                     nextHop = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("locPrf"))
+                if (property.NameEquals("locPrf"u8))
                 {
                     locPrf = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("weight"))
+                if (property.NameEquals("weight"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
                     weight = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;

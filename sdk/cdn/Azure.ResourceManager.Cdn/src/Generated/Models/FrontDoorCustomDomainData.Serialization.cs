@@ -18,23 +18,23 @@ namespace Azure.ResourceManager.Cdn
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(TlsSettings))
             {
-                writer.WritePropertyName("tlsSettings");
+                writer.WritePropertyName("tlsSettings"u8);
                 writer.WriteObjectValue(TlsSettings);
             }
             if (Optional.IsDefined(DnsZone))
             {
-                writer.WritePropertyName("azureDnsZone");
+                writer.WritePropertyName("azureDnsZone"u8);
                 JsonSerializer.Serialize(writer, DnsZone);
             }
             if (Optional.IsDefined(PreValidatedCustomDomainResource))
             {
                 if (PreValidatedCustomDomainResource != null)
                 {
-                    writer.WritePropertyName("preValidatedCustomDomainResourceId");
+                    writer.WritePropertyName("preValidatedCustomDomainResourceId"u8);
                     writer.WriteObjectValue(PreValidatedCustomDomainResource);
                 }
                 else
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(HostName))
             {
-                writer.WritePropertyName("hostName");
+                writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
             writer.WriteEndObject();
@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.Cdn
 
         internal static FrontDoorCustomDomainData DeserializeFrontDoorCustomDomainData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -68,22 +72,22 @@ namespace Azure.ResourceManager.Cdn
             Optional<DomainValidationProperties> validationProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +97,7 @@ namespace Azure.ResourceManager.Cdn
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,12 +106,12 @@ namespace Azure.ResourceManager.Cdn
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("profileName"))
+                        if (property0.NameEquals("profileName"u8))
                         {
                             profileName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("tlsSettings"))
+                        if (property0.NameEquals("tlsSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -117,7 +121,7 @@ namespace Azure.ResourceManager.Cdn
                             tlsSettings = FrontDoorCustomDomainHttpsContent.DeserializeFrontDoorCustomDomainHttpsContent(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("azureDnsZone"))
+                        if (property0.NameEquals("azureDnsZone"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -127,7 +131,7 @@ namespace Azure.ResourceManager.Cdn
                             azureDnsZone = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("preValidatedCustomDomainResourceId"))
+                        if (property0.NameEquals("preValidatedCustomDomainResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -137,7 +141,7 @@ namespace Azure.ResourceManager.Cdn
                             preValidatedCustomDomainResourceId = FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId.DeserializeFrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -147,7 +151,7 @@ namespace Azure.ResourceManager.Cdn
                             provisioningState = new FrontDoorProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("deploymentStatus"))
+                        if (property0.NameEquals("deploymentStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -157,7 +161,7 @@ namespace Azure.ResourceManager.Cdn
                             deploymentStatus = new FrontDoorDeploymentStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("domainValidationState"))
+                        if (property0.NameEquals("domainValidationState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -167,12 +171,12 @@ namespace Azure.ResourceManager.Cdn
                             domainValidationState = new DomainValidationState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("hostName"))
+                        if (property0.NameEquals("hostName"u8))
                         {
                             hostName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("validationProperties"))
+                        if (property0.NameEquals("validationProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

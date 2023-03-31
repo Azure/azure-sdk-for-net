@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EncryptionUserAssignedIdentity))
             {
-                writer.WritePropertyName("userAssignedIdentity");
+                writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(EncryptionUserAssignedIdentity);
             }
             if (Optional.IsDefined(EncryptionFederatedIdentityClientId))
             {
-                writer.WritePropertyName("federatedIdentityClientId");
+                writer.WritePropertyName("federatedIdentityClientId"u8);
                 writer.WriteStringValue(EncryptionFederatedIdentityClientId);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageAccountEncryptionIdentity DeserializeStorageAccountEncryptionIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> userAssignedIdentity = default;
             Optional<string> federatedIdentityClientId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userAssignedIdentity"))
+                if (property.NameEquals("userAssignedIdentity"u8))
                 {
                     userAssignedIdentity = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("federatedIdentityClientId"))
+                if (property.NameEquals("federatedIdentityClientId"u8))
                 {
                     federatedIdentityClientId = property.Value.GetString();
                     continue;

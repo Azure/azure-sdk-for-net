@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (CodeId != null)
                 {
-                    writer.WritePropertyName("codeId");
+                    writer.WritePropertyName("codeId"u8);
                     writer.WriteStringValue(CodeId);
                 }
                 else
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("codeId");
                 }
             }
-            writer.WritePropertyName("command");
+            writer.WritePropertyName("command"u8);
             writer.WriteStringValue(Command);
             if (Optional.IsDefined(Distribution))
             {
                 if (Distribution != null)
                 {
-                    writer.WritePropertyName("distribution");
+                    writer.WritePropertyName("distribution"u8);
                     writer.WriteObjectValue(Distribution);
                 }
                 else
@@ -42,13 +42,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("distribution");
                 }
             }
-            writer.WritePropertyName("environmentId");
+            writer.WritePropertyName("environmentId"u8);
             writer.WriteStringValue(EnvironmentId);
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 if (EnvironmentVariables != null)
                 {
-                    writer.WritePropertyName("environmentVariables");
+                    writer.WritePropertyName("environmentVariables"u8);
                     writer.WriteStartObject();
                     foreach (var item in EnvironmentVariables)
                     {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Resources))
             {
-                writer.WritePropertyName("resources");
+                writer.WritePropertyName("resources"u8);
                 writer.WriteObjectValue(Resources);
             }
             writer.WriteEndObject();
@@ -72,6 +72,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningTrialComponent DeserializeMachineLearningTrialComponent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> codeId = default;
             string command = default;
             Optional<MachineLearningDistributionConfiguration> distribution = default;
@@ -80,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningJobResourceConfiguration> resources = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("codeId"))
+                if (property.NameEquals("codeId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,12 +94,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     codeId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("command"))
+                if (property.NameEquals("command"u8))
                 {
                     command = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("distribution"))
+                if (property.NameEquals("distribution"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,12 +109,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     distribution = MachineLearningDistributionConfiguration.DeserializeMachineLearningDistributionConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("environmentId"))
+                if (property.NameEquals("environmentId"u8))
                 {
                     environmentId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("environmentVariables"))
+                if (property.NameEquals("environmentVariables"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,19 +124,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     environmentVariables = dictionary;
                     continue;
                 }
-                if (property.NameEquals("resources"))
+                if (property.NameEquals("resources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

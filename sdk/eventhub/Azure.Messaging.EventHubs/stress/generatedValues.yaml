@@ -1,0 +1,27 @@
+scenarios:
+- scenarioName: Consumer
+  imageBuildDir: ../../../..
+  Scenario: consumer
+  image: Dockerfile
+  imageTag: stresspgs7b6dif73rup6.azurecr.io/mredding/eventhub-net-stress/dockerfile:mredding
+- scenarioName: EventProd
+  imageBuildDir: ../../../..
+  Scenario: eventprod
+  image: Dockerfile
+  imageTag: stresspgs7b6dif73rup6.azurecr.io/mredding/eventhub-net-stress/dockerfile:mredding
+- scenarioName: BuffProd
+  imageBuildDir: ../../../..
+  Scenario: buffprod
+  image: Dockerfile
+  imageTag: stresspgs7b6dif73rup6.azurecr.io/mredding/eventhub-net-stress/dockerfile:mredding
+- scenarioName: BurstBuffProd
+  imageBuildDir: ../../../..
+  Scenario: burstbuffprod
+  image: Dockerfile
+  imageTag: stresspgs7b6dif73rup6.azurecr.io/mredding/eventhub-net-stress/dockerfile:mredding
+- scenarioName: Processor
+  imageBuildDir: ../../../..
+  Scenario: processor
+  image: Dockerfile
+  imageTag: stresspgs7b6dif73rup6.azurecr.io/mredding/eventhub-net-stress/dockerfile:mredding
+

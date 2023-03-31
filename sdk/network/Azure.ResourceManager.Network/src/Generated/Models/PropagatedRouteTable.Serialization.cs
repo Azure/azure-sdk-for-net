@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Labels))
             {
-                writer.WritePropertyName("labels");
+                writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
                 foreach (var item in Labels)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(Ids))
             {
-                writer.WritePropertyName("ids");
+                writer.WritePropertyName("ids"u8);
                 writer.WriteStartArray();
                 foreach (var item in Ids)
                 {
@@ -42,11 +42,15 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PropagatedRouteTable DeserializePropagatedRouteTable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> labels = default;
             Optional<IList<WritableSubResource>> ids = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("labels"))
+                if (property.NameEquals("labels"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
                     labels = array;
                     continue;
                 }
-                if (property.NameEquals("ids"))
+                if (property.NameEquals("ids"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

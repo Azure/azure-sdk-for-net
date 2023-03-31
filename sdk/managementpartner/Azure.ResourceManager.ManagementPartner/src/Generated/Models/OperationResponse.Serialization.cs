@@ -14,17 +14,21 @@ namespace Azure.ResourceManager.ManagementPartner.Models
     {
         internal static OperationResponse DeserializeOperationResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<OperationDisplay> display = default;
             Optional<string> origin = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("display"))
+                if (property.NameEquals("display"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                     display = OperationDisplay.DeserializeOperationDisplay(property.Value);
                     continue;
                 }
-                if (property.NameEquals("origin"))
+                if (property.NameEquals("origin"u8))
                 {
                     origin = property.Value.GetString();
                     continue;

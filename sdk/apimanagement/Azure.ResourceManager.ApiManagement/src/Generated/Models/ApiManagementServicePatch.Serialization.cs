@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
-                writer.WritePropertyName("zones");
+                writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
                 foreach (var item in Zones)
                 {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -51,16 +51,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(NotificationSenderEmail))
             {
-                writer.WritePropertyName("notificationSenderEmail");
+                writer.WritePropertyName("notificationSenderEmail"u8);
                 writer.WriteStringValue(NotificationSenderEmail);
             }
             if (Optional.IsCollectionDefined(HostnameConfigurations))
             {
-                writer.WritePropertyName("hostnameConfigurations");
+                writer.WritePropertyName("hostnameConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in HostnameConfigurations)
                 {
@@ -70,22 +70,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsDefined(PublicIPAddressId))
             {
-                writer.WritePropertyName("publicIpAddressId");
+                writer.WritePropertyName("publicIpAddressId"u8);
                 writer.WriteStringValue(PublicIPAddressId);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             if (Optional.IsDefined(VirtualNetworkConfiguration))
             {
-                writer.WritePropertyName("virtualNetworkConfiguration");
+                writer.WritePropertyName("virtualNetworkConfiguration"u8);
                 writer.WriteObjectValue(VirtualNetworkConfiguration);
             }
             if (Optional.IsCollectionDefined(AdditionalLocations))
             {
-                writer.WritePropertyName("additionalLocations");
+                writer.WritePropertyName("additionalLocations"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdditionalLocations)
                 {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsCollectionDefined(CustomProperties))
             {
-                writer.WritePropertyName("customProperties");
+                writer.WritePropertyName("customProperties"u8);
                 writer.WriteStartObject();
                 foreach (var item in CustomProperties)
                 {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsCollectionDefined(Certificates))
             {
-                writer.WritePropertyName("certificates");
+                writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();
                 foreach (var item in Certificates)
                 {
@@ -116,32 +116,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsDefined(EnableClientCertificate))
             {
-                writer.WritePropertyName("enableClientCertificate");
+                writer.WritePropertyName("enableClientCertificate"u8);
                 writer.WriteBooleanValue(EnableClientCertificate.Value);
             }
             if (Optional.IsDefined(DisableGateway))
             {
-                writer.WritePropertyName("disableGateway");
+                writer.WritePropertyName("disableGateway"u8);
                 writer.WriteBooleanValue(DisableGateway.Value);
             }
             if (Optional.IsDefined(VirtualNetworkType))
             {
-                writer.WritePropertyName("virtualNetworkType");
+                writer.WritePropertyName("virtualNetworkType"u8);
                 writer.WriteStringValue(VirtualNetworkType.Value.ToString());
             }
             if (Optional.IsDefined(ApiVersionConstraint))
             {
-                writer.WritePropertyName("apiVersionConstraint");
+                writer.WritePropertyName("apiVersionConstraint"u8);
                 writer.WriteObjectValue(ApiVersionConstraint);
             }
             if (Optional.IsDefined(Restore))
             {
-                writer.WritePropertyName("restore");
+                writer.WritePropertyName("restore"u8);
                 writer.WriteBooleanValue(Restore.Value);
             }
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
-                writer.WritePropertyName("privateEndpointConnections");
+                writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
@@ -151,12 +151,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsDefined(PublisherEmail))
             {
-                writer.WritePropertyName("publisherEmail");
+                writer.WritePropertyName("publisherEmail"u8);
                 writer.WriteStringValue(PublisherEmail);
             }
             if (Optional.IsDefined(PublisherName))
             {
-                writer.WritePropertyName("publisherName");
+                writer.WritePropertyName("publisherName"u8);
                 writer.WriteStringValue(PublisherName);
             }
             writer.WriteEndObject();
@@ -165,6 +165,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiManagementServicePatch DeserializeApiManagementServicePatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ApiManagementServiceSkuProperties> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> etag = default;
@@ -204,7 +208,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> publisherName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -214,7 +218,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     sku = ApiManagementServiceSkuProperties.DeserializeApiManagementServiceSkuProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -224,7 +228,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -234,7 +238,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("zones"))
+                if (property.NameEquals("zones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -249,7 +253,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     zones = array;
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -264,22 +268,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -289,7 +293,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -298,22 +302,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("notificationSenderEmail"))
+                        if (property0.NameEquals("notificationSenderEmail"u8))
                         {
                             notificationSenderEmail = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("targetProvisioningState"))
+                        if (property0.NameEquals("targetProvisioningState"u8))
                         {
                             targetProvisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("createdAtUtc"))
+                        if (property0.NameEquals("createdAtUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -323,7 +327,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             createdAtUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("gatewayUrl"))
+                        if (property0.NameEquals("gatewayUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -333,7 +337,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             gatewayUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("gatewayRegionalUrl"))
+                        if (property0.NameEquals("gatewayRegionalUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -343,7 +347,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             gatewayRegionalUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("portalUrl"))
+                        if (property0.NameEquals("portalUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -353,7 +357,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             portalUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("managementApiUrl"))
+                        if (property0.NameEquals("managementApiUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -363,7 +367,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             managementApiUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("scmUrl"))
+                        if (property0.NameEquals("scmUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -373,7 +377,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             scmUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("developerPortalUrl"))
+                        if (property0.NameEquals("developerPortalUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -383,7 +387,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             developerPortalUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("hostnameConfigurations"))
+                        if (property0.NameEquals("hostnameConfigurations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -398,7 +402,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             hostnameConfigurations = array;
                             continue;
                         }
-                        if (property0.NameEquals("publicIPAddresses"))
+                        if (property0.NameEquals("publicIPAddresses"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -408,12 +412,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<IPAddress> array = new List<IPAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPAddress.Parse(item.GetString()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(IPAddress.Parse(item.GetString()));
+                                }
                             }
                             publicIPAddresses = array;
                             continue;
                         }
-                        if (property0.NameEquals("privateIPAddresses"))
+                        if (property0.NameEquals("privateIPAddresses"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -423,12 +434,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<IPAddress> array = new List<IPAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPAddress.Parse(item.GetString()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(IPAddress.Parse(item.GetString()));
+                                }
                             }
                             privateIPAddresses = array;
                             continue;
                         }
-                        if (property0.NameEquals("publicIpAddressId"))
+                        if (property0.NameEquals("publicIpAddressId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -438,7 +456,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             publicIPAddressId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("publicNetworkAccess"))
+                        if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -448,7 +466,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("virtualNetworkConfiguration"))
+                        if (property0.NameEquals("virtualNetworkConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -458,7 +476,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             virtualNetworkConfiguration = VirtualNetworkConfiguration.DeserializeVirtualNetworkConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("additionalLocations"))
+                        if (property0.NameEquals("additionalLocations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -473,7 +491,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             additionalLocations = array;
                             continue;
                         }
-                        if (property0.NameEquals("customProperties"))
+                        if (property0.NameEquals("customProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -488,7 +506,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             customProperties = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("certificates"))
+                        if (property0.NameEquals("certificates"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -503,7 +521,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             certificates = array;
                             continue;
                         }
-                        if (property0.NameEquals("enableClientCertificate"))
+                        if (property0.NameEquals("enableClientCertificate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -513,7 +531,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             enableClientCertificate = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("disableGateway"))
+                        if (property0.NameEquals("disableGateway"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -523,7 +541,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             disableGateway = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("virtualNetworkType"))
+                        if (property0.NameEquals("virtualNetworkType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -533,7 +551,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             virtualNetworkType = new VirtualNetworkType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("apiVersionConstraint"))
+                        if (property0.NameEquals("apiVersionConstraint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -543,7 +561,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             apiVersionConstraint = ApiVersionConstraint.DeserializeApiVersionConstraint(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("restore"))
+                        if (property0.NameEquals("restore"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -553,7 +571,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             restore = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("privateEndpointConnections"))
+                        if (property0.NameEquals("privateEndpointConnections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -568,7 +586,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             privateEndpointConnections = array;
                             continue;
                         }
-                        if (property0.NameEquals("platformVersion"))
+                        if (property0.NameEquals("platformVersion"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -578,12 +596,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             platformVersion = new PlatformVersion(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("publisherEmail"))
+                        if (property0.NameEquals("publisherEmail"u8))
                         {
                             publisherEmail = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("publisherName"))
+                        if (property0.NameEquals("publisherName"u8))
                         {
                             publisherName = property0.Value.GetString();
                             continue;

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Subscription))
             {
-                writer.WritePropertyName("subscription");
+                writer.WritePropertyName("subscription"u8);
                 JsonSerializer.Serialize(writer, Subscription);
             }
             writer.WriteEndObject();

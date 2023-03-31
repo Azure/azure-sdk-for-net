@@ -8,14 +8,14 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.Email.Models
+namespace Azure.Communication.Email
 {
     public partial class EmailRecipients : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("to");
+            writer.WritePropertyName("to"u8);
             writer.WriteStartArray();
             foreach (var item in To)
             {
@@ -24,7 +24,7 @@ namespace Azure.Communication.Email.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(CC))
             {
-                writer.WritePropertyName("CC");
+                writer.WritePropertyName("cc"u8);
                 writer.WriteStartArray();
                 foreach (var item in CC)
                 {
@@ -34,7 +34,7 @@ namespace Azure.Communication.Email.Models
             }
             if (Optional.IsCollectionDefined(BCC))
             {
-                writer.WritePropertyName("bCC");
+                writer.WritePropertyName("bcc"u8);
                 writer.WriteStartArray();
                 foreach (var item in BCC)
                 {

@@ -15,41 +15,45 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("minInstanceCount");
+            writer.WritePropertyName("minInstanceCount"u8);
             writer.WriteNumberValue(MinInstanceCount);
-            writer.WritePropertyName("maxInstanceCount");
+            writer.WritePropertyName("maxInstanceCount"u8);
             writer.WriteNumberValue(MaxInstanceCount);
-            writer.WritePropertyName("scaleIncrement");
+            writer.WritePropertyName("scaleIncrement"u8);
             writer.WriteNumberValue(ScaleIncrement);
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
 
         internal static PartitionInstanceCountScalingMechanism DeserializePartitionInstanceCountScalingMechanism(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int minInstanceCount = default;
             int maxInstanceCount = default;
             int scaleIncrement = default;
             ServiceScalingMechanismKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minInstanceCount"))
+                if (property.NameEquals("minInstanceCount"u8))
                 {
                     minInstanceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxInstanceCount"))
+                if (property.NameEquals("maxInstanceCount"u8))
                 {
                     maxInstanceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("scaleIncrement"))
+                if (property.NameEquals("scaleIncrement"u8))
                 {
                     scaleIncrement = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new ServiceScalingMechanismKind(property.Value.GetString());
                     continue;

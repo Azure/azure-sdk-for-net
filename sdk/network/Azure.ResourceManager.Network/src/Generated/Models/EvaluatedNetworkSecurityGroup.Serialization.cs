@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static EvaluatedNetworkSecurityGroup DeserializeEvaluatedNetworkSecurityGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> networkSecurityGroupId = default;
             Optional<string> appliedTo = default;
             Optional<MatchedRule> matchedRule = default;
             Optional<IReadOnlyList<NetworkSecurityRulesEvaluationResult>> rulesEvaluationResult = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("networkSecurityGroupId"))
+                if (property.NameEquals("networkSecurityGroupId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,12 +35,12 @@ namespace Azure.ResourceManager.Network.Models
                     networkSecurityGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("appliedTo"))
+                if (property.NameEquals("appliedTo"u8))
                 {
                     appliedTo = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("matchedRule"))
+                if (property.NameEquals("matchedRule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
                     matchedRule = MatchedRule.DeserializeMatchedRule(property.Value);
                     continue;
                 }
-                if (property.NameEquals("rulesEvaluationResult"))
+                if (property.NameEquals("rulesEvaluationResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

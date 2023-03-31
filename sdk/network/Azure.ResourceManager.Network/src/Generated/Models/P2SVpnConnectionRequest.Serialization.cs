@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(VpnConnectionIds))
             {
-                writer.WritePropertyName("vpnConnectionIds");
+                writer.WritePropertyName("vpnConnectionIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in VpnConnectionIds)
                 {

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MongoDBCollectionProgress DeserializeMongoDBCollectionProgress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             long bytesCopied = default;
             long documentsCopied = default;
             string elapsedTime = default;
@@ -32,22 +36,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             long totalDocuments = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("bytesCopied"))
+                if (property.NameEquals("bytesCopied"u8))
                 {
                     bytesCopied = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("documentsCopied"))
+                if (property.NameEquals("documentsCopied"u8))
                 {
                     documentsCopied = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("elapsedTime"))
+                if (property.NameEquals("elapsedTime"u8))
                 {
                     elapsedTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     Dictionary<string, MongoDBError> dictionary = new Dictionary<string, MongoDBError>();
                     foreach (var property0 in property.Value.EnumerateObject())
@@ -57,17 +61,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                     errors = dictionary;
                     continue;
                 }
-                if (property.NameEquals("eventsPending"))
+                if (property.NameEquals("eventsPending"u8))
                 {
                     eventsPending = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("eventsReplayed"))
+                if (property.NameEquals("eventsReplayed"u8))
                 {
                     eventsReplayed = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("lastEventTime"))
+                if (property.NameEquals("lastEventTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +81,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     lastEventTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastReplayTime"))
+                if (property.NameEquals("lastReplayTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,32 +91,32 @@ namespace Azure.ResourceManager.DataMigration.Models
                     lastReplayTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("qualifiedName"))
+                if (property.NameEquals("qualifiedName"u8))
                 {
                     qualifiedName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultType"))
+                if (property.NameEquals("resultType"u8))
                 {
                     resultType = new MongoDBProgressResultType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = new MongoDBMigrationState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("totalBytes"))
+                if (property.NameEquals("totalBytes"u8))
                 {
                     totalBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalDocuments"))
+                if (property.NameEquals("totalDocuments"u8))
                 {
                     totalDocuments = property.Value.GetInt64();
                     continue;

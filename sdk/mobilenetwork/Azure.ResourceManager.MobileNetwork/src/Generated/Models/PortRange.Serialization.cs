@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MinPort))
             {
-                writer.WritePropertyName("minPort");
+                writer.WritePropertyName("minPort"u8);
                 writer.WriteNumberValue(MinPort.Value);
             }
             if (Optional.IsDefined(MaxPort))
             {
-                writer.WritePropertyName("maxPort");
+                writer.WritePropertyName("maxPort"u8);
                 writer.WriteNumberValue(MaxPort.Value);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static PortRange DeserializePortRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> minPort = default;
             Optional<int> maxPort = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minPort"))
+                if (property.NameEquals("minPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     minPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxPort"))
+                if (property.NameEquals("maxPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

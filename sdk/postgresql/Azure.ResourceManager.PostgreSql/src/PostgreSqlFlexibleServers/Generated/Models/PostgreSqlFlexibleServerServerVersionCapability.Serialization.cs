@@ -15,18 +15,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         internal static PostgreSqlFlexibleServerServerVersionCapability DeserializePostgreSqlFlexibleServerServerVersionCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<string>> supportedVersionsToUpgrade = default;
             Optional<IReadOnlyList<PostgreSqlFlexibleServerVCoreCapability>> supportedVcores = default;
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportedVersionsToUpgrade"))
+                if (property.NameEquals("supportedVersionsToUpgrade"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedVersionsToUpgrade = array;
                     continue;
                 }
-                if (property.NameEquals("supportedVcores"))
+                if (property.NameEquals("supportedVcores"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedVcores = array;
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;

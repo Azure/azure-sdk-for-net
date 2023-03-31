@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Columns))
             {
-                writer.WritePropertyName("columns");
+                writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
                 foreach (var item in Columns)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static DataStreamDeclaration DeserializeDataStreamDeclaration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<DataColumnDefinition>> columns = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("columns"))
+                if (property.NameEquals("columns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

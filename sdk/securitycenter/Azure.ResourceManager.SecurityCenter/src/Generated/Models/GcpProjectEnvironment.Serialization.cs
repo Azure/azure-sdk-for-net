@@ -17,27 +17,31 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(OrganizationalData))
             {
-                writer.WritePropertyName("organizationalData");
+                writer.WritePropertyName("organizationalData"u8);
                 writer.WriteObjectValue(OrganizationalData);
             }
             if (Optional.IsDefined(ProjectDetails))
             {
-                writer.WritePropertyName("projectDetails");
+                writer.WritePropertyName("projectDetails"u8);
                 writer.WriteObjectValue(ProjectDetails);
             }
-            writer.WritePropertyName("environmentType");
+            writer.WritePropertyName("environmentType"u8);
             writer.WriteStringValue(EnvironmentType.ToString());
             writer.WriteEndObject();
         }
 
         internal static GcpProjectEnvironment DeserializeGcpProjectEnvironment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GcpOrganizationalInfo> organizationalData = default;
             Optional<GcpProjectDetails> projectDetails = default;
             EnvironmentType environmentType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("organizationalData"))
+                if (property.NameEquals("organizationalData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     organizationalData = GcpOrganizationalInfo.DeserializeGcpOrganizationalInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("projectDetails"))
+                if (property.NameEquals("projectDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     projectDetails = GcpProjectDetails.DeserializeGcpProjectDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("environmentType"))
+                if (property.NameEquals("environmentType"u8))
                 {
                     environmentType = new EnvironmentType(property.Value.GetString());
                     continue;

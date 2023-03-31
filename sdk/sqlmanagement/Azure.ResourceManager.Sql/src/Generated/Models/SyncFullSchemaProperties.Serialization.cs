@@ -16,11 +16,15 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static SyncFullSchemaProperties DeserializeSyncFullSchemaProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SyncFullSchemaTable>> tables = default;
             Optional<DateTimeOffset> lastUpdateTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tables"))
+                if (property.NameEquals("tables"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
                     tables = array;
                     continue;
                 }
-                if (property.NameEquals("lastUpdateTime"))
+                if (property.NameEquals("lastUpdateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

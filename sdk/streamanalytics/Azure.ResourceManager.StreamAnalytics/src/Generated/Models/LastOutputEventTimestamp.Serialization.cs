@@ -15,11 +15,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         internal static LastOutputEventTimestamp DeserializeLastOutputEventTimestamp(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> lastOutputEventTime = default;
             Optional<DateTimeOffset> lastUpdateTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastOutputEventTime"))
+                if (property.NameEquals("lastOutputEventTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     lastOutputEventTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdateTime"))
+                if (property.NameEquals("lastUpdateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

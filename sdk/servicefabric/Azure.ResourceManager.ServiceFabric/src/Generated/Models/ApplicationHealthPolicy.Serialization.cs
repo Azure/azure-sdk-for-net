@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultServiceTypeHealthPolicy))
             {
-                writer.WritePropertyName("defaultServiceTypeHealthPolicy");
+                writer.WritePropertyName("defaultServiceTypeHealthPolicy"u8);
                 writer.WriteObjectValue(DefaultServiceTypeHealthPolicy);
             }
             if (Optional.IsCollectionDefined(ServiceTypeHealthPolicies))
             {
-                writer.WritePropertyName("serviceTypeHealthPolicies");
+                writer.WritePropertyName("serviceTypeHealthPolicies"u8);
                 writer.WriteStartObject();
                 foreach (var item in ServiceTypeHealthPolicies)
                 {
@@ -37,11 +37,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ApplicationHealthPolicy DeserializeApplicationHealthPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServiceTypeHealthPolicy> defaultServiceTypeHealthPolicy = default;
             Optional<IDictionary<string, ServiceTypeHealthPolicy>> serviceTypeHealthPolicies = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("defaultServiceTypeHealthPolicy"))
+                if (property.NameEquals("defaultServiceTypeHealthPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     defaultServiceTypeHealthPolicy = ServiceTypeHealthPolicy.DeserializeServiceTypeHealthPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("serviceTypeHealthPolicies"))
+                if (property.NameEquals("serviceTypeHealthPolicies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

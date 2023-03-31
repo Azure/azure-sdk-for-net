@@ -15,11 +15,11 @@ namespace Azure.Communication.Identity.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("token");
+            writer.WritePropertyName("token"u8);
             writer.WriteStringValue(Token);
-            writer.WritePropertyName("appId");
+            writer.WritePropertyName("appId"u8);
             writer.WriteStringValue(AppId);
-            writer.WritePropertyName("userId");
+            writer.WritePropertyName("userId"u8);
             writer.WriteStringValue(UserId);
             writer.WriteEndObject();
         }

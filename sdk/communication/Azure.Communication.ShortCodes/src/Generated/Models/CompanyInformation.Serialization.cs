@@ -18,27 +18,27 @@ namespace Azure.Communication.ShortCodes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Url))
             {
-                writer.WritePropertyName("url");
+                writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url.AbsoluteUri);
             }
             if (Optional.IsDefined(Address))
             {
-                writer.WritePropertyName("address");
+                writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
             if (Optional.IsDefined(ContactInformation))
             {
-                writer.WritePropertyName("contactInformation");
+                writer.WritePropertyName("contactInformation"u8);
                 writer.WriteObjectValue(ContactInformation);
             }
             if (Optional.IsDefined(CustomerCareInformation))
             {
-                writer.WritePropertyName("customerCareInformation");
+                writer.WritePropertyName("customerCareInformation"u8);
                 writer.WriteObjectValue(CustomerCareInformation);
             }
             writer.WriteEndObject();
@@ -46,6 +46,10 @@ namespace Azure.Communication.ShortCodes.Models
 
         internal static CompanyInformation DeserializeCompanyInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<Uri> url = default;
             Optional<string> address = default;
@@ -53,12 +57,12 @@ namespace Azure.Communication.ShortCodes.Models
             Optional<CustomerCareInformation> customerCareInformation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,12 +72,12 @@ namespace Azure.Communication.ShortCodes.Models
                     url = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("address"))
+                if (property.NameEquals("address"u8))
                 {
                     address = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("contactInformation"))
+                if (property.NameEquals("contactInformation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +87,7 @@ namespace Azure.Communication.ShortCodes.Models
                     contactInformation = ContactInformation.DeserializeContactInformation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("customerCareInformation"))
+                if (property.NameEquals("customerCareInformation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

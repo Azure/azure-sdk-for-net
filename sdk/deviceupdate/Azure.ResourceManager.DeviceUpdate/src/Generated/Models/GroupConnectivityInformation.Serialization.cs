@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(CustomerVisibleFqdns))
             {
-                writer.WritePropertyName("customerVisibleFqdns");
+                writer.WritePropertyName("customerVisibleFqdns"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomerVisibleFqdns)
                 {
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
             if (Optional.IsDefined(RedirectMapId))
             {
-                writer.WritePropertyName("redirectMapId");
+                writer.WritePropertyName("redirectMapId"u8);
                 writer.WriteStringValue(RedirectMapId);
             }
             if (Optional.IsDefined(PrivateLinkServiceArmRegion))
             {
-                writer.WritePropertyName("privateLinkServiceArmRegion");
+                writer.WritePropertyName("privateLinkServiceArmRegion"u8);
                 writer.WriteStringValue(PrivateLinkServiceArmRegion);
             }
             writer.WriteEndObject();
@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         internal static GroupConnectivityInformation DeserializeGroupConnectivityInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> groupId = default;
             Optional<string> memberName = default;
             Optional<IList<string>> customerVisibleFqdns = default;
@@ -49,17 +53,17 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             Optional<string> privateLinkServiceArmRegion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("groupId"))
+                if (property.NameEquals("groupId"u8))
                 {
                     groupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("memberName"))
+                if (property.NameEquals("memberName"u8))
                 {
                     memberName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customerVisibleFqdns"))
+                if (property.NameEquals("customerVisibleFqdns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,17 +78,17 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     customerVisibleFqdns = array;
                     continue;
                 }
-                if (property.NameEquals("internalFqdn"))
+                if (property.NameEquals("internalFqdn"u8))
                 {
                     internalFqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("redirectMapId"))
+                if (property.NameEquals("redirectMapId"u8))
                 {
                     redirectMapId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateLinkServiceArmRegion"))
+                if (property.NameEquals("privateLinkServiceArmRegion"u8))
                 {
                     privateLinkServiceArmRegion = property.Value.GetString();
                     continue;

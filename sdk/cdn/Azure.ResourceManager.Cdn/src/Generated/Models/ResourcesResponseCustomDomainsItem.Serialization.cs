@@ -14,28 +14,32 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static ResourcesResponseCustomDomainsItem DeserializeResourcesResponseCustomDomainsItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> endpointId = default;
             Optional<bool> history = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpointId"))
+                if (property.NameEquals("endpointId"u8))
                 {
                     endpointId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("history"))
+                if (property.NameEquals("history"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

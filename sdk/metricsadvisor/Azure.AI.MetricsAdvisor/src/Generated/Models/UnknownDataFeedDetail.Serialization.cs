@@ -17,22 +17,22 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("dataSourceType");
+            writer.WritePropertyName("dataSourceType"u8);
             writer.WriteStringValue(DataSourceType.ToString());
-            writer.WritePropertyName("dataFeedName");
+            writer.WritePropertyName("dataFeedName"u8);
             writer.WriteStringValue(DataFeedName);
             if (Optional.IsDefined(DataFeedDescription))
             {
-                writer.WritePropertyName("dataFeedDescription");
+                writer.WritePropertyName("dataFeedDescription"u8);
                 writer.WriteStringValue(DataFeedDescription);
             }
-            writer.WritePropertyName("granularityName");
+            writer.WritePropertyName("granularityName"u8);
             writer.WriteStringValue(GranularityName.ToString());
             if (Optional.IsDefined(GranularityAmount))
             {
                 if (GranularityAmount != null)
                 {
-                    writer.WritePropertyName("granularityAmount");
+                    writer.WritePropertyName("granularityAmount"u8);
                     writer.WriteNumberValue(GranularityAmount.Value);
                 }
                 else
@@ -40,7 +40,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("granularityAmount");
                 }
             }
-            writer.WritePropertyName("metrics");
+            writer.WritePropertyName("metrics"u8);
             writer.WriteStartArray();
             foreach (var item in Metrics)
             {
@@ -49,7 +49,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Dimension))
             {
-                writer.WritePropertyName("dimension");
+                writer.WritePropertyName("dimension"u8);
                 writer.WriteStartArray();
                 foreach (var item in Dimension)
                 {
@@ -59,44 +59,44 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             if (Optional.IsDefined(TimestampColumn))
             {
-                writer.WritePropertyName("timestampColumn");
+                writer.WritePropertyName("timestampColumn"u8);
                 writer.WriteStringValue(TimestampColumn);
             }
-            writer.WritePropertyName("dataStartFrom");
+            writer.WritePropertyName("dataStartFrom"u8);
             writer.WriteStringValue(DataStartFrom, "O");
             if (Optional.IsDefined(StartOffsetInSeconds))
             {
-                writer.WritePropertyName("startOffsetInSeconds");
+                writer.WritePropertyName("startOffsetInSeconds"u8);
                 writer.WriteNumberValue(StartOffsetInSeconds.Value);
             }
             if (Optional.IsDefined(MaxConcurrency))
             {
-                writer.WritePropertyName("maxConcurrency");
+                writer.WritePropertyName("maxConcurrency"u8);
                 writer.WriteNumberValue(MaxConcurrency.Value);
             }
             if (Optional.IsDefined(MinRetryIntervalInSeconds))
             {
-                writer.WritePropertyName("minRetryIntervalInSeconds");
+                writer.WritePropertyName("minRetryIntervalInSeconds"u8);
                 writer.WriteNumberValue(MinRetryIntervalInSeconds.Value);
             }
             if (Optional.IsDefined(StopRetryAfterInSeconds))
             {
-                writer.WritePropertyName("stopRetryAfterInSeconds");
+                writer.WritePropertyName("stopRetryAfterInSeconds"u8);
                 writer.WriteNumberValue(StopRetryAfterInSeconds.Value);
             }
             if (Optional.IsDefined(NeedRollup))
             {
-                writer.WritePropertyName("needRollup");
+                writer.WritePropertyName("needRollup"u8);
                 writer.WriteStringValue(NeedRollup.Value.ToString());
             }
             if (Optional.IsDefined(RollUpMethod))
             {
-                writer.WritePropertyName("rollUpMethod");
+                writer.WritePropertyName("rollUpMethod"u8);
                 writer.WriteStringValue(RollUpMethod.Value.ToString());
             }
             if (Optional.IsCollectionDefined(RollUpColumns))
             {
-                writer.WritePropertyName("rollUpColumns");
+                writer.WritePropertyName("rollUpColumns"u8);
                 writer.WriteStartArray();
                 foreach (var item in RollUpColumns)
                 {
@@ -106,27 +106,27 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             if (Optional.IsDefined(AllUpIdentification))
             {
-                writer.WritePropertyName("allUpIdentification");
+                writer.WritePropertyName("allUpIdentification"u8);
                 writer.WriteStringValue(AllUpIdentification);
             }
             if (Optional.IsDefined(FillMissingPointType))
             {
-                writer.WritePropertyName("fillMissingPointType");
+                writer.WritePropertyName("fillMissingPointType"u8);
                 writer.WriteStringValue(FillMissingPointType.Value.ToString());
             }
             if (Optional.IsDefined(FillMissingPointValue))
             {
-                writer.WritePropertyName("fillMissingPointValue");
+                writer.WritePropertyName("fillMissingPointValue"u8);
                 writer.WriteNumberValue(FillMissingPointValue.Value);
             }
             if (Optional.IsDefined(ViewMode))
             {
-                writer.WritePropertyName("viewMode");
+                writer.WritePropertyName("viewMode"u8);
                 writer.WriteStringValue(ViewMode.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Admins))
             {
-                writer.WritePropertyName("admins");
+                writer.WritePropertyName("admins"u8);
                 writer.WriteStartArray();
                 foreach (var item in Admins)
                 {
@@ -136,7 +136,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             if (Optional.IsCollectionDefined(Viewers))
             {
-                writer.WritePropertyName("viewers");
+                writer.WritePropertyName("viewers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Viewers)
                 {
@@ -146,17 +146,17 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             if (Optional.IsDefined(ActionLinkTemplate))
             {
-                writer.WritePropertyName("actionLinkTemplate");
+                writer.WritePropertyName("actionLinkTemplate"u8);
                 writer.WriteStringValue(ActionLinkTemplate);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
-                writer.WritePropertyName("authenticationType");
+                writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
             if (Optional.IsDefined(CredentialId))
             {
-                writer.WritePropertyName("credentialId");
+                writer.WritePropertyName("credentialId"u8);
                 writer.WriteStringValue(CredentialId);
             }
             writer.WriteEndObject();
@@ -164,6 +164,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static UnknownDataFeedDetail DeserializeUnknownDataFeedDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataFeedSourceKind dataSourceType = "Unknown";
             Optional<string> dataFeedId = default;
             string dataFeedName = default;
@@ -196,32 +200,32 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<string> credentialId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataSourceType"))
+                if (property.NameEquals("dataSourceType"u8))
                 {
                     dataSourceType = new DataFeedSourceKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dataFeedId"))
+                if (property.NameEquals("dataFeedId"u8))
                 {
                     dataFeedId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataFeedName"))
+                if (property.NameEquals("dataFeedName"u8))
                 {
                     dataFeedName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataFeedDescription"))
+                if (property.NameEquals("dataFeedDescription"u8))
                 {
                     dataFeedDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("granularityName"))
+                if (property.NameEquals("granularityName"u8))
                 {
                     granularityName = new DataFeedGranularityType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("granularityAmount"))
+                if (property.NameEquals("granularityAmount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -231,7 +235,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     granularityAmount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("metrics"))
+                if (property.NameEquals("metrics"u8))
                 {
                     List<DataFeedMetric> array = new List<DataFeedMetric>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -241,7 +245,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     metrics = array;
                     continue;
                 }
-                if (property.NameEquals("dimension"))
+                if (property.NameEquals("dimension"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -256,17 +260,17 @@ namespace Azure.AI.MetricsAdvisor.Models
                     dimension = array;
                     continue;
                 }
-                if (property.NameEquals("timestampColumn"))
+                if (property.NameEquals("timestampColumn"u8))
                 {
                     timestampColumn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataStartFrom"))
+                if (property.NameEquals("dataStartFrom"u8))
                 {
                     dataStartFrom = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("startOffsetInSeconds"))
+                if (property.NameEquals("startOffsetInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -276,7 +280,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     startOffsetInSeconds = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("maxConcurrency"))
+                if (property.NameEquals("maxConcurrency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -286,7 +290,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     maxConcurrency = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minRetryIntervalInSeconds"))
+                if (property.NameEquals("minRetryIntervalInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -296,7 +300,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     minRetryIntervalInSeconds = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("stopRetryAfterInSeconds"))
+                if (property.NameEquals("stopRetryAfterInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -306,7 +310,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     stopRetryAfterInSeconds = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("needRollup"))
+                if (property.NameEquals("needRollup"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -316,7 +320,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     needRollup = new DataFeedRollupType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rollUpMethod"))
+                if (property.NameEquals("rollUpMethod"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -326,7 +330,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     rollUpMethod = new DataFeedAutoRollupMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rollUpColumns"))
+                if (property.NameEquals("rollUpColumns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -341,12 +345,12 @@ namespace Azure.AI.MetricsAdvisor.Models
                     rollUpColumns = array;
                     continue;
                 }
-                if (property.NameEquals("allUpIdentification"))
+                if (property.NameEquals("allUpIdentification"u8))
                 {
                     allUpIdentification = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fillMissingPointType"))
+                if (property.NameEquals("fillMissingPointType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -356,7 +360,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     fillMissingPointType = new DataFeedMissingDataPointFillType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("fillMissingPointValue"))
+                if (property.NameEquals("fillMissingPointValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -366,7 +370,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     fillMissingPointValue = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("viewMode"))
+                if (property.NameEquals("viewMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -376,7 +380,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     viewMode = new DataFeedAccessMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("admins"))
+                if (property.NameEquals("admins"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -391,7 +395,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     admins = array;
                     continue;
                 }
-                if (property.NameEquals("viewers"))
+                if (property.NameEquals("viewers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -406,7 +410,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     viewers = array;
                     continue;
                 }
-                if (property.NameEquals("isAdmin"))
+                if (property.NameEquals("isAdmin"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -416,12 +420,12 @@ namespace Azure.AI.MetricsAdvisor.Models
                     isAdmin = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("creator"))
+                if (property.NameEquals("creator"u8))
                 {
                     creator = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -431,7 +435,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     status = new DataFeedStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("createdTime"))
+                if (property.NameEquals("createdTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -441,12 +445,12 @@ namespace Azure.AI.MetricsAdvisor.Models
                     createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("actionLinkTemplate"))
+                if (property.NameEquals("actionLinkTemplate"u8))
                 {
                     actionLinkTemplate = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authenticationType"))
+                if (property.NameEquals("authenticationType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -456,7 +460,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     authenticationType = new AuthenticationTypeEnum(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("credentialId"))
+                if (property.NameEquals("credentialId"u8))
                 {
                     credentialId = property.Value.GetString();
                     continue;

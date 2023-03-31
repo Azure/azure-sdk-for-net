@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static TransportAvailabilityDetails DeserializeTransportAvailabilityDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TransportShipmentType> shipmentType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("shipmentType"))
+                if (property.NameEquals("shipmentType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

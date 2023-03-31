@@ -20,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
             if (Optional.IsDefined(Data))
             {
-                writer.WritePropertyName("data");
+                writer.WritePropertyName("data"u8);
                 writer.WriteStringValue(Data);
             }
             writer.WriteEndObject();
@@ -33,16 +33,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DataFlowDebugResultResponse DeserializeDataFlowDebugResultResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             Optional<string> data = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("data"))
+                if (property.NameEquals("data"u8))
                 {
                     data = property.Value.GetString();
                     continue;

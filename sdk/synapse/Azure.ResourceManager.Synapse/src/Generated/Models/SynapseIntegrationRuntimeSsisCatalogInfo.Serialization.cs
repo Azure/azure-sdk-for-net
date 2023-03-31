@@ -19,22 +19,22 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CatalogServerEndpoint))
             {
-                writer.WritePropertyName("catalogServerEndpoint");
+                writer.WritePropertyName("catalogServerEndpoint"u8);
                 writer.WriteStringValue(CatalogServerEndpoint.AbsoluteUri);
             }
             if (Optional.IsDefined(CatalogAdminUserName))
             {
-                writer.WritePropertyName("catalogAdminUserName");
+                writer.WritePropertyName("catalogAdminUserName"u8);
                 writer.WriteStringValue(CatalogAdminUserName);
             }
             if (Optional.IsDefined(CatalogAdminPassword))
             {
-                writer.WritePropertyName("catalogAdminPassword");
+                writer.WritePropertyName("catalogAdminPassword"u8);
                 writer.WriteObjectValue(CatalogAdminPassword);
             }
             if (Optional.IsDefined(CatalogPricingTier))
             {
-                writer.WritePropertyName("catalogPricingTier");
+                writer.WritePropertyName("catalogPricingTier"u8);
                 writer.WriteStringValue(CatalogPricingTier.Value.ToString());
             }
             foreach (var item in AdditionalProperties)
@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseIntegrationRuntimeSsisCatalogInfo DeserializeSynapseIntegrationRuntimeSsisCatalogInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> catalogServerEndpoint = default;
             Optional<string> catalogAdminUserName = default;
             Optional<SynapseSecureString> catalogAdminPassword = default;
@@ -59,7 +63,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("catalogServerEndpoint"))
+                if (property.NameEquals("catalogServerEndpoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,12 +73,12 @@ namespace Azure.ResourceManager.Synapse.Models
                     catalogServerEndpoint = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("catalogAdminUserName"))
+                if (property.NameEquals("catalogAdminUserName"u8))
                 {
                     catalogAdminUserName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("catalogAdminPassword"))
+                if (property.NameEquals("catalogAdminPassword"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +88,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     catalogAdminPassword = SynapseSecureString.DeserializeSynapseSecureString(property.Value);
                     continue;
                 }
-                if (property.NameEquals("catalogPricingTier"))
+                if (property.NameEquals("catalogPricingTier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

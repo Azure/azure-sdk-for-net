@@ -17,21 +17,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(WorkspaceResourceId))
             {
-                writer.WritePropertyName("workspaceResourceId");
+                writer.WritePropertyName("workspaceResourceId"u8);
                 writer.WriteStringValue(WorkspaceResourceId);
             }
-            writer.WritePropertyName("actionType");
+            writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
             writer.WriteEndObject();
         }
 
         internal static SecurityAutomationActionWorkspace DeserializeSecurityAutomationActionWorkspace(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> workspaceResourceId = default;
             ActionType actionType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("workspaceResourceId"))
+                if (property.NameEquals("workspaceResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     workspaceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("actionType"))
+                if (property.NameEquals("actionType"u8))
                 {
                     actionType = new ActionType(property.Value.GetString());
                     continue;

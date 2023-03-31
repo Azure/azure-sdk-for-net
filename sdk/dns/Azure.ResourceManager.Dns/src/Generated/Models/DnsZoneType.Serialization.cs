@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Dns.Models
 
         public static DnsZoneType ToDnsZoneType(this string value)
         {
-            if (string.Equals(value, "Public", StringComparison.InvariantCultureIgnoreCase)) return DnsZoneType.Public;
-            if (string.Equals(value, "Private", StringComparison.InvariantCultureIgnoreCase)) return DnsZoneType.Private;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Public")) return DnsZoneType.Public;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Private")) return DnsZoneType.Private;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DnsZoneType value.");
         }
     }

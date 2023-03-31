@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(External))
             {
-                writer.WritePropertyName("external");
+                writer.WritePropertyName("external"u8);
                 writer.WriteBooleanValue(External.Value);
             }
             if (Optional.IsDefined(TargetPort))
             {
-                writer.WritePropertyName("targetPort");
+                writer.WritePropertyName("targetPort"u8);
                 writer.WriteNumberValue(TargetPort.Value);
             }
             if (Optional.IsDefined(ExposedPort))
             {
-                writer.WritePropertyName("exposedPort");
+                writer.WritePropertyName("exposedPort"u8);
                 writer.WriteNumberValue(ExposedPort.Value);
             }
             if (Optional.IsDefined(Transport))
             {
-                writer.WritePropertyName("transport");
+                writer.WritePropertyName("transport"u8);
                 writer.WriteStringValue(Transport.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Traffic))
             {
-                writer.WritePropertyName("traffic");
+                writer.WritePropertyName("traffic"u8);
                 writer.WriteStartArray();
                 foreach (var item in Traffic)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             if (Optional.IsCollectionDefined(CustomDomains))
             {
-                writer.WritePropertyName("customDomains");
+                writer.WritePropertyName("customDomains"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomDomains)
                 {
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             if (Optional.IsDefined(AllowInsecure))
             {
-                writer.WritePropertyName("allowInsecure");
+                writer.WritePropertyName("allowInsecure"u8);
                 writer.WriteBooleanValue(AllowInsecure.Value);
             }
             if (Optional.IsCollectionDefined(IPSecurityRestrictions))
             {
-                writer.WritePropertyName("ipSecurityRestrictions");
+                writer.WritePropertyName("ipSecurityRestrictions"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPSecurityRestrictions)
                 {
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             if (Optional.IsDefined(ClientCertificateMode))
             {
-                writer.WritePropertyName("clientCertificateMode");
+                writer.WritePropertyName("clientCertificateMode"u8);
                 writer.WriteStringValue(ClientCertificateMode.Value.ToString());
             }
             if (Optional.IsDefined(CorsPolicy))
             {
-                writer.WritePropertyName("corsPolicy");
+                writer.WritePropertyName("corsPolicy"u8);
                 writer.WriteObjectValue(CorsPolicy);
             }
             writer.WriteEndObject();
@@ -86,6 +86,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppIngressConfiguration DeserializeContainerAppIngressConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fqdn = default;
             Optional<bool> external = default;
             Optional<int> targetPort = default;
@@ -99,12 +103,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<ContainerAppCorsPolicy> corsPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fqdn"))
+                if (property.NameEquals("fqdn"u8))
                 {
                     fqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("external"))
+                if (property.NameEquals("external"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +118,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     external = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("targetPort"))
+                if (property.NameEquals("targetPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +128,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     targetPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("exposedPort"))
+                if (property.NameEquals("exposedPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -134,7 +138,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     exposedPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("transport"))
+                if (property.NameEquals("transport"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -144,7 +148,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     transport = new ContainerAppIngressTransportMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("traffic"))
+                if (property.NameEquals("traffic"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -159,7 +163,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     traffic = array;
                     continue;
                 }
-                if (property.NameEquals("customDomains"))
+                if (property.NameEquals("customDomains"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -174,7 +178,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     customDomains = array;
                     continue;
                 }
-                if (property.NameEquals("allowInsecure"))
+                if (property.NameEquals("allowInsecure"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -184,7 +188,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     allowInsecure = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("ipSecurityRestrictions"))
+                if (property.NameEquals("ipSecurityRestrictions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -199,7 +203,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     ipSecurityRestrictions = array;
                     continue;
                 }
-                if (property.NameEquals("clientCertificateMode"))
+                if (property.NameEquals("clientCertificateMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -209,7 +213,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     clientCertificateMode = new ContainerAppIngressClientCertificateMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("corsPolicy"))
+                if (property.NameEquals("corsPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

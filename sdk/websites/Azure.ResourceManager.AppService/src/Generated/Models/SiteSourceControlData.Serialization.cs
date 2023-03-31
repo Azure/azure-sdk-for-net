@@ -20,46 +20,46 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RepoUri))
             {
-                writer.WritePropertyName("repoUrl");
+                writer.WritePropertyName("repoUrl"u8);
                 writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Branch))
             {
-                writer.WritePropertyName("branch");
+                writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
             if (Optional.IsDefined(IsManualIntegration))
             {
-                writer.WritePropertyName("isManualIntegration");
+                writer.WritePropertyName("isManualIntegration"u8);
                 writer.WriteBooleanValue(IsManualIntegration.Value);
             }
             if (Optional.IsDefined(IsGitHubAction))
             {
-                writer.WritePropertyName("isGitHubAction");
+                writer.WritePropertyName("isGitHubAction"u8);
                 writer.WriteBooleanValue(IsGitHubAction.Value);
             }
             if (Optional.IsDefined(IsDeploymentRollbackEnabled))
             {
-                writer.WritePropertyName("deploymentRollbackEnabled");
+                writer.WritePropertyName("deploymentRollbackEnabled"u8);
                 writer.WriteBooleanValue(IsDeploymentRollbackEnabled.Value);
             }
             if (Optional.IsDefined(IsMercurial))
             {
-                writer.WritePropertyName("isMercurial");
+                writer.WritePropertyName("isMercurial"u8);
                 writer.WriteBooleanValue(IsMercurial.Value);
             }
             if (Optional.IsDefined(GitHubActionConfiguration))
             {
                 if (GitHubActionConfiguration != null)
                 {
-                    writer.WritePropertyName("gitHubActionConfiguration");
+                    writer.WritePropertyName("gitHubActionConfiguration"u8);
                     writer.WriteObjectValue(GitHubActionConfiguration);
                 }
                 else
@@ -73,6 +73,10 @@ namespace Azure.ResourceManager.AppService
 
         internal static SiteSourceControlData DeserializeSiteSourceControlData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -87,27 +91,27 @@ namespace Azure.ResourceManager.AppService
             Optional<GitHubActionConfiguration> gitHubActionConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -117,7 +121,7 @@ namespace Azure.ResourceManager.AppService
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,7 +130,7 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("repoUrl"))
+                        if (property0.NameEquals("repoUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -136,12 +140,12 @@ namespace Azure.ResourceManager.AppService
                             repoUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("branch"))
+                        if (property0.NameEquals("branch"u8))
                         {
                             branch = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("isManualIntegration"))
+                        if (property0.NameEquals("isManualIntegration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -151,7 +155,7 @@ namespace Azure.ResourceManager.AppService
                             isManualIntegration = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("isGitHubAction"))
+                        if (property0.NameEquals("isGitHubAction"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -161,7 +165,7 @@ namespace Azure.ResourceManager.AppService
                             isGitHubAction = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("deploymentRollbackEnabled"))
+                        if (property0.NameEquals("deploymentRollbackEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -171,7 +175,7 @@ namespace Azure.ResourceManager.AppService
                             deploymentRollbackEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("isMercurial"))
+                        if (property0.NameEquals("isMercurial"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -181,7 +185,7 @@ namespace Azure.ResourceManager.AppService
                             isMercurial = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("gitHubActionConfiguration"))
+                        if (property0.NameEquals("gitHubActionConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

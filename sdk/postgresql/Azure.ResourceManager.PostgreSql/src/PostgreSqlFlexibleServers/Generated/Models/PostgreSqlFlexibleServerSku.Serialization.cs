@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("tier");
+            writer.WritePropertyName("tier"u8);
             writer.WriteStringValue(Tier.ToString());
             writer.WriteEndObject();
         }
 
         internal static PostgreSqlFlexibleServerSku DeserializePostgreSqlFlexibleServerSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             PostgreSqlFlexibleServerSkuTier tier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     tier = new PostgreSqlFlexibleServerSkuTier(property.Value.GetString());
                     continue;

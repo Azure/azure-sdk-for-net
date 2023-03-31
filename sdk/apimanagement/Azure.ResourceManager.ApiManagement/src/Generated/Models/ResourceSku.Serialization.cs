@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ResourceSku DeserializeResourceSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ApiManagementServiceSkuType> name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

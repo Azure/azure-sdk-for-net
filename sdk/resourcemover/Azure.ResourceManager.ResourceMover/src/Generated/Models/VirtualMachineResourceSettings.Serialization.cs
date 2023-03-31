@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,38 +29,47 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             if (Optional.IsCollectionDefined(UserManagedIdentities))
             {
-                writer.WritePropertyName("userManagedIdentities");
+                writer.WritePropertyName("userManagedIdentities"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserManagedIdentities)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(TargetAvailabilityZone))
             {
-                writer.WritePropertyName("targetAvailabilityZone");
+                writer.WritePropertyName("targetAvailabilityZone"u8);
                 writer.WriteStringValue(TargetAvailabilityZone.Value.ToString());
             }
             if (Optional.IsDefined(TargetVmSize))
             {
-                writer.WritePropertyName("targetVmSize");
+                writer.WritePropertyName("targetVmSize"u8);
                 writer.WriteStringValue(TargetVmSize);
             }
             if (Optional.IsDefined(TargetAvailabilitySetId))
             {
-                writer.WritePropertyName("targetAvailabilitySetId");
+                writer.WritePropertyName("targetAvailabilitySetId"u8);
                 writer.WriteStringValue(TargetAvailabilitySetId);
             }
-            writer.WritePropertyName("resourceType");
+            writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            writer.WritePropertyName("targetResourceName");
+            writer.WritePropertyName("targetResourceName"u8);
             writer.WriteStringValue(TargetResourceName);
             writer.WriteEndObject();
         }
 
         internal static VirtualMachineResourceSettings DeserializeVirtualMachineResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             Optional<IList<ResourceIdentifier>> userManagedIdentities = default;
             Optional<MoverTargetAvailabilityZone> targetAvailabilityZone = default;
@@ -70,7 +79,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             string targetResourceName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +94,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("userManagedIdentities"))
+                if (property.NameEquals("userManagedIdentities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,12 +104,19 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ResourceIdentifier(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
                     }
                     userManagedIdentities = array;
                     continue;
                 }
-                if (property.NameEquals("targetAvailabilityZone"))
+                if (property.NameEquals("targetAvailabilityZone"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,12 +126,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     targetAvailabilityZone = new MoverTargetAvailabilityZone(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetVmSize"))
+                if (property.NameEquals("targetVmSize"u8))
                 {
                     targetVmSize = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetAvailabilitySetId"))
+                if (property.NameEquals("targetAvailabilitySetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -125,12 +141,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     targetAvailabilitySetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourceName"))
+                if (property.NameEquals("targetResourceName"u8))
                 {
                     targetResourceName = property.Value.GetString();
                     continue;

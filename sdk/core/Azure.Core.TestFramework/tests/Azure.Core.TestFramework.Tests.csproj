@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks);net6.0</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,5 +23,5 @@
     <Compile Include="..\..\..\..\common\ManagementTestShared\Redesign\*.cs" LinkBase="Shared\Mgmt" />
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
   </ItemGroup>
-  
+
 </Project>

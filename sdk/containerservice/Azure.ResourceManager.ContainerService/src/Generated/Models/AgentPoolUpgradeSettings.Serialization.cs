@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxSurge))
             {
-                writer.WritePropertyName("maxSurge");
+                writer.WritePropertyName("maxSurge"u8);
                 writer.WriteStringValue(MaxSurge);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static AgentPoolUpgradeSettings DeserializeAgentPoolUpgradeSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> maxSurge = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxSurge"))
+                if (property.NameEquals("maxSurge"u8))
                 {
                     maxSurge = property.Value.GetString();
                     continue;

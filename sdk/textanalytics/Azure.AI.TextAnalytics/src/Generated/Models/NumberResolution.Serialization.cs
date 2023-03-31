@@ -16,33 +16,37 @@ namespace Azure.AI.TextAnalytics
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("numberKind");
+            writer.WritePropertyName("numberKind"u8);
             writer.WriteStringValue(NumberKind.ToString());
-            writer.WritePropertyName("value");
+            writer.WritePropertyName("value"u8);
             writer.WriteNumberValue(Value);
-            writer.WritePropertyName("resolutionKind");
+            writer.WritePropertyName("resolutionKind"u8);
             writer.WriteStringValue(ResolutionKind.ToString());
             writer.WriteEndObject();
         }
 
         internal static NumberResolution DeserializeNumberResolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             NumberKind numberKind = default;
             double value = default;
             ResolutionKind resolutionKind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("numberKind"))
+                if (property.NameEquals("numberKind"u8))
                 {
                     numberKind = new NumberKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("resolutionKind"))
+                if (property.NameEquals("resolutionKind"u8))
                 {
                     resolutionKind = new ResolutionKind(property.Value.GetString());
                     continue;

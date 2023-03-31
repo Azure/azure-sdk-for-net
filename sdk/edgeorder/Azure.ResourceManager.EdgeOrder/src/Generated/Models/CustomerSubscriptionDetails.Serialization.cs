@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(RegisteredFeatures))
             {
-                writer.WritePropertyName("registeredFeatures");
+                writer.WritePropertyName("registeredFeatures"u8);
                 writer.WriteStartArray();
                 foreach (var item in RegisteredFeatures)
                 {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             if (Optional.IsDefined(LocationPlacementId))
             {
-                writer.WritePropertyName("locationPlacementId");
+                writer.WritePropertyName("locationPlacementId"u8);
                 writer.WriteStringValue(LocationPlacementId);
             }
-            writer.WritePropertyName("quotaId");
+            writer.WritePropertyName("quotaId"u8);
             writer.WriteStringValue(QuotaId);
             writer.WriteEndObject();
         }

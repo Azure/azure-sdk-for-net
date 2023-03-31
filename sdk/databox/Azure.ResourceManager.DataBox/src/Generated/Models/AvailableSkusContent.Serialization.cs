@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("transferType");
+            writer.WritePropertyName("transferType"u8);
             writer.WriteStringValue(TransferType.ToSerialString());
-            writer.WritePropertyName("country");
+            writer.WritePropertyName("country"u8);
             writer.WriteStringValue(Country);
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             if (Optional.IsCollectionDefined(SkuNames))
             {
-                writer.WritePropertyName("skuNames");
+                writer.WritePropertyName("skuNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in SkuNames)
                 {

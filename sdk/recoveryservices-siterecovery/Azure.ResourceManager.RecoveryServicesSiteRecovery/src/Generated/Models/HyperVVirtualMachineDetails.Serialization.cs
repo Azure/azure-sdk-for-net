@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static HyperVVirtualMachineDetails DeserializeHyperVVirtualMachineDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("instanceType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -33,17 +37,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string instanceType = "HyperVVirtualMachine";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceItemId"))
+                if (property.NameEquals("sourceItemId"u8))
                 {
                     sourceItemId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("generation"))
+                if (property.NameEquals("generation"u8))
                 {
                     generation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osDetails"))
+                if (property.NameEquals("osDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     osDetails = OSDetails.DeserializeOSDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("diskDetails"))
+                if (property.NameEquals("diskDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     diskDetails = array;
                     continue;
                 }
-                if (property.NameEquals("hasPhysicalDisk"))
+                if (property.NameEquals("hasPhysicalDisk"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     hasPhysicalDisk = new PresenceStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hasFibreChannelAdapter"))
+                if (property.NameEquals("hasFibreChannelAdapter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     hasFibreChannelAdapter = new PresenceStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hasSharedVhd"))
+                if (property.NameEquals("hasSharedVhd"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,12 +102,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     hasSharedVhd = new PresenceStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hyperVHostId"))
+                if (property.NameEquals("hyperVHostId"u8))
                 {
                     hyperVHostId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

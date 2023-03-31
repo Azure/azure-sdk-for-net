@@ -15,26 +15,31 @@ namespace Azure.ResourceManager.Avs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             if (Optional.IsCollectionDefined(VmMembers))
             {
-                writer.WritePropertyName("vmMembers");
+                writer.WritePropertyName("vmMembers"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmMembers)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(HostMembers))
             {
-                writer.WritePropertyName("hostMembers");
+                writer.WritePropertyName("hostMembers"u8);
                 writer.WriteStartArray();
                 foreach (var item in HostMembers)
                 {
@@ -44,12 +49,12 @@ namespace Azure.ResourceManager.Avs.Models
             }
             if (Optional.IsDefined(AffinityStrength))
             {
-                writer.WritePropertyName("affinityStrength");
+                writer.WritePropertyName("affinityStrength"u8);
                 writer.WriteStringValue(AffinityStrength.Value.ToString());
             }
             if (Optional.IsDefined(AzureHybridBenefitType))
             {
-                writer.WritePropertyName("azureHybridBenefitType");
+                writer.WritePropertyName("azureHybridBenefitType"u8);
                 writer.WriteStringValue(AzureHybridBenefitType.Value.ToString());
             }
             writer.WriteEndObject();

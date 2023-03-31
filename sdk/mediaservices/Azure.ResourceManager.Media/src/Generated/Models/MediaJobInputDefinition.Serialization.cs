@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             if (Optional.IsCollectionDefined(IncludedTracks))
             {
-                writer.WritePropertyName("includedTracks");
+                writer.WritePropertyName("includedTracks"u8);
                 writer.WriteStartArray();
                 foreach (var item in IncludedTracks)
                 {
@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaJobInputDefinition DeserializeMediaJobInputDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

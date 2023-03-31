@@ -6,9 +6,20 @@
 
 ### Breaking Changes
 
+- Method `NetworkExtensions.GetApplicationGatewayAvailableWafRuleSetsAsyncAsync` and `NetworkExtensions.GetApplicationGatewayAvailableWafRuleSetsAsync` were deprecated because it does not follow the guidelines of Azure SDKs. Please use `NetworkExtensions.GetAppGatewayAvailableWafRuleSetsAsync` and `NetworkExtensions.GetAppGatewayAvailableWafRuleSets` instead.
+
 ### Bugs Fixed
 
+- Fixed issue https://github.com/Azure/azure-sdk-for-net/issues/34094. Please use `EffectiveNetworkSecurityGroup.TagToIPAddresses` instead of `EffectiveNetworkSecurityGroup.TagMap`.
+
 ### Other Changes
+
+## 1.1.1 (2023-02-13)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
 ## 1.1.0 (2022-11-02)
 

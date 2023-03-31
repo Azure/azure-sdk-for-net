@@ -15,16 +15,16 @@ namespace Azure.Monitor.Query.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("query");
+            writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
             if (Optional.IsDefined(Timespan))
             {
-                writer.WritePropertyName("timespan");
+                writer.WritePropertyName("timespan"u8);
                 writer.WriteStringValue(Timespan);
             }
             if (Optional.IsCollectionDefined(Workspaces))
             {
-                writer.WritePropertyName("workspaces");
+                writer.WritePropertyName("workspaces"u8);
                 writer.WriteStartArray();
                 foreach (var item in Workspaces)
                 {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Synapse.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("restorePointLabel");
+            writer.WritePropertyName("restorePointLabel"u8);
             writer.WriteStringValue(RestorePointLabel);
             writer.WriteEndObject();
         }

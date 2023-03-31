@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("url");
+                writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(Email))
             {
-                writer.WritePropertyName("email");
+                writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
             if (Optional.IsDefined(Phone))
             {
-                writer.WritePropertyName("phone");
+                writer.WritePropertyName("phone"u8);
                 writer.WriteStringValue(Phone);
             }
             if (Optional.IsDefined(Instructions))
             {
-                writer.WritePropertyName("instructions");
+                writer.WritePropertyName("instructions"u8);
                 writer.WriteStringValue(Instructions);
             }
             writer.WriteEndObject();
@@ -41,13 +41,17 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabPlanSupportInfo DeserializeLabPlanSupportInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> url = default;
             Optional<string> email = default;
             Optional<string> phone = default;
             Optional<string> instructions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,17 +61,17 @@ namespace Azure.ResourceManager.LabServices.Models
                     url = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("email"))
+                if (property.NameEquals("email"u8))
                 {
                     email = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phone"))
+                if (property.NameEquals("phone"u8))
                 {
                     phone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instructions"))
+                if (property.NameEquals("instructions"u8))
                 {
                     instructions = property.Value.GetString();
                     continue;

@@ -16,35 +16,51 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("actionGroupIds");
+            writer.WritePropertyName("actionGroupIds"u8);
             writer.WriteStartArray();
             foreach (var item in ActionGroupIds)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("actionType");
+            writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
             writer.WriteEndObject();
         }
 
         internal static AlertProcessingRuleAddGroupsAction DeserializeAlertProcessingRuleAddGroupsAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<ResourceIdentifier> actionGroupIds = default;
             AlertProcessingRuleActionType actionType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("actionGroupIds"))
+                if (property.NameEquals("actionGroupIds"u8))
                 {
                     List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ResourceIdentifier(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
                     }
                     actionGroupIds = array;
                     continue;
                 }
-                if (property.NameEquals("actionType"))
+                if (property.NameEquals("actionType"u8))
                 {
                     actionType = new AlertProcessingRuleActionType(property.Value.GetString());
                     continue;

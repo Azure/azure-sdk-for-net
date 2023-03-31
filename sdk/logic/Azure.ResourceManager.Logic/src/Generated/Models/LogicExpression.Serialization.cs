@@ -16,18 +16,22 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static LogicExpression DeserializeLogicExpression(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> text = default;
             Optional<BinaryData> value = default;
             Optional<IReadOnlyList<LogicExpression>> subexpressions = default;
             Optional<LogicExpressionErrorInfo> error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("text"))
+                if (property.NameEquals("text"u8))
                 {
                     text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,7 +41,7 @@ namespace Azure.ResourceManager.Logic.Models
                     value = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("subexpressions"))
+                if (property.NameEquals("subexpressions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.Logic.Models
                     subexpressions = array;
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(WatermarkMode))
             {
-                writer.WritePropertyName("watermarkMode");
+                writer.WritePropertyName("watermarkMode"u8);
                 writer.WriteStringValue(WatermarkMode.Value.ToString());
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamingJobInputWatermarkProperties DeserializeStreamingJobInputWatermarkProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StreamingJobInputWatermarkMode> watermarkMode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("watermarkMode"))
+                if (property.NameEquals("watermarkMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -16,13 +16,17 @@ namespace Azure.ResourceManager.DataShare.Models
     {
         internal static DataShareOperationResult DeserializeDataShareOperationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> endTime = default;
             Optional<ResponseError> error = default;
             Optional<DateTimeOffset> startTime = default;
             DataShareOperationStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +36,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = new DataShareOperationStatus(property.Value.GetString());
                     continue;

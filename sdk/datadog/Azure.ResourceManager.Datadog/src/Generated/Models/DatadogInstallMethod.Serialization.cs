@@ -14,22 +14,26 @@ namespace Azure.ResourceManager.Datadog.Models
     {
         internal static DatadogInstallMethod DeserializeDatadogInstallMethod(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tool = default;
             Optional<string> toolVersion = default;
             Optional<string> installerVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tool"))
+                if (property.NameEquals("tool"u8))
                 {
                     tool = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("toolVersion"))
+                if (property.NameEquals("toolVersion"u8))
                 {
                     toolVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("installerVersion"))
+                if (property.NameEquals("installerVersion"u8))
                 {
                     installerVersion = property.Value.GetString();
                     continue;

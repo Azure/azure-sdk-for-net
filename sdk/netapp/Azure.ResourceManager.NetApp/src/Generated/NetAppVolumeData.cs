@@ -14,7 +14,10 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary> A class representing the NetAppVolume data model. </summary>
+    /// <summary>
+    /// A class representing the NetAppVolume data model.
+    /// Volume resource
+    /// </summary>
     public partial class NetAppVolumeData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of NetAppVolumeData. </summary>

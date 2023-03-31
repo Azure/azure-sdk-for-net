@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.ContainerService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyData");
+            writer.WritePropertyName("keyData"u8);
             writer.WriteStringValue(KeyData);
             writer.WriteEndObject();
         }
 
         internal static ContainerServiceSshPublicKey DeserializeContainerServiceSshPublicKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string keyData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyData"))
+                if (property.NameEquals("keyData"u8))
                 {
                     keyData = property.Value.GetString();
                     continue;

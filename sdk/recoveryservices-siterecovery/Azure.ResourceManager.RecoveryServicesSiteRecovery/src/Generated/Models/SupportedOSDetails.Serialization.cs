@@ -15,22 +15,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static SupportedOSDetails DeserializeSupportedOSDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> osName = default;
             Optional<string> osType = default;
             Optional<IReadOnlyList<OSVersionWrapper>> osVersions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("osName"))
+                if (property.NameEquals("osName"u8))
                 {
                     osName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osVersions"))
+                if (property.NameEquals("osVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

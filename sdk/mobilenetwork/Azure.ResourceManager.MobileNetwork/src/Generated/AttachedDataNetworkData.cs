@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    /// <summary> A class representing the AttachedDataNetwork data model. </summary>
+    /// <summary>
+    /// A class representing the AttachedDataNetwork data model.
+    /// Attached data network resource. Must be created in the same location as its parent packet core data plane.
+    /// </summary>
     public partial class AttachedDataNetworkData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AttachedDataNetworkData. </summary>

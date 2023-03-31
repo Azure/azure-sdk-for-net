@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(SupportTopicList))
             {
-                writer.WritePropertyName("supportTopicList");
+                writer.WritePropertyName("supportTopicList"u8);
                 writer.WriteStartArray();
                 foreach (var item in SupportTopicList)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             if (Optional.IsCollectionDefined(AnalysisTypes))
             {
-                writer.WritePropertyName("analysisTypes");
+                writer.WritePropertyName("analysisTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in AnalysisTypes)
                 {
@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppDiagnosticsMetadata DeserializeContainerAppDiagnosticsMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<string> author = default;
             Optional<string> category = default;
@@ -54,22 +58,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("author"))
+                if (property.NameEquals("author"u8))
                 {
                     author = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
                     category = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportTopicList"))
+                if (property.NameEquals("supportTopicList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     supportTopicList = array;
                     continue;
                 }
-                if (property.NameEquals("analysisTypes"))
+                if (property.NameEquals("analysisTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     analysisTypes = array;
                     continue;
                 }
-                if (property.NameEquals("score"))
+                if (property.NameEquals("score"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,22 +113,22 @@ namespace Azure.ResourceManager.AppContainers.Models
                     score = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

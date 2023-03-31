@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="resourceId"> Resource ID of the vault. </param>
         /// <param name="subject"> Certificate Subject Name. </param>
         /// <param name="thumbprint"> Certificate thumbprint. </param>
-        /// <param name="validFrom"> Certificate Validity start Date time. </param>
-        /// <param name="validTo"> Certificate Validity End Date time. </param>
+        /// <param name="validStartOn"> Certificate Validity start Date time. </param>
+        /// <param name="validEndOn"> Certificate Validity End Date time. </param>
         /// <param name="globalAcsNamespace"> ACS namespace name - tenant for our service. </param>
         /// <param name="globalAcsHostName"> Acs mgmt host name to connect to. </param>
         /// <param name="globalAcsRPRealm"> Global ACS namespace RP realm. </param>
-        internal ResourceCertificateAndAcsDetails(string authType, byte[] certificate, string friendlyName, string issuer, long? resourceId, string subject, string thumbprint, DateTimeOffset? validFrom, DateTimeOffset? validTo, string globalAcsNamespace, string globalAcsHostName, string globalAcsRPRealm) : base(authType, certificate, friendlyName, issuer, resourceId, subject, thumbprint, validFrom, validTo)
+        internal ResourceCertificateAndAcsDetails(string authType, byte[] certificate, string friendlyName, string issuer, long? resourceId, string subject, BinaryData thumbprint, DateTimeOffset? validStartOn, DateTimeOffset? validEndOn, string globalAcsNamespace, string globalAcsHostName, string globalAcsRPRealm) : base(authType, certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn)
         {
             GlobalAcsNamespace = globalAcsNamespace;
             GlobalAcsHostName = globalAcsHostName;

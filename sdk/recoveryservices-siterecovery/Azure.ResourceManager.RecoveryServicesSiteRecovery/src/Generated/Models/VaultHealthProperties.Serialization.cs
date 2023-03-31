@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static VaultHealthProperties DeserializeVaultHealthProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<HealthError>> vaultErrors = default;
             Optional<ResourceHealthSummary> protectedItemsHealth = default;
             Optional<ResourceHealthSummary> fabricsHealth = default;
             Optional<ResourceHealthSummary> containersHealth = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vaultErrors"))
+                if (property.NameEquals("vaultErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     vaultErrors = array;
                     continue;
                 }
-                if (property.NameEquals("protectedItemsHealth"))
+                if (property.NameEquals("protectedItemsHealth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     protectedItemsHealth = ResourceHealthSummary.DeserializeResourceHealthSummary(property.Value);
                     continue;
                 }
-                if (property.NameEquals("fabricsHealth"))
+                if (property.NameEquals("fabricsHealth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     fabricsHealth = ResourceHealthSummary.DeserializeResourceHealthSummary(property.Value);
                     continue;
                 }
-                if (property.NameEquals("containersHealth"))
+                if (property.NameEquals("containersHealth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

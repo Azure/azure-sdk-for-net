@@ -15,24 +15,24 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            writer.WritePropertyName("credentials");
+            writer.WritePropertyName("credentials"u8);
             writer.WriteObjectValue(CredentialsInternal);
-            writer.WritePropertyName("container");
+            writer.WritePropertyName("container"u8);
             writer.WriteObjectValue(Container);
             if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
-                    writer.WritePropertyName("identity");
+                    writer.WritePropertyName("identity"u8);
                     writer.WriteObjectValue(Identity);
                 }
                 else
@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (DataChangeDetectionPolicy != null)
                 {
-                    writer.WritePropertyName("dataChangeDetectionPolicy");
+                    writer.WritePropertyName("dataChangeDetectionPolicy"u8);
                     writer.WriteObjectValue(DataChangeDetectionPolicy);
                 }
                 else
@@ -56,7 +56,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (DataDeletionDetectionPolicy != null)
                 {
-                    writer.WritePropertyName("dataDeletionDetectionPolicy");
+                    writer.WritePropertyName("dataDeletionDetectionPolicy"u8);
                     writer.WriteObjectValue(DataDeletionDetectionPolicy);
                 }
                 else
@@ -66,14 +66,14 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(_etag))
             {
-                writer.WritePropertyName("@odata.etag");
+                writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(_etag);
             }
             if (Optional.IsDefined(EncryptionKey))
             {
                 if (EncryptionKey != null)
                 {
-                    writer.WritePropertyName("encryptionKey");
+                    writer.WritePropertyName("encryptionKey"u8);
                     writer.WriteObjectValue(EncryptionKey);
                 }
                 else
@@ -86,6 +86,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SearchIndexerDataSourceConnection DeserializeSearchIndexerDataSourceConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> description = default;
             SearchIndexerDataSourceType type = default;
@@ -98,32 +102,32 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<SearchResourceEncryptionKey> encryptionKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new SearchIndexerDataSourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("credentials"))
+                if (property.NameEquals("credentials"u8))
                 {
                     credentials = DataSourceCredentials.DeserializeDataSourceCredentials(property.Value);
                     continue;
                 }
-                if (property.NameEquals("container"))
+                if (property.NameEquals("container"u8))
                 {
                     container = SearchIndexerDataContainer.DeserializeSearchIndexerDataContainer(property.Value);
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,7 +137,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataChangeDetectionPolicy"))
+                if (property.NameEquals("dataChangeDetectionPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -143,7 +147,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     dataChangeDetectionPolicy = DataChangeDetectionPolicy.DeserializeDataChangeDetectionPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataDeletionDetectionPolicy"))
+                if (property.NameEquals("dataDeletionDetectionPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -153,12 +157,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     dataDeletionDetectionPolicy = DataDeletionDetectionPolicy.DeserializeDataDeletionDetectionPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("@odata.etag"))
+                if (property.NameEquals("@odata.etag"u8))
                 {
                     odataEtag = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptionKey"))
+                if (property.NameEquals("encryptionKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

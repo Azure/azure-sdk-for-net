@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RestartWithFailover))
             {
-                writer.WritePropertyName("restartWithFailover");
+                writer.WritePropertyName("restartWithFailover"u8);
                 writer.WriteStringValue(RestartWithFailover.Value.ToString());
             }
             if (Optional.IsDefined(MaxFailoverSeconds))
             {
-                writer.WritePropertyName("maxFailoverSeconds");
+                writer.WritePropertyName("maxFailoverSeconds"u8);
                 writer.WriteNumberValue(MaxFailoverSeconds.Value);
             }
             writer.WriteEndObject();

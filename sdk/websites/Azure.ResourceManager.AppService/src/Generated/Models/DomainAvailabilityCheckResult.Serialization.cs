@@ -14,17 +14,21 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static DomainAvailabilityCheckResult DeserializeDomainAvailabilityCheckResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<bool> available = default;
             Optional<AppServiceDomainType> domainType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("available"))
+                if (property.NameEquals("available"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
                     available = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("domainType"))
+                if (property.NameEquals("domainType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

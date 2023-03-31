@@ -14,22 +14,26 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static SyncMigrationDatabaseErrorEvent DeserializeSyncMigrationDatabaseErrorEvent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> timestampString = default;
             Optional<string> eventTypeString = default;
             Optional<string> eventText = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timestampString"))
+                if (property.NameEquals("timestampString"u8))
                 {
                     timestampString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eventTypeString"))
+                if (property.NameEquals("eventTypeString"u8))
                 {
                     eventTypeString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eventText"))
+                if (property.NameEquals("eventText"u8))
                 {
                     eventText = property.Value.GetString();
                     continue;

@@ -14,28 +14,32 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     {
         internal static ContainerRegistryCredentials DeserializeContainerRegistryCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> loginServer = default;
             Optional<string> password = default;
             Optional<string> password2 = default;
             Optional<string> username = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("loginServer"))
+                if (property.NameEquals("loginServer"u8))
                 {
                     loginServer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password2"))
+                if (property.NameEquals("password2"u8))
                 {
                     password2 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("username"))
+                if (property.NameEquals("username"u8))
                 {
                     username = property.Value.GetString();
                     continue;

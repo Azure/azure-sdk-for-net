@@ -15,10 +15,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static AccountKeyMetadata DeserializeAccountKeyMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> generationTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("generationTime"))
+                if (property.NameEquals("generationTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

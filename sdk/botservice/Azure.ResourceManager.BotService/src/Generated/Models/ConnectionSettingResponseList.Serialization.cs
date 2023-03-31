@@ -16,26 +16,30 @@ namespace Azure.ResourceManager.BotService.Models
     {
         internal static ConnectionSettingResponseList DeserializeConnectionSettingResponseList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<ConnectionSettingData>> value = default;
+            Optional<IReadOnlyList<BotConnectionSettingData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConnectionSettingData> array = new List<ConnectionSettingData>();
+                    List<BotConnectionSettingData> array = new List<BotConnectionSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectionSettingData.DeserializeConnectionSettingData(item));
+                        array.Add(BotConnectionSettingData.DeserializeBotConnectionSettingData(item));
                     }
                     value = array;
                     continue;

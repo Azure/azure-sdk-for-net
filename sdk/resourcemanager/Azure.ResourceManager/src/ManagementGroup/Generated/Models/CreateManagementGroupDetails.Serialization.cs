@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Parent))
             {
-                writer.WritePropertyName("parent");
+                writer.WritePropertyName("parent"u8);
                 writer.WriteObjectValue(Parent);
             }
             writer.WriteEndObject();

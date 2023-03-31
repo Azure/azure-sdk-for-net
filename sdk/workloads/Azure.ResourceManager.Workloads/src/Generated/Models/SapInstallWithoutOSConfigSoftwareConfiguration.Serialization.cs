@@ -16,24 +16,28 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("bomUrl");
+            writer.WritePropertyName("bomUrl"u8);
             writer.WriteStringValue(BomUri.AbsoluteUri);
-            writer.WritePropertyName("sapBitsStorageAccountId");
+            writer.WritePropertyName("sapBitsStorageAccountId"u8);
             writer.WriteStringValue(SapBitsStorageAccountId);
-            writer.WritePropertyName("softwareVersion");
+            writer.WritePropertyName("softwareVersion"u8);
             writer.WriteStringValue(SoftwareVersion);
             if (Optional.IsDefined(HighAvailabilitySoftwareConfiguration))
             {
-                writer.WritePropertyName("highAvailabilitySoftwareConfiguration");
+                writer.WritePropertyName("highAvailabilitySoftwareConfiguration"u8);
                 writer.WriteObjectValue(HighAvailabilitySoftwareConfiguration);
             }
-            writer.WritePropertyName("softwareInstallationType");
+            writer.WritePropertyName("softwareInstallationType"u8);
             writer.WriteStringValue(SoftwareInstallationType.ToString());
             writer.WriteEndObject();
         }
 
         internal static SapInstallWithoutOSConfigSoftwareConfiguration DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri bomUrl = default;
             string sapBitsStorageAccountId = default;
             string softwareVersion = default;
@@ -41,22 +45,22 @@ namespace Azure.ResourceManager.Workloads.Models
             SapSoftwareInstallationType softwareInstallationType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("bomUrl"))
+                if (property.NameEquals("bomUrl"u8))
                 {
                     bomUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sapBitsStorageAccountId"))
+                if (property.NameEquals("sapBitsStorageAccountId"u8))
                 {
                     sapBitsStorageAccountId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("softwareVersion"))
+                if (property.NameEquals("softwareVersion"u8))
                 {
                     softwareVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("highAvailabilitySoftwareConfiguration"))
+                if (property.NameEquals("highAvailabilitySoftwareConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     highAvailabilitySoftwareConfiguration = Models.HighAvailabilitySoftwareConfiguration.DeserializeHighAvailabilitySoftwareConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("softwareInstallationType"))
+                if (property.NameEquals("softwareInstallationType"u8))
                 {
                     softwareInstallationType = new SapSoftwareInstallationType(property.Value.GetString());
                     continue;

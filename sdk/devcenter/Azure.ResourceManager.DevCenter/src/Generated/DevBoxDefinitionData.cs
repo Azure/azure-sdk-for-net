@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary> A class representing the DevBoxDefinition data model. </summary>
+    /// <summary>
+    /// A class representing the DevBoxDefinition data model.
+    /// Represents a definition for a Developer Machine.
+    /// </summary>
     public partial class DevBoxDefinitionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DevBoxDefinitionData. </summary>

@@ -16,19 +16,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("resourceId");
+            writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
             if (Optional.IsDefined(MdmAccount))
             {
-                writer.WritePropertyName("mdmAccount");
+                writer.WritePropertyName("mdmAccount"u8);
                 writer.WriteStringValue(MdmAccount);
             }
             if (Optional.IsDefined(MetricNameSpace))
             {
-                writer.WritePropertyName("metricNameSpace");
+                writer.WritePropertyName("metricNameSpace"u8);
                 writer.WriteStringValue(MetricNameSpace);
             }
-            writer.WritePropertyName("counterSets");
+            writer.WritePropertyName("counterSets"u8);
             writer.WriteStartArray();
             foreach (var item in CounterSets)
             {
@@ -40,28 +40,32 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataBoxEdgeMetricConfiguration DeserializeDataBoxEdgeMetricConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier resourceId = default;
             Optional<string> mdmAccount = default;
             Optional<string> metricNameSpace = default;
             IList<DataBoxEdgeMetricCounterSet> counterSets = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("mdmAccount"))
+                if (property.NameEquals("mdmAccount"u8))
                 {
                     mdmAccount = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricNameSpace"))
+                if (property.NameEquals("metricNameSpace"u8))
                 {
                     metricNameSpace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("counterSets"))
+                if (property.NameEquals("counterSets"u8))
                 {
                     List<DataBoxEdgeMetricCounterSet> array = new List<DataBoxEdgeMetricCounterSet>();
                     foreach (var item in property.Value.EnumerateArray())

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomKeysAcquisitionUriTemplate))
             {
-                writer.WritePropertyName("customKeysAcquisitionUrlTemplate");
+                writer.WritePropertyName("customKeysAcquisitionUrlTemplate"u8);
                 writer.WriteStringValue(CustomKeysAcquisitionUriTemplate);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ClearKeyEncryptionConfiguration DeserializeClearKeyEncryptionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> customKeysAcquisitionUriTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("customKeysAcquisitionUrlTemplate"))
+                if (property.NameEquals("customKeysAcquisitionUrlTemplate"u8))
                 {
                     customKeysAcquisitionUriTemplate = property.Value.GetString();
                     continue;

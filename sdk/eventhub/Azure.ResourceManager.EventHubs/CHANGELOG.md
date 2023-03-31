@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.1 (2023-02-14)
+
+### Features Added
+
+- Added operation support to `EventHubsApplicationGroup` & `NetworkSecurityPerimeterConfiguration`.
+- Supported EventHubsCluster creation with `SupportsScaling`.
+- Supported EventHubsNamespace creation with `MinimumTlsVersion` and `PublicNetworkAccess`.
+
+### Other Changes
+
+- Upgraded API version to 2022-01-preview.
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
 ## 1.0.0 (2022-07-21)
 

@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PrincipalName))
             {
-                writer.WritePropertyName("principalName");
+                writer.WritePropertyName("principalName"u8);
                 writer.WriteStringValue(PrincipalName);
             }
             if (Optional.IsDefined(PrincipalId))
             {
-                writer.WritePropertyName("principalId");
+                writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId);
             }
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(ObjectId))
             {
-                writer.WritePropertyName("objectId");
+                writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
             if (Optional.IsDefined(AppId))
             {
-                writer.WritePropertyName("appId");
+                writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
             writer.WriteEndObject();
@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabUserIdentity DeserializeDevTestLabUserIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> principalName = default;
             Optional<string> principalId = default;
             Optional<Guid> tenantId = default;
@@ -53,17 +57,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<string> appId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("principalName"))
+                if (property.NameEquals("principalName"u8))
                 {
                     principalName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("principalId"))
+                if (property.NameEquals("principalId"u8))
                 {
                     principalId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,12 +77,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("objectId"))
+                if (property.NameEquals("objectId"u8))
                 {
                     objectId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("appId"))
+                if (property.NameEquals("appId"u8))
                 {
                     appId = property.Value.GetString();
                     continue;

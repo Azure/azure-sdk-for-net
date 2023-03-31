@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static DataSourcePrecedence DeserializeDataSourcePrecedence(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> precedence = default;
             Optional<string> name = default;
             Optional<DataSourceType> dataSourceType = default;
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<string> dataSourceReferenceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("precedence"))
+                if (property.NameEquals("precedence"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +36,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     precedence = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("dataSource"))
+                if (property.NameEquals("dataSource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,12 +45,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("name"))
+                        if (property0.NameEquals("name"u8))
                         {
                             name = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("dataSourceType"))
+                        if (property0.NameEquals("dataSourceType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                             dataSourceType = new DataSourceType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                             status = new Status(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("id"))
+                        if (property0.NameEquals("id"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                             id = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("dataSourceReferenceId"))
+                        if (property0.NameEquals("dataSourceReferenceId"u8))
                         {
                             dataSourceReferenceId = property0.Value.GetString();
                             continue;

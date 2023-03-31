@@ -17,37 +17,37 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ArtifactsStorageType))
             {
-                writer.WritePropertyName("artifactsStorageType");
+                writer.WritePropertyName("artifactsStorageType"u8);
                 writer.WriteStringValue(ArtifactsStorageType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ArtifactStorageClassName))
             {
-                writer.WritePropertyName("artifactStorageClassName");
+                writer.WritePropertyName("artifactStorageClassName"u8);
                 writer.WriteStringValue(ArtifactStorageClassName);
             }
             if (Optional.IsDefined(ArtifactStorageMountPath))
             {
-                writer.WritePropertyName("artifactStorageMountPath");
+                writer.WritePropertyName("artifactStorageMountPath"u8);
                 writer.WriteStringValue(ArtifactStorageMountPath);
             }
             if (Optional.IsDefined(ArtifactStorageNodeName))
             {
-                writer.WritePropertyName("artifactStorageNodeName");
+                writer.WritePropertyName("artifactStorageNodeName"u8);
                 writer.WriteStringValue(ArtifactStorageNodeName);
             }
             if (Optional.IsDefined(ArtifactStorageAccessMode))
             {
-                writer.WritePropertyName("artifactStorageAccessMode");
+                writer.WritePropertyName("artifactStorageAccessMode"u8);
                 writer.WriteStringValue(ArtifactStorageAccessMode);
             }
             if (Optional.IsDefined(FrontEndServiceConfiguration))
             {
-                writer.WritePropertyName("frontEndServiceConfiguration");
+                writer.WritePropertyName("frontEndServiceConfiguration"u8);
                 writer.WriteObjectValue(FrontEndServiceConfiguration);
             }
             if (Optional.IsDefined(KubeConfig))
             {
-                writer.WritePropertyName("kubeConfig");
+                writer.WritePropertyName("kubeConfig"u8);
                 writer.WriteStringValue(KubeConfig);
             }
             writer.WriteEndObject();
@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ArcConfiguration DeserializeArcConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ArtifactStorageType> artifactsStorageType = default;
             Optional<string> artifactStorageClassName = default;
             Optional<string> artifactStorageMountPath = default;
@@ -64,7 +68,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> kubeConfig = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("artifactsStorageType"))
+                if (property.NameEquals("artifactsStorageType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,27 +78,27 @@ namespace Azure.ResourceManager.AppService.Models
                     artifactsStorageType = property.Value.GetString().ToArtifactStorageType();
                     continue;
                 }
-                if (property.NameEquals("artifactStorageClassName"))
+                if (property.NameEquals("artifactStorageClassName"u8))
                 {
                     artifactStorageClassName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("artifactStorageMountPath"))
+                if (property.NameEquals("artifactStorageMountPath"u8))
                 {
                     artifactStorageMountPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("artifactStorageNodeName"))
+                if (property.NameEquals("artifactStorageNodeName"u8))
                 {
                     artifactStorageNodeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("artifactStorageAccessMode"))
+                if (property.NameEquals("artifactStorageAccessMode"u8))
                 {
                     artifactStorageAccessMode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("frontEndServiceConfiguration"))
+                if (property.NameEquals("frontEndServiceConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.AppService.Models
                     frontEndServiceConfiguration = FrontEndConfiguration.DeserializeFrontEndConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("kubeConfig"))
+                if (property.NameEquals("kubeConfig"u8))
                 {
                     kubeConfig = property.Value.GetString();
                     continue;

@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("roleId");
+            writer.WritePropertyName("roleId"u8);
             writer.WriteStringValue(RoleId);
             if (Optional.IsDefined(UseCommonAlertSchema))
             {
-                writer.WritePropertyName("useCommonAlertSchema");
+                writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
             }
             writer.WriteEndObject();
@@ -29,22 +29,26 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorArmRoleReceiver DeserializeMonitorArmRoleReceiver(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string roleId = default;
             Optional<bool> useCommonAlertSchema = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("roleId"))
+                if (property.NameEquals("roleId"u8))
                 {
                     roleId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("useCommonAlertSchema"))
+                if (property.NameEquals("useCommonAlertSchema"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

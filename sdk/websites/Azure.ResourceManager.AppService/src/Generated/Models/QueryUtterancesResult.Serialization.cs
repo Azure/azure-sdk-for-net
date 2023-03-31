@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SampleUtterance))
             {
-                writer.WritePropertyName("sampleUtterance");
+                writer.WritePropertyName("sampleUtterance"u8);
                 writer.WriteObjectValue(SampleUtterance);
             }
             if (Optional.IsDefined(Score))
             {
-                writer.WritePropertyName("score");
+                writer.WritePropertyName("score"u8);
                 writer.WriteNumberValue(Score.Value);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static QueryUtterancesResult DeserializeQueryUtterancesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SampleUtterance> sampleUtterance = default;
             Optional<float> score = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sampleUtterance"))
+                if (property.NameEquals("sampleUtterance"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
                     sampleUtterance = SampleUtterance.DeserializeSampleUtterance(property.Value);
                     continue;
                 }
-                if (property.NameEquals("score"))
+                if (property.NameEquals("score"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

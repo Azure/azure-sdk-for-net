@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SessionId))
             {
-                writer.WritePropertyName("sessionId");
+                writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId.Value);
             }
             if (Optional.IsDefined(DataFlow))
             {
-                writer.WritePropertyName("dataFlow");
+                writer.WritePropertyName("dataFlow"u8);
                 writer.WriteObjectValue(DataFlow);
             }
             if (Optional.IsCollectionDefined(DataFlows))
             {
-                writer.WritePropertyName("dataFlows");
+                writer.WritePropertyName("dataFlows"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataFlows)
                 {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsCollectionDefined(Datasets))
             {
-                writer.WritePropertyName("datasets");
+                writer.WritePropertyName("datasets"u8);
                 writer.WriteStartArray();
                 foreach (var item in Datasets)
                 {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsCollectionDefined(LinkedServices))
             {
-                writer.WritePropertyName("linkedServices");
+                writer.WritePropertyName("linkedServices"u8);
                 writer.WriteStartArray();
                 foreach (var item in LinkedServices)
                 {
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(Staging))
             {
-                writer.WritePropertyName("staging");
+                writer.WritePropertyName("staging"u8);
                 writer.WriteObjectValue(Staging);
             }
             if (Optional.IsDefined(DebugSettings))
             {
-                writer.WritePropertyName("debugSettings");
+                writer.WritePropertyName("debugSettings"u8);
                 writer.WriteObjectValue(DebugSettings);
             }
             foreach (var item in AdditionalProperties)

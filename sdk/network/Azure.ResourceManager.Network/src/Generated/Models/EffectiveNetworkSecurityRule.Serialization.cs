@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static EffectiveNetworkSecurityRule DeserializeEffectiveNetworkSecurityRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<EffectiveSecurityRuleProtocol> protocol = default;
             Optional<string> sourcePortRange = default;
@@ -32,12 +36,12 @@ namespace Azure.ResourceManager.Network.Models
             Optional<SecurityRuleDirection> direction = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protocol"))
+                if (property.NameEquals("protocol"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,17 +51,17 @@ namespace Azure.ResourceManager.Network.Models
                     protocol = new EffectiveSecurityRuleProtocol(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourcePortRange"))
+                if (property.NameEquals("sourcePortRange"u8))
                 {
                     sourcePortRange = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("destinationPortRange"))
+                if (property.NameEquals("destinationPortRange"u8))
                 {
                     destinationPortRange = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourcePortRanges"))
+                if (property.NameEquals("sourcePortRanges"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
                     sourcePortRanges = array;
                     continue;
                 }
-                if (property.NameEquals("destinationPortRanges"))
+                if (property.NameEquals("destinationPortRanges"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,17 +91,17 @@ namespace Azure.ResourceManager.Network.Models
                     destinationPortRanges = array;
                     continue;
                 }
-                if (property.NameEquals("sourceAddressPrefix"))
+                if (property.NameEquals("sourceAddressPrefix"u8))
                 {
                     sourceAddressPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("destinationAddressPrefix"))
+                if (property.NameEquals("destinationAddressPrefix"u8))
                 {
                     destinationAddressPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceAddressPrefixes"))
+                if (property.NameEquals("sourceAddressPrefixes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                     sourceAddressPrefixes = array;
                     continue;
                 }
-                if (property.NameEquals("destinationAddressPrefixes"))
+                if (property.NameEquals("destinationAddressPrefixes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -127,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
                     destinationAddressPrefixes = array;
                     continue;
                 }
-                if (property.NameEquals("expandedSourceAddressPrefix"))
+                if (property.NameEquals("expandedSourceAddressPrefix"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -142,7 +146,7 @@ namespace Azure.ResourceManager.Network.Models
                     expandedSourceAddressPrefix = array;
                     continue;
                 }
-                if (property.NameEquals("expandedDestinationAddressPrefix"))
+                if (property.NameEquals("expandedDestinationAddressPrefix"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -157,7 +161,7 @@ namespace Azure.ResourceManager.Network.Models
                     expandedDestinationAddressPrefix = array;
                     continue;
                 }
-                if (property.NameEquals("access"))
+                if (property.NameEquals("access"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -167,7 +171,7 @@ namespace Azure.ResourceManager.Network.Models
                     access = new SecurityRuleAccess(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("priority"))
+                if (property.NameEquals("priority"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -177,7 +181,7 @@ namespace Azure.ResourceManager.Network.Models
                     priority = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("direction"))
+                if (property.NameEquals("direction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

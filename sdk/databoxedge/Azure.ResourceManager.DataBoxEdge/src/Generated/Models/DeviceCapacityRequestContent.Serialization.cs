@@ -15,12 +15,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("vmPlacementQuery");
+            writer.WritePropertyName("vmPlacementQuery"u8);
             writer.WriteStartArray();
             foreach (var item in VmPlacementQuery)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteStartArray();
                 foreach (var item0 in item)
                 {
@@ -31,7 +36,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(VmPlacementResults))
             {
-                writer.WritePropertyName("vmPlacementResults");
+                writer.WritePropertyName("vmPlacementResults"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmPlacementResults)
                 {

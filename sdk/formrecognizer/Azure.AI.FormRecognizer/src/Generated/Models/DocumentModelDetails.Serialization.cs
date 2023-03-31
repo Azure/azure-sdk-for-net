@@ -16,35 +16,50 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentModelDetails DeserializeDocumentModelDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string modelId = default;
             Optional<string> description = default;
             DateTimeOffset createdDateTime = default;
+            Optional<DateTimeOffset> expirationDateTime = default;
             Optional<string> apiVersion = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             Optional<IReadOnlyDictionary<string, DocumentTypeDetails>> docTypes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("modelId"))
+                if (property.NameEquals("modelId"u8))
                 {
                     modelId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdDateTime"))
+                if (property.NameEquals("createdDateTime"u8))
                 {
                     createdDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("apiVersion"))
+                if (property.NameEquals("expirationDateTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    expirationDateTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("apiVersion"u8))
                 {
                     apiVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +74,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("docTypes"))
+                if (property.NameEquals("docTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +90,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentModelDetails(modelId, description.Value, createdDateTime, apiVersion.Value, Optional.ToDictionary(tags), Optional.ToDictionary(docTypes));
+            return new DocumentModelDetails(modelId, description.Value, createdDateTime, Optional.ToNullable(expirationDateTime), apiVersion.Value, Optional.ToDictionary(tags), Optional.ToDictionary(docTypes));
         }
     }
 }

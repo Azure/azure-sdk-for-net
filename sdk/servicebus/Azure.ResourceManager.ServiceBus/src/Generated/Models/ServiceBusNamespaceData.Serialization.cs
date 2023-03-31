@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.ServiceBus
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -40,28 +40,28 @@ namespace Azure.ResourceManager.ServiceBus
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(MinimumTlsVersion))
             {
-                writer.WritePropertyName("minimumTlsVersion");
+                writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {
-                writer.WritePropertyName("zoneRedundant");
+                writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (Optional.IsDefined(Encryption))
             {
-                writer.WritePropertyName("encryption");
+                writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
-                writer.WritePropertyName("privateEndpointConnections");
+                writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
@@ -71,22 +71,22 @@ namespace Azure.ResourceManager.ServiceBus
             }
             if (Optional.IsDefined(DisableLocalAuth))
             {
-                writer.WritePropertyName("disableLocalAuth");
+                writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
             if (Optional.IsDefined(AlternateName))
             {
-                writer.WritePropertyName("alternateName");
+                writer.WritePropertyName("alternateName"u8);
                 writer.WriteStringValue(AlternateName);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             if (Optional.IsDefined(PremiumMessagingPartitions))
             {
-                writer.WritePropertyName("premiumMessagingPartitions");
+                writer.WritePropertyName("premiumMessagingPartitions"u8);
                 writer.WriteNumberValue(PremiumMessagingPartitions.Value);
             }
             writer.WriteEndObject();
@@ -95,6 +95,10 @@ namespace Azure.ResourceManager.ServiceBus
 
         internal static ServiceBusNamespaceData DeserializeServiceBusNamespaceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServiceBusSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -119,7 +123,7 @@ namespace Azure.ResourceManager.ServiceBus
             Optional<int> premiumMessagingPartitions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,7 +133,7 @@ namespace Azure.ResourceManager.ServiceBus
                     sku = ServiceBusSku.DeserializeServiceBusSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,7 +143,7 @@ namespace Azure.ResourceManager.ServiceBus
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,27 +158,27 @@ namespace Azure.ResourceManager.ServiceBus
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -184,7 +188,7 @@ namespace Azure.ResourceManager.ServiceBus
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -193,7 +197,7 @@ namespace Azure.ResourceManager.ServiceBus
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("minimumTlsVersion"))
+                        if (property0.NameEquals("minimumTlsVersion"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -203,17 +207,17 @@ namespace Azure.ResourceManager.ServiceBus
                             minimumTlsVersion = new ServiceBusMinimumTlsVersion(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             status = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("createdAt"))
+                        if (property0.NameEquals("createdAt"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -223,7 +227,7 @@ namespace Azure.ResourceManager.ServiceBus
                             createdAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("updatedAt"))
+                        if (property0.NameEquals("updatedAt"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -233,17 +237,17 @@ namespace Azure.ResourceManager.ServiceBus
                             updatedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("serviceBusEndpoint"))
+                        if (property0.NameEquals("serviceBusEndpoint"u8))
                         {
                             serviceBusEndpoint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("metricId"))
+                        if (property0.NameEquals("metricId"u8))
                         {
                             metricId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("zoneRedundant"))
+                        if (property0.NameEquals("zoneRedundant"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -253,7 +257,7 @@ namespace Azure.ResourceManager.ServiceBus
                             zoneRedundant = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("encryption"))
+                        if (property0.NameEquals("encryption"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -263,7 +267,7 @@ namespace Azure.ResourceManager.ServiceBus
                             encryption = ServiceBusEncryption.DeserializeServiceBusEncryption(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("privateEndpointConnections"))
+                        if (property0.NameEquals("privateEndpointConnections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -278,7 +282,7 @@ namespace Azure.ResourceManager.ServiceBus
                             privateEndpointConnections = array;
                             continue;
                         }
-                        if (property0.NameEquals("disableLocalAuth"))
+                        if (property0.NameEquals("disableLocalAuth"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -288,12 +292,12 @@ namespace Azure.ResourceManager.ServiceBus
                             disableLocalAuth = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("alternateName"))
+                        if (property0.NameEquals("alternateName"u8))
                         {
                             alternateName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("publicNetworkAccess"))
+                        if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -303,7 +307,7 @@ namespace Azure.ResourceManager.ServiceBus
                             publicNetworkAccess = new ServiceBusPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("premiumMessagingPartitions"))
+                        if (property0.NameEquals("premiumMessagingPartitions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

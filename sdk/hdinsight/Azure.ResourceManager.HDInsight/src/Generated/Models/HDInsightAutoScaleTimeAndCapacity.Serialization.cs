@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Time))
             {
-                writer.WritePropertyName("time");
+                writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time);
             }
             if (Optional.IsDefined(MinInstanceCount))
             {
-                writer.WritePropertyName("minInstanceCount");
+                writer.WritePropertyName("minInstanceCount"u8);
                 writer.WriteNumberValue(MinInstanceCount.Value);
             }
             if (Optional.IsDefined(MaxInstanceCount))
             {
-                writer.WritePropertyName("maxInstanceCount");
+                writer.WritePropertyName("maxInstanceCount"u8);
                 writer.WriteNumberValue(MaxInstanceCount.Value);
             }
             writer.WriteEndObject();
@@ -35,17 +35,21 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightAutoScaleTimeAndCapacity DeserializeHDInsightAutoScaleTimeAndCapacity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> time = default;
             Optional<int> minInstanceCount = default;
             Optional<int> maxInstanceCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("time"))
+                if (property.NameEquals("time"u8))
                 {
                     time = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("minInstanceCount"))
+                if (property.NameEquals("minInstanceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     minInstanceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxInstanceCount"))
+                if (property.NameEquals("maxInstanceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

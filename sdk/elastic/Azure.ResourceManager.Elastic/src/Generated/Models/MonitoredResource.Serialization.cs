@@ -14,17 +14,21 @@ namespace Azure.ResourceManager.Elastic.Models
     {
         internal static MonitoredResource DeserializeMonitoredResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<SendingLog> sendingLogs = default;
             Optional<string> reasonForLogsStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sendingLogs"))
+                if (property.NameEquals("sendingLogs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     sendingLogs = new SendingLog(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("reasonForLogsStatus"))
+                if (property.NameEquals("reasonForLogsStatus"u8))
                 {
                     reasonForLogsStatus = property.Value.GetString();
                     continue;

@@ -5,6 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
+generate-model-factory: false
 csharp: true
 library-name: AppPlatform
 namespace: Azure.ResourceManager.AppPlatform
@@ -130,7 +131,7 @@ rename-mapping:
   CustomDomainResourceProvisioningState: AppPlatformCustomDomainProvisioningState
   ServiceResource: AppPlatformService
   ClusterResourceProperties: AppPlatformServiceProperties
-  ClusterResourceProperties.serviceId: -|uuid
+  ClusterResourceProperties.serviceId: ServiceInstanceId
   ClusterResourceProperties.zoneRedundant: IsZoneRedundant
   NetworkProfile: AppPlatformServiceNetworkProfile
   PowerState: AppPlatformServicePowerState

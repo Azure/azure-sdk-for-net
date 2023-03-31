@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DataStoreParametersList))
             {
-                writer.WritePropertyName("dataStoreParametersList");
+                writer.WritePropertyName("dataStoreParametersList"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataStoreParametersList)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             if (Optional.IsCollectionDefined(BackupDataSourceParametersList))
             {
-                writer.WritePropertyName("backupDatasourceParametersList");
+                writer.WritePropertyName("backupDatasourceParametersList"u8);
                 writer.WriteStartArray();
                 foreach (var item in BackupDataSourceParametersList)
                 {
@@ -41,11 +41,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static BackupInstancePolicySettings DeserializeBackupInstancePolicySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<DataStoreSettings>> dataStoreParametersList = default;
             Optional<IList<BackupDataSourceSettings>> backupDatasourceParametersList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataStoreParametersList"))
+                if (property.NameEquals("dataStoreParametersList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     dataStoreParametersList = array;
                     continue;
                 }
-                if (property.NameEquals("backupDatasourceParametersList"))
+                if (property.NameEquals("backupDatasourceParametersList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

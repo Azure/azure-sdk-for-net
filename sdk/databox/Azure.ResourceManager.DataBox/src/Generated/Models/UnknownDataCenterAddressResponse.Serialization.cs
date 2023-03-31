@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static UnknownDataCenterAddressResponse DeserializeUnknownDataCenterAddressResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataCenterAddressType dataCenterAddressType = default;
             Optional<IReadOnlyList<string>> supportedCarriersForReturnShipment = default;
             Optional<AzureLocation> dataCenterAzureLocation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("datacenterAddressType"))
+                if (property.NameEquals("datacenterAddressType"u8))
                 {
                     dataCenterAddressType = property.Value.GetString().ToDataCenterAddressType();
                     continue;
                 }
-                if (property.NameEquals("supportedCarriersForReturnShipment"))
+                if (property.NameEquals("supportedCarriersForReturnShipment"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     supportedCarriersForReturnShipment = array;
                     continue;
                 }
-                if (property.NameEquals("dataCenterAzureLocation"))
+                if (property.NameEquals("dataCenterAzureLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

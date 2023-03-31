@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static IotSecurityAggregatedAlertData DeserializeIotSecurityAggregatedAlertData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<IReadOnlyList<IotSecurityAggregatedAlertTopDevice>> topDevicesList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,22 +77,22 @@ namespace Azure.ResourceManager.SecurityCenter
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +102,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,17 +111,17 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("alertType"))
+                        if (property0.NameEquals("alertType"u8))
                         {
                             alertType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("alertDisplayName"))
+                        if (property0.NameEquals("alertDisplayName"u8))
                         {
                             alertDisplayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("aggregatedDateUtc"))
+                        if (property0.NameEquals("aggregatedDateUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -127,12 +131,12 @@ namespace Azure.ResourceManager.SecurityCenter
                             aggregatedDateUtc = property0.Value.GetDateTimeOffset("D");
                             continue;
                         }
-                        if (property0.NameEquals("vendorName"))
+                        if (property0.NameEquals("vendorName"u8))
                         {
                             vendorName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("reportedSeverity"))
+                        if (property0.NameEquals("reportedSeverity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -142,17 +146,17 @@ namespace Azure.ResourceManager.SecurityCenter
                             reportedSeverity = new ReportedSeverity(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("remediationSteps"))
+                        if (property0.NameEquals("remediationSteps"u8))
                         {
                             remediationSteps = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("count"))
+                        if (property0.NameEquals("count"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -162,27 +166,27 @@ namespace Azure.ResourceManager.SecurityCenter
                             count = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("effectedResourceType"))
+                        if (property0.NameEquals("effectedResourceType"u8))
                         {
                             effectedResourceType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("systemSource"))
+                        if (property0.NameEquals("systemSource"u8))
                         {
                             systemSource = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("actionTaken"))
+                        if (property0.NameEquals("actionTaken"u8))
                         {
                             actionTaken = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("logAnalyticsQuery"))
+                        if (property0.NameEquals("logAnalyticsQuery"u8))
                         {
                             logAnalyticsQuery = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("topDevicesList"))
+                        if (property0.NameEquals("topDevicesList"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

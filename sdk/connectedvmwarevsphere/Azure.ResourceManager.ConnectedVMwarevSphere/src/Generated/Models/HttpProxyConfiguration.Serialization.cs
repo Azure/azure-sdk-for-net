@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(HttpsProxy))
             {
-                writer.WritePropertyName("httpsProxy");
+                writer.WritePropertyName("httpsProxy"u8);
                 writer.WriteStringValue(HttpsProxy);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static HttpProxyConfiguration DeserializeHttpProxyConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> httpsProxy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("httpsProxy"))
+                if (property.NameEquals("httpsProxy"u8))
                 {
                     httpsProxy = property.Value.GetString();
                     continue;

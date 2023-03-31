@@ -18,37 +18,37 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Tier))
             {
-                writer.WritePropertyName("tier");
+                writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
             if (Optional.IsDefined(Size))
             {
-                writer.WritePropertyName("size");
+                writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
             if (Optional.IsDefined(Family))
             {
-                writer.WritePropertyName("family");
+                writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
             if (Optional.IsDefined(Capacity))
             {
-                writer.WritePropertyName("capacity");
+                writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
             if (Optional.IsDefined(SkuCapacity))
             {
-                writer.WritePropertyName("skuCapacity");
+                writer.WritePropertyName("skuCapacity"u8);
                 writer.WriteObjectValue(SkuCapacity);
             }
             if (Optional.IsCollectionDefined(Locations))
             {
-                writer.WritePropertyName("locations");
+                writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(Capabilities))
             {
-                writer.WritePropertyName("capabilities");
+                writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceSkuDescription DeserializeAppServiceSkuDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> tier = default;
             Optional<string> size = default;
@@ -81,27 +85,27 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IList<AppServiceSkuCapability>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     tier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("size"))
+                if (property.NameEquals("size"u8))
                 {
                     size = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("family"))
+                if (property.NameEquals("family"u8))
                 {
                     family = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capacity"))
+                if (property.NameEquals("capacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,7 +115,7 @@ namespace Azure.ResourceManager.AppService.Models
                     capacity = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("skuCapacity"))
+                if (property.NameEquals("skuCapacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -121,7 +125,7 @@ namespace Azure.ResourceManager.AppService.Models
                     skuCapacity = AppServiceSkuCapacity.DeserializeAppServiceSkuCapacity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("locations"))
+                if (property.NameEquals("locations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,7 +140,7 @@ namespace Azure.ResourceManager.AppService.Models
                     locations = array;
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

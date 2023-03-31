@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Width))
             {
-                writer.WritePropertyName("width");
+                writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
             if (Optional.IsDefined(Height))
             {
-                writer.WritePropertyName("height");
+                writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
             }
             if (Optional.IsDefined(Label))
             {
-                writer.WritePropertyName("label");
+                writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
             writer.WriteEndObject();
@@ -35,22 +35,26 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaLayerBase DeserializeMediaLayerBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> width = default;
             Optional<string> height = default;
             Optional<string> label = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("width"))
+                if (property.NameEquals("width"u8))
                 {
                     width = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("height"))
+                if (property.NameEquals("height"u8))
                 {
                     height = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;

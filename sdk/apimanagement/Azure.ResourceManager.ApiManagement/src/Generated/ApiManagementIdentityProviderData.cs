@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementIdentityProvider data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementIdentityProvider data model.
+    /// Identity Provider details.
+    /// </summary>
     public partial class ApiManagementIdentityProviderData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementIdentityProviderData. </summary>

@@ -16,28 +16,32 @@ namespace Azure.AI.AnomalyDetector
     {
         internal static AnomalyValue DeserializeAnomalyValue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool isAnomaly = default;
             float severity = default;
             float score = default;
             Optional<IReadOnlyList<AnomalyInterpretation>> interpretation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isAnomaly"))
+                if (property.NameEquals("isAnomaly"u8))
                 {
                     isAnomaly = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("severity"))
+                if (property.NameEquals("severity"u8))
                 {
                     severity = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("score"))
+                if (property.NameEquals("score"u8))
                 {
                     score = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("interpretation"))
+                if (property.NameEquals("interpretation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

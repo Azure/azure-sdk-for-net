@@ -15,12 +15,16 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static EffectiveNetworkSecurityGroupAssociation DeserializeEffectiveNetworkSecurityGroupAssociation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> networkManager = default;
             Optional<WritableSubResource> subnet = default;
             Optional<WritableSubResource> networkInterface = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("networkManager"))
+                if (property.NameEquals("networkManager"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
                     networkManager = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("subnet"))
+                if (property.NameEquals("subnet"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
                     subnet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("networkInterface"))
+                if (property.NameEquals("networkInterface"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

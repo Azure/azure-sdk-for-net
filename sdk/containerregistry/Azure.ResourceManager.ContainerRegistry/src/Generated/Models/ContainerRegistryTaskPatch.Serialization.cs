@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -31,51 +31,51 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(Platform))
             {
-                writer.WritePropertyName("platform");
+                writer.WritePropertyName("platform"u8);
                 writer.WriteObjectValue(Platform);
             }
             if (Optional.IsDefined(AgentConfiguration))
             {
-                writer.WritePropertyName("agentConfiguration");
+                writer.WritePropertyName("agentConfiguration"u8);
                 writer.WriteObjectValue(AgentConfiguration);
             }
             if (Optional.IsDefined(AgentPoolName))
             {
-                writer.WritePropertyName("agentPoolName");
+                writer.WritePropertyName("agentPoolName"u8);
                 writer.WriteStringValue(AgentPoolName);
             }
             if (Optional.IsDefined(TimeoutInSeconds))
             {
-                writer.WritePropertyName("timeout");
+                writer.WritePropertyName("timeout"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
             if (Optional.IsDefined(Step))
             {
-                writer.WritePropertyName("step");
+                writer.WritePropertyName("step"u8);
                 writer.WriteObjectValue(Step);
             }
             if (Optional.IsDefined(Trigger))
             {
-                writer.WritePropertyName("trigger");
+                writer.WritePropertyName("trigger"u8);
                 writer.WriteObjectValue(Trigger);
             }
             if (Optional.IsDefined(Credentials))
             {
-                writer.WritePropertyName("credentials");
+                writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
             if (Optional.IsDefined(LogTemplate))
             {
-                writer.WritePropertyName("logTemplate");
+                writer.WritePropertyName("logTemplate"u8);
                 writer.WriteStringValue(LogTemplate);
             }
             writer.WriteEndObject();

@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("contentType");
+            writer.WritePropertyName("contentType"u8);
             writer.WriteStringValue(ContentType);
             if (Optional.IsDefined(SchemaId))
             {
-                writer.WritePropertyName("schemaId");
+                writer.WritePropertyName("schemaId"u8);
                 writer.WriteStringValue(SchemaId);
             }
             if (Optional.IsDefined(TypeName))
             {
-                writer.WritePropertyName("typeName");
+                writer.WritePropertyName("typeName"u8);
                 writer.WriteStringValue(TypeName);
             }
             if (Optional.IsCollectionDefined(FormParameters))
             {
-                writer.WritePropertyName("formParameters");
+                writer.WritePropertyName("formParameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in FormParameters)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsCollectionDefined(Examples))
             {
-                writer.WritePropertyName("examples");
+                writer.WritePropertyName("examples"u8);
                 writer.WriteStartObject();
                 foreach (var item in Examples)
                 {
@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static RepresentationContract DeserializeRepresentationContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string contentType = default;
             Optional<string> schemaId = default;
             Optional<string> typeName = default;
@@ -61,22 +65,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<IDictionary<string, ParameterExampleContract>> examples = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("contentType"))
+                if (property.NameEquals("contentType"u8))
                 {
                     contentType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("schemaId"))
+                if (property.NameEquals("schemaId"u8))
                 {
                     schemaId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("typeName"))
+                if (property.NameEquals("typeName"u8))
                 {
                     typeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("formParameters"))
+                if (property.NameEquals("formParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     formParameters = array;
                     continue;
                 }
-                if (property.NameEquals("examples"))
+                if (property.NameEquals("examples"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

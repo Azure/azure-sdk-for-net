@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CompletionOperationType))
             {
-                writer.WritePropertyName("completionOperationType");
+                writer.WritePropertyName("completionOperationType"u8);
                 writer.WriteStringValue(CompletionOperationType.Value.ToSerialString());
             }
             if (Optional.IsDefined(DestinationFolder))
             {
-                writer.WritePropertyName("destinationFolder");
+                writer.WritePropertyName("destinationFolder"u8);
                 writer.WriteStringValue(DestinationFolder);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static ConnectorMappingCompleteOperation DeserializeConnectorMappingCompleteOperation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CompletionOperationType> completionOperationType = default;
             Optional<string> destinationFolder = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("completionOperationType"))
+                if (property.NameEquals("completionOperationType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     completionOperationType = property.Value.GetString().ToCompletionOperationType();
                     continue;
                 }
-                if (property.NameEquals("destinationFolder"))
+                if (property.NameEquals("destinationFolder"u8))
                 {
                     destinationFolder = property.Value.GetString();
                     continue;

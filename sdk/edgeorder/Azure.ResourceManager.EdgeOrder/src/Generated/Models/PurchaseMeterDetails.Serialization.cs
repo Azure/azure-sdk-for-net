@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static PurchaseMeterDetails DeserializePurchaseMeterDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> productId = default;
             Optional<string> skuId = default;
             Optional<string> termId = default;
@@ -22,27 +26,27 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<EdgeOrderProductChargingType> chargingType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("productId"))
+                if (property.NameEquals("productId"u8))
                 {
                     productId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("skuId"))
+                if (property.NameEquals("skuId"u8))
                 {
                     skuId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("termId"))
+                if (property.NameEquals("termId"u8))
                 {
                     termId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("billingType"))
+                if (property.NameEquals("billingType"u8))
                 {
                     billingType = new BillingType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("multiplier"))
+                if (property.NameEquals("multiplier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     multiplier = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("chargingType"))
+                if (property.NameEquals("chargingType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

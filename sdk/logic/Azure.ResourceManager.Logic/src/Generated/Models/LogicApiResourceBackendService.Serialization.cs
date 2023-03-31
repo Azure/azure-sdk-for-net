@@ -15,10 +15,14 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static LogicApiResourceBackendService DeserializeLogicApiResourceBackendService(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> serviceUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceUrl"))
+                if (property.NameEquals("serviceUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FailoverDirection))
             {
-                writer.WritePropertyName("failoverDirection");
+                writer.WritePropertyName("failoverDirection"u8);
                 writer.WriteStringValue(FailoverDirection);
             }
             if (Optional.IsDefined(NetworkType))
             {
-                writer.WritePropertyName("networkType");
+                writer.WritePropertyName("networkType"u8);
                 writer.WriteStringValue(NetworkType);
             }
             if (Optional.IsDefined(NetworkId))
             {
-                writer.WritePropertyName("networkId");
+                writer.WritePropertyName("networkId"u8);
                 writer.WriteStringValue(NetworkId);
             }
             if (Optional.IsDefined(ProviderSpecificDetails))
             {
-                writer.WritePropertyName("providerSpecificDetails");
+                writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);
             }
             writer.WriteEndObject();

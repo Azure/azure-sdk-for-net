@@ -15,39 +15,43 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("key");
+            writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
-            writer.WritePropertyName("labelOperator");
+            writer.WritePropertyName("labelOperator"u8);
             writer.WriteStringValue(LabelOperator.ToSerialString());
             if (Optional.IsDefined(_ttlSeconds))
             {
-                writer.WritePropertyName("ttlSeconds");
+                writer.WritePropertyName("ttlSeconds"u8);
                 writer.WriteNumberValue(_ttlSeconds.Value);
             }
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             writer.WriteEndObject();
         }
 
         internal static PassThroughWorkerSelectorAttachment DeserializePassThroughWorkerSelectorAttachment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string key = default;
             LabelOperator labelOperator = default;
             Optional<double> ttlSeconds = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("labelOperator"))
+                if (property.NameEquals("labelOperator"u8))
                 {
                     labelOperator = property.Value.GetString().ToLabelOperator();
                     continue;
                 }
-                if (property.NameEquals("ttlSeconds"))
+                if (property.NameEquals("ttlSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +61,7 @@ namespace Azure.Communication.JobRouter
                     ttlSeconds = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;

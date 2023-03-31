@@ -15,11 +15,15 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteSectionTec DeserializeRouteSectionTec(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> effectCode = default;
             Optional<IReadOnlyList<RouteSectionTecCause>> causes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("effectCode"))
+                if (property.NameEquals("effectCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.Maps.Routing.Models
                     effectCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("causes"))
+                if (property.NameEquals("causes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

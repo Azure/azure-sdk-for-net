@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Batch.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("accountName");
+            writer.WritePropertyName("accountName"u8);
             writer.WriteStringValue(AccountName);
-            writer.WritePropertyName("azureFileUrl");
+            writer.WritePropertyName("azureFileUrl"u8);
             writer.WriteStringValue(FileUri.AbsoluteUri);
-            writer.WritePropertyName("accountKey");
+            writer.WritePropertyName("accountKey"u8);
             writer.WriteStringValue(AccountKey);
-            writer.WritePropertyName("relativeMountPath");
+            writer.WritePropertyName("relativeMountPath"u8);
             writer.WriteStringValue(RelativeMountPath);
             if (Optional.IsDefined(MountOptions))
             {
-                writer.WritePropertyName("mountOptions");
+                writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStringValue(MountOptions);
             }
             writer.WriteEndObject();
@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchFileShareConfiguration DeserializeBatchFileShareConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string accountName = default;
             Uri azureFileUrl = default;
             string accountKey = default;
@@ -41,27 +45,27 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<string> mountOptions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountName"))
+                if (property.NameEquals("accountName"u8))
                 {
                     accountName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("azureFileUrl"))
+                if (property.NameEquals("azureFileUrl"u8))
                 {
                     azureFileUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("accountKey"))
+                if (property.NameEquals("accountKey"u8))
                 {
                     accountKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("relativeMountPath"))
+                if (property.NameEquals("relativeMountPath"u8))
                 {
                     relativeMountPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mountOptions"))
+                if (property.NameEquals("mountOptions"u8))
                 {
                     mountOptions = property.Value.GetString();
                     continue;

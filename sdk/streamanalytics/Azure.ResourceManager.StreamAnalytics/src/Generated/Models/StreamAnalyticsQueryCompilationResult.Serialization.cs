@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         internal static StreamAnalyticsQueryCompilationResult DeserializeStreamAnalyticsQueryCompilationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StreamAnalyticsQueryCompilationError>> errors = default;
             Optional<IReadOnlyList<string>> warnings = default;
             Optional<IReadOnlyList<string>> inputs = default;
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<IReadOnlyList<string>> functions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,7 +41,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("warnings"))
+                if (property.NameEquals("warnings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     warnings = array;
                     continue;
                 }
-                if (property.NameEquals("inputs"))
+                if (property.NameEquals("inputs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +71,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     inputs = array;
                     continue;
                 }
-                if (property.NameEquals("outputs"))
+                if (property.NameEquals("outputs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +86,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     outputs = array;
                     continue;
                 }
-                if (property.NameEquals("functions"))
+                if (property.NameEquals("functions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

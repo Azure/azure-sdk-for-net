@@ -20,22 +20,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Source))
             {
-                writer.WritePropertyName("source");
+                writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
             if (Optional.IsDefined(Target))
             {
-                writer.WritePropertyName("target");
+                writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
             }
             if (Optional.IsDefined(OperationType))
             {
-                writer.WritePropertyName("operationType");
+                writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType);
             }
             writer.WriteEndObject();
@@ -43,18 +43,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static LinkTableRequest DeserializeLinkTableRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<LinkTableRequestSource> source = default;
             Optional<LinkTableRequestTarget> target = default;
             Optional<string> operationType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +68,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     source = LinkTableRequestSource.DeserializeLinkTableRequestSource(property.Value);
                     continue;
                 }
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +78,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     target = LinkTableRequestTarget.DeserializeLinkTableRequestTarget(property.Value);
                     continue;
                 }
-                if (property.NameEquals("operationType"))
+                if (property.NameEquals("operationType"u8))
                 {
                     operationType = property.Value.GetString();
                     continue;

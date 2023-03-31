@@ -28,6 +28,7 @@ extends:
   parameters:
     SDKType: client
     ServiceDirectory: loadtestservice
+    BuildSnippets: false
     ArtifactName: packages
     Artifacts:
     - name: Azure.Developer.LoadTesting

@@ -17,32 +17,36 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LicenseKey))
             {
-                writer.WritePropertyName("licenseKey");
+                writer.WritePropertyName("licenseKey"u8);
                 writer.WriteStringValue(LicenseKey);
             }
-            writer.WritePropertyName("addonType");
+            writer.WritePropertyName("addonType"u8);
             writer.WriteStringValue(AddonType.ToString());
             writer.WriteEndObject();
         }
 
         internal static AddonSrmProperties DeserializeAddonSrmProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> licenseKey = default;
             AddonType addonType = default;
             Optional<AddonProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("licenseKey"))
+                if (property.NameEquals("licenseKey"u8))
                 {
                     licenseKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("addonType"))
+                if (property.NameEquals("addonType"u8))
                 {
                     addonType = new AddonType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

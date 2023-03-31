@@ -18,21 +18,21 @@ namespace Azure.ResourceManager.Blueprint.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IdentityType.ToString());
             if (Optional.IsDefined(PrincipalId))
             {
-                writer.WritePropertyName("principalId");
+                writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId);
             }
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
-                writer.WritePropertyName("userAssignedIdentities");
+                writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();
                 foreach (var item in UserAssignedIdentities)
                 {
@@ -46,23 +46,27 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static ManagedServiceIdentity DeserializeManagedServiceIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ManagedServiceIdentityType type = default;
             Optional<string> principalId = default;
             Optional<Guid> tenantId = default;
             Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ManagedServiceIdentityType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("principalId"))
+                if (property.NameEquals("principalId"u8))
                 {
                     principalId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("userAssignedIdentities"))
+                if (property.NameEquals("userAssignedIdentities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

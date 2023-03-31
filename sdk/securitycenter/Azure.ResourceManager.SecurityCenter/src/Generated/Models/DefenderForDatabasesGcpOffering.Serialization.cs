@@ -17,28 +17,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ArcAutoProvisioning))
             {
-                writer.WritePropertyName("arcAutoProvisioning");
+                writer.WritePropertyName("arcAutoProvisioning"u8);
                 writer.WriteObjectValue(ArcAutoProvisioning);
             }
             if (Optional.IsDefined(DefenderForDatabasesArcAutoProvisioning))
             {
-                writer.WritePropertyName("defenderForDatabasesArcAutoProvisioning");
+                writer.WritePropertyName("defenderForDatabasesArcAutoProvisioning"u8);
                 writer.WriteObjectValue(DefenderForDatabasesArcAutoProvisioning);
             }
-            writer.WritePropertyName("offeringType");
+            writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
             writer.WriteEndObject();
         }
 
         internal static DefenderForDatabasesGcpOffering DeserializeDefenderForDatabasesGcpOffering(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DefenderForDatabasesGcpOfferingArcAutoProvisioning> arcAutoProvisioning = default;
             Optional<GcpDefenderForDatabasesArcAutoProvisioning> defenderForDatabasesArcAutoProvisioning = default;
             OfferingType offeringType = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("arcAutoProvisioning"))
+                if (property.NameEquals("arcAutoProvisioning"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     arcAutoProvisioning = DefenderForDatabasesGcpOfferingArcAutoProvisioning.DeserializeDefenderForDatabasesGcpOfferingArcAutoProvisioning(property.Value);
                     continue;
                 }
-                if (property.NameEquals("defenderForDatabasesArcAutoProvisioning"))
+                if (property.NameEquals("defenderForDatabasesArcAutoProvisioning"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,12 +62,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     defenderForDatabasesArcAutoProvisioning = GcpDefenderForDatabasesArcAutoProvisioning.DeserializeGcpDefenderForDatabasesArcAutoProvisioning(property.Value);
                     continue;
                 }
-                if (property.NameEquals("offeringType"))
+                if (property.NameEquals("offeringType"u8))
                 {
                     offeringType = new OfferingType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;

@@ -17,23 +17,23 @@ namespace Azure.ResourceManager.DataBoxEdge
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(StorageAccountStatus))
             {
-                writer.WritePropertyName("storageAccountStatus");
+                writer.WritePropertyName("storageAccountStatus"u8);
                 writer.WriteStringValue(StorageAccountStatus.Value.ToString());
             }
-            writer.WritePropertyName("dataPolicy");
+            writer.WritePropertyName("dataPolicy"u8);
             writer.WriteStringValue(DataPolicy.ToString());
             if (Optional.IsDefined(StorageAccountCredentialId))
             {
-                writer.WritePropertyName("storageAccountCredentialId");
+                writer.WritePropertyName("storageAccountCredentialId"u8);
                 writer.WriteStringValue(StorageAccountCredentialId);
             }
             writer.WriteEndObject();
@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         internal static DataBoxEdgeStorageAccountData DeserializeDataBoxEdgeStorageAccountData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -54,22 +58,22 @@ namespace Azure.ResourceManager.DataBoxEdge
             Optional<int> containerCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +83,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,12 +92,12 @@ namespace Azure.ResourceManager.DataBoxEdge
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("storageAccountStatus"))
+                        if (property0.NameEquals("storageAccountStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -103,12 +107,12 @@ namespace Azure.ResourceManager.DataBoxEdge
                             storageAccountStatus = new DataBoxEdgeStorageAccountStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("dataPolicy"))
+                        if (property0.NameEquals("dataPolicy"u8))
                         {
                             dataPolicy = new DataBoxEdgeDataPolicy(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("storageAccountCredentialId"))
+                        if (property0.NameEquals("storageAccountCredentialId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -118,12 +122,12 @@ namespace Azure.ResourceManager.DataBoxEdge
                             storageAccountCredentialId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("blobEndpoint"))
+                        if (property0.NameEquals("blobEndpoint"u8))
                         {
                             blobEndpoint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("containerCount"))
+                        if (property0.NameEquals("containerCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static PolicyEvent DeserializePolicyEvent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> odataId = default;
             Optional<string> odataContext = default;
             Optional<DateTimeOffset> timestamp = default;
@@ -51,17 +55,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.id"))
+                if (property.NameEquals("@odata.id"u8))
                 {
                     odataId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@odata.context"))
+                if (property.NameEquals("@odata.context"u8))
                 {
                     odataContext = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,7 +85,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policyAssignmentId"))
+                if (property.NameEquals("policyAssignmentId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     policyAssignmentId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policyDefinitionId"))
+                if (property.NameEquals("policyDefinitionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,12 +105,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     policyDefinitionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("effectiveParameters"))
+                if (property.NameEquals("effectiveParameters"u8))
                 {
                     effectiveParameters = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isCompliant"))
+                if (property.NameEquals("isCompliant"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,17 +120,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     isCompliant = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceLocation"))
+                if (property.NameEquals("resourceLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,52 +140,52 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     resourceLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceGroup"))
+                if (property.NameEquals("resourceGroup"u8))
                 {
                     resourceGroup = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceTags"))
+                if (property.NameEquals("resourceTags"u8))
                 {
                     resourceTags = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyAssignmentName"))
+                if (property.NameEquals("policyAssignmentName"u8))
                 {
                     policyAssignmentName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyAssignmentOwner"))
+                if (property.NameEquals("policyAssignmentOwner"u8))
                 {
                     policyAssignmentOwner = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyAssignmentParameters"))
+                if (property.NameEquals("policyAssignmentParameters"u8))
                 {
                     policyAssignmentParameters = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyAssignmentScope"))
+                if (property.NameEquals("policyAssignmentScope"u8))
                 {
                     policyAssignmentScope = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyDefinitionName"))
+                if (property.NameEquals("policyDefinitionName"u8))
                 {
                     policyDefinitionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyDefinitionAction"))
+                if (property.NameEquals("policyDefinitionAction"u8))
                 {
                     policyDefinitionAction = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyDefinitionCategory"))
+                if (property.NameEquals("policyDefinitionCategory"u8))
                 {
                     policyDefinitionCategory = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policySetDefinitionId"))
+                if (property.NameEquals("policySetDefinitionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -191,42 +195,42 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     policySetDefinitionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policySetDefinitionName"))
+                if (property.NameEquals("policySetDefinitionName"u8))
                 {
                     policySetDefinitionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policySetDefinitionOwner"))
+                if (property.NameEquals("policySetDefinitionOwner"u8))
                 {
                     policySetDefinitionOwner = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policySetDefinitionCategory"))
+                if (property.NameEquals("policySetDefinitionCategory"u8))
                 {
                     policySetDefinitionCategory = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policySetDefinitionParameters"))
+                if (property.NameEquals("policySetDefinitionParameters"u8))
                 {
                     policySetDefinitionParameters = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("managementGroupIds"))
+                if (property.NameEquals("managementGroupIds"u8))
                 {
                     managementGroupIds = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyDefinitionReferenceId"))
+                if (property.NameEquals("policyDefinitionReferenceId"u8))
                 {
                     policyDefinitionReferenceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("complianceState"))
+                if (property.NameEquals("complianceState"u8))
                 {
                     complianceState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -236,12 +240,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("principalOid"))
+                if (property.NameEquals("principalOid"u8))
                 {
                     principalOid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("components"))
+                if (property.NameEquals("components"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

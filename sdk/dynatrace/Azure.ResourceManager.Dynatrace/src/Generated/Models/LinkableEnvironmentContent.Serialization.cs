@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Dynatrace.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(UserPrincipal))
             {
-                writer.WritePropertyName("userPrincipal");
+                writer.WritePropertyName("userPrincipal"u8);
                 writer.WriteStringValue(UserPrincipal);
             }
             if (Optional.IsDefined(Region))
             {
-                writer.WritePropertyName("region");
+                writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region.Value);
             }
             writer.WriteEndObject();

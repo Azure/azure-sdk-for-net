@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Region))
             {
-                writer.WritePropertyName("region");
+                writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
             if (Optional.IsDefined(WorkspaceId))
             {
-                writer.WritePropertyName("workspaceId");
+                writer.WritePropertyName("workspaceId"u8);
                 JsonSerializer.Serialize(writer, WorkspaceId);
             }
             writer.WriteEndObject();
@@ -31,16 +31,20 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPolicyLogAnalyticsWorkspace DeserializeFirewallPolicyLogAnalyticsWorkspace(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> region = default;
             Optional<WritableSubResource> workspaceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("region"))
+                if (property.NameEquals("region"u8))
                 {
                     region = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workspaceId"))
+                if (property.NameEquals("workspaceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

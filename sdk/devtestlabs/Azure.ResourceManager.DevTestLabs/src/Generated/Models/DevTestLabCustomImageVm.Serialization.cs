@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceVmId))
             {
-                writer.WritePropertyName("sourceVmId");
+                writer.WritePropertyName("sourceVmId"u8);
                 writer.WriteStringValue(SourceVmId);
             }
             if (Optional.IsDefined(WindowsOSInfo))
             {
-                writer.WritePropertyName("windowsOsInfo");
+                writer.WritePropertyName("windowsOsInfo"u8);
                 writer.WriteObjectValue(WindowsOSInfo);
             }
             if (Optional.IsDefined(LinuxOSInfo))
             {
-                writer.WritePropertyName("linuxOsInfo");
+                writer.WritePropertyName("linuxOsInfo"u8);
                 writer.WriteObjectValue(LinuxOSInfo);
             }
             writer.WriteEndObject();
@@ -35,17 +35,21 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabCustomImageVm DeserializeDevTestLabCustomImageVm(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sourceVmId = default;
             Optional<WindowsOSInfo> windowsOSInfo = default;
             Optional<LinuxOSInfo> linuxOSInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceVmId"))
+                if (property.NameEquals("sourceVmId"u8))
                 {
                     sourceVmId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("windowsOsInfo"))
+                if (property.NameEquals("windowsOsInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     windowsOSInfo = WindowsOSInfo.DeserializeWindowsOSInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("linuxOsInfo"))
+                if (property.NameEquals("linuxOsInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

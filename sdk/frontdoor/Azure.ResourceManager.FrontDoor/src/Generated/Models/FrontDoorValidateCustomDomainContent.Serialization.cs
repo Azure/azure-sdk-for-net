@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("hostName");
+            writer.WritePropertyName("hostName"u8);
             writer.WriteStringValue(HostName);
             writer.WriteEndObject();
         }

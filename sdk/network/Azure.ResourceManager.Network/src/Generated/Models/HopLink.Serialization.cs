@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static HopLink DeserializeHopLink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextHopId = default;
             Optional<string> linkType = default;
             Optional<IReadOnlyList<ConnectivityIssueInfo>> issues = default;
@@ -25,17 +29,17 @@ namespace Azure.ResourceManager.Network.Models
             Optional<long> roundTripTimeMax = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextHopId"))
+                if (property.NameEquals("nextHopId"u8))
                 {
                     nextHopId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("linkType"))
+                if (property.NameEquals("linkType"u8))
                 {
                     linkType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("issues"))
+                if (property.NameEquals("issues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
                     issues = array;
                     continue;
                 }
-                if (property.NameEquals("context"))
+                if (property.NameEquals("context"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
                     context = dictionary;
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("roundTripTimeMin"))
+                        if (property0.NameEquals("roundTripTimeMin"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -94,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
                             roundTripTimeMin = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("roundTripTimeAvg"))
+                        if (property0.NameEquals("roundTripTimeAvg"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.Network.Models
                             roundTripTimeAvg = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("roundTripTimeMax"))
+                        if (property0.NameEquals("roundTripTimeMax"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -19,48 +19,48 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(BodyFingerprintBin1))
             {
-                writer.WritePropertyName("bodyFingerprintBin1");
+                writer.WritePropertyName("bodyFingerprintBin1"u8);
                 writer.WriteNumberValue(BodyFingerprintBin1.Value);
             }
             if (Optional.IsDefined(BodyFingerprintBin2))
             {
-                writer.WritePropertyName("bodyFingerprintBin2");
+                writer.WritePropertyName("bodyFingerprintBin2"u8);
                 writer.WriteNumberValue(BodyFingerprintBin2.Value);
             }
             if (Optional.IsDefined(BodyFingerprintBin3))
             {
-                writer.WritePropertyName("bodyFingerprintBin3");
+                writer.WritePropertyName("bodyFingerprintBin3"u8);
                 writer.WriteNumberValue(BodyFingerprintBin3.Value);
             }
             if (Optional.IsDefined(BodyFingerprintBin4))
             {
-                writer.WritePropertyName("bodyFingerprintBin4");
+                writer.WritePropertyName("bodyFingerprintBin4"u8);
                 writer.WriteNumberValue(BodyFingerprintBin4.Value);
             }
             if (Optional.IsDefined(BodyFingerprintBin5))
             {
-                writer.WritePropertyName("bodyFingerprintBin5");
+                writer.WritePropertyName("bodyFingerprintBin5"u8);
                 writer.WriteNumberValue(BodyFingerprintBin5.Value);
             }
             if (Optional.IsDefined(AntispamDirection))
             {
-                writer.WritePropertyName("antispamDirection");
+                writer.WritePropertyName("antispamDirection"u8);
                 writer.WriteStringValue(AntispamDirection.Value.ToString());
             }
             if (Optional.IsDefined(DeliveryAction))
             {
-                writer.WritePropertyName("deliveryAction");
+                writer.WritePropertyName("deliveryAction"u8);
                 writer.WriteStringValue(DeliveryAction.Value.ToSerialString());
             }
             if (Optional.IsDefined(DeliveryLocation))
             {
-                writer.WritePropertyName("deliveryLocation");
+                writer.WritePropertyName("deliveryLocation"u8);
                 writer.WriteStringValue(DeliveryLocation.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsMailMessageEntity DeserializeSecurityInsightsMailMessageEntity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SecurityInsightsEntityKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -103,37 +107,37 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<SecurityInsightsMailMessageDeliveryLocation> deliveryLocation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new SecurityInsightsEntityKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -142,7 +146,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("additionalData"))
+                        if (property0.NameEquals("additionalData"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -152,17 +156,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
                             }
                             additionalData = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("friendlyName"))
+                        if (property0.NameEquals("friendlyName"u8))
                         {
                             friendlyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("fileEntityIds"))
+                        if (property0.NameEquals("fileEntityIds"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -177,12 +188,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             fileEntityIds = array;
                             continue;
                         }
-                        if (property0.NameEquals("recipient"))
+                        if (property0.NameEquals("recipient"u8))
                         {
                             recipient = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("urls"))
+                        if (property0.NameEquals("urls"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -192,12 +203,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<Uri> array = new List<Uri>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new Uri(item.GetString()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new Uri(item.GetString()));
+                                }
                             }
                             urls = array;
                             continue;
                         }
-                        if (property0.NameEquals("threats"))
+                        if (property0.NameEquals("threats"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -212,22 +230,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             threats = array;
                             continue;
                         }
-                        if (property0.NameEquals("p1Sender"))
+                        if (property0.NameEquals("p1Sender"u8))
                         {
                             p1Sender = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("p1SenderDisplayName"))
+                        if (property0.NameEquals("p1SenderDisplayName"u8))
                         {
                             p1SenderDisplayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("p1SenderDomain"))
+                        if (property0.NameEquals("p1SenderDomain"u8))
                         {
                             p1SenderDomain = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("senderIP"))
+                        if (property0.NameEquals("senderIP"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -237,22 +255,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             senderIP = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("p2Sender"))
+                        if (property0.NameEquals("p2Sender"u8))
                         {
                             p2Sender = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("p2SenderDisplayName"))
+                        if (property0.NameEquals("p2SenderDisplayName"u8))
                         {
                             p2SenderDisplayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("p2SenderDomain"))
+                        if (property0.NameEquals("p2SenderDomain"u8))
                         {
                             p2SenderDomain = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("receiveDate"))
+                        if (property0.NameEquals("receiveDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -262,7 +280,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             receiveDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("networkMessageId"))
+                        if (property0.NameEquals("networkMessageId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -272,22 +290,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             networkMessageId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("internetMessageId"))
+                        if (property0.NameEquals("internetMessageId"u8))
                         {
                             internetMessageId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("subject"))
+                        if (property0.NameEquals("subject"u8))
                         {
                             subject = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("language"))
+                        if (property0.NameEquals("language"u8))
                         {
                             language = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("threatDetectionMethods"))
+                        if (property0.NameEquals("threatDetectionMethods"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -302,7 +320,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             threatDetectionMethods = array;
                             continue;
                         }
-                        if (property0.NameEquals("bodyFingerprintBin1"))
+                        if (property0.NameEquals("bodyFingerprintBin1"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -312,7 +330,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             bodyFingerprintBin1 = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("bodyFingerprintBin2"))
+                        if (property0.NameEquals("bodyFingerprintBin2"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -322,7 +340,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             bodyFingerprintBin2 = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("bodyFingerprintBin3"))
+                        if (property0.NameEquals("bodyFingerprintBin3"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -332,7 +350,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             bodyFingerprintBin3 = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("bodyFingerprintBin4"))
+                        if (property0.NameEquals("bodyFingerprintBin4"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -342,7 +360,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             bodyFingerprintBin4 = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("bodyFingerprintBin5"))
+                        if (property0.NameEquals("bodyFingerprintBin5"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -352,7 +370,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             bodyFingerprintBin5 = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("antispamDirection"))
+                        if (property0.NameEquals("antispamDirection"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -362,7 +380,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             antispamDirection = new AntispamMailDirection(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("deliveryAction"))
+                        if (property0.NameEquals("deliveryAction"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -372,7 +390,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             deliveryAction = property0.Value.GetString().ToSecurityInsightsMailMessageDeliveryAction();
                             continue;
                         }
-                        if (property0.NameEquals("deliveryLocation"))
+                        if (property0.NameEquals("deliveryLocation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

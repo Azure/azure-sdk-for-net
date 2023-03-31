@@ -15,18 +15,22 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     {
         internal static Service DeserializeService(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<ServiceUnit>> serviceUnits = default;
             string targetLocation = default;
             string targetSubscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceUnits"))
+                if (property.NameEquals("serviceUnits"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,12 +45,12 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     serviceUnits = array;
                     continue;
                 }
-                if (property.NameEquals("targetLocation"))
+                if (property.NameEquals("targetLocation"u8))
                 {
                     targetLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetSubscriptionId"))
+                if (property.NameEquals("targetSubscriptionId"u8))
                 {
                     targetSubscriptionId = property.Value.GetString();
                     continue;

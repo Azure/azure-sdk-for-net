@@ -14,11 +14,15 @@ namespace Azure.ResourceManager.Billing.Models
     {
         internal static BillingSubscriptionValidateMoveEligibilityResult DeserializeBillingSubscriptionValidateMoveEligibilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isMoveEligible = default;
             Optional<BillingSubscriptionValidateMoveEligibilityError> errorDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isMoveEligible"))
+                if (property.NameEquals("isMoveEligible"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.Billing.Models
                     isMoveEligible = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("errorDetails"))
+                if (property.NameEquals("errorDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

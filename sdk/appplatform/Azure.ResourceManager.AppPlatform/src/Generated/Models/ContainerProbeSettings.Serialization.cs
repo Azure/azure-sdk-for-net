@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsProbeDisabled))
             {
-                writer.WritePropertyName("disableProbe");
+                writer.WritePropertyName("disableProbe"u8);
                 writer.WriteBooleanValue(IsProbeDisabled.Value);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static ContainerProbeSettings DeserializeContainerProbeSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> disableProbe = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("disableProbe"))
+                if (property.NameEquals("disableProbe"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

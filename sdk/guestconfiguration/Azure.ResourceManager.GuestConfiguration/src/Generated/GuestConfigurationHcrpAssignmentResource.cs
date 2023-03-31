@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.GuestConfiguration.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.GuestConfiguration
 {
@@ -22,7 +21,7 @@ namespace Azure.ResourceManager.GuestConfiguration
     /// A Class representing a GuestConfigurationHcrpAssignment along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GuestConfigurationHcrpAssignmentResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetGuestConfigurationHcrpAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetGuestConfigurationHcrpAssignment method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetGuestConfigurationHcrpAssignment method.
     /// </summary>
     public partial class GuestConfigurationHcrpAssignmentResource : ArmResource
     {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -26,26 +26,26 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Identifier))
             {
-                writer.WritePropertyName("identifier");
+                writer.WritePropertyName("identifier"u8);
                 writer.WriteObjectValue(Identifier);
             }
             if (Optional.IsDefined(SharingProfile))
             {
-                writer.WritePropertyName("sharingProfile");
+                writer.WritePropertyName("sharingProfile"u8);
                 writer.WriteObjectValue(SharingProfile);
             }
             if (Optional.IsDefined(SoftDeletePolicy))
             {
-                writer.WritePropertyName("softDeletePolicy");
+                writer.WritePropertyName("softDeletePolicy"u8);
                 writer.WriteObjectValue(SoftDeletePolicy);
             }
             writer.WriteEndObject();

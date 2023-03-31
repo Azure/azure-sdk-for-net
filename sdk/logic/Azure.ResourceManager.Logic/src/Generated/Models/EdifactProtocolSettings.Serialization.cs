@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("validationSettings");
+            writer.WritePropertyName("validationSettings"u8);
             writer.WriteObjectValue(ValidationSettings);
-            writer.WritePropertyName("framingSettings");
+            writer.WritePropertyName("framingSettings"u8);
             writer.WriteObjectValue(FramingSettings);
-            writer.WritePropertyName("envelopeSettings");
+            writer.WritePropertyName("envelopeSettings"u8);
             writer.WriteObjectValue(EnvelopeSettings);
-            writer.WritePropertyName("acknowledgementSettings");
+            writer.WritePropertyName("acknowledgementSettings"u8);
             writer.WriteObjectValue(AcknowledgementSettings);
-            writer.WritePropertyName("messageFilter");
+            writer.WritePropertyName("messageFilter"u8);
             writer.WriteObjectValue(MessageFilter);
-            writer.WritePropertyName("processingSettings");
+            writer.WritePropertyName("processingSettings"u8);
             writer.WriteObjectValue(ProcessingSettings);
             if (Optional.IsCollectionDefined(EnvelopeOverrides))
             {
-                writer.WritePropertyName("envelopeOverrides");
+                writer.WritePropertyName("envelopeOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in EnvelopeOverrides)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
             if (Optional.IsCollectionDefined(MessageFilterList))
             {
-                writer.WritePropertyName("messageFilterList");
+                writer.WritePropertyName("messageFilterList"u8);
                 writer.WriteStartArray();
                 foreach (var item in MessageFilterList)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("schemaReferences");
+            writer.WritePropertyName("schemaReferences"u8);
             writer.WriteStartArray();
             foreach (var item in SchemaReferences)
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(ValidationOverrides))
             {
-                writer.WritePropertyName("validationOverrides");
+                writer.WritePropertyName("validationOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in ValidationOverrides)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
             if (Optional.IsCollectionDefined(EdifactDelimiterOverrides))
             {
-                writer.WritePropertyName("edifactDelimiterOverrides");
+                writer.WritePropertyName("edifactDelimiterOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in EdifactDelimiterOverrides)
                 {
@@ -80,6 +80,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static EdifactProtocolSettings DeserializeEdifactProtocolSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EdifactValidationSettings validationSettings = default;
             EdifactFramingSettings framingSettings = default;
             EdifactEnvelopeSettings envelopeSettings = default;
@@ -93,37 +97,37 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<IList<EdifactDelimiterOverride>> edifactDelimiterOverrides = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("validationSettings"))
+                if (property.NameEquals("validationSettings"u8))
                 {
                     validationSettings = EdifactValidationSettings.DeserializeEdifactValidationSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("framingSettings"))
+                if (property.NameEquals("framingSettings"u8))
                 {
                     framingSettings = EdifactFramingSettings.DeserializeEdifactFramingSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("envelopeSettings"))
+                if (property.NameEquals("envelopeSettings"u8))
                 {
                     envelopeSettings = EdifactEnvelopeSettings.DeserializeEdifactEnvelopeSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("acknowledgementSettings"))
+                if (property.NameEquals("acknowledgementSettings"u8))
                 {
                     acknowledgementSettings = EdifactAcknowledgementSettings.DeserializeEdifactAcknowledgementSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("messageFilter"))
+                if (property.NameEquals("messageFilter"u8))
                 {
                     messageFilter = EdifactMessageFilter.DeserializeEdifactMessageFilter(property.Value);
                     continue;
                 }
-                if (property.NameEquals("processingSettings"))
+                if (property.NameEquals("processingSettings"u8))
                 {
                     processingSettings = EdifactProcessingSettings.DeserializeEdifactProcessingSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("envelopeOverrides"))
+                if (property.NameEquals("envelopeOverrides"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -138,7 +142,7 @@ namespace Azure.ResourceManager.Logic.Models
                     envelopeOverrides = array;
                     continue;
                 }
-                if (property.NameEquals("messageFilterList"))
+                if (property.NameEquals("messageFilterList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -153,7 +157,7 @@ namespace Azure.ResourceManager.Logic.Models
                     messageFilterList = array;
                     continue;
                 }
-                if (property.NameEquals("schemaReferences"))
+                if (property.NameEquals("schemaReferences"u8))
                 {
                     List<EdifactSchemaReference> array = new List<EdifactSchemaReference>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -163,7 +167,7 @@ namespace Azure.ResourceManager.Logic.Models
                     schemaReferences = array;
                     continue;
                 }
-                if (property.NameEquals("validationOverrides"))
+                if (property.NameEquals("validationOverrides"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -178,7 +182,7 @@ namespace Azure.ResourceManager.Logic.Models
                     validationOverrides = array;
                     continue;
                 }
-                if (property.NameEquals("edifactDelimiterOverrides"))
+                if (property.NameEquals("edifactDelimiterOverrides"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

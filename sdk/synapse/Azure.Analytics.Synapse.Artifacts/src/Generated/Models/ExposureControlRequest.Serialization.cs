@@ -20,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FeatureName))
             {
-                writer.WritePropertyName("featureName");
+                writer.WritePropertyName("featureName"u8);
                 writer.WriteStringValue(FeatureName);
             }
             if (Optional.IsDefined(FeatureType))
             {
-                writer.WritePropertyName("featureType");
+                writer.WritePropertyName("featureType"u8);
                 writer.WriteStringValue(FeatureType);
             }
             writer.WriteEndObject();
@@ -33,16 +33,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ExposureControlRequest DeserializeExposureControlRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> featureName = default;
             Optional<string> featureType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("featureName"))
+                if (property.NameEquals("featureName"u8))
                 {
                     featureName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("featureType"))
+                if (property.NameEquals("featureType"u8))
                 {
                     featureType = property.Value.GetString();
                     continue;

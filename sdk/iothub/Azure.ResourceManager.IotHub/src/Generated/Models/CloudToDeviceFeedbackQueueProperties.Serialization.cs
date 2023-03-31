@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LockDurationAsIso8601))
             {
-                writer.WritePropertyName("lockDurationAsIso8601");
+                writer.WritePropertyName("lockDurationAsIso8601"u8);
                 writer.WriteStringValue(LockDurationAsIso8601.Value, "P");
             }
             if (Optional.IsDefined(TtlAsIso8601))
             {
-                writer.WritePropertyName("ttlAsIso8601");
+                writer.WritePropertyName("ttlAsIso8601"u8);
                 writer.WriteStringValue(TtlAsIso8601.Value, "P");
             }
             if (Optional.IsDefined(MaxDeliveryCount))
             {
-                writer.WritePropertyName("maxDeliveryCount");
+                writer.WritePropertyName("maxDeliveryCount"u8);
                 writer.WriteNumberValue(MaxDeliveryCount.Value);
             }
             writer.WriteEndObject();
@@ -36,12 +36,16 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static CloudToDeviceFeedbackQueueProperties DeserializeCloudToDeviceFeedbackQueueProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSpan> lockDurationAsIso8601 = default;
             Optional<TimeSpan> ttlAsIso8601 = default;
             Optional<int> maxDeliveryCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lockDurationAsIso8601"))
+                if (property.NameEquals("lockDurationAsIso8601"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     lockDurationAsIso8601 = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("ttlAsIso8601"))
+                if (property.NameEquals("ttlAsIso8601"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     ttlAsIso8601 = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("maxDeliveryCount"))
+                if (property.NameEquals("maxDeliveryCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

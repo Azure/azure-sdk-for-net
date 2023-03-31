@@ -15,23 +15,28 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceType = default;
             Optional<IReadOnlyList<string>> locations = default;
             Optional<IReadOnlyList<ProviderExtendedLocation>> locationMappings = default;
             Optional<IReadOnlyList<ResourceTypeAlias>> aliases = default;
             Optional<IReadOnlyList<string>> apiVersions = default;
             Optional<string> defaultApiVersion = default;
+            Optional<IReadOnlyList<ZoneMapping>> zoneMappings = default;
             Optional<IReadOnlyList<ApiProfile>> apiProfiles = default;
             Optional<string> capabilities = default;
             Optional<IReadOnlyDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("locations"))
+                if (property.NameEquals("locations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +51,7 @@ namespace Azure.ResourceManager.Resources.Models
                     locations = array;
                     continue;
                 }
-                if (property.NameEquals("locationMappings"))
+                if (property.NameEquals("locationMappings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +66,7 @@ namespace Azure.ResourceManager.Resources.Models
                     locationMappings = array;
                     continue;
                 }
-                if (property.NameEquals("aliases"))
+                if (property.NameEquals("aliases"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +81,7 @@ namespace Azure.ResourceManager.Resources.Models
                     aliases = array;
                     continue;
                 }
-                if (property.NameEquals("apiVersions"))
+                if (property.NameEquals("apiVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,12 +96,27 @@ namespace Azure.ResourceManager.Resources.Models
                     apiVersions = array;
                     continue;
                 }
-                if (property.NameEquals("defaultApiVersion"))
+                if (property.NameEquals("defaultApiVersion"u8))
                 {
                     defaultApiVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("apiProfiles"))
+                if (property.NameEquals("zoneMappings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<ZoneMapping> array = new List<ZoneMapping>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ZoneMapping.DeserializeZoneMapping(item));
+                    }
+                    zoneMappings = array;
+                    continue;
+                }
+                if (property.NameEquals("apiProfiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,12 +131,12 @@ namespace Azure.ResourceManager.Resources.Models
                     apiProfiles = array;
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     capabilities = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +152,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ProviderResourceType(resourceType.Value, Optional.ToList(locations), Optional.ToList(locationMappings), Optional.ToList(aliases), Optional.ToList(apiVersions), defaultApiVersion.Value, Optional.ToList(apiProfiles), capabilities.Value, Optional.ToDictionary(properties));
+            return new ProviderResourceType(resourceType.Value, Optional.ToList(locations), Optional.ToList(locationMappings), Optional.ToList(aliases), Optional.ToList(apiVersions), defaultApiVersion.Value, Optional.ToList(zoneMappings), Optional.ToList(apiProfiles), capabilities.Value, Optional.ToDictionary(properties));
         }
     }
 }

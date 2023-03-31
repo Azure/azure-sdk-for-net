@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VmSizeProperties))
             {
-                writer.WritePropertyName("vmSizeProperties");
+                writer.WritePropertyName("vmSizeProperties"u8);
                 writer.WriteObjectValue(VmSizeProperties);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetHardwareProfile DeserializeVirtualMachineScaleSetHardwareProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VirtualMachineSizeProperties> vmSizeProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vmSizeProperties"))
+                if (property.NameEquals("vmSizeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

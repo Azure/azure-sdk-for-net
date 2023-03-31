@@ -13,7 +13,10 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary> A class representing the NetAppAccount data model. </summary>
+    /// <summary>
+    /// A class representing the NetAppAccount data model.
+    /// NetApp account resource
+    /// </summary>
     public partial class NetAppAccountData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of NetAppAccountData. </summary>

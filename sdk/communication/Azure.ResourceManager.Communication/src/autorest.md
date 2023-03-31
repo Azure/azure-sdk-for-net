@@ -5,10 +5,11 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
+generate-model-factory: false
 title: communication
 namespace: Azure.ResourceManager.Communication
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/7168ecde052e9797d31d74c40ad00ac68c74ec6a/specification/communication/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/bbee55edb05169aba6d8d1944c0e2bc2b9408943/specification/communication/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -70,5 +71,12 @@ rename-mapping:
   DnsRecord.ttl: TimeToLiveInSeconds
   DnsRecord: VerificationDnsRecord
   DomainsProvisioningState: DomainProvisioningState
+  ProvisioningState: CommunicationServiceProvisioningState
+
+directive:
+ - from: types.json
+   where: $.parameters.SubscriptionIdParameter
+   transform: >
+     delete $["format"];
 
 ```

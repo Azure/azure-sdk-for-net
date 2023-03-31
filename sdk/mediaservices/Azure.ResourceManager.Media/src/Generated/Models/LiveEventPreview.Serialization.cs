@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Endpoints))
             {
-                writer.WritePropertyName("endpoints");
+                writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 if (AccessControl != null)
                 {
-                    writer.WritePropertyName("accessControl");
+                    writer.WritePropertyName("accessControl"u8);
                     writer.WriteObjectValue(AccessControl);
                 }
                 else
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.Media.Models
             }
             if (Optional.IsDefined(PreviewLocator))
             {
-                writer.WritePropertyName("previewLocator");
+                writer.WritePropertyName("previewLocator"u8);
                 writer.WriteStringValue(PreviewLocator);
             }
             if (Optional.IsDefined(StreamingPolicyName))
             {
-                writer.WritePropertyName("streamingPolicyName");
+                writer.WritePropertyName("streamingPolicyName"u8);
                 writer.WriteStringValue(StreamingPolicyName);
             }
             if (Optional.IsDefined(AlternativeMediaId))
             {
-                writer.WritePropertyName("alternativeMediaId");
+                writer.WritePropertyName("alternativeMediaId"u8);
                 writer.WriteStringValue(AlternativeMediaId);
             }
             writer.WriteEndObject();
@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static LiveEventPreview DeserializeLiveEventPreview(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<LiveEventEndpoint>> endpoints = default;
             Optional<LiveEventPreviewAccessControl> accessControl = default;
             Optional<string> previewLocator = default;
@@ -65,7 +69,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> alternativeMediaId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endpoints"))
+                if (property.NameEquals("endpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +84,7 @@ namespace Azure.ResourceManager.Media.Models
                     endpoints = array;
                     continue;
                 }
-                if (property.NameEquals("accessControl"))
+                if (property.NameEquals("accessControl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,17 +94,17 @@ namespace Azure.ResourceManager.Media.Models
                     accessControl = LiveEventPreviewAccessControl.DeserializeLiveEventPreviewAccessControl(property.Value);
                     continue;
                 }
-                if (property.NameEquals("previewLocator"))
+                if (property.NameEquals("previewLocator"u8))
                 {
                     previewLocator = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("streamingPolicyName"))
+                if (property.NameEquals("streamingPolicyName"u8))
                 {
                     streamingPolicyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("alternativeMediaId"))
+                if (property.NameEquals("alternativeMediaId"u8))
                 {
                     alternativeMediaId = property.Value.GetString();
                     continue;

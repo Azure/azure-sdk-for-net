@@ -15,11 +15,15 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     {
         internal static Message DeserializeMessage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> timeStamp = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timeStamp"))
+                if (property.NameEquals("timeStamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     timeStamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;

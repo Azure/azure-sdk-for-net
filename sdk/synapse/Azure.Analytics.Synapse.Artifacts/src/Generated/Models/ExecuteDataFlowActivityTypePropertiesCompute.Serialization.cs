@@ -17,12 +17,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ComputeType))
             {
-                writer.WritePropertyName("computeType");
+                writer.WritePropertyName("computeType"u8);
                 writer.WriteStringValue(ComputeType.Value.ToString());
             }
             if (Optional.IsDefined(CoreCount))
             {
-                writer.WritePropertyName("coreCount");
+                writer.WritePropertyName("coreCount"u8);
                 writer.WriteNumberValue(CoreCount.Value);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ExecuteDataFlowActivityTypePropertiesCompute DeserializeExecuteDataFlowActivityTypePropertiesCompute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataFlowComputeType> computeType = default;
             Optional<int> coreCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("computeType"))
+                if (property.NameEquals("computeType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     computeType = new DataFlowComputeType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("coreCount"))
+                if (property.NameEquals("coreCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

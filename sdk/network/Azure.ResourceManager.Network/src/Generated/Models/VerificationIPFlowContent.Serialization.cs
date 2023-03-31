@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetResourceId");
+            writer.WritePropertyName("targetResourceId"u8);
             writer.WriteStringValue(TargetResourceId);
-            writer.WritePropertyName("direction");
+            writer.WritePropertyName("direction"u8);
             writer.WriteStringValue(Direction.ToString());
-            writer.WritePropertyName("protocol");
+            writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
-            writer.WritePropertyName("localPort");
+            writer.WritePropertyName("localPort"u8);
             writer.WriteStringValue(LocalPort);
-            writer.WritePropertyName("remotePort");
+            writer.WritePropertyName("remotePort"u8);
             writer.WriteStringValue(RemotePort);
-            writer.WritePropertyName("localIPAddress");
+            writer.WritePropertyName("localIPAddress"u8);
             writer.WriteStringValue(LocalIPAddress);
-            writer.WritePropertyName("remoteIPAddress");
+            writer.WritePropertyName("remoteIPAddress"u8);
             writer.WriteStringValue(RemoteIPAddress);
             if (Optional.IsDefined(TargetNicResourceId))
             {
-                writer.WritePropertyName("targetNicResourceId");
+                writer.WritePropertyName("targetNicResourceId"u8);
                 writer.WriteStringValue(TargetNicResourceId);
             }
             writer.WriteEndObject();

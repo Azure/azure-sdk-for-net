@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(NetworkInterfaceConfigurations))
             {
-                writer.WritePropertyName("networkInterfaceConfigurations");
+                writer.WritePropertyName("networkInterfaceConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaceConfigurations)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetVmNetworkProfileConfiguration DeserializeVirtualMachineScaleSetVmNetworkProfileConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<VirtualMachineScaleSetNetworkConfiguration>> networkInterfaceConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("networkInterfaceConfigurations"))
+                if (property.NameEquals("networkInterfaceConfigurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

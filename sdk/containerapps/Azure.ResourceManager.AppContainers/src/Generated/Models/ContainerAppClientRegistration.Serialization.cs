@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("clientId");
+                writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
             if (Optional.IsDefined(ClientSecretSettingName))
             {
-                writer.WritePropertyName("clientSecretSettingName");
+                writer.WritePropertyName("clientSecretSettingName"u8);
                 writer.WriteStringValue(ClientSecretSettingName);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppClientRegistration DeserializeContainerAppClientRegistration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clientId = default;
             Optional<string> clientSecretSettingName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientId"))
+                if (property.NameEquals("clientId"u8))
                 {
                     clientId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientSecretSettingName"))
+                if (property.NameEquals("clientSecretSettingName"u8))
                 {
                     clientSecretSettingName = property.Value.GetString();
                     continue;

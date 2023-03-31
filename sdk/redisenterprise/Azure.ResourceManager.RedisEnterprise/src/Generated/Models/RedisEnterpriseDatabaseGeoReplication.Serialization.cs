@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(GroupNickname))
             {
-                writer.WritePropertyName("groupNickname");
+                writer.WritePropertyName("groupNickname"u8);
                 writer.WriteStringValue(GroupNickname);
             }
             if (Optional.IsCollectionDefined(LinkedDatabases))
             {
-                writer.WritePropertyName("linkedDatabases");
+                writer.WritePropertyName("linkedDatabases"u8);
                 writer.WriteStartArray();
                 foreach (var item in LinkedDatabases)
                 {
@@ -36,16 +36,20 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         internal static RedisEnterpriseDatabaseGeoReplication DeserializeRedisEnterpriseDatabaseGeoReplication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> groupNickname = default;
             Optional<IList<RedisEnterpriseLinkedDatabase>> linkedDatabases = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("groupNickname"))
+                if (property.NameEquals("groupNickname"u8))
                 {
                     groupNickname = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("linkedDatabases"))
+                if (property.NameEquals("linkedDatabases"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

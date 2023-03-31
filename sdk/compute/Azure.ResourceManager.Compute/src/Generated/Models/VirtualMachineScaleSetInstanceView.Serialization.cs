@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static VirtualMachineScaleSetInstanceView DeserializeVirtualMachineScaleSetInstanceView(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VirtualMachineScaleSetInstanceViewStatusesSummary> virtualMachine = default;
             Optional<IReadOnlyList<VirtualMachineScaleSetVmExtensionsSummary>> extensions = default;
             Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
             Optional<IReadOnlyList<OrchestrationServiceSummary>> orchestrationServices = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("virtualMachine"))
+                if (property.NameEquals("virtualMachine"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
                     virtualMachine = VirtualMachineScaleSetInstanceViewStatusesSummary.DeserializeVirtualMachineScaleSetInstanceViewStatusesSummary(property.Value);
                     continue;
                 }
-                if (property.NameEquals("extensions"))
+                if (property.NameEquals("extensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                     extensions = array;
                     continue;
                 }
-                if (property.NameEquals("statuses"))
+                if (property.NameEquals("statuses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
                     statuses = array;
                     continue;
                 }
-                if (property.NameEquals("orchestrationServices"))
+                if (property.NameEquals("orchestrationServices"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

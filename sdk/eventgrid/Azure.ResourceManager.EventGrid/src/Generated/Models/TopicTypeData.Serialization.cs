@@ -18,36 +18,36 @@ namespace Azure.ResourceManager.EventGrid
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Provider))
             {
-                writer.WritePropertyName("provider");
+                writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(ResourceRegionType))
             {
-                writer.WritePropertyName("resourceRegionType");
+                writer.WritePropertyName("resourceRegionType"u8);
                 writer.WriteStringValue(ResourceRegionType.Value.ToString());
             }
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsCollectionDefined(SupportedLocations))
             {
-                writer.WritePropertyName("supportedLocations");
+                writer.WritePropertyName("supportedLocations"u8);
                 writer.WriteStartArray();
                 foreach (var item in SupportedLocations)
                 {
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.EventGrid
             }
             if (Optional.IsDefined(SourceResourceFormat))
             {
-                writer.WritePropertyName("sourceResourceFormat");
+                writer.WritePropertyName("sourceResourceFormat"u8);
                 writer.WriteStringValue(SourceResourceFormat);
             }
             if (Optional.IsCollectionDefined(SupportedScopesForSource))
             {
-                writer.WritePropertyName("supportedScopesForSource");
+                writer.WritePropertyName("supportedScopesForSource"u8);
                 writer.WriteStartArray();
                 foreach (var item in SupportedScopesForSource)
                 {
@@ -76,6 +76,10 @@ namespace Azure.ResourceManager.EventGrid
 
         internal static TopicTypeData DeserializeTopicTypeData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -90,22 +94,22 @@ namespace Azure.ResourceManager.EventGrid
             Optional<IList<TopicTypeSourceScope>> supportedScopesForSource = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -115,7 +119,7 @@ namespace Azure.ResourceManager.EventGrid
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,22 +128,22 @@ namespace Azure.ResourceManager.EventGrid
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provider"))
+                        if (property0.NameEquals("provider"u8))
                         {
                             provider = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("resourceRegionType"))
+                        if (property0.NameEquals("resourceRegionType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -149,7 +153,7 @@ namespace Azure.ResourceManager.EventGrid
                             resourceRegionType = new EventGridResourceRegionType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -159,7 +163,7 @@ namespace Azure.ResourceManager.EventGrid
                             provisioningState = new TopicTypeProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("supportedLocations"))
+                        if (property0.NameEquals("supportedLocations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -174,12 +178,12 @@ namespace Azure.ResourceManager.EventGrid
                             supportedLocations = array;
                             continue;
                         }
-                        if (property0.NameEquals("sourceResourceFormat"))
+                        if (property0.NameEquals("sourceResourceFormat"u8))
                         {
                             sourceResourceFormat = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("supportedScopesForSource"))
+                        if (property0.NameEquals("supportedScopesForSource"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

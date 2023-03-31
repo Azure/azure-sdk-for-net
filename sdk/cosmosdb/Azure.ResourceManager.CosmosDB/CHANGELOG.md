@@ -10,6 +10,13 @@
 
 ### Other Changes
 
+## 1.2.1 (2023-02-13)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
+
 ## 1.2.0 (2022-11-29)
 
 ### Features Added

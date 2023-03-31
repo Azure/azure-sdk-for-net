@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Akamai))
             {
-                writer.WritePropertyName("akamai");
+                writer.WritePropertyName("akamai"u8);
                 writer.WriteObjectValue(Akamai);
             }
             if (Optional.IsDefined(IPs))
             {
-                writer.WritePropertyName("ip");
+                writer.WritePropertyName("ip"u8);
                 writer.WriteObjectValue(IPs);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static StreamingEndpointAccessControl DeserializeStreamingEndpointAccessControl(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AkamaiAccessControl> akamai = default;
             Optional<IPAccessControl> ip = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("akamai"))
+                if (property.NameEquals("akamai"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.Media.Models
                     akamai = AkamaiAccessControl.DeserializeAkamaiAccessControl(property.Value);
                     continue;
                 }
-                if (property.NameEquals("ip"))
+                if (property.NameEquals("ip"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

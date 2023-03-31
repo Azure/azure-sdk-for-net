@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("rehydrationPriority");
+            writer.WritePropertyName("rehydrationPriority"u8);
             writer.WriteStringValue(RehydrationPriority.ToString());
-            writer.WritePropertyName("rehydrationRetentionDuration");
+            writer.WritePropertyName("rehydrationRetentionDuration"u8);
             writer.WriteStringValue(RehydrationRetentionDuration, "P");
-            writer.WritePropertyName("recoveryPointId");
+            writer.WritePropertyName("recoveryPointId"u8);
             writer.WriteStringValue(RecoveryPointId);
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
-            writer.WritePropertyName("restoreTargetInfo");
+            writer.WritePropertyName("restoreTargetInfo"u8);
             writer.WriteObjectValue(RestoreTargetInfo);
-            writer.WritePropertyName("sourceDataStoreType");
+            writer.WritePropertyName("sourceDataStoreType"u8);
             writer.WriteStringValue(SourceDataStoreType.ToString());
             if (Optional.IsDefined(SourceResourceId))
             {
-                writer.WritePropertyName("sourceResourceId");
+                writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
             writer.WriteEndObject();

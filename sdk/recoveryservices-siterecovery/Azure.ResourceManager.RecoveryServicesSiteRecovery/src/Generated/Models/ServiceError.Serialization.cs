@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static ServiceError DeserializeServiceError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> possibleCauses = default;
@@ -21,27 +25,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> activityId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("possibleCauses"))
+                if (property.NameEquals("possibleCauses"u8))
                 {
                     possibleCauses = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recommendedAction"))
+                if (property.NameEquals("recommendedAction"u8))
                 {
                     recommendedAction = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("activityId"))
+                if (property.NameEquals("activityId"u8))
                 {
                     activityId = property.Value.GetString();
                     continue;

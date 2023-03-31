@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EphemeralOSDiskSettings))
             {
-                writer.WritePropertyName("ephemeralOSDiskSettings");
+                writer.WritePropertyName("ephemeralOSDiskSettings"u8);
                 writer.WriteObjectValue(EphemeralOSDiskSettings);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static OSDisk DeserializeOSDisk(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DiffDiskSettings> ephemeralOSDiskSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ephemeralOSDiskSettings"))
+                if (property.NameEquals("ephemeralOSDiskSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

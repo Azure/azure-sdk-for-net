@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(SubscriptionIds))
             {
-                writer.WritePropertyName("subscriptionIds");
+                writer.WritePropertyName("subscriptionIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in SubscriptionIds)
                 {

@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(OutputDataSourceType);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(FunctionAppName))
             {
-                writer.WritePropertyName("functionAppName");
+                writer.WritePropertyName("functionAppName"u8);
                 writer.WriteStringValue(FunctionAppName);
             }
             if (Optional.IsDefined(FunctionName))
             {
-                writer.WritePropertyName("functionName");
+                writer.WritePropertyName("functionName"u8);
                 writer.WriteStringValue(FunctionName);
             }
             if (Optional.IsDefined(ApiKey))
             {
-                writer.WritePropertyName("apiKey");
+                writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
             if (Optional.IsDefined(MaxBatchSize))
             {
-                writer.WritePropertyName("maxBatchSize");
+                writer.WritePropertyName("maxBatchSize"u8);
                 writer.WriteNumberValue(MaxBatchSize.Value);
             }
             if (Optional.IsDefined(MaxBatchCount))
             {
-                writer.WritePropertyName("maxBatchCount");
+                writer.WritePropertyName("maxBatchCount"u8);
                 writer.WriteNumberValue(MaxBatchCount.Value);
             }
             writer.WriteEndObject();
@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static FunctionOutputDataSource DeserializeFunctionOutputDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> functionAppName = default;
             Optional<string> functionName = default;
@@ -58,12 +62,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<int> maxBatchCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,22 +76,22 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("functionAppName"))
+                        if (property0.NameEquals("functionAppName"u8))
                         {
                             functionAppName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("functionName"))
+                        if (property0.NameEquals("functionName"u8))
                         {
                             functionName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("apiKey"))
+                        if (property0.NameEquals("apiKey"u8))
                         {
                             apiKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("maxBatchSize"))
+                        if (property0.NameEquals("maxBatchSize"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -97,7 +101,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             maxBatchSize = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("maxBatchCount"))
+                        if (property0.NameEquals("maxBatchCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

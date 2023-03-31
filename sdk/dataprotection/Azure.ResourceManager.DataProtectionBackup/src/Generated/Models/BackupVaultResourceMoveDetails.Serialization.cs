@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal static BackupVaultResourceMoveDetails DeserializeBackupVaultResourceMoveDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> operationId = default;
             Optional<DateTimeOffset> startTimeUtc = default;
             Optional<DateTimeOffset> completionTimeUtc = default;
@@ -22,12 +26,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<string> targetResourcePath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operationId"))
+                if (property.NameEquals("operationId"u8))
                 {
                     operationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTimeUtc"))
+                if (property.NameEquals("startTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,7 +41,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     startTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("completionTimeUtc"))
+                if (property.NameEquals("completionTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,12 +51,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     completionTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("sourceResourcePath"))
+                if (property.NameEquals("sourceResourcePath"u8))
                 {
                     sourceResourcePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourcePath"))
+                if (property.NameEquals("targetResourcePath"u8))
                 {
                     targetResourcePath = property.Value.GetString();
                     continue;

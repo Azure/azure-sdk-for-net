@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static DedicatedHostInstanceView DeserializeDedicatedHostInstanceView(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> assetId = default;
             Optional<DedicatedHostAvailableCapacity> availableCapacity = default;
             Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("assetId"))
+                if (property.NameEquals("assetId"u8))
                 {
                     assetId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("availableCapacity"))
+                if (property.NameEquals("availableCapacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
                     availableCapacity = DedicatedHostAvailableCapacity.DeserializeDedicatedHostAvailableCapacity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("statuses"))
+                if (property.NameEquals("statuses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

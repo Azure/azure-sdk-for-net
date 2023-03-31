@@ -41,7 +41,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TestHelper.AssertExpectedException(
                 () => transfer.EnsureCompleted(cancellationTokenSource.Token),
-                new TaskCanceledException("The operation was canceled."));
+                new TaskCanceledException("A task was canceled."));
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
             catch (TaskCanceledException exception)
             {
-                Assert.AreEqual(exception.Message, "The operation was canceled.");
+                Assert.AreEqual(exception.Message, "A task was canceled.");
             }
         }
     }

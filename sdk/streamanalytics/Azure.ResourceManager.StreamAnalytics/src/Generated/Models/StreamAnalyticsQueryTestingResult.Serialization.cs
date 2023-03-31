@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         internal static StreamAnalyticsQueryTestingResult DeserializeStreamAnalyticsQueryTestingResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StreamAnalyticsQueryTestingResultStatus> status = default;
             Optional<Uri> outputUri = default;
             Optional<string> code = default;
@@ -24,7 +28,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<IReadOnlyList<StreamAnalyticsErrorDetails>> details = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     status = new StreamAnalyticsQueryTestingResultStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("outputUri"))
+                if (property.NameEquals("outputUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     outputUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,22 +57,22 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("code"))
+                        if (property0.NameEquals("code"u8))
                         {
                             code = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("message"))
+                        if (property0.NameEquals("message"u8))
                         {
                             message = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("target"))
+                        if (property0.NameEquals("target"u8))
                         {
                             target = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("details"))
+                        if (property0.NameEquals("details"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

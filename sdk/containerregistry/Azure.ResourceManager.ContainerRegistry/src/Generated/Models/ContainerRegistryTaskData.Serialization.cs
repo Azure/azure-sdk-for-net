@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.ContainerRegistry
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -35,58 +35,58 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(Platform))
             {
-                writer.WritePropertyName("platform");
+                writer.WritePropertyName("platform"u8);
                 writer.WriteObjectValue(Platform);
             }
             if (Optional.IsDefined(AgentConfiguration))
             {
-                writer.WritePropertyName("agentConfiguration");
+                writer.WritePropertyName("agentConfiguration"u8);
                 writer.WriteObjectValue(AgentConfiguration);
             }
             if (Optional.IsDefined(AgentPoolName))
             {
-                writer.WritePropertyName("agentPoolName");
+                writer.WritePropertyName("agentPoolName"u8);
                 writer.WriteStringValue(AgentPoolName);
             }
             if (Optional.IsDefined(TimeoutInSeconds))
             {
-                writer.WritePropertyName("timeout");
+                writer.WritePropertyName("timeout"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
             if (Optional.IsDefined(Step))
             {
-                writer.WritePropertyName("step");
+                writer.WritePropertyName("step"u8);
                 writer.WriteObjectValue(Step);
             }
             if (Optional.IsDefined(Trigger))
             {
-                writer.WritePropertyName("trigger");
+                writer.WritePropertyName("trigger"u8);
                 writer.WriteObjectValue(Trigger);
             }
             if (Optional.IsDefined(Credentials))
             {
-                writer.WritePropertyName("credentials");
+                writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
             if (Optional.IsDefined(LogTemplate))
             {
-                writer.WritePropertyName("logTemplate");
+                writer.WritePropertyName("logTemplate"u8);
                 writer.WriteStringValue(LogTemplate);
             }
             if (Optional.IsDefined(IsSystemTask))
             {
-                writer.WritePropertyName("isSystemTask");
+                writer.WritePropertyName("isSystemTask"u8);
                 writer.WriteBooleanValue(IsSystemTask.Value);
             }
             writer.WriteEndObject();
@@ -95,6 +95,10 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         internal static ContainerRegistryTaskData DeserializeContainerRegistryTaskData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -116,7 +120,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             Optional<bool> isSystemTask = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,7 +130,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -141,27 +145,27 @@ namespace Azure.ResourceManager.ContainerRegistry
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -171,7 +175,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -180,7 +184,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -190,7 +194,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             provisioningState = new ContainerRegistryProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("creationDate"))
+                        if (property0.NameEquals("creationDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -200,7 +204,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             creationDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -210,7 +214,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             status = new ContainerRegistryTaskStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("platform"))
+                        if (property0.NameEquals("platform"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -220,7 +224,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             platform = ContainerRegistryPlatformProperties.DeserializeContainerRegistryPlatformProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("agentConfiguration"))
+                        if (property0.NameEquals("agentConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -230,12 +234,12 @@ namespace Azure.ResourceManager.ContainerRegistry
                             agentConfiguration = ContainerRegistryAgentProperties.DeserializeContainerRegistryAgentProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("agentPoolName"))
+                        if (property0.NameEquals("agentPoolName"u8))
                         {
                             agentPoolName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("timeout"))
+                        if (property0.NameEquals("timeout"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -245,7 +249,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             timeout = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("step"))
+                        if (property0.NameEquals("step"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -255,7 +259,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             step = ContainerRegistryTaskStepProperties.DeserializeContainerRegistryTaskStepProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("trigger"))
+                        if (property0.NameEquals("trigger"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -265,7 +269,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             trigger = ContainerRegistryTriggerProperties.DeserializeContainerRegistryTriggerProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("credentials"))
+                        if (property0.NameEquals("credentials"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -275,12 +279,12 @@ namespace Azure.ResourceManager.ContainerRegistry
                             credentials = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("logTemplate"))
+                        if (property0.NameEquals("logTemplate"u8))
                         {
                             logTemplate = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("isSystemTask"))
+                        if (property0.NameEquals("isSystemTask"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

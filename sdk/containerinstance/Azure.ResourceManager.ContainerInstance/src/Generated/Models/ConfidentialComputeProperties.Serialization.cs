@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CcePolicy))
             {
-                writer.WritePropertyName("ccePolicy");
+                writer.WritePropertyName("ccePolicy"u8);
                 writer.WriteStringValue(CcePolicy);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ConfidentialComputeProperties DeserializeConfidentialComputeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ccePolicy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ccePolicy"))
+                if (property.NameEquals("ccePolicy"u8))
                 {
                     ccePolicy = property.Value.GetString();
                     continue;

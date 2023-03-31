@@ -15,6 +15,10 @@ namespace Azure.MixedReality.RemoteRendering
     {
         internal static RenderingSession DeserializeRenderingSession(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             Optional<int> arrInspectorPort = default;
             Optional<int> handshakePort = default;
@@ -28,12 +32,12 @@ namespace Azure.MixedReality.RemoteRendering
             Optional<DateTimeOffset> creationTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("arrInspectorPort"))
+                if (property.NameEquals("arrInspectorPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +47,7 @@ namespace Azure.MixedReality.RemoteRendering
                     arrInspectorPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("handshakePort"))
+                if (property.NameEquals("handshakePort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.MixedReality.RemoteRendering
                     handshakePort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("elapsedTimeMinutes"))
+                if (property.NameEquals("elapsedTimeMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,12 +67,12 @@ namespace Azure.MixedReality.RemoteRendering
                     elapsedTimeMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("hostname"))
+                if (property.NameEquals("hostname"u8))
                 {
                     hostname = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxLeaseTimeMinutes"))
+                if (property.NameEquals("maxLeaseTimeMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,17 +82,17 @@ namespace Azure.MixedReality.RemoteRendering
                     maxLeaseTimeMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("size"))
+                if (property.NameEquals("size"u8))
                 {
                     size = new RenderingServerSize(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = new RenderingSessionStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("teraflops"))
+                if (property.NameEquals("teraflops"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +102,7 @@ namespace Azure.MixedReality.RemoteRendering
                     teraflops = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +112,7 @@ namespace Azure.MixedReality.RemoteRendering
                     error = RemoteRenderingServiceError.DeserializeRemoteRenderingServiceError(property.Value);
                     continue;
                 }
-                if (property.NameEquals("creationTime"))
+                if (property.NameEquals("creationTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

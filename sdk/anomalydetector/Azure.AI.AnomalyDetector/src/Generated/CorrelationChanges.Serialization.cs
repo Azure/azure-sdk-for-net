@@ -16,10 +16,14 @@ namespace Azure.AI.AnomalyDetector
     {
         internal static CorrelationChanges DeserializeCorrelationChanges(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> changedVariables = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("changedVariables"))
+                if (property.NameEquals("changedVariables"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

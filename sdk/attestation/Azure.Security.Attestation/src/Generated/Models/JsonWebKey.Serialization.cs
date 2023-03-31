@@ -18,79 +18,79 @@ namespace Azure.Security.Attestation
             writer.WriteStartObject();
             if (Optional.IsDefined(Alg))
             {
-                writer.WritePropertyName("alg");
+                writer.WritePropertyName("alg"u8);
                 writer.WriteStringValue(Alg);
             }
             if (Optional.IsDefined(Crv))
             {
-                writer.WritePropertyName("crv");
+                writer.WritePropertyName("crv"u8);
                 writer.WriteStringValue(Crv);
             }
             if (Optional.IsDefined(D))
             {
-                writer.WritePropertyName("d");
+                writer.WritePropertyName("d"u8);
                 writer.WriteStringValue(D);
             }
             if (Optional.IsDefined(Dp))
             {
-                writer.WritePropertyName("dp");
+                writer.WritePropertyName("dp"u8);
                 writer.WriteStringValue(Dp);
             }
             if (Optional.IsDefined(Dq))
             {
-                writer.WritePropertyName("dq");
+                writer.WritePropertyName("dq"u8);
                 writer.WriteStringValue(Dq);
             }
             if (Optional.IsDefined(E))
             {
-                writer.WritePropertyName("e");
+                writer.WritePropertyName("e"u8);
                 writer.WriteStringValue(E);
             }
             if (Optional.IsDefined(K))
             {
-                writer.WritePropertyName("k");
+                writer.WritePropertyName("k"u8);
                 writer.WriteStringValue(K);
             }
             if (Optional.IsDefined(Kid))
             {
-                writer.WritePropertyName("kid");
+                writer.WritePropertyName("kid"u8);
                 writer.WriteStringValue(Kid);
             }
-            writer.WritePropertyName("kty");
+            writer.WritePropertyName("kty"u8);
             writer.WriteStringValue(Kty);
             if (Optional.IsDefined(N))
             {
-                writer.WritePropertyName("n");
+                writer.WritePropertyName("n"u8);
                 writer.WriteStringValue(N);
             }
             if (Optional.IsDefined(P))
             {
-                writer.WritePropertyName("p");
+                writer.WritePropertyName("p"u8);
                 writer.WriteStringValue(P);
             }
             if (Optional.IsDefined(Q))
             {
-                writer.WritePropertyName("q");
+                writer.WritePropertyName("q"u8);
                 writer.WriteStringValue(Q);
             }
             if (Optional.IsDefined(Qi))
             {
-                writer.WritePropertyName("qi");
+                writer.WritePropertyName("qi"u8);
                 writer.WriteStringValue(Qi);
             }
             if (Optional.IsDefined(Use))
             {
-                writer.WritePropertyName("use");
+                writer.WritePropertyName("use"u8);
                 writer.WriteStringValue(Use);
             }
             if (Optional.IsDefined(X))
             {
-                writer.WritePropertyName("x");
+                writer.WritePropertyName("x"u8);
                 writer.WriteStringValue(X);
             }
             if (Optional.IsCollectionDefined(X5C))
             {
-                writer.WritePropertyName("x5c");
+                writer.WritePropertyName("x5c"u8);
                 writer.WriteStartArray();
                 foreach (var item in X5C)
                 {
@@ -100,7 +100,7 @@ namespace Azure.Security.Attestation
             }
             if (Optional.IsDefined(Y))
             {
-                writer.WritePropertyName("y");
+                writer.WritePropertyName("y"u8);
                 writer.WriteStringValue(Y);
             }
             writer.WriteEndObject();
@@ -108,6 +108,10 @@ namespace Azure.Security.Attestation
 
         internal static JsonWebKey DeserializeJsonWebKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> alg = default;
             Optional<string> crv = default;
             Optional<string> d = default;
@@ -127,82 +131,82 @@ namespace Azure.Security.Attestation
             Optional<string> y = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("alg"))
+                if (property.NameEquals("alg"u8))
                 {
                     alg = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("crv"))
+                if (property.NameEquals("crv"u8))
                 {
                     crv = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("d"))
+                if (property.NameEquals("d"u8))
                 {
                     d = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dp"))
+                if (property.NameEquals("dp"u8))
                 {
                     dp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dq"))
+                if (property.NameEquals("dq"u8))
                 {
                     dq = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("e"))
+                if (property.NameEquals("e"u8))
                 {
                     e = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("k"))
+                if (property.NameEquals("k"u8))
                 {
                     k = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kid"))
+                if (property.NameEquals("kid"u8))
                 {
                     kid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kty"))
+                if (property.NameEquals("kty"u8))
                 {
                     kty = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("n"))
+                if (property.NameEquals("n"u8))
                 {
                     n = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("p"))
+                if (property.NameEquals("p"u8))
                 {
                     p = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("q"))
+                if (property.NameEquals("q"u8))
                 {
                     q = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("qi"))
+                if (property.NameEquals("qi"u8))
                 {
                     qi = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("use"))
+                if (property.NameEquals("use"u8))
                 {
                     use = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("x"))
+                if (property.NameEquals("x"u8))
                 {
                     x = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("x5c"))
+                if (property.NameEquals("x5c"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -217,7 +221,7 @@ namespace Azure.Security.Attestation
                     x5c = array;
                     continue;
                 }
-                if (property.NameEquals("y"))
+                if (property.NameEquals("y"u8))
                 {
                     y = property.Value.GetString();
                     continue;

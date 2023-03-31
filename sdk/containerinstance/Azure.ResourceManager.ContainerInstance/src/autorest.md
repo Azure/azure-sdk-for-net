@@ -4,6 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
+generate-model-factory: false
 library-name: ContainerInstance
 namespace: Azure.ResourceManager.ContainerInstance
 require: https://github.com/Azure/azure-rest-api-specs/blob/f5a5c4331869641fb5fa86f2e1e78ecd8e456483/specification/containerinstance/resource-manager/readme.md

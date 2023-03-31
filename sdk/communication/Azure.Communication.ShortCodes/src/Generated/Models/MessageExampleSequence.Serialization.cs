@@ -18,7 +18,7 @@ namespace Azure.Communication.ShortCodes.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Messages))
             {
-                writer.WritePropertyName("messages");
+                writer.WritePropertyName("messages"u8);
                 writer.WriteStartArray();
                 foreach (var item in Messages)
                 {
@@ -31,10 +31,14 @@ namespace Azure.Communication.ShortCodes.Models
 
         internal static MessageExampleSequence DeserializeMessageExampleSequence(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<MessageExample>> messages = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("messages"))
+                if (property.NameEquals("messages"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

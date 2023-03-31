@@ -17,37 +17,37 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("metricName");
+            writer.WritePropertyName("metricName"u8);
             writer.WriteStringValue(MetricName);
             if (Optional.IsDefined(MetricNamespace))
             {
-                writer.WritePropertyName("metricNamespace");
+                writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
             }
-            writer.WritePropertyName("metricResourceUri");
+            writer.WritePropertyName("metricResourceUri"u8);
             writer.WriteStringValue(MetricResourceId);
             if (Optional.IsDefined(MetricResourceLocation))
             {
-                writer.WritePropertyName("metricResourceLocation");
+                writer.WritePropertyName("metricResourceLocation"u8);
                 writer.WriteStringValue(MetricResourceLocation.Value);
             }
-            writer.WritePropertyName("timeGrain");
+            writer.WritePropertyName("timeGrain"u8);
             writer.WriteStringValue(TimeGrain, "P");
-            writer.WritePropertyName("statistic");
+            writer.WritePropertyName("statistic"u8);
             writer.WriteStringValue(Statistic.ToSerialString());
-            writer.WritePropertyName("timeWindow");
+            writer.WritePropertyName("timeWindow"u8);
             writer.WriteStringValue(TimeWindow, "P");
-            writer.WritePropertyName("timeAggregation");
+            writer.WritePropertyName("timeAggregation"u8);
             writer.WriteStringValue(TimeAggregation.ToSerialString());
-            writer.WritePropertyName("operator");
+            writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(Operator.ToSerialString());
-            writer.WritePropertyName("threshold");
+            writer.WritePropertyName("threshold"u8);
             writer.WriteNumberValue(Threshold);
             if (Optional.IsCollectionDefined(Dimensions))
             {
                 if (Dimensions != null)
                 {
-                    writer.WritePropertyName("dimensions");
+                    writer.WritePropertyName("dimensions"u8);
                     writer.WriteStartArray();
                     foreach (var item in Dimensions)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsDefined(IsDividedPerInstance))
             {
-                writer.WritePropertyName("dividePerInstance");
+                writer.WritePropertyName("dividePerInstance"u8);
                 writer.WriteBooleanValue(IsDividedPerInstance.Value);
             }
             writer.WriteEndObject();
@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MetricTrigger DeserializeMetricTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string metricName = default;
             Optional<string> metricNamespace = default;
             ResourceIdentifier metricResourceUri = default;
@@ -84,22 +88,22 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<bool> dividePerInstance = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metricName"))
+                if (property.NameEquals("metricName"u8))
                 {
                     metricName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricNamespace"))
+                if (property.NameEquals("metricNamespace"u8))
                 {
                     metricNamespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricResourceUri"))
+                if (property.NameEquals("metricResourceUri"u8))
                 {
                     metricResourceUri = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("metricResourceLocation"))
+                if (property.NameEquals("metricResourceLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,37 +113,37 @@ namespace Azure.ResourceManager.Monitor.Models
                     metricResourceLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("timeGrain"))
+                if (property.NameEquals("timeGrain"u8))
                 {
                     timeGrain = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("statistic"))
+                if (property.NameEquals("statistic"u8))
                 {
                     statistic = property.Value.GetString().ToMetricStatisticType();
                     continue;
                 }
-                if (property.NameEquals("timeWindow"))
+                if (property.NameEquals("timeWindow"u8))
                 {
                     timeWindow = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("timeAggregation"))
+                if (property.NameEquals("timeAggregation"u8))
                 {
                     timeAggregation = property.Value.GetString().ToMetricTriggerTimeAggregationType();
                     continue;
                 }
-                if (property.NameEquals("operator"))
+                if (property.NameEquals("operator"u8))
                 {
                     @operator = property.Value.GetString().ToMetricTriggerComparisonOperation();
                     continue;
                 }
-                if (property.NameEquals("threshold"))
+                if (property.NameEquals("threshold"u8))
                 {
                     threshold = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("dimensions"))
+                if (property.NameEquals("dimensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,7 +158,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     dimensions = array;
                     continue;
                 }
-                if (property.NameEquals("dividePerInstance"))
+                if (property.NameEquals("dividePerInstance"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

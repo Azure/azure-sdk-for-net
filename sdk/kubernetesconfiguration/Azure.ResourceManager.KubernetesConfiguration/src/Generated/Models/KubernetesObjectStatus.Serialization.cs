@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     {
         internal static KubernetesObjectStatus DeserializeKubernetesObjectStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> @namespace = default;
             Optional<string> kind = default;
@@ -24,22 +28,22 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Optional<HelmReleaseProperties> helmReleaseProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("namespace"))
+                if (property.NameEquals("namespace"u8))
                 {
                     @namespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("complianceState"))
+                if (property.NameEquals("complianceState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +53,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     complianceState = new KubernetesFluxComplianceState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("appliedBy"))
+                if (property.NameEquals("appliedBy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +63,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     appliedBy = KubernetesObjectReference.DeserializeKubernetesObjectReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("statusConditions"))
+                if (property.NameEquals("statusConditions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     statusConditions = array;
                     continue;
                 }
-                if (property.NameEquals("helmReleaseProperties"))
+                if (property.NameEquals("helmReleaseProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

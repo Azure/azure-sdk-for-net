@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Categories))
             {
-                writer.WritePropertyName("categories");
+                writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
             if (Optional.IsCollectionDefined(ResourceTypes))
             {
-                writer.WritePropertyName("resourceTypes");
+                writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypes)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
             if (Optional.IsCollectionDefined(Solutions))
             {
-                writer.WritePropertyName("solutions");
+                writer.WritePropertyName("solutions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Solutions)
                 {
@@ -51,12 +51,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static LogAnalyticsQueryRelatedMetadata DeserializeLogAnalyticsQueryRelatedMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> categories = default;
             Optional<IList<string>> resourceTypes = default;
             Optional<IList<string>> solutions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("categories"))
+                if (property.NameEquals("categories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     categories = array;
                     continue;
                 }
-                if (property.NameEquals("resourceTypes"))
+                if (property.NameEquals("resourceTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +90,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     resourceTypes = array;
                     continue;
                 }
-                if (property.NameEquals("solutions"))
+                if (property.NameEquals("solutions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

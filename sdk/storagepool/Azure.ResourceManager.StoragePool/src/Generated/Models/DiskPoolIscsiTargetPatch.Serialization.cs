@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.StoragePool.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ManagedBy))
             {
-                writer.WritePropertyName("managedBy");
+                writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
             if (Optional.IsCollectionDefined(ManagedByExtended))
             {
-                writer.WritePropertyName("managedByExtended");
+                writer.WritePropertyName("managedByExtended"u8);
                 writer.WriteStartArray();
                 foreach (var item in ManagedByExtended)
                 {
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(StaticAcls))
             {
-                writer.WritePropertyName("staticAcls");
+                writer.WritePropertyName("staticAcls"u8);
                 writer.WriteStartArray();
                 foreach (var item in StaticAcls)
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
             if (Optional.IsCollectionDefined(Luns))
             {
-                writer.WritePropertyName("luns");
+                writer.WritePropertyName("luns"u8);
                 writer.WriteStartArray();
                 foreach (var item in Luns)
                 {
@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.StoragePool.Models
 
         internal static DiskPoolIscsiTargetPatch DeserializeDiskPoolIscsiTargetPatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> managedBy = default;
             Optional<IList<string>> managedByExtended = default;
             ResourceIdentifier id = default;
@@ -70,12 +74,12 @@ namespace Azure.ResourceManager.StoragePool.Models
             Optional<IList<ManagedDiskIscsiLun>> luns = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("managedBy"))
+                if (property.NameEquals("managedBy"u8))
                 {
                     managedBy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("managedByExtended"))
+                if (property.NameEquals("managedByExtended"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,22 +94,22 @@ namespace Azure.ResourceManager.StoragePool.Models
                     managedByExtended = array;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -115,7 +119,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +128,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("staticAcls"))
+                        if (property0.NameEquals("staticAcls"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -139,7 +143,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                             staticAcls = array;
                             continue;
                         }
-                        if (property0.NameEquals("luns"))
+                        if (property0.NameEquals("luns"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

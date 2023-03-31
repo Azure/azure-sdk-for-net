@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             {
                 Response<DeletedManagedHsmResource> deletedMhsm = await Subscription.GetDeletedManagedHsmAsync(Location, MHSMName);
                 Assert.NotNull(deletedMhsm.Value);
-                Assert.NotNull(deletedMhsm.Value.Data.Properties.DeletionOn);
+                Assert.NotNull(deletedMhsm.Value.Data.Properties.DeletedOn);
                 await deletedMhsm.Value.PurgeDeletedAsync(WaitUntil.Completed);
             }
             catch (Exception)

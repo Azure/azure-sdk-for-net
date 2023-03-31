@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MachineLearningServicesDatasetDriftDetectedEventData DeserializeMachineLearningServicesDatasetDriftDetectedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dataDriftId = default;
             Optional<string> dataDriftName = default;
             Optional<string> runId = default;
@@ -27,32 +31,32 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<DateTimeOffset> endTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataDriftId"))
+                if (property.NameEquals("dataDriftId"u8))
                 {
                     dataDriftId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataDriftName"))
+                if (property.NameEquals("dataDriftName"u8))
                 {
                     dataDriftName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runId"))
+                if (property.NameEquals("runId"u8))
                 {
                     runId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("baseDatasetId"))
+                if (property.NameEquals("baseDatasetId"u8))
                 {
                     baseDatasetId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetDatasetId"))
+                if (property.NameEquals("targetDatasetId"u8))
                 {
                     targetDatasetId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("driftCoefficient"))
+                if (property.NameEquals("driftCoefficient"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +66,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     driftCoefficient = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

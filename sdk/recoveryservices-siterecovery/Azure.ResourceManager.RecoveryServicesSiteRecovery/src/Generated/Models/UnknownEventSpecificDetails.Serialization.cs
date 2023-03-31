@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static UnknownEventSpecificDetails DeserializeUnknownEventSpecificDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string instanceType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

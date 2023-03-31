@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CompressionProperties))
             {
-                writer.WritePropertyName("compressionProperties");
+                writer.WritePropertyName("compressionProperties"u8);
                 writer.WriteObjectValue(CompressionProperties);
             }
             if (Optional.IsDefined(ValidationMode))
             {
-                writer.WritePropertyName("validationMode");
+                writer.WritePropertyName("validationMode"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ValidationMode);
 #else
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(DetectDataType))
             {
-                writer.WritePropertyName("detectDataType");
+                writer.WritePropertyName("detectDataType"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DetectDataType);
 #else
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(Namespaces))
             {
-                writer.WritePropertyName("namespaces");
+                writer.WritePropertyName("namespaces"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Namespaces);
 #else
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(NamespacePrefixes))
             {
-                writer.WritePropertyName("namespacePrefixes");
+                writer.WritePropertyName("namespacePrefixes"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(NamespacePrefixes);
 #else
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(NamespacePrefixes.ToString()).RootElement);
 #endif
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FormatReadSettingsType);
             foreach (var item in AdditionalProperties)
             {
@@ -74,6 +74,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static XmlReadSettings DeserializeXmlReadSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CompressionReadSettings> compressionProperties = default;
             Optional<BinaryData> validationMode = default;
             Optional<BinaryData> detectDataType = default;
@@ -84,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("compressionProperties"))
+                if (property.NameEquals("compressionProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     compressionProperties = CompressionReadSettings.DeserializeCompressionReadSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("validationMode"))
+                if (property.NameEquals("validationMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     validationMode = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("detectDataType"))
+                if (property.NameEquals("detectDataType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +118,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     detectDataType = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("namespaces"))
+                if (property.NameEquals("namespaces"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     namespaces = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("namespacePrefixes"))
+                if (property.NameEquals("namespacePrefixes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -134,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     namespacePrefixes = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

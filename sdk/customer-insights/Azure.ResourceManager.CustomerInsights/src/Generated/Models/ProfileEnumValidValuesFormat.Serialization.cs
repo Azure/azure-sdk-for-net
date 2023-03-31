@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
             }
             if (Optional.IsCollectionDefined(LocalizedValueNames))
             {
-                writer.WritePropertyName("localizedValueNames");
+                writer.WritePropertyName("localizedValueNames"u8);
                 writer.WriteStartObject();
                 foreach (var item in LocalizedValueNames)
                 {
@@ -37,11 +37,15 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static ProfileEnumValidValuesFormat DeserializeProfileEnumValidValuesFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> value = default;
             Optional<IDictionary<string, string>> localizedValueNames = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     value = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("localizedValueNames"))
+                if (property.NameEquals("localizedValueNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -31,21 +31,21 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Source))
             {
-                writer.WritePropertyName("source");
+                writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
             if (Optional.IsDefined(Configuration))
             {
-                writer.WritePropertyName("configuration");
+                writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
             }
             if (Optional.IsDefined(IsIncrementNodeConfigurationBuildRequired))
             {
-                writer.WritePropertyName("incrementNodeConfigurationBuild");
+                writer.WritePropertyName("incrementNodeConfigurationBuild"u8);
                 writer.WriteBooleanValue(IsIncrementNodeConfigurationBuildRequired.Value);
             }
             writer.WriteEndObject();

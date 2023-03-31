@@ -16,10 +16,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     {
         internal static AutoScaleVCoreListResult DeserializeAutoScaleVCoreListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<AutoScaleVCoreData> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<AutoScaleVCoreData> array = new List<AutoScaleVCoreData>();
                     foreach (var item in property.Value.EnumerateArray())

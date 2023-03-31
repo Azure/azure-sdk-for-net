@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PrincipalType))
             {
-                writer.WritePropertyName("principalType");
+                writer.WritePropertyName("principalType"u8);
                 writer.WriteStringValue(PrincipalType.Value.ToString());
             }
             if (Optional.IsDefined(PrincipalName))
             {
-                writer.WritePropertyName("principalName");
+                writer.WritePropertyName("principalName"u8);
                 writer.WriteStringValue(PrincipalName);
             }
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
             writer.WriteEndObject();

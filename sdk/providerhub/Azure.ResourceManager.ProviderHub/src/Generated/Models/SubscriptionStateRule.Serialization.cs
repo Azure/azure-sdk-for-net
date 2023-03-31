@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             if (Optional.IsCollectionDefined(AllowedActions))
             {
-                writer.WritePropertyName("allowedActions");
+                writer.WritePropertyName("allowedActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedActions)
                 {
@@ -36,11 +36,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static SubscriptionStateRule DeserializeSubscriptionStateRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SubscriptionState> state = default;
             Optional<IList<string>> allowedActions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     state = new SubscriptionState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("allowedActions"))
+                if (property.NameEquals("allowedActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static ConsumptionMeterDetails DeserializeConsumptionMeterDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> meterName = default;
             Optional<string> meterCategory = default;
             Optional<string> meterSubCategory = default;
@@ -25,32 +29,32 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<string> serviceTier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("meterName"))
+                if (property.NameEquals("meterName"u8))
                 {
                     meterName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("meterCategory"))
+                if (property.NameEquals("meterCategory"u8))
                 {
                     meterCategory = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("meterSubCategory"))
+                if (property.NameEquals("meterSubCategory"u8))
                 {
                     meterSubCategory = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     unit = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("meterLocation"))
+                if (property.NameEquals("meterLocation"u8))
                 {
                     meterLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("totalIncludedQuantity"))
+                if (property.NameEquals("totalIncludedQuantity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     totalIncludedQuantity = property.Value.GetDecimal();
                     continue;
                 }
-                if (property.NameEquals("pretaxStandardRate"))
+                if (property.NameEquals("pretaxStandardRate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,12 +74,12 @@ namespace Azure.ResourceManager.Consumption.Models
                     pretaxStandardRate = property.Value.GetDecimal();
                     continue;
                 }
-                if (property.NameEquals("serviceName"))
+                if (property.NameEquals("serviceName"u8))
                 {
                     serviceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceTier"))
+                if (property.NameEquals("serviceTier"u8))
                 {
                     serviceTier = property.Value.GetString();
                     continue;

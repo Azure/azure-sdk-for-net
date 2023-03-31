@@ -17,17 +17,21 @@ namespace Azure.AI.AnomalyDetector
     {
         internal static AnomalyState DeserializeAnomalyState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset timestamp = default;
             Optional<AnomalyValue> value = default;
             Optional<IReadOnlyList<ErrorResponse>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,7 +41,7 @@ namespace Azure.AI.AnomalyDetector
                     value = AnomalyValue.DeserializeAnomalyValue(property.Value);
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

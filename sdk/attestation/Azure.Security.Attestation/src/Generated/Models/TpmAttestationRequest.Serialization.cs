@@ -17,7 +17,7 @@ namespace Azure.Security.Attestation
             writer.WriteStartObject();
             if (Optional.IsDefined(InternalData))
             {
-                writer.WritePropertyName("data");
+                writer.WritePropertyName("data"u8);
                 writer.WriteStringValue(InternalData);
             }
             writer.WriteEndObject();

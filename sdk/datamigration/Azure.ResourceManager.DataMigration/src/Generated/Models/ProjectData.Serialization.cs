@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.DataMigration
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("etag");
+                writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -36,38 +36,38 @@ namespace Azure.ResourceManager.DataMigration
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(SourcePlatform))
             {
-                writer.WritePropertyName("sourcePlatform");
+                writer.WritePropertyName("sourcePlatform"u8);
                 writer.WriteStringValue(SourcePlatform.Value.ToString());
             }
             if (Optional.IsDefined(AzureAuthenticationInfo))
             {
-                writer.WritePropertyName("azureAuthenticationInfo");
+                writer.WritePropertyName("azureAuthenticationInfo"u8);
                 writer.WriteObjectValue(AzureAuthenticationInfo);
             }
             if (Optional.IsDefined(TargetPlatform))
             {
-                writer.WritePropertyName("targetPlatform");
+                writer.WritePropertyName("targetPlatform"u8);
                 writer.WriteStringValue(TargetPlatform.Value.ToString());
             }
             if (Optional.IsDefined(SourceConnectionInfo))
             {
-                writer.WritePropertyName("sourceConnectionInfo");
+                writer.WritePropertyName("sourceConnectionInfo"u8);
                 writer.WriteObjectValue(SourceConnectionInfo);
             }
             if (Optional.IsDefined(TargetConnectionInfo))
             {
-                writer.WritePropertyName("targetConnectionInfo");
+                writer.WritePropertyName("targetConnectionInfo"u8);
                 writer.WriteObjectValue(TargetConnectionInfo);
             }
             if (Optional.IsCollectionDefined(DatabasesInfo))
             {
-                writer.WritePropertyName("databasesInfo");
+                writer.WritePropertyName("databasesInfo"u8);
                 writer.WriteStartArray();
                 foreach (var item in DatabasesInfo)
                 {
@@ -81,6 +81,10 @@ namespace Azure.ResourceManager.DataMigration
 
         internal static ProjectData DeserializeProjectData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -98,7 +102,7 @@ namespace Azure.ResourceManager.DataMigration
             Optional<ProjectProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +112,7 @@ namespace Azure.ResourceManager.DataMigration
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,27 +127,27 @@ namespace Azure.ResourceManager.DataMigration
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new Core.ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -153,7 +157,7 @@ namespace Azure.ResourceManager.DataMigration
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -162,7 +166,7 @@ namespace Azure.ResourceManager.DataMigration
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("sourcePlatform"))
+                        if (property0.NameEquals("sourcePlatform"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -172,7 +176,7 @@ namespace Azure.ResourceManager.DataMigration
                             sourcePlatform = new ProjectSourcePlatform(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("azureAuthenticationInfo"))
+                        if (property0.NameEquals("azureAuthenticationInfo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -182,7 +186,7 @@ namespace Azure.ResourceManager.DataMigration
                             azureAuthenticationInfo = AzureActiveDirectoryApp.DeserializeAzureActiveDirectoryApp(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("targetPlatform"))
+                        if (property0.NameEquals("targetPlatform"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -192,7 +196,7 @@ namespace Azure.ResourceManager.DataMigration
                             targetPlatform = new ProjectTargetPlatform(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("creationTime"))
+                        if (property0.NameEquals("creationTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -202,7 +206,7 @@ namespace Azure.ResourceManager.DataMigration
                             creationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("sourceConnectionInfo"))
+                        if (property0.NameEquals("sourceConnectionInfo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -212,7 +216,7 @@ namespace Azure.ResourceManager.DataMigration
                             sourceConnectionInfo = ConnectionInfo.DeserializeConnectionInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("targetConnectionInfo"))
+                        if (property0.NameEquals("targetConnectionInfo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -222,7 +226,7 @@ namespace Azure.ResourceManager.DataMigration
                             targetConnectionInfo = ConnectionInfo.DeserializeConnectionInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("databasesInfo"))
+                        if (property0.NameEquals("databasesInfo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -237,7 +241,7 @@ namespace Azure.ResourceManager.DataMigration
                             databasesInfo = array;
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

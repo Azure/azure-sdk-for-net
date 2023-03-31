@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(CertificateIds))
             {
-                writer.WritePropertyName("certificateIds");
+                writer.WritePropertyName("certificateIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in CertificateIds)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsCollectionDefined(Certificate))
             {
-                writer.WritePropertyName("certificate");
+                writer.WritePropertyName("certificate"u8);
                 writer.WriteStartArray();
                 foreach (var item in Certificate)
                 {
@@ -38,11 +38,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsCollectionDefined(Query))
             {
-                writer.WritePropertyName("query");
+                writer.WritePropertyName("query"u8);
                 writer.WriteStartObject();
                 foreach (var item in Query)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartArray();
                     foreach (var item0 in item.Value)
                     {
@@ -54,11 +59,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsCollectionDefined(Header))
             {
-                writer.WritePropertyName("header");
+                writer.WritePropertyName("header"u8);
                 writer.WriteStartObject();
                 foreach (var item in Header)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartArray();
                     foreach (var item0 in item.Value)
                     {
@@ -70,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsDefined(Authorization))
             {
-                writer.WritePropertyName("authorization");
+                writer.WritePropertyName("authorization"u8);
                 writer.WriteObjectValue(Authorization);
             }
             writer.WriteEndObject();
@@ -78,6 +88,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static BackendCredentialsContract DeserializeBackendCredentialsContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> certificateIds = default;
             Optional<IList<string>> certificate = default;
             Optional<IDictionary<string, IList<string>>> query = default;
@@ -85,7 +99,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<BackendAuthorizationHeaderCredentials> authorization = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("certificateIds"))
+                if (property.NameEquals("certificateIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +114,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     certificateIds = array;
                     continue;
                 }
-                if (property.NameEquals("certificate"))
+                if (property.NameEquals("certificate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -115,7 +129,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     certificate = array;
                     continue;
                 }
-                if (property.NameEquals("query"))
+                if (property.NameEquals("query"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -125,17 +139,24 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     Dictionary<string, IList<string>> dictionary = new Dictionary<string, IList<string>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        List<string> array = new List<string>();
-                        foreach (var item in property0.Value.EnumerateArray())
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            array.Add(item.GetString());
+                            dictionary.Add(property0.Name, null);
                         }
-                        dictionary.Add(property0.Name, array);
+                        else
+                        {
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            dictionary.Add(property0.Name, array);
+                        }
                     }
                     query = dictionary;
                     continue;
                 }
-                if (property.NameEquals("header"))
+                if (property.NameEquals("header"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -145,17 +166,24 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     Dictionary<string, IList<string>> dictionary = new Dictionary<string, IList<string>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        List<string> array = new List<string>();
-                        foreach (var item in property0.Value.EnumerateArray())
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            array.Add(item.GetString());
+                            dictionary.Add(property0.Name, null);
                         }
-                        dictionary.Add(property0.Name, array);
+                        else
+                        {
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            dictionary.Add(property0.Name, array);
+                        }
                     }
                     header = dictionary;
                     continue;
                 }
-                if (property.NameEquals("authorization"))
+                if (property.NameEquals("authorization"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

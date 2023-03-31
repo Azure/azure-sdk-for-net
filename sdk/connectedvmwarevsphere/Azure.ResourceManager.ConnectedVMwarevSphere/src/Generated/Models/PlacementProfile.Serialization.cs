@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourcePoolId))
             {
-                writer.WritePropertyName("resourcePoolId");
+                writer.WritePropertyName("resourcePoolId"u8);
                 writer.WriteStringValue(ResourcePoolId);
             }
             if (Optional.IsDefined(ClusterId))
             {
-                writer.WritePropertyName("clusterId");
+                writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
             }
             if (Optional.IsDefined(HostId))
             {
-                writer.WritePropertyName("hostId");
+                writer.WritePropertyName("hostId"u8);
                 writer.WriteStringValue(HostId);
             }
             if (Optional.IsDefined(DatastoreId))
             {
-                writer.WritePropertyName("datastoreId");
+                writer.WritePropertyName("datastoreId"u8);
                 writer.WriteStringValue(DatastoreId);
             }
             writer.WriteEndObject();
@@ -40,28 +40,32 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static PlacementProfile DeserializePlacementProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourcePoolId = default;
             Optional<string> clusterId = default;
             Optional<string> hostId = default;
             Optional<string> datastoreId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourcePoolId"))
+                if (property.NameEquals("resourcePoolId"u8))
                 {
                     resourcePoolId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clusterId"))
+                if (property.NameEquals("clusterId"u8))
                 {
                     clusterId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hostId"))
+                if (property.NameEquals("hostId"u8))
                 {
                     hostId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("datastoreId"))
+                if (property.NameEquals("datastoreId"u8))
                 {
                     datastoreId = property.Value.GetString();
                     continue;

@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(SupportedFilterType.ToString());
-            writer.WritePropertyName("supportedValues");
+            writer.WritePropertyName("supportedValues"u8);
             writer.WriteStartArray();
             foreach (var item in SupportedValues)
             {
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static FilterableProperty DeserializeFilterableProperty(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SupportedFilterType type = default;
             IList<string> supportedValues = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new SupportedFilterType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("supportedValues"))
+                if (property.NameEquals("supportedValues"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())

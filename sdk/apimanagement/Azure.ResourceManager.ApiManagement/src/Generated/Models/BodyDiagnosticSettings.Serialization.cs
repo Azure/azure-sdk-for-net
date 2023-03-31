@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Bytes))
             {
-                writer.WritePropertyName("bytes");
+                writer.WritePropertyName("bytes"u8);
                 writer.WriteNumberValue(Bytes.Value);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static BodyDiagnosticSettings DeserializeBodyDiagnosticSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> bytes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("bytes"))
+                if (property.NameEquals("bytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

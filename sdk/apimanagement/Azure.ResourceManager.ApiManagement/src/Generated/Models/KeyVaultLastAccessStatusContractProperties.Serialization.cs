@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Code))
             {
-                writer.WritePropertyName("code");
+                writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
             if (Optional.IsDefined(Message))
             {
-                writer.WritePropertyName("message");
+                writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
             if (Optional.IsDefined(TimeStampUtc))
             {
-                writer.WritePropertyName("timeStampUtc");
+                writer.WritePropertyName("timeStampUtc"u8);
                 writer.WriteStringValue(TimeStampUtc.Value, "O");
             }
             writer.WriteEndObject();
@@ -36,22 +36,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static KeyVaultLastAccessStatusContractProperties DeserializeKeyVaultLastAccessStatusContractProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<DateTimeOffset> timeStampUtc = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timeStampUtc"))
+                if (property.NameEquals("timeStampUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

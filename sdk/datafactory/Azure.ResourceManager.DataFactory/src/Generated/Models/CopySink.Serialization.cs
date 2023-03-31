@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
             if (Optional.IsDefined(WriteBatchSize))
             {
-                writer.WritePropertyName("writeBatchSize");
+                writer.WritePropertyName("writeBatchSize"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(WriteBatchSize);
 #else
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(WriteBatchTimeout))
             {
-                writer.WritePropertyName("writeBatchTimeout");
+                writer.WritePropertyName("writeBatchTimeout"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(WriteBatchTimeout);
 #else
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(SinkRetryCount))
             {
-                writer.WritePropertyName("sinkRetryCount");
+                writer.WritePropertyName("sinkRetryCount"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SinkRetryCount);
 #else
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(SinkRetryWait))
             {
-                writer.WritePropertyName("sinkRetryWait");
+                writer.WritePropertyName("sinkRetryWait"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SinkRetryWait);
 #else
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
-                writer.WritePropertyName("maxConcurrentConnections");
+                writer.WritePropertyName("maxConcurrentConnections"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(MaxConcurrentConnections);
 #else
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
-                writer.WritePropertyName("disableMetricsCollection");
+                writer.WritePropertyName("disableMetricsCollection"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DisableMetricsCollection);
 #else
@@ -85,6 +85,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static CopySink DeserializeCopySink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

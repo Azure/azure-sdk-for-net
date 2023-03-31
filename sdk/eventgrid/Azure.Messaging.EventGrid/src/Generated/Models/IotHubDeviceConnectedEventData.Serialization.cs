@@ -17,28 +17,32 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static IotHubDeviceConnectedEventData DeserializeIotHubDeviceConnectedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> deviceId = default;
             Optional<string> moduleId = default;
             Optional<string> hubName = default;
             Optional<DeviceConnectionStateEventInfo> deviceConnectionStateEventInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceId"))
+                if (property.NameEquals("deviceId"u8))
                 {
                     deviceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("moduleId"))
+                if (property.NameEquals("moduleId"u8))
                 {
                     moduleId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hubName"))
+                if (property.NameEquals("hubName"u8))
                 {
                     hubName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deviceConnectionStateEventInfo"))
+                if (property.NameEquals("deviceConnectionStateEventInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

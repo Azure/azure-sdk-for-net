@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.Automation.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("base64Value");
+            writer.WritePropertyName("base64Value"u8);
             writer.WriteStringValue(Base64Value);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Thumbprint))
             {
-                writer.WritePropertyName("thumbprint");
+                writer.WritePropertyName("thumbprint"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Thumbprint);
 #else
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             if (Optional.IsDefined(IsExportable))
             {
-                writer.WritePropertyName("isExportable");
+                writer.WritePropertyName("isExportable"u8);
                 writer.WriteBooleanValue(IsExportable.Value);
             }
             writer.WriteEndObject();

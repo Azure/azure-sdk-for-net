@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.Hci.Models
     {
         internal static ArcIdentityResult DeserializeArcIdentityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> arcApplicationClientId = default;
             Optional<Guid> arcApplicationTenantId = default;
             Optional<Guid> arcServicePrincipalObjectId = default;
             Optional<Guid> arcApplicationObjectId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.Hci.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("arcApplicationClientId"))
+                        if (property0.NameEquals("arcApplicationClientId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Hci.Models
                             arcApplicationClientId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("arcApplicationTenantId"))
+                        if (property0.NameEquals("arcApplicationTenantId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.Hci.Models
                             arcApplicationTenantId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("arcServicePrincipalObjectId"))
+                        if (property0.NameEquals("arcServicePrincipalObjectId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.Hci.Models
                             arcServicePrincipalObjectId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("arcApplicationObjectId"))
+                        if (property0.NameEquals("arcApplicationObjectId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

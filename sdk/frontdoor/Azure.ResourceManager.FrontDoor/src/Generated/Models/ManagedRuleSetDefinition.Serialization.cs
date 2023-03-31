@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static ManagedRuleSetDefinition DeserializeManagedRuleSetDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<IReadOnlyList<ManagedRuleGroupDefinition>> ruleGroups = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,27 +70,27 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +100,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,27 +109,27 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("ruleSetId"))
+                        if (property0.NameEquals("ruleSetId"u8))
                         {
                             ruleSetId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("ruleSetType"))
+                        if (property0.NameEquals("ruleSetType"u8))
                         {
                             ruleSetType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("ruleSetVersion"))
+                        if (property0.NameEquals("ruleSetVersion"u8))
                         {
                             ruleSetVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("ruleGroups"))
+                        if (property0.NameEquals("ruleGroups"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

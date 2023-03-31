@@ -18,52 +18,52 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(RestoreFromBackupId))
             {
-                writer.WritePropertyName("restoreFromBackupId");
+                writer.WritePropertyName("restoreFromBackupId"u8);
                 writer.WriteStringValue(RestoreFromBackupId);
             }
             if (Optional.IsDefined(DelegatedManagementSubnetId))
             {
-                writer.WritePropertyName("delegatedManagementSubnetId");
+                writer.WritePropertyName("delegatedManagementSubnetId"u8);
                 writer.WriteStringValue(DelegatedManagementSubnetId);
             }
             if (Optional.IsDefined(CassandraVersion))
             {
-                writer.WritePropertyName("cassandraVersion");
+                writer.WritePropertyName("cassandraVersion"u8);
                 writer.WriteStringValue(CassandraVersion);
             }
             if (Optional.IsDefined(ClusterNameOverride))
             {
-                writer.WritePropertyName("clusterNameOverride");
+                writer.WritePropertyName("clusterNameOverride"u8);
                 writer.WriteStringValue(ClusterNameOverride);
             }
             if (Optional.IsDefined(AuthenticationMethod))
             {
-                writer.WritePropertyName("authenticationMethod");
+                writer.WritePropertyName("authenticationMethod"u8);
                 writer.WriteStringValue(AuthenticationMethod.Value.ToString());
             }
             if (Optional.IsDefined(InitialCassandraAdminPassword))
             {
-                writer.WritePropertyName("initialCassandraAdminPassword");
+                writer.WritePropertyName("initialCassandraAdminPassword"u8);
                 writer.WriteStringValue(InitialCassandraAdminPassword);
             }
             if (Optional.IsDefined(PrometheusEndpoint))
             {
-                writer.WritePropertyName("prometheusEndpoint");
+                writer.WritePropertyName("prometheusEndpoint"u8);
                 writer.WriteObjectValue(PrometheusEndpoint);
             }
             if (Optional.IsDefined(IsRepairEnabled))
             {
-                writer.WritePropertyName("repairEnabled");
+                writer.WritePropertyName("repairEnabled"u8);
                 writer.WriteBooleanValue(IsRepairEnabled.Value);
             }
             if (Optional.IsCollectionDefined(ClientCertificates))
             {
-                writer.WritePropertyName("clientCertificates");
+                writer.WritePropertyName("clientCertificates"u8);
                 writer.WriteStartArray();
                 foreach (var item in ClientCertificates)
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             if (Optional.IsCollectionDefined(ExternalGossipCertificates))
             {
-                writer.WritePropertyName("externalGossipCertificates");
+                writer.WritePropertyName("externalGossipCertificates"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExternalGossipCertificates)
                 {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             if (Optional.IsCollectionDefined(ExternalSeedNodes))
             {
-                writer.WritePropertyName("externalSeedNodes");
+                writer.WritePropertyName("externalSeedNodes"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExternalSeedNodes)
                 {
@@ -93,17 +93,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             if (Optional.IsDefined(HoursBetweenBackups))
             {
-                writer.WritePropertyName("hoursBetweenBackups");
+                writer.WritePropertyName("hoursBetweenBackups"u8);
                 writer.WriteNumberValue(HoursBetweenBackups.Value);
             }
             if (Optional.IsDefined(IsDeallocated))
             {
-                writer.WritePropertyName("deallocated");
+                writer.WritePropertyName("deallocated"u8);
                 writer.WriteBooleanValue(IsDeallocated.Value);
             }
             if (Optional.IsDefined(IsCassandraAuditLoggingEnabled))
             {
-                writer.WritePropertyName("cassandraAuditLoggingEnabled");
+                writer.WritePropertyName("cassandraAuditLoggingEnabled"u8);
                 writer.WriteBooleanValue(IsCassandraAuditLoggingEnabled.Value);
             }
             writer.WriteEndObject();
@@ -111,6 +111,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CassandraClusterProperties DeserializeCassandraClusterProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CassandraProvisioningState> provisioningState = default;
             Optional<string> restoreFromBackupId = default;
             Optional<ResourceIdentifier> delegatedManagementSubnetId = default;
@@ -130,7 +134,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<bool> cassandraAuditLoggingEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -140,12 +144,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     provisioningState = new CassandraProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("restoreFromBackupId"))
+                if (property.NameEquals("restoreFromBackupId"u8))
                 {
                     restoreFromBackupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("delegatedManagementSubnetId"))
+                if (property.NameEquals("delegatedManagementSubnetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -155,17 +159,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     delegatedManagementSubnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cassandraVersion"))
+                if (property.NameEquals("cassandraVersion"u8))
                 {
                     cassandraVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clusterNameOverride"))
+                if (property.NameEquals("clusterNameOverride"u8))
                 {
                     clusterNameOverride = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authenticationMethod"))
+                if (property.NameEquals("authenticationMethod"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -175,12 +179,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     authenticationMethod = new CassandraAuthenticationMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("initialCassandraAdminPassword"))
+                if (property.NameEquals("initialCassandraAdminPassword"u8))
                 {
                     initialCassandraAdminPassword = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("prometheusEndpoint"))
+                if (property.NameEquals("prometheusEndpoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -190,7 +194,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     prometheusEndpoint = CassandraDataCenterSeedNode.DeserializeCassandraDataCenterSeedNode(property.Value);
                     continue;
                 }
-                if (property.NameEquals("repairEnabled"))
+                if (property.NameEquals("repairEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -200,7 +204,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     repairEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("clientCertificates"))
+                if (property.NameEquals("clientCertificates"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -215,7 +219,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     clientCertificates = array;
                     continue;
                 }
-                if (property.NameEquals("externalGossipCertificates"))
+                if (property.NameEquals("externalGossipCertificates"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -230,7 +234,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     externalGossipCertificates = array;
                     continue;
                 }
-                if (property.NameEquals("gossipCertificates"))
+                if (property.NameEquals("gossipCertificates"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -245,7 +249,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     gossipCertificates = array;
                     continue;
                 }
-                if (property.NameEquals("externalSeedNodes"))
+                if (property.NameEquals("externalSeedNodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -260,7 +264,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     externalSeedNodes = array;
                     continue;
                 }
-                if (property.NameEquals("seedNodes"))
+                if (property.NameEquals("seedNodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -275,7 +279,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     seedNodes = array;
                     continue;
                 }
-                if (property.NameEquals("hoursBetweenBackups"))
+                if (property.NameEquals("hoursBetweenBackups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -285,7 +289,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     hoursBetweenBackups = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("deallocated"))
+                if (property.NameEquals("deallocated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -295,7 +299,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     deallocated = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("cassandraAuditLoggingEnabled"))
+                if (property.NameEquals("cassandraAuditLoggingEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

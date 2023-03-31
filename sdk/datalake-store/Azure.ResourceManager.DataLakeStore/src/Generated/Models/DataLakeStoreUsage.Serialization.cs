@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     {
         internal static DataLakeStoreUsage DeserializeDataLakeStoreUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataLakeStoreUsageUnit> unit = default;
             Optional<ResourceIdentifier> id = default;
             Optional<int> currentValue = default;
@@ -21,7 +25,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             Optional<DataLakeStoreUsageName> name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +35,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     unit = property.Value.GetString().ToDataLakeStoreUsageUnit();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("currentValue"))
+                if (property.NameEquals("currentValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     currentValue = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     limit = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

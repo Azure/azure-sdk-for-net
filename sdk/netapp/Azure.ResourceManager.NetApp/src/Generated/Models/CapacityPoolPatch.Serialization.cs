@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -26,23 +26,23 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Size))
             {
-                writer.WritePropertyName("size");
+                writer.WritePropertyName("size"u8);
                 writer.WriteNumberValue(Size.Value);
             }
             if (Optional.IsDefined(QosType))
             {
-                writer.WritePropertyName("qosType");
+                writer.WritePropertyName("qosType"u8);
                 writer.WriteStringValue(QosType.Value.ToString());
             }
             if (Optional.IsDefined(IsCoolAccessEnabled))
             {
-                writer.WritePropertyName("coolAccess");
+                writer.WritePropertyName("coolAccess"u8);
                 writer.WriteBooleanValue(IsCoolAccessEnabled.Value);
             }
             writer.WriteEndObject();

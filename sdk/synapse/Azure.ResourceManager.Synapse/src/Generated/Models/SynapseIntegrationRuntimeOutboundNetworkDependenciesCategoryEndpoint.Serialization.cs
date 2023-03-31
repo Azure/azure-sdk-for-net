@@ -15,16 +15,20 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> category = default;
             Optional<IReadOnlyList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>> endpoints = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
                     category = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpoints"))
+                if (property.NameEquals("endpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             if (Optional.IsDefined(Note))
             {
-                writer.WritePropertyName("note");
+                writer.WritePropertyName("note"u8);
                 writer.WriteStringValue(Note);
             }
             if (Optional.IsCollectionDefined(Identities))
             {
-                writer.WritePropertyName("identities");
+                writer.WritePropertyName("identities"u8);
                 writer.WriteStartArray();
                 foreach (var item in Identities)
                 {
@@ -39,32 +39,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsDefined(Email))
             {
-                writer.WritePropertyName("email");
+                writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
             if (Optional.IsDefined(FirstName))
             {
-                writer.WritePropertyName("firstName");
+                writer.WritePropertyName("firstName"u8);
                 writer.WriteStringValue(FirstName);
             }
             if (Optional.IsDefined(LastName))
             {
-                writer.WritePropertyName("lastName");
+                writer.WritePropertyName("lastName"u8);
                 writer.WriteStringValue(LastName);
             }
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
+                writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
             if (Optional.IsDefined(AppType))
             {
-                writer.WritePropertyName("appType");
+                writer.WritePropertyName("appType"u8);
                 writer.WriteStringValue(AppType.Value.ToString());
             }
             if (Optional.IsDefined(Confirmation))
             {
-                writer.WritePropertyName("confirmation");
+                writer.WritePropertyName("confirmation"u8);
                 writer.WriteStringValue(Confirmation.Value.ToString());
             }
             writer.WriteEndObject();

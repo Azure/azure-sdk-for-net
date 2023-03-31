@@ -19,21 +19,21 @@ namespace Azure.ResourceManager.AppConfiguration
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
             if (Optional.IsDefined(ContentType))
             {
-                writer.WritePropertyName("contentType");
+                writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.AppConfiguration
 
         internal static AppConfigurationKeyValueData DeserializeAppConfigurationKeyValueData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -62,22 +66,22 @@ namespace Azure.ResourceManager.AppConfiguration
             Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +91,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,27 +100,27 @@ namespace Azure.ResourceManager.AppConfiguration
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("key"))
+                        if (property0.NameEquals("key"u8))
                         {
                             key = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("label"))
+                        if (property0.NameEquals("label"u8))
                         {
                             label = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("value"))
+                        if (property0.NameEquals("value"u8))
                         {
                             value = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("contentType"))
+                        if (property0.NameEquals("contentType"u8))
                         {
                             contentType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("eTag"))
+                        if (property0.NameEquals("eTag"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -126,7 +130,7 @@ namespace Azure.ResourceManager.AppConfiguration
                             eTag = new ETag(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("lastModified"))
+                        if (property0.NameEquals("lastModified"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -136,7 +140,7 @@ namespace Azure.ResourceManager.AppConfiguration
                             lastModified = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("locked"))
+                        if (property0.NameEquals("locked"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -146,7 +150,7 @@ namespace Azure.ResourceManager.AppConfiguration
                             locked = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("tags"))
+                        if (property0.NameEquals("tags"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

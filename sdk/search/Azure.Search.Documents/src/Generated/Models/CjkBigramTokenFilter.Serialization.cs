@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(IgnoreScripts))
             {
-                writer.WritePropertyName("ignoreScripts");
+                writer.WritePropertyName("ignoreScripts"u8);
                 writer.WriteStartArray();
                 foreach (var item in IgnoreScripts)
                 {
@@ -28,25 +28,29 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(OutputUnigrams))
             {
-                writer.WritePropertyName("outputUnigrams");
+                writer.WritePropertyName("outputUnigrams"u8);
                 writer.WriteBooleanValue(OutputUnigrams.Value);
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WriteEndObject();
         }
 
         internal static CjkBigramTokenFilter DeserializeCjkBigramTokenFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<CjkBigramTokenFilterScripts>> ignoreScripts = default;
             Optional<bool> outputUnigrams = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ignoreScripts"))
+                if (property.NameEquals("ignoreScripts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     ignoreScripts = array;
                     continue;
                 }
-                if (property.NameEquals("outputUnigrams"))
+                if (property.NameEquals("outputUnigrams"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,12 +75,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     outputUnigrams = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;

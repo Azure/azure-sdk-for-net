@@ -14,10 +14,14 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static FsLayer DeserializeFsLayer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> blobSum = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("blobSum"))
+                if (property.NameEquals("blobSum"u8))
                 {
                     blobSum = property.Value.GetString();
                     continue;

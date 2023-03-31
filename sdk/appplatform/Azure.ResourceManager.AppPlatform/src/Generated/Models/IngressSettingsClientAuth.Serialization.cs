@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Certificates))
             {
-                writer.WritePropertyName("certificates");
+                writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();
                 foreach (var item in Certificates)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static IngressSettingsClientAuth DeserializeIngressSettingsClientAuth(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> certificates = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("certificates"))
+                if (property.NameEquals("certificates"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

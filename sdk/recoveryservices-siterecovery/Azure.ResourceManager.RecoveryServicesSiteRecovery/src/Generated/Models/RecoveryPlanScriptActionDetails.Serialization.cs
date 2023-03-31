@@ -15,44 +15,48 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("path");
+            writer.WritePropertyName("path"u8);
             writer.WriteStringValue(Path);
             if (Optional.IsDefined(Timeout))
             {
-                writer.WritePropertyName("timeout");
+                writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout);
             }
-            writer.WritePropertyName("fabricLocation");
+            writer.WritePropertyName("fabricLocation"u8);
             writer.WriteStringValue(FabricLocation.ToString());
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }
 
         internal static RecoveryPlanScriptActionDetails DeserializeRecoveryPlanScriptActionDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string path = default;
             Optional<string> timeout = default;
             RecoveryPlanActionLocation fabricLocation = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timeout"))
+                if (property.NameEquals("timeout"u8))
                 {
                     timeout = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fabricLocation"))
+                if (property.NameEquals("fabricLocation"u8))
                 {
                     fabricLocation = new RecoveryPlanActionLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

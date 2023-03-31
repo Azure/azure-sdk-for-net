@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Convention))
             {
-                writer.WritePropertyName("convention");
+                writer.WritePropertyName("convention"u8);
                 writer.WriteStringValue(Convention.Value.ToSerialString());
             }
             if (Optional.IsDefined(CustomHostHeaderName))
             {
-                writer.WritePropertyName("customHostHeaderName");
+                writer.WritePropertyName("customHostHeaderName"u8);
                 writer.WriteStringValue(CustomHostHeaderName);
             }
             if (Optional.IsDefined(CustomProtoHeaderName))
             {
-                writer.WritePropertyName("customProtoHeaderName");
+                writer.WritePropertyName("customProtoHeaderName"u8);
                 writer.WriteStringValue(CustomProtoHeaderName);
             }
             writer.WriteEndObject();
@@ -35,12 +35,16 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceForwardProxy DeserializeAppServiceForwardProxy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ForwardProxyConvention> convention = default;
             Optional<string> customHostHeaderName = default;
             Optional<string> customProtoHeaderName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("convention"))
+                if (property.NameEquals("convention"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,12 +54,12 @@ namespace Azure.ResourceManager.AppService.Models
                     convention = property.Value.GetString().ToForwardProxyConvention();
                     continue;
                 }
-                if (property.NameEquals("customHostHeaderName"))
+                if (property.NameEquals("customHostHeaderName"u8))
                 {
                     customHostHeaderName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customProtoHeaderName"))
+                if (property.NameEquals("customProtoHeaderName"u8))
                 {
                     customProtoHeaderName = property.Value.GetString();
                     continue;

@@ -15,23 +15,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("labelName");
+            writer.WritePropertyName("labelName"u8);
             writer.WriteStringValue(LabelName);
             writer.WriteEndObject();
         }
 
         internal static SecurityInsightsIncidentLabel DeserializeSecurityInsightsIncidentLabel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string labelName = default;
             Optional<SecurityInsightsIncidentLabelType> labelType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("labelName"))
+                if (property.NameEquals("labelName"u8))
                 {
                     labelName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("labelType"))
+                if (property.NameEquals("labelType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,37 +17,41 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SoftDeleteColumnName))
             {
-                writer.WritePropertyName("softDeleteColumnName");
+                writer.WritePropertyName("softDeleteColumnName"u8);
                 writer.WriteStringValue(SoftDeleteColumnName);
             }
             if (Optional.IsDefined(SoftDeleteMarkerValue))
             {
-                writer.WritePropertyName("softDeleteMarkerValue");
+                writer.WritePropertyName("softDeleteMarkerValue"u8);
                 writer.WriteStringValue(SoftDeleteMarkerValue);
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
             writer.WriteEndObject();
         }
 
         internal static SoftDeleteColumnDeletionDetectionPolicy DeserializeSoftDeleteColumnDeletionDetectionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> softDeleteColumnName = default;
             Optional<string> softDeleteMarkerValue = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("softDeleteColumnName"))
+                if (property.NameEquals("softDeleteColumnName"u8))
                 {
                     softDeleteColumnName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("softDeleteMarkerValue"))
+                if (property.NameEquals("softDeleteMarkerValue"u8))
                 {
                     softDeleteMarkerValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;

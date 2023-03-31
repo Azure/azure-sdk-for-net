@@ -17,21 +17,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RetentionDuration))
             {
-                writer.WritePropertyName("retentionDuration");
+                writer.WritePropertyName("retentionDuration"u8);
                 writer.WriteObjectValue(RetentionDuration);
             }
-            writer.WritePropertyName("retentionPolicyType");
+            writer.WritePropertyName("retentionPolicyType"u8);
             writer.WriteStringValue(RetentionPolicyType);
             writer.WriteEndObject();
         }
 
         internal static SimpleRetentionPolicy DeserializeSimpleRetentionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RetentionDuration> retentionDuration = default;
             string retentionPolicyType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("retentionDuration"))
+                if (property.NameEquals("retentionDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     retentionDuration = RetentionDuration.DeserializeRetentionDuration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("retentionPolicyType"))
+                if (property.NameEquals("retentionPolicyType"u8))
                 {
                     retentionPolicyType = property.Value.GetString();
                     continue;

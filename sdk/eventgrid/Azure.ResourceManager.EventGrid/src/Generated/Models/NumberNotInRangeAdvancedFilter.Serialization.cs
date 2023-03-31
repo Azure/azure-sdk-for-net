@@ -18,10 +18,15 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Values))
             {
-                writer.WritePropertyName("values");
+                writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartArray();
                     foreach (var item0 in item)
                     {
@@ -31,11 +36,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("operatorType");
+            writer.WritePropertyName("operatorType"u8);
             writer.WriteStringValue(OperatorType.ToString());
             if (Optional.IsDefined(Key))
             {
-                writer.WritePropertyName("key");
+                writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
             writer.WriteEndObject();
@@ -43,12 +48,16 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static NumberNotInRangeAdvancedFilter DeserializeNumberNotInRangeAdvancedFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<IList<double>>> values = default;
             AdvancedFilterOperatorType operatorType = default;
             Optional<string> key = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("values"))
+                if (property.NameEquals("values"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,22 +67,29 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<IList<double>> array = new List<IList<double>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        List<double> array0 = new List<double>();
-                        foreach (var item0 in item.EnumerateArray())
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array0.Add(item0.GetDouble());
+                            array.Add(null);
                         }
-                        array.Add(array0);
+                        else
+                        {
+                            List<double> array0 = new List<double>();
+                            foreach (var item0 in item.EnumerateArray())
+                            {
+                                array0.Add(item0.GetDouble());
+                            }
+                            array.Add(array0);
+                        }
                     }
                     values = array;
                     continue;
                 }
-                if (property.NameEquals("operatorType"))
+                if (property.NameEquals("operatorType"u8))
                 {
                     operatorType = new AdvancedFilterOperatorType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = property.Value.GetString();
                     continue;

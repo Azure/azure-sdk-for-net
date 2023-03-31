@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StatusCodes))
             {
-                writer.WritePropertyName("statusCodes");
+                writer.WritePropertyName("statusCodes"u8);
                 writer.WriteStringValue(StatusCodes);
             }
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             if (Optional.IsDefined(Count))
             {
-                writer.WritePropertyName("count");
+                writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
             if (Optional.IsDefined(TimeInterval))
             {
-                writer.WritePropertyName("timeInterval");
+                writer.WritePropertyName("timeInterval"u8);
                 writer.WriteStringValue(TimeInterval);
             }
             writer.WriteEndObject();
@@ -40,23 +40,27 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static StatusCodesRangeBasedTrigger DeserializeStatusCodesRangeBasedTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> statusCodes = default;
             Optional<string> path = default;
             Optional<int> count = default;
             Optional<string> timeInterval = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("statusCodes"))
+                if (property.NameEquals("statusCodes"u8))
                 {
                     statusCodes = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
                     count = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("timeInterval"))
+                if (property.NameEquals("timeInterval"u8))
                 {
                     timeInterval = property.Value.GetString();
                     continue;

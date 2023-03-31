@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
     {
         internal static TargetResourceEndpointAccess DeserializeTargetResourceEndpointAccess(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> namespaceName = default;
             Optional<string> namespaceNameSuffix = default;
             Optional<string> hybridConnectionName = default;
@@ -21,7 +25,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             Optional<long> expiresOn = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("relay"))
+                if (property.NameEquals("relay"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,27 +34,27 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("namespaceName"))
+                        if (property0.NameEquals("namespaceName"u8))
                         {
                             namespaceName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("namespaceNameSuffix"))
+                        if (property0.NameEquals("namespaceNameSuffix"u8))
                         {
                             namespaceNameSuffix = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("hybridConnectionName"))
+                        if (property0.NameEquals("hybridConnectionName"u8))
                         {
                             hybridConnectionName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("accessKey"))
+                        if (property0.NameEquals("accessKey"u8))
                         {
                             accessKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("expiresOn"))
+                        if (property0.NameEquals("expiresOn"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

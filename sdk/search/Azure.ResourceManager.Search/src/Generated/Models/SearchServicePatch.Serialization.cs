@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.Search.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -39,34 +39,56 @@ namespace Azure.ResourceManager.Search.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ReplicaCount))
             {
-                writer.WritePropertyName("replicaCount");
+                writer.WritePropertyName("replicaCount"u8);
                 writer.WriteNumberValue(ReplicaCount.Value);
             }
             if (Optional.IsDefined(PartitionCount))
             {
-                writer.WritePropertyName("partitionCount");
+                writer.WritePropertyName("partitionCount"u8);
                 writer.WriteNumberValue(PartitionCount.Value);
             }
             if (Optional.IsDefined(HostingMode))
             {
-                writer.WritePropertyName("hostingMode");
+                writer.WritePropertyName("hostingMode"u8);
                 writer.WriteStringValue(HostingMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
             if (Optional.IsDefined(NetworkRuleSet))
             {
-                writer.WritePropertyName("networkRuleSet");
+                writer.WritePropertyName("networkRuleSet"u8);
                 writer.WriteObjectValue(NetworkRuleSet);
+            }
+            if (Optional.IsDefined(EncryptionWithCmk))
+            {
+                writer.WritePropertyName("encryptionWithCmk"u8);
+                writer.WriteObjectValue(EncryptionWithCmk);
+            }
+            if (Optional.IsDefined(IsLocalAuthDisabled))
+            {
+                if (IsLocalAuthDisabled != null)
+                {
+                    writer.WritePropertyName("disableLocalAuth"u8);
+                    writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
+                }
+                else
+                {
+                    writer.WriteNull("disableLocalAuth");
+                }
+            }
+            if (Optional.IsDefined(AuthOptions))
+            {
+                writer.WritePropertyName("authOptions"u8);
+                writer.WriteObjectValue(AuthOptions);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -74,6 +96,10 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static SearchServicePatch DeserializeSearchServicePatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SearchSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -90,11 +116,14 @@ namespace Azure.ResourceManager.Search.Models
             Optional<string> statusDetails = default;
             Optional<SearchServiceProvisioningState> provisioningState = default;
             Optional<NetworkRuleSet> networkRuleSet = default;
+            Optional<SearchEncryptionWithCmk> encryptionWithCmk = default;
+            Optional<bool?> disableLocalAuth = default;
+            Optional<SearchAadAuthDataPlaneAuthOptions> authOptions = default;
             Optional<IReadOnlyList<SearchPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<IReadOnlyList<SharedSearchServicePrivateLinkResourceData>> sharedPrivateLinkResources = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +133,7 @@ namespace Azure.ResourceManager.Search.Models
                     sku = SearchSku.DeserializeSearchSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +143,7 @@ namespace Azure.ResourceManager.Search.Models
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,27 +158,27 @@ namespace Azure.ResourceManager.Search.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -159,7 +188,7 @@ namespace Azure.ResourceManager.Search.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -168,7 +197,7 @@ namespace Azure.ResourceManager.Search.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("replicaCount"))
+                        if (property0.NameEquals("replicaCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -178,7 +207,7 @@ namespace Azure.ResourceManager.Search.Models
                             replicaCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("partitionCount"))
+                        if (property0.NameEquals("partitionCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -188,7 +217,7 @@ namespace Azure.ResourceManager.Search.Models
                             partitionCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("hostingMode"))
+                        if (property0.NameEquals("hostingMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -198,7 +227,7 @@ namespace Azure.ResourceManager.Search.Models
                             hostingMode = property0.Value.GetString().ToSearchServiceHostingMode();
                             continue;
                         }
-                        if (property0.NameEquals("publicNetworkAccess"))
+                        if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -208,7 +237,7 @@ namespace Azure.ResourceManager.Search.Models
                             publicNetworkAccess = property0.Value.GetString().ToSearchServicePublicNetworkAccess();
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -218,12 +247,12 @@ namespace Azure.ResourceManager.Search.Models
                             status = property0.Value.GetString().ToSearchServiceStatus();
                             continue;
                         }
-                        if (property0.NameEquals("statusDetails"))
+                        if (property0.NameEquals("statusDetails"u8))
                         {
                             statusDetails = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -233,7 +262,7 @@ namespace Azure.ResourceManager.Search.Models
                             provisioningState = property0.Value.GetString().ToSearchServiceProvisioningState();
                             continue;
                         }
-                        if (property0.NameEquals("networkRuleSet"))
+                        if (property0.NameEquals("networkRuleSet"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -243,7 +272,37 @@ namespace Azure.ResourceManager.Search.Models
                             networkRuleSet = NetworkRuleSet.DeserializeNetworkRuleSet(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("privateEndpointConnections"))
+                        if (property0.NameEquals("encryptionWithCmk"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            encryptionWithCmk = SearchEncryptionWithCmk.DeserializeSearchEncryptionWithCmk(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("disableLocalAuth"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                disableLocalAuth = null;
+                                continue;
+                            }
+                            disableLocalAuth = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("authOptions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            authOptions = SearchAadAuthDataPlaneAuthOptions.DeserializeSearchAadAuthDataPlaneAuthOptions(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("privateEndpointConnections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -258,7 +317,7 @@ namespace Azure.ResourceManager.Search.Models
                             privateEndpointConnections = array;
                             continue;
                         }
-                        if (property0.NameEquals("sharedPrivateLinkResources"))
+                        if (property0.NameEquals("sharedPrivateLinkResources"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -277,7 +336,7 @@ namespace Azure.ResourceManager.Search.Models
                     continue;
                 }
             }
-            return new SearchServicePatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(replicaCount), Optional.ToNullable(partitionCount), Optional.ToNullable(hostingMode), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(status), statusDetails.Value, Optional.ToNullable(provisioningState), networkRuleSet.Value, Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources));
+            return new SearchServicePatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(replicaCount), Optional.ToNullable(partitionCount), Optional.ToNullable(hostingMode), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(status), statusDetails.Value, Optional.ToNullable(provisioningState), networkRuleSet.Value, encryptionWithCmk.Value, Optional.ToNullable(disableLocalAuth), authOptions.Value, Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources));
         }
     }
 }

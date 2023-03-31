@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VnetName))
             {
-                writer.WritePropertyName("vnetName");
+                writer.WritePropertyName("vnetName"u8);
                 writer.WriteStringValue(VnetName);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static VirtualNetworksPropertiesInfraVnetProfileKubevirt DeserializeVirtualNetworksPropertiesInfraVnetProfileKubevirt(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vnetName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vnetName"))
+                if (property.NameEquals("vnetName"u8))
                 {
                     vnetName = property.Value.GetString();
                     continue;

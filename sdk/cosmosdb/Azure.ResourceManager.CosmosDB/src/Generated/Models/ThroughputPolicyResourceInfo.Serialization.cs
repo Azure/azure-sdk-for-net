@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("isEnabled");
+                writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(IncrementPercent))
             {
-                writer.WritePropertyName("incrementPercent");
+                writer.WritePropertyName("incrementPercent"u8);
                 writer.WriteNumberValue(IncrementPercent.Value);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static ThroughputPolicyResourceInfo DeserializeThroughputPolicyResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isEnabled = default;
             Optional<int> incrementPercent = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isEnabled"))
+                if (property.NameEquals("isEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("incrementPercent"))
+                if (property.NameEquals("incrementPercent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

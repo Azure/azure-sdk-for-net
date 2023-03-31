@@ -15,36 +15,36 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientProtocol))
             {
-                writer.WritePropertyName("clientProtocol");
+                writer.WritePropertyName("clientProtocol"u8);
                 writer.WriteStringValue(ClientProtocol.Value.ToString());
             }
             if (Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port");
+                writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
             if (Optional.IsDefined(ClusteringPolicy))
             {
-                writer.WritePropertyName("clusteringPolicy");
+                writer.WritePropertyName("clusteringPolicy"u8);
                 writer.WriteStringValue(ClusteringPolicy.Value.ToString());
             }
             if (Optional.IsDefined(EvictionPolicy))
             {
-                writer.WritePropertyName("evictionPolicy");
+                writer.WritePropertyName("evictionPolicy"u8);
                 writer.WriteStringValue(EvictionPolicy.Value.ToString());
             }
             if (Optional.IsDefined(Persistence))
             {
-                writer.WritePropertyName("persistence");
+                writer.WritePropertyName("persistence"u8);
                 writer.WriteObjectValue(Persistence);
             }
             if (Optional.IsCollectionDefined(Modules))
             {
-                writer.WritePropertyName("modules");
+                writer.WritePropertyName("modules"u8);
                 writer.WriteStartArray();
                 foreach (var item in Modules)
                 {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
             if (Optional.IsDefined(GeoReplication))
             {
-                writer.WritePropertyName("geoReplication");
+                writer.WritePropertyName("geoReplication"u8);
                 writer.WriteObjectValue(GeoReplication);
             }
             writer.WriteEndObject();

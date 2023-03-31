@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.ContainerService
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(TimesInWeek))
             {
-                writer.WritePropertyName("timeInWeek");
+                writer.WritePropertyName("timeInWeek"u8);
                 writer.WriteStartArray();
                 foreach (var item in TimesInWeek)
                 {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerService
             }
             if (Optional.IsCollectionDefined(NotAllowedTimes))
             {
-                writer.WritePropertyName("notAllowedTime");
+                writer.WritePropertyName("notAllowedTime"u8);
                 writer.WriteStartArray();
                 foreach (var item in NotAllowedTimes)
                 {
@@ -40,36 +40,46 @@ namespace Azure.ResourceManager.ContainerService
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(MaintenanceWindow))
+            {
+                writer.WritePropertyName("maintenanceWindow"u8);
+                writer.WriteObjectValue(MaintenanceWindow);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static ContainerServiceMaintenanceConfigurationData DeserializeContainerServiceMaintenanceConfigurationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<IList<ContainerServiceTimeInWeek>> timeInWeek = default;
             Optional<IList<ContainerServiceTimeSpan>> notAllowedTime = default;
+            Optional<ContainerServiceMaintenanceWindow> maintenanceWindow = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +89,7 @@ namespace Azure.ResourceManager.ContainerService
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +98,7 @@ namespace Azure.ResourceManager.ContainerService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("timeInWeek"))
+                        if (property0.NameEquals("timeInWeek"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -103,7 +113,7 @@ namespace Azure.ResourceManager.ContainerService
                             timeInWeek = array;
                             continue;
                         }
-                        if (property0.NameEquals("notAllowedTime"))
+                        if (property0.NameEquals("notAllowedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -118,11 +128,21 @@ namespace Azure.ResourceManager.ContainerService
                             notAllowedTime = array;
                             continue;
                         }
+                        if (property0.NameEquals("maintenanceWindow"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            maintenanceWindow = ContainerServiceMaintenanceWindow.DeserializeContainerServiceMaintenanceWindow(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ContainerServiceMaintenanceConfigurationData(id, name, type, systemData.Value, Optional.ToList(timeInWeek), Optional.ToList(notAllowedTime));
+            return new ContainerServiceMaintenanceConfigurationData(id, name, type, systemData.Value, Optional.ToList(timeInWeek), Optional.ToList(notAllowedTime), maintenanceWindow.Value);
         }
     }
 }

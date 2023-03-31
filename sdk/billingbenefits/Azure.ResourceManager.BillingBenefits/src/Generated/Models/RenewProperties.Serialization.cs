@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PurchaseProperties))
             {
-                writer.WritePropertyName("purchaseProperties");
+                writer.WritePropertyName("purchaseProperties"u8);
                 writer.WriteObjectValue(PurchaseProperties);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         internal static RenewProperties DeserializeRenewProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BillingBenefitsPurchaseContent> purchaseProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("purchaseProperties"))
+                if (property.NameEquals("purchaseProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

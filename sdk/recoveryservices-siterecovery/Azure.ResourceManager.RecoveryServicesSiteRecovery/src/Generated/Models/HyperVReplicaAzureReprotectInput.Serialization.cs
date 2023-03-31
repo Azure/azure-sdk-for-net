@@ -17,35 +17,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(HvHostVmId))
             {
-                writer.WritePropertyName("hvHostVmId");
+                writer.WritePropertyName("hvHostVmId"u8);
                 writer.WriteStringValue(HvHostVmId);
             }
             if (Optional.IsDefined(VmName))
             {
-                writer.WritePropertyName("vmName");
+                writer.WritePropertyName("vmName"u8);
                 writer.WriteStringValue(VmName);
             }
             if (Optional.IsDefined(OSType))
             {
-                writer.WritePropertyName("osType");
+                writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
             if (Optional.IsDefined(VHDId))
             {
-                writer.WritePropertyName("vHDId");
+                writer.WritePropertyName("vHDId"u8);
                 writer.WriteStringValue(VHDId);
             }
             if (Optional.IsDefined(StorageAccountId))
             {
-                writer.WritePropertyName("storageAccountId");
+                writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
             if (Optional.IsDefined(LogStorageAccountId))
             {
-                writer.WritePropertyName("logStorageAccountId");
+                writer.WritePropertyName("logStorageAccountId"u8);
                 writer.WriteStringValue(LogStorageAccountId);
             }
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

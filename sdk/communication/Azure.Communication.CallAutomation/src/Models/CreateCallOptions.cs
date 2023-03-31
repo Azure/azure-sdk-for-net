@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -15,26 +13,17 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new CreateCallOptions object.
         /// </summary>
-        /// <param name="targets"></param>
-        /// <param name="callSource"></param>
-        /// <param name="callbackUri"></param>
-        public CreateCallOptions(CallSource callSource, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri)
+        public CreateCallOptions(CallInvite callInvite, Uri callbackUri)
         {
-            Targets = (IReadOnlyList<CommunicationIdentifier>)targets;
-            CallSource = callSource;
+            CallInvite = callInvite;
             CallbackUri = callbackUri;
-            RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>
-        /// The targets of the call.
+        /// Call invitee information.
         /// </summary>
-        public IReadOnlyList<CommunicationIdentifier> Targets { get; }
-
-        /// <summary>
-        /// The source of the call.
-        /// </summary>
-        public CallSource CallSource { get; }
+        /// <value></value>
+        public CallInvite CallInvite { get; }
 
         /// <summary>
         /// The callback Uri.
@@ -50,11 +39,6 @@ namespace Azure.Communication.CallAutomation
         /// Media Streaming Configuration.
         /// </summary>
         public MediaStreamingOptions MediaStreamingOptions { get; set; }
-
-        /// <summary>
-        /// Repeatability Headers.
-        /// </summary>
-        public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
 
         /// <summary>
         /// The endpoint URL of the Azure Cognitive Services resource attached

@@ -15,6 +15,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkStatementOutput DeserializeSparkStatementOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             int executionCount = default;
             Optional<object> data = default;
@@ -23,17 +27,17 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Optional<IReadOnlyList<string>> traceback = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("execution_count"))
+                if (property.NameEquals("execution_count"u8))
                 {
                     executionCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("data"))
+                if (property.NameEquals("data"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +47,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     data = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("ename"))
+                if (property.NameEquals("ename"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     ename = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("evalue"))
+                if (property.NameEquals("evalue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +67,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     evalue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("traceback"))
+                if (property.NameEquals("traceback"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

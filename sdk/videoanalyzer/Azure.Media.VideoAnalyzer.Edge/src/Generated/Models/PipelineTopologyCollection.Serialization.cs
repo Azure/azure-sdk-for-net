@@ -18,7 +18,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
@@ -28,7 +28,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             if (Optional.IsDefined(ContinuationToken))
             {
-                writer.WritePropertyName("@continuationToken");
+                writer.WritePropertyName("@continuationToken"u8);
                 writer.WriteStringValue(ContinuationToken);
             }
             writer.WriteEndObject();
@@ -36,11 +36,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static PipelineTopologyCollection DeserializePipelineTopologyCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<PipelineTopology>> value = default;
             Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("@continuationToken"))
+                if (property.NameEquals("@continuationToken"u8))
                 {
                     continuationToken = property.Value.GetString();
                     continue;

@@ -16,23 +16,23 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("validationSettings");
+            writer.WritePropertyName("validationSettings"u8);
             writer.WriteObjectValue(ValidationSettings);
-            writer.WritePropertyName("framingSettings");
+            writer.WritePropertyName("framingSettings"u8);
             writer.WriteObjectValue(FramingSettings);
-            writer.WritePropertyName("envelopeSettings");
+            writer.WritePropertyName("envelopeSettings"u8);
             writer.WriteObjectValue(EnvelopeSettings);
-            writer.WritePropertyName("acknowledgementSettings");
+            writer.WritePropertyName("acknowledgementSettings"u8);
             writer.WriteObjectValue(AcknowledgementSettings);
-            writer.WritePropertyName("messageFilter");
+            writer.WritePropertyName("messageFilter"u8);
             writer.WriteObjectValue(MessageFilter);
-            writer.WritePropertyName("securitySettings");
+            writer.WritePropertyName("securitySettings"u8);
             writer.WriteObjectValue(SecuritySettings);
-            writer.WritePropertyName("processingSettings");
+            writer.WritePropertyName("processingSettings"u8);
             writer.WriteObjectValue(ProcessingSettings);
             if (Optional.IsCollectionDefined(EnvelopeOverrides))
             {
-                writer.WritePropertyName("envelopeOverrides");
+                writer.WritePropertyName("envelopeOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in EnvelopeOverrides)
                 {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
             if (Optional.IsCollectionDefined(ValidationOverrides))
             {
-                writer.WritePropertyName("validationOverrides");
+                writer.WritePropertyName("validationOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in ValidationOverrides)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
             if (Optional.IsCollectionDefined(MessageFilterList))
             {
-                writer.WritePropertyName("messageFilterList");
+                writer.WritePropertyName("messageFilterList"u8);
                 writer.WriteStartArray();
                 foreach (var item in MessageFilterList)
                 {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("schemaReferences");
+            writer.WritePropertyName("schemaReferences"u8);
             writer.WriteStartArray();
             foreach (var item in SchemaReferences)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(X12DelimiterOverrides))
             {
-                writer.WritePropertyName("x12DelimiterOverrides");
+                writer.WritePropertyName("x12DelimiterOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in X12DelimiterOverrides)
                 {
@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static X12ProtocolSettings DeserializeX12ProtocolSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             X12ValidationSettings validationSettings = default;
             X12FramingSettings framingSettings = default;
             X12EnvelopeSettings envelopeSettings = default;
@@ -96,42 +100,42 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<IList<X12DelimiterOverrides>> x12DelimiterOverrides = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("validationSettings"))
+                if (property.NameEquals("validationSettings"u8))
                 {
                     validationSettings = X12ValidationSettings.DeserializeX12ValidationSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("framingSettings"))
+                if (property.NameEquals("framingSettings"u8))
                 {
                     framingSettings = X12FramingSettings.DeserializeX12FramingSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("envelopeSettings"))
+                if (property.NameEquals("envelopeSettings"u8))
                 {
                     envelopeSettings = X12EnvelopeSettings.DeserializeX12EnvelopeSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("acknowledgementSettings"))
+                if (property.NameEquals("acknowledgementSettings"u8))
                 {
                     acknowledgementSettings = X12AcknowledgementSettings.DeserializeX12AcknowledgementSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("messageFilter"))
+                if (property.NameEquals("messageFilter"u8))
                 {
                     messageFilter = X12MessageFilter.DeserializeX12MessageFilter(property.Value);
                     continue;
                 }
-                if (property.NameEquals("securitySettings"))
+                if (property.NameEquals("securitySettings"u8))
                 {
                     securitySettings = X12SecuritySettings.DeserializeX12SecuritySettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("processingSettings"))
+                if (property.NameEquals("processingSettings"u8))
                 {
                     processingSettings = X12ProcessingSettings.DeserializeX12ProcessingSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("envelopeOverrides"))
+                if (property.NameEquals("envelopeOverrides"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -146,7 +150,7 @@ namespace Azure.ResourceManager.Logic.Models
                     envelopeOverrides = array;
                     continue;
                 }
-                if (property.NameEquals("validationOverrides"))
+                if (property.NameEquals("validationOverrides"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -161,7 +165,7 @@ namespace Azure.ResourceManager.Logic.Models
                     validationOverrides = array;
                     continue;
                 }
-                if (property.NameEquals("messageFilterList"))
+                if (property.NameEquals("messageFilterList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -176,7 +180,7 @@ namespace Azure.ResourceManager.Logic.Models
                     messageFilterList = array;
                     continue;
                 }
-                if (property.NameEquals("schemaReferences"))
+                if (property.NameEquals("schemaReferences"u8))
                 {
                     List<X12SchemaReference> array = new List<X12SchemaReference>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -186,7 +190,7 @@ namespace Azure.ResourceManager.Logic.Models
                     schemaReferences = array;
                     continue;
                 }
-                if (property.NameEquals("x12DelimiterOverrides"))
+                if (property.NameEquals("x12DelimiterOverrides"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

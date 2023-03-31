@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FilterData))
             {
-                writer.WritePropertyName("filterData");
+                writer.WritePropertyName("filterData"u8);
                 writer.WriteStringValue(FilterData);
             }
             if (Optional.IsCollectionDefined(LinkConnectionNames))
             {
-                writer.WritePropertyName("linkConnectionNames");
+                writer.WritePropertyName("linkConnectionNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in LinkConnectionNames)
                 {

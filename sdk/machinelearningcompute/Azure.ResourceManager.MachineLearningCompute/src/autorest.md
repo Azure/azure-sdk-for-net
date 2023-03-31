@@ -5,6 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
+generate-model-factory: false
 csharp: true
 library-name: MachineLearningCompute
 namespace: Azure.ResourceManager.MachineLearningCompute

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridData
 {
-    /// <summary> A class representing the HybridDataPublicKey data model. </summary>
+    /// <summary>
+    /// A class representing the HybridDataPublicKey data model.
+    /// Public key
+    /// </summary>
     public partial class HybridDataPublicKeyData : ResourceData
     {
         /// <summary> Initializes a new instance of HybridDataPublicKeyData. </summary>

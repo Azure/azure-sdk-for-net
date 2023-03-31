@@ -14,11 +14,15 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static QueryAnalysisValidationResult DeserializeQueryAnalysisValidationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<QueryExecutionResult> queryResults = default;
             Optional<ValidationError> validationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("queryResults"))
+                if (property.NameEquals("queryResults"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     queryResults = QueryExecutionResult.DeserializeQueryExecutionResult(property.Value);
                     continue;
                 }
-                if (property.NameEquals("validationErrors"))
+                if (property.NameEquals("validationErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

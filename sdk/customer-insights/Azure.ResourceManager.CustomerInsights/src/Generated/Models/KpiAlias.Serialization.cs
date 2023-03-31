@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("aliasName");
+            writer.WritePropertyName("aliasName"u8);
             writer.WriteStringValue(AliasName);
-            writer.WritePropertyName("expression");
+            writer.WritePropertyName("expression"u8);
             writer.WriteStringValue(Expression);
             writer.WriteEndObject();
         }
 
         internal static KpiAlias DeserializeKpiAlias(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string aliasName = default;
             string expression = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("aliasName"))
+                if (property.NameEquals("aliasName"u8))
                 {
                     aliasName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expression"))
+                if (property.NameEquals("expression"u8))
                 {
                     expression = property.Value.GetString();
                     continue;

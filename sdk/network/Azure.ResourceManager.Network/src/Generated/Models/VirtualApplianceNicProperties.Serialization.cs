@@ -14,22 +14,26 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VirtualApplianceNicProperties DeserializeVirtualApplianceNicProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> publicIPAddress = default;
             Optional<string> privateIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publicIpAddress"))
+                if (property.NameEquals("publicIpAddress"u8))
                 {
                     publicIPAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateIpAddress"))
+                if (property.NameEquals("privateIpAddress"u8))
                 {
                     privateIPAddress = property.Value.GetString();
                     continue;

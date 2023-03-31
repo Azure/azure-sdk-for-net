@@ -19,27 +19,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(ExternalId))
             {
-                writer.WritePropertyName("externalId");
+                writer.WritePropertyName("externalId"u8);
                 writer.WriteStringValue(ExternalId);
             }
             if (Optional.IsDefined(SourceName))
             {
-                writer.WritePropertyName("sourceName");
+                writer.WritePropertyName("sourceName"u8);
                 writer.WriteStringValue(SourceName);
             }
             if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("url");
+                writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(Hashes))
             {
-                writer.WritePropertyName("hashes");
+                writer.WritePropertyName("hashes"u8);
                 writer.WriteStartObject();
                 foreach (var item in Hashes)
                 {
@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static ThreatIntelligenceExternalReference DeserializeThreatIntelligenceExternalReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<string> externalId = default;
             Optional<string> sourceName = default;
@@ -60,22 +64,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<IDictionary<string, string>> hashes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("externalId"))
+                if (property.NameEquals("externalId"u8))
                 {
                     externalId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceName"))
+                if (property.NameEquals("sourceName"u8))
                 {
                     sourceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +89,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     url = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hashes"))
+                if (property.NameEquals("hashes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

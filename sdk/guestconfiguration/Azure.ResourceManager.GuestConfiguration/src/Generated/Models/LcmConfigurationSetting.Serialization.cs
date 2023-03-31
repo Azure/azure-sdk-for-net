@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     {
         internal static LcmConfigurationSetting DeserializeLcmConfigurationSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LcmConfigurationMode> configurationMode = default;
             Optional<bool> allowModuleOverwrite = default;
             Optional<ActionAfterReboot> actionAfterReboot = default;
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Optional<float> configurationModeFrequencyMins = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("configurationMode"))
+                if (property.NameEquals("configurationMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +36,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     configurationMode = new LcmConfigurationMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("allowModuleOverwrite"))
+                if (property.NameEquals("allowModuleOverwrite"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     allowModuleOverwrite = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("actionAfterReboot"))
+                if (property.NameEquals("actionAfterReboot"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     actionAfterReboot = new ActionAfterReboot(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("refreshFrequencyMins"))
+                if (property.NameEquals("refreshFrequencyMins"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +66,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     refreshFrequencyMins = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("rebootIfNeeded"))
+                if (property.NameEquals("rebootIfNeeded"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     rebootIfNeeded = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("configurationModeFrequencyMins"))
+                if (property.NameEquals("configurationModeFrequencyMins"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

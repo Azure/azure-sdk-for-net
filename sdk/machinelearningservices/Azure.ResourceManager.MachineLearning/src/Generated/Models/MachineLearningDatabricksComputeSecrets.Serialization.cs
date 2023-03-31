@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningDatabricksComputeSecrets DeserializeMachineLearningDatabricksComputeSecrets(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> databricksAccessToken = default;
             ComputeType computeType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("databricksAccessToken"))
+                if (property.NameEquals("databricksAccessToken"u8))
                 {
                     databricksAccessToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("computeType"))
+                if (property.NameEquals("computeType"u8))
                 {
                     computeType = new ComputeType(property.Value.GetString());
                     continue;

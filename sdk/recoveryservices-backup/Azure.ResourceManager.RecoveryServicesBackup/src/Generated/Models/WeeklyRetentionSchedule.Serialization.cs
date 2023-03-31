@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DaysOfTheWeek))
             {
-                writer.WritePropertyName("daysOfTheWeek");
+                writer.WritePropertyName("daysOfTheWeek"u8);
                 writer.WriteStartArray();
                 foreach (var item in DaysOfTheWeek)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsCollectionDefined(RetentionTimes))
             {
-                writer.WritePropertyName("retentionTimes");
+                writer.WritePropertyName("retentionTimes"u8);
                 writer.WriteStartArray();
                 foreach (var item in RetentionTimes)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(RetentionDuration))
             {
-                writer.WritePropertyName("retentionDuration");
+                writer.WritePropertyName("retentionDuration"u8);
                 writer.WriteObjectValue(RetentionDuration);
             }
             writer.WriteEndObject();
@@ -47,27 +47,31 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WeeklyRetentionSchedule DeserializeWeeklyRetentionSchedule(JsonElement element)
         {
-            Optional<IList<DayOfWeek>> daysOfTheWeek = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<BackupDayOfWeek>> daysOfTheWeek = default;
             Optional<IList<DateTimeOffset>> retentionTimes = default;
             Optional<RetentionDuration> retentionDuration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("daysOfTheWeek"))
+                if (property.NameEquals("daysOfTheWeek"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DayOfWeek> array = new List<DayOfWeek>();
+                    List<BackupDayOfWeek> array = new List<BackupDayOfWeek>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToDayOfWeek());
+                        array.Add(item.GetString().ToBackupDayOfWeek());
                     }
                     daysOfTheWeek = array;
                     continue;
                 }
-                if (property.NameEquals("retentionTimes"))
+                if (property.NameEquals("retentionTimes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     retentionTimes = array;
                     continue;
                 }
-                if (property.NameEquals("retentionDuration"))
+                if (property.NameEquals("retentionDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

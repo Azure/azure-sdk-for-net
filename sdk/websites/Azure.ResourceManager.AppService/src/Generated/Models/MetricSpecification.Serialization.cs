@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static MetricSpecification DeserializeMetricSpecification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> displayName = default;
             Optional<string> displayDescription = default;
@@ -34,32 +38,32 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IReadOnlyList<string>> supportedAggregationTypes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayDescription"))
+                if (property.NameEquals("displayDescription"u8))
                 {
                     displayDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     unit = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("aggregationType"))
+                if (property.NameEquals("aggregationType"u8))
                 {
                     aggregationType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportsInstanceLevelAggregation"))
+                if (property.NameEquals("supportsInstanceLevelAggregation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +73,7 @@ namespace Azure.ResourceManager.AppService.Models
                     supportsInstanceLevelAggregation = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableRegionalMdmAccount"))
+                if (property.NameEquals("enableRegionalMdmAccount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,22 +83,22 @@ namespace Azure.ResourceManager.AppService.Models
                     enableRegionalMdmAccount = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("sourceMdmAccount"))
+                if (property.NameEquals("sourceMdmAccount"u8))
                 {
                     sourceMdmAccount = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceMdmNamespace"))
+                if (property.NameEquals("sourceMdmNamespace"u8))
                 {
                     sourceMdmNamespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricFilterPattern"))
+                if (property.NameEquals("metricFilterPattern"u8))
                 {
                     metricFilterPattern = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fillGapWithZero"))
+                if (property.NameEquals("fillGapWithZero"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.AppService.Models
                     fillGapWithZero = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isInternal"))
+                if (property.NameEquals("isInternal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
                     isInternal = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("dimensions"))
+                if (property.NameEquals("dimensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,12 +133,12 @@ namespace Azure.ResourceManager.AppService.Models
                     dimensions = array;
                     continue;
                 }
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
                     category = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("availabilities"))
+                if (property.NameEquals("availabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -149,7 +153,7 @@ namespace Azure.ResourceManager.AppService.Models
                     availabilities = array;
                     continue;
                 }
-                if (property.NameEquals("supportedTimeGrainTypes"))
+                if (property.NameEquals("supportedTimeGrainTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -164,7 +168,7 @@ namespace Azure.ResourceManager.AppService.Models
                     supportedTimeGrainTypes = array;
                     continue;
                 }
-                if (property.NameEquals("supportedAggregationTypes"))
+                if (property.NameEquals("supportedAggregationTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

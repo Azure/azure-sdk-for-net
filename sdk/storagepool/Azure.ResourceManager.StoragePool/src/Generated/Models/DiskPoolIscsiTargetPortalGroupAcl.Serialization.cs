@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.StoragePool.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("initiatorIqn");
+            writer.WritePropertyName("initiatorIqn"u8);
             writer.WriteStringValue(InitiatorIqn);
-            writer.WritePropertyName("mappedLuns");
+            writer.WritePropertyName("mappedLuns"u8);
             writer.WriteStartArray();
             foreach (var item in MappedLuns)
             {
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.StoragePool.Models
 
         internal static DiskPoolIscsiTargetPortalGroupAcl DeserializeDiskPoolIscsiTargetPortalGroupAcl(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string initiatorIqn = default;
             IList<string> mappedLuns = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("initiatorIqn"))
+                if (property.NameEquals("initiatorIqn"u8))
                 {
                     initiatorIqn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mappedLuns"))
+                if (property.NameEquals("mappedLuns"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())

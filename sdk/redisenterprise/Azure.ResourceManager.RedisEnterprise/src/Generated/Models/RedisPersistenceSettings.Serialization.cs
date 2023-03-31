@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsAofEnabled))
             {
-                writer.WritePropertyName("aofEnabled");
+                writer.WritePropertyName("aofEnabled"u8);
                 writer.WriteBooleanValue(IsAofEnabled.Value);
             }
             if (Optional.IsDefined(IsRdbEnabled))
             {
-                writer.WritePropertyName("rdbEnabled");
+                writer.WritePropertyName("rdbEnabled"u8);
                 writer.WriteBooleanValue(IsRdbEnabled.Value);
             }
             if (Optional.IsDefined(AofFrequency))
             {
-                writer.WritePropertyName("aofFrequency");
+                writer.WritePropertyName("aofFrequency"u8);
                 writer.WriteStringValue(AofFrequency.Value.ToString());
             }
             if (Optional.IsDefined(RdbFrequency))
             {
-                writer.WritePropertyName("rdbFrequency");
+                writer.WritePropertyName("rdbFrequency"u8);
                 writer.WriteStringValue(RdbFrequency.Value.ToString());
             }
             writer.WriteEndObject();
@@ -40,13 +40,17 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         internal static RedisPersistenceSettings DeserializeRedisPersistenceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> aofEnabled = default;
             Optional<bool> rdbEnabled = default;
             Optional<PersistenceSettingAofFrequency> aofFrequency = default;
             Optional<PersistenceSettingRdbFrequency> rdbFrequency = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("aofEnabled"))
+                if (property.NameEquals("aofEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     aofEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("rdbEnabled"))
+                if (property.NameEquals("rdbEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     rdbEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("aofFrequency"))
+                if (property.NameEquals("aofFrequency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     aofFrequency = new PersistenceSettingAofFrequency(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rdbFrequency"))
+                if (property.NameEquals("rdbFrequency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

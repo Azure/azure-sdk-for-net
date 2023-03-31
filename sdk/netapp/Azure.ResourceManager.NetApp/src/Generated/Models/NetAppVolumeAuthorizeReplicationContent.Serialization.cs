@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RemoteVolumeResourceId))
             {
-                writer.WritePropertyName("remoteVolumeResourceId");
+                writer.WritePropertyName("remoteVolumeResourceId"u8);
                 writer.WriteStringValue(RemoteVolumeResourceId);
             }
             writer.WriteEndObject();

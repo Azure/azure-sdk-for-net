@@ -15,6 +15,10 @@ namespace Azure.Security.KeyVault.Storage.Models
     {
         internal static SasDefinitionBundle DeserializeSasDefinitionBundle(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> sid = default;
             Optional<string> templateUri = default;
@@ -24,22 +28,22 @@ namespace Azure.Security.KeyVault.Storage.Models
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sid"))
+                if (property.NameEquals("sid"u8))
                 {
                     sid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("templateUri"))
+                if (property.NameEquals("templateUri"u8))
                 {
                     templateUri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sasType"))
+                if (property.NameEquals("sasType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,12 +53,12 @@ namespace Azure.Security.KeyVault.Storage.Models
                     sasType = new SasTokenType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("validityPeriod"))
+                if (property.NameEquals("validityPeriod"u8))
                 {
                     validityPeriod = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("attributes"))
+                if (property.NameEquals("attributes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +68,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     attributes = SasDefinitionAttributes.DeserializeSasDefinitionAttributes(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateNewCloudServiceWithMultipleRoles()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-04-04/examples/CloudService_Create_WithMultiRole.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudService_Create_WithMultiRole.json
             // this example is just showing the usage of "CloudServices_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,6 +77,90 @@ Capacity = 1,
 {
 new CloudServiceLoadBalancerConfiguration("contosolb",new LoadBalancerFrontendIPConfiguration[]
 {
+new LoadBalancerFrontendIPConfiguration("contosofe")
+{
+PublicIPAddressId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/contosopublicip"),
+}
+})
+},
+                },
+            };
+            ArmOperation<CloudServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, cloudServiceName, data);
+            CloudServiceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CloudServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Create New Cloud Service with Multiple Roles in a specific availability zone
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_CreateNewCloudServiceWithMultipleRolesInASpecificAvailabilityZone()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudService_Create_WithMultiRole_WithZones.json
+            // this example is just showing the usage of "CloudServices_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "ConstosoRG";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this CloudServiceResource
+            CloudServiceCollection collection = resourceGroupResource.GetCloudServices();
+
+            // invoke the operation
+            string cloudServiceName = "{cs-name}";
+            CloudServiceData data = new CloudServiceData(new AzureLocation("westus"))
+            {
+                Zones =
+{
+"1"
+},
+                PackageUri = new Uri("{PackageUrl}"),
+                Configuration = "{ServiceConfiguration}",
+                UpgradeMode = CloudServiceUpgradeMode.Auto,
+                Roles =
+{
+new CloudServiceRoleProfileProperties()
+{
+Name = "ContosoFrontend",
+Sku = new CloudServiceRoleSku()
+{
+Name = "Standard_D1_v2",
+Tier = "Standard",
+Capacity = 1,
+},
+},new CloudServiceRoleProfileProperties()
+{
+Name = "ContosoBackend",
+Sku = new CloudServiceRoleSku()
+{
+Name = "Standard_D1_v2",
+Tier = "Standard",
+Capacity = 1,
+},
+}
+},
+                NetworkProfile = new CloudServiceNetworkProfile()
+                {
+                    LoadBalancerConfigurations =
+{
+new CloudServiceLoadBalancerConfiguration("contosolb",new LoadBalancerFrontendIPConfiguration[]
+{
+new LoadBalancerFrontendIPConfiguration("contosofe")
+{
+PublicIPAddressId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/contosopublicip"),
+}
 })
 },
                 },
@@ -96,7 +180,7 @@ new CloudServiceLoadBalancerConfiguration("contosolb",new LoadBalancerFrontendIP
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateNewCloudServiceWithSingleRole()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-04-04/examples/CloudService_Create_WithSingleRole.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudService_Create_WithSingleRole.json
             // this example is just showing the usage of "CloudServices_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -140,6 +224,10 @@ Capacity = 1,
 {
 new CloudServiceLoadBalancerConfiguration("myLoadBalancer",new LoadBalancerFrontendIPConfiguration[]
 {
+new LoadBalancerFrontendIPConfiguration("myfe")
+{
+PublicIPAddressId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/myPublicIP"),
+}
 })
 },
                 },
@@ -159,7 +247,7 @@ new CloudServiceLoadBalancerConfiguration("myLoadBalancer",new LoadBalancerFront
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateNewCloudServiceWithSingleRoleAndCertificateFromKeyVault()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-04-04/examples/CloudService_Create_WithSingleRoleAndCertificate.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudService_Create_WithSingleRoleAndCertificate.json
             // this example is just showing the usage of "CloudServices_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -217,6 +305,10 @@ CertificateUri = new Uri("https://{keyvault-name}.vault.azure.net:443/secrets/Co
 {
 new CloudServiceLoadBalancerConfiguration("contosolb",new LoadBalancerFrontendIPConfiguration[]
 {
+new LoadBalancerFrontendIPConfiguration("contosofe")
+{
+PublicIPAddressId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/contosopublicip"),
+}
 })
 },
                 },
@@ -236,7 +328,7 @@ new CloudServiceLoadBalancerConfiguration("contosolb",new LoadBalancerFrontendIP
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateNewCloudServiceWithSingleRoleAndRDPExtension()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-04-04/examples/CloudService_Create_WithSingleRoleAndRDP.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudService_Create_WithSingleRoleAndRDP.json
             // this example is just showing the usage of "CloudServices_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -280,6 +372,10 @@ Capacity = 1,
 {
 new CloudServiceLoadBalancerConfiguration("contosolb",new LoadBalancerFrontendIPConfiguration[]
 {
+new LoadBalancerFrontendIPConfiguration("contosofe")
+{
+PublicIPAddressId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/contosopublicip"),
+}
 })
 },
                 },
@@ -312,7 +408,7 @@ ProtectedSettings = BinaryData.FromString("<PrivateConfig><Password>{password}</
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetCloudServiceWithMultipleRolesAndRDPExtension()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-04-04/examples/CloudService_Get_WithMultiRoleAndRDP.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudService_Get_WithMultiRoleAndRDP.json
             // this example is just showing the usage of "CloudServices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -346,7 +442,7 @@ ProtectedSettings = BinaryData.FromString("<PrivateConfig><Password>{password}</
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetCloudServiceWithMultipleRolesAndRDPExtension()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-04-04/examples/CloudService_Get_WithMultiRoleAndRDP.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudService_Get_WithMultiRoleAndRDP.json
             // this example is just showing the usage of "CloudServices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -376,7 +472,7 @@ ProtectedSettings = BinaryData.FromString("<PrivateConfig><Password>{password}</
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListCloudServicesInAResourceGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-04-04/examples/CloudService_List_ByResourceGroup.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudService_List_ByResourceGroup.json
             // this example is just showing the usage of "CloudServices_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

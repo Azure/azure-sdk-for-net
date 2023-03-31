@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static GenerateExpressRoutePortsLoaResult DeserializeGenerateExpressRoutePortsLoaResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> encodedContent = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("encodedContent"))
+                if (property.NameEquals("encodedContent"u8))
                 {
                     encodedContent = property.Value.GetString();
                     continue;

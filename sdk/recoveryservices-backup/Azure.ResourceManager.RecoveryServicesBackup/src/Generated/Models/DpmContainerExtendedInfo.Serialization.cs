@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LastRefreshedOn))
             {
-                writer.WritePropertyName("lastRefreshedAt");
+                writer.WritePropertyName("lastRefreshedAt"u8);
                 writer.WriteStringValue(LastRefreshedOn.Value, "O");
             }
             writer.WriteEndObject();
@@ -26,10 +26,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static DpmContainerExtendedInfo DeserializeDpmContainerExtendedInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> lastRefreshedAt = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastRefreshedAt"))
+                if (property.NameEquals("lastRefreshedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

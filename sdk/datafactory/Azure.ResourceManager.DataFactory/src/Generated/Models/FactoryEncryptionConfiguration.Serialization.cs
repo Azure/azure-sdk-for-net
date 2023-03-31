@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyName");
+            writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName);
-            writer.WritePropertyName("vaultBaseUrl");
+            writer.WritePropertyName("vaultBaseUrl"u8);
             writer.WriteStringValue(VaultBaseUri.AbsoluteUri);
             if (Optional.IsDefined(KeyVersion))
             {
-                writer.WritePropertyName("keyVersion");
+                writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
             writer.WriteEndObject();
@@ -35,28 +35,32 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FactoryEncryptionConfiguration DeserializeFactoryEncryptionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string keyName = default;
             Uri vaultBaseUrl = default;
             Optional<string> keyVersion = default;
             Optional<CmkIdentityDefinition> identity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyName"))
+                if (property.NameEquals("keyName"u8))
                 {
                     keyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vaultBaseUrl"))
+                if (property.NameEquals("vaultBaseUrl"u8))
                 {
                     vaultBaseUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyVersion"))
+                if (property.NameEquals("keyVersion"u8))
                 {
                     keyVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

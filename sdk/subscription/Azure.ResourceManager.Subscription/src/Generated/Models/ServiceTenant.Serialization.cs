@@ -15,11 +15,15 @@ namespace Azure.ResourceManager.Subscription.Models
     {
         internal static ServiceTenant DeserializeServiceTenant(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> tenantId = default;
             Optional<string> tenantName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("tenantName"))
+                if (property.NameEquals("tenantName"u8))
                 {
                     tenantName = property.Value.GetString();
                     continue;

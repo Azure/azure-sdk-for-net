@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static ServerEndpointSyncActivityStatus DeserializeServerEndpointSyncActivityStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> timestamp = default;
             Optional<long> perItemErrorCount = default;
             Optional<long> appliedItemCount = default;
@@ -25,7 +29,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<int> sessionMinutesRemaining = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +39,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("perItemErrorCount"))
+                if (property.NameEquals("perItemErrorCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     perItemErrorCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("appliedItemCount"))
+                if (property.NameEquals("appliedItemCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     appliedItemCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalItemCount"))
+                if (property.NameEquals("totalItemCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +69,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     totalItemCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("appliedBytes"))
+                if (property.NameEquals("appliedBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +79,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     appliedBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalBytes"))
+                if (property.NameEquals("totalBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +89,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     totalBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("syncMode"))
+                if (property.NameEquals("syncMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,7 +99,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     syncMode = new ServerEndpointSyncMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sessionMinutesRemaining"))
+                if (property.NameEquals("sessionMinutesRemaining"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

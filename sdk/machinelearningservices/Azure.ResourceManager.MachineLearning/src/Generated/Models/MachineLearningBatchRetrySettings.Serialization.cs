@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxRetries))
             {
-                writer.WritePropertyName("maxRetries");
+                writer.WritePropertyName("maxRetries"u8);
                 writer.WriteNumberValue(MaxRetries.Value);
             }
             if (Optional.IsDefined(Timeout))
             {
-                writer.WritePropertyName("timeout");
+                writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
             writer.WriteEndObject();
@@ -31,11 +31,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningBatchRetrySettings DeserializeMachineLearningBatchRetrySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxRetries = default;
             Optional<TimeSpan> timeout = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxRetries"))
+                if (property.NameEquals("maxRetries"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     maxRetries = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("timeout"))
+                if (property.NameEquals("timeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -16,7 +16,7 @@ namespace Azure.Maps.Search.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("geometries");
+            writer.WritePropertyName("geometries"u8);
             writer.WriteStartArray();
             foreach (var item in Geometries)
             {
@@ -28,10 +28,14 @@ namespace Azure.Maps.Search.Models
 
         internal static GeoJsonGeometryCollectionData DeserializeGeoJsonGeometryCollectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<GeoJsonGeometry> geometries = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("geometries"))
+                if (property.NameEquals("geometries"u8))
                 {
                     List<GeoJsonGeometry> array = new List<GeoJsonGeometry>();
                     foreach (var item in property.Value.EnumerateArray())

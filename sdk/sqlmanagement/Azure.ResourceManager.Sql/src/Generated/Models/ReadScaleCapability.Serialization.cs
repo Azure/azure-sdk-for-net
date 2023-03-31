@@ -14,12 +14,16 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ReadScaleCapability DeserializeReadScaleCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxNumberOfReplicas = default;
             Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxNumberOfReplicas"))
+                if (property.NameEquals("maxNumberOfReplicas"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Models
                     maxNumberOfReplicas = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +43,7 @@ namespace Azure.ResourceManager.Sql.Models
                     status = property.Value.GetString().ToSqlCapabilityStatus();
                     continue;
                 }
-                if (property.NameEquals("reason"))
+                if (property.NameEquals("reason"u8))
                 {
                     reason = property.Value.GetString();
                     continue;

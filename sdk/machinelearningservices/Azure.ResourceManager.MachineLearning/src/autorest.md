@@ -5,6 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
+generate-model-factory: false
 library-name: MachineLearning
 namespace: Azure.ResourceManager.MachineLearning
 require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b32e1896f30e6ea155449cb49719a6286e32b961/specification/machinelearningservices/resource-manager/readme.md

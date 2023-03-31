@@ -17,12 +17,12 @@ namespace Azure.AI.FormRecognizer.Training
             writer.WriteStartObject();
             if (Optional.IsDefined(Prefix))
             {
-                writer.WritePropertyName("prefix");
+                writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
             if (Optional.IsDefined(IncludeSubfolders))
             {
-                writer.WritePropertyName("includeSubFolders");
+                writer.WritePropertyName("includeSubFolders"u8);
                 writer.WriteBooleanValue(IncludeSubfolders);
             }
             writer.WriteEndObject();

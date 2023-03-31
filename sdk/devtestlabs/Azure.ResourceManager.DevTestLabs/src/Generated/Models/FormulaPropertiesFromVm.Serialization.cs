@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LabVmId))
             {
-                writer.WritePropertyName("labVmId");
+                writer.WritePropertyName("labVmId"u8);
                 writer.WriteStringValue(LabVmId);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static FormulaPropertiesFromVm DeserializeFormulaPropertiesFromVm(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> labVmId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("labVmId"))
+                if (property.NameEquals("labVmId"u8))
                 {
                     labVmId = property.Value.GetString();
                     continue;

@@ -12,7 +12,10 @@ using Azure.ResourceManager.SecurityDevOps.Models;
 
 namespace Azure.ResourceManager.SecurityDevOps
 {
-    /// <summary> A class representing the GitHubConnector data model. </summary>
+    /// <summary>
+    /// A class representing the GitHubConnector data model.
+    /// Represents an ARM resource for /subscriptions/xxx/resourceGroups/xxx/providers/Microsoft.SecurityDevOps/gitHubConnectors.
+    /// </summary>
     public partial class GitHubConnectorData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of GitHubConnectorData. </summary>

@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsDefined(ImmutableSubscriptionId))
             {
-                writer.WritePropertyName("immutableSubscriptionId");
+                writer.WritePropertyName("immutableSubscriptionId"u8);
                 writer.WriteStringValue(ImmutableSubscriptionId);
             }
             if (Optional.IsDefined(ImmutableResourceId))
             {
-                writer.WritePropertyName("immutableResourceId");
+                writer.WritePropertyName("immutableResourceId"u8);
                 writer.WriteStringValue(ImmutableResourceId);
             }
             if (Optional.IsDefined(VnetTrafficTag))
             {
-                writer.WritePropertyName("vnetTrafficTag");
+                writer.WritePropertyName("vnetTrafficTag"u8);
                 writer.WriteStringValue(VnetTrafficTag);
             }
             writer.WriteEndObject();

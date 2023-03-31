@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.Synapse.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("key");
+            writer.WritePropertyName("key"u8);
             writer.WriteObjectValue(Key);
-            writer.WritePropertyName("authorizationType");
+            writer.WritePropertyName("authorizationType"u8);
             writer.WriteStringValue(AuthorizationType);
             writer.WriteEndObject();
         }
 
         internal static SynapseLinkedIntegrationRuntimeKeyAuthorization DeserializeSynapseLinkedIntegrationRuntimeKeyAuthorization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SynapseSecureString key = default;
             string authorizationType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = SynapseSecureString.DeserializeSynapseSecureString(property.Value);
                     continue;
                 }
-                if (property.NameEquals("authorizationType"))
+                if (property.NameEquals("authorizationType"u8))
                 {
                     authorizationType = property.Value.GetString();
                     continue;

@@ -18,21 +18,25 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Level))
             {
-                writer.WritePropertyName("level");
+                writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToSerialString());
             }
-            writer.WritePropertyName("sasUrl");
+            writer.WritePropertyName("sasUrl"u8);
             writer.WriteStringValue(SasUri.AbsoluteUri);
             writer.WriteEndObject();
         }
 
         internal static AppServiceTableStorageApplicationLogsConfig DeserializeAppServiceTableStorageApplicationLogsConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WebAppLogLevel> level = default;
             Uri sasUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("level"))
+                if (property.NameEquals("level"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
                     level = property.Value.GetString().ToWebAppLogLevel();
                     continue;
                 }
-                if (property.NameEquals("sasUrl"))
+                if (property.NameEquals("sasUrl"u8))
                 {
                     sasUrl = new Uri(property.Value.GetString());
                     continue;

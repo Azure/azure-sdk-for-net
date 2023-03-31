@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -44,6 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityKind.Server,
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
                 startTime: DateTime.UtcNow);
+            Assert.NotNull(activity);
             activity.Stop();
 
             var httpUrl = "https://www.foo.bar/search";
@@ -79,6 +78,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityKind.Server,
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
                 startTime: DateTime.UtcNow);
+            Assert.NotNull(activity);
 
             var httpResponseCode = httpStatusCode ?? "0";
             activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/search");
@@ -104,6 +104,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityKind.Server,
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
                 startTime: DateTime.UtcNow);
+            Assert.NotNull(activity);
 
             var httpResponseCode = httpStatusCode ?? "0";
             activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/search");

@@ -15,5 +15,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         [JsonPropertyName("authenticationContext")]
         [Required]
         public AuthenticationEventContext AuthenticationContext { get; set; }
+
+        /// <summary>Json constructor for desearilization</summary>
+        public TokenIssuanceStartData()
+        {
+        }
     }
 }

@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("connectionInfo");
+            writer.WritePropertyName("connectionInfo"u8);
             writer.WriteObjectValue(ConnectionInfo);
-            writer.WritePropertyName("selectedDatabases");
+            writer.WritePropertyName("selectedDatabases"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
             {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(EncryptedKeyForSecureFields))
             {
-                writer.WritePropertyName("encryptedKeyForSecureFields");
+                writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
             }
             writer.WriteEndObject();
@@ -35,17 +35,21 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static GetUserTablesSqlTaskInput DeserializeGetUserTablesSqlTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SqlConnectionInfo connectionInfo = default;
             IList<string> selectedDatabases = default;
             Optional<string> encryptedKeyForSecureFields = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectionInfo"))
+                if (property.NameEquals("connectionInfo"u8))
                 {
                     connectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("selectedDatabases"))
+                if (property.NameEquals("selectedDatabases"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     selectedDatabases = array;
                     continue;
                 }
-                if (property.NameEquals("encryptedKeyForSecureFields"))
+                if (property.NameEquals("encryptedKeyForSecureFields"u8))
                 {
                     encryptedKeyForSecureFields = property.Value.GetString();
                     continue;

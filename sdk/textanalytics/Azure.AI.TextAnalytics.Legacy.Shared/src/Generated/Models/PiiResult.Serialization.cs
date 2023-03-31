@@ -15,13 +15,17 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static PiiResult DeserializePiiResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<PiiDocumentEntities> documents = default;
             IReadOnlyList<DocumentError> errors = default;
             Optional<RequestStatistics> statistics = default;
             string modelVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("documents"))
+                if (property.NameEquals("documents"u8))
                 {
                     List<PiiDocumentEntities> array = new List<PiiDocumentEntities>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -31,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     documents = array;
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     List<DocumentError> array = new List<DocumentError>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -41,7 +45,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("statistics"))
+                if (property.NameEquals("statistics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     statistics = RequestStatistics.DeserializeRequestStatistics(property.Value);
                     continue;
                 }
-                if (property.NameEquals("modelVersion"))
+                if (property.NameEquals("modelVersion"u8))
                 {
                     modelVersion = property.Value.GetString();
                     continue;

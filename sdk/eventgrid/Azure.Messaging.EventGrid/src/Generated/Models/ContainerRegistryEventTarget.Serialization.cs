@@ -14,6 +14,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static ContainerRegistryEventTarget DeserializeContainerRegistryEventTarget(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> mediaType = default;
             Optional<long> size = default;
             Optional<string> digest = default;
@@ -23,12 +27,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> tag = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mediaType"))
+                if (property.NameEquals("mediaType"u8))
                 {
                     mediaType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("size"))
+                if (property.NameEquals("size"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,12 +42,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     size = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("digest"))
+                if (property.NameEquals("digest"u8))
                 {
                     digest = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("length"))
+                if (property.NameEquals("length"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,17 +57,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     length = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("repository"))
+                if (property.NameEquals("repository"u8))
                 {
                     repository = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     url = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tag"))
+                if (property.NameEquals("tag"u8))
                 {
                     tag = property.Value.GetString();
                     continue;

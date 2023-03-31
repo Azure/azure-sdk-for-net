@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("count");
+            writer.WritePropertyName("count"u8);
             writer.WriteNumberValue(Count);
-            writer.WritePropertyName("sku");
+            writer.WritePropertyName("sku"u8);
             writer.WriteStringValue(Sku.ToString());
             writer.WriteEndObject();
         }
 
         internal static ContainerGpuResourceInfo DeserializeContainerGpuResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int count = default;
             ContainerGpuSku sku = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     count = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     sku = new ContainerGpuSku(property.Value.GetString());
                     continue;

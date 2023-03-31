@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static LabCostSummaryProperties DeserializeLabCostSummaryProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> estimatedLabCost = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("estimatedLabCost"))
+                if (property.NameEquals("estimatedLabCost"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

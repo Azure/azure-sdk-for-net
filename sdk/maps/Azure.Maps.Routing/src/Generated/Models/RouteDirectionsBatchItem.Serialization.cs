@@ -14,11 +14,15 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteDirectionsBatchItem DeserializeRouteDirectionsBatchItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RouteDirectionsBatchItemResponse> response = default;
             Optional<int> statusCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("response"))
+                if (property.NameEquals("response"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +32,7 @@ namespace Azure.Maps.Routing.Models
                     response = RouteDirectionsBatchItemResponse.DeserializeRouteDirectionsBatchItemResponse(property.Value);
                     continue;
                 }
-                if (property.NameEquals("statusCode"))
+                if (property.NameEquals("statusCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

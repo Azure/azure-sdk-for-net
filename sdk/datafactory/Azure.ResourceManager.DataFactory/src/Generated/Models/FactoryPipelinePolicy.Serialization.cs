@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ElapsedTimeMetric))
             {
-                writer.WritePropertyName("elapsedTimeMetric");
+                writer.WritePropertyName("elapsedTimeMetric"u8);
                 writer.WriteObjectValue(ElapsedTimeMetric);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FactoryPipelinePolicy DeserializeFactoryPipelinePolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PipelineElapsedTimeMetricPolicy> elapsedTimeMetric = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("elapsedTimeMetric"))
+                if (property.NameEquals("elapsedTimeMetric"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

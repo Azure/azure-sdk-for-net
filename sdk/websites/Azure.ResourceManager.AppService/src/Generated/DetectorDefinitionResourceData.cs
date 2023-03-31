@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the DetectorDefinitionResource data model. </summary>
+    /// <summary>
+    /// A class representing the DetectorDefinitionResource data model.
+    /// ARM resource for a detector definition
+    /// </summary>
     public partial class DetectorDefinitionResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of DetectorDefinitionResourceData. </summary>

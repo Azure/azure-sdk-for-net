@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.Dynatrace.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EnvironmentId))
             {
-                writer.WritePropertyName("environmentId");
+                writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
             if (Optional.IsDefined(IngestionKey))
             {
-                writer.WritePropertyName("ingestionKey");
+                writer.WritePropertyName("ingestionKey"u8);
                 writer.WriteStringValue(IngestionKey);
             }
             if (Optional.IsDefined(LogsIngestionEndpoint))
             {
-                writer.WritePropertyName("logsIngestionEndpoint");
+                writer.WritePropertyName("logsIngestionEndpoint"u8);
                 writer.WriteStringValue(LogsIngestionEndpoint.AbsoluteUri);
             }
             if (Optional.IsDefined(LandingUri))
             {
-                writer.WritePropertyName("landingURL");
+                writer.WritePropertyName("landingURL"u8);
                 writer.WriteStringValue(LandingUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -41,23 +41,27 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceEnvironmentInfo DeserializeDynatraceEnvironmentInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> environmentId = default;
             Optional<string> ingestionKey = default;
             Optional<Uri> logsIngestionEndpoint = default;
             Optional<Uri> landingUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("environmentId"))
+                if (property.NameEquals("environmentId"u8))
                 {
                     environmentId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ingestionKey"))
+                if (property.NameEquals("ingestionKey"u8))
                 {
                     ingestionKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("logsIngestionEndpoint"))
+                if (property.NameEquals("logsIngestionEndpoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +71,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     logsIngestionEndpoint = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("landingURL"))
+                if (property.NameEquals("landingURL"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

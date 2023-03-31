@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,38 +29,42 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             if (Optional.IsDefined(DomainNameLabel))
             {
-                writer.WritePropertyName("domainNameLabel");
+                writer.WritePropertyName("domainNameLabel"u8);
                 writer.WriteStringValue(DomainNameLabel);
             }
             if (Optional.IsDefined(Fqdn))
             {
-                writer.WritePropertyName("fqdn");
+                writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
             if (Optional.IsDefined(PublicIPAllocationMethod))
             {
-                writer.WritePropertyName("publicIpAllocationMethod");
+                writer.WritePropertyName("publicIpAllocationMethod"u8);
                 writer.WriteStringValue(PublicIPAllocationMethod);
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
             if (Optional.IsDefined(Zones))
             {
-                writer.WritePropertyName("zones");
+                writer.WritePropertyName("zones"u8);
                 writer.WriteStringValue(Zones);
             }
-            writer.WritePropertyName("resourceType");
+            writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            writer.WritePropertyName("targetResourceName");
+            writer.WritePropertyName("targetResourceName"u8);
             writer.WriteStringValue(TargetResourceName);
             writer.WriteEndObject();
         }
 
         internal static PublicIPAddressResourceSettings DeserializePublicIPAddressResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             Optional<string> domainNameLabel = default;
             Optional<string> fqdn = default;
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             string targetResourceName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,37 +90,37 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("domainNameLabel"))
+                if (property.NameEquals("domainNameLabel"u8))
                 {
                     domainNameLabel = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fqdn"))
+                if (property.NameEquals("fqdn"u8))
                 {
                     fqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publicIpAllocationMethod"))
+                if (property.NameEquals("publicIpAllocationMethod"u8))
                 {
                     publicIPAllocationMethod = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     sku = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("zones"))
+                if (property.NameEquals("zones"u8))
                 {
                     zones = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourceName"))
+                if (property.NameEquals("targetResourceName"u8))
                 {
                     targetResourceName = property.Value.GetString();
                     continue;

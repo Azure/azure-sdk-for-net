@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ManagedRuleSets))
             {
-                writer.WritePropertyName("managedRuleSets");
+                writer.WritePropertyName("managedRuleSets"u8);
                 writer.WriteStartArray();
                 foreach (var item in ManagedRuleSets)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ManagedRuleSetList DeserializeManagedRuleSetList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<WafPolicyManagedRuleSet>> managedRuleSets = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("managedRuleSets"))
+                if (property.NameEquals("managedRuleSets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

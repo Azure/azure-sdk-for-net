@@ -18,20 +18,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("logPath");
+            writer.WritePropertyName("logPath"u8);
             writer.WriteObjectValue(LogPath);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AccessCredential))
             {
-                writer.WritePropertyName("accessCredential");
+                writer.WritePropertyName("accessCredential"u8);
                 writer.WriteObjectValue(AccessCredential);
             }
             if (Optional.IsDefined(LogRefreshInterval))
             {
-                writer.WritePropertyName("logRefreshInterval");
+                writer.WritePropertyName("logRefreshInterval"u8);
                 writer.WriteObjectValue(LogRefreshInterval);
             }
             writer.WriteEndObject();
@@ -40,23 +40,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SsisLogLocation DeserializeSsisLogLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             object logPath = default;
             SsisLogLocationType type = default;
             Optional<SsisAccessCredential> accessCredential = default;
             Optional<object> logRefreshInterval = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("logPath"))
+                if (property.NameEquals("logPath"u8))
                 {
                     logPath = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new SsisLogLocationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("accessCredential"))
+                        if (property0.NameEquals("accessCredential"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -75,7 +79,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             accessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("logRefreshInterval"))
+                        if (property0.NameEquals("logRefreshInterval"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

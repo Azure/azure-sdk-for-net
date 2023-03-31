@@ -15,16 +15,20 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static ContainerServiceEndpointDependency DeserializeContainerServiceEndpointDependency(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> domainName = default;
             Optional<IReadOnlyList<ContainerServiceEndpointDetail>> endpointDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("domainName"))
+                if (property.NameEquals("domainName"u8))
                 {
                     domainName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpointDetails"))
+                if (property.NameEquals("endpointDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

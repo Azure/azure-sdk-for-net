@@ -20,16 +20,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ContinuationToken))
             {
-                writer.WritePropertyName("continuationToken");
+                writer.WritePropertyName("continuationToken"u8);
                 writer.WriteStringValue(ContinuationToken);
             }
-            writer.WritePropertyName("lastUpdatedAfter");
+            writer.WritePropertyName("lastUpdatedAfter"u8);
             writer.WriteStringValue(LastUpdatedAfter, "O");
-            writer.WritePropertyName("lastUpdatedBefore");
+            writer.WritePropertyName("lastUpdatedBefore"u8);
             writer.WriteStringValue(LastUpdatedBefore, "O");
             if (Optional.IsCollectionDefined(Filters))
             {
-                writer.WritePropertyName("filters");
+                writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(OrderBy))
             {
-                writer.WritePropertyName("orderBy");
+                writer.WritePropertyName("orderBy"u8);
                 writer.WriteStartArray();
                 foreach (var item in OrderBy)
                 {

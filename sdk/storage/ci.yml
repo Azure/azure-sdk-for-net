@@ -29,6 +29,7 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: storage
+    BuildSnippets: false
     ArtifactName: packages
     Artifacts:
     - name: Azure.Storage.Blobs

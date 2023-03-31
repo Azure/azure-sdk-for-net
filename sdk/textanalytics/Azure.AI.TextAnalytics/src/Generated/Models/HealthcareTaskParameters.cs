@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="fhirVersion"> The FHIR Spec version that the result will use to format the fhirBundle. For additional information see https://www.hl7.org/fhir/overview.html. </param>
         /// <param name="documentType"> Document type that can be provided as input for Fhir Documents. Expect to have fhirVersion provided when used. Behavior of using None enum is the same as not using the documentType parameter. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
-        internal HealthcareTaskParameters(bool? loggingOptOut, string modelVersion, WellKnownFhirVersion? fhirVersion, HealthcareDocumentType? documentType, StringIndexType? stringIndexType) : base(loggingOptOut, modelVersion)
+        internal HealthcareTaskParameters(bool? loggingOptOut, string modelVersion, FhirVersion? fhirVersion, HealthcareDocumentType? documentType, StringIndexType? stringIndexType) : base(loggingOptOut, modelVersion)
         {
             FhirVersion = fhirVersion;
             DocumentType = documentType;
@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics.Models
         }
 
         /// <summary> The FHIR Spec version that the result will use to format the fhirBundle. For additional information see https://www.hl7.org/fhir/overview.html. </summary>
-        public WellKnownFhirVersion? FhirVersion { get; set; }
+        public FhirVersion? FhirVersion { get; set; }
         /// <summary> Document type that can be provided as input for Fhir Documents. Expect to have fhirVersion provided when used. Behavior of using None enum is the same as not using the documentType parameter. </summary>
         public HealthcareDocumentType? DocumentType { get; set; }
         /// <summary> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </summary>

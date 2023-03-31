@@ -18,39 +18,43 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FolderPath))
             {
-                writer.WritePropertyName("folderPath");
+                writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
             if (Optional.IsDefined(FileFilter))
             {
-                writer.WritePropertyName("fileFilter");
+                writer.WritePropertyName("fileFilter"u8);
                 writer.WriteStringValue(FileFilter);
             }
             if (Optional.IsDefined(HasHeader))
             {
-                writer.WritePropertyName("hasHeader");
+                writer.WritePropertyName("hasHeader"u8);
                 writer.WriteBooleanValue(HasHeader.Value);
             }
-            writer.WritePropertyName("errorManagement");
+            writer.WritePropertyName("errorManagement"u8);
             writer.WriteObjectValue(ErrorManagement);
-            writer.WritePropertyName("format");
+            writer.WritePropertyName("format"u8);
             writer.WriteObjectValue(Format);
-            writer.WritePropertyName("availability");
+            writer.WritePropertyName("availability"u8);
             writer.WriteObjectValue(Availability);
-            writer.WritePropertyName("structure");
+            writer.WritePropertyName("structure"u8);
             writer.WriteStartArray();
             foreach (var item in Structure)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("completeOperation");
+            writer.WritePropertyName("completeOperation"u8);
             writer.WriteObjectValue(CompleteOperation);
             writer.WriteEndObject();
         }
 
         internal static ConnectorMappingProperties DeserializeConnectorMappingProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> folderPath = default;
             Optional<string> fileFilter = default;
             Optional<bool> hasHeader = default;
@@ -61,17 +65,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             ConnectorMappingCompleteOperation completeOperation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("folderPath"))
+                if (property.NameEquals("folderPath"u8))
                 {
                     folderPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fileFilter"))
+                if (property.NameEquals("fileFilter"u8))
                 {
                     fileFilter = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hasHeader"))
+                if (property.NameEquals("hasHeader"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,22 +85,22 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     hasHeader = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("errorManagement"))
+                if (property.NameEquals("errorManagement"u8))
                 {
                     errorManagement = ConnectorMappingErrorManagement.DeserializeConnectorMappingErrorManagement(property.Value);
                     continue;
                 }
-                if (property.NameEquals("format"))
+                if (property.NameEquals("format"u8))
                 {
                     format = ConnectorMappingFormat.DeserializeConnectorMappingFormat(property.Value);
                     continue;
                 }
-                if (property.NameEquals("availability"))
+                if (property.NameEquals("availability"u8))
                 {
                     availability = ConnectorMappingAvailability.DeserializeConnectorMappingAvailability(property.Value);
                     continue;
                 }
-                if (property.NameEquals("structure"))
+                if (property.NameEquals("structure"u8))
                 {
                     List<ConnectorMappingStructure> array = new List<ConnectorMappingStructure>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -106,7 +110,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     structure = array;
                     continue;
                 }
-                if (property.NameEquals("completeOperation"))
+                if (property.NameEquals("completeOperation"u8))
                 {
                     completeOperation = ConnectorMappingCompleteOperation.DeserializeConnectorMappingCompleteOperation(property.Value);
                     continue;

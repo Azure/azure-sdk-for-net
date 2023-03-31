@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Category))
             {
-                writer.WritePropertyName("category");
+                writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(AdditionalMetadataId))
             {
-                writer.WritePropertyName("additionalMetadataId");
+                writer.WritePropertyName("additionalMetadataId"u8);
                 writer.WriteStringValue(AdditionalMetadataId);
             }
             writer.WriteEndObject();
@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static PolicyDefinitionGroup DeserializePolicyDefinitionGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> displayName = default;
             Optional<string> category = default;
@@ -49,27 +53,27 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> additionalMetadataId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
                     category = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("additionalMetadataId"))
+                if (property.NameEquals("additionalMetadataId"u8))
                 {
                     additionalMetadataId = property.Value.GetString();
                     continue;

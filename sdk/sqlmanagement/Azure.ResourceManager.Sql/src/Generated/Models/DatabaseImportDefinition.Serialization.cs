@@ -17,42 +17,42 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DatabaseName))
             {
-                writer.WritePropertyName("databaseName");
+                writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
             if (Optional.IsDefined(Edition))
             {
-                writer.WritePropertyName("edition");
+                writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition);
             }
             if (Optional.IsDefined(ServiceObjectiveName))
             {
-                writer.WritePropertyName("serviceObjectiveName");
+                writer.WritePropertyName("serviceObjectiveName"u8);
                 writer.WriteStringValue(ServiceObjectiveName);
             }
             if (Optional.IsDefined(MaxSizeBytes))
             {
-                writer.WritePropertyName("maxSizeBytes");
+                writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteStringValue(MaxSizeBytes);
             }
-            writer.WritePropertyName("storageKeyType");
+            writer.WritePropertyName("storageKeyType"u8);
             writer.WriteStringValue(StorageKeyType.ToString());
-            writer.WritePropertyName("storageKey");
+            writer.WritePropertyName("storageKey"u8);
             writer.WriteStringValue(StorageKey);
-            writer.WritePropertyName("storageUri");
+            writer.WritePropertyName("storageUri"u8);
             writer.WriteStringValue(StorageUri.AbsoluteUri);
-            writer.WritePropertyName("administratorLogin");
+            writer.WritePropertyName("administratorLogin"u8);
             writer.WriteStringValue(AdministratorLogin);
-            writer.WritePropertyName("administratorLoginPassword");
+            writer.WritePropertyName("administratorLoginPassword"u8);
             writer.WriteStringValue(AdministratorLoginPassword);
             if (Optional.IsDefined(AuthenticationType))
             {
-                writer.WritePropertyName("authenticationType");
+                writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType);
             }
             if (Optional.IsDefined(NetworkIsolation))
             {
-                writer.WritePropertyName("networkIsolation");
+                writer.WritePropertyName("networkIsolation"u8);
                 writer.WriteObjectValue(NetworkIsolation);
             }
             writer.WriteEndObject();

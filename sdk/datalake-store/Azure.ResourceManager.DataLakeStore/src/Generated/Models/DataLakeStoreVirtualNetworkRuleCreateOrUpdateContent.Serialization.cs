@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("subnetId");
+            writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
             writer.WriteEndObject();
             writer.WriteEndObject();

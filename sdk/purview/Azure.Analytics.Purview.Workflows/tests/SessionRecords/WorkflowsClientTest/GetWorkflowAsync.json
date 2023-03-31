@@ -1,0 +1,132 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://account-name.purview.azure.com/workflow/workflows/8af1ecae-16ee-4b2d-8972-00d611dd2f99?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-49c436cf5a8b734f8c87f2d2a6e16dd2-b9c6f420cce57644-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Workflows/1.0.0-alpha.20230113.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "692ee49eef4d75ae4a2fe90234457616",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "1780",
+        "Content-Type": "application/json",
+        "Date": "Fri, 13 Jan 2023 08:52:46 GMT",
+        "Server": "MicrosoftPurview",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "692ee49eef4d75ae4a2fe90234457616",
+        "x-ms-correlation-request-id": "9f9c0e33-1903-49ac-9c10-e5810e5efb59",
+        "x-ms-request-id": "e8c87d12-a80c-4a94-8181-da1ed1a6cce9"
+      },
+      "ResponseBody": {
+        "id": "8af1ecae-16ee-4b2d-8972-00d611dd2f99",
+        "triggers": [
+          {
+            "type": "when_term_deletion_is_requested",
+            "underGlossaryHierarchy": "/glossaries/20031e20-b4df-4a66-a61d-1b0716f3fa48"
+          }
+        ],
+        "createdTime": "2023-01-11T10:15:43.610476536Z",
+        "createdBy": "eece94d9-0619-4669-bb8a-d6ecec5220bc",
+        "lastUpdateTime": "2023-01-11T10:22:07.776206840Z",
+        "updatedBy": "eece94d9-0619-4669-bb8a-d6ecec5220bc",
+        "name": "Delete glossary term",
+        "isEnabled": true,
+        "description": "",
+        "actionDag": {
+          "actions": {
+            "Start and wait for an approval": {
+              "type": "Approval",
+              "inputs": {
+                "parameters": {
+                  "approvalType": "PendingOnAll",
+                  "title": "Approval Request for Delete Glossary Term",
+                  "assignedTo": [
+                    "eece94d9-0619-4669-bb8a-d6ecec5220bc"
+                  ]
+                }
+              },
+              "runAfter": {}
+            },
+            "Condition": {
+              "type": "If",
+              "expression": {
+                "and": [
+                  {
+                    "equals": [
+                      "@outputs(\u0027Start and wait for an approval\u0027)[\u0027body/outcome\u0027]",
+                      "Approved"
+                    ]
+                  }
+                ]
+              },
+              "actions": {
+                "Delete glossary term": {
+                  "type": "DeleteTerm",
+                  "runAfter": {}
+                },
+                "Send email notification": {
+                  "type": "EmailNotification",
+                  "inputs": {
+                    "parameters": {
+                      "emailSubject": "Glossary Term Delete - APPROVED",
+                      "emailMessage": "Your request for Glossary Term @{triggerBody()[\u0027request\u0027][\u0027term\u0027][\u0027name\u0027]} is approved.",
+                      "emailRecipients": [
+                        "@{triggerBody()[\u0027request\u0027][\u0027requestor\u0027]}"
+                      ]
+                    }
+                  },
+                  "runAfter": {
+                    "Delete glossary term": [
+                      "Succeeded"
+                    ]
+                  },
+                  "runtimeConfiguration": {
+                    "secureInput": false,
+                    "secureOutput": false
+                  }
+                }
+              },
+              "else": {
+                "actions": {
+                  "Send reject email notification": {
+                    "type": "EmailNotification",
+                    "inputs": {
+                      "parameters": {
+                        "emailSubject": "Glossary Term Delete - REJECTED",
+                        "emailMessage": "Your request for Glossary Term @{triggerBody()[\u0027request\u0027][\u0027term\u0027][\u0027name\u0027]} is rejected.",
+                        "emailRecipients": [
+                          "@{triggerBody()[\u0027request\u0027][\u0027requestor\u0027]}"
+                        ]
+                      }
+                    },
+                    "runAfter": {},
+                    "runtimeConfiguration": {
+                      "secureInput": false,
+                      "secureOutput": false
+                    }
+                  }
+                }
+              },
+              "runAfter": {
+                "Start and wait for an approval": [
+                  "Succeeded"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1491725724",
+    "WORKFLOW_ENDPOINT": "https://account-name.purview.azure.com"
+  }
+}

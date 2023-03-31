@@ -17,17 +17,17 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             if (Optional.IsDefined(InterToneTimeoutInSeconds))
             {
-                writer.WritePropertyName("interToneTimeoutInSeconds");
+                writer.WritePropertyName("interToneTimeoutInSeconds"u8);
                 writer.WriteNumberValue(InterToneTimeoutInSeconds.Value);
             }
             if (Optional.IsDefined(MaxTonesToCollect))
             {
-                writer.WritePropertyName("maxTonesToCollect");
+                writer.WritePropertyName("maxTonesToCollect"u8);
                 writer.WriteNumberValue(MaxTonesToCollect.Value);
             }
             if (Optional.IsCollectionDefined(StopTones))
             {
-                writer.WritePropertyName("stopTones");
+                writer.WritePropertyName("stopTones"u8);
                 writer.WriteStartArray();
                 foreach (var item in StopTones)
                 {

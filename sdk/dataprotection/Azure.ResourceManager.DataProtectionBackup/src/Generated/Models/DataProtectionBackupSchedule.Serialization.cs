@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("repeatingTimeIntervals");
+            writer.WritePropertyName("repeatingTimeIntervals"u8);
             writer.WriteStartArray();
             foreach (var item in RepeatingTimeIntervals)
             {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(TimeZone))
             {
-                writer.WritePropertyName("timeZone");
+                writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
             writer.WriteEndObject();
@@ -33,11 +33,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static DataProtectionBackupSchedule DeserializeDataProtectionBackupSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> repeatingTimeIntervals = default;
             Optional<string> timeZone = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("repeatingTimeIntervals"))
+                if (property.NameEquals("repeatingTimeIntervals"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -47,7 +51,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     repeatingTimeIntervals = array;
                     continue;
                 }
-                if (property.NameEquals("timeZone"))
+                if (property.NameEquals("timeZone"u8))
                 {
                     timeZone = property.Value.GetString();
                     continue;

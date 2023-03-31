@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InMageReplicationDetails DeserializeInMageReplicationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> activeSiteType = default;
             Optional<int> sourceVmCpuCount = default;
             Optional<int> sourceVmRamSizeInMB = default;
@@ -59,12 +63,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("activeSiteType"))
+                if (property.NameEquals("activeSiteType"u8))
                 {
                     activeSiteType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceVmCpuCount"))
+                if (property.NameEquals("sourceVmCpuCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     sourceVmCpuCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sourceVmRamSizeInMB"))
+                if (property.NameEquals("sourceVmRamSizeInMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     sourceVmRamSizeInMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("osDetails"))
+                if (property.NameEquals("osDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,27 +98,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     osDetails = OSDiskDetails.DeserializeOSDiskDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("protectionStage"))
+                if (property.NameEquals("protectionStage"u8))
                 {
                     protectionStage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmId"))
+                if (property.NameEquals("vmId"u8))
                 {
                     vmId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmProtectionState"))
+                if (property.NameEquals("vmProtectionState"u8))
                 {
                     vmProtectionState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmProtectionStateDescription"))
+                if (property.NameEquals("vmProtectionStateDescription"u8))
                 {
                     vmProtectionStateDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resyncDetails"))
+                if (property.NameEquals("resyncDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     resyncDetails = InitialReplicationDetails.DeserializeInitialReplicationDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("retentionWindowStart"))
+                if (property.NameEquals("retentionWindowStart"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -134,7 +138,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     retentionWindowStart = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("retentionWindowEnd"))
+                if (property.NameEquals("retentionWindowEnd"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -144,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     retentionWindowEnd = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("compressedDataRateInMB"))
+                if (property.NameEquals("compressedDataRateInMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     compressedDataRateInMB = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("uncompressedDataRateInMB"))
+                if (property.NameEquals("uncompressedDataRateInMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -164,7 +168,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     uncompressedDataRateInMB = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("rpoInSeconds"))
+                if (property.NameEquals("rpoInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -174,7 +178,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     rpoInSeconds = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("protectedDisks"))
+                if (property.NameEquals("protectedDisks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -189,12 +193,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     protectedDisks = array;
                     continue;
                 }
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
                     ipAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastHeartbeat"))
+                if (property.NameEquals("lastHeartbeat"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -204,17 +208,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     lastHeartbeat = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("processServerId"))
+                if (property.NameEquals("processServerId"u8))
                 {
                     processServerId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("masterTargetId"))
+                if (property.NameEquals("masterTargetId"u8))
                 {
                     masterTargetId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("consistencyPoints"))
+                if (property.NameEquals("consistencyPoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -229,32 +233,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     consistencyPoints = dictionary;
                     continue;
                 }
-                if (property.NameEquals("diskResized"))
+                if (property.NameEquals("diskResized"u8))
                 {
                     diskResized = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rebootAfterUpdateStatus"))
+                if (property.NameEquals("rebootAfterUpdateStatus"u8))
                 {
                     rebootAfterUpdateStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("multiVmGroupId"))
+                if (property.NameEquals("multiVmGroupId"u8))
                 {
                     multiVmGroupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("multiVmGroupName"))
+                if (property.NameEquals("multiVmGroupName"u8))
                 {
                     multiVmGroupName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("multiVmSyncStatus"))
+                if (property.NameEquals("multiVmSyncStatus"u8))
                 {
                     multiVmSyncStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentDetails"))
+                if (property.NameEquals("agentDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -264,17 +268,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     agentDetails = InMageAgentDetails.DeserializeInMageAgentDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("vCenterInfrastructureId"))
+                if (property.NameEquals("vCenterInfrastructureId"u8))
                 {
                     vCenterInfrastructureId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("infrastructureVmId"))
+                if (property.NameEquals("infrastructureVmId"u8))
                 {
                     infrastructureVmId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmNics"))
+                if (property.NameEquals("vmNics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -289,17 +293,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     vmNics = array;
                     continue;
                 }
-                if (property.NameEquals("discoveryType"))
+                if (property.NameEquals("discoveryType"u8))
                 {
                     discoveryType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("azureStorageAccountId"))
+                if (property.NameEquals("azureStorageAccountId"u8))
                 {
                     azureStorageAccountId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("datastores"))
+                if (property.NameEquals("datastores"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -314,7 +318,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     datastores = array;
                     continue;
                 }
-                if (property.NameEquals("validationErrors"))
+                if (property.NameEquals("validationErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -329,7 +333,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     validationErrors = array;
                     continue;
                 }
-                if (property.NameEquals("lastRpoCalculatedTime"))
+                if (property.NameEquals("lastRpoCalculatedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -339,7 +343,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     lastRpoCalculatedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdateReceivedTime"))
+                if (property.NameEquals("lastUpdateReceivedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -349,17 +353,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     lastUpdateReceivedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("replicaId"))
+                if (property.NameEquals("replicaId"u8))
                 {
                     replicaId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osVersion"))
+                if (property.NameEquals("osVersion"u8))
                 {
                     osVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isAdditionalStatsAvailable"))
+                if (property.NameEquals("isAdditionalStatsAvailable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -369,7 +373,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     isAdditionalStatsAvailable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("totalDataTransferred"))
+                if (property.NameEquals("totalDataTransferred"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -379,12 +383,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     totalDataTransferred = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalProgressHealth"))
+                if (property.NameEquals("totalProgressHealth"u8))
                 {
                     totalProgressHealth = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

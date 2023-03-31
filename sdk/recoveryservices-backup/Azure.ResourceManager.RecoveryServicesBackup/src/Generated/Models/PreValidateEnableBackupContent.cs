@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
@@ -22,11 +24,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> ProtectedItem Type- VM, SqlDataBase, AzureFileShare etc. </summary>
-        public DataSourceType? ResourceType { get; set; }
+        public BackupDataSourceType? ResourceType { get; set; }
         /// <summary> ARM Virtual Machine Id. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> ARM id of the Recovery Services Vault. </summary>
-        public string VaultId { get; set; }
+        public ResourceIdentifier VaultId { get; set; }
         /// <summary> Configuration of VM if any needs to be validated like OS type etc. </summary>
         public string Properties { get; set; }
     }

@@ -15,38 +15,38 @@ namespace Azure.ResourceManager.IotHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("inputBlobContainerUri");
+            writer.WritePropertyName("inputBlobContainerUri"u8);
             writer.WriteStringValue(InputBlobContainerUri.AbsoluteUri);
-            writer.WritePropertyName("outputBlobContainerUri");
+            writer.WritePropertyName("outputBlobContainerUri"u8);
             writer.WriteStringValue(OutputBlobContainerUri.AbsoluteUri);
             if (Optional.IsDefined(InputBlobName))
             {
-                writer.WritePropertyName("inputBlobName");
+                writer.WritePropertyName("inputBlobName"u8);
                 writer.WriteStringValue(InputBlobName);
             }
             if (Optional.IsDefined(OutputBlobName))
             {
-                writer.WritePropertyName("outputBlobName");
+                writer.WritePropertyName("outputBlobName"u8);
                 writer.WriteStringValue(OutputBlobName);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
-                writer.WritePropertyName("authenticationType");
+                writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
             if (Optional.IsDefined(IncludeConfigurations))
             {
-                writer.WritePropertyName("includeConfigurations");
+                writer.WritePropertyName("includeConfigurations"u8);
                 writer.WriteBooleanValue(IncludeConfigurations.Value);
             }
             if (Optional.IsDefined(ConfigurationsBlobName))
             {
-                writer.WritePropertyName("configurationsBlobName");
+                writer.WritePropertyName("configurationsBlobName"u8);
                 writer.WriteStringValue(ConfigurationsBlobName);
             }
             writer.WriteEndObject();

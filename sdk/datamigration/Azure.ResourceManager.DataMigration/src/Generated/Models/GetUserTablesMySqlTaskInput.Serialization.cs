@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("connectionInfo");
+            writer.WritePropertyName("connectionInfo"u8);
             writer.WriteObjectValue(ConnectionInfo);
-            writer.WritePropertyName("selectedDatabases");
+            writer.WritePropertyName("selectedDatabases"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
             {
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static GetUserTablesMySqlTaskInput DeserializeGetUserTablesMySqlTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MySqlConnectionInfo connectionInfo = default;
             IList<string> selectedDatabases = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectionInfo"))
+                if (property.NameEquals("connectionInfo"u8))
                 {
                     connectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("selectedDatabases"))
+                if (property.NameEquals("selectedDatabases"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())

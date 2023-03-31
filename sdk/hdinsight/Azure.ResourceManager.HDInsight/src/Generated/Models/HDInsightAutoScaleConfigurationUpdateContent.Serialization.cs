@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AutoScale))
             {
-                writer.WritePropertyName("autoscale");
+                writer.WritePropertyName("autoscale"u8);
                 writer.WriteObjectValue(AutoScale);
             }
             writer.WriteEndObject();

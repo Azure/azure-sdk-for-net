@@ -17,12 +17,12 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SentenceCount))
             {
-                writer.WritePropertyName("sentenceCount");
+                writer.WritePropertyName("sentenceCount"u8);
                 writer.WriteNumberValue(SentenceCount.Value);
             }
             if (Optional.IsDefined(StringIndexType))
             {
-                writer.WritePropertyName("stringIndexType");
+                writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static AbstractiveSummarizationTaskParametersBase DeserializeAbstractiveSummarizationTaskParametersBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> sentenceCount = default;
             Optional<StringIndexType> stringIndexType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sentenceCount"))
+                if (property.NameEquals("sentenceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.AI.TextAnalytics.Models
                     sentenceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("stringIndexType"))
+                if (property.NameEquals("stringIndexType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

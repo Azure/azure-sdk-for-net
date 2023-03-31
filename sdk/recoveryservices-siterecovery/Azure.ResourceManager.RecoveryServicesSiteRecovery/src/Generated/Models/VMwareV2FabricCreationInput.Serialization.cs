@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VMwareSiteId))
             {
-                writer.WritePropertyName("vmwareSiteId");
+                writer.WritePropertyName("vmwareSiteId"u8);
                 writer.WriteStringValue(VMwareSiteId);
             }
             if (Optional.IsDefined(PhysicalSiteId))
             {
-                writer.WritePropertyName("physicalSiteId");
+                writer.WritePropertyName("physicalSiteId"u8);
                 writer.WriteStringValue(PhysicalSiteId);
             }
-            writer.WritePropertyName("migrationSolutionId");
+            writer.WritePropertyName("migrationSolutionId"u8);
             writer.WriteStringValue(MigrationSolutionId);
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

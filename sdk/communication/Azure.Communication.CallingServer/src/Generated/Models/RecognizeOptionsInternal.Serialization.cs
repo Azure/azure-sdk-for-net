@@ -17,19 +17,19 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartObject();
             if (Optional.IsDefined(InterruptPrompt))
             {
-                writer.WritePropertyName("interruptPrompt");
+                writer.WritePropertyName("interruptPrompt"u8);
                 writer.WriteBooleanValue(InterruptPrompt.Value);
             }
             if (Optional.IsDefined(InitialSilenceTimeoutInSeconds))
             {
-                writer.WritePropertyName("initialSilenceTimeoutInSeconds");
+                writer.WritePropertyName("initialSilenceTimeoutInSeconds"u8);
                 writer.WriteNumberValue(InitialSilenceTimeoutInSeconds.Value);
             }
-            writer.WritePropertyName("targetParticipant");
+            writer.WritePropertyName("targetParticipant"u8);
             writer.WriteObjectValue(TargetParticipant);
             if (Optional.IsDefined(DtmfOptions))
             {
-                writer.WritePropertyName("dtmfOptions");
+                writer.WritePropertyName("dtmfOptions"u8);
                 writer.WriteObjectValue(DtmfOptions);
             }
             writer.WriteEndObject();

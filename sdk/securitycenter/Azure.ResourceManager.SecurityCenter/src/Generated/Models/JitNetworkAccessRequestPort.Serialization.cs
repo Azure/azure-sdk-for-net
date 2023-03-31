@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("number");
+            writer.WritePropertyName("number"u8);
             writer.WriteNumberValue(Number);
             if (Optional.IsDefined(AllowedSourceAddressPrefix))
             {
-                writer.WritePropertyName("allowedSourceAddressPrefix");
+                writer.WritePropertyName("allowedSourceAddressPrefix"u8);
                 writer.WriteStringValue(AllowedSourceAddressPrefix);
             }
             if (Optional.IsCollectionDefined(AllowedSourceAddressPrefixes))
             {
-                writer.WritePropertyName("allowedSourceAddressPrefixes");
+                writer.WritePropertyName("allowedSourceAddressPrefixes"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedSourceAddressPrefixes)
                 {
@@ -34,15 +34,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("endTimeUtc");
+            writer.WritePropertyName("endTimeUtc"u8);
             writer.WriteStringValue(EndOn, "O");
-            writer.WritePropertyName("status");
+            writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            writer.WritePropertyName("statusReason");
+            writer.WritePropertyName("statusReason"u8);
             writer.WriteStringValue(StatusReason.ToString());
             if (Optional.IsDefined(MappedPort))
             {
-                writer.WritePropertyName("mappedPort");
+                writer.WritePropertyName("mappedPort"u8);
                 writer.WriteNumberValue(MappedPort.Value);
             }
             writer.WriteEndObject();
@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static JitNetworkAccessRequestPort DeserializeJitNetworkAccessRequestPort(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int number = default;
             Optional<string> allowedSourceAddressPrefix = default;
             Optional<IList<string>> allowedSourceAddressPrefixes = default;
@@ -59,17 +63,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<int> mappedPort = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("number"))
+                if (property.NameEquals("number"u8))
                 {
                     number = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("allowedSourceAddressPrefix"))
+                if (property.NameEquals("allowedSourceAddressPrefix"u8))
                 {
                     allowedSourceAddressPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("allowedSourceAddressPrefixes"))
+                if (property.NameEquals("allowedSourceAddressPrefixes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,22 +88,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     allowedSourceAddressPrefixes = array;
                     continue;
                 }
-                if (property.NameEquals("endTimeUtc"))
+                if (property.NameEquals("endTimeUtc"u8))
                 {
                     endTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = new JitNetworkAccessPortStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("statusReason"))
+                if (property.NameEquals("statusReason"u8))
                 {
                     statusReason = new JitNetworkAccessPortStatusReason(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("mappedPort"))
+                if (property.NameEquals("mappedPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ConnectorId))
             {
-                writer.WritePropertyName("connectorId");
+                writer.WritePropertyName("connectorId"u8);
                 writer.WriteStringValue(ConnectorId);
             }
             if (Optional.IsCollectionDefined(DataTypes))
             {
-                writer.WritePropertyName("dataTypes");
+                writer.WritePropertyName("dataTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataTypes)
                 {
@@ -36,16 +36,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityMLAnalyticsSettingsDataSource DeserializeSecurityMLAnalyticsSettingsDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> connectorId = default;
             Optional<IList<string>> dataTypes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectorId"))
+                if (property.NameEquals("connectorId"u8))
                 {
                     connectorId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataTypes"))
+                if (property.NameEquals("dataTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

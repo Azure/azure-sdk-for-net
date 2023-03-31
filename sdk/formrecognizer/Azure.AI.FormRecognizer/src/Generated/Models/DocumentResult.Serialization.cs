@@ -16,6 +16,10 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static DocumentResult DeserializeDocumentResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string docType = default;
             Optional<Guid> modelId = default;
             IReadOnlyList<int> pageRange = default;
@@ -23,12 +27,12 @@ namespace Azure.AI.FormRecognizer.Models
             IReadOnlyDictionary<string, FieldValue_internal> fields = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("docType"))
+                if (property.NameEquals("docType"u8))
                 {
                     docType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("modelId"))
+                if (property.NameEquals("modelId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,7 +42,7 @@ namespace Azure.AI.FormRecognizer.Models
                     modelId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("pageRange"))
+                if (property.NameEquals("pageRange"u8))
                 {
                     List<int> array = new List<int>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -48,7 +52,7 @@ namespace Azure.AI.FormRecognizer.Models
                     pageRange = array;
                     continue;
                 }
-                if (property.NameEquals("docTypeConfidence"))
+                if (property.NameEquals("docTypeConfidence"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,19 +62,12 @@ namespace Azure.AI.FormRecognizer.Models
                     docTypeConfidence = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("fields"))
+                if (property.NameEquals("fields"u8))
                 {
                     Dictionary<string, FieldValue_internal> dictionary = new Dictionary<string, FieldValue_internal>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, FieldValue_internal.DeserializeFieldValue_internal(property0.Value));
-                        }
+                        dictionary.Add(property0.Name, FieldValue_internal.DeserializeFieldValue_internal(property0.Value));
                     }
                     fields = dictionary;
                     continue;

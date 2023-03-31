@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("region");
+            writer.WritePropertyName("region"u8);
             writer.WriteStringValue(Region);
             if (Optional.IsDefined(Instance))
             {
-                writer.WritePropertyName("instance");
+                writer.WritePropertyName("instance"u8);
                 writer.WriteNumberValue(Instance.Value);
             }
             writer.WriteEndObject();

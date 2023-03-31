@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Nginx.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EnableDiagnosticsSupport))
             {
-                writer.WritePropertyName("enableDiagnosticsSupport");
+                writer.WritePropertyName("enableDiagnosticsSupport"u8);
                 writer.WriteBooleanValue(EnableDiagnosticsSupport.Value);
             }
             if (Optional.IsDefined(Logging))
             {
-                writer.WritePropertyName("logging");
+                writer.WritePropertyName("logging"u8);
                 writer.WriteObjectValue(Logging);
             }
             writer.WriteEndObject();

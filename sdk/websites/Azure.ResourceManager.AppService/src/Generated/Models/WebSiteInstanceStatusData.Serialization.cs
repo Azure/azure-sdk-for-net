@@ -21,39 +21,39 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
             if (Optional.IsDefined(StatusUri))
             {
-                writer.WritePropertyName("statusUrl");
+                writer.WritePropertyName("statusUrl"u8);
                 writer.WriteStringValue(StatusUri.AbsoluteUri);
             }
             if (Optional.IsDefined(DetectorUri))
             {
-                writer.WritePropertyName("detectorUrl");
+                writer.WritePropertyName("detectorUrl"u8);
                 writer.WriteStringValue(DetectorUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ConsoleUri))
             {
-                writer.WritePropertyName("consoleUrl");
+                writer.WritePropertyName("consoleUrl"u8);
                 writer.WriteStringValue(ConsoleUri.AbsoluteUri);
             }
             if (Optional.IsDefined(HealthCheckUri))
             {
-                writer.WritePropertyName("healthCheckUrl");
+                writer.WritePropertyName("healthCheckUrl"u8);
                 writer.WriteStringValue(HealthCheckUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(Containers))
             {
-                writer.WritePropertyName("containers");
+                writer.WritePropertyName("containers"u8);
                 writer.WriteStartObject();
                 foreach (var item in Containers)
                 {
@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.AppService
 
         internal static WebSiteInstanceStatusData DeserializeWebSiteInstanceStatusData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -81,27 +85,27 @@ namespace Azure.ResourceManager.AppService
             Optional<IDictionary<string, ContainerInfo>> containers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,7 +115,7 @@ namespace Azure.ResourceManager.AppService
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +124,7 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -130,7 +134,7 @@ namespace Azure.ResourceManager.AppService
                             state = property0.Value.GetString().ToSiteRuntimeState();
                             continue;
                         }
-                        if (property0.NameEquals("statusUrl"))
+                        if (property0.NameEquals("statusUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -140,7 +144,7 @@ namespace Azure.ResourceManager.AppService
                             statusUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("detectorUrl"))
+                        if (property0.NameEquals("detectorUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -150,7 +154,7 @@ namespace Azure.ResourceManager.AppService
                             detectorUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("consoleUrl"))
+                        if (property0.NameEquals("consoleUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -160,7 +164,7 @@ namespace Azure.ResourceManager.AppService
                             consoleUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("healthCheckUrl"))
+                        if (property0.NameEquals("healthCheckUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -170,7 +174,7 @@ namespace Azure.ResourceManager.AppService
                             healthCheckUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("containers"))
+                        if (property0.NameEquals("containers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

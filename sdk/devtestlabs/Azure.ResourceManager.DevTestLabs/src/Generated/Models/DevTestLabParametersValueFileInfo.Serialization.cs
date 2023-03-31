@@ -15,16 +15,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static DevTestLabParametersValueFileInfo DeserializeDevTestLabParametersValueFileInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fileName = default;
             Optional<BinaryData> parametersValueInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fileName"))
+                if (property.NameEquals("fileName"u8))
                 {
                     fileName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parametersValueInfo"))
+                if (property.NameEquals("parametersValueInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

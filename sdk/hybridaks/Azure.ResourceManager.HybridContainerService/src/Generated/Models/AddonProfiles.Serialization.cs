@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Config))
             {
-                writer.WritePropertyName("config");
+                writer.WritePropertyName("config"u8);
                 writer.WriteStartObject();
                 foreach (var item in Config)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
             if (Optional.IsDefined(Enabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
             writer.WriteEndObject();
@@ -37,11 +37,15 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static AddonProfiles DeserializeAddonProfiles(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> config = default;
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("config"))
+                if (property.NameEquals("config"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     config = dictionary;
                     continue;
                 }
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

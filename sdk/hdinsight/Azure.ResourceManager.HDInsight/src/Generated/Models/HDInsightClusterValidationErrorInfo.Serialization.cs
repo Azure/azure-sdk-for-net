@@ -15,28 +15,32 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightClusterValidationErrorInfo DeserializeHDInsightClusterValidationErrorInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> errorResource = default;
             Optional<IReadOnlyList<string>> messageArguments = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorResource"))
+                if (property.NameEquals("errorResource"u8))
                 {
                     errorResource = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("messageArguments"))
+                if (property.NameEquals("messageArguments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

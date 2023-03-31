@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("lun");
+            writer.WritePropertyName("lun"u8);
             writer.WriteNumberValue(Lun);
             if (Optional.IsDefined(DiskEncryptionSetId))
             {
-                writer.WritePropertyName("diskEncryptionSetId");
+                writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
             writer.WriteEndObject();
@@ -27,16 +27,20 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DataDiskImageEncryption DeserializeDataDiskImageEncryption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int lun = default;
             Optional<ResourceIdentifier> diskEncryptionSetId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lun"))
+                if (property.NameEquals("lun"u8))
                 {
                     lun = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("diskEncryptionSetId"))
+                if (property.NameEquals("diskEncryptionSetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

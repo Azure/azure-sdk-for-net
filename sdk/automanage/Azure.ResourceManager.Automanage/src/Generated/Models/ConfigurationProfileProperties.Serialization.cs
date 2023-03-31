@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Automanage.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Configuration))
             {
-                writer.WritePropertyName("configuration");
+                writer.WritePropertyName("configuration"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Configuration);
 #else
@@ -30,10 +30,14 @@ namespace Azure.ResourceManager.Automanage.Models
 
         internal static ConfigurationProfileProperties DeserializeConfigurationProfileProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> configuration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("configuration"))
+                if (property.NameEquals("configuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ManagedDatabaseRestoreDetailBackupSetProperties DeserializeManagedDatabaseRestoreDetailBackupSetProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             Optional<string> firstStripeName = default;
             Optional<int> numberOfStripes = default;
@@ -23,17 +27,17 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<DateTimeOffset> restoreFinishedTimestampUtc = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("firstStripeName"))
+                if (property.NameEquals("firstStripeName"u8))
                 {
                     firstStripeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("numberOfStripes"))
+                if (property.NameEquals("numberOfStripes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
                     numberOfStripes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("backupSizeMB"))
+                if (property.NameEquals("backupSizeMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
                     backupSizeMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("restoreStartedTimestampUtc"))
+                if (property.NameEquals("restoreStartedTimestampUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +67,7 @@ namespace Azure.ResourceManager.Sql.Models
                     restoreStartedTimestampUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("restoreFinishedTimestampUtc"))
+                if (property.NameEquals("restoreFinishedTimestampUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

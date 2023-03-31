@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Groups))
             {
-                writer.WritePropertyName("groups");
+                writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
                 foreach (var item in Groups)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(Identities))
             {
-                writer.WritePropertyName("identities");
+                writer.WritePropertyName("identities"u8);
                 writer.WriteStartArray();
                 foreach (var item in Identities)
                 {
@@ -41,11 +41,15 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceAadAllowedPrincipals DeserializeAppServiceAadAllowedPrincipals(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> groups = default;
             Optional<IList<string>> identities = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("groups"))
+                if (property.NameEquals("groups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
                     groups = array;
                     continue;
                 }
-                if (property.NameEquals("identities"))
+                if (property.NameEquals("identities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

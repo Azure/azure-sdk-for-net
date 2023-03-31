@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TableName))
             {
-                writer.WritePropertyName("tableName");
+                writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
             if (Optional.IsCollectionDefined(Columns))
             {
-                writer.WritePropertyName("columns");
+                writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
                 foreach (var item in Columns)
                 {
@@ -33,10 +33,15 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(Rows))
             {
-                writer.WritePropertyName("rows");
+                writer.WritePropertyName("rows"u8);
                 writer.WriteStartArray();
                 foreach (var item in Rows)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartArray();
                     foreach (var item0 in item)
                     {
@@ -51,17 +56,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DataTableResponseObject DeserializeDataTableResponseObject(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tableName = default;
             Optional<IList<DataTableResponseColumn>> columns = default;
             Optional<IList<IList<string>>> rows = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tableName"))
+                if (property.NameEquals("tableName"u8))
                 {
                     tableName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("columns"))
+                if (property.NameEquals("columns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +85,7 @@ namespace Azure.ResourceManager.AppService.Models
                     columns = array;
                     continue;
                 }
-                if (property.NameEquals("rows"))
+                if (property.NameEquals("rows"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,12 +95,19 @@ namespace Azure.ResourceManager.AppService.Models
                     List<IList<string>> array = new List<IList<string>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        List<string> array0 = new List<string>();
-                        foreach (var item0 in item.EnumerateArray())
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array0.Add(item0.GetString());
+                            array.Add(null);
                         }
-                        array.Add(array0);
+                        else
+                        {
+                            List<string> array0 = new List<string>();
+                            foreach (var item0 in item.EnumerateArray())
+                            {
+                                array0.Add(item0.GetString());
+                            }
+                            array.Add(array0);
+                        }
                     }
                     rows = array;
                     continue;

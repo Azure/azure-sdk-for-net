@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Analysis.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(FirewallRules))
             {
-                writer.WritePropertyName("firewallRules");
+                writer.WritePropertyName("firewallRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Analysis.Models
             }
             if (Optional.IsDefined(IsPowerBIServiceEnabled))
             {
-                writer.WritePropertyName("enablePowerBIService");
+                writer.WritePropertyName("enablePowerBIService"u8);
                 writer.WriteBooleanValue(IsPowerBIServiceEnabled.Value);
             }
             writer.WriteEndObject();
@@ -36,11 +36,15 @@ namespace Azure.ResourceManager.Analysis.Models
 
         internal static AnalysisIPv4FirewallSettings DeserializeAnalysisIPv4FirewallSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<AnalysisIPv4FirewallRule>> firewallRules = default;
             Optional<bool> enablePowerBIService = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("firewallRules"))
+                if (property.NameEquals("firewallRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     firewallRules = array;
                     continue;
                 }
-                if (property.NameEquals("enablePowerBIService"))
+                if (property.NameEquals("enablePowerBIService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

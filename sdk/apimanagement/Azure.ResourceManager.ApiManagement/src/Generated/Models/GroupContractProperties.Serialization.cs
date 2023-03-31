@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static GroupContractProperties DeserializeGroupContractProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string displayName = default;
             Optional<string> description = default;
             Optional<bool> builtIn = default;
@@ -21,17 +25,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> externalId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("builtIn"))
+                if (property.NameEquals("builtIn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     builtIn = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     type = property.Value.GetString().ToApiManagementGroupType();
                     continue;
                 }
-                if (property.NameEquals("externalId"))
+                if (property.NameEquals("externalId"u8))
                 {
                     externalId = property.Value.GetString();
                     continue;

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Maps.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DisableLocalAuth))
             {
-                writer.WritePropertyName("disableLocalAuth");
+                writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
             writer.WriteEndObject();
@@ -26,12 +26,16 @@ namespace Azure.ResourceManager.Maps.Models
 
         internal static MapsAccountProperties DeserializeMapsAccountProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> uniqueId = default;
             Optional<bool> disableLocalAuth = default;
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("uniqueId"))
+                if (property.NameEquals("uniqueId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.Maps.Models
                     uniqueId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("disableLocalAuth"))
+                if (property.NameEquals("disableLocalAuth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.Maps.Models
                     disableLocalAuth = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     provisioningState = property.Value.GetString();
                     continue;

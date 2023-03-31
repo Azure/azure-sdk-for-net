@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FineTuneOn))
             {
-                writer.WritePropertyName("fineTune");
+                writer.WritePropertyName("fineTune"u8);
                 writer.WriteStringValue(FineTuneOn.Value, "O");
             }
             if (Optional.IsDefined(InferenceOn))
             {
-                writer.WritePropertyName("inference");
+                writer.WritePropertyName("inference"u8);
                 writer.WriteStringValue(InferenceOn.Value, "O");
             }
             writer.WriteEndObject();
@@ -31,11 +31,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static ServiceAccountModelDeprecationInfo DeserializeServiceAccountModelDeprecationInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> fineTune = default;
             Optional<DateTimeOffset> inference = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fineTune"))
+                if (property.NameEquals("fineTune"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     fineTune = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("inference"))
+                if (property.NameEquals("inference"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

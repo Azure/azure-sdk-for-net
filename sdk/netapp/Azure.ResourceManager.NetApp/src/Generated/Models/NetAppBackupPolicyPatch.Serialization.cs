@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -26,28 +26,28 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DailyBackupsToKeep))
             {
-                writer.WritePropertyName("dailyBackupsToKeep");
+                writer.WritePropertyName("dailyBackupsToKeep"u8);
                 writer.WriteNumberValue(DailyBackupsToKeep.Value);
             }
             if (Optional.IsDefined(WeeklyBackupsToKeep))
             {
-                writer.WritePropertyName("weeklyBackupsToKeep");
+                writer.WritePropertyName("weeklyBackupsToKeep"u8);
                 writer.WriteNumberValue(WeeklyBackupsToKeep.Value);
             }
             if (Optional.IsDefined(MonthlyBackupsToKeep))
             {
-                writer.WritePropertyName("monthlyBackupsToKeep");
+                writer.WritePropertyName("monthlyBackupsToKeep"u8);
                 writer.WriteNumberValue(MonthlyBackupsToKeep.Value);
             }
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WriteEndObject();

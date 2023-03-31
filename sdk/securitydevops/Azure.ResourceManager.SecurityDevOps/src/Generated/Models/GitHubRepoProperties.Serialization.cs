@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(AccountId))
             {
-                writer.WritePropertyName("accountId");
+                writer.WritePropertyName("accountId"u8);
                 writer.WriteNumberValue(AccountId.Value);
             }
             if (Optional.IsDefined(RepoUri))
             {
-                writer.WritePropertyName("repoUrl");
+                writer.WritePropertyName("repoUrl"u8);
                 writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
             if (Optional.IsDefined(OwnerName))
             {
-                writer.WritePropertyName("ownerName");
+                writer.WritePropertyName("ownerName"u8);
                 writer.WriteStringValue(OwnerName);
             }
             writer.WriteEndObject();
@@ -41,13 +41,17 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static GitHubRepoProperties DeserializeGitHubRepoProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<long> accountId = default;
             Optional<Uri> repoUrl = default;
             Optional<string> ownerName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +61,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("accountId"))
+                if (property.NameEquals("accountId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +71,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     accountId = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("repoUrl"))
+                if (property.NameEquals("repoUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +81,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     repoUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ownerName"))
+                if (property.NameEquals("ownerName"u8))
                 {
                     ownerName = property.Value.GetString();
                     continue;

@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("deviceId");
+            writer.WritePropertyName("deviceId"u8);
             writer.WriteStringValue(DeviceId);
-            writer.WritePropertyName("ioTHostHub");
+            writer.WritePropertyName("ioTHostHub"u8);
             writer.WriteStringValue(IotHostHub);
             if (Optional.IsDefined(IotHostHubId))
             {
-                writer.WritePropertyName("ioTHostHubId");
+                writer.WritePropertyName("ioTHostHubId"u8);
                 writer.WriteStringValue(IotHostHubId);
             }
             if (Optional.IsDefined(Authentication))
             {
-                writer.WritePropertyName("authentication");
+                writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
             writer.WriteEndObject();
@@ -34,23 +34,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeIotDeviceInfo DeserializeEdgeIotDeviceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string deviceId = default;
             string iotHostHub = default;
             Optional<ResourceIdentifier> iotHostHubId = default;
             Optional<Authentication> authentication = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceId"))
+                if (property.NameEquals("deviceId"u8))
                 {
                     deviceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ioTHostHub"))
+                if (property.NameEquals("ioTHostHub"u8))
                 {
                     iotHostHub = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ioTHostHubId"))
+                if (property.NameEquals("ioTHostHubId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     iotHostHubId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("authentication"))
+                if (property.NameEquals("authentication"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

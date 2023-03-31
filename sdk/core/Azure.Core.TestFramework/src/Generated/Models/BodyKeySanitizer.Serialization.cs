@@ -17,19 +17,19 @@ namespace Azure.Core.TestFramework.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(JsonPath))
             {
-                writer.WritePropertyName("jsonPath");
+                writer.WritePropertyName("jsonPath"u8);
                 writer.WriteStringValue(JsonPath);
             }
-            writer.WritePropertyName("value");
+            writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
             if (Optional.IsDefined(Regex))
             {
-                writer.WritePropertyName("regex");
+                writer.WritePropertyName("regex"u8);
                 writer.WriteStringValue(Regex);
             }
             if (Optional.IsDefined(GroupForReplace))
             {
-                writer.WritePropertyName("groupForReplace");
+                writer.WritePropertyName("groupForReplace"u8);
                 writer.WriteStringValue(GroupForReplace);
             }
             writer.WriteEndObject();

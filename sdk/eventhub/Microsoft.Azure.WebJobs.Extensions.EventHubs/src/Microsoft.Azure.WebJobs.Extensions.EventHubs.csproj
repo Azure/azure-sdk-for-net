@@ -3,9 +3,9 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <Description>Microsoft Azure WebJobs SDK EventHubs Extension</Description>
-    <Version>5.2.0-beta.1</Version>
+    <Version>5.3.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>5.1.2</ApiCompatVersion>
+    <ApiCompatVersion>5.2.0</ApiCompatVersion>
     <NoWarn>$(NoWarn);AZC0001;CS1591;SA1636</NoWarn>
     <AssemblyOriginatorKeyFile>sign.snk</AssemblyOriginatorKeyFile>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
@@ -21,6 +21,7 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="SharedSource" />
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="SharedSource" />
+    <Compile Include="$(AzureCoreSharedSources)ValueStopwatch.cs" LinkBase="SharedSource" />
     <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Core/CancellationTokenExtensions.cs" LinkBase="SharedSource" />
     <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Core/BasicRetryPolicy.cs" LinkBase="SharedSource" />
     <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Core/EventHubsRetryOptionsExtensions.cs" LinkBase="SharedSource" />

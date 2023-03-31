@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Elements))
             {
-                writer.WritePropertyName("elements");
+                writer.WritePropertyName("elements"u8);
                 writer.WriteStartArray();
                 foreach (var item in Elements)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             if (Optional.IsCollectionDefined(Exceptions))
             {
-                writer.WritePropertyName("exceptions");
+                writer.WritePropertyName("exceptions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Exceptions)
                 {
@@ -41,11 +41,15 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static ResourceSetDescription DeserializeResourceSetDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> elements = default;
             Optional<IList<string>> exceptions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("elements"))
+                if (property.NameEquals("elements"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     elements = array;
                     continue;
                 }
-                if (property.NameEquals("exceptions"))
+                if (property.NameEquals("exceptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

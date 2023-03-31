@@ -14,28 +14,32 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MigrateSchemaSqlServerSqlDBTaskOutputError DeserializeMigrateSchemaSqlServerSqlDBTaskOutputError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> commandText = default;
             Optional<string> errorText = default;
             Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("commandText"))
+                if (property.NameEquals("commandText"u8))
                 {
                     commandText = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorText"))
+                if (property.NameEquals("errorText"u8))
                 {
                     errorText = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultType"))
+                if (property.NameEquals("resultType"u8))
                 {
                     resultType = property.Value.GetString();
                     continue;

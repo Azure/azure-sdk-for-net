@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Resources))
             {
-                writer.WritePropertyName("resources");
+                writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceManagementAction DeserializeResourceManagementAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ResourceManagementEntity>> resources = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resources"))
+                if (property.NameEquals("resources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

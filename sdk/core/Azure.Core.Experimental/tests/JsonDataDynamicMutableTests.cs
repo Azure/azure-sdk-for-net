@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using Azure.Core.Dynamic;
 using Azure.Core.GeoJson;
+using Azure.Core.Json;
 using NUnit.Framework;
 
 namespace Azure.Core.Experimental.Tests

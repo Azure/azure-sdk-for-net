@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Backup))
             {
-                writer.WritePropertyName("backup");
+                writer.WritePropertyName("backup"u8);
                 writer.WriteObjectValue(Backup);
             }
             if (Optional.IsDefined(Replication))
             {
-                writer.WritePropertyName("replication");
+                writer.WritePropertyName("replication"u8);
                 writer.WriteObjectValue(Replication);
             }
             if (Optional.IsDefined(Snapshot))
             {
-                writer.WritePropertyName("snapshot");
+                writer.WritePropertyName("snapshot"u8);
                 writer.WriteObjectValue(Snapshot);
             }
             writer.WriteEndObject();
@@ -35,12 +35,16 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppVolumeDataProtection DeserializeNetAppVolumeDataProtection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NetAppVolumeBackupConfiguration> backup = default;
             Optional<NetAppReplicationObject> replication = default;
             Optional<VolumeSnapshotProperties> snapshot = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("backup"))
+                if (property.NameEquals("backup"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     backup = NetAppVolumeBackupConfiguration.DeserializeNetAppVolumeBackupConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("replication"))
+                if (property.NameEquals("replication"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     replication = NetAppReplicationObject.DeserializeNetAppReplicationObject(property.Value);
                     continue;
                 }
-                if (property.NameEquals("snapshot"))
+                if (property.NameEquals("snapshot"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

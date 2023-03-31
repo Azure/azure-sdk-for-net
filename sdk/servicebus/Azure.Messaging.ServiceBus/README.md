@@ -338,6 +338,8 @@ string reason = dlqMessage.DeadLetterReason;
 string description = dlqMessage.DeadLetterErrorDescription;
 ```
 
+For more information, see the [overview of ServiceBus dead letter queues](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-dead-letter-queues).
+
 ### Using the Processor
 
 The `ServiceBusProcessor` can be thought of as an abstraction around a set of receivers. It uses a callback model to allow code to be specified when a message is received and when an exception occurs. It offers automatic completion of processed messages, automatic message lock renewal, and concurrent execution of user specified event handlers. Because of its feature set, it should be the go to tool for writing applications that receive from Service Bus entities. The ServiceBusReceiver is recommended for more complex scenarios in which the processor is not able to provide the fine-grained control that one can expect when using the ServiceBusReceiver directly.

@@ -16,22 +16,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("allowlistValues");
+            writer.WritePropertyName("allowlistValues"u8);
             writer.WriteStartArray();
             foreach (var item in AllowlistValues)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("isEnabled");
+            writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            writer.WritePropertyName("ruleType");
+            writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType);
             writer.WriteEndObject();
         }
 
         internal static ConnectionToIPNotAllowed DeserializeConnectionToIPNotAllowed(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> allowlistValues = default;
             Optional<SecurityValueType> valueType = default;
             Optional<string> displayName = default;
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string ruleType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowlistValues"))
+                if (property.NameEquals("allowlistValues"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     allowlistValues = array;
                     continue;
                 }
-                if (property.NameEquals("valueType"))
+                if (property.NameEquals("valueType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,22 +64,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     valueType = new SecurityValueType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isEnabled"))
+                if (property.NameEquals("isEnabled"u8))
                 {
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("ruleType"))
+                if (property.NameEquals("ruleType"u8))
                 {
                     ruleType = property.Value.GetString();
                     continue;

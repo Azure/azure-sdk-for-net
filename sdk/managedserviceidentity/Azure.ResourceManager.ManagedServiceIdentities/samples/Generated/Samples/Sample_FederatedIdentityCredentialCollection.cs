@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_FederatedIdentityCredentialList()
         {
-            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/preview/2022-01-31-preview/examples/FederatedIdentityCredentialList.json
+            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/FederatedIdentityCredentialList.json
             // this example is just showing the usage of "FederatedIdentityCredentials_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 
             // this example assumes you already have this UserAssignedIdentityResource created on azure
             // for more information of creating UserAssignedIdentityResource, please refer to the document of UserAssignedIdentityResource
-            string subscriptionId = "subid";
+            string subscriptionId = "c267c0e7-0a73-4789-9e17-d26aeb0904e5";
             string resourceGroupName = "rgName";
             string resourceName = "resourceName";
             ResourceIdentifier userAssignedIdentityResourceId = UserAssignedIdentityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_FederatedIdentityCredentialCreate()
         {
-            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/preview/2022-01-31-preview/examples/FederatedIdentityCredentialCreate.json
+            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/FederatedIdentityCredentialCreate.json
             // this example is just showing the usage of "FederatedIdentityCredentials_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 
             // this example assumes you already have this UserAssignedIdentityResource created on azure
             // for more information of creating UserAssignedIdentityResource, please refer to the document of UserAssignedIdentityResource
-            string subscriptionId = "subid";
+            string subscriptionId = "c267c0e7-0a73-4789-9e17-d26aeb0904e5";
             string resourceGroupName = "rgName";
             string resourceName = "resourceName";
             ResourceIdentifier userAssignedIdentityResourceId = UserAssignedIdentityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
             string federatedIdentityCredentialResourceName = "ficResourceName";
             FederatedIdentityCredentialData data = new FederatedIdentityCredentialData()
             {
-                IssuerUri = new Uri("https://oidc.prod-aks.azure.com/IssuerGUID"),
+                IssuerUri = new Uri("https://oidc.prod-aks.azure.com/TenantGUID/IssuerGUID"),
                 Subject = "system:serviceaccount:ns:svcaccount",
                 Audiences =
 {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_FederatedIdentityCredentialGet()
         {
-            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/preview/2022-01-31-preview/examples/FederatedIdentityCredentialGet.json
+            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/FederatedIdentityCredentialGet.json
             // this example is just showing the usage of "FederatedIdentityCredentials_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 
             // this example assumes you already have this UserAssignedIdentityResource created on azure
             // for more information of creating UserAssignedIdentityResource, please refer to the document of UserAssignedIdentityResource
-            string subscriptionId = "subid";
+            string subscriptionId = "c267c0e7-0a73-4789-9e17-d26aeb0904e5";
             string resourceGroupName = "rgName";
             string resourceName = "resourceName";
             ResourceIdentifier userAssignedIdentityResourceId = UserAssignedIdentityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_FederatedIdentityCredentialGet()
         {
-            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/preview/2022-01-31-preview/examples/FederatedIdentityCredentialGet.json
+            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/FederatedIdentityCredentialGet.json
             // this example is just showing the usage of "FederatedIdentityCredentials_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 
             // this example assumes you already have this UserAssignedIdentityResource created on azure
             // for more information of creating UserAssignedIdentityResource, please refer to the document of UserAssignedIdentityResource
-            string subscriptionId = "subid";
+            string subscriptionId = "c267c0e7-0a73-4789-9e17-d26aeb0904e5";
             string resourceGroupName = "rgName";
             string resourceName = "resourceName";
             ResourceIdentifier userAssignedIdentityResourceId = UserAssignedIdentityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);

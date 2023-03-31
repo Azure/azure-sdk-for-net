@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetResourceId");
+            writer.WritePropertyName("targetResourceId"u8);
             writer.WriteStringValue(TargetResourceId);
             if (Optional.IsDefined(VerbosityLevel))
             {
-                writer.WritePropertyName("verbosityLevel");
+                writer.WritePropertyName("verbosityLevel"u8);
                 writer.WriteStringValue(VerbosityLevel.Value.ToString());
             }
-            writer.WritePropertyName("profiles");
+            writer.WritePropertyName("profiles"u8);
             writer.WriteStartArray();
             foreach (var item in Profiles)
             {

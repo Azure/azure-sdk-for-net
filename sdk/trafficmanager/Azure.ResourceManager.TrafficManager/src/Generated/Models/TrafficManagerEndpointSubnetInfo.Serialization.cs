@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.TrafficManager.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(First))
             {
-                writer.WritePropertyName("first");
+                writer.WritePropertyName("first"u8);
                 writer.WriteStringValue(First.ToString());
             }
             if (Optional.IsDefined(Last))
             {
-                writer.WritePropertyName("last");
+                writer.WritePropertyName("last"u8);
                 writer.WriteStringValue(Last.ToString());
             }
             if (Optional.IsDefined(Scope))
             {
-                writer.WritePropertyName("scope");
+                writer.WritePropertyName("scope"u8);
                 writer.WriteNumberValue(Scope.Value);
             }
             writer.WriteEndObject();
@@ -36,12 +36,16 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         internal static TrafficManagerEndpointSubnetInfo DeserializeTrafficManagerEndpointSubnetInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IPAddress> first = default;
             Optional<IPAddress> last = default;
             Optional<int> scope = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("first"))
+                if (property.NameEquals("first"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     first = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("last"))
+                if (property.NameEquals("last"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     last = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scope"))
+                if (property.NameEquals("scope"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

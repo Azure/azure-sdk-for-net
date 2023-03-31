@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.IotHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("failoverRegion");
+            writer.WritePropertyName("failoverRegion"u8);
             writer.WriteStringValue(FailoverRegion);
             writer.WriteEndObject();
         }

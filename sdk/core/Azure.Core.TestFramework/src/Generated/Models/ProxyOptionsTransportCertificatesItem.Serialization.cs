@@ -17,12 +17,12 @@ namespace Azure.Core.TestFramework.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PemValue))
             {
-                writer.WritePropertyName("PemValue");
+                writer.WritePropertyName("PemValue"u8);
                 writer.WriteStringValue(PemValue);
             }
             if (Optional.IsDefined(PemKey))
             {
-                writer.WritePropertyName("PemKey");
+                writer.WritePropertyName("PemKey"u8);
                 writer.WriteStringValue(PemKey);
             }
             writer.WriteEndObject();

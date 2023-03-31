@@ -17,13 +17,17 @@ namespace Azure.Security.Attestation
     {
         internal static PolicyModificationResult DeserializePolicyModificationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PolicyModification> xMsPolicyResult = default;
             Optional<string> xMsPolicyTokenHash = default;
             Optional<JsonWebKey> xMsPolicySigner = default;
             Optional<string> xMsPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("x-ms-policy-result"))
+                if (property.NameEquals("x-ms-policy-result"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,12 +37,12 @@ namespace Azure.Security.Attestation
                     xMsPolicyResult = new PolicyModification(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("x-ms-policy-token-hash"))
+                if (property.NameEquals("x-ms-policy-token-hash"u8))
                 {
                     xMsPolicyTokenHash = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("x-ms-policy-signer"))
+                if (property.NameEquals("x-ms-policy-signer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +52,7 @@ namespace Azure.Security.Attestation
                     xMsPolicySigner = JsonWebKey.DeserializeJsonWebKey(property.Value);
                     continue;
                 }
-                if (property.NameEquals("x-ms-policy"))
+                if (property.NameEquals("x-ms-policy"u8))
                 {
                     xMsPolicy = property.Value.GetString();
                     continue;

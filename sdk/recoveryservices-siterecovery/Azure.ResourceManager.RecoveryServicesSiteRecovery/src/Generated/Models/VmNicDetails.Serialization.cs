@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static VmNicDetails DeserializeVmNicDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nicId = default;
             Optional<string> replicaNicId = default;
             Optional<string> sourceNicArmId = default;
@@ -36,32 +40,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> targetNicName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nicId"))
+                if (property.NameEquals("nicId"u8))
                 {
                     nicId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("replicaNicId"))
+                if (property.NameEquals("replicaNicId"u8))
                 {
                     replicaNicId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceNicArmId"))
+                if (property.NameEquals("sourceNicArmId"u8))
                 {
                     sourceNicArmId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vMNetworkName"))
+                if (property.NameEquals("vMNetworkName"u8))
                 {
                     vmNetworkName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryVMNetworkId"))
+                if (property.NameEquals("recoveryVMNetworkId"u8))
                 {
                     recoveryVmNetworkId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipConfigs"))
+                if (property.NameEquals("ipConfigs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,17 +80,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     ipConfigs = array;
                     continue;
                 }
-                if (property.NameEquals("selectionType"))
+                if (property.NameEquals("selectionType"u8))
                 {
                     selectionType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryNetworkSecurityGroupId"))
+                if (property.NameEquals("recoveryNetworkSecurityGroupId"u8))
                 {
                     recoveryNetworkSecurityGroupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enableAcceleratedNetworkingOnRecovery"))
+                if (property.NameEquals("enableAcceleratedNetworkingOnRecovery"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,17 +100,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     enableAcceleratedNetworkingOnRecovery = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("tfoVMNetworkId"))
+                if (property.NameEquals("tfoVMNetworkId"u8))
                 {
                     tfoVmNetworkId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tfoNetworkSecurityGroupId"))
+                if (property.NameEquals("tfoNetworkSecurityGroupId"u8))
                 {
                     tfoNetworkSecurityGroupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enableAcceleratedNetworkingOnTfo"))
+                if (property.NameEquals("enableAcceleratedNetworkingOnTfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,17 +120,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     enableAcceleratedNetworkingOnTfo = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("recoveryNicName"))
+                if (property.NameEquals("recoveryNicName"u8))
                 {
                     recoveryNicName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryNicResourceGroupName"))
+                if (property.NameEquals("recoveryNicResourceGroupName"u8))
                 {
                     recoveryNicResourceGroupName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reuseExistingNic"))
+                if (property.NameEquals("reuseExistingNic"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,17 +140,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     reuseExistingNic = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("tfoRecoveryNicName"))
+                if (property.NameEquals("tfoRecoveryNicName"u8))
                 {
                     tfoRecoveryNicName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tfoRecoveryNicResourceGroupName"))
+                if (property.NameEquals("tfoRecoveryNicResourceGroupName"u8))
                 {
                     tfoRecoveryNicResourceGroupName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tfoReuseExistingNic"))
+                if (property.NameEquals("tfoReuseExistingNic"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -156,7 +160,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     tfoReuseExistingNic = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("targetNicName"))
+                if (property.NameEquals("targetNicName"u8))
                 {
                     targetNicName = property.Value.GetString();
                     continue;

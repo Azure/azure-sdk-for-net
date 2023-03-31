@@ -15,10 +15,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
     {
         internal static MoveResourcePropertiesErrors DeserializeMoveResourcePropertiesErrors(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResponseError> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

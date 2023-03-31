@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Rows))
             {
-                writer.WritePropertyName("rows");
+                writer.WritePropertyName("rows"u8);
                 writer.WriteNumberValue(Rows.Value);
             }
             if (Optional.IsDefined(Cols))
             {
-                writer.WritePropertyName("cols");
+                writer.WritePropertyName("cols"u8);
                 writer.WriteNumberValue(Cols.Value);
             }
             writer.WriteEndObject();

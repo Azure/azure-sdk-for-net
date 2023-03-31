@@ -16,22 +16,26 @@ namespace Azure.AI.AnomalyDetector
     {
         internal static MultivariateDetectionResult DeserializeMultivariateDetectionResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string resultId = default;
             MultivariateBatchDetectionResultSummary summary = default;
             IReadOnlyList<AnomalyState> results = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resultId"))
+                if (property.NameEquals("resultId"u8))
                 {
                     resultId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("summary"))
+                if (property.NameEquals("summary"u8))
                 {
                     summary = MultivariateBatchDetectionResultSummary.DeserializeMultivariateBatchDetectionResultSummary(property.Value);
                     continue;
                 }
-                if (property.NameEquals("results"))
+                if (property.NameEquals("results"u8))
                 {
                     List<AnomalyState> array = new List<AnomalyState>();
                     foreach (var item in property.Value.EnumerateArray())

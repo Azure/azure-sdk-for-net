@@ -20,16 +20,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static IotSecurityAlertedDevice DeserializeIotSecurityAlertedDevice(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> deviceId = default;
             Optional<long> alertsCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceId"))
+                if (property.NameEquals("deviceId"u8))
                 {
                     deviceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("alertsCount"))
+                if (property.NameEquals("alertsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

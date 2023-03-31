@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,28 +29,28 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Workspace))
             {
-                writer.WritePropertyName("workspace");
+                writer.WritePropertyName("workspace"u8);
                 writer.WriteStringValue(Workspace);
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Export))
             {
-                writer.WritePropertyName("export");
+                writer.WritePropertyName("export"u8);
                 writer.WriteStartArray();
                 foreach (var item in Export)
                 {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             if (Optional.IsCollectionDefined(DisabledDataSources))
             {
-                writer.WritePropertyName("disabledDataSources");
+                writer.WritePropertyName("disabledDataSources"u8);
                 writer.WriteStartArray();
                 foreach (var item in DisabledDataSources)
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             if (Optional.IsCollectionDefined(IotHubs))
             {
-                writer.WritePropertyName("iotHubs");
+                writer.WritePropertyName("iotHubs"u8);
                 writer.WriteStartArray();
                 foreach (var item in IotHubs)
                 {
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             if (Optional.IsDefined(UserDefinedResources))
             {
-                writer.WritePropertyName("userDefinedResources");
+                writer.WritePropertyName("userDefinedResources"u8);
                 writer.WriteObjectValue(UserDefinedResources);
             }
             if (Optional.IsCollectionDefined(RecommendationsConfiguration))
             {
-                writer.WritePropertyName("recommendationsConfiguration");
+                writer.WritePropertyName("recommendationsConfiguration"u8);
                 writer.WriteStartArray();
                 foreach (var item in RecommendationsConfiguration)
                 {
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             if (Optional.IsDefined(UnmaskedIPLoggingStatus))
             {
-                writer.WritePropertyName("unmaskedIpLoggingStatus");
+                writer.WritePropertyName("unmaskedIpLoggingStatus"u8);
                 writer.WriteStringValue(UnmaskedIPLoggingStatus.Value.ToString());
             }
             if (Optional.IsCollectionDefined(AdditionalWorkspaces))
             {
-                writer.WritePropertyName("additionalWorkspaces");
+                writer.WritePropertyName("additionalWorkspaces"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdditionalWorkspaces)
                 {
@@ -114,6 +114,10 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static IotSecuritySolutionData DeserializeIotSecuritySolutionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -133,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<IList<AdditionalWorkspacesProperties>> additionalWorkspaces = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -148,27 +152,27 @@ namespace Azure.ResourceManager.SecurityCenter
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -178,7 +182,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -187,17 +191,17 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("workspace"))
+                        if (property0.NameEquals("workspace"u8))
                         {
                             workspace = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -207,7 +211,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             status = new SecuritySolutionStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("export"))
+                        if (property0.NameEquals("export"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -222,7 +226,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             export = array;
                             continue;
                         }
-                        if (property0.NameEquals("disabledDataSources"))
+                        if (property0.NameEquals("disabledDataSources"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -237,7 +241,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             disabledDataSources = array;
                             continue;
                         }
-                        if (property0.NameEquals("iotHubs"))
+                        if (property0.NameEquals("iotHubs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -252,7 +256,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             iotHubs = array;
                             continue;
                         }
-                        if (property0.NameEquals("userDefinedResources"))
+                        if (property0.NameEquals("userDefinedResources"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -262,7 +266,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             userDefinedResources = UserDefinedResourcesProperties.DeserializeUserDefinedResourcesProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("autoDiscoveredResources"))
+                        if (property0.NameEquals("autoDiscoveredResources"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -277,7 +281,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             autoDiscoveredResources = array;
                             continue;
                         }
-                        if (property0.NameEquals("recommendationsConfiguration"))
+                        if (property0.NameEquals("recommendationsConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -292,7 +296,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             recommendationsConfiguration = array;
                             continue;
                         }
-                        if (property0.NameEquals("unmaskedIpLoggingStatus"))
+                        if (property0.NameEquals("unmaskedIpLoggingStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -302,7 +306,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             unmaskedIPLoggingStatus = new UnmaskedIPLoggingStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("additionalWorkspaces"))
+                        if (property0.NameEquals("additionalWorkspaces"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

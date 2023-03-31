@@ -15,23 +15,27 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("virtualNetworkCommunity");
+            writer.WritePropertyName("virtualNetworkCommunity"u8);
             writer.WriteStringValue(VirtualNetworkCommunity);
             writer.WriteEndObject();
         }
 
         internal static VirtualNetworkBgpCommunities DeserializeVirtualNetworkBgpCommunities(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string virtualNetworkCommunity = default;
             Optional<string> regionalCommunity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("virtualNetworkCommunity"))
+                if (property.NameEquals("virtualNetworkCommunity"u8))
                 {
                     virtualNetworkCommunity = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("regionalCommunity"))
+                if (property.NameEquals("regionalCommunity"u8))
                 {
                     regionalCommunity = property.Value.GetString();
                     continue;

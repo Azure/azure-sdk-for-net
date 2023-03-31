@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("taggingCriteria");
+            writer.WritePropertyName("taggingCriteria"u8);
             writer.WriteObjectValue(AdhocBackupRetention);
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
         }
 
         internal static AdhocBasedBackupTriggerContext DeserializeAdhocBasedBackupTriggerContext(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AdhocBasedBackupTaggingCriteria taggingCriteria = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("taggingCriteria"))
+                if (property.NameEquals("taggingCriteria"u8))
                 {
                     taggingCriteria = AdhocBasedBackupTaggingCriteria.DeserializeAdhocBasedBackupTaggingCriteria(property.Value);
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;

@@ -17,41 +17,45 @@ namespace Azure.AI.AnomalyDetector
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("dataSource");
+            writer.WritePropertyName("dataSource"u8);
             writer.WriteStringValue(DataSource);
-            writer.WritePropertyName("topContributorCount");
+            writer.WritePropertyName("topContributorCount"u8);
             writer.WriteNumberValue(TopContributorCount);
-            writer.WritePropertyName("startTime");
+            writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime, "O");
-            writer.WritePropertyName("endTime");
+            writer.WritePropertyName("endTime"u8);
             writer.WriteStringValue(EndTime, "O");
             writer.WriteEndObject();
         }
 
         internal static MultivariateBatchDetectionOptions DeserializeMultivariateBatchDetectionOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string dataSource = default;
             int topContributorCount = default;
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataSource"))
+                if (property.NameEquals("dataSource"u8))
                 {
                     dataSource = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("topContributorCount"))
+                if (property.NameEquals("topContributorCount"u8))
                 {
                     topContributorCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;

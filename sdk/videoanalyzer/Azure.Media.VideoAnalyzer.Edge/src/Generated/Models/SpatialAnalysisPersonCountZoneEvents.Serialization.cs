@@ -16,11 +16,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("zone");
+            writer.WritePropertyName("zone"u8);
             writer.WriteObjectValue(Zone);
             if (Optional.IsCollectionDefined(Events))
             {
-                writer.WritePropertyName("events");
+                writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
@@ -33,16 +33,20 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static SpatialAnalysisPersonCountZoneEvents DeserializeSpatialAnalysisPersonCountZoneEvents(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             NamedPolygonBase zone = default;
             Optional<IList<SpatialAnalysisPersonCountEvent>> events = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("zone"))
+                if (property.NameEquals("zone"u8))
                 {
                     zone = NamedPolygonBase.DeserializeNamedPolygonBase(property.Value);
                     continue;
                 }
-                if (property.NameEquals("events"))
+                if (property.NameEquals("events"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,15 +15,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("isEnabled");
+            writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            writer.WritePropertyName("ruleType");
+            writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType);
             writer.WriteEndObject();
         }
 
         internal static ListCustomAlertRule DeserializeListCustomAlertRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("ruleType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -43,7 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string ruleType = "ListCustomAlertRule";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("valueType"))
+                if (property.NameEquals("valueType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,22 +57,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     valueType = new SecurityValueType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isEnabled"))
+                if (property.NameEquals("isEnabled"u8))
                 {
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("ruleType"))
+                if (property.NameEquals("ruleType"u8))
                 {
                     ruleType = property.Value.GetString();
                     continue;

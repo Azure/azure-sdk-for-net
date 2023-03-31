@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MigrateSqlServerSqlDBTaskOutputValidationResult DeserializeMigrateSqlServerSqlDBTaskOutputValidationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> migrationId = default;
             Optional<IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult>> summaryResults = default;
             Optional<ValidationStatus> status = default;
@@ -22,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("migrationId"))
+                if (property.NameEquals("migrationId"u8))
                 {
                     migrationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("summaryResults"))
+                if (property.NameEquals("summaryResults"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     summaryResults = dictionary;
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,12 +56,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     status = new ValidationStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultType"))
+                if (property.NameEquals("resultType"u8))
                 {
                     resultType = property.Value.GetString();
                     continue;

@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("accountName");
+            writer.WritePropertyName("accountName"u8);
             writer.WriteStringValue(AccountName);
             if (Optional.IsDefined(Endpoint))
             {
                 if (Endpoint != null)
                 {
-                    writer.WritePropertyName("endpoint");
+                    writer.WritePropertyName("endpoint"u8);
                     writer.WriteStringValue(Endpoint);
                 }
                 else
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("endpoint");
                 }
             }
-            writer.WritePropertyName("filesystem");
+            writer.WritePropertyName("filesystem"u8);
             writer.WriteStringValue(Filesystem);
             if (Optional.IsDefined(Protocol))
             {
                 if (Protocol != null)
                 {
-                    writer.WritePropertyName("protocol");
+                    writer.WritePropertyName("protocol"u8);
                     writer.WriteStringValue(Protocol);
                 }
                 else
@@ -46,18 +46,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(ServiceDataAccessAuthIdentity))
             {
-                writer.WritePropertyName("serviceDataAccessAuthIdentity");
+                writer.WritePropertyName("serviceDataAccessAuthIdentity"u8);
                 writer.WriteStringValue(ServiceDataAccessAuthIdentity.Value.ToString());
             }
-            writer.WritePropertyName("credentials");
+            writer.WritePropertyName("credentials"u8);
             writer.WriteObjectValue(Credentials);
-            writer.WritePropertyName("datastoreType");
+            writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
-                    writer.WritePropertyName("description");
+                    writer.WritePropertyName("description"u8);
                     writer.WriteStringValue(Description);
                 }
                 else
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties != null)
                 {
-                    writer.WritePropertyName("properties");
+                    writer.WritePropertyName("properties"u8);
                     writer.WriteStartObject();
                     foreach (var item in Properties)
                     {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Tags != null)
                 {
-                    writer.WritePropertyName("tags");
+                    writer.WritePropertyName("tags"u8);
                     writer.WriteStartObject();
                     foreach (var item in Tags)
                     {
@@ -106,6 +106,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningAzureDataLakeGen2Datastore DeserializeMachineLearningAzureDataLakeGen2Datastore(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string accountName = default;
             Optional<string> endpoint = default;
             string filesystem = default;
@@ -119,12 +123,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountName"))
+                if (property.NameEquals("accountName"u8))
                 {
                     accountName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpoint"))
+                if (property.NameEquals("endpoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -134,12 +138,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     endpoint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filesystem"))
+                if (property.NameEquals("filesystem"u8))
                 {
                     filesystem = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protocol"))
+                if (property.NameEquals("protocol"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -149,7 +153,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     protocol = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceDataAccessAuthIdentity"))
+                if (property.NameEquals("serviceDataAccessAuthIdentity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -159,17 +163,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     serviceDataAccessAuthIdentity = new MachineLearningServiceDataAccessAuthIdentity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("credentials"))
+                if (property.NameEquals("credentials"u8))
                 {
                     credentials = MachineLearningDatastoreCredentials.DeserializeMachineLearningDatastoreCredentials(property.Value);
                     continue;
                 }
-                if (property.NameEquals("datastoreType"))
+                if (property.NameEquals("datastoreType"u8))
                 {
                     datastoreType = new DatastoreType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("isDefault"))
+                if (property.NameEquals("isDefault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -179,7 +183,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     isDefault = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -189,7 +193,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -199,19 +203,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -221,14 +218,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;

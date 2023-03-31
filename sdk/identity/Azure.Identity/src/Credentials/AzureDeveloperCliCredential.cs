@@ -67,7 +67,7 @@ namespace Azure.Identity
             _pipeline = pipeline;
             _processService = processService ?? ProcessService.Default;
             TenantId = options?.TenantId;
-            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
             AzdCliProcessTimeout = options?.AzdCliProcessTimeout ?? TimeSpan.FromSeconds(13);
         }
 

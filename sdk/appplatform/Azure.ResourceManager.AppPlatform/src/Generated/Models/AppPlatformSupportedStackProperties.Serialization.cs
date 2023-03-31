@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StackId))
             {
-                writer.WritePropertyName("stackId");
+                writer.WritePropertyName("stackId"u8);
                 writer.WriteStringValue(StackId);
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformSupportedStackProperties DeserializeAppPlatformSupportedStackProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> stackId = default;
             Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("stackId"))
+                if (property.NameEquals("stackId"u8))
                 {
                     stackId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;

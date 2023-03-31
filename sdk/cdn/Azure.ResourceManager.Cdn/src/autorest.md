@@ -4,6 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
+generate-model-factory: false
 library-name: Cdn
 namespace: Azure.ResourceManager.Cdn
 title: CdnManagementClient

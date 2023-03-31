@@ -15,6 +15,10 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteSummary DeserializeRouteSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> lengthInMeters = default;
             Optional<int> travelTimeInSeconds = default;
             Optional<int> trafficDelayInSeconds = default;
@@ -22,7 +26,7 @@ namespace Azure.Maps.Routing.Models
             Optional<DateTimeOffset> arrivalTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lengthInMeters"))
+                if (property.NameEquals("lengthInMeters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +36,7 @@ namespace Azure.Maps.Routing.Models
                     lengthInMeters = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("travelTimeInSeconds"))
+                if (property.NameEquals("travelTimeInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +46,7 @@ namespace Azure.Maps.Routing.Models
                     travelTimeInSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("trafficDelayInSeconds"))
+                if (property.NameEquals("trafficDelayInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +56,7 @@ namespace Azure.Maps.Routing.Models
                     trafficDelayInSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("departureTime"))
+                if (property.NameEquals("departureTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +66,7 @@ namespace Azure.Maps.Routing.Models
                     departureTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("arrivalTime"))
+                if (property.NameEquals("arrivalTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

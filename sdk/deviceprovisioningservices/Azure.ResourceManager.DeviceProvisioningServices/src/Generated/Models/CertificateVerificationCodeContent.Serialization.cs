@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Certificate))
             {
-                writer.WritePropertyName("certificate");
+                writer.WritePropertyName("certificate"u8);
                 writer.WriteStringValue(Certificate);
             }
             writer.WriteEndObject();

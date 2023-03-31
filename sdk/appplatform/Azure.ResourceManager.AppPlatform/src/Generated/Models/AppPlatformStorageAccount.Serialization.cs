@@ -15,33 +15,37 @@ namespace Azure.ResourceManager.AppPlatform.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("accountName");
+            writer.WritePropertyName("accountName"u8);
             writer.WriteStringValue(AccountName);
-            writer.WritePropertyName("accountKey");
+            writer.WritePropertyName("accountKey"u8);
             writer.WriteStringValue(AccountKey);
-            writer.WritePropertyName("storageType");
+            writer.WritePropertyName("storageType"u8);
             writer.WriteStringValue(StorageType.ToString());
             writer.WriteEndObject();
         }
 
         internal static AppPlatformStorageAccount DeserializeAppPlatformStorageAccount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string accountName = default;
             string accountKey = default;
             StorageType storageType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountName"))
+                if (property.NameEquals("accountName"u8))
                 {
                     accountName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accountKey"))
+                if (property.NameEquals("accountKey"u8))
                 {
                     accountKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageType"))
+                if (property.NameEquals("storageType"u8))
                 {
                     storageType = new StorageType(property.Value.GetString());
                     continue;

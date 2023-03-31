@@ -324,6 +324,7 @@ namespace Azure.Messaging.ServiceBus
         public System.TimeSpan TimeToLive { get { throw null; } }
         public string To { get { throw null; } }
         public string TransactionPartitionKey { get { throw null; } }
+        public static Azure.Messaging.ServiceBus.ServiceBusReceivedMessage FromAmqpMessage(Azure.Core.Amqp.AmqpAnnotatedMessage message, System.BinaryData lockTokenBytes) { throw null; }
         public Azure.Core.Amqp.AmqpAnnotatedMessage GetRawAmqpMessage() { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1005,14 +1006,6 @@ namespace Azure.Messaging.ServiceBus.Administration
         public static bool operator ==(Azure.Messaging.ServiceBus.Administration.TrueRuleFilter left, Azure.Messaging.ServiceBus.Administration.TrueRuleFilter right) { throw null; }
         public static bool operator !=(Azure.Messaging.ServiceBus.Administration.TrueRuleFilter left, Azure.Messaging.ServiceBus.Administration.TrueRuleFilter right) { throw null; }
         public override string ToString() { throw null; }
-    }
-}
-namespace Azure.Messaging.ServiceBus.Primitives
-{
-    public static partial class ServiceBusAmqpExtensions
-    {
-        public static Azure.Messaging.ServiceBus.ServiceBusReceivedMessage FromAmqpBytes(System.BinaryData messageBytes, System.BinaryData lockTokenBytes) { throw null; }
-        public static System.BinaryData ToAmqpBytes(this Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message) { throw null; }
     }
 }
 namespace Microsoft.Extensions.Azure

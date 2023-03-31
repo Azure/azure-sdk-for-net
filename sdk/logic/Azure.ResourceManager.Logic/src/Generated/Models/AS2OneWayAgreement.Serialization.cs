@@ -15,33 +15,37 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("senderBusinessIdentity");
+            writer.WritePropertyName("senderBusinessIdentity"u8);
             writer.WriteObjectValue(SenderBusinessIdentity);
-            writer.WritePropertyName("receiverBusinessIdentity");
+            writer.WritePropertyName("receiverBusinessIdentity"u8);
             writer.WriteObjectValue(ReceiverBusinessIdentity);
-            writer.WritePropertyName("protocolSettings");
+            writer.WritePropertyName("protocolSettings"u8);
             writer.WriteObjectValue(ProtocolSettings);
             writer.WriteEndObject();
         }
 
         internal static AS2OneWayAgreement DeserializeAS2OneWayAgreement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IntegrationAccountBusinessIdentity senderBusinessIdentity = default;
             IntegrationAccountBusinessIdentity receiverBusinessIdentity = default;
             AS2ProtocolSettings protocolSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("senderBusinessIdentity"))
+                if (property.NameEquals("senderBusinessIdentity"u8))
                 {
                     senderBusinessIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("receiverBusinessIdentity"))
+                if (property.NameEquals("receiverBusinessIdentity"u8))
                 {
                     receiverBusinessIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("protocolSettings"))
+                if (property.NameEquals("protocolSettings"u8))
                 {
                     protocolSettings = AS2ProtocolSettings.DeserializeAS2ProtocolSettings(property.Value);
                     continue;

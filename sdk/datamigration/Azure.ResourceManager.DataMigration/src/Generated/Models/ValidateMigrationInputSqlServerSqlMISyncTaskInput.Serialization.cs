@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("selectedDatabases");
+            writer.WritePropertyName("selectedDatabases"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
             {
@@ -25,22 +25,26 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(BackupFileShare))
             {
-                writer.WritePropertyName("backupFileShare");
+                writer.WritePropertyName("backupFileShare"u8);
                 writer.WriteObjectValue(BackupFileShare);
             }
-            writer.WritePropertyName("storageResourceId");
+            writer.WritePropertyName("storageResourceId"u8);
             writer.WriteStringValue(StorageResourceId);
-            writer.WritePropertyName("sourceConnectionInfo");
+            writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo);
-            writer.WritePropertyName("targetConnectionInfo");
+            writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo);
-            writer.WritePropertyName("azureApp");
+            writer.WritePropertyName("azureApp"u8);
             writer.WriteObjectValue(AzureApp);
             writer.WriteEndObject();
         }
 
         internal static ValidateMigrationInputSqlServerSqlMISyncTaskInput DeserializeValidateMigrationInputSqlServerSqlMISyncTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases = default;
             Optional<FileShare> backupFileShare = default;
             string storageResourceId = default;
@@ -49,7 +53,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             AzureActiveDirectoryApp azureApp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("selectedDatabases"))
+                if (property.NameEquals("selectedDatabases"u8))
                 {
                     List<MigrateSqlServerSqlMIDatabaseInput> array = new List<MigrateSqlServerSqlMIDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -59,7 +63,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     selectedDatabases = array;
                     continue;
                 }
-                if (property.NameEquals("backupFileShare"))
+                if (property.NameEquals("backupFileShare"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,22 +73,22 @@ namespace Azure.ResourceManager.DataMigration.Models
                     backupFileShare = FileShare.DeserializeFileShare(property.Value);
                     continue;
                 }
-                if (property.NameEquals("storageResourceId"))
+                if (property.NameEquals("storageResourceId"u8))
                 {
                     storageResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceConnectionInfo"))
+                if (property.NameEquals("sourceConnectionInfo"u8))
                 {
                     sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("targetConnectionInfo"))
+                if (property.NameEquals("targetConnectionInfo"u8))
                 {
                     targetConnectionInfo = MISqlConnectionInfo.DeserializeMISqlConnectionInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("azureApp"))
+                if (property.NameEquals("azureApp"u8))
                 {
                     azureApp = AzureActiveDirectoryApp.DeserializeAzureActiveDirectoryApp(property.Value);
                     continue;

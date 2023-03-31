@@ -19,27 +19,27 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsInEditMode))
             {
-                writer.WritePropertyName("inEdit");
+                writer.WritePropertyName("inEdit"u8);
                 writer.WriteBooleanValue(IsInEditMode.Value);
             }
             if (Optional.IsDefined(DraftContentLink))
             {
-                writer.WritePropertyName("draftContentLink");
+                writer.WritePropertyName("draftContentLink"u8);
                 writer.WriteObjectValue(DraftContentLink);
             }
             if (Optional.IsDefined(CreatedOn))
             {
-                writer.WritePropertyName("creationTime");
+                writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(LastModifiedOn))
             {
-                writer.WritePropertyName("lastModifiedTime");
+                writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             if (Optional.IsCollectionDefined(OutputTypes))
             {
-                writer.WritePropertyName("outputTypes");
+                writer.WritePropertyName("outputTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in OutputTypes)
                 {
@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationRunbookDraft DeserializeAutomationRunbookDraft(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> inEdit = default;
             Optional<AutomationContentLink> draftContentLink = default;
             Optional<DateTimeOffset> creationTime = default;
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<IList<string>> outputTypes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("inEdit"))
+                if (property.NameEquals("inEdit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,7 +85,7 @@ namespace Azure.ResourceManager.Automation.Models
                     inEdit = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("draftContentLink"))
+                if (property.NameEquals("draftContentLink"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                     draftContentLink = AutomationContentLink.DeserializeAutomationContentLink(property.Value);
                     continue;
                 }
-                if (property.NameEquals("creationTime"))
+                if (property.NameEquals("creationTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +105,7 @@ namespace Azure.ResourceManager.Automation.Models
                     creationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastModifiedTime"))
+                if (property.NameEquals("lastModifiedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,7 +115,7 @@ namespace Azure.ResourceManager.Automation.Models
                     lastModifiedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,7 +130,7 @@ namespace Azure.ResourceManager.Automation.Models
                     parameters = dictionary;
                     continue;
                 }
-                if (property.NameEquals("outputTypes"))
+                if (property.NameEquals("outputTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ApiRevisionContract DeserializeApiRevisionContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> apiId = default;
             Optional<string> apiRevision = default;
             Optional<DateTimeOffset> createdDateTime = default;
@@ -25,17 +29,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<bool> isCurrent = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("apiId"))
+                if (property.NameEquals("apiId"u8))
                 {
                     apiId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("apiRevision"))
+                if (property.NameEquals("apiRevision"u8))
                 {
                     apiRevision = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdDateTime"))
+                if (property.NameEquals("createdDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     createdDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("updatedDateTime"))
+                if (property.NameEquals("updatedDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,12 +59,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     updatedDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateUrl"))
+                if (property.NameEquals("privateUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +74,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     privateUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("isOnline"))
+                if (property.NameEquals("isOnline"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +84,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     isOnline = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isCurrent"))
+                if (property.NameEquals("isCurrent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

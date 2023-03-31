@@ -16,12 +16,16 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static MetricAlertStatusProperties DeserializeMetricAlertStatusProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyDictionary<string, string>> dimensions = default;
             Optional<string> status = default;
             Optional<DateTimeOffset> timestamp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dimensions"))
+                if (property.NameEquals("dimensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,12 +40,12 @@ namespace Azure.ResourceManager.Monitor.Models
                     dimensions = dictionary;
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

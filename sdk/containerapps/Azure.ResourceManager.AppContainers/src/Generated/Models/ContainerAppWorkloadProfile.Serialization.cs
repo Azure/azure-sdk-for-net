@@ -15,33 +15,37 @@ namespace Azure.ResourceManager.AppContainers.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("workloadProfileType");
+            writer.WritePropertyName("workloadProfileType"u8);
             writer.WriteStringValue(WorkloadProfileType);
-            writer.WritePropertyName("minimumCount");
+            writer.WritePropertyName("minimumCount"u8);
             writer.WriteNumberValue(MinimumCount);
-            writer.WritePropertyName("maximumCount");
+            writer.WritePropertyName("maximumCount"u8);
             writer.WriteNumberValue(MaximumCount);
             writer.WriteEndObject();
         }
 
         internal static ContainerAppWorkloadProfile DeserializeContainerAppWorkloadProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string workloadProfileType = default;
             int minimumCount = default;
             int maximumCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("workloadProfileType"))
+                if (property.NameEquals("workloadProfileType"u8))
                 {
                     workloadProfileType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("minimumCount"))
+                if (property.NameEquals("minimumCount"u8))
                 {
                     minimumCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maximumCount"))
+                if (property.NameEquals("maximumCount"u8))
                 {
                     maximumCount = property.Value.GetInt32();
                     continue;

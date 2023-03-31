@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("selectedDatabases");
+            writer.WritePropertyName("selectedDatabases"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
             {
@@ -25,28 +25,32 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(ValidationOptions))
             {
-                writer.WritePropertyName("validationOptions");
+                writer.WritePropertyName("validationOptions"u8);
                 writer.WriteObjectValue(ValidationOptions);
             }
             if (Optional.IsDefined(StartedOn))
             {
-                writer.WritePropertyName("startedOn");
+                writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn);
             }
             if (Optional.IsDefined(EncryptedKeyForSecureFields))
             {
-                writer.WritePropertyName("encryptedKeyForSecureFields");
+                writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
             }
-            writer.WritePropertyName("sourceConnectionInfo");
+            writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo);
-            writer.WritePropertyName("targetConnectionInfo");
+            writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo);
             writer.WriteEndObject();
         }
 
         internal static MigrateSqlServerSqlDBTaskInput DeserializeMigrateSqlServerSqlDBTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<MigrateSqlServerSqlDBDatabaseInput> selectedDatabases = default;
             Optional<MigrationValidationOptions> validationOptions = default;
             Optional<string> startedOn = default;
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SqlConnectionInfo targetConnectionInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("selectedDatabases"))
+                if (property.NameEquals("selectedDatabases"u8))
                 {
                     List<MigrateSqlServerSqlDBDatabaseInput> array = new List<MigrateSqlServerSqlDBDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -65,7 +69,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     selectedDatabases = array;
                     continue;
                 }
-                if (property.NameEquals("validationOptions"))
+                if (property.NameEquals("validationOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,22 +79,22 @@ namespace Azure.ResourceManager.DataMigration.Models
                     validationOptions = MigrationValidationOptions.DeserializeMigrationValidationOptions(property.Value);
                     continue;
                 }
-                if (property.NameEquals("startedOn"))
+                if (property.NameEquals("startedOn"u8))
                 {
                     startedOn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptedKeyForSecureFields"))
+                if (property.NameEquals("encryptedKeyForSecureFields"u8))
                 {
                     encryptedKeyForSecureFields = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceConnectionInfo"))
+                if (property.NameEquals("sourceConnectionInfo"u8))
                 {
                     sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("targetConnectionInfo"))
+                if (property.NameEquals("targetConnectionInfo"u8))
                 {
                     targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
                     continue;

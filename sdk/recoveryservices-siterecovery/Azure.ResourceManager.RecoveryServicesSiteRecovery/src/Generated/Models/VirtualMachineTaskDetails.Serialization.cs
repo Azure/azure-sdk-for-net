@@ -14,23 +14,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static VirtualMachineTaskDetails DeserializeVirtualMachineTaskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> skippedReason = default;
             Optional<string> skippedReasonString = default;
             Optional<JobEntity> jobTask = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("skippedReason"))
+                if (property.NameEquals("skippedReason"u8))
                 {
                     skippedReason = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("skippedReasonString"))
+                if (property.NameEquals("skippedReasonString"u8))
                 {
                     skippedReasonString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobTask"))
+                if (property.NameEquals("jobTask"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     jobTask = JobEntity.DeserializeJobEntity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

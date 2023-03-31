@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(QuotaBasePropertiesType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(QuotaBasePropertiesType);
             }
             if (Optional.IsDefined(Limit))
             {
-                writer.WritePropertyName("limit");
+                writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
             if (Optional.IsDefined(Unit))
             {
-                writer.WritePropertyName("unit");
+                writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
             writer.WriteEndObject();

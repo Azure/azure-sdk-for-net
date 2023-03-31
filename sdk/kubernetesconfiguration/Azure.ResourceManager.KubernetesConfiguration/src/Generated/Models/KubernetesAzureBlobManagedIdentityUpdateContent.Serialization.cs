@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (ClientId != null)
                 {
-                    writer.WritePropertyName("clientId");
+                    writer.WritePropertyName("clientId"u8);
                     writer.WriteStringValue(ClientId);
                 }
                 else

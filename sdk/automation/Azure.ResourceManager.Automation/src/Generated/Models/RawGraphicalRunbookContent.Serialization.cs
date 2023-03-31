@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SchemaVersion))
             {
-                writer.WritePropertyName("schemaVersion");
+                writer.WritePropertyName("schemaVersion"u8);
                 writer.WriteStringValue(SchemaVersion);
             }
             if (Optional.IsDefined(RunbookDefinition))
             {
-                writer.WritePropertyName("runbookDefinition");
+                writer.WritePropertyName("runbookDefinition"u8);
                 writer.WriteStringValue(RunbookDefinition);
             }
             if (Optional.IsDefined(RunbookType))
             {
-                writer.WritePropertyName("runbookType");
+                writer.WritePropertyName("runbookType"u8);
                 writer.WriteStringValue(RunbookType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -35,22 +35,26 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static RawGraphicalRunbookContent DeserializeRawGraphicalRunbookContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> schemaVersion = default;
             Optional<string> runbookDefinition = default;
             Optional<GraphRunbookType> runbookType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("schemaVersion"))
+                if (property.NameEquals("schemaVersion"u8))
                 {
                     schemaVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runbookDefinition"))
+                if (property.NameEquals("runbookDefinition"u8))
                 {
                     runbookDefinition = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runbookType"))
+                if (property.NameEquals("runbookType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

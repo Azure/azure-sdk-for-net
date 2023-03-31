@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Data.Tables.Models
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class TableModelFactory
     {
         /// <summary> Initializes a new instance of TableServiceStatistics. </summary>

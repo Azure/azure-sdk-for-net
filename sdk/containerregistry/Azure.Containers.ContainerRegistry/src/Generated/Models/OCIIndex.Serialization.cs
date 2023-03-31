@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
@@ -16,12 +15,16 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static OCIIndex DeserializeOCIIndex(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ManifestListAttributes>> manifests = default;
             Optional<OciAnnotations> annotations = default;
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("manifests"))
+                if (property.NameEquals("manifests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +39,7 @@ namespace Azure.Containers.ContainerRegistry
                     manifests = array;
                     continue;
                 }
-                if (property.NameEquals("annotations"))
+                if (property.NameEquals("annotations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +49,7 @@ namespace Azure.Containers.ContainerRegistry
                     annotations = OciAnnotations.DeserializeOciAnnotations(property.Value);
                     continue;
                 }
-                if (property.NameEquals("schemaVersion"))
+                if (property.NameEquals("schemaVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

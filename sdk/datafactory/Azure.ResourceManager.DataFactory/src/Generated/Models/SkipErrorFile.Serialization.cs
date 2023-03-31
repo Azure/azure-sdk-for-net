@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FileMissing))
             {
-                writer.WritePropertyName("fileMissing");
+                writer.WritePropertyName("fileMissing"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(FileMissing);
 #else
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(DataInconsistency))
             {
-                writer.WritePropertyName("dataInconsistency");
+                writer.WritePropertyName("dataInconsistency"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DataInconsistency);
 #else
@@ -39,11 +39,15 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SkipErrorFile DeserializeSkipErrorFile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> fileMissing = default;
             Optional<BinaryData> dataInconsistency = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fileMissing"))
+                if (property.NameEquals("fileMissing"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     fileMissing = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("dataInconsistency"))
+                if (property.NameEquals("dataInconsistency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AggregationKind))
             {
-                writer.WritePropertyName("aggregationKind");
+                writer.WritePropertyName("aggregationKind"u8);
                 writer.WriteStringValue(AggregationKind.Value.ToString());
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static EventGroupingSettings DeserializeEventGroupingSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EventGroupingAggregationKind> aggregationKind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("aggregationKind"))
+                if (property.NameEquals("aggregationKind"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

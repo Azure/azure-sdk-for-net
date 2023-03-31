@@ -20,17 +20,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MinNodeCount))
             {
-                writer.WritePropertyName("minNodeCount");
+                writer.WritePropertyName("minNodeCount"u8);
                 writer.WriteNumberValue(MinNodeCount.Value);
             }
             if (Optional.IsDefined(Enabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
             if (Optional.IsDefined(MaxNodeCount))
             {
-                writer.WritePropertyName("maxNodeCount");
+                writer.WritePropertyName("maxNodeCount"u8);
                 writer.WriteNumberValue(MaxNodeCount.Value);
             }
             writer.WriteEndObject();
@@ -38,12 +38,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AutoScaleProperties DeserializeAutoScaleProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> minNodeCount = default;
             Optional<bool> enabled = default;
             Optional<int> maxNodeCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minNodeCount"))
+                if (property.NameEquals("minNodeCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     minNodeCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +67,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("maxNodeCount"))
+                if (property.NameEquals("maxNodeCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

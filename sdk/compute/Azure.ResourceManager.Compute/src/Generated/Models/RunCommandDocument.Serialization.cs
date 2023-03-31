@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static RunCommandDocument DeserializeRunCommandDocument(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<string> script = default;
             Optional<IReadOnlyList<RunCommandParameterDefinition>> parameters = default;
             string schema = default;
@@ -24,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             string description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("script"))
+                if (property.NameEquals("script"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
                     script = array;
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,27 +53,27 @@ namespace Azure.ResourceManager.Compute.Models
                     parameters = array;
                     continue;
                 }
-                if (property.NameEquals("$schema"))
+                if (property.NameEquals("$schema"u8))
                 {
                     schema = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = property.Value.GetString().ToSupportedOperatingSystemType();
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;

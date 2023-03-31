@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseMetadataSyncConfiguration data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseMetadataSyncConfiguration data model.
+    /// Configuration for metadata sync
+    /// </summary>
     public partial class SynapseMetadataSyncConfigurationData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseMetadataSyncConfigurationData. </summary>

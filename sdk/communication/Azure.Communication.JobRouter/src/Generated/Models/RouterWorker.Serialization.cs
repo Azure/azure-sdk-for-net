@@ -19,45 +19,60 @@ namespace Azure.Communication.JobRouter.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(_queueAssignments))
             {
-                writer.WritePropertyName("queueAssignments");
+                writer.WritePropertyName("queueAssignments"u8);
                 writer.WriteStartObject();
                 foreach (var item in _queueAssignments)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(TotalCapacity))
             {
-                writer.WritePropertyName("totalCapacity");
+                writer.WritePropertyName("totalCapacity"u8);
                 writer.WriteNumberValue(TotalCapacity.Value);
             }
             if (Optional.IsCollectionDefined(_labels))
             {
-                writer.WritePropertyName("labels");
+                writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
                 foreach (var item in _labels)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsCollectionDefined(_tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in _tags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsCollectionDefined(_channelConfigurations))
             {
-                writer.WritePropertyName("channelConfigurations");
+                writer.WritePropertyName("channelConfigurations"u8);
                 writer.WriteStartObject();
                 foreach (var item in _channelConfigurations)
                 {
@@ -68,7 +83,7 @@ namespace Azure.Communication.JobRouter.Models
             }
             if (Optional.IsDefined(AvailableForOffers))
             {
-                writer.WritePropertyName("availableForOffers");
+                writer.WritePropertyName("availableForOffers"u8);
                 writer.WriteBooleanValue(AvailableForOffers.Value);
             }
             writer.WriteEndObject();
@@ -76,6 +91,10 @@ namespace Azure.Communication.JobRouter.Models
 
         internal static RouterWorker DeserializeRouterWorker(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<RouterWorkerState> state = default;
             Optional<IDictionary<string, object>> queueAssignments = default;
@@ -89,12 +108,12 @@ namespace Azure.Communication.JobRouter.Models
             Optional<bool> availableForOffers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +123,7 @@ namespace Azure.Communication.JobRouter.Models
                     state = new RouterWorkerState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("queueAssignments"))
+                if (property.NameEquals("queueAssignments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,12 +133,19 @@ namespace Azure.Communication.JobRouter.Models
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetObject());
+                        }
                     }
                     queueAssignments = dictionary;
                     continue;
                 }
-                if (property.NameEquals("totalCapacity"))
+                if (property.NameEquals("totalCapacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,7 +155,7 @@ namespace Azure.Communication.JobRouter.Models
                     totalCapacity = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("labels"))
+                if (property.NameEquals("labels"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,12 +165,19 @@ namespace Azure.Communication.JobRouter.Models
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetObject());
+                        }
                     }
                     labels = dictionary;
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,12 +187,19 @@ namespace Azure.Communication.JobRouter.Models
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetObject());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("channelConfigurations"))
+                if (property.NameEquals("channelConfigurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -174,7 +214,7 @@ namespace Azure.Communication.JobRouter.Models
                     channelConfigurations = dictionary;
                     continue;
                 }
-                if (property.NameEquals("offers"))
+                if (property.NameEquals("offers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -189,7 +229,7 @@ namespace Azure.Communication.JobRouter.Models
                     offers = array;
                     continue;
                 }
-                if (property.NameEquals("assignedJobs"))
+                if (property.NameEquals("assignedJobs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -204,7 +244,7 @@ namespace Azure.Communication.JobRouter.Models
                     assignedJobs = array;
                     continue;
                 }
-                if (property.NameEquals("loadRatio"))
+                if (property.NameEquals("loadRatio"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -214,7 +254,7 @@ namespace Azure.Communication.JobRouter.Models
                     loadRatio = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("availableForOffers"))
+                if (property.NameEquals("availableForOffers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

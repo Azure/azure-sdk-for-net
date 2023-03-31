@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsManagerEmailNotificationDisabled))
             {
-                writer.WritePropertyName("disableManagerEmailNotification");
+                writer.WritePropertyName("disableManagerEmailNotification"u8);
                 writer.WriteBooleanValue(IsManagerEmailNotificationDisabled.Value);
             }
             if (Optional.IsDefined(IsOwnerEmailNotificationDisabled))
             {
-                writer.WritePropertyName("disableOwnerEmailNotification");
+                writer.WritePropertyName("disableOwnerEmailNotification"u8);
                 writer.WriteBooleanValue(IsOwnerEmailNotificationDisabled.Value);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static GovernanceEmailNotification DeserializeGovernanceEmailNotification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> disableManagerEmailNotification = default;
             Optional<bool> disableOwnerEmailNotification = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("disableManagerEmailNotification"))
+                if (property.NameEquals("disableManagerEmailNotification"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     disableManagerEmailNotification = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("disableOwnerEmailNotification"))
+                if (property.NameEquals("disableOwnerEmailNotification"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

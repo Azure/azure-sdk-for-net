@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static DataMigrationServiceStatusResponse DeserializeDataMigrationServiceStatusResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> agentVersion = default;
             Optional<BinaryData> agentConfiguration = default;
             Optional<string> status = default;
@@ -23,12 +27,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IReadOnlyList<string>> supportedTaskTypes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("agentVersion"))
+                if (property.NameEquals("agentVersion"u8))
                 {
                     agentVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentConfiguration"))
+                if (property.NameEquals("agentConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,17 +42,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                     agentConfiguration = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmSize"))
+                if (property.NameEquals("vmSize"u8))
                 {
                     vmSize = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportedTaskTypes"))
+                if (property.NameEquals("supportedTaskTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

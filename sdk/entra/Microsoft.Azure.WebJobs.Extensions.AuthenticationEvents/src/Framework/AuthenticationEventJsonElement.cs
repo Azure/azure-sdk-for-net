@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks.Sources;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 {

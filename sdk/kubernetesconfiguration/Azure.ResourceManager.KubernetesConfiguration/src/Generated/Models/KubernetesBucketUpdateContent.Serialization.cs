@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (Uri != null)
                 {
-                    writer.WritePropertyName("url");
+                    writer.WritePropertyName("url"u8);
                     writer.WriteStringValue(Uri.AbsoluteUri);
                 }
                 else
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (BucketName != null)
                 {
-                    writer.WritePropertyName("bucketName");
+                    writer.WritePropertyName("bucketName"u8);
                     writer.WriteStringValue(BucketName);
                 }
                 else
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (UseInsecureCommunication != null)
                 {
-                    writer.WritePropertyName("insecure");
+                    writer.WritePropertyName("insecure"u8);
                     writer.WriteBooleanValue(UseInsecureCommunication.Value);
                 }
                 else
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (TimeoutInSeconds != null)
                 {
-                    writer.WritePropertyName("timeoutInSeconds");
+                    writer.WritePropertyName("timeoutInSeconds"u8);
                     writer.WriteNumberValue(TimeoutInSeconds.Value);
                 }
                 else
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (SyncIntervalInSeconds != null)
                 {
-                    writer.WritePropertyName("syncIntervalInSeconds");
+                    writer.WritePropertyName("syncIntervalInSeconds"u8);
                     writer.WriteNumberValue(SyncIntervalInSeconds.Value);
                 }
                 else
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (AccessKey != null)
                 {
-                    writer.WritePropertyName("accessKey");
+                    writer.WritePropertyName("accessKey"u8);
                     writer.WriteStringValue(AccessKey);
                 }
                 else
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (LocalAuthRef != null)
                 {
-                    writer.WritePropertyName("localAuthRef");
+                    writer.WritePropertyName("localAuthRef"u8);
                     writer.WriteStringValue(LocalAuthRef);
                 }
                 else

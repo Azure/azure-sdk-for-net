@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
             if (Optional.IsCollectionDefined(InlineEventTypes))
             {
-                writer.WritePropertyName("inlineEventTypes");
+                writer.WritePropertyName("inlineEventTypes"u8);
                 writer.WriteStartObject();
                 foreach (var item in InlineEventTypes)
                 {
@@ -37,11 +37,15 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static PartnerTopicEventTypeInfo DeserializePartnerTopicEventTypeInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EventDefinitionKind> kind = default;
             Optional<IDictionary<string, InlineEventProperties>> inlineEventTypes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     kind = new EventDefinitionKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("inlineEventTypes"))
+                if (property.NameEquals("inlineEventTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

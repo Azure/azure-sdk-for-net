@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxPercentDeltaUnhealthyServices))
             {
-                writer.WritePropertyName("maxPercentDeltaUnhealthyServices");
+                writer.WritePropertyName("maxPercentDeltaUnhealthyServices"u8);
                 writer.WriteNumberValue(MaxPercentDeltaUnhealthyServices.Value);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ServiceTypeDeltaHealthPolicy DeserializeServiceTypeDeltaHealthPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxPercentDeltaUnhealthyServices = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxPercentDeltaUnhealthyServices"))
+                if (property.NameEquals("maxPercentDeltaUnhealthyServices"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

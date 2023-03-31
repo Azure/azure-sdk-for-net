@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.Avs
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ExpressRouteId))
             {
-                writer.WritePropertyName("expressRouteId");
+                writer.WritePropertyName("expressRouteId"u8);
                 writer.WriteStringValue(ExpressRouteId);
             }
             writer.WriteEndObject();
@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Avs
 
         internal static ExpressRouteAuthorizationData DeserializeExpressRouteAuthorizationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -40,22 +44,22 @@ namespace Azure.ResourceManager.Avs
             Optional<ResourceIdentifier> expressRouteId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +69,7 @@ namespace Azure.ResourceManager.Avs
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.Avs
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -84,7 +88,7 @@ namespace Azure.ResourceManager.Avs
                             provisioningState = new ExpressRouteAuthorizationProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("expressRouteAuthorizationId"))
+                        if (property0.NameEquals("expressRouteAuthorizationId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -94,12 +98,12 @@ namespace Azure.ResourceManager.Avs
                             expressRouteAuthorizationId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("expressRouteAuthorizationKey"))
+                        if (property0.NameEquals("expressRouteAuthorizationKey"u8))
                         {
                             expressRouteAuthorizationKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("expressRouteId"))
+                        if (property0.NameEquals("expressRouteId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

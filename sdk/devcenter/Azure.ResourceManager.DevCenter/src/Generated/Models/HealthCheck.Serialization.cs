@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DevCenter.Models
     {
         internal static HealthCheck DeserializeHealthCheck(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HealthCheckStatus> status = default;
             Optional<string> displayName = default;
             Optional<DateTimeOffset> startDateTime = default;
@@ -24,7 +28,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             Optional<string> additionalDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,12 +38,12 @@ namespace Azure.ResourceManager.DevCenter.Models
                     status = new HealthCheckStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startDateTime"))
+                if (property.NameEquals("startDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +53,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     startDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endDateTime"))
+                if (property.NameEquals("endDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,17 +63,17 @@ namespace Azure.ResourceManager.DevCenter.Models
                     endDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("errorType"))
+                if (property.NameEquals("errorType"u8))
                 {
                     errorType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recommendedAction"))
+                if (property.NameEquals("recommendedAction"u8))
                 {
                     recommendedAction = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("additionalDetails"))
+                if (property.NameEquals("additionalDetails"u8))
                 {
                     additionalDetails = property.Value.GetString();
                     continue;

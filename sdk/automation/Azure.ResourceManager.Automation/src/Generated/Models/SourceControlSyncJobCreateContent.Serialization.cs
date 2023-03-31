@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Automation.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("commitId");
+            writer.WritePropertyName("commitId"u8);
             writer.WriteStringValue(CommitId);
             writer.WriteEndObject();
             writer.WriteEndObject();

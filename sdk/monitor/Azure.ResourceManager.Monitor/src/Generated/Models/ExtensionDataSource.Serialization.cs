@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Streams))
             {
-                writer.WritePropertyName("streams");
+                writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
                 foreach (var item in Streams)
                 {
@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("extensionName");
+            writer.WritePropertyName("extensionName"u8);
             writer.WriteStringValue(ExtensionName);
             if (Optional.IsDefined(ExtensionSettings))
             {
-                writer.WritePropertyName("extensionSettings");
+                writer.WritePropertyName("extensionSettings"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ExtensionSettings);
 #else
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(InputDataSources))
             {
-                writer.WritePropertyName("inputDataSources");
+                writer.WritePropertyName("inputDataSources"u8);
                 writer.WriteStartArray();
                 foreach (var item in InputDataSources)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WriteEndObject();
@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ExtensionDataSource DeserializeExtensionDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ExtensionDataSourceStream>> streams = default;
             string extensionName = default;
             Optional<BinaryData> extensionSettings = default;
@@ -65,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("streams"))
+                if (property.NameEquals("streams"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,12 +84,12 @@ namespace Azure.ResourceManager.Monitor.Models
                     streams = array;
                     continue;
                 }
-                if (property.NameEquals("extensionName"))
+                if (property.NameEquals("extensionName"u8))
                 {
                     extensionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("extensionSettings"))
+                if (property.NameEquals("extensionSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,7 +99,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     extensionSettings = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("inputDataSources"))
+                if (property.NameEquals("inputDataSources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +114,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     inputDataSources = array;
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;

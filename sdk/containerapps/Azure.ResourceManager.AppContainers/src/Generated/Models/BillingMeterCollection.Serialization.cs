@@ -15,10 +15,14 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static BillingMeterCollection DeserializeBillingMeterCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ContainerAppBillingMeter> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<ContainerAppBillingMeter> array = new List<ContainerAppBillingMeter>();
                     foreach (var item in property.Value.EnumerateArray())

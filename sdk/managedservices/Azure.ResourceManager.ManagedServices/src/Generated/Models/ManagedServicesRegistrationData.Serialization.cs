@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.ManagedServices
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("properties");
+                writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
             if (Optional.IsDefined(Plan))
             {
-                writer.WritePropertyName("plan");
+                writer.WritePropertyName("plan"u8);
                 writer.WriteObjectValue(Plan);
             }
             writer.WriteEndObject();
@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.ManagedServices
 
         internal static ManagedServicesRegistrationData DeserializeManagedServicesRegistrationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServicesRegistrationProperties> properties = default;
             Optional<ManagedServicesPlan> plan = default;
             ResourceIdentifier id = default;
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.ManagedServices
             Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.ManagedServices
                     properties = ManagedServicesRegistrationProperties.DeserializeManagedServicesRegistrationProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("plan"))
+                if (property.NameEquals("plan"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,22 +64,22 @@ namespace Azure.ResourceManager.ManagedServices
                     plan = ManagedServicesPlan.DeserializeManagedServicesPlan(property.Value);
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

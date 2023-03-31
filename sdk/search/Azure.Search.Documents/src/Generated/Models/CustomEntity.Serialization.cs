@@ -16,13 +16,13 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
-                    writer.WritePropertyName("description");
+                    writer.WritePropertyName("description"u8);
                     writer.WriteStringValue(Description);
                 }
                 else
@@ -34,7 +34,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (Type != null)
                 {
-                    writer.WritePropertyName("type");
+                    writer.WritePropertyName("type"u8);
                     writer.WriteStringValue(Type);
                 }
                 else
@@ -46,7 +46,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (Subtype != null)
                 {
-                    writer.WritePropertyName("subtype");
+                    writer.WritePropertyName("subtype"u8);
                     writer.WriteStringValue(Subtype);
                 }
                 else
@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (Id != null)
                 {
-                    writer.WritePropertyName("id");
+                    writer.WritePropertyName("id"u8);
                     writer.WriteStringValue(Id);
                 }
                 else
@@ -70,7 +70,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (CaseSensitive != null)
                 {
-                    writer.WritePropertyName("caseSensitive");
+                    writer.WritePropertyName("caseSensitive"u8);
                     writer.WriteBooleanValue(CaseSensitive.Value);
                 }
                 else
@@ -82,7 +82,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (AccentSensitive != null)
                 {
-                    writer.WritePropertyName("accentSensitive");
+                    writer.WritePropertyName("accentSensitive"u8);
                     writer.WriteBooleanValue(AccentSensitive.Value);
                 }
                 else
@@ -94,7 +94,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (FuzzyEditDistance != null)
                 {
-                    writer.WritePropertyName("fuzzyEditDistance");
+                    writer.WritePropertyName("fuzzyEditDistance"u8);
                     writer.WriteNumberValue(FuzzyEditDistance.Value);
                 }
                 else
@@ -106,7 +106,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (DefaultCaseSensitive != null)
                 {
-                    writer.WritePropertyName("defaultCaseSensitive");
+                    writer.WritePropertyName("defaultCaseSensitive"u8);
                     writer.WriteBooleanValue(DefaultCaseSensitive.Value);
                 }
                 else
@@ -118,7 +118,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (DefaultAccentSensitive != null)
                 {
-                    writer.WritePropertyName("defaultAccentSensitive");
+                    writer.WritePropertyName("defaultAccentSensitive"u8);
                     writer.WriteBooleanValue(DefaultAccentSensitive.Value);
                 }
                 else
@@ -130,7 +130,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (DefaultFuzzyEditDistance != null)
                 {
-                    writer.WritePropertyName("defaultFuzzyEditDistance");
+                    writer.WritePropertyName("defaultFuzzyEditDistance"u8);
                     writer.WriteNumberValue(DefaultFuzzyEditDistance.Value);
                 }
                 else
@@ -142,7 +142,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (Aliases != null)
                 {
-                    writer.WritePropertyName("aliases");
+                    writer.WritePropertyName("aliases"u8);
                     writer.WriteStartArray();
                     foreach (var item in Aliases)
                     {
@@ -160,6 +160,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static CustomEntity DeserializeCustomEntity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> description = default;
             Optional<string> type = default;
@@ -174,12 +178,12 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<IList<CustomEntityAlias>> aliases = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -189,7 +193,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -199,7 +203,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subtype"))
+                if (property.NameEquals("subtype"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -209,7 +213,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     subtype = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -219,7 +223,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("caseSensitive"))
+                if (property.NameEquals("caseSensitive"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -229,7 +233,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     caseSensitive = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("accentSensitive"))
+                if (property.NameEquals("accentSensitive"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -239,7 +243,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     accentSensitive = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("fuzzyEditDistance"))
+                if (property.NameEquals("fuzzyEditDistance"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -249,7 +253,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     fuzzyEditDistance = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("defaultCaseSensitive"))
+                if (property.NameEquals("defaultCaseSensitive"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -259,7 +263,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     defaultCaseSensitive = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("defaultAccentSensitive"))
+                if (property.NameEquals("defaultAccentSensitive"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -269,7 +273,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     defaultAccentSensitive = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("defaultFuzzyEditDistance"))
+                if (property.NameEquals("defaultFuzzyEditDistance"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -279,7 +283,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     defaultFuzzyEditDistance = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("aliases"))
+                if (property.NameEquals("aliases"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

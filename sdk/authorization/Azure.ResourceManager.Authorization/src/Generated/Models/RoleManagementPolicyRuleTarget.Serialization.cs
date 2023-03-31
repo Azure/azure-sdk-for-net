@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Caller))
             {
-                writer.WritePropertyName("caller");
+                writer.WritePropertyName("caller"u8);
                 writer.WriteStringValue(Caller);
             }
             if (Optional.IsCollectionDefined(Operations))
             {
-                writer.WritePropertyName("operations");
+                writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Operations)
                 {
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             if (Optional.IsDefined(Level))
             {
-                writer.WritePropertyName("level");
+                writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToString());
             }
             if (Optional.IsCollectionDefined(TargetObjects))
             {
-                writer.WritePropertyName("targetObjects");
+                writer.WritePropertyName("targetObjects"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetObjects)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             if (Optional.IsCollectionDefined(InheritableSettings))
             {
-                writer.WritePropertyName("inheritableSettings");
+                writer.WritePropertyName("inheritableSettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in InheritableSettings)
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             if (Optional.IsCollectionDefined(EnforcedSettings))
             {
-                writer.WritePropertyName("enforcedSettings");
+                writer.WritePropertyName("enforcedSettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in EnforcedSettings)
                 {
@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleManagementPolicyRuleTarget DeserializeRoleManagementPolicyRuleTarget(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> caller = default;
             Optional<IList<string>> operations = default;
             Optional<RoleManagementAssignmentLevel> level = default;
@@ -79,12 +83,12 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<IList<string>> enforcedSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("caller"))
+                if (property.NameEquals("caller"u8))
                 {
                     caller = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operations"))
+                if (property.NameEquals("operations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     operations = array;
                     continue;
                 }
-                if (property.NameEquals("level"))
+                if (property.NameEquals("level"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,7 +113,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     level = new RoleManagementAssignmentLevel(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetObjects"))
+                if (property.NameEquals("targetObjects"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +128,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     targetObjects = array;
                     continue;
                 }
-                if (property.NameEquals("inheritableSettings"))
+                if (property.NameEquals("inheritableSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,7 +143,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     inheritableSettings = array;
                     continue;
                 }
-                if (property.NameEquals("enforcedSettings"))
+                if (property.NameEquals("enforcedSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

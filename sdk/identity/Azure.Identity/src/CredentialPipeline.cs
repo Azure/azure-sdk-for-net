@@ -17,19 +17,13 @@ namespace Azure.Identity
 
         private CredentialPipeline(TokenCredentialOptions options)
         {
-            AuthorityHost = options.AuthorityHost;
-
             HttpPipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new CredentialResponseClassifier());
-
             Diagnostics = new ClientDiagnostics(options);
         }
 
-        public CredentialPipeline(Uri authorityHost, HttpPipeline httpPipeline, ClientDiagnostics diagnostics)
+        public CredentialPipeline(HttpPipeline httpPipeline, ClientDiagnostics diagnostics)
         {
-            AuthorityHost = authorityHost;
-
             HttpPipeline = httpPipeline;
-
             Diagnostics = diagnostics;
         }
 
@@ -37,8 +31,6 @@ namespace Azure.Identity
         {
             return options is null ? s_singleton.Value : new CredentialPipeline(options);
         }
-
-        public Uri AuthorityHost { get; }
 
         public HttpPipeline HttpPipeline { get; }
 

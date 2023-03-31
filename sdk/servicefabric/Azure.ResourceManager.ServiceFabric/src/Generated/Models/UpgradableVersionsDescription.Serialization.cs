@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetVersion");
+            writer.WritePropertyName("targetVersion"u8);
             writer.WriteStringValue(TargetVersion);
             writer.WriteEndObject();
         }

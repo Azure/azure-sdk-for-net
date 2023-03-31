@@ -15,23 +15,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InconsistentVmDetails DeserializeInconsistentVmDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vmName = default;
             Optional<string> cloudName = default;
             Optional<IReadOnlyList<string>> details = default;
             Optional<IReadOnlyList<string>> errorIds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vmName"))
+                if (property.NameEquals("vmName"u8))
                 {
                     vmName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cloudName"))
+                if (property.NameEquals("cloudName"u8))
                 {
                     cloudName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("details"))
+                if (property.NameEquals("details"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     details = array;
                     continue;
                 }
-                if (property.NameEquals("errorIds"))
+                if (property.NameEquals("errorIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

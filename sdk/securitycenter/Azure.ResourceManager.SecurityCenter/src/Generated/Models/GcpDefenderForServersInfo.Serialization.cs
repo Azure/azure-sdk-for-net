@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(WorkloadIdentityProviderId))
             {
-                writer.WritePropertyName("workloadIdentityProviderId");
+                writer.WritePropertyName("workloadIdentityProviderId"u8);
                 writer.WriteStringValue(WorkloadIdentityProviderId);
             }
             if (Optional.IsDefined(ServiceAccountEmailAddress))
             {
-                writer.WritePropertyName("serviceAccountEmailAddress");
+                writer.WritePropertyName("serviceAccountEmailAddress"u8);
                 writer.WriteStringValue(ServiceAccountEmailAddress);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static GcpDefenderForServersInfo DeserializeGcpDefenderForServersInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> workloadIdentityProviderId = default;
             Optional<string> serviceAccountEmailAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("workloadIdentityProviderId"))
+                if (property.NameEquals("workloadIdentityProviderId"u8))
                 {
                     workloadIdentityProviderId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceAccountEmailAddress"))
+                if (property.NameEquals("serviceAccountEmailAddress"u8))
                 {
                     serviceAccountEmailAddress = property.Value.GetString();
                     continue;

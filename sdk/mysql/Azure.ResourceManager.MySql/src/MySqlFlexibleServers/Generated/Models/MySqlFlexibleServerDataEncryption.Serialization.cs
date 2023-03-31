@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
             {
-                writer.WritePropertyName("primaryUserAssignedIdentityId");
+                writer.WritePropertyName("primaryUserAssignedIdentityId"u8);
                 writer.WriteStringValue(PrimaryUserAssignedIdentityId);
             }
             if (Optional.IsDefined(PrimaryKeyUri))
             {
-                writer.WritePropertyName("primaryKeyUri");
+                writer.WritePropertyName("primaryKeyUri"u8);
                 writer.WriteStringValue(PrimaryKeyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(GeoBackupUserAssignedIdentityId))
             {
-                writer.WritePropertyName("geoBackupUserAssignedIdentityId");
+                writer.WritePropertyName("geoBackupUserAssignedIdentityId"u8);
                 writer.WriteStringValue(GeoBackupUserAssignedIdentityId);
             }
             if (Optional.IsDefined(GeoBackupKeyUri))
             {
-                writer.WritePropertyName("geoBackupKeyUri");
+                writer.WritePropertyName("geoBackupKeyUri"u8);
                 writer.WriteStringValue(GeoBackupKeyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(EncryptionType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(EncryptionType.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         internal static MySqlFlexibleServerDataEncryption DeserializeMySqlFlexibleServerDataEncryption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
             Optional<Uri> primaryKeyUri = default;
             Optional<ResourceIdentifier> geoBackupUserAssignedIdentityId = default;
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Optional<MySqlFlexibleServerDataEncryptionType> type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryUserAssignedIdentityId"))
+                if (property.NameEquals("primaryUserAssignedIdentityId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +67,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     primaryUserAssignedIdentityId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("primaryKeyUri"))
+                if (property.NameEquals("primaryKeyUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +77,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     primaryKeyUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("geoBackupUserAssignedIdentityId"))
+                if (property.NameEquals("geoBackupUserAssignedIdentityId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +87,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     geoBackupUserAssignedIdentityId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("geoBackupKeyUri"))
+                if (property.NameEquals("geoBackupKeyUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +97,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     geoBackupKeyUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

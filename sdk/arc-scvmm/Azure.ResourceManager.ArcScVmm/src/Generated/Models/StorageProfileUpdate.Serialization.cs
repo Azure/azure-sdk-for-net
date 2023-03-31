@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Disks))
             {
-                writer.WritePropertyName("disks");
+                writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {

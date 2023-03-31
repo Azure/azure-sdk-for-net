@@ -36,13 +36,13 @@ namespace Azure.Identity.Tests
                 EventLevel.Verbose);
 
             var client_1 = new MockMsalClient(
-                new CredentialPipeline(new Uri("https://w.com"), new HttpPipeline(new MockTransport()), new ClientDiagnostics(Moq.Mock.Of<ClientOptions>())),
+                new CredentialPipeline(new HttpPipeline(new MockTransport()), new ClientDiagnostics(Moq.Mock.Of<ClientOptions>())),
                 "tenant",
                 "client",
                 new InteractiveBrowserCredentialOptions(){ IsLoggingPIIEnabled = logPii });
 
             var client_2 = new MockMsalClient(
-                new CredentialPipeline(new Uri("https://w.com"), new HttpPipeline(new MockTransport()), new ClientDiagnostics(Moq.Mock.Of<ClientOptions>())),
+                new CredentialPipeline(new HttpPipeline(new MockTransport()), new ClientDiagnostics(Moq.Mock.Of<ClientOptions>())),
                 "tenant",
                 "client",
                 new InteractiveBrowserCredentialOptions(){ IsLoggingPIIEnabled = false }); // never log PII

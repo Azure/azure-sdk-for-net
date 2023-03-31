@@ -17,25 +17,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryZone))
             {
-                writer.WritePropertyName("primaryZone");
+                writer.WritePropertyName("primaryZone"u8);
                 writer.WriteStringValue(PrimaryZone);
             }
             if (Optional.IsDefined(RecoveryZone))
             {
-                writer.WritePropertyName("recoveryZone");
+                writer.WritePropertyName("recoveryZone"u8);
                 writer.WriteStringValue(RecoveryZone);
             }
             if (Optional.IsDefined(PrimaryExtendedLocation))
             {
-                writer.WritePropertyName("primaryExtendedLocation");
+                writer.WritePropertyName("primaryExtendedLocation"u8);
                 writer.WriteObjectValue(PrimaryExtendedLocation);
             }
             if (Optional.IsDefined(RecoveryExtendedLocation))
             {
-                writer.WritePropertyName("recoveryExtendedLocation");
+                writer.WritePropertyName("recoveryExtendedLocation"u8);
                 writer.WriteObjectValue(RecoveryExtendedLocation);
             }
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

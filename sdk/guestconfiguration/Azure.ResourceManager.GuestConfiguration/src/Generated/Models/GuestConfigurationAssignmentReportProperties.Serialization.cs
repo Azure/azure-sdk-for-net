@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     {
         internal static GuestConfigurationAssignmentReportProperties DeserializeGuestConfigurationAssignmentReportProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
             Optional<Guid> reportId = default;
             Optional<GuestConfigurationAssignmentInfo> assignment = default;
@@ -25,7 +29,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Optional<string> vmssResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("complianceStatus"))
+                if (property.NameEquals("complianceStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +39,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     complianceStatus = new AssignedGuestConfigurationMachineComplianceStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("reportId"))
+                if (property.NameEquals("reportId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     reportId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("assignment"))
+                if (property.NameEquals("assignment"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     assignment = GuestConfigurationAssignmentInfo.DeserializeGuestConfigurationAssignmentInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("vm"))
+                if (property.NameEquals("vm"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +69,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     vm = GuestConfigurationVmInfo.DeserializeGuestConfigurationVmInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +79,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +89,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("details"))
+                if (property.NameEquals("details"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,7 +99,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     details = GuestConfigurationAssignmentReportDetails.DeserializeGuestConfigurationAssignmentReportDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("vmssResourceId"))
+                if (property.NameEquals("vmssResourceId"u8))
                 {
                     vmssResourceId = property.Value.GetString();
                     continue;

@@ -4,9 +4,9 @@
     <AssemblyTitle>Microsoft Azure.Identity.BrokeredAuthentication Component</AssemblyTitle>
     <Version>1.0.0-beta.4</Version>
     <PackageTags>Microsoft Azure Identity Broker;$(PackageCommonTags)</PackageTags>
-    <TargetFrameworks Condition="$([MSBuild]::IsOsPlatform('Windows'))">$(RequiredTargetFrameworks);net462;netcoreapp3.1</TargetFrameworks>
-    <TargetFrameworks Condition="$([MSBuild]::IsOsPlatform('OSX'))">$(RequiredTargetFrameworks);netcoreapp3.1</TargetFrameworks>
-    <TargetFrameworks Condition="$([MSBuild]::IsOsPlatform('Linux')) ">$(RequiredTargetFrameworks);netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOsPlatform('Windows'))">$(RequiredTargetFrameworks);net462;net6.0</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOsPlatform('OSX'))">$(RequiredTargetFrameworks);net6.0</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOsPlatform('Linux')) ">$(RequiredTargetFrameworks);net6.0</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>

@@ -15,10 +15,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static AssessmentLinks DeserializeAssessmentLinks(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> azurePortalUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("azurePortalUri"))
+                if (property.NameEquals("azurePortalUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(LinkTables))
             {
-                writer.WritePropertyName("linkTables");
+                writer.WritePropertyName("linkTables"u8);
                 writer.WriteStartArray();
                 foreach (var item in LinkTables)
                 {
@@ -34,10 +34,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static EditTablesRequest DeserializeEditTablesRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<LinkTableRequest>> linkTables = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linkTables"))
+                if (property.NameEquals("linkTables"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

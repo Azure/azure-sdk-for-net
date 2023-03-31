@@ -15,6 +15,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentTable DeserializeDocumentTable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int rowCount = default;
             int columnCount = default;
             IReadOnlyList<DocumentTableCell> cells = default;
@@ -22,17 +26,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             IReadOnlyList<DocumentSpan> spans = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rowCount"))
+                if (property.NameEquals("rowCount"u8))
                 {
                     rowCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("columnCount"))
+                if (property.NameEquals("columnCount"u8))
                 {
                     columnCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("cells"))
+                if (property.NameEquals("cells"u8))
                 {
                     List<DocumentTableCell> array = new List<DocumentTableCell>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -42,7 +46,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     cells = array;
                     continue;
                 }
-                if (property.NameEquals("boundingRegions"))
+                if (property.NameEquals("boundingRegions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +61,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     boundingRegions = array;
                     continue;
                 }
-                if (property.NameEquals("spans"))
+                if (property.NameEquals("spans"u8))
                 {
                     List<DocumentSpan> array = new List<DocumentSpan>();
                     foreach (var item in property.Value.EnumerateArray())

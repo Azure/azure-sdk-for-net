@@ -14,13 +14,17 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseSsisEnvironmentReference DeserializeSynapseSsisEnvironmentReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> id = default;
             Optional<string> environmentFolderName = default;
             Optional<string> environmentName = default;
             Optional<string> referenceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,17 +34,17 @@ namespace Azure.ResourceManager.Synapse.Models
                     id = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("environmentFolderName"))
+                if (property.NameEquals("environmentFolderName"u8))
                 {
                     environmentFolderName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("environmentName"))
+                if (property.NameEquals("environmentName"u8))
                 {
                     environmentName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("referenceType"))
+                if (property.NameEquals("referenceType"u8))
                 {
                     referenceType = property.Value.GetString();
                     continue;

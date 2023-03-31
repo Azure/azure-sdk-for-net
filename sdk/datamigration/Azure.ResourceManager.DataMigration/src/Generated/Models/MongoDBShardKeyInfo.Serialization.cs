@@ -15,11 +15,15 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MongoDBShardKeyInfo DeserializeMongoDBShardKeyInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<MongoDBShardKeyField> fields = default;
             bool isUnique = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fields"))
+                if (property.NameEquals("fields"u8))
                 {
                     List<MongoDBShardKeyField> array = new List<MongoDBShardKeyField>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     fields = array;
                     continue;
                 }
-                if (property.NameEquals("isUnique"))
+                if (property.NameEquals("isUnique"u8))
                 {
                     isUnique = property.Value.GetBoolean();
                     continue;

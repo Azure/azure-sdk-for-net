@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Automation.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Runbook))
             {
-                writer.WritePropertyName("runbook");
+                writer.WritePropertyName("runbook"u8);
                 writer.WriteObjectValue(Runbook);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             if (Optional.IsDefined(RunOn))
             {
-                writer.WritePropertyName("runOn");
+                writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
             }
             writer.WriteEndObject();

@@ -19,35 +19,40 @@ namespace Azure.ResourceManager.OperationalInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Body))
             {
-                writer.WritePropertyName("body");
+                writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
             }
             if (Optional.IsDefined(Related))
             {
-                writer.WritePropertyName("related");
+                writer.WritePropertyName("related"u8);
                 writer.WriteObjectValue(Related);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartArray();
                     foreach (var item0 in item.Value)
                     {
@@ -59,7 +64,7 @@ namespace Azure.ResourceManager.OperationalInsights
             }
             if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("properties");
+                writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Properties);
 #else
@@ -72,6 +77,10 @@ namespace Azure.ResourceManager.OperationalInsights
 
         internal static LogAnalyticsQueryData DeserializeLogAnalyticsQueryData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -88,22 +97,22 @@ namespace Azure.ResourceManager.OperationalInsights
             Optional<BinaryData> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +122,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,7 +131,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("id"))
+                        if (property0.NameEquals("id"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -132,12 +141,12 @@ namespace Azure.ResourceManager.OperationalInsights
                             id0 = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("timeCreated"))
+                        if (property0.NameEquals("timeCreated"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -147,7 +156,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             timeCreated = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("timeModified"))
+                        if (property0.NameEquals("timeModified"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -157,22 +166,22 @@ namespace Azure.ResourceManager.OperationalInsights
                             timeModified = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("author"))
+                        if (property0.NameEquals("author"u8))
                         {
                             author = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("body"))
+                        if (property0.NameEquals("body"u8))
                         {
                             body = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("related"))
+                        if (property0.NameEquals("related"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -182,7 +191,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             related = LogAnalyticsQueryRelatedMetadata.DeserializeLogAnalyticsQueryRelatedMetadata(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("tags"))
+                        if (property0.NameEquals("tags"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -192,17 +201,24 @@ namespace Azure.ResourceManager.OperationalInsights
                             Dictionary<string, IList<string>> dictionary = new Dictionary<string, IList<string>>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                List<string> array = new List<string>();
-                                foreach (var item in property1.Value.EnumerateArray())
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
                                 {
-                                    array.Add(item.GetString());
+                                    dictionary.Add(property1.Name, null);
                                 }
-                                dictionary.Add(property1.Name, array);
+                                else
+                                {
+                                    List<string> array = new List<string>();
+                                    foreach (var item in property1.Value.EnumerateArray())
+                                    {
+                                        array.Add(item.GetString());
+                                    }
+                                    dictionary.Add(property1.Name, array);
+                                }
                             }
                             tags = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("properties"))
+                        if (property0.NameEquals("properties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Reservations.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Scopes))
             {
-                writer.WritePropertyName("scopes");
+                writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Scopes)
                 {

@@ -14,23 +14,27 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static OSVersionPropertiesBase DeserializeOSVersionPropertiesBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> version = default;
             Optional<string> label = default;
             Optional<bool> isDefault = default;
             Optional<bool> isActive = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isDefault"))
+                if (property.NameEquals("isDefault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
                     isDefault = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isActive"))
+                if (property.NameEquals("isActive"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

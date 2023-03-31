@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Orbital
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -31,43 +31,43 @@ namespace Azure.ResourceManager.Orbital
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(MinimumViableContactDuration))
             {
-                writer.WritePropertyName("minimumViableContactDuration");
+                writer.WritePropertyName("minimumViableContactDuration"u8);
                 writer.WriteStringValue(MinimumViableContactDuration.Value, "P");
             }
             if (Optional.IsDefined(MinimumElevationDegrees))
             {
-                writer.WritePropertyName("minimumElevationDegrees");
+                writer.WritePropertyName("minimumElevationDegrees"u8);
                 writer.WriteNumberValue(MinimumElevationDegrees.Value);
             }
             if (Optional.IsDefined(AutoTrackingConfiguration))
             {
-                writer.WritePropertyName("autoTrackingConfiguration");
+                writer.WritePropertyName("autoTrackingConfiguration"u8);
                 writer.WriteStringValue(AutoTrackingConfiguration.Value.ToSerialString());
             }
             if (Optional.IsDefined(EventHubUri))
             {
-                writer.WritePropertyName("eventHubUri");
+                writer.WritePropertyName("eventHubUri"u8);
                 writer.WriteStringValue(EventHubUri.AbsoluteUri);
             }
             if (Optional.IsDefined(NetworkConfiguration))
             {
-                writer.WritePropertyName("networkConfiguration");
+                writer.WritePropertyName("networkConfiguration"u8);
                 writer.WriteObjectValue(NetworkConfiguration);
             }
             if (Optional.IsCollectionDefined(Links))
             {
-                writer.WritePropertyName("links");
+                writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
@@ -81,6 +81,10 @@ namespace Azure.ResourceManager.Orbital
 
         internal static OrbitalContactProfileData DeserializeOrbitalContactProfileData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -97,7 +101,7 @@ namespace Azure.ResourceManager.Orbital
             Optional<IList<OrbitalContactProfileLink>> links = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,7 +111,7 @@ namespace Azure.ResourceManager.Orbital
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,27 +126,27 @@ namespace Azure.ResourceManager.Orbital
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -152,7 +156,7 @@ namespace Azure.ResourceManager.Orbital
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -161,7 +165,7 @@ namespace Azure.ResourceManager.Orbital
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -171,7 +175,7 @@ namespace Azure.ResourceManager.Orbital
                             provisioningState = new OrbitalProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("minimumViableContactDuration"))
+                        if (property0.NameEquals("minimumViableContactDuration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -181,7 +185,7 @@ namespace Azure.ResourceManager.Orbital
                             minimumViableContactDuration = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("minimumElevationDegrees"))
+                        if (property0.NameEquals("minimumElevationDegrees"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -191,7 +195,7 @@ namespace Azure.ResourceManager.Orbital
                             minimumElevationDegrees = property0.Value.GetSingle();
                             continue;
                         }
-                        if (property0.NameEquals("autoTrackingConfiguration"))
+                        if (property0.NameEquals("autoTrackingConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -201,7 +205,7 @@ namespace Azure.ResourceManager.Orbital
                             autoTrackingConfiguration = property0.Value.GetString().ToAutoTrackingConfiguration();
                             continue;
                         }
-                        if (property0.NameEquals("eventHubUri"))
+                        if (property0.NameEquals("eventHubUri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -211,7 +215,7 @@ namespace Azure.ResourceManager.Orbital
                             eventHubUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("networkConfiguration"))
+                        if (property0.NameEquals("networkConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -221,7 +225,7 @@ namespace Azure.ResourceManager.Orbital
                             networkConfiguration = ContactProfilesPropertiesNetworkConfiguration.DeserializeContactProfilesPropertiesNetworkConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("links"))
+                        if (property0.NameEquals("links"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

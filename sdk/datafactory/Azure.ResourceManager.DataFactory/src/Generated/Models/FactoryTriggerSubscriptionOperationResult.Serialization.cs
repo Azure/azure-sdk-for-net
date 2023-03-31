@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static FactoryTriggerSubscriptionOperationResult DeserializeFactoryTriggerSubscriptionOperationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> triggerName = default;
             Optional<EventSubscriptionStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("triggerName"))
+                if (property.NameEquals("triggerName"u8))
                 {
                     triggerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

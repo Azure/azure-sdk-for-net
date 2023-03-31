@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static JobStatusEventDetails DeserializeJobStatusEventDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> jobId = default;
             Optional<string> jobFriendlyName = default;
             Optional<string> jobStatus = default;
@@ -21,27 +25,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobId"))
+                if (property.NameEquals("jobId"u8))
                 {
                     jobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobFriendlyName"))
+                if (property.NameEquals("jobFriendlyName"u8))
                 {
                     jobFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobStatus"))
+                if (property.NameEquals("jobStatus"u8))
                 {
                     jobStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("affectedObjectType"))
+                if (property.NameEquals("affectedObjectType"u8))
                 {
                     affectedObjectType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

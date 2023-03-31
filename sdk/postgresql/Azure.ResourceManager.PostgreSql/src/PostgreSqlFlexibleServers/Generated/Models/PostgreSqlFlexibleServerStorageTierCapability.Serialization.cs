@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         internal static PostgreSqlFlexibleServerStorageTierCapability DeserializePostgreSqlFlexibleServerStorageTierCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> tierName = default;
             Optional<long> iops = default;
@@ -21,17 +25,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tierName"))
+                if (property.NameEquals("tierName"u8))
                 {
                     tierName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("iops"))
+                if (property.NameEquals("iops"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     iops = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("isBaseline"))
+                if (property.NameEquals("isBaseline"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     isBaseline = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;

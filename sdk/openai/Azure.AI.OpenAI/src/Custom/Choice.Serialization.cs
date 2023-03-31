@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml.Linq;
 using Azure;
 using Azure.Core;
 
@@ -49,21 +50,13 @@ namespace Azure.AI.OpenAI
                         continue;
                     }
                 }
-                if (property.NameEquals("finishReason"))
+                if (property.NameEquals("finish_reason"))
                 {
                     finishReason = property.Value.GetString();
                     continue;
                 }
             }
             return new Choice(text, Optional.ToNullable(index), logprobs, finishReason);
-        }
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Choice FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeChoice(document.RootElement);
         }
     }
 }

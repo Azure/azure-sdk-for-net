@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(TargetService))
             {
-                writer.WritePropertyName("targetService");
+                writer.WritePropertyName("targetService"u8);
                 writer.WriteObjectValue(TargetService);
             }
             if (Optional.IsDefined(AuthInfo))
             {
-                writer.WritePropertyName("authInfo");
+                writer.WritePropertyName("authInfo"u8);
                 writer.WriteObjectValue(AuthInfo);
             }
             if (Optional.IsDefined(ClientType))
             {
-                writer.WritePropertyName("clientType");
+                writer.WritePropertyName("clientType"u8);
                 writer.WriteStringValue(ClientType.Value.ToString());
             }
             if (Optional.IsDefined(VnetSolution))
             {
                 if (VnetSolution != null)
                 {
-                    writer.WritePropertyName("vNetSolution");
+                    writer.WritePropertyName("vNetSolution"u8);
                     writer.WriteObjectValue(VnetSolution);
                 }
                 else
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 if (SecretStore != null)
                 {
-                    writer.WritePropertyName("secretStore");
+                    writer.WritePropertyName("secretStore"u8);
                     writer.WriteObjectValue(SecretStore);
                 }
                 else
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 if (Scope != null)
                 {
-                    writer.WritePropertyName("scope");
+                    writer.WritePropertyName("scope"u8);
                     writer.WriteStringValue(Scope);
                 }
                 else

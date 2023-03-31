@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Attestation.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             if (Optional.IsDefined(PolicySigningCertificates))
             {
-                writer.WritePropertyName("policySigningCertificates");
+                writer.WritePropertyName("policySigningCertificates"u8);
                 writer.WriteObjectValue(PolicySigningCertificates);
             }
             writer.WriteEndObject();

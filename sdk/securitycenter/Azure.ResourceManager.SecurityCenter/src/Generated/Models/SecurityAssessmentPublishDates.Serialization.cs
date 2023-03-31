@@ -17,26 +17,30 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(GA))
             {
-                writer.WritePropertyName("GA");
+                writer.WritePropertyName("GA"u8);
                 writer.WriteStringValue(GA);
             }
-            writer.WritePropertyName("public");
+            writer.WritePropertyName("public"u8);
             writer.WriteStringValue(Public);
             writer.WriteEndObject();
         }
 
         internal static SecurityAssessmentPublishDates DeserializeSecurityAssessmentPublishDates(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ga = default;
             string @public = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("GA"))
+                if (property.NameEquals("GA"u8))
                 {
                     ga = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("public"))
+                if (property.NameEquals("public"u8))
                 {
                     @public = property.Value.GetString();
                     continue;

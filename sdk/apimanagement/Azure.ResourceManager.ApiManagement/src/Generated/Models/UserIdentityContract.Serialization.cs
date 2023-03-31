@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Provider))
             {
-                writer.WritePropertyName("provider");
+                writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static UserIdentityContract DeserializeUserIdentityContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> provider = default;
             Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provider"))
+                if (property.NameEquals("provider"u8))
                 {
                     provider = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;

@@ -16,21 +16,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("timeWindowSize");
+            writer.WritePropertyName("timeWindowSize"u8);
             writer.WriteStringValue(TimeWindowSize, "P");
-            writer.WritePropertyName("minThreshold");
+            writer.WritePropertyName("minThreshold"u8);
             writer.WriteNumberValue(MinThreshold);
-            writer.WritePropertyName("maxThreshold");
+            writer.WritePropertyName("maxThreshold"u8);
             writer.WriteNumberValue(MaxThreshold);
-            writer.WritePropertyName("isEnabled");
+            writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            writer.WritePropertyName("ruleType");
+            writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType);
             writer.WriteEndObject();
         }
 
         internal static HttpC2DRejectedMessagesNotInAllowedRange DeserializeHttpC2DRejectedMessagesNotInAllowedRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TimeSpan timeWindowSize = default;
             int minThreshold = default;
             int maxThreshold = default;
@@ -40,37 +44,37 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string ruleType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timeWindowSize"))
+                if (property.NameEquals("timeWindowSize"u8))
                 {
                     timeWindowSize = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("minThreshold"))
+                if (property.NameEquals("minThreshold"u8))
                 {
                     minThreshold = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxThreshold"))
+                if (property.NameEquals("maxThreshold"u8))
                 {
                     maxThreshold = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isEnabled"))
+                if (property.NameEquals("isEnabled"u8))
                 {
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("ruleType"))
+                if (property.NameEquals("ruleType"u8))
                 {
                     ruleType = property.Value.GetString();
                     continue;

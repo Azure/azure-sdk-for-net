@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.ArcScVmm
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("extendedLocation");
+            writer.WritePropertyName("extendedLocation"u8);
             JsonSerializer.Serialize(writer, ExtendedLocation); if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -31,38 +31,38 @@ namespace Azure.ResourceManager.ArcScVmm
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(InventoryItemId))
             {
-                writer.WritePropertyName("inventoryItemId");
+                writer.WritePropertyName("inventoryItemId"u8);
                 writer.WriteStringValue(InventoryItemId);
             }
             if (Optional.IsDefined(VmmServerId))
             {
-                writer.WritePropertyName("vmmServerId");
+                writer.WritePropertyName("vmmServerId"u8);
                 writer.WriteStringValue(VmmServerId);
             }
             if (Optional.IsDefined(CloudId))
             {
-                writer.WritePropertyName("cloudId");
+                writer.WritePropertyName("cloudId"u8);
                 writer.WriteStringValue(CloudId);
             }
             if (Optional.IsDefined(TemplateId))
             {
-                writer.WritePropertyName("templateId");
+                writer.WritePropertyName("templateId"u8);
                 writer.WriteStringValue(TemplateId);
             }
             if (Optional.IsDefined(CheckpointType))
             {
-                writer.WritePropertyName("checkpointType");
+                writer.WritePropertyName("checkpointType"u8);
                 writer.WriteStringValue(CheckpointType);
             }
             if (Optional.IsCollectionDefined(Checkpoints))
             {
-                writer.WritePropertyName("checkpoints");
+                writer.WritePropertyName("checkpoints"u8);
                 writer.WriteStartArray();
                 foreach (var item in Checkpoints)
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ArcScVmm
             }
             if (Optional.IsCollectionDefined(AvailabilitySets))
             {
-                writer.WritePropertyName("availabilitySets");
+                writer.WritePropertyName("availabilitySets"u8);
                 writer.WriteStartArray();
                 foreach (var item in AvailabilitySets)
                 {
@@ -82,37 +82,37 @@ namespace Azure.ResourceManager.ArcScVmm
             }
             if (Optional.IsDefined(OSProfile))
             {
-                writer.WritePropertyName("osProfile");
+                writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
             if (Optional.IsDefined(HardwareProfile))
             {
-                writer.WritePropertyName("hardwareProfile");
+                writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
-                writer.WritePropertyName("networkProfile");
+                writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
             if (Optional.IsDefined(StorageProfile))
             {
-                writer.WritePropertyName("storageProfile");
+                writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
             if (Optional.IsDefined(VmName))
             {
-                writer.WritePropertyName("vmName");
+                writer.WritePropertyName("vmName"u8);
                 writer.WriteStringValue(VmName);
             }
             if (Optional.IsDefined(Uuid))
             {
-                writer.WritePropertyName("uuid");
+                writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
             if (Optional.IsDefined(Generation))
             {
-                writer.WritePropertyName("generation");
+                writer.WritePropertyName("generation"u8);
                 writer.WriteNumberValue(Generation.Value);
             }
             writer.WriteEndObject();
@@ -121,6 +121,10 @@ namespace Azure.ResourceManager.ArcScVmm
 
         internal static ScVmmVirtualMachineData DeserializeScVmmVirtualMachineData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ExtendedLocation extendedLocation = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -146,12 +150,12 @@ namespace Azure.ResourceManager.ArcScVmm
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("extendedLocation"))
+                if (property.NameEquals("extendedLocation"u8))
                 {
                     extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -166,27 +170,27 @@ namespace Azure.ResourceManager.ArcScVmm
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -196,7 +200,7 @@ namespace Azure.ResourceManager.ArcScVmm
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -205,32 +209,32 @@ namespace Azure.ResourceManager.ArcScVmm
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("inventoryItemId"))
+                        if (property0.NameEquals("inventoryItemId"u8))
                         {
                             inventoryItemId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("vmmServerId"))
+                        if (property0.NameEquals("vmmServerId"u8))
                         {
                             vmmServerId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("cloudId"))
+                        if (property0.NameEquals("cloudId"u8))
                         {
                             cloudId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("templateId"))
+                        if (property0.NameEquals("templateId"u8))
                         {
                             templateId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("checkpointType"))
+                        if (property0.NameEquals("checkpointType"u8))
                         {
                             checkpointType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("checkpoints"))
+                        if (property0.NameEquals("checkpoints"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -245,7 +249,7 @@ namespace Azure.ResourceManager.ArcScVmm
                             checkpoints = array;
                             continue;
                         }
-                        if (property0.NameEquals("availabilitySets"))
+                        if (property0.NameEquals("availabilitySets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -260,7 +264,7 @@ namespace Azure.ResourceManager.ArcScVmm
                             availabilitySets = array;
                             continue;
                         }
-                        if (property0.NameEquals("osProfile"))
+                        if (property0.NameEquals("osProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -270,7 +274,7 @@ namespace Azure.ResourceManager.ArcScVmm
                             osProfile = OSProfile.DeserializeOSProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("hardwareProfile"))
+                        if (property0.NameEquals("hardwareProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -280,7 +284,7 @@ namespace Azure.ResourceManager.ArcScVmm
                             hardwareProfile = HardwareProfile.DeserializeHardwareProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("networkProfile"))
+                        if (property0.NameEquals("networkProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -290,7 +294,7 @@ namespace Azure.ResourceManager.ArcScVmm
                             networkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("storageProfile"))
+                        if (property0.NameEquals("storageProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -300,17 +304,17 @@ namespace Azure.ResourceManager.ArcScVmm
                             storageProfile = StorageProfile.DeserializeStorageProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("vmName"))
+                        if (property0.NameEquals("vmName"u8))
                         {
                             vmName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("uuid"))
+                        if (property0.NameEquals("uuid"u8))
                         {
                             uuid = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("generation"))
+                        if (property0.NameEquals("generation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -320,12 +324,12 @@ namespace Azure.ResourceManager.ArcScVmm
                             generation = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("powerState"))
+                        if (property0.NameEquals("powerState"u8))
                         {
                             powerState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;

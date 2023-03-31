@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SkuName))
             {
-                writer.WritePropertyName("skuName");
+                writer.WritePropertyName("skuName"u8);
                 writer.WriteStringValue(SkuName);
             }
             if (Optional.IsDefined(MinUnits))
             {
-                writer.WritePropertyName("minUnits");
+                writer.WritePropertyName("minUnits"u8);
                 writer.WriteNumberValue(MinUnits.Value);
             }
             if (Optional.IsDefined(MaxUnits))
             {
-                writer.WritePropertyName("maxUnits");
+                writer.WritePropertyName("maxUnits"u8);
                 writer.WriteNumberValue(MaxUnits.Value);
             }
             writer.WriteEndObject();
@@ -35,17 +35,21 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static HubBillingInfoFormat DeserializeHubBillingInfoFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> skuName = default;
             Optional<int> minUnits = default;
             Optional<int> maxUnits = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("skuName"))
+                if (property.NameEquals("skuName"u8))
                 {
                     skuName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("minUnits"))
+                if (property.NameEquals("minUnits"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     minUnits = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxUnits"))
+                if (property.NameEquals("maxUnits"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

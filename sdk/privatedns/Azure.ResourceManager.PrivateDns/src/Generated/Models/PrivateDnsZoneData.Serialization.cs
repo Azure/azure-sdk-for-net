@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.PrivateDns
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("etag");
+                writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.PrivateDns
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.PrivateDns
 
         internal static PrivateDnsZoneData DeserializePrivateDnsZoneData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -62,7 +66,7 @@ namespace Azure.ResourceManager.PrivateDns
             Optional<string> internalId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.PrivateDns
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,27 +91,27 @@ namespace Azure.ResourceManager.PrivateDns
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -117,7 +121,7 @@ namespace Azure.ResourceManager.PrivateDns
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,7 +130,7 @@ namespace Azure.ResourceManager.PrivateDns
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("maxNumberOfRecordSets"))
+                        if (property0.NameEquals("maxNumberOfRecordSets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -136,7 +140,7 @@ namespace Azure.ResourceManager.PrivateDns
                             maxNumberOfRecordSets = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("numberOfRecordSets"))
+                        if (property0.NameEquals("numberOfRecordSets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -146,7 +150,7 @@ namespace Azure.ResourceManager.PrivateDns
                             numberOfRecordSets = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("maxNumberOfVirtualNetworkLinks"))
+                        if (property0.NameEquals("maxNumberOfVirtualNetworkLinks"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -156,7 +160,7 @@ namespace Azure.ResourceManager.PrivateDns
                             maxNumberOfVirtualNetworkLinks = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("numberOfVirtualNetworkLinks"))
+                        if (property0.NameEquals("numberOfVirtualNetworkLinks"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -166,7 +170,7 @@ namespace Azure.ResourceManager.PrivateDns
                             numberOfVirtualNetworkLinks = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("maxNumberOfVirtualNetworkLinksWithRegistration"))
+                        if (property0.NameEquals("maxNumberOfVirtualNetworkLinksWithRegistration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -176,7 +180,7 @@ namespace Azure.ResourceManager.PrivateDns
                             maxNumberOfVirtualNetworkLinksWithRegistration = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("numberOfVirtualNetworkLinksWithRegistration"))
+                        if (property0.NameEquals("numberOfVirtualNetworkLinksWithRegistration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -186,7 +190,7 @@ namespace Azure.ResourceManager.PrivateDns
                             numberOfVirtualNetworkLinksWithRegistration = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -196,7 +200,7 @@ namespace Azure.ResourceManager.PrivateDns
                             privateDnsProvisioningState = new PrivateDnsProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("internalId"))
+                        if (property0.NameEquals("internalId"u8))
                         {
                             internalId = property0.Value.GetString();
                             continue;

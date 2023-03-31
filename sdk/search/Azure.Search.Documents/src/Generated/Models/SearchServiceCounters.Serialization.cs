@@ -14,6 +14,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static SearchServiceCounters DeserializeSearchServiceCounters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SearchResourceCounter> aliasesCount = default;
             SearchResourceCounter documentCount = default;
             SearchResourceCounter indexesCount = default;
@@ -24,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<SearchResourceCounter> skillsetCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("aliasesCount"))
+                if (property.NameEquals("aliasesCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,37 +38,37 @@ namespace Azure.Search.Documents.Indexes.Models
                     aliasesCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
                     continue;
                 }
-                if (property.NameEquals("documentCount"))
+                if (property.NameEquals("documentCount"u8))
                 {
                     documentCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
                     continue;
                 }
-                if (property.NameEquals("indexesCount"))
+                if (property.NameEquals("indexesCount"u8))
                 {
                     indexesCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
                     continue;
                 }
-                if (property.NameEquals("indexersCount"))
+                if (property.NameEquals("indexersCount"u8))
                 {
                     indexersCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataSourcesCount"))
+                if (property.NameEquals("dataSourcesCount"u8))
                 {
                     dataSourcesCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
                     continue;
                 }
-                if (property.NameEquals("storageSize"))
+                if (property.NameEquals("storageSize"u8))
                 {
                     storageSize = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
                     continue;
                 }
-                if (property.NameEquals("synonymMaps"))
+                if (property.NameEquals("synonymMaps"u8))
                 {
                     synonymMaps = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
                     continue;
                 }
-                if (property.NameEquals("skillsetCount"))
+                if (property.NameEquals("skillsetCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("trackName");
+            writer.WritePropertyName("trackName"u8);
             writer.WriteStringValue(TrackName);
             writer.WriteEndObject();
         }
 
         internal static LiveEventOutputTranscriptionTrack DeserializeLiveEventOutputTranscriptionTrack(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string trackName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("trackName"))
+                if (property.NameEquals("trackName"u8))
                 {
                     trackName = property.Value.GetString();
                     continue;

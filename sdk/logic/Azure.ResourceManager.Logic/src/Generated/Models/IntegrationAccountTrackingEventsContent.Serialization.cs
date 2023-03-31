@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceType");
+            writer.WritePropertyName("sourceType"u8);
             writer.WriteStringValue(SourceType);
             if (Optional.IsDefined(TrackEventsOptions))
             {
-                writer.WritePropertyName("trackEventsOptions");
+                writer.WritePropertyName("trackEventsOptions"u8);
                 writer.WriteStringValue(TrackEventsOptions.Value.ToString());
             }
-            writer.WritePropertyName("events");
+            writer.WritePropertyName("events"u8);
             writer.WriteStartArray();
             foreach (var item in Events)
             {

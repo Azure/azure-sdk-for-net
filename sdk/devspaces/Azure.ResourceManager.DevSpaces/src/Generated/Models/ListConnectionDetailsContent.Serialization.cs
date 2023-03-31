@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetContainerHostResourceId");
+            writer.WritePropertyName("targetContainerHostResourceId"u8);
             writer.WriteStringValue(TargetContainerHostResourceId);
             writer.WriteEndObject();
         }

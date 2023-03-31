@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataCenterAddressLocationResult DeserializeDataCenterAddressLocationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> contactPersonName = default;
             Optional<string> company = default;
             Optional<string> street1 = default;
@@ -33,77 +37,77 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<AzureLocation> dataCenterAzureLocation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("contactPersonName"))
+                if (property.NameEquals("contactPersonName"u8))
                 {
                     contactPersonName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("company"))
+                if (property.NameEquals("company"u8))
                 {
                     company = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("street1"))
+                if (property.NameEquals("street1"u8))
                 {
                     street1 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("street2"))
+                if (property.NameEquals("street2"u8))
                 {
                     street2 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("street3"))
+                if (property.NameEquals("street3"u8))
                 {
                     street3 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("city"))
+                if (property.NameEquals("city"u8))
                 {
                     city = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("zip"))
+                if (property.NameEquals("zip"u8))
                 {
                     zip = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("country"))
+                if (property.NameEquals("country"u8))
                 {
                     country = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phone"))
+                if (property.NameEquals("phone"u8))
                 {
                     phone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phoneExtension"))
+                if (property.NameEquals("phoneExtension"u8))
                 {
                     phoneExtension = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("addressType"))
+                if (property.NameEquals("addressType"u8))
                 {
                     addressType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("additionalShippingInformation"))
+                if (property.NameEquals("additionalShippingInformation"u8))
                 {
                     additionalShippingInformation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("datacenterAddressType"))
+                if (property.NameEquals("datacenterAddressType"u8))
                 {
                     dataCenterAddressType = property.Value.GetString().ToDataCenterAddressType();
                     continue;
                 }
-                if (property.NameEquals("supportedCarriersForReturnShipment"))
+                if (property.NameEquals("supportedCarriersForReturnShipment"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +122,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     supportedCarriersForReturnShipment = array;
                     continue;
                 }
-                if (property.NameEquals("dataCenterAzureLocation"))
+                if (property.NameEquals("dataCenterAzureLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

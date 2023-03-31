@@ -17,7 +17,7 @@ namespace Azure.Maps.Search.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Geometry))
             {
-                writer.WritePropertyName("geometry");
+                writer.WritePropertyName("geometry"u8);
                 writer.WriteObjectValue(Geometry);
             }
             writer.WriteEndObject();

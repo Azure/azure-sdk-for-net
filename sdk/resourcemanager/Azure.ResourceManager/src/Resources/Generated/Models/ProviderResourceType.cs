@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
             LocationMappings = new ChangeTrackingList<ProviderExtendedLocation>();
             Aliases = new ChangeTrackingList<ResourceTypeAlias>();
             ApiVersions = new ChangeTrackingList<string>();
+            ZoneMappings = new ChangeTrackingList<ZoneMapping>();
             ApiProfiles = new ChangeTrackingList<ApiProfile>();
             Properties = new ChangeTrackingDictionary<string, string>();
         }
@@ -31,10 +32,11 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="aliases"> The aliases that are supported by this resource type. </param>
         /// <param name="apiVersions"> The API version. </param>
         /// <param name="defaultApiVersion"> The default API version. </param>
+        /// <param name="zoneMappings"></param>
         /// <param name="apiProfiles"> The API profiles for the resource provider. </param>
         /// <param name="capabilities"> The additional capabilities offered by this resource type. </param>
         /// <param name="properties"> The properties. </param>
-        internal ProviderResourceType(string resourceType, IReadOnlyList<string> locations, IReadOnlyList<ProviderExtendedLocation> locationMappings, IReadOnlyList<ResourceTypeAlias> aliases, IReadOnlyList<string> apiVersions, string defaultApiVersion, IReadOnlyList<ApiProfile> apiProfiles, string capabilities, IReadOnlyDictionary<string, string> properties)
+        internal ProviderResourceType(string resourceType, IReadOnlyList<string> locations, IReadOnlyList<ProviderExtendedLocation> locationMappings, IReadOnlyList<ResourceTypeAlias> aliases, IReadOnlyList<string> apiVersions, string defaultApiVersion, IReadOnlyList<ZoneMapping> zoneMappings, IReadOnlyList<ApiProfile> apiProfiles, string capabilities, IReadOnlyDictionary<string, string> properties)
         {
             ResourceType = resourceType;
             Locations = locations;
@@ -42,6 +44,7 @@ namespace Azure.ResourceManager.Resources.Models
             Aliases = aliases;
             ApiVersions = apiVersions;
             DefaultApiVersion = defaultApiVersion;
+            ZoneMappings = zoneMappings;
             ApiProfiles = apiProfiles;
             Capabilities = capabilities;
             Properties = properties;
@@ -59,6 +62,8 @@ namespace Azure.ResourceManager.Resources.Models
         public IReadOnlyList<string> ApiVersions { get; }
         /// <summary> The default API version. </summary>
         public string DefaultApiVersion { get; }
+        /// <summary> Gets the zone mappings. </summary>
+        public IReadOnlyList<ZoneMapping> ZoneMappings { get; }
         /// <summary> The API profiles for the resource provider. </summary>
         public IReadOnlyList<ApiProfile> ApiProfiles { get; }
         /// <summary> The additional capabilities offered by this resource type. </summary>

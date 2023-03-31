@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Monitor.Query.Models
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class MonitorQueryModelFactory
     {
         /// <summary> Initializes a new instance of LogsTableColumn. </summary>

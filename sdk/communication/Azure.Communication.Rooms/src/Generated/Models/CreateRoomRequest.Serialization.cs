@@ -17,22 +17,22 @@ namespace Azure.Communication.Rooms
             writer.WriteStartObject();
             if (Optional.IsDefined(ValidFrom))
             {
-                writer.WritePropertyName("validFrom");
+                writer.WritePropertyName("validFrom"u8);
                 writer.WriteStringValue(ValidFrom.Value, "O");
             }
             if (Optional.IsDefined(ValidUntil))
             {
-                writer.WritePropertyName("validUntil");
+                writer.WritePropertyName("validUntil"u8);
                 writer.WriteStringValue(ValidUntil.Value, "O");
             }
             if (Optional.IsDefined(RoomJoinPolicy))
             {
-                writer.WritePropertyName("roomJoinPolicy");
+                writer.WritePropertyName("roomJoinPolicy"u8);
                 writer.WriteStringValue(RoomJoinPolicy.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Participants))
             {
-                writer.WritePropertyName("participants");
+                writer.WritePropertyName("participants"u8);
                 writer.WriteStartArray();
                 foreach (var item in Participants)
                 {

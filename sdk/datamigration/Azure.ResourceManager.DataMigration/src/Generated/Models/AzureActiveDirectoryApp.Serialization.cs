@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ApplicationId))
             {
-                writer.WritePropertyName("applicationId");
+                writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId);
             }
             if (Optional.IsDefined(AppKey))
             {
-                writer.WritePropertyName("appKey");
+                writer.WritePropertyName("appKey"u8);
                 writer.WriteStringValue(AppKey);
             }
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(IgnoreAzurePermissions))
             {
-                writer.WritePropertyName("ignoreAzurePermissions");
+                writer.WritePropertyName("ignoreAzurePermissions"u8);
                 writer.WriteBooleanValue(IgnoreAzurePermissions.Value);
             }
             writer.WriteEndObject();
@@ -41,23 +41,27 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static AzureActiveDirectoryApp DeserializeAzureActiveDirectoryApp(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> applicationId = default;
             Optional<string> appKey = default;
             Optional<Guid> tenantId = default;
             Optional<bool> ignoreAzurePermissions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("applicationId"))
+                if (property.NameEquals("applicationId"u8))
                 {
                     applicationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("appKey"))
+                if (property.NameEquals("appKey"u8))
                 {
                     appKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +71,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("ignoreAzurePermissions"))
+                if (property.NameEquals("ignoreAzurePermissions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

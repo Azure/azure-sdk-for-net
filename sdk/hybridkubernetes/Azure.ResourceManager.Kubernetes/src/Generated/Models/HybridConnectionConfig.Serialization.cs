@@ -14,13 +14,17 @@ namespace Azure.ResourceManager.Kubernetes.Models
     {
         internal static HybridConnectionConfig DeserializeHybridConnectionConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> expirationTime = default;
             Optional<string> hybridConnectionName = default;
             Optional<string> relay = default;
             Optional<string> token = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("expirationTime"))
+                if (property.NameEquals("expirationTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,17 +34,17 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     expirationTime = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("hybridConnectionName"))
+                if (property.NameEquals("hybridConnectionName"u8))
                 {
                     hybridConnectionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("relay"))
+                if (property.NameEquals("relay"u8))
                 {
                     relay = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("token"))
+                if (property.NameEquals("token"u8))
                 {
                     token = property.Value.GetString();
                     continue;

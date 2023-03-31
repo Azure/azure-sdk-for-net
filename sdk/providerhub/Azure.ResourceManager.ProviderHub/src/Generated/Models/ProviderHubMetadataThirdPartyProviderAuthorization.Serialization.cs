@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Authorizations))
             {
-                writer.WritePropertyName("authorizations");
+                writer.WritePropertyName("authorizations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Authorizations)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             if (Optional.IsDefined(ManagedByTenantId))
             {
-                writer.WritePropertyName("managedByTenantId");
+                writer.WritePropertyName("managedByTenantId"u8);
                 writer.WriteStringValue(ManagedByTenantId);
             }
             writer.WriteEndObject();
@@ -36,11 +36,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ProviderHubMetadataThirdPartyProviderAuthorization DeserializeProviderHubMetadataThirdPartyProviderAuthorization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<LightHouseAuthorization>> authorizations = default;
             Optional<string> managedByTenantId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("authorizations"))
+                if (property.NameEquals("authorizations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     authorizations = array;
                     continue;
                 }
-                if (property.NameEquals("managedByTenantId"))
+                if (property.NameEquals("managedByTenantId"u8))
                 {
                     managedByTenantId = property.Value.GetString();
                     continue;

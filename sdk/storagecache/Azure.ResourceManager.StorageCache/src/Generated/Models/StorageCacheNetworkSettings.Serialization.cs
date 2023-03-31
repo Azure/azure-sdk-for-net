@@ -19,27 +19,32 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Mtu))
             {
-                writer.WritePropertyName("mtu");
+                writer.WritePropertyName("mtu"u8);
                 writer.WriteNumberValue(Mtu.Value);
             }
             if (Optional.IsCollectionDefined(DnsServers))
             {
-                writer.WritePropertyName("dnsServers");
+                writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
                 foreach (var item in DnsServers)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DnsSearchDomain))
             {
-                writer.WritePropertyName("dnsSearchDomain");
+                writer.WritePropertyName("dnsSearchDomain"u8);
                 writer.WriteStringValue(DnsSearchDomain);
             }
             if (Optional.IsDefined(NtpServer))
             {
-                writer.WritePropertyName("ntpServer");
+                writer.WritePropertyName("ntpServer"u8);
                 writer.WriteStringValue(NtpServer);
             }
             writer.WriteEndObject();
@@ -47,6 +52,10 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static StorageCacheNetworkSettings DeserializeStorageCacheNetworkSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> mtu = default;
             Optional<IReadOnlyList<IPAddress>> utilityAddresses = default;
             Optional<IList<IPAddress>> dnsServers = default;
@@ -54,7 +63,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             Optional<string> ntpServer = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mtu"))
+                if (property.NameEquals("mtu"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +73,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     mtu = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("utilityAddresses"))
+                if (property.NameEquals("utilityAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,12 +83,19 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddress.Parse(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IPAddress.Parse(item.GetString()));
+                        }
                     }
                     utilityAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("dnsServers"))
+                if (property.NameEquals("dnsServers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,17 +105,24 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddress.Parse(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IPAddress.Parse(item.GetString()));
+                        }
                     }
                     dnsServers = array;
                     continue;
                 }
-                if (property.NameEquals("dnsSearchDomain"))
+                if (property.NameEquals("dnsSearchDomain"u8))
                 {
                     dnsSearchDomain = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ntpServer"))
+                if (property.NameEquals("ntpServer"u8))
                 {
                     ntpServer = property.Value.GetString();
                     continue;

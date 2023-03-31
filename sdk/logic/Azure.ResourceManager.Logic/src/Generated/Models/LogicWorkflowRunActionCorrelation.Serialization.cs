@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ActionTrackingId))
             {
-                writer.WritePropertyName("actionTrackingId");
+                writer.WritePropertyName("actionTrackingId"u8);
                 writer.WriteStringValue(ActionTrackingId.Value);
             }
             if (Optional.IsDefined(ClientTrackingId))
             {
-                writer.WritePropertyName("clientTrackingId");
+                writer.WritePropertyName("clientTrackingId"u8);
                 writer.WriteStringValue(ClientTrackingId);
             }
             if (Optional.IsCollectionDefined(ClientKeywords))
             {
-                writer.WritePropertyName("clientKeywords");
+                writer.WritePropertyName("clientKeywords"u8);
                 writer.WriteStartArray();
                 foreach (var item in ClientKeywords)
                 {
@@ -42,12 +42,16 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicWorkflowRunActionCorrelation DeserializeLogicWorkflowRunActionCorrelation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> actionTrackingId = default;
             Optional<string> clientTrackingId = default;
             Optional<IList<string>> clientKeywords = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("actionTrackingId"))
+                if (property.NameEquals("actionTrackingId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,12 +61,12 @@ namespace Azure.ResourceManager.Logic.Models
                     actionTrackingId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("clientTrackingId"))
+                if (property.NameEquals("clientTrackingId"u8))
                 {
                     clientTrackingId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientKeywords"))
+                if (property.NameEquals("clientKeywords"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

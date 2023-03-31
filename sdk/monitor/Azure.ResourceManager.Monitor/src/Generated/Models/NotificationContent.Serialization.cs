@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("alertType");
+            writer.WritePropertyName("alertType"u8);
             writer.WriteStringValue(AlertType);
             if (Optional.IsCollectionDefined(EmailReceivers))
             {
-                writer.WritePropertyName("emailReceivers");
+                writer.WritePropertyName("emailReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in EmailReceivers)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(SmsReceivers))
             {
-                writer.WritePropertyName("smsReceivers");
+                writer.WritePropertyName("smsReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in SmsReceivers)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(WebhookReceivers))
             {
-                writer.WritePropertyName("webhookReceivers");
+                writer.WritePropertyName("webhookReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in WebhookReceivers)
                 {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(ItsmReceivers))
             {
-                writer.WritePropertyName("itsmReceivers");
+                writer.WritePropertyName("itsmReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in ItsmReceivers)
                 {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(AzureAppPushReceivers))
             {
-                writer.WritePropertyName("azureAppPushReceivers");
+                writer.WritePropertyName("azureAppPushReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in AzureAppPushReceivers)
                 {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(AutomationRunbookReceivers))
             {
-                writer.WritePropertyName("automationRunbookReceivers");
+                writer.WritePropertyName("automationRunbookReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in AutomationRunbookReceivers)
                 {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(VoiceReceivers))
             {
-                writer.WritePropertyName("voiceReceivers");
+                writer.WritePropertyName("voiceReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in VoiceReceivers)
                 {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(LogicAppReceivers))
             {
-                writer.WritePropertyName("logicAppReceivers");
+                writer.WritePropertyName("logicAppReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in LogicAppReceivers)
                 {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(AzureFunctionReceivers))
             {
-                writer.WritePropertyName("azureFunctionReceivers");
+                writer.WritePropertyName("azureFunctionReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in AzureFunctionReceivers)
                 {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(ArmRoleReceivers))
             {
-                writer.WritePropertyName("armRoleReceivers");
+                writer.WritePropertyName("armRoleReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in ArmRoleReceivers)
                 {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(EventHubReceivers))
             {
-                writer.WritePropertyName("eventHubReceivers");
+                writer.WritePropertyName("eventHubReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in EventHubReceivers)
                 {

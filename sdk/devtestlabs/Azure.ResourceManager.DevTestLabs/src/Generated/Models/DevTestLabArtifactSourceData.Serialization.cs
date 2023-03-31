@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DevTestLabs
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -30,48 +30,48 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("uri");
+                writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(SourceType))
             {
-                writer.WritePropertyName("sourceType");
+                writer.WritePropertyName("sourceType"u8);
                 writer.WriteStringValue(SourceType.Value.ToString());
             }
             if (Optional.IsDefined(FolderPath))
             {
-                writer.WritePropertyName("folderPath");
+                writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
             if (Optional.IsDefined(ArmTemplateFolderPath))
             {
-                writer.WritePropertyName("armTemplateFolderPath");
+                writer.WritePropertyName("armTemplateFolderPath"u8);
                 writer.WriteStringValue(ArmTemplateFolderPath);
             }
             if (Optional.IsDefined(BranchRef))
             {
-                writer.WritePropertyName("branchRef");
+                writer.WritePropertyName("branchRef"u8);
                 writer.WriteStringValue(BranchRef);
             }
             if (Optional.IsDefined(SecurityToken))
             {
-                writer.WritePropertyName("securityToken");
+                writer.WritePropertyName("securityToken"u8);
                 writer.WriteStringValue(SecurityToken);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             writer.WriteEndObject();
@@ -80,6 +80,10 @@ namespace Azure.ResourceManager.DevTestLabs
 
         internal static DevTestLabArtifactSourceData DeserializeDevTestLabArtifactSourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,27 +118,27 @@ namespace Azure.ResourceManager.DevTestLabs
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -144,7 +148,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -153,12 +157,12 @@ namespace Azure.ResourceManager.DevTestLabs
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("uri"))
+                        if (property0.NameEquals("uri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -168,7 +172,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             uri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("sourceType"))
+                        if (property0.NameEquals("sourceType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -178,27 +182,27 @@ namespace Azure.ResourceManager.DevTestLabs
                             sourceType = new DevTestLabSourceControlType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("folderPath"))
+                        if (property0.NameEquals("folderPath"u8))
                         {
                             folderPath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("armTemplateFolderPath"))
+                        if (property0.NameEquals("armTemplateFolderPath"u8))
                         {
                             armTemplateFolderPath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("branchRef"))
+                        if (property0.NameEquals("branchRef"u8))
                         {
                             branchRef = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("securityToken"))
+                        if (property0.NameEquals("securityToken"u8))
                         {
                             securityToken = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -208,7 +212,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             status = new DevTestLabEnableStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("createdDate"))
+                        if (property0.NameEquals("createdDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -218,12 +222,12 @@ namespace Azure.ResourceManager.DevTestLabs
                             createdDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("uniqueIdentifier"))
+                        if (property0.NameEquals("uniqueIdentifier"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

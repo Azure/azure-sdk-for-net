@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LogRules))
             {
-                writer.WritePropertyName("logRules");
+                writer.WritePropertyName("logRules"u8);
                 writer.WriteObjectValue(LogRules);
             }
             if (Optional.IsDefined(MetricRules))
             {
-                writer.WritePropertyName("metricRules");
+                writer.WritePropertyName("metricRules"u8);
                 writer.WriteObjectValue(MetricRules);
             }
             writer.WriteEndObject();

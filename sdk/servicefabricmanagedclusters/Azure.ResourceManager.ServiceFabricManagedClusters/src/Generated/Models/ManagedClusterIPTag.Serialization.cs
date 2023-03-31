@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("ipTagType");
+            writer.WritePropertyName("ipTagType"u8);
             writer.WriteStringValue(IPTagType);
-            writer.WritePropertyName("tag");
+            writer.WritePropertyName("tag"u8);
             writer.WriteStringValue(Tag);
             writer.WriteEndObject();
         }
 
         internal static ManagedClusterIPTag DeserializeManagedClusterIPTag(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string ipTagType = default;
             string tag = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ipTagType"))
+                if (property.NameEquals("ipTagType"u8))
                 {
                     ipTagType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tag"))
+                if (property.NameEquals("tag"u8))
                 {
                     tag = property.Value.GetString();
                     continue;

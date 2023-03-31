@@ -14,28 +14,32 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static CertificateOrderContact DeserializeCertificateOrderContact(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> email = default;
             Optional<string> nameFirst = default;
             Optional<string> nameLast = default;
             Optional<string> phone = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("email"))
+                if (property.NameEquals("email"u8))
                 {
                     email = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nameFirst"))
+                if (property.NameEquals("nameFirst"u8))
                 {
                     nameFirst = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nameLast"))
+                if (property.NameEquals("nameLast"u8))
                 {
                     nameLast = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phone"))
+                if (property.NameEquals("phone"u8))
                 {
                     phone = property.Value.GetString();
                     continue;

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Subscription.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SubscriptionNameValue))
             {
-                writer.WritePropertyName("subscriptionName");
+                writer.WritePropertyName("subscriptionName"u8);
                 writer.WriteStringValue(SubscriptionNameValue);
             }
             writer.WriteEndObject();

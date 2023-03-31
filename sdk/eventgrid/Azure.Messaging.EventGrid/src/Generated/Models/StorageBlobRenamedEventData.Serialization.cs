@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static StorageBlobRenamedEventData DeserializeStorageBlobRenamedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> api = default;
             Optional<string> clientRequestId = default;
             Optional<string> requestId = default;
@@ -27,42 +31,42 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<object> storageDiagnostics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("api"))
+                if (property.NameEquals("api"u8))
                 {
                     api = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientRequestId"))
+                if (property.NameEquals("clientRequestId"u8))
                 {
                     clientRequestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requestId"))
+                if (property.NameEquals("requestId"u8))
                 {
                     requestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceUrl"))
+                if (property.NameEquals("sourceUrl"u8))
                 {
                     sourceUrl = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("destinationUrl"))
+                if (property.NameEquals("destinationUrl"u8))
                 {
                     destinationUrl = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sequencer"))
+                if (property.NameEquals("sequencer"u8))
                 {
                     sequencer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     identity = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageDiagnostics"))
+                if (property.NameEquals("storageDiagnostics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

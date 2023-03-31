@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Key))
             {
-                writer.WritePropertyName("key");
+                writer.WritePropertyName("key"u8);
                 writer.WriteObjectValue(Key);
             }
             if (Optional.IsDefined(Options))
             {
-                writer.WritePropertyName("options");
+                writer.WritePropertyName("options"u8);
                 writer.WriteObjectValue(Options);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static MongoDBIndex DeserializeMongoDBIndex(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MongoIndexKeys> key = default;
             Optional<MongoDBIndexConfig> options = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     key = MongoIndexKeys.DeserializeMongoIndexKeys(property.Value);
                     continue;
                 }
-                if (property.NameEquals("options"))
+                if (property.NameEquals("options"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

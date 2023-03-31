@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing the CosmosDBSqlUserDefinedFunction data model. </summary>
+    /// <summary>
+    /// A class representing the CosmosDBSqlUserDefinedFunction data model.
+    /// An Azure Cosmos DB userDefinedFunction.
+    /// </summary>
     public partial class CosmosDBSqlUserDefinedFunctionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CosmosDBSqlUserDefinedFunctionData. </summary>

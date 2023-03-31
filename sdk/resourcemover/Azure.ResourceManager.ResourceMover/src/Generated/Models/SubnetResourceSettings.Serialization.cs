@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(AddressPrefix))
             {
-                writer.WritePropertyName("addressPrefix");
+                writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
             if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 if (NetworkSecurityGroup != null)
                 {
-                    writer.WritePropertyName("networkSecurityGroup");
+                    writer.WritePropertyName("networkSecurityGroup"u8);
                     writer.WriteObjectValue(NetworkSecurityGroup);
                 }
                 else
@@ -42,22 +42,26 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static SubnetResourceSettings DeserializeSubnetResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> addressPrefix = default;
             Optional<NetworkSecurityGroupResourceReferenceInfo> networkSecurityGroup = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("addressPrefix"))
+                if (property.NameEquals("addressPrefix"u8))
                 {
                     addressPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkSecurityGroup"))
+                if (property.NameEquals("networkSecurityGroup"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,24 +17,28 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceGroupId))
             {
-                writer.WritePropertyName("resourceGroupId");
+                writer.WritePropertyName("resourceGroupId"u8);
                 writer.WriteStringValue(ResourceGroupId);
             }
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
-            writer.WritePropertyName("dataStoreType");
+            writer.WritePropertyName("dataStoreType"u8);
             writer.WriteStringValue(DataStoreType.ToString());
             writer.WriteEndObject();
         }
 
         internal static OperationalDataStoreSettings DeserializeOperationalDataStoreSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> resourceGroupId = default;
             string objectType = default;
             DataStoreType dataStoreType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceGroupId"))
+                if (property.NameEquals("resourceGroupId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,12 +48,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     resourceGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataStoreType"))
+                if (property.NameEquals("dataStoreType"u8))
                 {
                     dataStoreType = new DataStoreType(property.Value.GetString());
                     continue;

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Cpu))
             {
-                writer.WritePropertyName("cpu");
+                writer.WritePropertyName("cpu"u8);
                 writer.WriteStringValue(Cpu);
             }
             if (Optional.IsDefined(Memory))
             {
-                writer.WritePropertyName("memory");
+                writer.WritePropertyName("memory"u8);
                 writer.WriteStringValue(Memory);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformDeploymentResourceRequirements DeserializeAppPlatformDeploymentResourceRequirements(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> cpu = default;
             Optional<string> memory = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cpu"))
+                if (property.NameEquals("cpu"u8))
                 {
                     cpu = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("memory"))
+                if (property.NameEquals("memory"u8))
                 {
                     memory = property.Value.GetString();
                     continue;

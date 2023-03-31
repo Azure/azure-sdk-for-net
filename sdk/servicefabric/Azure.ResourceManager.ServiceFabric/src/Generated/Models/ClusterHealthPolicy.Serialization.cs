@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxPercentUnhealthyNodes))
             {
-                writer.WritePropertyName("maxPercentUnhealthyNodes");
+                writer.WritePropertyName("maxPercentUnhealthyNodes"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyNodes.Value);
             }
             if (Optional.IsDefined(MaxPercentUnhealthyApplications))
             {
-                writer.WritePropertyName("maxPercentUnhealthyApplications");
+                writer.WritePropertyName("maxPercentUnhealthyApplications"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyApplications.Value);
             }
             if (Optional.IsCollectionDefined(ApplicationHealthPolicies))
             {
-                writer.WritePropertyName("applicationHealthPolicies");
+                writer.WritePropertyName("applicationHealthPolicies"u8);
                 writer.WriteStartObject();
                 foreach (var item in ApplicationHealthPolicies)
                 {
@@ -42,12 +42,16 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ClusterHealthPolicy DeserializeClusterHealthPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxPercentUnhealthyNodes = default;
             Optional<int> maxPercentUnhealthyApplications = default;
             Optional<IDictionary<string, ApplicationHealthPolicy>> applicationHealthPolicies = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxPercentUnhealthyNodes"))
+                if (property.NameEquals("maxPercentUnhealthyNodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +61,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     maxPercentUnhealthyNodes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxPercentUnhealthyApplications"))
+                if (property.NameEquals("maxPercentUnhealthyApplications"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +71,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     maxPercentUnhealthyApplications = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("applicationHealthPolicies"))
+                if (property.NameEquals("applicationHealthPolicies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

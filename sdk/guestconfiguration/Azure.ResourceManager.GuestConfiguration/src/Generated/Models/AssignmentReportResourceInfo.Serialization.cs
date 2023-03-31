@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Reasons))
             {
-                writer.WritePropertyName("reasons");
+                writer.WritePropertyName("reasons"u8);
                 writer.WriteStartArray();
                 foreach (var item in Reasons)
                 {
@@ -32,13 +32,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         internal static AssignmentReportResourceInfo DeserializeAssignmentReportResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
             Optional<string> resourceId = default;
             Optional<IList<AssignmentReportResourceComplianceReason>> reasons = default;
             Optional<BinaryData> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("complianceStatus"))
+                if (property.NameEquals("complianceStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,12 +52,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     complianceStatus = new AssignedGuestConfigurationMachineComplianceStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reasons"))
+                if (property.NameEquals("reasons"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     reasons = array;
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

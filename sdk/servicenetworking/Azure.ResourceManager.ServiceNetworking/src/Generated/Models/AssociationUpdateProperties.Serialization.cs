@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AssociationType))
             {
-                writer.WritePropertyName("associationType");
+                writer.WritePropertyName("associationType"u8);
                 writer.WriteStringValue(AssociationType.Value.ToString());
             }
             if (Optional.IsDefined(Subnet))
             {
-                writer.WritePropertyName("subnet");
+                writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
             }
             writer.WriteEndObject();

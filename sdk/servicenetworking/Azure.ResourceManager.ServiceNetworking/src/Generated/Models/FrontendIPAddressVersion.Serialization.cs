@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         public static FrontendIPAddressVersion ToFrontendIPAddressVersion(this string value)
         {
-            if (string.Equals(value, "IPv4", StringComparison.InvariantCultureIgnoreCase)) return FrontendIPAddressVersion.IPv4;
-            if (string.Equals(value, "IPv6", StringComparison.InvariantCultureIgnoreCase)) return FrontendIPAddressVersion.IPv6;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IPv4")) return FrontendIPAddressVersion.IPv4;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IPv6")) return FrontendIPAddressVersion.IPv6;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FrontendIPAddressVersion value.");
         }
     }

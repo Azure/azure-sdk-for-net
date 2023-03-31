@@ -18,34 +18,34 @@ namespace Azure.ResourceManager.Peering.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Direct))
             {
-                writer.WritePropertyName("direct");
+                writer.WritePropertyName("direct"u8);
                 writer.WriteObjectValue(Direct);
             }
             if (Optional.IsDefined(Exchange))
             {
-                writer.WritePropertyName("exchange");
+                writer.WritePropertyName("exchange"u8);
                 writer.WriteObjectValue(Exchange);
             }
             if (Optional.IsDefined(PeeringLocationValue))
             {
-                writer.WritePropertyName("peeringLocation");
+                writer.WritePropertyName("peeringLocation"u8);
                 writer.WriteStringValue(PeeringLocationValue);
             }
             if (Optional.IsDefined(Country))
             {
-                writer.WritePropertyName("country");
+                writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
             if (Optional.IsDefined(AzureRegion))
             {
-                writer.WritePropertyName("azureRegion");
+                writer.WritePropertyName("azureRegion"u8);
                 writer.WriteStringValue(AzureRegion.Value);
             }
             writer.WriteEndObject();
@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static PeeringLocation DeserializePeeringLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PeeringKind> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.Peering.Models
             Optional<AzureLocation> azureRegion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,22 +80,22 @@ namespace Azure.ResourceManager.Peering.Models
                     kind = new PeeringKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +105,7 @@ namespace Azure.ResourceManager.Peering.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +114,7 @@ namespace Azure.ResourceManager.Peering.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("direct"))
+                        if (property0.NameEquals("direct"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -120,7 +124,7 @@ namespace Azure.ResourceManager.Peering.Models
                             direct = DirectPeeringLocationProperties.DeserializeDirectPeeringLocationProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("exchange"))
+                        if (property0.NameEquals("exchange"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -130,17 +134,17 @@ namespace Azure.ResourceManager.Peering.Models
                             exchange = PeeringLocationPropertiesExchange.DeserializePeeringLocationPropertiesExchange(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("peeringLocation"))
+                        if (property0.NameEquals("peeringLocation"u8))
                         {
                             peeringLocation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("country"))
+                        if (property0.NameEquals("country"u8))
                         {
                             country = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("azureRegion"))
+                        if (property0.NameEquals("azureRegion"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

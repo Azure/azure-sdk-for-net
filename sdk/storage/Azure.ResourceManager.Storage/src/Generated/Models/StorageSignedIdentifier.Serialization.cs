@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(AccessPolicy))
             {
-                writer.WritePropertyName("accessPolicy");
+                writer.WritePropertyName("accessPolicy"u8);
                 writer.WriteObjectValue(AccessPolicy);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageSignedIdentifier DeserializeStorageSignedIdentifier(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<StorageServiceAccessPolicy> accessPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accessPolicy"))
+                if (property.NameEquals("accessPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

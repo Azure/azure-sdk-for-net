@@ -18,55 +18,55 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FirstPlayExpiration))
             {
-                writer.WritePropertyName("firstPlayExpiration");
+                writer.WritePropertyName("firstPlayExpiration"u8);
                 writer.WriteStringValue(FirstPlayExpiration.Value, "P");
             }
             if (Optional.IsDefined(ScmsRestriction))
             {
-                writer.WritePropertyName("scmsRestriction");
+                writer.WritePropertyName("scmsRestriction"u8);
                 writer.WriteNumberValue(ScmsRestriction.Value);
             }
             if (Optional.IsDefined(AgcAndColorStripeRestriction))
             {
-                writer.WritePropertyName("agcAndColorStripeRestriction");
+                writer.WritePropertyName("agcAndColorStripeRestriction"u8);
                 writer.WriteNumberValue(AgcAndColorStripeRestriction.Value);
             }
             if (Optional.IsDefined(ExplicitAnalogTelevisionOutputRestriction))
             {
-                writer.WritePropertyName("explicitAnalogTelevisionOutputRestriction");
+                writer.WritePropertyName("explicitAnalogTelevisionOutputRestriction"u8);
                 writer.WriteObjectValue(ExplicitAnalogTelevisionOutputRestriction);
             }
-            writer.WritePropertyName("digitalVideoOnlyContentRestriction");
+            writer.WritePropertyName("digitalVideoOnlyContentRestriction"u8);
             writer.WriteBooleanValue(HasDigitalVideoOnlyContentRestriction);
-            writer.WritePropertyName("imageConstraintForAnalogComponentVideoRestriction");
+            writer.WritePropertyName("imageConstraintForAnalogComponentVideoRestriction"u8);
             writer.WriteBooleanValue(HasImageConstraintForAnalogComponentVideoRestriction);
-            writer.WritePropertyName("imageConstraintForAnalogComputerMonitorRestriction");
+            writer.WritePropertyName("imageConstraintForAnalogComputerMonitorRestriction"u8);
             writer.WriteBooleanValue(HasImageConstraintForAnalogComputerMonitorRestriction);
-            writer.WritePropertyName("allowPassingVideoContentToUnknownOutput");
+            writer.WritePropertyName("allowPassingVideoContentToUnknownOutput"u8);
             writer.WriteStringValue(AllowPassingVideoContentToUnknownOutput.ToString());
             if (Optional.IsDefined(UncompressedDigitalVideoOutputProtectionLevel))
             {
-                writer.WritePropertyName("uncompressedDigitalVideoOpl");
+                writer.WritePropertyName("uncompressedDigitalVideoOpl"u8);
                 writer.WriteNumberValue(UncompressedDigitalVideoOutputProtectionLevel.Value);
             }
             if (Optional.IsDefined(CompressedDigitalVideoOutputProtectionLevel))
             {
-                writer.WritePropertyName("compressedDigitalVideoOpl");
+                writer.WritePropertyName("compressedDigitalVideoOpl"u8);
                 writer.WriteNumberValue(CompressedDigitalVideoOutputProtectionLevel.Value);
             }
             if (Optional.IsDefined(AnalogVideoOutputProtectionLevel))
             {
-                writer.WritePropertyName("analogVideoOpl");
+                writer.WritePropertyName("analogVideoOpl"u8);
                 writer.WriteNumberValue(AnalogVideoOutputProtectionLevel.Value);
             }
             if (Optional.IsDefined(CompressedDigitalAudioOutputProtectionLevel))
             {
-                writer.WritePropertyName("compressedDigitalAudioOpl");
+                writer.WritePropertyName("compressedDigitalAudioOpl"u8);
                 writer.WriteNumberValue(CompressedDigitalAudioOutputProtectionLevel.Value);
             }
             if (Optional.IsDefined(UncompressedDigitalAudioOutputProtectionLevel))
             {
-                writer.WritePropertyName("uncompressedDigitalAudioOpl");
+                writer.WritePropertyName("uncompressedDigitalAudioOpl"u8);
                 writer.WriteNumberValue(UncompressedDigitalAudioOutputProtectionLevel.Value);
             }
             writer.WriteEndObject();
@@ -74,6 +74,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ContentKeyPolicyPlayReadyPlayRight DeserializeContentKeyPolicyPlayReadyPlayRight(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSpan> firstPlayExpiration = default;
             Optional<int> scmsRestriction = default;
             Optional<int> agcAndColorStripeRestriction = default;
@@ -89,7 +93,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<int> uncompressedDigitalAudioOpl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("firstPlayExpiration"))
+                if (property.NameEquals("firstPlayExpiration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.Media.Models
                     firstPlayExpiration = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("scmsRestriction"))
+                if (property.NameEquals("scmsRestriction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,7 +113,7 @@ namespace Azure.ResourceManager.Media.Models
                     scmsRestriction = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("agcAndColorStripeRestriction"))
+                if (property.NameEquals("agcAndColorStripeRestriction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,7 +123,7 @@ namespace Azure.ResourceManager.Media.Models
                     agcAndColorStripeRestriction = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("explicitAnalogTelevisionOutputRestriction"))
+                if (property.NameEquals("explicitAnalogTelevisionOutputRestriction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,27 +133,27 @@ namespace Azure.ResourceManager.Media.Models
                     explicitAnalogTelevisionOutputRestriction = ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction.DeserializeContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction(property.Value);
                     continue;
                 }
-                if (property.NameEquals("digitalVideoOnlyContentRestriction"))
+                if (property.NameEquals("digitalVideoOnlyContentRestriction"u8))
                 {
                     digitalVideoOnlyContentRestriction = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("imageConstraintForAnalogComponentVideoRestriction"))
+                if (property.NameEquals("imageConstraintForAnalogComponentVideoRestriction"u8))
                 {
                     imageConstraintForAnalogComponentVideoRestriction = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("imageConstraintForAnalogComputerMonitorRestriction"))
+                if (property.NameEquals("imageConstraintForAnalogComputerMonitorRestriction"u8))
                 {
                     imageConstraintForAnalogComputerMonitorRestriction = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("allowPassingVideoContentToUnknownOutput"))
+                if (property.NameEquals("allowPassingVideoContentToUnknownOutput"u8))
                 {
                     allowPassingVideoContentToUnknownOutput = new ContentKeyPolicyPlayReadyUnknownOutputPassingOption(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("uncompressedDigitalVideoOpl"))
+                if (property.NameEquals("uncompressedDigitalVideoOpl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -159,7 +163,7 @@ namespace Azure.ResourceManager.Media.Models
                     uncompressedDigitalVideoOpl = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("compressedDigitalVideoOpl"))
+                if (property.NameEquals("compressedDigitalVideoOpl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -169,7 +173,7 @@ namespace Azure.ResourceManager.Media.Models
                     compressedDigitalVideoOpl = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("analogVideoOpl"))
+                if (property.NameEquals("analogVideoOpl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -179,7 +183,7 @@ namespace Azure.ResourceManager.Media.Models
                     analogVideoOpl = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("compressedDigitalAudioOpl"))
+                if (property.NameEquals("compressedDigitalAudioOpl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -189,7 +193,7 @@ namespace Azure.ResourceManager.Media.Models
                     compressedDigitalAudioOpl = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("uncompressedDigitalAudioOpl"))
+                if (property.NameEquals("uncompressedDigitalAudioOpl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

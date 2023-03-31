@@ -19,22 +19,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RelativePath))
             {
-                writer.WritePropertyName("relativePath");
+                writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
             if (Optional.IsDefined(Builder))
             {
-                writer.WritePropertyName("builder");
+                writer.WritePropertyName("builder"u8);
                 writer.WriteStringValue(Builder);
             }
             if (Optional.IsDefined(AgentPool))
             {
-                writer.WritePropertyName("agentPool");
+                writer.WritePropertyName("agentPool"u8);
                 writer.WriteStringValue(AgentPool);
             }
             if (Optional.IsCollectionDefined(Env))
             {
-                writer.WritePropertyName("env");
+                writer.WritePropertyName("env"u8);
                 writer.WriteStartObject();
                 foreach (var item in Env)
                 {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             if (Optional.IsDefined(ResourceRequests))
             {
-                writer.WritePropertyName("resourceRequests");
+                writer.WritePropertyName("resourceRequests"u8);
                 writer.WriteObjectValue(ResourceRequests);
             }
             writer.WriteEndObject();
@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformBuildProperties DeserializeAppPlatformBuildProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> relativePath = default;
             Optional<string> builder = default;
             Optional<string> agentPool = default;
@@ -62,22 +66,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<AppPlatformBuildResourceRequirements> resourceRequests = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("relativePath"))
+                if (property.NameEquals("relativePath"u8))
                 {
                     relativePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("builder"))
+                if (property.NameEquals("builder"u8))
                 {
                     builder = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentPool"))
+                if (property.NameEquals("agentPool"u8))
                 {
                     agentPool = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +91,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     provisioningState = new AppPlatformBuildProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("env"))
+                if (property.NameEquals("env"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,7 +106,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     env = dictionary;
                     continue;
                 }
-                if (property.NameEquals("triggeredBuildResult"))
+                if (property.NameEquals("triggeredBuildResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,7 +116,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     triggeredBuildResult = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("resourceRequests"))
+                if (property.NameEquals("resourceRequests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

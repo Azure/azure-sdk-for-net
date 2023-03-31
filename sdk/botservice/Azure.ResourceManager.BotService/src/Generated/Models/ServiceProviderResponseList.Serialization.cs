@@ -15,26 +15,30 @@ namespace Azure.ResourceManager.BotService.Models
     {
         internal static ServiceProviderResponseList DeserializeServiceProviderResponseList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<ServiceProvider>> value = default;
+            Optional<IReadOnlyList<BotServiceProvider>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServiceProvider> array = new List<ServiceProvider>();
+                    List<BotServiceProvider> array = new List<BotServiceProvider>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceProvider.DeserializeServiceProvider(item));
+                        array.Add(BotServiceProvider.DeserializeBotServiceProvider(item));
                     }
                     value = array;
                     continue;

@@ -17,21 +17,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(BackupType))
             {
-                writer.WritePropertyName("backupType");
+                writer.WritePropertyName("backupType"u8);
                 writer.WriteStringValue(BackupType);
             }
             if (Optional.IsDefined(CompletedOn))
             {
-                writer.WritePropertyName("completedTime");
+                writer.WritePropertyName("completedTime"u8);
                 writer.WriteStringValue(CompletedOn.Value, "O");
             }
             if (Optional.IsDefined(Source))
             {
-                writer.WritePropertyName("source");
+                writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
             writer.WriteEndObject();
@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         internal static MySqlFlexibleServerBackupData DeserializeMySqlFlexibleServerBackupData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -49,22 +53,22 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             Optional<string> source = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,12 +87,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("backupType"))
+                        if (property0.NameEquals("backupType"u8))
                         {
                             backupType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("completedTime"))
+                        if (property0.NameEquals("completedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -98,7 +102,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                             completedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("source"))
+                        if (property0.NameEquals("source"u8))
                         {
                             source = property0.Value.GetString();
                             continue;

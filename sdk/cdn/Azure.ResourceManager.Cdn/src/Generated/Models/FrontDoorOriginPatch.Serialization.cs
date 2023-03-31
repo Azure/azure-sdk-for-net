@@ -15,38 +15,38 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Origin))
             {
-                writer.WritePropertyName("azureOrigin");
+                writer.WritePropertyName("azureOrigin"u8);
                 JsonSerializer.Serialize(writer, Origin);
             }
             if (Optional.IsDefined(HostName))
             {
-                writer.WritePropertyName("hostName");
+                writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
             if (Optional.IsDefined(HttpPort))
             {
-                writer.WritePropertyName("httpPort");
+                writer.WritePropertyName("httpPort"u8);
                 writer.WriteNumberValue(HttpPort.Value);
             }
             if (Optional.IsDefined(HttpsPort))
             {
-                writer.WritePropertyName("httpsPort");
+                writer.WritePropertyName("httpsPort"u8);
                 writer.WriteNumberValue(HttpsPort.Value);
             }
             if (Optional.IsDefined(OriginHostHeader))
             {
-                writer.WritePropertyName("originHostHeader");
+                writer.WritePropertyName("originHostHeader"u8);
                 writer.WriteStringValue(OriginHostHeader);
             }
             if (Optional.IsDefined(Priority))
             {
                 if (Priority != null)
                 {
-                    writer.WritePropertyName("priority");
+                    writer.WritePropertyName("priority"u8);
                     writer.WriteNumberValue(Priority.Value);
                 }
                 else
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (Weight != null)
                 {
-                    writer.WritePropertyName("weight");
+                    writer.WritePropertyName("weight"u8);
                     writer.WriteNumberValue(Weight.Value);
                 }
                 else
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (SharedPrivateLinkResource != null)
                 {
-                    writer.WritePropertyName("sharedPrivateLinkResource");
+                    writer.WritePropertyName("sharedPrivateLinkResource"u8);
                     writer.WriteObjectValue(SharedPrivateLinkResource);
                 }
                 else
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(EnabledState))
             {
-                writer.WritePropertyName("enabledState");
+                writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
             if (Optional.IsDefined(EnforceCertificateNameCheck))
             {
-                writer.WritePropertyName("enforceCertificateNameCheck");
+                writer.WritePropertyName("enforceCertificateNameCheck"u8);
                 writer.WriteBooleanValue(EnforceCertificateNameCheck.Value);
             }
             writer.WriteEndObject();

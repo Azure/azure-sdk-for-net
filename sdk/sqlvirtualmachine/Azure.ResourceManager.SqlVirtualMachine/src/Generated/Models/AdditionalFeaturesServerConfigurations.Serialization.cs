@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsRServicesEnabled))
             {
-                writer.WritePropertyName("isRServicesEnabled");
+                writer.WritePropertyName("isRServicesEnabled"u8);
                 writer.WriteBooleanValue(IsRServicesEnabled.Value);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static AdditionalFeaturesServerConfigurations DeserializeAdditionalFeaturesServerConfigurations(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isRServicesEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isRServicesEnabled"))
+                if (property.NameEquals("isRServicesEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

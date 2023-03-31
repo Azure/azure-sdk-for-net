@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ReportRecordContract DeserializeReportRecordContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<DateTimeOffset> timestamp = default;
             Optional<string> interval = default;
@@ -43,12 +47,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<double> serviceTimeMax = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,52 +62,52 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("interval"))
+                if (property.NameEquals("interval"u8))
                 {
                     interval = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("country"))
+                if (property.NameEquals("country"u8))
                 {
                     country = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("region"))
+                if (property.NameEquals("region"u8))
                 {
                     region = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("zip"))
+                if (property.NameEquals("zip"u8))
                 {
                     zip = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userId"))
+                if (property.NameEquals("userId"u8))
                 {
                     userId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("productId"))
+                if (property.NameEquals("productId"u8))
                 {
                     productId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("apiId"))
+                if (property.NameEquals("apiId"u8))
                 {
                     apiId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operationId"))
+                if (property.NameEquals("operationId"u8))
                 {
                     operationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("apiRegion"))
+                if (property.NameEquals("apiRegion"u8))
                 {
                     apiRegion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +117,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     subscriptionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("callCountSuccess"))
+                if (property.NameEquals("callCountSuccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +127,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     callCountSuccess = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("callCountBlocked"))
+                if (property.NameEquals("callCountBlocked"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,7 +137,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     callCountBlocked = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("callCountFailed"))
+                if (property.NameEquals("callCountFailed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -143,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     callCountFailed = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("callCountOther"))
+                if (property.NameEquals("callCountOther"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -153,7 +157,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     callCountOther = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("callCountTotal"))
+                if (property.NameEquals("callCountTotal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -163,7 +167,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     callCountTotal = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("bandwidth"))
+                if (property.NameEquals("bandwidth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -173,7 +177,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     bandwidth = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("cacheHitCount"))
+                if (property.NameEquals("cacheHitCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -183,7 +187,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     cacheHitCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("cacheMissCount"))
+                if (property.NameEquals("cacheMissCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -193,7 +197,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     cacheMissCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("apiTimeAvg"))
+                if (property.NameEquals("apiTimeAvg"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -203,7 +207,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     apiTimeAvg = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("apiTimeMin"))
+                if (property.NameEquals("apiTimeMin"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -213,7 +217,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     apiTimeMin = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("apiTimeMax"))
+                if (property.NameEquals("apiTimeMax"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -223,7 +227,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     apiTimeMax = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("serviceTimeAvg"))
+                if (property.NameEquals("serviceTimeAvg"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -233,7 +237,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     serviceTimeAvg = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("serviceTimeMin"))
+                if (property.NameEquals("serviceTimeMin"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -243,7 +247,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     serviceTimeMin = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("serviceTimeMax"))
+                if (property.NameEquals("serviceTimeMax"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

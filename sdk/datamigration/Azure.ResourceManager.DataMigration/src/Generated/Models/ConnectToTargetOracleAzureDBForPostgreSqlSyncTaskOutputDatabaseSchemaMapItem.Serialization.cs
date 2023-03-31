@@ -15,16 +15,20 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem DeserializeConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> database = default;
             Optional<IReadOnlyList<string>> schemas = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("database"))
+                if (property.NameEquals("database"u8))
                 {
                     database = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("schemas"))
+                if (property.NameEquals("schemas"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

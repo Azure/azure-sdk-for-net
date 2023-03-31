@@ -21,59 +21,59 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ColumnDelimiter))
             {
-                writer.WritePropertyName("columnDelimiter");
+                writer.WritePropertyName("columnDelimiter"u8);
                 writer.WriteObjectValue(ColumnDelimiter);
             }
             if (Optional.IsDefined(RowDelimiter))
             {
-                writer.WritePropertyName("rowDelimiter");
+                writer.WritePropertyName("rowDelimiter"u8);
                 writer.WriteObjectValue(RowDelimiter);
             }
             if (Optional.IsDefined(EscapeChar))
             {
-                writer.WritePropertyName("escapeChar");
+                writer.WritePropertyName("escapeChar"u8);
                 writer.WriteObjectValue(EscapeChar);
             }
             if (Optional.IsDefined(QuoteChar))
             {
-                writer.WritePropertyName("quoteChar");
+                writer.WritePropertyName("quoteChar"u8);
                 writer.WriteObjectValue(QuoteChar);
             }
             if (Optional.IsDefined(NullValue))
             {
-                writer.WritePropertyName("nullValue");
+                writer.WritePropertyName("nullValue"u8);
                 writer.WriteObjectValue(NullValue);
             }
             if (Optional.IsDefined(EncodingName))
             {
-                writer.WritePropertyName("encodingName");
+                writer.WritePropertyName("encodingName"u8);
                 writer.WriteObjectValue(EncodingName);
             }
             if (Optional.IsDefined(TreatEmptyAsNull))
             {
-                writer.WritePropertyName("treatEmptyAsNull");
+                writer.WritePropertyName("treatEmptyAsNull"u8);
                 writer.WriteObjectValue(TreatEmptyAsNull);
             }
             if (Optional.IsDefined(SkipLineCount))
             {
-                writer.WritePropertyName("skipLineCount");
+                writer.WritePropertyName("skipLineCount"u8);
                 writer.WriteObjectValue(SkipLineCount);
             }
             if (Optional.IsDefined(FirstRowAsHeader))
             {
-                writer.WritePropertyName("firstRowAsHeader");
+                writer.WritePropertyName("firstRowAsHeader"u8);
                 writer.WriteObjectValue(FirstRowAsHeader);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Serializer))
             {
-                writer.WritePropertyName("serializer");
+                writer.WritePropertyName("serializer"u8);
                 writer.WriteObjectValue(Serializer);
             }
             if (Optional.IsDefined(Deserializer))
             {
-                writer.WritePropertyName("deserializer");
+                writer.WritePropertyName("deserializer"u8);
                 writer.WriteObjectValue(Deserializer);
             }
             foreach (var item in AdditionalProperties)
@@ -86,6 +86,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static TextFormat DeserializeTextFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> columnDelimiter = default;
             Optional<object> rowDelimiter = default;
             Optional<object> escapeChar = default;
@@ -102,7 +106,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("columnDelimiter"))
+                if (property.NameEquals("columnDelimiter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,7 +116,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     columnDelimiter = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("rowDelimiter"))
+                if (property.NameEquals("rowDelimiter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,7 +126,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     rowDelimiter = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("escapeChar"))
+                if (property.NameEquals("escapeChar"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +136,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     escapeChar = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("quoteChar"))
+                if (property.NameEquals("quoteChar"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -142,7 +146,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     quoteChar = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("nullValue"))
+                if (property.NameEquals("nullValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -152,7 +156,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     nullValue = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("encodingName"))
+                if (property.NameEquals("encodingName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -162,7 +166,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     encodingName = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("treatEmptyAsNull"))
+                if (property.NameEquals("treatEmptyAsNull"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -172,7 +176,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     treatEmptyAsNull = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("skipLineCount"))
+                if (property.NameEquals("skipLineCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -182,7 +186,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     skipLineCount = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("firstRowAsHeader"))
+                if (property.NameEquals("firstRowAsHeader"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -192,12 +196,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     firstRowAsHeader = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serializer"))
+                if (property.NameEquals("serializer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -207,7 +211,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     serializer = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("deserializer"))
+                if (property.NameEquals("deserializer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

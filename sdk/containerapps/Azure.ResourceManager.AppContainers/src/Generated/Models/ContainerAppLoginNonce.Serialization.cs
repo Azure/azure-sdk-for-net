@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ValidateNonce))
             {
-                writer.WritePropertyName("validateNonce");
+                writer.WritePropertyName("validateNonce"u8);
                 writer.WriteBooleanValue(ValidateNonce.Value);
             }
             if (Optional.IsDefined(NonceExpirationInterval))
             {
-                writer.WritePropertyName("nonceExpirationInterval");
+                writer.WritePropertyName("nonceExpirationInterval"u8);
                 writer.WriteStringValue(NonceExpirationInterval);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppLoginNonce DeserializeContainerAppLoginNonce(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> validateNonce = default;
             Optional<string> nonceExpirationInterval = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("validateNonce"))
+                if (property.NameEquals("validateNonce"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     validateNonce = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("nonceExpirationInterval"))
+                if (property.NameEquals("nonceExpirationInterval"u8))
                 {
                     nonceExpirationInterval = property.Value.GetString();
                     continue;

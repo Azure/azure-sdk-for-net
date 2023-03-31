@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Attestation.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Keys))
             {
-                writer.WritePropertyName("keys");
+                writer.WritePropertyName("keys"u8);
                 writer.WriteStartArray();
                 foreach (var item in Keys)
                 {

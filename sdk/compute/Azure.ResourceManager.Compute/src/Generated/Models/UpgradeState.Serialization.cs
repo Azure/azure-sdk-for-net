@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         public static UpgradeState ToUpgradeState(this string value)
         {
-            if (string.Equals(value, "RollingForward", StringComparison.InvariantCultureIgnoreCase)) return UpgradeState.RollingForward;
-            if (string.Equals(value, "Cancelled", StringComparison.InvariantCultureIgnoreCase)) return UpgradeState.Cancelled;
-            if (string.Equals(value, "Completed", StringComparison.InvariantCultureIgnoreCase)) return UpgradeState.Completed;
-            if (string.Equals(value, "Faulted", StringComparison.InvariantCultureIgnoreCase)) return UpgradeState.Faulted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RollingForward")) return UpgradeState.RollingForward;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cancelled")) return UpgradeState.Cancelled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Completed")) return UpgradeState.Completed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Faulted")) return UpgradeState.Faulted;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown UpgradeState value.");
         }
     }

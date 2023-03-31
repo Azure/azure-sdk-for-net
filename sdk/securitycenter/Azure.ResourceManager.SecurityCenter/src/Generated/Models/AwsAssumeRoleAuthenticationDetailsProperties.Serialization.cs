@@ -17,17 +17,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("awsAssumeRoleArn");
+            writer.WritePropertyName("awsAssumeRoleArn"u8);
             writer.WriteStringValue(AwsAssumeRoleArn);
-            writer.WritePropertyName("awsExternalId");
+            writer.WritePropertyName("awsExternalId"u8);
             writer.WriteStringValue(AwsExternalId);
-            writer.WritePropertyName("authenticationType");
+            writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             writer.WriteEndObject();
         }
 
         internal static AwsAssumeRoleAuthenticationDetailsProperties DeserializeAwsAssumeRoleAuthenticationDetailsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> accountId = default;
             string awsAssumeRoleArn = default;
             Guid awsExternalId = default;
@@ -36,22 +40,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             AuthenticationType authenticationType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountId"))
+                if (property.NameEquals("accountId"u8))
                 {
                     accountId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("awsAssumeRoleArn"))
+                if (property.NameEquals("awsAssumeRoleArn"u8))
                 {
                     awsAssumeRoleArn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("awsExternalId"))
+                if (property.NameEquals("awsExternalId"u8))
                 {
                     awsExternalId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("authenticationProvisioningState"))
+                if (property.NameEquals("authenticationProvisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     authenticationProvisioningState = new AuthenticationProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("grantedPermissions"))
+                if (property.NameEquals("grantedPermissions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     grantedPermissions = array;
                     continue;
                 }
-                if (property.NameEquals("authenticationType"))
+                if (property.NameEquals("authenticationType"u8))
                 {
                     authenticationType = new AuthenticationType(property.Value.GetString());
                     continue;

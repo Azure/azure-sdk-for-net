@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static ServerEndpointSyncStatus DeserializeServerEndpointSyncStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServerEndpointHealthState> downloadHealth = default;
             Optional<ServerEndpointHealthState> uploadHealth = default;
             Optional<ServerEndpointHealthState> combinedHealth = default;
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<ServerEndpointBackgroundDataDownloadActivity> backgroundDataDownloadActivity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("downloadHealth"))
+                if (property.NameEquals("downloadHealth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +43,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     downloadHealth = new ServerEndpointHealthState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("uploadHealth"))
+                if (property.NameEquals("uploadHealth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +53,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     uploadHealth = new ServerEndpointHealthState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("combinedHealth"))
+                if (property.NameEquals("combinedHealth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +63,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     combinedHealth = new ServerEndpointHealthState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("syncActivity"))
+                if (property.NameEquals("syncActivity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +73,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     syncActivity = new ServerEndpointSyncActivityState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("totalPersistentFilesNotSyncingCount"))
+                if (property.NameEquals("totalPersistentFilesNotSyncingCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +83,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     totalPersistentFilesNotSyncingCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("lastUpdatedTimestamp"))
+                if (property.NameEquals("lastUpdatedTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +93,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     lastUpdatedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("uploadStatus"))
+                if (property.NameEquals("uploadStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     uploadStatus = ServerEndpointSyncSessionStatus.DeserializeServerEndpointSyncSessionStatus(property.Value);
                     continue;
                 }
-                if (property.NameEquals("downloadStatus"))
+                if (property.NameEquals("downloadStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,7 +113,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     downloadStatus = ServerEndpointSyncSessionStatus.DeserializeServerEndpointSyncSessionStatus(property.Value);
                     continue;
                 }
-                if (property.NameEquals("uploadActivity"))
+                if (property.NameEquals("uploadActivity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,7 +123,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     uploadActivity = ServerEndpointSyncActivityStatus.DeserializeServerEndpointSyncActivityStatus(property.Value);
                     continue;
                 }
-                if (property.NameEquals("downloadActivity"))
+                if (property.NameEquals("downloadActivity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,7 +133,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     downloadActivity = ServerEndpointSyncActivityStatus.DeserializeServerEndpointSyncActivityStatus(property.Value);
                     continue;
                 }
-                if (property.NameEquals("offlineDataTransferStatus"))
+                if (property.NameEquals("offlineDataTransferStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,7 +143,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     offlineDataTransferStatus = new ServerEndpointOfflineDataTransferState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("backgroundDataDownloadActivity"))
+                if (property.NameEquals("backgroundDataDownloadActivity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

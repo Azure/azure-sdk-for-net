@@ -15,33 +15,37 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("subnetId");
+            writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
-            writer.WritePropertyName("virtualMachineConfiguration");
+            writer.WritePropertyName("virtualMachineConfiguration"u8);
             writer.WriteObjectValue(VirtualMachineConfiguration);
-            writer.WritePropertyName("instanceCount");
+            writer.WritePropertyName("instanceCount"u8);
             writer.WriteNumberValue(InstanceCount);
             writer.WriteEndObject();
         }
 
         internal static CentralServerConfiguration DeserializeCentralServerConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier subnetId = default;
             VirtualMachineConfiguration virtualMachineConfiguration = default;
             long instanceCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subnetId"))
+                if (property.NameEquals("subnetId"u8))
                 {
                     subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("virtualMachineConfiguration"))
+                if (property.NameEquals("virtualMachineConfiguration"u8))
                 {
                     virtualMachineConfiguration = VirtualMachineConfiguration.DeserializeVirtualMachineConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("instanceCount"))
+                if (property.NameEquals("instanceCount"u8))
                 {
                     instanceCount = property.Value.GetInt64();
                     continue;

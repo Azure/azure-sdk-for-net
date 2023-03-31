@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ArcAgentProfile))
             {
-                writer.WritePropertyName("arcAgentProfile");
+                writer.WritePropertyName("arcAgentProfile"u8);
                 writer.WriteObjectValue(ArcAgentProfile);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static ProvisionedClustersCommonPropertiesFeatures DeserializeProvisionedClustersCommonPropertiesFeatures(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ArcAgentProfile> arcAgentProfile = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("arcAgentProfile"))
+                if (property.NameEquals("arcAgentProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

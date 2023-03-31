@@ -15,10 +15,14 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static ListAliasesResult DeserializeListAliasesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SearchAlias> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<SearchAlias> array = new List<SearchAlias>();
                     foreach (var item in property.Value.EnumerateArray())

@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("actionType");
+            writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
             writer.WriteEndObject();
         }
 
         internal static UnknownScheduleActionBase DeserializeUnknownScheduleActionBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ScheduleActionType actionType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("actionType"))
+                if (property.NameEquals("actionType"u8))
                 {
                     actionType = new ScheduleActionType(property.Value.GetString());
                     continue;

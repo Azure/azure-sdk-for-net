@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
+                writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteBase64StringValue(Value, "D");
             }
             writer.WriteEndObject();
@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppCertificateProperties DeserializeContainerAppCertificateProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppCertificateProvisioningState> provisioningState = default;
             Optional<string> password = default;
             Optional<string> subjectName = default;
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> publicKeyHash = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,17 +59,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                     provisioningState = new ContainerAppCertificateProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subjectName"))
+                if (property.NameEquals("subjectName"u8))
                 {
                     subjectName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subjectAlternativeNames"))
+                if (property.NameEquals("subjectAlternativeNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +84,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     subjectAlternativeNames = array;
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,12 +94,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                     value = property.Value.GetBytesFromBase64("D");
                     continue;
                 }
-                if (property.NameEquals("issuer"))
+                if (property.NameEquals("issuer"u8))
                 {
                     issuer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("issueDate"))
+                if (property.NameEquals("issueDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,7 +109,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     issueDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("expirationDate"))
+                if (property.NameEquals("expirationDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -115,12 +119,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                     expirationDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("thumbprint"))
+                if (property.NameEquals("thumbprint"u8))
                 {
                     thumbprint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("valid"))
+                if (property.NameEquals("valid"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,7 +134,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     valid = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("publicKeyHash"))
+                if (property.NameEquals("publicKeyHash"u8))
                 {
                     publicKeyHash = property.Value.GetString();
                     continue;

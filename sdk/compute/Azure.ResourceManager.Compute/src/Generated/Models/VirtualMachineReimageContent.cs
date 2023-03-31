@@ -17,5 +17,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Specifies whether to reimage temp disk. Default value: false. Note: This temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS disk. </summary>
         public bool? TempDisk { get; set; }
+        /// <summary> Specifies in decimal number, the version the OS disk should be reimaged to. If exact version is not provided, the OS disk is reimaged to the existing version of OS Disk. </summary>
+        public string ExactVersion { get; set; }
+        /// <summary> Specifies information required for reimaging the non-ephemeral OS disk. </summary>
+        public OSProfileProvisioningData OSProfile { get; set; }
     }
 }

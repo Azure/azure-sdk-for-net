@@ -15,10 +15,14 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseIntegrationRuntimeNodeIPAddress DeserializeSynapseIntegrationRuntimeNodeIPAddress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IPAddress> ipAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

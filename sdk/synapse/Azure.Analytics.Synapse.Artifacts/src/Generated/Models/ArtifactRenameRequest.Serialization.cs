@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(NewName))
             {
-                writer.WritePropertyName("newName");
+                writer.WritePropertyName("newName"u8);
                 writer.WriteStringValue(NewName);
             }
             writer.WriteEndObject();

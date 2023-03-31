@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FailureThreshold))
             {
-                writer.WritePropertyName("failureThreshold");
+                writer.WritePropertyName("failureThreshold"u8);
                 writer.WriteNumberValue(FailureThreshold.Value);
             }
             if (Optional.IsDefined(InitialDelay))
             {
                 if (InitialDelay != null)
                 {
-                    writer.WritePropertyName("initialDelay");
+                    writer.WritePropertyName("initialDelay"u8);
                     writer.WriteStringValue(InitialDelay.Value, "P");
                 }
                 else
@@ -35,17 +35,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Period))
             {
-                writer.WritePropertyName("period");
+                writer.WritePropertyName("period"u8);
                 writer.WriteStringValue(Period.Value, "P");
             }
             if (Optional.IsDefined(SuccessThreshold))
             {
-                writer.WritePropertyName("successThreshold");
+                writer.WritePropertyName("successThreshold"u8);
                 writer.WriteNumberValue(SuccessThreshold.Value);
             }
             if (Optional.IsDefined(Timeout))
             {
-                writer.WritePropertyName("timeout");
+                writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
             writer.WriteEndObject();
@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningProbeSettings DeserializeMachineLearningProbeSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> failureThreshold = default;
             Optional<TimeSpan?> initialDelay = default;
             Optional<TimeSpan> period = default;
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<TimeSpan> timeout = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("failureThreshold"))
+                if (property.NameEquals("failureThreshold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     failureThreshold = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("initialDelay"))
+                if (property.NameEquals("initialDelay"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     initialDelay = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("period"))
+                if (property.NameEquals("period"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     period = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("successThreshold"))
+                if (property.NameEquals("successThreshold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     successThreshold = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("timeout"))
+                if (property.NameEquals("timeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

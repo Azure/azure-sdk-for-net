@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(AzureFile))
             {
-                writer.WritePropertyName("azureFile");
+                writer.WritePropertyName("azureFile"u8);
                 writer.WriteObjectValue(AzureFile);
             }
             if (Optional.IsDefined(EmptyDir))
             {
-                writer.WritePropertyName("emptyDir");
+                writer.WritePropertyName("emptyDir"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(EmptyDir);
 #else
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             if (Optional.IsCollectionDefined(Secret))
             {
-                writer.WritePropertyName("secret");
+                writer.WritePropertyName("secret"u8);
                 writer.WriteStartObject();
                 foreach (var item in Secret)
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             if (Optional.IsDefined(GitRepo))
             {
-                writer.WritePropertyName("gitRepo");
+                writer.WritePropertyName("gitRepo"u8);
                 writer.WriteObjectValue(GitRepo);
             }
             writer.WriteEndObject();
@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerVolume DeserializeContainerVolume(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<ContainerInstanceAzureFileVolume> azureFile = default;
             Optional<BinaryData> emptyDir = default;
@@ -61,12 +65,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<ContainerInstanceGitRepoVolume> gitRepo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("azureFile"))
+                if (property.NameEquals("azureFile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     azureFile = ContainerInstanceAzureFileVolume.DeserializeContainerInstanceAzureFileVolume(property.Value);
                     continue;
                 }
-                if (property.NameEquals("emptyDir"))
+                if (property.NameEquals("emptyDir"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +90,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     emptyDir = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("secret"))
+                if (property.NameEquals("secret"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +105,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     secret = dictionary;
                     continue;
                 }
-                if (property.NameEquals("gitRepo"))
+                if (property.NameEquals("gitRepo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

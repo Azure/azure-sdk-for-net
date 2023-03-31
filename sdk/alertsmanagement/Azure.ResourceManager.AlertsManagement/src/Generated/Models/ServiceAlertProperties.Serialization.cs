@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Essentials))
             {
-                writer.WritePropertyName("essentials");
+                writer.WritePropertyName("essentials"u8);
                 writer.WriteObjectValue(Essentials);
             }
             writer.WriteEndObject();
@@ -26,12 +26,16 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static ServiceAlertProperties DeserializeServiceAlertProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServiceAlertEssentials> essentials = default;
             Optional<BinaryData> context = default;
             Optional<BinaryData> egressConfig = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("essentials"))
+                if (property.NameEquals("essentials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     essentials = ServiceAlertEssentials.DeserializeServiceAlertEssentials(property.Value);
                     continue;
                 }
-                if (property.NameEquals("context"))
+                if (property.NameEquals("context"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +55,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     context = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("egressConfig"))
+                if (property.NameEquals("egressConfig"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

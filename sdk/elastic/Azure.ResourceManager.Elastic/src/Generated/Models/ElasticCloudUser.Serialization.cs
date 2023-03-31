@@ -21,22 +21,26 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static ElasticCloudUser DeserializeElasticCloudUser(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> emailAddress = default;
             Optional<string> id = default;
             Optional<Uri> elasticCloudSsoDefaultUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("emailAddress"))
+                if (property.NameEquals("emailAddress"u8))
                 {
                     emailAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("elasticCloudSsoDefaultUrl"))
+                if (property.NameEquals("elasticCloudSsoDefaultUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -2372,7 +2372,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
                 int messageCount = 10;
-                ConcurrentDictionary<long, byte> sequenceNumbers = new();
 
                 await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount, "sessionId"));
 
@@ -2390,19 +2389,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     capturedArgs ??= args;
 
-                    IReadOnlyList<ServiceBusReceivedMessage> receivedDeferredMessages = null;
+                    ServiceBusReceivedMessage receivedDeferredMessage = null;
                     var count = Interlocked.Increment(ref receivedCount);
 
-                    // defer first two messages
-                    if (count <= 2)
+                    // defer first message
+                    if (count == 1)
                     {
                         await args.DeferMessageAsync(args.Message);
-                        sequenceNumbers[args.Message.SequenceNumber] = default;
-                    }
-
-                    if (count == 2)
-                    {
-                        receivedDeferredMessages = await args.GetReceiveActions().ReceiveDeferredMessagesAsync(sequenceNumbers.Keys);
+                        receivedDeferredMessage = (await args.GetReceiveActions().ReceiveDeferredMessagesAsync(new[] {args.Message.SequenceNumber})).Single();
                     }
 
                     // lock renewal should happen for messages received in callback
@@ -2412,16 +2406,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     {
                         // do not attempt to complete the deferred message as we will only be able to complete it
                         // after receiving using ReceiveDeferredMessageAsync
-                        if (!sequenceNumbers.ContainsKey(args.Message.SequenceNumber))
+                        if (count > 1)
                         {
                             await args.CompleteMessageAsync(args.Message);
                         }
-                        if (receivedDeferredMessages != null)
+                        else
                         {
-                            foreach (var message in receivedDeferredMessages)
-                            {
-                                await args.CompleteMessageAsync(message);
-                            }
+                            await args.CompleteMessageAsync(receivedDeferredMessage);
                         }
                     }
 

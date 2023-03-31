@@ -19,15 +19,20 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ParameterType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ParameterType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(AllowedValues))
             {
-                writer.WritePropertyName("allowedValues");
+                writer.WritePropertyName("allowedValues"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedValues)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
@@ -38,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
             if (Optional.IsDefined(DefaultValue))
             {
-                writer.WritePropertyName("defaultValue");
+                writer.WritePropertyName("defaultValue"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DefaultValue);
 #else
@@ -47,7 +52,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
             if (Optional.IsDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
             writer.WriteEndObject();
@@ -55,13 +60,17 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmPolicyParameter DeserializeArmPolicyParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ArmPolicyParameterType> type = default;
             Optional<IList<BinaryData>> allowedValues = default;
             Optional<BinaryData> defaultValue = default;
             Optional<ParameterDefinitionsValueMetadata> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +80,7 @@ namespace Azure.ResourceManager.Resources.Models
                     type = new ArmPolicyParameterType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("allowedValues"))
+                if (property.NameEquals("allowedValues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,12 +90,19 @@ namespace Azure.ResourceManager.Resources.Models
                     List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BinaryData.FromString(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BinaryData.FromString(item.GetRawText()));
+                        }
                     }
                     allowedValues = array;
                     continue;
                 }
-                if (property.NameEquals("defaultValue"))
+                if (property.NameEquals("defaultValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +112,7 @@ namespace Azure.ResourceManager.Resources.Models
                     defaultValue = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

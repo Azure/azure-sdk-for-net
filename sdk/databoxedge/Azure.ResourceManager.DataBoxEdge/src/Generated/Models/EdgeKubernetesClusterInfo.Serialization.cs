@@ -16,19 +16,23 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("version");
+            writer.WritePropertyName("version"u8);
             writer.WriteStringValue(Version);
             writer.WriteEndObject();
         }
 
         internal static EdgeKubernetesClusterInfo DeserializeEdgeKubernetesClusterInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataBoxEdgeEtcdInfo> etcdInfo = default;
             Optional<IReadOnlyList<EdgeKubernetesNodeInfo>> nodes = default;
             string version = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etcdInfo"))
+                if (property.NameEquals("etcdInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,7 +42,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     etcdInfo = DataBoxEdgeEtcdInfo.DeserializeDataBoxEdgeEtcdInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("nodes"))
+                if (property.NameEquals("nodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     nodes = array;
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;

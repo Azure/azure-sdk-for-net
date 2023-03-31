@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ArmDeploymentOperationProperties DeserializeArmDeploymentOperationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningOperationKind> provisioningOperation = default;
             Optional<string> provisioningState = default;
             Optional<DateTimeOffset> timestamp = default;
@@ -27,7 +31,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<HttpMessage> response = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningOperation"))
+                if (property.NameEquals("provisioningOperation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,12 +41,12 @@ namespace Azure.ResourceManager.Resources.Models
                     provisioningOperation = property.Value.GetString().ToProvisioningOperationKind();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     provisioningState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.Resources.Models
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("duration"))
+                if (property.NameEquals("duration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,17 +66,17 @@ namespace Azure.ResourceManager.Resources.Models
                     duration = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("serviceRequestId"))
+                if (property.NameEquals("serviceRequestId"u8))
                 {
                     serviceRequestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statusCode"))
+                if (property.NameEquals("statusCode"u8))
                 {
                     statusCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statusMessage"))
+                if (property.NameEquals("statusMessage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +86,7 @@ namespace Azure.ResourceManager.Resources.Models
                     statusMessage = StatusMessage.DeserializeStatusMessage(property.Value);
                     continue;
                 }
-                if (property.NameEquals("targetResource"))
+                if (property.NameEquals("targetResource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.Resources.Models
                     targetResource = TargetResource.DeserializeTargetResource(property.Value);
                     continue;
                 }
-                if (property.NameEquals("request"))
+                if (property.NameEquals("request"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,7 +106,7 @@ namespace Azure.ResourceManager.Resources.Models
                     request = HttpMessage.DeserializeHttpMessage(property.Value);
                     continue;
                 }
-                if (property.NameEquals("response"))
+                if (property.NameEquals("response"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

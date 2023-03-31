@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -26,31 +26,31 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Severity))
             {
-                writer.WritePropertyName("severity");
+                writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsCollectionDefined(Scopes))
             {
-                writer.WritePropertyName("scopes");
+                writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Scopes)
                 {
@@ -60,22 +60,22 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsDefined(EvaluationFrequency))
             {
-                writer.WritePropertyName("evaluationFrequency");
+                writer.WritePropertyName("evaluationFrequency"u8);
                 writer.WriteStringValue(EvaluationFrequency.Value, "P");
             }
             if (Optional.IsDefined(WindowSize))
             {
-                writer.WritePropertyName("windowSize");
+                writer.WritePropertyName("windowSize"u8);
                 writer.WriteStringValue(WindowSize.Value, "P");
             }
             if (Optional.IsDefined(OverrideQueryTimeRange))
             {
-                writer.WritePropertyName("overrideQueryTimeRange");
+                writer.WritePropertyName("overrideQueryTimeRange"u8);
                 writer.WriteStringValue(OverrideQueryTimeRange.Value, "P");
             }
             if (Optional.IsCollectionDefined(TargetResourceTypes))
             {
-                writer.WritePropertyName("targetResourceTypes");
+                writer.WritePropertyName("targetResourceTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetResourceTypes)
                 {
@@ -85,32 +85,32 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsDefined(Criteria))
             {
-                writer.WritePropertyName("criteria");
+                writer.WritePropertyName("criteria"u8);
                 writer.WriteObjectValue(Criteria);
             }
             if (Optional.IsDefined(MuteActionsDuration))
             {
-                writer.WritePropertyName("muteActionsDuration");
+                writer.WritePropertyName("muteActionsDuration"u8);
                 writer.WriteStringValue(MuteActionsDuration.Value, "P");
             }
             if (Optional.IsDefined(Actions))
             {
-                writer.WritePropertyName("actions");
+                writer.WritePropertyName("actions"u8);
                 writer.WriteObjectValue(Actions);
             }
             if (Optional.IsDefined(CheckWorkspaceAlertsStorageConfigured))
             {
-                writer.WritePropertyName("checkWorkspaceAlertsStorageConfigured");
+                writer.WritePropertyName("checkWorkspaceAlertsStorageConfigured"u8);
                 writer.WriteBooleanValue(CheckWorkspaceAlertsStorageConfigured.Value);
             }
             if (Optional.IsDefined(SkipQueryValidation))
             {
-                writer.WritePropertyName("skipQueryValidation");
+                writer.WritePropertyName("skipQueryValidation"u8);
                 writer.WriteBooleanValue(SkipQueryValidation.Value);
             }
             if (Optional.IsDefined(AutoMitigate))
             {
-                writer.WritePropertyName("autoMitigate");
+                writer.WritePropertyName("autoMitigate"u8);
                 writer.WriteBooleanValue(AutoMitigate.Value);
             }
             writer.WriteEndObject();

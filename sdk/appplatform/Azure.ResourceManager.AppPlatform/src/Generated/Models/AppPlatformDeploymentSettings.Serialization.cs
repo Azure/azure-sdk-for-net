@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceRequests))
             {
-                writer.WritePropertyName("resourceRequests");
+                writer.WritePropertyName("resourceRequests"u8);
                 writer.WriteObjectValue(ResourceRequests);
             }
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
-                writer.WritePropertyName("environmentVariables");
+                writer.WritePropertyName("environmentVariables"u8);
                 writer.WriteStartObject();
                 foreach (var item in EnvironmentVariables)
                 {
@@ -35,15 +35,25 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             if (Optional.IsCollectionDefined(AddonConfigs))
             {
-                writer.WritePropertyName("addonConfigs");
+                writer.WritePropertyName("addonConfigs"u8);
                 writer.WriteStartObject();
                 foreach (var item in AddonConfigs)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartObject();
                     foreach (var item0 in item.Value)
                     {
                         writer.WritePropertyName(item0.Key);
+                        if (item0.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item0.Value);
 #else
@@ -56,27 +66,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             if (Optional.IsDefined(LivenessProbe))
             {
-                writer.WritePropertyName("livenessProbe");
+                writer.WritePropertyName("livenessProbe"u8);
                 writer.WriteObjectValue(LivenessProbe);
             }
             if (Optional.IsDefined(ReadinessProbe))
             {
-                writer.WritePropertyName("readinessProbe");
+                writer.WritePropertyName("readinessProbe"u8);
                 writer.WriteObjectValue(ReadinessProbe);
             }
             if (Optional.IsDefined(StartupProbe))
             {
-                writer.WritePropertyName("startupProbe");
+                writer.WritePropertyName("startupProbe"u8);
                 writer.WriteObjectValue(StartupProbe);
             }
             if (Optional.IsDefined(TerminationGracePeriodInSeconds))
             {
-                writer.WritePropertyName("terminationGracePeriodSeconds");
+                writer.WritePropertyName("terminationGracePeriodSeconds"u8);
                 writer.WriteNumberValue(TerminationGracePeriodInSeconds.Value);
             }
             if (Optional.IsDefined(ContainerProbeSettings))
             {
-                writer.WritePropertyName("containerProbeSettings");
+                writer.WritePropertyName("containerProbeSettings"u8);
                 writer.WriteObjectValue(ContainerProbeSettings);
             }
             writer.WriteEndObject();
@@ -84,6 +94,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformDeploymentSettings DeserializeAppPlatformDeploymentSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformDeploymentResourceRequirements> resourceRequests = default;
             Optional<IDictionary<string, string>> environmentVariables = default;
             Optional<IDictionary<string, IDictionary<string, BinaryData>>> addonConfigs = default;
@@ -94,7 +108,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<ContainerProbeSettings> containerProbeSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceRequests"))
+                if (property.NameEquals("resourceRequests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +118,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     resourceRequests = AppPlatformDeploymentResourceRequirements.DeserializeAppPlatformDeploymentResourceRequirements(property.Value);
                     continue;
                 }
-                if (property.NameEquals("environmentVariables"))
+                if (property.NameEquals("environmentVariables"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,7 +133,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     environmentVariables = dictionary;
                     continue;
                 }
-                if (property.NameEquals("addonConfigs"))
+                if (property.NameEquals("addonConfigs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,17 +143,31 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     Dictionary<string, IDictionary<string, BinaryData>> dictionary = new Dictionary<string, IDictionary<string, BinaryData>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        Dictionary<string, BinaryData> dictionary0 = new Dictionary<string, BinaryData>();
-                        foreach (var property1 in property0.Value.EnumerateObject())
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary0.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                            dictionary.Add(property0.Name, null);
                         }
-                        dictionary.Add(property0.Name, dictionary0);
+                        else
+                        {
+                            Dictionary<string, BinaryData> dictionary0 = new Dictionary<string, BinaryData>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary0.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary0.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
+                            }
+                            dictionary.Add(property0.Name, dictionary0);
+                        }
                     }
                     addonConfigs = dictionary;
                     continue;
                 }
-                if (property.NameEquals("livenessProbe"))
+                if (property.NameEquals("livenessProbe"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -149,7 +177,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     livenessProbe = AppInstanceProbe.DeserializeAppInstanceProbe(property.Value);
                     continue;
                 }
-                if (property.NameEquals("readinessProbe"))
+                if (property.NameEquals("readinessProbe"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -159,7 +187,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     readinessProbe = AppInstanceProbe.DeserializeAppInstanceProbe(property.Value);
                     continue;
                 }
-                if (property.NameEquals("startupProbe"))
+                if (property.NameEquals("startupProbe"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -169,7 +197,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     startupProbe = AppInstanceProbe.DeserializeAppInstanceProbe(property.Value);
                     continue;
                 }
-                if (property.NameEquals("terminationGracePeriodSeconds"))
+                if (property.NameEquals("terminationGracePeriodSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -179,7 +207,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     terminationGracePeriodSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("containerProbeSettings"))
+                if (property.NameEquals("containerProbeSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

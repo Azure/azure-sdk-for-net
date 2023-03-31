@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Zones))
             {
-                writer.WritePropertyName("zones");
+                writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
                 foreach (var item in Zones)
                 {
@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.Chaos.Models
 
         internal static SimpleFilterParameters DeserializeSimpleFilterParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> zones = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("zones"))
+                if (property.NameEquals("zones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
     {
         internal static ManagedServicesMarketplaceRegistrationProperties DeserializeManagedServicesMarketplaceRegistrationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Guid managedByTenantId = default;
             IReadOnlyList<ManagedServicesAuthorization> authorizations = default;
             Optional<IReadOnlyList<ManagedServicesEligibleAuthorization>> eligibleAuthorizations = default;
@@ -24,12 +28,12 @@ namespace Azure.ResourceManager.ManagedServices.Models
             Optional<string> planDisplayName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("managedByTenantId"))
+                if (property.NameEquals("managedByTenantId"u8))
                 {
                     managedByTenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("authorizations"))
+                if (property.NameEquals("authorizations"u8))
                 {
                     List<ManagedServicesAuthorization> array = new List<ManagedServicesAuthorization>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -39,7 +43,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     authorizations = array;
                     continue;
                 }
-                if (property.NameEquals("eligibleAuthorizations"))
+                if (property.NameEquals("eligibleAuthorizations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,17 +58,17 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     eligibleAuthorizations = array;
                     continue;
                 }
-                if (property.NameEquals("offerDisplayName"))
+                if (property.NameEquals("offerDisplayName"u8))
                 {
                     offerDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publisherDisplayName"))
+                if (property.NameEquals("publisherDisplayName"u8))
                 {
                     publisherDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("planDisplayName"))
+                if (property.NameEquals("planDisplayName"u8))
                 {
                     planDisplayName = property.Value.GetString();
                     continue;

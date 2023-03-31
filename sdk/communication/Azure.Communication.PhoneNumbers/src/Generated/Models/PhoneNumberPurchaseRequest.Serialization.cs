@@ -17,7 +17,7 @@ namespace Azure.Communication.PhoneNumbers
             writer.WriteStartObject();
             if (Optional.IsDefined(SearchId))
             {
-                writer.WritePropertyName("searchId");
+                writer.WritePropertyName("searchId"u8);
                 writer.WriteStringValue(SearchId);
             }
             writer.WriteEndObject();

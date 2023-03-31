@@ -15,11 +15,15 @@ namespace Azure.AI.Language.QuestionAnswering
     {
         internal static KnowledgeBaseAnswerDialog DeserializeKnowledgeBaseAnswerDialog(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isContextOnly = default;
             Optional<IReadOnlyList<KnowledgeBaseAnswerPrompt>> prompts = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isContextOnly"))
+                if (property.NameEquals("isContextOnly"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.AI.Language.QuestionAnswering
                     isContextOnly = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("prompts"))
+                if (property.NameEquals("prompts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

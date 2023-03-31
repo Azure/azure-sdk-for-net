@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceRepository");
+            writer.WritePropertyName("sourceRepository"u8);
             writer.WriteObjectValue(SourceRepository);
-            writer.WritePropertyName("sourceTriggerEvents");
+            writer.WritePropertyName("sourceTriggerEvents"u8);
             writer.WriteStartArray();
             foreach (var item in SourceTriggerEvents)
             {
@@ -27,28 +27,32 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WriteEndObject();
         }
 
         internal static ContainerRegistrySourceTrigger DeserializeContainerRegistrySourceTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SourceCodeRepoProperties sourceRepository = default;
             IList<ContainerRegistrySourceTriggerEvent> sourceTriggerEvents = default;
             Optional<ContainerRegistryTriggerStatus> status = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceRepository"))
+                if (property.NameEquals("sourceRepository"u8))
                 {
                     sourceRepository = SourceCodeRepoProperties.DeserializeSourceCodeRepoProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sourceTriggerEvents"))
+                if (property.NameEquals("sourceTriggerEvents"u8))
                 {
                     List<ContainerRegistrySourceTriggerEvent> array = new List<ContainerRegistrySourceTriggerEvent>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     sourceTriggerEvents = array;
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     status = new ContainerRegistryTriggerStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;

@@ -21,54 +21,54 @@ namespace Azure.ResourceManager.SecurityInsights
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("etag");
+                writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(WatchlistItemType))
             {
-                writer.WritePropertyName("watchlistItemType");
+                writer.WritePropertyName("watchlistItemType"u8);
                 writer.WriteStringValue(WatchlistItemType);
             }
             if (Optional.IsDefined(WatchlistItemId))
             {
-                writer.WritePropertyName("watchlistItemId");
+                writer.WritePropertyName("watchlistItemId"u8);
                 writer.WriteStringValue(WatchlistItemId);
             }
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(IsDeleted))
             {
-                writer.WritePropertyName("isDeleted");
+                writer.WritePropertyName("isDeleted"u8);
                 writer.WriteBooleanValue(IsDeleted.Value);
             }
             if (Optional.IsDefined(CreatedOn))
             {
-                writer.WritePropertyName("created");
+                writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(UpdatedOn))
             {
-                writer.WritePropertyName("updated");
+                writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(CreatedBy))
             {
-                writer.WritePropertyName("createdBy");
+                writer.WritePropertyName("createdBy"u8);
                 writer.WriteObjectValue(CreatedBy);
             }
             if (Optional.IsDefined(UpdatedBy))
             {
-                writer.WritePropertyName("updatedBy");
+                writer.WritePropertyName("updatedBy"u8);
                 writer.WriteObjectValue(UpdatedBy);
             }
             if (Optional.IsDefined(ItemsKeyValue))
             {
-                writer.WritePropertyName("itemsKeyValue");
+                writer.WritePropertyName("itemsKeyValue"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ItemsKeyValue);
 #else
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
             if (Optional.IsDefined(EntityMapping))
             {
-                writer.WritePropertyName("entityMapping");
+                writer.WritePropertyName("entityMapping"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(EntityMapping);
 #else
@@ -90,6 +90,10 @@ namespace Azure.ResourceManager.SecurityInsights
 
         internal static SecurityInsightsWatchlistItemData DeserializeSecurityInsightsWatchlistItemData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -107,7 +111,7 @@ namespace Azure.ResourceManager.SecurityInsights
             Optional<BinaryData> entityMapping = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -117,32 +121,32 @@ namespace Azure.ResourceManager.SecurityInsights
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -151,17 +155,17 @@ namespace Azure.ResourceManager.SecurityInsights
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("watchlistItemType"))
+                        if (property0.NameEquals("watchlistItemType"u8))
                         {
                             watchlistItemType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("watchlistItemId"))
+                        if (property0.NameEquals("watchlistItemId"u8))
                         {
                             watchlistItemId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("tenantId"))
+                        if (property0.NameEquals("tenantId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -171,7 +175,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             tenantId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("isDeleted"))
+                        if (property0.NameEquals("isDeleted"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -181,7 +185,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             isDeleted = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("created"))
+                        if (property0.NameEquals("created"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -191,7 +195,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             created = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("updated"))
+                        if (property0.NameEquals("updated"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -201,7 +205,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             updated = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("createdBy"))
+                        if (property0.NameEquals("createdBy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -211,7 +215,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             createdBy = SecurityInsightsUserInfo.DeserializeSecurityInsightsUserInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("updatedBy"))
+                        if (property0.NameEquals("updatedBy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -221,7 +225,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             updatedBy = SecurityInsightsUserInfo.DeserializeSecurityInsightsUserInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("itemsKeyValue"))
+                        if (property0.NameEquals("itemsKeyValue"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -231,7 +235,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             itemsKeyValue = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("entityMapping"))
+                        if (property0.NameEquals("entityMapping"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.TrafficManager.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RelativeName))
             {
-                writer.WritePropertyName("relativeName");
+                writer.WritePropertyName("relativeName"u8);
                 writer.WriteStringValue(RelativeName);
             }
             if (Optional.IsDefined(Ttl))
             {
-                writer.WritePropertyName("ttl");
+                writer.WritePropertyName("ttl"u8);
                 writer.WriteNumberValue(Ttl.Value);
             }
             writer.WriteEndObject();
@@ -30,22 +30,26 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         internal static TrafficManagerDnsConfig DeserializeTrafficManagerDnsConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> relativeName = default;
             Optional<string> fqdn = default;
             Optional<long> ttl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("relativeName"))
+                if (property.NameEquals("relativeName"u8))
                 {
                     relativeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fqdn"))
+                if (property.NameEquals("fqdn"u8))
                 {
                     fqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ttl"))
+                if (property.NameEquals("ttl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

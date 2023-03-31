@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    /// <summary> A class representing the KustoCluster data model. </summary>
+    /// <summary>
+    /// A class representing the KustoCluster data model.
+    /// Class representing a Kusto cluster.
+    /// </summary>
     public partial class KustoClusterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of KustoClusterData. </summary>

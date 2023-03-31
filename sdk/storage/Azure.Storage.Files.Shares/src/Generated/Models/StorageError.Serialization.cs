@@ -25,10 +25,14 @@ namespace Azure.Storage.Files.Shares.Models
 
         internal static StorageError DeserializeStorageError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("Message"))
+                if (property.NameEquals("Message"u8))
                 {
                     message = property.Value.GetString();
                     continue;

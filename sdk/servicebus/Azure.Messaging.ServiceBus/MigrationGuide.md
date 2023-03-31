@@ -25,6 +25,7 @@ We assume that you are familiar with the `Microsoft.Azure.ServiceBus` library. I
     - [Dead letter messages](#dead-letter-messages)
     - [Working with sessions](#working-with-sessions)
     - [Cross-Entity transactions](#cross-entity-transactions)
+    - [Distributed tracing](#distributed-tracing)
   - [Plugins](#plugins)
   - [Additional samples](#additional-samples)
   - [Frequently Asked Questions](#frequently-asked-questions)
@@ -465,6 +466,12 @@ using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
     ts.Complete();
 }
 ```
+
+### Distributed tracing
+
+In `Microsoft.Azure.ServiceBus`, the library would automatically flow [activity baggage](https://learn.microsoft.com/dotnet/api/system.diagnostics.activity.baggage) via the `Correlation-Context` entry of the `Message.UserProperties` dictionary. This would allow senders and receivers to correlate any information that was added to an Activity's baggage by an application. 
+
+In `Azure.Messaging.ServiceBus`, Activity baggage is not currently flowed through the message. Instead, when using the [experimental OpenTelemetry support](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/), `tracestate` can be used to correlate the [Activity.TraceStateString](https://learn.microsoft.com/dotnet/api/system.diagnostics.activity.tracestatestring) between senders, receivers, and processors. The `tracestate` entry is populated in the `ServiceBusMessage.ApplicationProperties` if the enclosing Activity has a non-null `TraceStateString`. In the future, we plan to add additional support for propagating context between senders, receivers, and processors. More details about tracing support in the `Azure.Messaging.ServiceBus` library can be found in the [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/TROUBLESHOOTING.md#distributed-tracing).
 
 ## Plugins
  

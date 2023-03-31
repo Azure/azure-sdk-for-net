@@ -15,11 +15,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static IotSecuritySolutionAnalyticsModelDevicesMetrics DeserializeIotSecuritySolutionAnalyticsModelDevicesMetrics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> date = default;
             Optional<IotSeverityMetrics> devicesMetrics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("date"))
+                if (property.NameEquals("date"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     date = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("devicesMetrics"))
+                if (property.NameEquals("devicesMetrics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

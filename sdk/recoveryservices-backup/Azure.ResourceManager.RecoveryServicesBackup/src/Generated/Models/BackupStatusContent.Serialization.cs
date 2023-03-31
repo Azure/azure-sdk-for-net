@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceType))
             {
-                writer.WritePropertyName("resourceType");
+                writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value.ToString());
             }
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId");
+                writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsDefined(PoLogicalName))
             {
-                writer.WritePropertyName("poLogicalName");
+                writer.WritePropertyName("poLogicalName"u8);
                 writer.WriteStringValue(PoLogicalName);
             }
             writer.WriteEndObject();

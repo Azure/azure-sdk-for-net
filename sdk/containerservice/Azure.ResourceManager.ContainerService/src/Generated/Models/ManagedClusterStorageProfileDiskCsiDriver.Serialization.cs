@@ -10,25 +10,35 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    internal partial class ManagedClusterStorageProfileDiskCsiDriver : IUtf8JsonSerializable
+    public partial class ManagedClusterStorageProfileDiskCsiDriver : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
             }
             writer.WriteEndObject();
         }
 
         internal static ManagedClusterStorageProfileDiskCsiDriver DeserializeManagedClusterStorageProfileDiskCsiDriver(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
+            Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,8 +48,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("version"u8))
+                {
+                    version = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ManagedClusterStorageProfileDiskCsiDriver(Optional.ToNullable(enabled));
+            return new ManagedClusterStorageProfileDiskCsiDriver(Optional.ToNullable(enabled), version.Value);
         }
     }
 }

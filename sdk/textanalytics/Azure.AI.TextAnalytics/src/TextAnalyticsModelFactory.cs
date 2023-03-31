@@ -434,16 +434,6 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.BooleanResolution"/> for mocking purposes.
-        /// </summary>
-        /// <param name="value">Sets the <see cref="BooleanResolution.Value"/> property.</param>
-        /// <returns>A new instance of <see cref="TextAnalytics.BooleanResolution"/> for mocking purposes.</returns>
-        public static BooleanResolution BooleanResolution(bool value)
-        {
-            return new BooleanResolution(ResolutionKind.BooleanResolution, value);
-        }
-
-        /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.CurrencyResolution"/> for mocking purposes.
         /// </summary>
         /// <param name="iso4217">Sets the <see cref="CurrencyResolution.Iso4217"/> property.</param>

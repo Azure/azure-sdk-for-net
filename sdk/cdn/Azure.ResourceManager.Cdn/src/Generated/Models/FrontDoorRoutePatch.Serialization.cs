@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(CustomDomains))
             {
-                writer.WritePropertyName("customDomains");
+                writer.WritePropertyName("customDomains"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomDomains)
                 {
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(OriginGroup))
             {
-                writer.WritePropertyName("originGroup");
+                writer.WritePropertyName("originGroup"u8);
                 JsonSerializer.Serialize(writer, OriginGroup);
             }
             if (Optional.IsDefined(OriginPath))
             {
-                writer.WritePropertyName("originPath");
+                writer.WritePropertyName("originPath"u8);
                 writer.WriteStringValue(OriginPath);
             }
             if (Optional.IsCollectionDefined(RuleSets))
             {
-                writer.WritePropertyName("ruleSets");
+                writer.WritePropertyName("ruleSets"u8);
                 writer.WriteStartArray();
                 foreach (var item in RuleSets)
                 {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsCollectionDefined(SupportedProtocols))
             {
-                writer.WritePropertyName("supportedProtocols");
+                writer.WritePropertyName("supportedProtocols"u8);
                 writer.WriteStartArray();
                 foreach (var item in SupportedProtocols)
                 {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsCollectionDefined(PatternsToMatch))
             {
-                writer.WritePropertyName("patternsToMatch");
+                writer.WritePropertyName("patternsToMatch"u8);
                 writer.WriteStartArray();
                 foreach (var item in PatternsToMatch)
                 {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (CacheConfiguration != null)
                 {
-                    writer.WritePropertyName("cacheConfiguration");
+                    writer.WritePropertyName("cacheConfiguration"u8);
                     writer.WriteObjectValue(CacheConfiguration);
                 }
                 else
@@ -81,22 +81,22 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(ForwardingProtocol))
             {
-                writer.WritePropertyName("forwardingProtocol");
+                writer.WritePropertyName("forwardingProtocol"u8);
                 writer.WriteStringValue(ForwardingProtocol.Value.ToString());
             }
             if (Optional.IsDefined(LinkToDefaultDomain))
             {
-                writer.WritePropertyName("linkToDefaultDomain");
+                writer.WritePropertyName("linkToDefaultDomain"u8);
                 writer.WriteStringValue(LinkToDefaultDomain.Value.ToString());
             }
             if (Optional.IsDefined(HttpsRedirect))
             {
-                writer.WritePropertyName("httpsRedirect");
+                writer.WritePropertyName("httpsRedirect"u8);
                 writer.WriteStringValue(HttpsRedirect.Value.ToString());
             }
             if (Optional.IsDefined(EnabledState))
             {
-                writer.WritePropertyName("enabledState");
+                writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
             writer.WriteEndObject();

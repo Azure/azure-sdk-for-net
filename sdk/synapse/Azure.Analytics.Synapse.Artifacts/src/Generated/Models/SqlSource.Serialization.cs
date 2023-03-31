@@ -21,17 +21,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SqlReaderQuery))
             {
-                writer.WritePropertyName("sqlReaderQuery");
+                writer.WritePropertyName("sqlReaderQuery"u8);
                 writer.WriteObjectValue(SqlReaderQuery);
             }
             if (Optional.IsDefined(SqlReaderStoredProcedureName))
             {
-                writer.WritePropertyName("sqlReaderStoredProcedureName");
+                writer.WritePropertyName("sqlReaderStoredProcedureName"u8);
                 writer.WriteObjectValue(SqlReaderStoredProcedureName);
             }
             if (Optional.IsCollectionDefined(StoredProcedureParameters))
             {
-                writer.WritePropertyName("storedProcedureParameters");
+                writer.WritePropertyName("storedProcedureParameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in StoredProcedureParameters)
                 {
@@ -42,44 +42,44 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsDefined(IsolationLevel))
             {
-                writer.WritePropertyName("isolationLevel");
+                writer.WritePropertyName("isolationLevel"u8);
                 writer.WriteObjectValue(IsolationLevel);
             }
             if (Optional.IsDefined(PartitionOption))
             {
-                writer.WritePropertyName("partitionOption");
+                writer.WritePropertyName("partitionOption"u8);
                 writer.WriteObjectValue(PartitionOption);
             }
             if (Optional.IsDefined(PartitionSettings))
             {
-                writer.WritePropertyName("partitionSettings");
+                writer.WritePropertyName("partitionSettings"u8);
                 writer.WriteObjectValue(PartitionSettings);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
-                writer.WritePropertyName("queryTimeout");
+                writer.WritePropertyName("queryTimeout"u8);
                 writer.WriteObjectValue(QueryTimeout);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
-                writer.WritePropertyName("additionalColumns");
+                writer.WritePropertyName("additionalColumns"u8);
                 writer.WriteObjectValue(AdditionalColumns);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(SourceRetryCount))
             {
-                writer.WritePropertyName("sourceRetryCount");
+                writer.WritePropertyName("sourceRetryCount"u8);
                 writer.WriteObjectValue(SourceRetryCount);
             }
             if (Optional.IsDefined(SourceRetryWait))
             {
-                writer.WritePropertyName("sourceRetryWait");
+                writer.WritePropertyName("sourceRetryWait"u8);
                 writer.WriteObjectValue(SourceRetryWait);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
-                writer.WritePropertyName("maxConcurrentConnections");
+                writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
@@ -92,6 +92,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SqlSource DeserializeSqlSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> sqlReaderQuery = default;
             Optional<object> sqlReaderStoredProcedureName = default;
             Optional<IDictionary<string, StoredProcedureParameter>> storedProcedureParameters = default;
@@ -108,7 +112,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sqlReaderQuery"))
+                if (property.NameEquals("sqlReaderQuery"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +122,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     sqlReaderQuery = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("sqlReaderStoredProcedureName"))
+                if (property.NameEquals("sqlReaderStoredProcedureName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -128,7 +132,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     sqlReaderStoredProcedureName = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("storedProcedureParameters"))
+                if (property.NameEquals("storedProcedureParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -143,7 +147,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     storedProcedureParameters = dictionary;
                     continue;
                 }
-                if (property.NameEquals("isolationLevel"))
+                if (property.NameEquals("isolationLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -153,7 +157,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     isolationLevel = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("partitionOption"))
+                if (property.NameEquals("partitionOption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -163,7 +167,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     partitionOption = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("partitionSettings"))
+                if (property.NameEquals("partitionSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -173,7 +177,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     partitionSettings = SqlPartitionSettings.DeserializeSqlPartitionSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("queryTimeout"))
+                if (property.NameEquals("queryTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -183,7 +187,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     queryTimeout = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("additionalColumns"))
+                if (property.NameEquals("additionalColumns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -193,12 +197,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     additionalColumns = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceRetryCount"))
+                if (property.NameEquals("sourceRetryCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -208,7 +212,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     sourceRetryCount = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("sourceRetryWait"))
+                if (property.NameEquals("sourceRetryWait"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -218,7 +222,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     sourceRetryWait = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentConnections"))
+                if (property.NameEquals("maxConcurrentConnections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

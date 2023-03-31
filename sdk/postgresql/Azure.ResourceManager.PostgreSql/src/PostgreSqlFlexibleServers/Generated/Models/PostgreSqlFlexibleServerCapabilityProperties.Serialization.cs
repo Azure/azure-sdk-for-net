@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         internal static PostgreSqlFlexibleServerCapabilityProperties DeserializePostgreSqlFlexibleServerCapabilityProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> zone = default;
             Optional<IReadOnlyList<string>> supportedHAMode = default;
             Optional<bool> geoBackupSupported = default;
@@ -27,12 +31,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("zone"))
+                if (property.NameEquals("zone"u8))
                 {
                     zone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportedHAMode"))
+                if (property.NameEquals("supportedHAMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +51,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedHAMode = array;
                     continue;
                 }
-                if (property.NameEquals("geoBackupSupported"))
+                if (property.NameEquals("geoBackupSupported"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +61,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     geoBackupSupported = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("zoneRedundantHaSupported"))
+                if (property.NameEquals("zoneRedundantHaSupported"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +71,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     zoneRedundantHaSupported = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("zoneRedundantHaAndGeoBackupSupported"))
+                if (property.NameEquals("zoneRedundantHaAndGeoBackupSupported"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +81,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     zoneRedundantHaAndGeoBackupSupported = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("supportedFlexibleServerEditions"))
+                if (property.NameEquals("supportedFlexibleServerEditions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedFlexibleServerEditions = array;
                     continue;
                 }
-                if (property.NameEquals("supportedHyperscaleNodeEditions"))
+                if (property.NameEquals("supportedHyperscaleNodeEditions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,7 +111,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedHyperscaleNodeEditions = array;
                     continue;
                 }
-                if (property.NameEquals("fastProvisioningSupported"))
+                if (property.NameEquals("fastProvisioningSupported"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -117,7 +121,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     fastProvisioningSupported = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("supportedFastProvisioningEditions"))
+                if (property.NameEquals("supportedFastProvisioningEditions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +136,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedFastProvisioningEditions = array;
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;

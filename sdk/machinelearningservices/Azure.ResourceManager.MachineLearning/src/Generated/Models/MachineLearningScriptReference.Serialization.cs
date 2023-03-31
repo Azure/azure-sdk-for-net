@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ScriptSource))
             {
-                writer.WritePropertyName("scriptSource");
+                writer.WritePropertyName("scriptSource"u8);
                 writer.WriteStringValue(ScriptSource);
             }
             if (Optional.IsDefined(ScriptData))
             {
-                writer.WritePropertyName("scriptData");
+                writer.WritePropertyName("scriptData"u8);
                 writer.WriteStringValue(ScriptData);
             }
             if (Optional.IsDefined(ScriptArguments))
             {
-                writer.WritePropertyName("scriptArguments");
+                writer.WritePropertyName("scriptArguments"u8);
                 writer.WriteStringValue(ScriptArguments);
             }
             if (Optional.IsDefined(Timeout))
             {
-                writer.WritePropertyName("timeout");
+                writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout);
             }
             writer.WriteEndObject();
@@ -40,28 +40,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningScriptReference DeserializeMachineLearningScriptReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> scriptSource = default;
             Optional<string> scriptData = default;
             Optional<string> scriptArguments = default;
             Optional<string> timeout = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scriptSource"))
+                if (property.NameEquals("scriptSource"u8))
                 {
                     scriptSource = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scriptData"))
+                if (property.NameEquals("scriptData"u8))
                 {
                     scriptData = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scriptArguments"))
+                if (property.NameEquals("scriptArguments"u8))
                 {
                     scriptArguments = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timeout"))
+                if (property.NameEquals("timeout"u8))
                 {
                     timeout = property.Value.GetString();
                     continue;

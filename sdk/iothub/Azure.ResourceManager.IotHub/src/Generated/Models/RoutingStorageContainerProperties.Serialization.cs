@@ -18,61 +18,61 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.Value);
             }
             if (Optional.IsDefined(ConnectionString))
             {
-                writer.WritePropertyName("connectionString");
+                writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
             if (Optional.IsDefined(Endpoint))
             {
-                writer.WritePropertyName("endpointUri");
+                writer.WritePropertyName("endpointUri"u8);
                 writer.WriteStringValue(Endpoint);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
-                writer.WritePropertyName("authenticationType");
+                writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(SubscriptionId))
             {
-                writer.WritePropertyName("subscriptionId");
+                writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
             if (Optional.IsDefined(ResourceGroup))
             {
-                writer.WritePropertyName("resourceGroup");
+                writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            writer.WritePropertyName("containerName");
+            writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
             if (Optional.IsDefined(FileNameFormat))
             {
-                writer.WritePropertyName("fileNameFormat");
+                writer.WritePropertyName("fileNameFormat"u8);
                 writer.WriteStringValue(FileNameFormat);
             }
             if (Optional.IsDefined(BatchFrequencyInSeconds))
             {
-                writer.WritePropertyName("batchFrequencyInSeconds");
+                writer.WritePropertyName("batchFrequencyInSeconds"u8);
                 writer.WriteNumberValue(BatchFrequencyInSeconds.Value);
             }
             if (Optional.IsDefined(MaxChunkSizeInBytes))
             {
-                writer.WritePropertyName("maxChunkSizeInBytes");
+                writer.WritePropertyName("maxChunkSizeInBytes"u8);
                 writer.WriteNumberValue(MaxChunkSizeInBytes.Value);
             }
             if (Optional.IsDefined(Encoding))
             {
-                writer.WritePropertyName("encoding");
+                writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToString());
             }
             writer.WriteEndObject();
@@ -80,6 +80,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static RoutingStorageContainerProperties DeserializeRoutingStorageContainerProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> id = default;
             Optional<string> connectionString = default;
             Optional<string> endpointUri = default;
@@ -95,7 +99,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<RoutingStorageContainerPropertiesEncoding> encoding = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,17 +109,17 @@ namespace Azure.ResourceManager.IotHub.Models
                     id = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("connectionString"))
+                if (property.NameEquals("connectionString"u8))
                 {
                     connectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpointUri"))
+                if (property.NameEquals("endpointUri"u8))
                 {
                     endpointUri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authenticationType"))
+                if (property.NameEquals("authenticationType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -125,7 +129,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     authenticationType = new IotHubAuthenticationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -135,32 +139,32 @@ namespace Azure.ResourceManager.IotHub.Models
                     identity = ManagedIdentity.DeserializeManagedIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceGroup"))
+                if (property.NameEquals("resourceGroup"u8))
                 {
                     resourceGroup = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containerName"))
+                if (property.NameEquals("containerName"u8))
                 {
                     containerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fileNameFormat"))
+                if (property.NameEquals("fileNameFormat"u8))
                 {
                     fileNameFormat = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("batchFrequencyInSeconds"))
+                if (property.NameEquals("batchFrequencyInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -170,7 +174,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     batchFrequencyInSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxChunkSizeInBytes"))
+                if (property.NameEquals("maxChunkSizeInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -180,7 +184,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     maxChunkSizeInBytes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("encoding"))
+                if (property.NameEquals("encoding"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

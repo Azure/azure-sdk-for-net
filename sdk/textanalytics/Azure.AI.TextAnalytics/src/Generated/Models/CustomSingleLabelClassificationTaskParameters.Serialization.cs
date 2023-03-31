@@ -15,13 +15,13 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("projectName");
+            writer.WritePropertyName("projectName"u8);
             writer.WriteStringValue(ProjectName);
-            writer.WritePropertyName("deploymentName");
+            writer.WritePropertyName("deploymentName"u8);
             writer.WriteStringValue(DeploymentName);
             if (Optional.IsDefined(LoggingOptOut))
             {
-                writer.WritePropertyName("loggingOptOut");
+                writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
             }
             writer.WriteEndObject();
@@ -29,22 +29,26 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static CustomSingleLabelClassificationTaskParameters DeserializeCustomSingleLabelClassificationTaskParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string projectName = default;
             string deploymentName = default;
             Optional<bool> loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("projectName"))
+                if (property.NameEquals("projectName"u8))
                 {
                     projectName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deploymentName"))
+                if (property.NameEquals("deploymentName"u8))
                 {
                     deploymentName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("loggingOptOut"))
+                if (property.NameEquals("loggingOptOut"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

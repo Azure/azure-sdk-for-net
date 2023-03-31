@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ChartVersion))
             {
-                writer.WritePropertyName("chartVersion");
+                writer.WritePropertyName("chartVersion"u8);
                 writer.WriteStringValue(ChartVersion);
             }
             if (Optional.IsDefined(ChartValues))
             {
-                writer.WritePropertyName("chartValues");
+                writer.WritePropertyName("chartValues"u8);
                 writer.WriteStringValue(ChartValues);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         internal static HelmOperatorProperties DeserializeHelmOperatorProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> chartVersion = default;
             Optional<string> chartValues = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("chartVersion"))
+                if (property.NameEquals("chartVersion"u8))
                 {
                     chartVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("chartValues"))
+                if (property.NameEquals("chartValues"u8))
                 {
                     chartValues = property.Value.GetString();
                     continue;

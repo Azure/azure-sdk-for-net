@@ -133,9 +133,8 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
         [Test]
-        [LiveOnly]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         [TestCase(0, 10)]
         [TestCase(100, 10)]
         [TestCase(Constants.KB, 10)]
@@ -248,9 +247,8 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
         [Test]
-        [LiveOnly]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task BlockBlobDirectoryToDirectory_EmptyFolder()
         {
             // Arrange
@@ -301,9 +299,8 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
         [Test]
-        [LiveOnly]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task BlockBlobDirectoryToDirectory_SingleFile()
         {
             // Arrange
@@ -337,9 +334,8 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
         [Test]
-        [LiveOnly]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task BlockBlobDirectoryToDirectory_ManySubDirectories()
         {
             // Arrange
@@ -385,9 +381,8 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
         [Test]
-        [LiveOnly]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(3)]
@@ -431,9 +426,8 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
         [Test]
-        [LiveOnly]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task BlockBlobDirectoryToDirectory_OverwriteTrue()
         {
             // Arrange
@@ -491,9 +485,8 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
         [Test]
-        [LiveOnly]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task BlockBlobDirectoryToDirectory_OverwriteFalse()
         {
             // Arrange
@@ -549,5 +542,226 @@ namespace Azure.Storage.DataMovement.Tests
                 Directory.Delete(sourceFolderPath, true);
             }
         }
+
+        #region Single Concurrency
+        private async Task CreateBlobDirectoryTree(
+            BlobContainerClient client,
+            string sourceFolderPath,
+            string sourceBlobDirectoryName,
+            int size)
+        {
+            string blobName1 = Path.Combine(sourceBlobDirectoryName, "blob1");
+            string blobName2 = Path.Combine(sourceBlobDirectoryName, "blob2");
+            await CreateBlockBlob(client, Path.GetTempFileName(), blobName1, size);
+            await CreateBlockBlob(client, Path.GetTempFileName(), blobName2, size);
+
+            string subDirName = "bar";
+            CreateRandomDirectory(sourceFolderPath, subDirName).Substring(sourceFolderPath.Length + 1);
+            string blobName3 = Path.Combine(sourceBlobDirectoryName, subDirName, "blob3");
+            await CreateBlockBlob(client, Path.GetTempFileName(), blobName3, size);
+
+            string subDirName2 = "pik";
+            CreateRandomDirectory(sourceFolderPath, subDirName2).Substring(sourceFolderPath.Length + 1);
+            string blobName4 = Path.Combine(sourceBlobDirectoryName, subDirName2, "blob4");
+            await CreateBlockBlob(client, Path.GetTempFileName(), blobName4, size);
+        }
+
+        private async Task<DataTransfer> CreateStartTransfer(
+            BlobContainerClient containerClient,
+            int concurrency,
+            bool createFailedCondition = false,
+            ContainerTransferOptions options = default,
+            int size = Constants.KB)
+        {
+            // Arrange
+            // Create source local file for checking, and source blob
+            string sourceBlobPrefix = "sourceFolder";
+            string destBlobPrefix = "destFolder";
+            string sourceFolderPath = CreateRandomDirectory(Path.GetTempPath(), sourceBlobPrefix);
+            await CreateBlobDirectoryTree(containerClient, sourceFolderPath, sourceBlobPrefix, size);
+
+            // Create new source block blob.
+            string newSourceFile = Path.GetTempFileName();
+            StorageResourceContainer sourceResource = new BlobDirectoryStorageResourceContainer(containerClient, sourceBlobPrefix);
+            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(containerClient, destBlobPrefix);
+
+            // If we want a failure condition to happen
+            if (createFailedCondition)
+            {
+                await CreateBlockBlob(containerClient, Path.GetTempFileName(), $"{destBlobPrefix}/blob1", size);
+            }
+
+            // Create Transfer Manager with single threaded operation
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
+            {
+                MaximumConcurrency = concurrency,
+            };
+            TransferManager transferManager = new TransferManager(managerOptions);
+
+            // Start transfer and await for completion.
+            return await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options).ConfigureAwait(false);
+        }
+
+        [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        public async Task StartTransfer_AwaitCompletion()
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+
+            // Create transfer to do a AwaitCompletion
+            DataTransfer transfer = await CreateStartTransfer(test.Container, 1);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
+        }
+
+        [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        public async Task StartTransfer_AwaitCompletion_Failed()
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+
+            ContainerTransferOptions options = new ContainerTransferOptions()
+            {
+                CreateMode = StorageResourceCreateMode.Fail
+            };
+
+            // Create transfer to do a AwaitCompletion
+            DataTransfer transfer = await CreateStartTransfer(
+                test.Container,
+                1,
+                createFailedCondition: true,
+                options: options);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
+        }
+
+        [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        public async Task StartTransfer_AwaitCompletion_Skipped()
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+
+            // Create transfer options with Skipping available
+            ContainerTransferOptions options = new ContainerTransferOptions()
+            {
+                CreateMode = StorageResourceCreateMode.Skip
+            };
+
+            // Create transfer to do a AwaitCompletion
+            DataTransfer transfer = await CreateStartTransfer(
+                test.Container,
+                1,
+                createFailedCondition: true,
+                options: options);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(StorageTransferStatus.CompletedWithSkippedTransfers, transfer.TransferStatus);
+        }
+
+        [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        public async Task StartTransfer_EnsureCompleted()
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+
+            // Create transfer to do a EnsureCompleted
+            DataTransfer transfer = await CreateStartTransfer(test.Container, 1);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            transfer.EnsureCompleted(cancellationTokenSource.Token);
+
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
+        }
+
+        [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        public async Task StartTransfer_EnsureCompleted_Failed()
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+
+            ContainerTransferOptions options = new ContainerTransferOptions()
+            {
+                CreateMode = StorageResourceCreateMode.Fail
+            };
+
+            // Create transfer to do a AwaitCompletion
+            DataTransfer transfer = await CreateStartTransfer(
+                test.Container,
+                1,
+                createFailedCondition: true,
+                options: options);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            transfer.EnsureCompleted(cancellationTokenSource.Token);
+
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
+        }
+
+        [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        public async Task StartTransfer_EnsureCompleted_Skipped()
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+
+            // Create transfer options with Skipping available
+            ContainerTransferOptions options = new ContainerTransferOptions()
+            {
+                CreateMode = StorageResourceCreateMode.Skip
+            };
+
+            // Create transfer to do a EnsureCompleted
+            DataTransfer transfer = await CreateStartTransfer(
+                test.Container,
+                1,
+                createFailedCondition: true,
+                options: options);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            transfer.EnsureCompleted(cancellationTokenSource.Token);
+
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(StorageTransferStatus.CompletedWithSkippedTransfers, transfer.TransferStatus);
+        }
+        #endregion
     }
 }

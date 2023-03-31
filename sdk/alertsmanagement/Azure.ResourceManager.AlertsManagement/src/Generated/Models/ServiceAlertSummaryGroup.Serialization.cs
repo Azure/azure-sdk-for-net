@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Total))
             {
-                writer.WritePropertyName("total");
+                writer.WritePropertyName("total"u8);
                 writer.WriteNumberValue(Total.Value);
             }
             if (Optional.IsDefined(SmartGroupsCount))
             {
-                writer.WritePropertyName("smartGroupsCount");
+                writer.WritePropertyName("smartGroupsCount"u8);
                 writer.WriteNumberValue(SmartGroupsCount.Value);
             }
             if (Optional.IsDefined(GroupedBy))
             {
-                writer.WritePropertyName("groupedby");
+                writer.WritePropertyName("groupedby"u8);
                 writer.WriteStringValue(GroupedBy);
             }
             if (Optional.IsCollectionDefined(Values))
             {
-                writer.WritePropertyName("values");
+                writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
@@ -46,13 +46,17 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static ServiceAlertSummaryGroup DeserializeServiceAlertSummaryGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> total = default;
             Optional<long> smartGroupsCount = default;
             Optional<string> groupedby = default;
             Optional<IList<ServiceAlertSummaryGroupItemInfo>> values = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("total"))
+                if (property.NameEquals("total"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +66,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     total = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("smartGroupsCount"))
+                if (property.NameEquals("smartGroupsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,12 +76,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     smartGroupsCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("groupedby"))
+                if (property.NameEquals("groupedby"u8))
                 {
                     groupedby = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("values"))
+                if (property.NameEquals("values"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

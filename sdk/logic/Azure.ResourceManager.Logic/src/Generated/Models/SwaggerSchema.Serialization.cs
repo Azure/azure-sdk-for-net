@@ -19,27 +19,27 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Reference))
             {
-                writer.WritePropertyName("ref");
+                writer.WritePropertyName("ref"u8);
                 writer.WriteStringValue(Reference);
             }
             if (Optional.IsDefined(SchemaType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SchemaType.Value.ToString());
             }
             if (Optional.IsDefined(Title))
             {
-                writer.WritePropertyName("title");
+                writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
             if (Optional.IsDefined(Items))
             {
-                writer.WritePropertyName("items");
+                writer.WritePropertyName("items"u8);
                 writer.WriteObjectValue(Items);
             }
             if (Optional.IsCollectionDefined(Properties))
             {
-                writer.WritePropertyName("properties");
+                writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
                 foreach (var item in Properties)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
             if (Optional.IsDefined(AdditionalProperties))
             {
-                writer.WritePropertyName("additionalProperties");
+                writer.WritePropertyName("additionalProperties"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(AdditionalProperties);
 #else
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
             if (Optional.IsCollectionDefined(RequiredProperties))
             {
-                writer.WritePropertyName("required");
+                writer.WritePropertyName("required"u8);
                 writer.WriteStartArray();
                 foreach (var item in RequiredProperties)
                 {
@@ -69,17 +69,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
             if (Optional.IsDefined(MaxProperties))
             {
-                writer.WritePropertyName("maxProperties");
+                writer.WritePropertyName("maxProperties"u8);
                 writer.WriteNumberValue(MaxProperties.Value);
             }
             if (Optional.IsDefined(MinProperties))
             {
-                writer.WritePropertyName("minProperties");
+                writer.WritePropertyName("minProperties"u8);
                 writer.WriteNumberValue(MinProperties.Value);
             }
             if (Optional.IsCollectionDefined(AllOf))
             {
-                writer.WritePropertyName("allOf");
+                writer.WritePropertyName("allOf"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllOf)
                 {
@@ -89,27 +89,27 @@ namespace Azure.ResourceManager.Logic.Models
             }
             if (Optional.IsDefined(Discriminator))
             {
-                writer.WritePropertyName("discriminator");
+                writer.WritePropertyName("discriminator"u8);
                 writer.WriteStringValue(Discriminator);
             }
             if (Optional.IsDefined(IsReadOnly))
             {
-                writer.WritePropertyName("readOnly");
+                writer.WritePropertyName("readOnly"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
             }
             if (Optional.IsDefined(Xml))
             {
-                writer.WritePropertyName("xml");
+                writer.WritePropertyName("xml"u8);
                 writer.WriteObjectValue(Xml);
             }
             if (Optional.IsDefined(ExternalDocs))
             {
-                writer.WritePropertyName("externalDocs");
+                writer.WritePropertyName("externalDocs"u8);
                 writer.WriteObjectValue(ExternalDocs);
             }
             if (Optional.IsDefined(Example))
             {
-                writer.WritePropertyName("example");
+                writer.WritePropertyName("example"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Example);
 #else
@@ -118,27 +118,27 @@ namespace Azure.ResourceManager.Logic.Models
             }
             if (Optional.IsDefined(IsNotificationUrlExtension))
             {
-                writer.WritePropertyName("notificationUrlExtension");
+                writer.WritePropertyName("notificationUrlExtension"u8);
                 writer.WriteBooleanValue(IsNotificationUrlExtension.Value);
             }
             if (Optional.IsDefined(DynamicSchemaOld))
             {
-                writer.WritePropertyName("dynamicSchemaOld");
+                writer.WritePropertyName("dynamicSchemaOld"u8);
                 writer.WriteObjectValue(DynamicSchemaOld);
             }
             if (Optional.IsDefined(DynamicSchemaNew))
             {
-                writer.WritePropertyName("dynamicSchemaNew");
+                writer.WritePropertyName("dynamicSchemaNew"u8);
                 writer.WriteObjectValue(DynamicSchemaNew);
             }
             if (Optional.IsDefined(DynamicListNew))
             {
-                writer.WritePropertyName("dynamicListNew");
+                writer.WritePropertyName("dynamicListNew"u8);
                 writer.WriteObjectValue(DynamicListNew);
             }
             if (Optional.IsDefined(DynamicTree))
             {
-                writer.WritePropertyName("dynamicTree");
+                writer.WritePropertyName("dynamicTree"u8);
                 writer.WriteObjectValue(DynamicTree);
             }
             writer.WriteEndObject();
@@ -146,6 +146,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static SwaggerSchema DeserializeSwaggerSchema(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> @ref = default;
             Optional<SwaggerSchemaType> type = default;
             Optional<string> title = default;
@@ -168,12 +172,12 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<SwaggerCustomDynamicTree> dynamicTree = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ref"))
+                if (property.NameEquals("ref"u8))
                 {
                     @ref = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -183,12 +187,12 @@ namespace Azure.ResourceManager.Logic.Models
                     type = new SwaggerSchemaType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("title"))
+                if (property.NameEquals("title"u8))
                 {
                     title = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("items"))
+                if (property.NameEquals("items"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -198,7 +202,7 @@ namespace Azure.ResourceManager.Logic.Models
                     items = DeserializeSwaggerSchema(property.Value);
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -213,7 +217,7 @@ namespace Azure.ResourceManager.Logic.Models
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("additionalProperties"))
+                if (property.NameEquals("additionalProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -223,7 +227,7 @@ namespace Azure.ResourceManager.Logic.Models
                     additionalProperties = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("required"))
+                if (property.NameEquals("required"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -238,7 +242,7 @@ namespace Azure.ResourceManager.Logic.Models
                     required = array;
                     continue;
                 }
-                if (property.NameEquals("maxProperties"))
+                if (property.NameEquals("maxProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -248,7 +252,7 @@ namespace Azure.ResourceManager.Logic.Models
                     maxProperties = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minProperties"))
+                if (property.NameEquals("minProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -258,7 +262,7 @@ namespace Azure.ResourceManager.Logic.Models
                     minProperties = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("allOf"))
+                if (property.NameEquals("allOf"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -273,12 +277,12 @@ namespace Azure.ResourceManager.Logic.Models
                     allOf = array;
                     continue;
                 }
-                if (property.NameEquals("discriminator"))
+                if (property.NameEquals("discriminator"u8))
                 {
                     discriminator = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("readOnly"))
+                if (property.NameEquals("readOnly"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -288,7 +292,7 @@ namespace Azure.ResourceManager.Logic.Models
                     readOnly = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("xml"))
+                if (property.NameEquals("xml"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -298,7 +302,7 @@ namespace Azure.ResourceManager.Logic.Models
                     xml = SwaggerXml.DeserializeSwaggerXml(property.Value);
                     continue;
                 }
-                if (property.NameEquals("externalDocs"))
+                if (property.NameEquals("externalDocs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -308,7 +312,7 @@ namespace Azure.ResourceManager.Logic.Models
                     externalDocs = SwaggerExternalDocumentation.DeserializeSwaggerExternalDocumentation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("example"))
+                if (property.NameEquals("example"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -318,7 +322,7 @@ namespace Azure.ResourceManager.Logic.Models
                     example = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("notificationUrlExtension"))
+                if (property.NameEquals("notificationUrlExtension"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -328,7 +332,7 @@ namespace Azure.ResourceManager.Logic.Models
                     notificationUrlExtension = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("dynamicSchemaOld"))
+                if (property.NameEquals("dynamicSchemaOld"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -338,7 +342,7 @@ namespace Azure.ResourceManager.Logic.Models
                     dynamicSchemaOld = SwaggerCustomDynamicSchema.DeserializeSwaggerCustomDynamicSchema(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dynamicSchemaNew"))
+                if (property.NameEquals("dynamicSchemaNew"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -348,7 +352,7 @@ namespace Azure.ResourceManager.Logic.Models
                     dynamicSchemaNew = SwaggerCustomDynamicProperties.DeserializeSwaggerCustomDynamicProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dynamicListNew"))
+                if (property.NameEquals("dynamicListNew"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -358,7 +362,7 @@ namespace Azure.ResourceManager.Logic.Models
                     dynamicListNew = SwaggerCustomDynamicList.DeserializeSwaggerCustomDynamicList(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dynamicTree"))
+                if (property.NameEquals("dynamicTree"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

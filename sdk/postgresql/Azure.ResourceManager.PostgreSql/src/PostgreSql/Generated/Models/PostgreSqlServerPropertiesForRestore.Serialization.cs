@@ -15,41 +15,41 @@ namespace Azure.ResourceManager.PostgreSql.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceServerId");
+            writer.WritePropertyName("sourceServerId"u8);
             writer.WriteStringValue(SourceServerId);
-            writer.WritePropertyName("restorePointInTime");
+            writer.WritePropertyName("restorePointInTime"u8);
             writer.WriteStringValue(RestorePointInTime, "O");
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version.Value.ToString());
             }
             if (Optional.IsDefined(SslEnforcement))
             {
-                writer.WritePropertyName("sslEnforcement");
+                writer.WritePropertyName("sslEnforcement"u8);
                 writer.WriteStringValue(SslEnforcement.Value.ToSerialString());
             }
             if (Optional.IsDefined(MinimalTlsVersion))
             {
-                writer.WritePropertyName("minimalTlsVersion");
+                writer.WritePropertyName("minimalTlsVersion"u8);
                 writer.WriteStringValue(MinimalTlsVersion.Value.ToString());
             }
             if (Optional.IsDefined(InfrastructureEncryption))
             {
-                writer.WritePropertyName("infrastructureEncryption");
+                writer.WritePropertyName("infrastructureEncryption"u8);
                 writer.WriteStringValue(InfrastructureEncryption.Value.ToString());
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             if (Optional.IsDefined(StorageProfile))
             {
-                writer.WritePropertyName("storageProfile");
+                writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            writer.WritePropertyName("createMode");
+            writer.WritePropertyName("createMode"u8);
             writer.WriteStringValue(CreateMode.ToString());
             writer.WriteEndObject();
         }

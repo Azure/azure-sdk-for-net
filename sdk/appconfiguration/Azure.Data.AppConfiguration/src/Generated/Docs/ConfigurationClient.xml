@@ -41,7 +41,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="CheckKeyValuesAsync(String,String,String,String,IEnumerable,RequestContext)">
+    <member name="CheckKeyValuesAsync(String,String,String,String,IEnumerable,String,RequestContext)">
 <example>
 This sample shows how to call CheckKeyValuesAsync.
 <code><![CDATA[
@@ -56,12 +56,12 @@ This sample shows how to call CheckKeyValuesAsync with all parameters.
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfigurationClient(endpoint);
 
-Response response = await client.CheckKeyValuesAsync("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"});
+Response response = await client.CheckKeyValuesAsync("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"}, "<snapshot>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="CheckKeyValues(String,String,String,String,IEnumerable,RequestContext)">
+    <member name="CheckKeyValues(String,String,String,String,IEnumerable,String,RequestContext)">
 <example>
 This sample shows how to call CheckKeyValues.
 <code><![CDATA[
@@ -76,7 +76,7 @@ This sample shows how to call CheckKeyValues with all parameters.
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfigurationClient(endpoint);
 
-Response response = client.CheckKeyValues("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"});
+Response response = client.CheckKeyValues("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"}, "<snapshot>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -118,14 +118,14 @@ Response Body:
 
 Schema for <c>KeyValue</c>:
 <code>{
-  key: string, # Optional.
-  label: string, # Optional.
-  content_type: string, # Optional.
-  value: string, # Optional.
-  last_modified: string (ISO 8601 Format), # Optional.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-  locked: boolean, # Optional.
-  etag: string, # Optional.
+  key: string, # Optional. The key of the key-value.
+  label: string, # Optional. The label the key-value belongs to.
+  content_type: string, # Optional. The content type of the value stored within the key-value.
+  value: string, # Optional. The value of the key-value.
+  last_modified: string (ISO 8601 Format), # Optional. A date representing the last time the key-value was modified.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the key-value
+  locked: boolean, # Optional. Indicates whether the key-value is locked.
+  etag: string, # Optional. A value representing the current state of the resource.
 }
 </code>
 
@@ -168,14 +168,14 @@ Response Body:
 
 Schema for <c>KeyValue</c>:
 <code>{
-  key: string, # Optional.
-  label: string, # Optional.
-  content_type: string, # Optional.
-  value: string, # Optional.
-  last_modified: string (ISO 8601 Format), # Optional.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-  locked: boolean, # Optional.
-  etag: string, # Optional.
+  key: string, # Optional. The key of the key-value.
+  label: string, # Optional. The label the key-value belongs to.
+  content_type: string, # Optional. The content type of the value stored within the key-value.
+  value: string, # Optional. The value of the key-value.
+  last_modified: string (ISO 8601 Format), # Optional. A date representing the last time the key-value was modified.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the key-value
+  locked: boolean, # Optional. Indicates whether the key-value is locked.
+  etag: string, # Optional. A value representing the current state of the resource.
 }
 </code>
 
@@ -233,14 +233,14 @@ Request Body:
 
 Schema for <c>KeyValue</c>:
 <code>{
-  key: string, # Optional.
-  label: string, # Optional.
-  content_type: string, # Optional.
-  value: string, # Optional.
-  last_modified: string (ISO 8601 Format), # Optional.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-  locked: boolean, # Optional.
-  etag: string, # Optional.
+  key: string, # Optional. The key of the key-value.
+  label: string, # Optional. The label the key-value belongs to.
+  content_type: string, # Optional. The content type of the value stored within the key-value.
+  value: string, # Optional. The value of the key-value.
+  last_modified: string (ISO 8601 Format), # Optional. A date representing the last time the key-value was modified.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the key-value
+  locked: boolean, # Optional. Indicates whether the key-value is locked.
+  etag: string, # Optional. A value representing the current state of the resource.
 }
 </code>
 
@@ -248,14 +248,14 @@ Response Body:
 
 Schema for <c>KeyValue</c>:
 <code>{
-  key: string, # Optional.
-  label: string, # Optional.
-  content_type: string, # Optional.
-  value: string, # Optional.
-  last_modified: string (ISO 8601 Format), # Optional.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-  locked: boolean, # Optional.
-  etag: string, # Optional.
+  key: string, # Optional. The key of the key-value.
+  label: string, # Optional. The label the key-value belongs to.
+  content_type: string, # Optional. The content type of the value stored within the key-value.
+  value: string, # Optional. The value of the key-value.
+  last_modified: string (ISO 8601 Format), # Optional. A date representing the last time the key-value was modified.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the key-value
+  locked: boolean, # Optional. Indicates whether the key-value is locked.
+  etag: string, # Optional. A value representing the current state of the resource.
 }
 </code>
 
@@ -313,14 +313,14 @@ Request Body:
 
 Schema for <c>KeyValue</c>:
 <code>{
-  key: string, # Optional.
-  label: string, # Optional.
-  content_type: string, # Optional.
-  value: string, # Optional.
-  last_modified: string (ISO 8601 Format), # Optional.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-  locked: boolean, # Optional.
-  etag: string, # Optional.
+  key: string, # Optional. The key of the key-value.
+  label: string, # Optional. The label the key-value belongs to.
+  content_type: string, # Optional. The content type of the value stored within the key-value.
+  value: string, # Optional. The value of the key-value.
+  last_modified: string (ISO 8601 Format), # Optional. A date representing the last time the key-value was modified.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the key-value
+  locked: boolean, # Optional. Indicates whether the key-value is locked.
+  etag: string, # Optional. A value representing the current state of the resource.
 }
 </code>
 
@@ -328,14 +328,14 @@ Response Body:
 
 Schema for <c>KeyValue</c>:
 <code>{
-  key: string, # Optional.
-  label: string, # Optional.
-  content_type: string, # Optional.
-  value: string, # Optional.
-  last_modified: string (ISO 8601 Format), # Optional.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-  locked: boolean, # Optional.
-  etag: string, # Optional.
+  key: string, # Optional. The key of the key-value.
+  label: string, # Optional. The label the key-value belongs to.
+  content_type: string, # Optional. The content type of the value stored within the key-value.
+  value: string, # Optional. The value of the key-value.
+  last_modified: string (ISO 8601 Format), # Optional. A date representing the last time the key-value was modified.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the key-value
+  locked: boolean, # Optional. Indicates whether the key-value is locked.
+  etag: string, # Optional. A value representing the current state of the resource.
 }
 </code>
 
@@ -378,14 +378,14 @@ Response Body:
 
 Schema for <c>KeyValue</c>:
 <code>{
-  key: string, # Optional.
-  label: string, # Optional.
-  content_type: string, # Optional.
-  value: string, # Optional.
-  last_modified: string (ISO 8601 Format), # Optional.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-  locked: boolean, # Optional.
-  etag: string, # Optional.
+  key: string, # Optional. The key of the key-value.
+  label: string, # Optional. The label the key-value belongs to.
+  content_type: string, # Optional. The content type of the value stored within the key-value.
+  value: string, # Optional. The value of the key-value.
+  last_modified: string (ISO 8601 Format), # Optional. A date representing the last time the key-value was modified.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the key-value
+  locked: boolean, # Optional. Indicates whether the key-value is locked.
+  etag: string, # Optional. A value representing the current state of the resource.
 }
 </code>
 
@@ -428,14 +428,14 @@ Response Body:
 
 Schema for <c>KeyValue</c>:
 <code>{
-  key: string, # Optional.
-  label: string, # Optional.
-  content_type: string, # Optional.
-  value: string, # Optional.
-  last_modified: string (ISO 8601 Format), # Optional.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-  locked: boolean, # Optional.
-  etag: string, # Optional.
+  key: string, # Optional. The key of the key-value.
+  label: string, # Optional. The label the key-value belongs to.
+  content_type: string, # Optional. The content type of the value stored within the key-value.
+  value: string, # Optional. The value of the key-value.
+  last_modified: string (ISO 8601 Format), # Optional. A date representing the last time the key-value was modified.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the key-value
+  locked: boolean, # Optional. Indicates whether the key-value is locked.
+  etag: string, # Optional. A value representing the current state of the resource.
 }
 </code>
 
@@ -477,6 +477,590 @@ var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfigurationClient(endpoint);
 
 Response response = client.CheckKeyValue("<key>", "<label>", "<acceptDatetime>", new String[]{"<select>"}, new MatchConditions { IfMatch = "<YOUR_ETAG>" });
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="CheckSnapshotsAsync(String,RequestContext)">
+<example>
+This sample shows how to call CheckSnapshotsAsync.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+Response response = await client.CheckSnapshotsAsync();
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CheckSnapshotsAsync with all parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+Response response = await client.CheckSnapshotsAsync("<after>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="CheckSnapshots(String,RequestContext)">
+<example>
+This sample shows how to call CheckSnapshots.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+Response response = client.CheckSnapshots();
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CheckSnapshots with all parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+Response response = client.CheckSnapshots("<after>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="GetSnapshotAsync(String,IEnumerable,MatchConditions,RequestContext)">
+<example>
+This sample shows how to call GetSnapshotAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+Response response = await client.GetSnapshotAsync("<name>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+]]></code>
+This sample shows how to call GetSnapshotAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+Response response = await client.GetSnapshotAsync("<name>", new String[]{"<select>"}, new MatchConditions { IfMatch = "<YOUR_ETAG>" });
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("status_code").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("composition_type").ToString());
+Console.WriteLine(result.GetProperty("created").ToString());
+Console.WriteLine(result.GetProperty("expires").ToString());
+Console.WriteLine(result.GetProperty("retention_period").ToString());
+Console.WriteLine(result.GetProperty("size").ToString());
+Console.WriteLine(result.GetProperty("items_count").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Snapshot</c>:
+<code>{
+  name: string, # Optional. The name of the snapshot.
+  status: &quot;provisioning&quot; | &quot;ready&quot; | &quot;archived&quot; | &quot;failed&quot;, # Optional. The current status of the snapshot.
+  status_code: number, # Optional. Provides additional information about the status of the snapshot. The status code values are modeled after HTTP status codes.
+  filters: [
+    {
+      key: string, # Required. Filters key-values by their key field.
+      label: string, # Optional. Filters key-values by their label field.
+    }
+  ], # Required. A list of filters used to filter the key-values included in the snapshot.
+  composition_type: &quot;all&quot; | &quot;group_by_key&quot;, # Optional. The composition type describes how the key-values within the snapshot are composed. The &apos;all&apos; composition type includes all key-values. The &apos;group_by_key&apos; composition type ensures there are no two key-values containing the same key.
+  created: string (ISO 8601 Format), # Optional. The time that the snapshot was created.
+  expires: string (ISO 8601 Format), # Optional. The time that the snapshot will expire.
+  retention_period: number, # Optional. The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used.
+  size: number, # Optional. The size in bytes of the snapshot.
+  items_count: number, # Optional. The amount of key-values in the snapshot.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the snapshot.
+  etag: string, # Optional. A value representing the current state of the snapshot.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetSnapshot(String,IEnumerable,MatchConditions,RequestContext)">
+<example>
+This sample shows how to call GetSnapshot with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+Response response = client.GetSnapshot("<name>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+]]></code>
+This sample shows how to call GetSnapshot with all parameters, and how to parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+Response response = client.GetSnapshot("<name>", new String[]{"<select>"}, new MatchConditions { IfMatch = "<YOUR_ETAG>" });
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("status_code").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("composition_type").ToString());
+Console.WriteLine(result.GetProperty("created").ToString());
+Console.WriteLine(result.GetProperty("expires").ToString());
+Console.WriteLine(result.GetProperty("retention_period").ToString());
+Console.WriteLine(result.GetProperty("size").ToString());
+Console.WriteLine(result.GetProperty("items_count").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Snapshot</c>:
+<code>{
+  name: string, # Optional. The name of the snapshot.
+  status: &quot;provisioning&quot; | &quot;ready&quot; | &quot;archived&quot; | &quot;failed&quot;, # Optional. The current status of the snapshot.
+  status_code: number, # Optional. Provides additional information about the status of the snapshot. The status code values are modeled after HTTP status codes.
+  filters: [
+    {
+      key: string, # Required. Filters key-values by their key field.
+      label: string, # Optional. Filters key-values by their label field.
+    }
+  ], # Required. A list of filters used to filter the key-values included in the snapshot.
+  composition_type: &quot;all&quot; | &quot;group_by_key&quot;, # Optional. The composition type describes how the key-values within the snapshot are composed. The &apos;all&apos; composition type includes all key-values. The &apos;group_by_key&apos; composition type ensures there are no two key-values containing the same key.
+  created: string (ISO 8601 Format), # Optional. The time that the snapshot was created.
+  expires: string (ISO 8601 Format), # Optional. The time that the snapshot will expire.
+  retention_period: number, # Optional. The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used.
+  size: number, # Optional. The size in bytes of the snapshot.
+  items_count: number, # Optional. The amount of key-values in the snapshot.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the snapshot.
+  etag: string, # Optional. A value representing the current state of the snapshot.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateSnapshotAsync(String,RequestContent,ContentType,RequestContext)">
+<example>
+This sample shows how to call CreateSnapshotAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+var data = new {
+    filters = new[] {
+        new {
+            key = "<key>",
+        }
+    },
+};
+
+Response response = await client.CreateSnapshotAsync("<name>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+]]></code>
+This sample shows how to call CreateSnapshotAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+var data = new {
+    filters = new[] {
+        new {
+            key = "<key>",
+            label = "<label>",
+        }
+    },
+    composition_type = "all",
+    retention_period = 1234L,
+    tags = new {
+        key = "<String>",
+    },
+};
+
+Response response = await client.CreateSnapshotAsync("<name>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("status_code").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("composition_type").ToString());
+Console.WriteLine(result.GetProperty("created").ToString());
+Console.WriteLine(result.GetProperty("expires").ToString());
+Console.WriteLine(result.GetProperty("retention_period").ToString());
+Console.WriteLine(result.GetProperty("size").ToString());
+Console.WriteLine(result.GetProperty("items_count").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>Snapshot</c>:
+<code>{
+  name: string, # Optional. The name of the snapshot.
+  status: &quot;provisioning&quot; | &quot;ready&quot; | &quot;archived&quot; | &quot;failed&quot;, # Optional. The current status of the snapshot.
+  status_code: number, # Optional. Provides additional information about the status of the snapshot. The status code values are modeled after HTTP status codes.
+  filters: [
+    {
+      key: string, # Required. Filters key-values by their key field.
+      label: string, # Optional. Filters key-values by their label field.
+    }
+  ], # Required. A list of filters used to filter the key-values included in the snapshot.
+  composition_type: &quot;all&quot; | &quot;group_by_key&quot;, # Optional. The composition type describes how the key-values within the snapshot are composed. The &apos;all&apos; composition type includes all key-values. The &apos;group_by_key&apos; composition type ensures there are no two key-values containing the same key.
+  created: string (ISO 8601 Format), # Optional. The time that the snapshot was created.
+  expires: string (ISO 8601 Format), # Optional. The time that the snapshot will expire.
+  retention_period: number, # Optional. The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used.
+  size: number, # Optional. The size in bytes of the snapshot.
+  items_count: number, # Optional. The amount of key-values in the snapshot.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the snapshot.
+  etag: string, # Optional. A value representing the current state of the snapshot.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Snapshot</c>:
+<code>{
+  name: string, # Optional. The name of the snapshot.
+  status: &quot;provisioning&quot; | &quot;ready&quot; | &quot;archived&quot; | &quot;failed&quot;, # Optional. The current status of the snapshot.
+  status_code: number, # Optional. Provides additional information about the status of the snapshot. The status code values are modeled after HTTP status codes.
+  filters: [
+    {
+      key: string, # Required. Filters key-values by their key field.
+      label: string, # Optional. Filters key-values by their label field.
+    }
+  ], # Required. A list of filters used to filter the key-values included in the snapshot.
+  composition_type: &quot;all&quot; | &quot;group_by_key&quot;, # Optional. The composition type describes how the key-values within the snapshot are composed. The &apos;all&apos; composition type includes all key-values. The &apos;group_by_key&apos; composition type ensures there are no two key-values containing the same key.
+  created: string (ISO 8601 Format), # Optional. The time that the snapshot was created.
+  expires: string (ISO 8601 Format), # Optional. The time that the snapshot will expire.
+  retention_period: number, # Optional. The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used.
+  size: number, # Optional. The size in bytes of the snapshot.
+  items_count: number, # Optional. The amount of key-values in the snapshot.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the snapshot.
+  etag: string, # Optional. A value representing the current state of the snapshot.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateSnapshot(String,RequestContent,ContentType,RequestContext)">
+<example>
+This sample shows how to call CreateSnapshot with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+var data = new {
+    filters = new[] {
+        new {
+            key = "<key>",
+        }
+    },
+};
+
+Response response = client.CreateSnapshot("<name>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+]]></code>
+This sample shows how to call CreateSnapshot with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+var data = new {
+    filters = new[] {
+        new {
+            key = "<key>",
+            label = "<label>",
+        }
+    },
+    composition_type = "all",
+    retention_period = 1234L,
+    tags = new {
+        key = "<String>",
+    },
+};
+
+Response response = client.CreateSnapshot("<name>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("status_code").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("composition_type").ToString());
+Console.WriteLine(result.GetProperty("created").ToString());
+Console.WriteLine(result.GetProperty("expires").ToString());
+Console.WriteLine(result.GetProperty("retention_period").ToString());
+Console.WriteLine(result.GetProperty("size").ToString());
+Console.WriteLine(result.GetProperty("items_count").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>Snapshot</c>:
+<code>{
+  name: string, # Optional. The name of the snapshot.
+  status: &quot;provisioning&quot; | &quot;ready&quot; | &quot;archived&quot; | &quot;failed&quot;, # Optional. The current status of the snapshot.
+  status_code: number, # Optional. Provides additional information about the status of the snapshot. The status code values are modeled after HTTP status codes.
+  filters: [
+    {
+      key: string, # Required. Filters key-values by their key field.
+      label: string, # Optional. Filters key-values by their label field.
+    }
+  ], # Required. A list of filters used to filter the key-values included in the snapshot.
+  composition_type: &quot;all&quot; | &quot;group_by_key&quot;, # Optional. The composition type describes how the key-values within the snapshot are composed. The &apos;all&apos; composition type includes all key-values. The &apos;group_by_key&apos; composition type ensures there are no two key-values containing the same key.
+  created: string (ISO 8601 Format), # Optional. The time that the snapshot was created.
+  expires: string (ISO 8601 Format), # Optional. The time that the snapshot will expire.
+  retention_period: number, # Optional. The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used.
+  size: number, # Optional. The size in bytes of the snapshot.
+  items_count: number, # Optional. The amount of key-values in the snapshot.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the snapshot.
+  etag: string, # Optional. A value representing the current state of the snapshot.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Snapshot</c>:
+<code>{
+  name: string, # Optional. The name of the snapshot.
+  status: &quot;provisioning&quot; | &quot;ready&quot; | &quot;archived&quot; | &quot;failed&quot;, # Optional. The current status of the snapshot.
+  status_code: number, # Optional. Provides additional information about the status of the snapshot. The status code values are modeled after HTTP status codes.
+  filters: [
+    {
+      key: string, # Required. Filters key-values by their key field.
+      label: string, # Optional. Filters key-values by their label field.
+    }
+  ], # Required. A list of filters used to filter the key-values included in the snapshot.
+  composition_type: &quot;all&quot; | &quot;group_by_key&quot;, # Optional. The composition type describes how the key-values within the snapshot are composed. The &apos;all&apos; composition type includes all key-values. The &apos;group_by_key&apos; composition type ensures there are no two key-values containing the same key.
+  created: string (ISO 8601 Format), # Optional. The time that the snapshot was created.
+  expires: string (ISO 8601 Format), # Optional. The time that the snapshot will expire.
+  retention_period: number, # Optional. The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used.
+  size: number, # Optional. The size in bytes of the snapshot.
+  items_count: number, # Optional. The amount of key-values in the snapshot.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the snapshot.
+  etag: string, # Optional. A value representing the current state of the snapshot.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="UpdateSnapshotStatusAsync(String,RequestContent,MatchConditions,RequestContext)">
+<example>
+This sample shows how to call UpdateSnapshotStatusAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+var data = new {};
+
+Response response = await client.UpdateSnapshotStatusAsync("<name>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+]]></code>
+This sample shows how to call UpdateSnapshotStatusAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+var data = new {
+    status = "provisioning",
+};
+
+Response response = await client.UpdateSnapshotStatusAsync("<name>", RequestContent.Create(data), new MatchConditions { IfMatch = "<YOUR_ETAG>" });
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("status_code").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("composition_type").ToString());
+Console.WriteLine(result.GetProperty("created").ToString());
+Console.WriteLine(result.GetProperty("expires").ToString());
+Console.WriteLine(result.GetProperty("retention_period").ToString());
+Console.WriteLine(result.GetProperty("size").ToString());
+Console.WriteLine(result.GetProperty("items_count").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>SnapshotUpdateParameters</c>:
+<code>{
+  status: &quot;provisioning&quot; | &quot;ready&quot; | &quot;archived&quot; | &quot;failed&quot;, # Optional. The desired status of the snapshot.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Snapshot</c>:
+<code>{
+  name: string, # Optional. The name of the snapshot.
+  status: &quot;provisioning&quot; | &quot;ready&quot; | &quot;archived&quot; | &quot;failed&quot;, # Optional. The current status of the snapshot.
+  status_code: number, # Optional. Provides additional information about the status of the snapshot. The status code values are modeled after HTTP status codes.
+  filters: [
+    {
+      key: string, # Required. Filters key-values by their key field.
+      label: string, # Optional. Filters key-values by their label field.
+    }
+  ], # Required. A list of filters used to filter the key-values included in the snapshot.
+  composition_type: &quot;all&quot; | &quot;group_by_key&quot;, # Optional. The composition type describes how the key-values within the snapshot are composed. The &apos;all&apos; composition type includes all key-values. The &apos;group_by_key&apos; composition type ensures there are no two key-values containing the same key.
+  created: string (ISO 8601 Format), # Optional. The time that the snapshot was created.
+  expires: string (ISO 8601 Format), # Optional. The time that the snapshot will expire.
+  retention_period: number, # Optional. The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used.
+  size: number, # Optional. The size in bytes of the snapshot.
+  items_count: number, # Optional. The amount of key-values in the snapshot.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the snapshot.
+  etag: string, # Optional. A value representing the current state of the snapshot.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="UpdateSnapshotStatus(String,RequestContent,MatchConditions,RequestContext)">
+<example>
+This sample shows how to call UpdateSnapshotStatus with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+var data = new {};
+
+Response response = client.UpdateSnapshotStatus("<name>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+]]></code>
+This sample shows how to call UpdateSnapshotStatus with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+var data = new {
+    status = "provisioning",
+};
+
+Response response = client.UpdateSnapshotStatus("<name>", RequestContent.Create(data), new MatchConditions { IfMatch = "<YOUR_ETAG>" });
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("status_code").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("composition_type").ToString());
+Console.WriteLine(result.GetProperty("created").ToString());
+Console.WriteLine(result.GetProperty("expires").ToString());
+Console.WriteLine(result.GetProperty("retention_period").ToString());
+Console.WriteLine(result.GetProperty("size").ToString());
+Console.WriteLine(result.GetProperty("items_count").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>SnapshotUpdateParameters</c>:
+<code>{
+  status: &quot;provisioning&quot; | &quot;ready&quot; | &quot;archived&quot; | &quot;failed&quot;, # Optional. The desired status of the snapshot.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Snapshot</c>:
+<code>{
+  name: string, # Optional. The name of the snapshot.
+  status: &quot;provisioning&quot; | &quot;ready&quot; | &quot;archived&quot; | &quot;failed&quot;, # Optional. The current status of the snapshot.
+  status_code: number, # Optional. Provides additional information about the status of the snapshot. The status code values are modeled after HTTP status codes.
+  filters: [
+    {
+      key: string, # Required. Filters key-values by their key field.
+      label: string, # Optional. Filters key-values by their label field.
+    }
+  ], # Required. A list of filters used to filter the key-values included in the snapshot.
+  composition_type: &quot;all&quot; | &quot;group_by_key&quot;, # Optional. The composition type describes how the key-values within the snapshot are composed. The &apos;all&apos; composition type includes all key-values. The &apos;group_by_key&apos; composition type ensures there are no two key-values containing the same key.
+  created: string (ISO 8601 Format), # Optional. The time that the snapshot was created.
+  expires: string (ISO 8601 Format), # Optional. The time that the snapshot will expire.
+  retention_period: number, # Optional. The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used.
+  size: number, # Optional. The size in bytes of the snapshot.
+  items_count: number, # Optional. The amount of key-values in the snapshot.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the snapshot.
+  etag: string, # Optional. A value representing the current state of the snapshot.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CheckSnapshotAsync(String,MatchConditions,RequestContext)">
+<example>
+This sample shows how to call CheckSnapshotAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+Response response = await client.CheckSnapshotAsync("<name>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CheckSnapshotAsync with all parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+Response response = await client.CheckSnapshotAsync("<name>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="CheckSnapshot(String,MatchConditions,RequestContext)">
+<example>
+This sample shows how to call CheckSnapshot with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+Response response = client.CheckSnapshot("<name>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CheckSnapshot with all parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+Response response = client.CheckSnapshot("<name>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -558,14 +1142,14 @@ Response Body:
 
 Schema for <c>KeyValue</c>:
 <code>{
-  key: string, # Optional.
-  label: string, # Optional.
-  content_type: string, # Optional.
-  value: string, # Optional.
-  last_modified: string (ISO 8601 Format), # Optional.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-  locked: boolean, # Optional.
-  etag: string, # Optional.
+  key: string, # Optional. The key of the key-value.
+  label: string, # Optional. The label the key-value belongs to.
+  content_type: string, # Optional. The content type of the value stored within the key-value.
+  value: string, # Optional. The value of the key-value.
+  last_modified: string (ISO 8601 Format), # Optional. A date representing the last time the key-value was modified.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the key-value
+  locked: boolean, # Optional. Indicates whether the key-value is locked.
+  etag: string, # Optional. A value representing the current state of the resource.
 }
 </code>
 
@@ -608,14 +1192,14 @@ Response Body:
 
 Schema for <c>KeyValue</c>:
 <code>{
-  key: string, # Optional.
-  label: string, # Optional.
-  content_type: string, # Optional.
-  value: string, # Optional.
-  last_modified: string (ISO 8601 Format), # Optional.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-  locked: boolean, # Optional.
-  etag: string, # Optional.
+  key: string, # Optional. The key of the key-value.
+  label: string, # Optional. The label the key-value belongs to.
+  content_type: string, # Optional. The content type of the value stored within the key-value.
+  value: string, # Optional. The value of the key-value.
+  last_modified: string (ISO 8601 Format), # Optional. A date representing the last time the key-value was modified.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the key-value
+  locked: boolean, # Optional. Indicates whether the key-value is locked.
+  etag: string, # Optional. A value representing the current state of the resource.
 }
 </code>
 
@@ -658,14 +1242,14 @@ Response Body:
 
 Schema for <c>KeyValue</c>:
 <code>{
-  key: string, # Optional.
-  label: string, # Optional.
-  content_type: string, # Optional.
-  value: string, # Optional.
-  last_modified: string (ISO 8601 Format), # Optional.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-  locked: boolean, # Optional.
-  etag: string, # Optional.
+  key: string, # Optional. The key of the key-value.
+  label: string, # Optional. The label the key-value belongs to.
+  content_type: string, # Optional. The content type of the value stored within the key-value.
+  value: string, # Optional. The value of the key-value.
+  last_modified: string (ISO 8601 Format), # Optional. A date representing the last time the key-value was modified.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the key-value
+  locked: boolean, # Optional. Indicates whether the key-value is locked.
+  etag: string, # Optional. A value representing the current state of the resource.
 }
 </code>
 
@@ -708,14 +1292,14 @@ Response Body:
 
 Schema for <c>KeyValue</c>:
 <code>{
-  key: string, # Optional.
-  label: string, # Optional.
-  content_type: string, # Optional.
-  value: string, # Optional.
-  last_modified: string (ISO 8601 Format), # Optional.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-  locked: boolean, # Optional.
-  etag: string, # Optional.
+  key: string, # Optional. The key of the key-value.
+  label: string, # Optional. The label the key-value belongs to.
+  content_type: string, # Optional. The content type of the value stored within the key-value.
+  value: string, # Optional. The value of the key-value.
+  last_modified: string (ISO 8601 Format), # Optional. A date representing the last time the key-value was modified.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the key-value
+  locked: boolean, # Optional. Indicates whether the key-value is locked.
+  etag: string, # Optional. A value representing the current state of the resource.
 }
 </code>
 
@@ -793,7 +1377,7 @@ Response Body:
 
 Schema for <c>KeyListResultItems</c>:
 <code>{
-  name: string, # Optional.
+  name: string, # Optional. The name of the key.
 }
 </code>
 
@@ -831,13 +1415,13 @@ Response Body:
 
 Schema for <c>KeyListResultItems</c>:
 <code>{
-  name: string, # Optional.
+  name: string, # Optional. The name of the key.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetConfigurationSettingsAsync(String,String,String,String,IEnumerable,RequestContext)">
+    <member name="GetConfigurationSettingsAsync(String,String,String,String,IEnumerable,String,RequestContext)">
 <example>
 This sample shows how to call GetConfigurationSettingsAsync and parse the result.
 <code><![CDATA[
@@ -855,7 +1439,7 @@ This sample shows how to call GetConfigurationSettingsAsync with all parameters,
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfigurationClient(endpoint);
 
-await foreach (var data in client.GetConfigurationSettingsAsync("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"}))
+await foreach (var data in client.GetConfigurationSettingsAsync("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"}, "<snapshot>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("key").ToString());
@@ -876,20 +1460,20 @@ Response Body:
 
 Schema for <c>KeyValueListResultItems</c>:
 <code>{
-  key: string, # Optional.
-  label: string, # Optional.
-  content_type: string, # Optional.
-  value: string, # Optional.
-  last_modified: string (ISO 8601 Format), # Optional.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-  locked: boolean, # Optional.
-  etag: string, # Optional.
+  key: string, # Optional. The key of the key-value.
+  label: string, # Optional. The label the key-value belongs to.
+  content_type: string, # Optional. The content type of the value stored within the key-value.
+  value: string, # Optional. The value of the key-value.
+  last_modified: string (ISO 8601 Format), # Optional. A date representing the last time the key-value was modified.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the key-value
+  locked: boolean, # Optional. Indicates whether the key-value is locked.
+  etag: string, # Optional. A value representing the current state of the resource.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetConfigurationSettings(String,String,String,String,IEnumerable,RequestContext)">
+    <member name="GetConfigurationSettings(String,String,String,String,IEnumerable,String,RequestContext)">
 <example>
 This sample shows how to call GetConfigurationSettings and parse the result.
 <code><![CDATA[
@@ -907,7 +1491,7 @@ This sample shows how to call GetConfigurationSettings with all parameters, and 
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfigurationClient(endpoint);
 
-foreach (var data in client.GetConfigurationSettings("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"}))
+foreach (var data in client.GetConfigurationSettings("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"}, "<snapshot>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("key").ToString());
@@ -928,14 +1512,146 @@ Response Body:
 
 Schema for <c>KeyValueListResultItems</c>:
 <code>{
-  key: string, # Optional.
-  label: string, # Optional.
-  content_type: string, # Optional.
-  value: string, # Optional.
-  last_modified: string (ISO 8601 Format), # Optional.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-  locked: boolean, # Optional.
-  etag: string, # Optional.
+  key: string, # Optional. The key of the key-value.
+  label: string, # Optional. The label the key-value belongs to.
+  content_type: string, # Optional. The content type of the value stored within the key-value.
+  value: string, # Optional. The value of the key-value.
+  last_modified: string (ISO 8601 Format), # Optional. A date representing the last time the key-value was modified.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the key-value
+  locked: boolean, # Optional. Indicates whether the key-value is locked.
+  etag: string, # Optional. A value representing the current state of the resource.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetSnapshotsAsync(String,String,IEnumerable,String,RequestContext)">
+<example>
+This sample shows how to call GetSnapshotsAsync and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+await foreach (var data in client.GetSnapshotsAsync())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+}
+]]></code>
+This sample shows how to call GetSnapshotsAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+await foreach (var data in client.GetSnapshotsAsync("<name>", "<after>", new String[]{"<select>"}, "<status>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("status_code").ToString());
+    Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+    Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
+    Console.WriteLine(result.GetProperty("composition_type").ToString());
+    Console.WriteLine(result.GetProperty("created").ToString());
+    Console.WriteLine(result.GetProperty("expires").ToString());
+    Console.WriteLine(result.GetProperty("retention_period").ToString());
+    Console.WriteLine(result.GetProperty("size").ToString());
+    Console.WriteLine(result.GetProperty("items_count").ToString());
+    Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>SnapshotListResultItems</c>:
+<code>{
+  name: string, # Optional. The name of the snapshot.
+  status: &quot;provisioning&quot; | &quot;ready&quot; | &quot;archived&quot; | &quot;failed&quot;, # Optional. The current status of the snapshot.
+  status_code: number, # Optional. Provides additional information about the status of the snapshot. The status code values are modeled after HTTP status codes.
+  filters: [
+    {
+      key: string, # Required. Filters key-values by their key field.
+      label: string, # Optional. Filters key-values by their label field.
+    }
+  ], # Required. A list of filters used to filter the key-values included in the snapshot.
+  composition_type: &quot;all&quot; | &quot;group_by_key&quot;, # Optional. The composition type describes how the key-values within the snapshot are composed. The &apos;all&apos; composition type includes all key-values. The &apos;group_by_key&apos; composition type ensures there are no two key-values containing the same key.
+  created: string (ISO 8601 Format), # Optional. The time that the snapshot was created.
+  expires: string (ISO 8601 Format), # Optional. The time that the snapshot will expire.
+  retention_period: number, # Optional. The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used.
+  size: number, # Optional. The size in bytes of the snapshot.
+  items_count: number, # Optional. The amount of key-values in the snapshot.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the snapshot.
+  etag: string, # Optional. A value representing the current state of the snapshot.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetSnapshots(String,String,IEnumerable,String,RequestContext)">
+<example>
+This sample shows how to call GetSnapshots and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+foreach (var data in client.GetSnapshots())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+}
+]]></code>
+This sample shows how to call GetSnapshots with all parameters, and how to parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConfigurationClient(endpoint);
+
+foreach (var data in client.GetSnapshots("<name>", "<after>", new String[]{"<select>"}, "<status>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("status_code").ToString());
+    Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+    Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
+    Console.WriteLine(result.GetProperty("composition_type").ToString());
+    Console.WriteLine(result.GetProperty("created").ToString());
+    Console.WriteLine(result.GetProperty("expires").ToString());
+    Console.WriteLine(result.GetProperty("retention_period").ToString());
+    Console.WriteLine(result.GetProperty("size").ToString());
+    Console.WriteLine(result.GetProperty("items_count").ToString());
+    Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>SnapshotListResultItems</c>:
+<code>{
+  name: string, # Optional. The name of the snapshot.
+  status: &quot;provisioning&quot; | &quot;ready&quot; | &quot;archived&quot; | &quot;failed&quot;, # Optional. The current status of the snapshot.
+  status_code: number, # Optional. Provides additional information about the status of the snapshot. The status code values are modeled after HTTP status codes.
+  filters: [
+    {
+      key: string, # Required. Filters key-values by their key field.
+      label: string, # Optional. Filters key-values by their label field.
+    }
+  ], # Required. A list of filters used to filter the key-values included in the snapshot.
+  composition_type: &quot;all&quot; | &quot;group_by_key&quot;, # Optional. The composition type describes how the key-values within the snapshot are composed. The &apos;all&apos; composition type includes all key-values. The &apos;group_by_key&apos; composition type ensures there are no two key-values containing the same key.
+  created: string (ISO 8601 Format), # Optional. The time that the snapshot was created.
+  expires: string (ISO 8601 Format), # Optional. The time that the snapshot will expire.
+  retention_period: number, # Optional. The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used.
+  size: number, # Optional. The size in bytes of the snapshot.
+  items_count: number, # Optional. The amount of key-values in the snapshot.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the snapshot.
+  etag: string, # Optional. A value representing the current state of the snapshot.
 }
 </code>
 
@@ -973,7 +1689,7 @@ Response Body:
 
 Schema for <c>LabelListResultItems</c>:
 <code>{
-  name: string, # Optional.
+  name: string, # Optional. The name of the label.
 }
 </code>
 
@@ -1011,7 +1727,7 @@ Response Body:
 
 Schema for <c>LabelListResultItems</c>:
 <code>{
-  name: string, # Optional.
+  name: string, # Optional. The name of the label.
 }
 </code>
 
@@ -1056,14 +1772,14 @@ Response Body:
 
 Schema for <c>KeyValueListResultItems</c>:
 <code>{
-  key: string, # Optional.
-  label: string, # Optional.
-  content_type: string, # Optional.
-  value: string, # Optional.
-  last_modified: string (ISO 8601 Format), # Optional.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-  locked: boolean, # Optional.
-  etag: string, # Optional.
+  key: string, # Optional. The key of the key-value.
+  label: string, # Optional. The label the key-value belongs to.
+  content_type: string, # Optional. The content type of the value stored within the key-value.
+  value: string, # Optional. The value of the key-value.
+  last_modified: string (ISO 8601 Format), # Optional. A date representing the last time the key-value was modified.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the key-value
+  locked: boolean, # Optional. Indicates whether the key-value is locked.
+  etag: string, # Optional. A value representing the current state of the resource.
 }
 </code>
 
@@ -1108,14 +1824,14 @@ Response Body:
 
 Schema for <c>KeyValueListResultItems</c>:
 <code>{
-  key: string, # Optional.
-  label: string, # Optional.
-  content_type: string, # Optional.
-  value: string, # Optional.
-  last_modified: string (ISO 8601 Format), # Optional.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-  locked: boolean, # Optional.
-  etag: string, # Optional.
+  key: string, # Optional. The key of the key-value.
+  label: string, # Optional. The label the key-value belongs to.
+  content_type: string, # Optional. The content type of the value stored within the key-value.
+  value: string, # Optional. The value of the key-value.
+  last_modified: string (ISO 8601 Format), # Optional. A date representing the last time the key-value was modified.
+  tags: Dictionary&lt;string, string&gt;, # Optional. The tags of the key-value
+  locked: boolean, # Optional. Indicates whether the key-value is locked.
+  etag: string, # Optional. A value representing the current state of the resource.
 }
 </code>
 

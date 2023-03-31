@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("profileFieldName");
+            writer.WritePropertyName("profileFieldName"u8);
             writer.WriteStringValue(ProfileFieldName);
-            writer.WritePropertyName("relatedProfileKeyProperty");
+            writer.WritePropertyName("relatedProfileKeyProperty"u8);
             writer.WriteStringValue(RelatedProfileKeyProperty);
             writer.WriteEndObject();
         }
 
         internal static RelationshipTypeFieldMapping DeserializeRelationshipTypeFieldMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string profileFieldName = default;
             string relatedProfileKeyProperty = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("profileFieldName"))
+                if (property.NameEquals("profileFieldName"u8))
                 {
                     profileFieldName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("relatedProfileKeyProperty"))
+                if (property.NameEquals("relatedProfileKeyProperty"u8))
                 {
                     relatedProfileKeyProperty = property.Value.GetString();
                     continue;

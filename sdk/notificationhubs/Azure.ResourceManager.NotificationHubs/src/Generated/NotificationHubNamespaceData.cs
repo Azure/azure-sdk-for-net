@@ -13,7 +13,10 @@ using Azure.ResourceManager.NotificationHubs.Models;
 
 namespace Azure.ResourceManager.NotificationHubs
 {
-    /// <summary> A class representing the NotificationHubNamespace data model. </summary>
+    /// <summary>
+    /// A class representing the NotificationHubNamespace data model.
+    /// Description of a Namespace resource.
+    /// </summary>
     public partial class NotificationHubNamespaceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of NotificationHubNamespaceData. </summary>

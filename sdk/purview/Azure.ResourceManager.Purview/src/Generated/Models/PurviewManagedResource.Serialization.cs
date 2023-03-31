@@ -14,12 +14,16 @@ namespace Azure.ResourceManager.Purview.Models
     {
         internal static PurviewManagedResource DeserializePurviewManagedResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> eventHubNamespace = default;
             Optional<ResourceIdentifier> resourceGroup = default;
             Optional<ResourceIdentifier> storageAccount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eventHubNamespace"))
+                if (property.NameEquals("eventHubNamespace"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.Purview.Models
                     eventHubNamespace = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceGroup"))
+                if (property.NameEquals("resourceGroup"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +43,7 @@ namespace Azure.ResourceManager.Purview.Models
                     resourceGroup = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageAccount"))
+                if (property.NameEquals("storageAccount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

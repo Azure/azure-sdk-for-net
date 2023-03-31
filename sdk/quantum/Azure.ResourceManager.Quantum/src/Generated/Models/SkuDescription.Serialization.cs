@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Quantum.Models
     {
         internal static SkuDescription DeserializeSkuDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> version = default;
@@ -27,27 +31,27 @@ namespace Azure.ResourceManager.Quantum.Models
             Optional<IReadOnlyList<PricingDetail>> pricingDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("restrictedAccessUri"))
+                if (property.NameEquals("restrictedAccessUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +61,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     restrictedAccessUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("autoAdd"))
+                if (property.NameEquals("autoAdd"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +71,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     autoAdd = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("targets"))
+                if (property.NameEquals("targets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +86,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     targets = array;
                     continue;
                 }
-                if (property.NameEquals("quotaDimensions"))
+                if (property.NameEquals("quotaDimensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +101,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     quotaDimensions = array;
                     continue;
                 }
-                if (property.NameEquals("pricingDetails"))
+                if (property.NameEquals("pricingDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Input))
             {
-                writer.WritePropertyName("input");
+                writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
             if (Optional.IsDefined(CompatibilityLevel))
             {
-                writer.WritePropertyName("compatibilityLevel");
+                writer.WritePropertyName("compatibilityLevel"u8);
                 writer.WriteStringValue(CompatibilityLevel);
             }
             if (Optional.IsDefined(EventsUri))
             {
-                writer.WritePropertyName("eventsUri");
+                writer.WritePropertyName("eventsUri"u8);
                 writer.WriteStringValue(EventsUri.AbsoluteUri);
             }
             if (Optional.IsDefined(DataLocalion))
             {
-                writer.WritePropertyName("dataLocale");
+                writer.WritePropertyName("dataLocale"u8);
                 writer.WriteStringValue(DataLocalion.Value);
             }
             writer.WriteEndObject();

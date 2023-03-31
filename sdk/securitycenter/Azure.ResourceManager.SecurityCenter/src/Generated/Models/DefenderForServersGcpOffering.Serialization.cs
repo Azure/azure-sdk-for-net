@@ -17,36 +17,40 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DefenderForServers))
             {
-                writer.WritePropertyName("defenderForServers");
+                writer.WritePropertyName("defenderForServers"u8);
                 writer.WriteObjectValue(DefenderForServers);
             }
             if (Optional.IsDefined(ArcAutoProvisioning))
             {
-                writer.WritePropertyName("arcAutoProvisioning");
+                writer.WritePropertyName("arcAutoProvisioning"u8);
                 writer.WriteObjectValue(ArcAutoProvisioning);
             }
             if (Optional.IsDefined(VulnerabilityAssessmentAutoProvisioning))
             {
-                writer.WritePropertyName("vaAutoProvisioning");
+                writer.WritePropertyName("vaAutoProvisioning"u8);
                 writer.WriteObjectValue(VulnerabilityAssessmentAutoProvisioning);
             }
             if (Optional.IsDefined(MdeAutoProvisioning))
             {
-                writer.WritePropertyName("mdeAutoProvisioning");
+                writer.WritePropertyName("mdeAutoProvisioning"u8);
                 writer.WriteObjectValue(MdeAutoProvisioning);
             }
             if (Optional.IsDefined(SubPlan))
             {
-                writer.WritePropertyName("subPlan");
+                writer.WritePropertyName("subPlan"u8);
                 writer.WriteObjectValue(SubPlan);
             }
-            writer.WritePropertyName("offeringType");
+            writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
             writer.WriteEndObject();
         }
 
         internal static DefenderForServersGcpOffering DeserializeDefenderForServersGcpOffering(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GcpDefenderForServersInfo> defenderForServers = default;
             Optional<DefenderForServersGcpOfferingArcAutoProvisioning> arcAutoProvisioning = default;
             Optional<DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning> vaAutoProvisioning = default;
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("defenderForServers"))
+                if (property.NameEquals("defenderForServers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     defenderForServers = GcpDefenderForServersInfo.DeserializeGcpDefenderForServersInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("arcAutoProvisioning"))
+                if (property.NameEquals("arcAutoProvisioning"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     arcAutoProvisioning = DefenderForServersGcpOfferingArcAutoProvisioning.DeserializeDefenderForServersGcpOfferingArcAutoProvisioning(property.Value);
                     continue;
                 }
-                if (property.NameEquals("vaAutoProvisioning"))
+                if (property.NameEquals("vaAutoProvisioning"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     vaAutoProvisioning = DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning.DeserializeDefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning(property.Value);
                     continue;
                 }
-                if (property.NameEquals("mdeAutoProvisioning"))
+                if (property.NameEquals("mdeAutoProvisioning"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     mdeAutoProvisioning = DefenderForServersGcpOfferingMdeAutoProvisioning.DeserializeDefenderForServersGcpOfferingMdeAutoProvisioning(property.Value);
                     continue;
                 }
-                if (property.NameEquals("subPlan"))
+                if (property.NameEquals("subPlan"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,12 +110,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     subPlan = DefenderForServersGcpOfferingSubPlan.DeserializeDefenderForServersGcpOfferingSubPlan(property.Value);
                     continue;
                 }
-                if (property.NameEquals("offeringType"))
+                if (property.NameEquals("offeringType"u8))
                 {
                     offeringType = new OfferingType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;

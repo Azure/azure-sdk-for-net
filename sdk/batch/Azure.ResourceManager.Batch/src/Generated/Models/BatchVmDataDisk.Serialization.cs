@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.Batch.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("lun");
+            writer.WritePropertyName("lun"u8);
             writer.WriteNumberValue(Lun);
             if (Optional.IsDefined(Caching))
             {
-                writer.WritePropertyName("caching");
+                writer.WritePropertyName("caching"u8);
                 writer.WriteStringValue(Caching.Value.ToSerialString());
             }
-            writer.WritePropertyName("diskSizeGB");
+            writer.WritePropertyName("diskSizeGB"u8);
             writer.WriteNumberValue(DiskSizeInGB);
             if (Optional.IsDefined(StorageAccountType))
             {
-                writer.WritePropertyName("storageAccountType");
+                writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -34,18 +34,22 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchVmDataDisk DeserializeBatchVmDataDisk(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int lun = default;
             Optional<BatchDiskCachingType> caching = default;
             int diskSizeGB = default;
             Optional<BatchStorageAccountType> storageAccountType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lun"))
+                if (property.NameEquals("lun"u8))
                 {
                     lun = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("caching"))
+                if (property.NameEquals("caching"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,12 +59,12 @@ namespace Azure.ResourceManager.Batch.Models
                     caching = property.Value.GetString().ToBatchDiskCachingType();
                     continue;
                 }
-                if (property.NameEquals("diskSizeGB"))
+                if (property.NameEquals("diskSizeGB"u8))
                 {
                     diskSizeGB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("storageAccountType"))
+                if (property.NameEquals("storageAccountType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
-using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ClientSecretCredentialTests : CredentialTestBase
+    public class ClientSecretCredentialTests : CredentialTestBase<ClientSecretCredentialOptions>
     {
         public ClientSecretCredentialTests(bool isAsync) : base(isAsync)
         { }
@@ -19,28 +18,21 @@ namespace Azure.Identity.Tests
         public override TokenCredential GetTokenCredential(TokenCredentialOptions options) => InstrumentClient(
             new ClientSecretCredential(expectedTenantId, ClientId, "secret", options, null, mockConfidentialMsalClient));
 
-        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
         {
-            Console.WriteLine(parameters.ToDebugString());
-
-            // no need to test with null TenantId since we can't construct this credential without it
-            if (parameters.TenantId == null)
+            if (config.TenantId == null)
             {
                 Assert.Ignore("Null TenantId test does not apply to this credential");
             }
 
-            var options = new ClientSecretCredentialOptions();
-
-            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
+            var options = new ClientSecretCredentialOptions
             {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
-            }
-
-            var msalClientMock = new MockMsalConfidentialClient(AuthenticationResultFactory.Create());
-
-            var cred = InstrumentClient(new ClientSecretCredential(parameters.TenantId, ClientId, "secret", options, null, msalClientMock));
-
-            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
+                Transport = config.Transport,
+                DisableInstanceDiscovery = config.DisableInstanceDiscovery,
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants
+            };
+            var pipeline = CredentialPipeline.GetInstance(options);
+            return InstrumentClient(new ClientSecretCredential(config.TenantId, ClientId, "secret", options, pipeline, null));
         }
 
         [Test]

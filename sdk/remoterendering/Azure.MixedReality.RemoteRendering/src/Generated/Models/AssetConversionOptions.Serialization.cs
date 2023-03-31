@@ -15,25 +15,29 @@ namespace Azure.MixedReality.RemoteRendering
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("inputLocation");
+            writer.WritePropertyName("inputLocation"u8);
             writer.WriteObjectValue(InputOptions);
-            writer.WritePropertyName("outputLocation");
+            writer.WritePropertyName("outputLocation"u8);
             writer.WriteObjectValue(OutputOptions);
             writer.WriteEndObject();
         }
 
         internal static AssetConversionOptions DeserializeAssetConversionOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AssetConversionInputOptions inputLocation = default;
             AssetConversionOutputOptions outputLocation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("inputLocation"))
+                if (property.NameEquals("inputLocation"u8))
                 {
                     inputLocation = AssetConversionInputOptions.DeserializeAssetConversionInputOptions(property.Value);
                     continue;
                 }
-                if (property.NameEquals("outputLocation"))
+                if (property.NameEquals("outputLocation"u8))
                 {
                     outputLocation = AssetConversionOutputOptions.DeserializeAssetConversionOutputOptions(property.Value);
                     continue;

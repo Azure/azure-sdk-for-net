@@ -19,26 +19,26 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
-                writer.WritePropertyName("linkedServiceName");
+                writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteObjectValue(LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
-                writer.WritePropertyName("policy");
+                writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
-                writer.WritePropertyName("dependsOn");
+                writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsCollectionDefined(UserProperties))
             {
-                writer.WritePropertyName("userProperties");
+                writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(StorageLinkedServices))
             {
-                writer.WritePropertyName("storageLinkedServices");
+                writer.WritePropertyName("storageLinkedServices"u8);
                 writer.WriteStartArray();
                 foreach (var item in StorageLinkedServices)
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(Arguments))
             {
-                writer.WritePropertyName("arguments");
+                writer.WritePropertyName("arguments"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Arguments);
 #else
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(GetDebugInfo))
             {
-                writer.WritePropertyName("getDebugInfo");
+                writer.WritePropertyName("getDebugInfo"u8);
                 writer.WriteStringValue(GetDebugInfo.Value.ToString());
             }
             if (Optional.IsDefined(ScriptPath))
             {
-                writer.WritePropertyName("scriptPath");
+                writer.WritePropertyName("scriptPath"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ScriptPath);
 #else
@@ -93,16 +93,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(ScriptLinkedService))
             {
-                writer.WritePropertyName("scriptLinkedService");
+                writer.WritePropertyName("scriptLinkedService"u8);
                 writer.WriteObjectValue(ScriptLinkedService);
             }
             if (Optional.IsCollectionDefined(Defines))
             {
-                writer.WritePropertyName("defines");
+                writer.WritePropertyName("defines"u8);
                 writer.WriteStartObject();
                 foreach (var item in Defines)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
@@ -126,6 +131,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static HDInsightPigActivity DeserializeHDInsightPigActivity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FactoryLinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
@@ -143,7 +152,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linkedServiceName"))
+                if (property.NameEquals("linkedServiceName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -153,7 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("policy"))
+                if (property.NameEquals("policy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -163,22 +172,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                     policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dependsOn"))
+                if (property.NameEquals("dependsOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -193,7 +202,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     dependsOn = array;
                     continue;
                 }
-                if (property.NameEquals("userProperties"))
+                if (property.NameEquals("userProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -208,7 +217,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     userProperties = array;
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -217,7 +226,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("storageLinkedServices"))
+                        if (property0.NameEquals("storageLinkedServices"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -232,7 +241,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             storageLinkedServices = array;
                             continue;
                         }
-                        if (property0.NameEquals("arguments"))
+                        if (property0.NameEquals("arguments"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -242,7 +251,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             arguments = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("getDebugInfo"))
+                        if (property0.NameEquals("getDebugInfo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -252,7 +261,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             getDebugInfo = new HDInsightActivityDebugInfoOptionSetting(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("scriptPath"))
+                        if (property0.NameEquals("scriptPath"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -262,7 +271,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             scriptPath = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("scriptLinkedService"))
+                        if (property0.NameEquals("scriptLinkedService"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -272,7 +281,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             scriptLinkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("defines"))
+                        if (property0.NameEquals("defines"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -282,7 +291,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                             Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
                             }
                             defines = dictionary;
                             continue;

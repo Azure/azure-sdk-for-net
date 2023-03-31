@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Column))
             {
-                writer.WritePropertyName("column");
+                writer.WritePropertyName("column"u8);
                 writer.WriteStringValue(Column);
             }
             if (Optional.IsDefined(Operator))
             {
-                writer.WritePropertyName("operator");
+                writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator);
             }
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Value);
 #else
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
             if (Optional.IsDefined(Key))
             {
-                writer.WritePropertyName("key");
+                writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
             writer.WriteEndObject();

@@ -18,46 +18,46 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Position))
             {
-                writer.WritePropertyName("position");
+                writer.WritePropertyName("position"u8);
                 writer.WriteObjectValue(Position);
             }
             if (Optional.IsDefined(Opacity))
             {
-                writer.WritePropertyName("opacity");
+                writer.WritePropertyName("opacity"u8);
                 writer.WriteNumberValue(Opacity.Value);
             }
             if (Optional.IsDefined(CropRectangle))
             {
-                writer.WritePropertyName("cropRectangle");
+                writer.WritePropertyName("cropRectangle"u8);
                 writer.WriteObjectValue(CropRectangle);
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            writer.WritePropertyName("inputLabel");
+            writer.WritePropertyName("inputLabel"u8);
             writer.WriteStringValue(InputLabel);
             if (Optional.IsDefined(Start))
             {
-                writer.WritePropertyName("start");
+                writer.WritePropertyName("start"u8);
                 writer.WriteStringValue(Start.Value, "P");
             }
             if (Optional.IsDefined(End))
             {
-                writer.WritePropertyName("end");
+                writer.WritePropertyName("end"u8);
                 writer.WriteStringValue(End.Value, "P");
             }
             if (Optional.IsDefined(FadeInDuration))
             {
-                writer.WritePropertyName("fadeInDuration");
+                writer.WritePropertyName("fadeInDuration"u8);
                 writer.WriteStringValue(FadeInDuration.Value, "P");
             }
             if (Optional.IsDefined(FadeOutDuration))
             {
-                writer.WritePropertyName("fadeOutDuration");
+                writer.WritePropertyName("fadeOutDuration"u8);
                 writer.WriteStringValue(FadeOutDuration.Value, "P");
             }
             if (Optional.IsDefined(AudioGainLevel))
             {
-                writer.WritePropertyName("audioGainLevel");
+                writer.WritePropertyName("audioGainLevel"u8);
                 writer.WriteNumberValue(AudioGainLevel.Value);
             }
             writer.WriteEndObject();
@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static VideoOverlay DeserializeVideoOverlay(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RectangularWindow> position = default;
             Optional<double> opacity = default;
             Optional<RectangularWindow> cropRectangle = default;
@@ -77,7 +81,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<double> audioGainLevel = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("position"))
+                if (property.NameEquals("position"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +91,7 @@ namespace Azure.ResourceManager.Media.Models
                     position = RectangularWindow.DeserializeRectangularWindow(property.Value);
                     continue;
                 }
-                if (property.NameEquals("opacity"))
+                if (property.NameEquals("opacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +101,7 @@ namespace Azure.ResourceManager.Media.Models
                     opacity = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("cropRectangle"))
+                if (property.NameEquals("cropRectangle"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,17 +111,17 @@ namespace Azure.ResourceManager.Media.Models
                     cropRectangle = RectangularWindow.DeserializeRectangularWindow(property.Value);
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("inputLabel"))
+                if (property.NameEquals("inputLabel"u8))
                 {
                     inputLabel = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("start"))
+                if (property.NameEquals("start"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -127,7 +131,7 @@ namespace Azure.ResourceManager.Media.Models
                     start = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("end"))
+                if (property.NameEquals("end"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -137,7 +141,7 @@ namespace Azure.ResourceManager.Media.Models
                     end = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("fadeInDuration"))
+                if (property.NameEquals("fadeInDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -147,7 +151,7 @@ namespace Azure.ResourceManager.Media.Models
                     fadeInDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("fadeOutDuration"))
+                if (property.NameEquals("fadeOutDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -157,7 +161,7 @@ namespace Azure.ResourceManager.Media.Models
                     fadeOutDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("audioGainLevel"))
+                if (property.NameEquals("audioGainLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

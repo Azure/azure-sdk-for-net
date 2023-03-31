@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Support.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(QuotaChangeRequestSubType))
             {
-                writer.WritePropertyName("quotaChangeRequestSubType");
+                writer.WritePropertyName("quotaChangeRequestSubType"u8);
                 writer.WriteStringValue(QuotaChangeRequestSubType);
             }
             if (Optional.IsDefined(QuotaChangeRequestVersion))
             {
-                writer.WritePropertyName("quotaChangeRequestVersion");
+                writer.WritePropertyName("quotaChangeRequestVersion"u8);
                 writer.WriteStringValue(QuotaChangeRequestVersion);
             }
             if (Optional.IsCollectionDefined(QuotaChangeRequests))
             {
-                writer.WritePropertyName("quotaChangeRequests");
+                writer.WritePropertyName("quotaChangeRequests"u8);
                 writer.WriteStartArray();
                 foreach (var item in QuotaChangeRequests)
                 {
@@ -41,22 +41,26 @@ namespace Azure.ResourceManager.Support.Models
 
         internal static QuotaTicketDetails DeserializeQuotaTicketDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> quotaChangeRequestSubType = default;
             Optional<string> quotaChangeRequestVersion = default;
             Optional<IList<SupportQuotaChangeContent>> quotaChangeRequests = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("quotaChangeRequestSubType"))
+                if (property.NameEquals("quotaChangeRequestSubType"u8))
                 {
                     quotaChangeRequestSubType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("quotaChangeRequestVersion"))
+                if (property.NameEquals("quotaChangeRequestVersion"u8))
                 {
                     quotaChangeRequestVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("quotaChangeRequests"))
+                if (property.NameEquals("quotaChangeRequests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

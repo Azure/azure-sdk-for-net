@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Offline))
             {
-                writer.WritePropertyName("offline");
+                writer.WritePropertyName("offline"u8);
                 writer.WriteBooleanValue(Offline.Value);
             }
             if (Optional.IsDefined(LastBackupName))
             {
-                writer.WritePropertyName("lastBackupName");
+                writer.WritePropertyName("lastBackupName"u8);
                 writer.WriteStringValue(LastBackupName);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static OfflineConfiguration DeserializeOfflineConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> offline = default;
             Optional<string> lastBackupName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("offline"))
+                if (property.NameEquals("offline"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     offline = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("lastBackupName"))
+                if (property.NameEquals("lastBackupName"u8))
                 {
                     lastBackupName = property.Value.GetString();
                     continue;

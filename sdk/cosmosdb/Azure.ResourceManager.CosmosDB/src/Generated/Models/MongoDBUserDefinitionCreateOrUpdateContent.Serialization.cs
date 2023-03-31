@@ -15,31 +15,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(UserName))
             {
-                writer.WritePropertyName("userName");
+                writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
+                writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
             if (Optional.IsDefined(DatabaseName))
             {
-                writer.WritePropertyName("databaseName");
+                writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
             if (Optional.IsDefined(CustomData))
             {
-                writer.WritePropertyName("customData");
+                writer.WritePropertyName("customData"u8);
                 writer.WriteStringValue(CustomData);
             }
             if (Optional.IsCollectionDefined(Roles))
             {
-                writer.WritePropertyName("roles");
+                writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();
                 foreach (var item in Roles)
                 {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             if (Optional.IsDefined(Mechanisms))
             {
-                writer.WritePropertyName("mechanisms");
+                writer.WritePropertyName("mechanisms"u8);
                 writer.WriteStringValue(Mechanisms);
             }
             writer.WriteEndObject();

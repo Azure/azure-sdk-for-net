@@ -15,19 +15,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("recoveryPointType");
+            writer.WritePropertyName("recoveryPointType"u8);
             writer.WriteStringValue(RecoveryPointType.ToString());
             if (Optional.IsDefined(CloudServiceCreationOption))
             {
-                writer.WritePropertyName("cloudServiceCreationOption");
+                writer.WritePropertyName("cloudServiceCreationOption"u8);
                 writer.WriteStringValue(CloudServiceCreationOption);
             }
             if (Optional.IsDefined(MultiVmSyncPointOption))
             {
-                writer.WritePropertyName("multiVmSyncPointOption");
+                writer.WritePropertyName("multiVmSyncPointOption"u8);
                 writer.WriteStringValue(MultiVmSyncPointOption.Value.ToString());
             }
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

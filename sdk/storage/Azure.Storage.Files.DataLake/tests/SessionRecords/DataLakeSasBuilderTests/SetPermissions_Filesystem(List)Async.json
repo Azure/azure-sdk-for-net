@@ -35,7 +35,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-53470492-4a68-180f-141a-51d5b23354f8?sv=2021-12-02&st=2021-02-19T17%3A58%3A08Z&se=2021-02-19T19%3A58%3A08Z&sr=c&sp=l&sig=Sanitized&resource=filesystem&recursive=false&upn=false",
+      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-53470492-4a68-180f-141a-51d5b23354f8?sv=2022-11-02&st=2021-02-19T17%3A58%3A08Z&se=2021-02-19T19%3A58%3A08Z&sr=c&sp=l&sig=Sanitized&resource=filesystem&recursive=false&upn=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",

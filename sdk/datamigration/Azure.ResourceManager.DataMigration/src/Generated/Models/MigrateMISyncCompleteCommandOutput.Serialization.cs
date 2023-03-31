@@ -15,10 +15,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MigrateMISyncCompleteCommandOutput DeserializeMigrateMISyncCompleteCommandOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ReportableException>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

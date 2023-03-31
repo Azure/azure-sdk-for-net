@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ConfigurationStatus))
             {
-                writer.WritePropertyName("configurationStatus");
+                writer.WritePropertyName("configurationStatus"u8);
                 writer.WriteStringValue(ConfigurationStatus.Value.ToString());
             }
             if (Optional.IsDefined(RecommendationAction))
             {
-                writer.WritePropertyName("recommendationAction");
+                writer.WritePropertyName("recommendationAction"u8);
                 writer.WriteStringValue(RecommendationAction.Value.ToString());
             }
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId");
+                writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsDefined(EnforcementSupport))
             {
-                writer.WritePropertyName("enforcementSupport");
+                writer.WritePropertyName("enforcementSupport"u8);
                 writer.WriteStringValue(EnforcementSupport.Value.ToString());
             }
             writer.WriteEndObject();
@@ -40,13 +40,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static VmRecommendation DeserializeVmRecommendation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SecurityCenterConfigurationStatus> configurationStatus = default;
             Optional<RecommendationAction> recommendationAction = default;
             Optional<ResourceIdentifier> resourceId = default;
             Optional<SecurityCenterVmEnforcementSupportState> enforcementSupport = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("configurationStatus"))
+                if (property.NameEquals("configurationStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     configurationStatus = new SecurityCenterConfigurationStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recommendationAction"))
+                if (property.NameEquals("recommendationAction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     recommendationAction = new RecommendationAction(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("enforcementSupport"))
+                if (property.NameEquals("enforcementSupport"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

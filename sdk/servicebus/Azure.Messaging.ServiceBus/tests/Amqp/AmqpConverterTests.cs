@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Azure.Core;
+using Azure.Core.Amqp;
+using Azure.Core.Amqp.Shared;
 using Azure.Messaging.ServiceBus.Amqp;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
@@ -128,19 +130,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         }
 
         [Test]
-        public void CanParseDictionaryValueSection()
+        public void CanRoundTripDictionaryValueSection()
         {
-            var converter = new AmqpMessageConverter();
-            var amqpMessage = AmqpMessage.Create(new AmqpValue { Value = new Dictionary<string, string> { { "key", "value" } } });
-            var sbMessage = converter.AmqpMessageToSBReceivedMessage(amqpMessage);
-            var body = sbMessage.GetRawAmqpMessage().Body;
-            Assert.IsTrue(body.TryGetValue(out object val));
+            var annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(new Dictionary<string, string> { { "key", "value" } }));
+            Assert.IsTrue(annotatedMessage.Body.TryGetValue(out object val));
             Assert.AreEqual("value", ((Dictionary<string, string>)val)["key"]);
 
-            amqpMessage = AmqpMessage.Create(new AmqpValue { Value = new AmqpMap { { new MapKey("key"), "value" } } });
-            sbMessage = converter.AmqpMessageToSBReceivedMessage(amqpMessage);
-            body = sbMessage.GetRawAmqpMessage().Body;
-            Assert.IsTrue(body.TryGetValue(out val));
+            var amqpMessage = AmqpAnnotatedMessageConverter.ToAmqpMessage(annotatedMessage);
+
+            annotatedMessage = AmqpAnnotatedMessageConverter.FromAmqpMessage(amqpMessage);
+            Assert.IsTrue(annotatedMessage.Body.TryGetValue(out val));
             Assert.AreEqual("value", ((Dictionary<string, object>)val)["key"]);
         }
 

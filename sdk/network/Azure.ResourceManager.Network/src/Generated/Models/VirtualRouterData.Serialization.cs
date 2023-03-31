@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.Network
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -40,16 +40,16 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(VirtualRouterAsn))
             {
-                writer.WritePropertyName("virtualRouterAsn");
+                writer.WritePropertyName("virtualRouterAsn"u8);
                 writer.WriteNumberValue(VirtualRouterAsn.Value);
             }
             if (Optional.IsCollectionDefined(VirtualRouterIPs))
             {
-                writer.WritePropertyName("virtualRouterIps");
+                writer.WritePropertyName("virtualRouterIps"u8);
                 writer.WriteStartArray();
                 foreach (var item in VirtualRouterIPs)
                 {
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsDefined(HostedSubnet))
             {
-                writer.WritePropertyName("hostedSubnet");
+                writer.WritePropertyName("hostedSubnet"u8);
                 JsonSerializer.Serialize(writer, HostedSubnet);
             }
             if (Optional.IsDefined(HostedGateway))
             {
-                writer.WritePropertyName("hostedGateway");
+                writer.WritePropertyName("hostedGateway"u8);
                 JsonSerializer.Serialize(writer, HostedGateway);
             }
             writer.WriteEndObject();
@@ -73,6 +73,10 @@ namespace Azure.ResourceManager.Network
 
         internal static VirtualRouterData DeserializeVirtualRouterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
@@ -87,7 +91,7 @@ namespace Azure.ResourceManager.Network
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +101,7 @@ namespace Azure.ResourceManager.Network
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,12 +111,12 @@ namespace Azure.ResourceManager.Network
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,7 +126,7 @@ namespace Azure.ResourceManager.Network
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +136,7 @@ namespace Azure.ResourceManager.Network
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -147,7 +151,7 @@ namespace Azure.ResourceManager.Network
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -156,7 +160,7 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("virtualRouterAsn"))
+                        if (property0.NameEquals("virtualRouterAsn"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -166,7 +170,7 @@ namespace Azure.ResourceManager.Network
                             virtualRouterAsn = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("virtualRouterIps"))
+                        if (property0.NameEquals("virtualRouterIps"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -181,7 +185,7 @@ namespace Azure.ResourceManager.Network
                             virtualRouterIPs = array;
                             continue;
                         }
-                        if (property0.NameEquals("hostedSubnet"))
+                        if (property0.NameEquals("hostedSubnet"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -191,7 +195,7 @@ namespace Azure.ResourceManager.Network
                             hostedSubnet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("hostedGateway"))
+                        if (property0.NameEquals("hostedGateway"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -201,7 +205,7 @@ namespace Azure.ResourceManager.Network
                             hostedGateway = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("peerings"))
+                        if (property0.NameEquals("peerings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -216,7 +220,7 @@ namespace Azure.ResourceManager.Network
                             peerings = array;
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

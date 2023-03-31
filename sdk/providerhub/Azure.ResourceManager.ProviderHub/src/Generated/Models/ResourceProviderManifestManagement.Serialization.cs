@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(SchemaOwners))
             {
-                writer.WritePropertyName("schemaOwners");
+                writer.WritePropertyName("schemaOwners"u8);
                 writer.WriteStartArray();
                 foreach (var item in SchemaOwners)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             if (Optional.IsCollectionDefined(ManifestOwners))
             {
-                writer.WritePropertyName("manifestOwners");
+                writer.WritePropertyName("manifestOwners"u8);
                 writer.WriteStartArray();
                 foreach (var item in ManifestOwners)
                 {
@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             if (Optional.IsDefined(IncidentRoutingService))
             {
-                writer.WritePropertyName("incidentRoutingService");
+                writer.WritePropertyName("incidentRoutingService"u8);
                 writer.WriteStringValue(IncidentRoutingService);
             }
             if (Optional.IsDefined(IncidentRoutingTeam))
             {
-                writer.WritePropertyName("incidentRoutingTeam");
+                writer.WritePropertyName("incidentRoutingTeam"u8);
                 writer.WriteStringValue(IncidentRoutingTeam);
             }
             if (Optional.IsDefined(IncidentContactEmail))
             {
-                writer.WritePropertyName("incidentContactEmail");
+                writer.WritePropertyName("incidentContactEmail"u8);
                 writer.WriteStringValue(IncidentContactEmail);
             }
             if (Optional.IsCollectionDefined(ServiceTreeInfos))
             {
-                writer.WritePropertyName("serviceTreeInfos");
+                writer.WritePropertyName("serviceTreeInfos"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServiceTreeInfos)
                 {
@@ -64,15 +64,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             if (Optional.IsDefined(ResourceAccessPolicy))
             {
-                writer.WritePropertyName("resourceAccessPolicy");
+                writer.WritePropertyName("resourceAccessPolicy"u8);
                 writer.WriteStringValue(ResourceAccessPolicy.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ResourceAccessRoles))
             {
-                writer.WritePropertyName("resourceAccessRoles");
+                writer.WritePropertyName("resourceAccessRoles"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceAccessRoles)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
@@ -86,6 +91,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceProviderManifestManagement DeserializeResourceProviderManifestManagement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> schemaOwners = default;
             Optional<IList<string>> manifestOwners = default;
             Optional<string> incidentRoutingService = default;
@@ -96,7 +105,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<IList<BinaryData>> resourceAccessRoles = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("schemaOwners"))
+                if (property.NameEquals("schemaOwners"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,7 +120,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     schemaOwners = array;
                     continue;
                 }
-                if (property.NameEquals("manifestOwners"))
+                if (property.NameEquals("manifestOwners"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,22 +135,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     manifestOwners = array;
                     continue;
                 }
-                if (property.NameEquals("incidentRoutingService"))
+                if (property.NameEquals("incidentRoutingService"u8))
                 {
                     incidentRoutingService = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("incidentRoutingTeam"))
+                if (property.NameEquals("incidentRoutingTeam"u8))
                 {
                     incidentRoutingTeam = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("incidentContactEmail"))
+                if (property.NameEquals("incidentContactEmail"u8))
                 {
                     incidentContactEmail = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceTreeInfos"))
+                if (property.NameEquals("serviceTreeInfos"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -156,7 +165,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     serviceTreeInfos = array;
                     continue;
                 }
-                if (property.NameEquals("resourceAccessPolicy"))
+                if (property.NameEquals("resourceAccessPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -166,7 +175,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     resourceAccessPolicy = new ResourceProviderManagementResourceAccessPolicy(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceAccessRoles"))
+                if (property.NameEquals("resourceAccessRoles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -176,7 +185,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BinaryData.FromString(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BinaryData.FromString(item.GetRawText()));
+                        }
                     }
                     resourceAccessRoles = array;
                     continue;

@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseDataConnectionValidationResult DeserializeSynapseDataConnectionValidationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     errorMessage = property.Value.GetString();
                     continue;

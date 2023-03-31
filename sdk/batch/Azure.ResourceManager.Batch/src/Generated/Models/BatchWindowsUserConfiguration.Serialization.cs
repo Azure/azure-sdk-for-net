@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LoginMode))
             {
-                writer.WritePropertyName("loginMode");
+                writer.WritePropertyName("loginMode"u8);
                 writer.WriteStringValue(LoginMode.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchWindowsUserConfiguration DeserializeBatchWindowsUserConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BatchWindowsLoginMode> loginMode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("loginMode"))
+                if (property.NameEquals("loginMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

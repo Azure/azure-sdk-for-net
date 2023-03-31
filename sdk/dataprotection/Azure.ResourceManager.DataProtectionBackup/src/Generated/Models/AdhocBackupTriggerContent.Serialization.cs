@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("backupRuleOptions");
+            writer.WritePropertyName("backupRuleOptions"u8);
             writer.WriteObjectValue(BackupRules);
             writer.WriteEndObject();
         }

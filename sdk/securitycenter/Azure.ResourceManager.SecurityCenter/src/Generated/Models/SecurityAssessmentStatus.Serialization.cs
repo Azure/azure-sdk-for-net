@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("code");
+            writer.WritePropertyName("code"u8);
             writer.WriteStringValue(Code.ToString());
             if (Optional.IsDefined(Cause))
             {
-                writer.WritePropertyName("cause");
+                writer.WritePropertyName("cause"u8);
                 writer.WriteStringValue(Cause);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
@@ -32,22 +32,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityAssessmentStatus DeserializeSecurityAssessmentStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SecurityAssessmentStatusCode code = default;
             Optional<string> cause = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = new SecurityAssessmentStatusCode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cause"))
+                if (property.NameEquals("cause"u8))
                 {
                     cause = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;

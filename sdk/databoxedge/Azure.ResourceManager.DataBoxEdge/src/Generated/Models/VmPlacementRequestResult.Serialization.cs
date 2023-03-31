@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(VmSize))
             {
-                writer.WritePropertyName("vmSize");
+                writer.WritePropertyName("vmSize"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmSize)
                 {
@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             if (Optional.IsDefined(IsFeasible))
             {
-                writer.WritePropertyName("isFeasible");
+                writer.WritePropertyName("isFeasible"u8);
                 writer.WriteBooleanValue(IsFeasible.Value);
             }
             if (Optional.IsDefined(MessageCode))
             {
-                writer.WritePropertyName("messageCode");
+                writer.WritePropertyName("messageCode"u8);
                 writer.WriteStringValue(MessageCode);
             }
             if (Optional.IsDefined(Message))
             {
-                writer.WritePropertyName("message");
+                writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
             writer.WriteEndObject();

@@ -17,22 +17,22 @@ namespace Azure.Core.TestFramework.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ExcludedHeaders))
             {
-                writer.WritePropertyName("excludedHeaders");
+                writer.WritePropertyName("excludedHeaders"u8);
                 writer.WriteStringValue(ExcludedHeaders);
             }
             if (Optional.IsDefined(CompareBodies))
             {
-                writer.WritePropertyName("compareBodies");
+                writer.WritePropertyName("compareBodies"u8);
                 writer.WriteBooleanValue(CompareBodies.Value);
             }
             if (Optional.IsDefined(IgnoredHeaders))
             {
-                writer.WritePropertyName("ignoredHeaders");
+                writer.WritePropertyName("ignoredHeaders"u8);
                 writer.WriteStringValue(IgnoredHeaders);
             }
             if (Optional.IsDefined(IgnoredQueryParameters))
             {
-                writer.WritePropertyName("ignoredQueryParameters");
+                writer.WritePropertyName("ignoredQueryParameters"u8);
                 writer.WriteStringValue(IgnoredQueryParameters);
             }
             writer.WriteEndObject();

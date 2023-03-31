@@ -15,13 +15,13 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("key");
+            writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
-            writer.WritePropertyName("labelOperator");
+            writer.WritePropertyName("labelOperator"u8);
             writer.WriteStringValue(LabelOperator.ToSerialString());
             if (Optional.IsDefined(_value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteObjectValue(_value);
             }
             writer.WriteEndObject();
@@ -29,22 +29,26 @@ namespace Azure.Communication.JobRouter
 
         internal static QueueSelector DeserializeQueueSelector(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string key = default;
             LabelOperator labelOperator = default;
             Optional<object> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("labelOperator"))
+                if (property.NameEquals("labelOperator"u8))
                 {
                     labelOperator = property.Value.GetString().ToLabelOperator();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

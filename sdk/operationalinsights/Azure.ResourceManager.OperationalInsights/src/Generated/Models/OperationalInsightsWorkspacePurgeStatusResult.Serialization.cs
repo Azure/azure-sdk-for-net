@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static OperationalInsightsWorkspacePurgeStatusResult DeserializeOperationalInsightsWorkspacePurgeStatusResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             OperationalInsightsWorkspacePurgeState status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = new OperationalInsightsWorkspacePurgeState(property.Value.GetString());
                     continue;

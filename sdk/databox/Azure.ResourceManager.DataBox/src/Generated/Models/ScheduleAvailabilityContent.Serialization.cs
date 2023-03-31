@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("storageLocation");
+            writer.WritePropertyName("storageLocation"u8);
             writer.WriteStringValue(StorageLocation);
-            writer.WritePropertyName("skuName");
+            writer.WritePropertyName("skuName"u8);
             writer.WriteStringValue(SkuName.ToSerialString());
             if (Optional.IsDefined(Country))
             {
-                writer.WritePropertyName("country");
+                writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
             writer.WriteEndObject();

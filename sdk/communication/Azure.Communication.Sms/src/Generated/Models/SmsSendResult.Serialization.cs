@@ -14,6 +14,10 @@ namespace Azure.Communication.Sms
     {
         internal static SmsSendResult DeserializeSmsSendResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string to = default;
             Optional<string> messageId = default;
             int httpStatusCode = default;
@@ -22,22 +26,22 @@ namespace Azure.Communication.Sms
             Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("to"))
+                if (property.NameEquals("to"u8))
                 {
                     to = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("messageId"))
+                if (property.NameEquals("messageId"u8))
                 {
                     messageId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("httpStatusCode"))
+                if (property.NameEquals("httpStatusCode"u8))
                 {
                     httpStatusCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("repeatabilityResult"))
+                if (property.NameEquals("repeatabilityResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,12 +51,12 @@ namespace Azure.Communication.Sms
                     repeatabilityResult = new SmsSendResponseItemRepeatabilityResult(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("successful"))
+                if (property.NameEquals("successful"u8))
                 {
                     successful = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     errorMessage = property.Value.GetString();
                     continue;

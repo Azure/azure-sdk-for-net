@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Address))
             {
-                writer.WritePropertyName("address");
+                writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
             if (Optional.IsDefined(PrivateLinkAlias))
             {
-                writer.WritePropertyName("privateLinkAlias");
+                writer.WritePropertyName("privateLinkAlias"u8);
                 writer.WriteStringValue(PrivateLinkAlias);
             }
             if (Optional.IsDefined(PrivateLinkResourceId))
             {
                 if (PrivateLinkResourceId != null)
                 {
-                    writer.WritePropertyName("privateLinkResourceId");
+                    writer.WritePropertyName("privateLinkResourceId"u8);
                     writer.WriteStringValue(PrivateLinkResourceId);
                 }
                 else
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 if (PrivateLinkLocation != null)
                 {
-                    writer.WritePropertyName("privateLinkLocation");
+                    writer.WritePropertyName("privateLinkLocation"u8);
                     writer.WriteStringValue(PrivateLinkLocation.Value);
                 }
                 else
@@ -51,37 +51,37 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             if (Optional.IsDefined(PrivateLinkApprovalMessage))
             {
-                writer.WritePropertyName("privateLinkApprovalMessage");
+                writer.WritePropertyName("privateLinkApprovalMessage"u8);
                 writer.WriteStringValue(PrivateLinkApprovalMessage);
             }
             if (Optional.IsDefined(HttpPort))
             {
-                writer.WritePropertyName("httpPort");
+                writer.WritePropertyName("httpPort"u8);
                 writer.WriteNumberValue(HttpPort.Value);
             }
             if (Optional.IsDefined(HttpsPort))
             {
-                writer.WritePropertyName("httpsPort");
+                writer.WritePropertyName("httpsPort"u8);
                 writer.WriteNumberValue(HttpsPort.Value);
             }
             if (Optional.IsDefined(EnabledState))
             {
-                writer.WritePropertyName("enabledState");
+                writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
             if (Optional.IsDefined(Priority))
             {
-                writer.WritePropertyName("priority");
+                writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
             if (Optional.IsDefined(Weight))
             {
-                writer.WritePropertyName("weight");
+                writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
             if (Optional.IsDefined(BackendHostHeader))
             {
-                writer.WritePropertyName("backendHostHeader");
+                writer.WritePropertyName("backendHostHeader"u8);
                 writer.WriteStringValue(BackendHostHeader);
             }
             writer.WriteEndObject();
@@ -89,6 +89,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static FrontDoorBackend DeserializeFrontDoorBackend(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> address = default;
             Optional<string> privateLinkAlias = default;
             Optional<ResourceIdentifier> privateLinkResourceId = default;
@@ -103,17 +107,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<string> backendHostHeader = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("address"))
+                if (property.NameEquals("address"u8))
                 {
                     address = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateLinkAlias"))
+                if (property.NameEquals("privateLinkAlias"u8))
                 {
                     privateLinkAlias = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateLinkResourceId"))
+                if (property.NameEquals("privateLinkResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +127,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     privateLinkResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("privateLinkLocation"))
+                if (property.NameEquals("privateLinkLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,7 +137,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     privateLinkLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("privateEndpointStatus"))
+                if (property.NameEquals("privateEndpointStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -143,12 +147,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     privateEndpointStatus = new BackendPrivateEndpointStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("privateLinkApprovalMessage"))
+                if (property.NameEquals("privateLinkApprovalMessage"u8))
                 {
                     privateLinkApprovalMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("httpPort"))
+                if (property.NameEquals("httpPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -158,7 +162,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     httpPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("httpsPort"))
+                if (property.NameEquals("httpsPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -168,7 +172,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     httpsPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("enabledState"))
+                if (property.NameEquals("enabledState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -178,7 +182,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     enabledState = new BackendEnabledState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("priority"))
+                if (property.NameEquals("priority"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -188,7 +192,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     priority = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("weight"))
+                if (property.NameEquals("weight"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -198,7 +202,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     weight = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("backendHostHeader"))
+                if (property.NameEquals("backendHostHeader"u8))
                 {
                     backendHostHeader = property.Value.GetString();
                     continue;

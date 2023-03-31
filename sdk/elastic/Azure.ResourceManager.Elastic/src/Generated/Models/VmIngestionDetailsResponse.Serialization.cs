@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.Elastic.Models
     {
         internal static VmIngestionDetailsResponse DeserializeVmIngestionDetailsResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> cloudId = default;
             Optional<string> ingestionKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cloudId"))
+                if (property.NameEquals("cloudId"u8))
                 {
                     cloudId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ingestionKey"))
+                if (property.NameEquals("ingestionKey"u8))
                 {
                     ingestionKey = property.Value.GetString();
                     continue;

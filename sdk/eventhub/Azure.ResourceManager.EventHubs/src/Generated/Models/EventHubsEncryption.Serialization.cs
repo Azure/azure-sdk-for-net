@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(KeyVaultProperties))
             {
-                writer.WritePropertyName("keyVaultProperties");
+                writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in KeyVaultProperties)
                 {
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
             if (Optional.IsDefined(KeySource))
             {
-                writer.WritePropertyName("keySource");
+                writer.WritePropertyName("keySource"u8);
                 writer.WriteStringValue(KeySource.Value.ToString());
             }
             if (Optional.IsDefined(RequireInfrastructureEncryption))
             {
-                writer.WritePropertyName("requireInfrastructureEncryption");
+                writer.WritePropertyName("requireInfrastructureEncryption"u8);
                 writer.WriteBooleanValue(RequireInfrastructureEncryption.Value);
             }
             writer.WriteEndObject();
@@ -41,12 +41,16 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EventHubsEncryption DeserializeEventHubsEncryption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<EventHubsKeyVaultProperties>> keyVaultProperties = default;
             Optional<EventHubsKeySource> keySource = default;
             Optional<bool> requireInfrastructureEncryption = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyVaultProperties"))
+                if (property.NameEquals("keyVaultProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     keyVaultProperties = array;
                     continue;
                 }
-                if (property.NameEquals("keySource"))
+                if (property.NameEquals("keySource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     keySource = new EventHubsKeySource(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("requireInfrastructureEncryption"))
+                if (property.NameEquals("requireInfrastructureEncryption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

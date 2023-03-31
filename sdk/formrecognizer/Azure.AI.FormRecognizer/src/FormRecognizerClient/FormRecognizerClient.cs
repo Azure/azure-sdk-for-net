@@ -146,7 +146,7 @@ namespace Azure.AI.FormRecognizer
                 FormContentType formContentType = recognizeContentOptions.ContentType ?? DetectContentType(form, nameof(form));
 
                 Response response = ServiceClient.AnalyzeLayoutAsync(
-                    formContentType,
+                    GetInternalContentType(formContentType),
                     recognizeContentOptions.Pages.Count == 0 ? null : recognizeContentOptions.Pages,
                     recognizeContentOptions.Language,
                     recognizeContentOptions.ReadingOrder,
@@ -186,7 +186,7 @@ namespace Azure.AI.FormRecognizer
                 FormContentType formContentType = recognizeContentOptions.ContentType ?? DetectContentType(form, nameof(form));
 
                 Response response = await ServiceClient.AnalyzeLayoutAsyncAsync(
-                    formContentType,
+                    GetInternalContentType(formContentType),
                     recognizeContentOptions.Pages.Count == 0 ? null : recognizeContentOptions.Pages,
                     recognizeContentOptions.Language,
                     recognizeContentOptions.ReadingOrder,
@@ -307,7 +307,7 @@ namespace Azure.AI.FormRecognizer
                 FormContentType formContentType = recognizeReceiptsOptions.ContentType ?? DetectContentType(receipt, nameof(receipt));
 
                 Response response = await ServiceClient.AnalyzeReceiptAsyncAsync(
-                    formContentType,
+                    GetInternalContentType(formContentType),
                     recognizeReceiptsOptions.IncludeFieldElements,
                     recognizeReceiptsOptions.Locale,
                     recognizeReceiptsOptions.Pages.Count == 0 ? null : recognizeReceiptsOptions.Pages,
@@ -348,7 +348,7 @@ namespace Azure.AI.FormRecognizer
                 FormContentType formContentType = recognizeReceiptsOptions.ContentType ?? DetectContentType(receipt, nameof(receipt));
 
                 Response response = ServiceClient.AnalyzeReceiptAsync(
-                    formContentType,
+                    GetInternalContentType(formContentType),
                     recognizeReceiptsOptions.IncludeFieldElements,
                     recognizeReceiptsOptions.Locale,
                     recognizeReceiptsOptions.Pages.Count == 0 ? null : recognizeReceiptsOptions.Pages,
@@ -474,7 +474,7 @@ namespace Azure.AI.FormRecognizer
                 FormContentType formContentType = recognizeBusinessCardsOptions.ContentType ?? DetectContentType(businessCard, nameof(businessCard));
 
                 Response response = await ServiceClient.AnalyzeBusinessCardAsyncAsync(
-                    formContentType,
+                    GetInternalContentType(formContentType),
                     recognizeBusinessCardsOptions.IncludeFieldElements,
                     recognizeBusinessCardsOptions.Locale,
                     recognizeBusinessCardsOptions.Pages.Count == 0 ? null : recognizeBusinessCardsOptions.Pages,
@@ -518,7 +518,7 @@ namespace Azure.AI.FormRecognizer
                 FormContentType formContentType = recognizeBusinessCardsOptions.ContentType ?? DetectContentType(businessCard, nameof(businessCard));
 
                 Response response = ServiceClient.AnalyzeBusinessCardAsync(
-                    formContentType,
+                    GetInternalContentType(formContentType),
                     recognizeBusinessCardsOptions.IncludeFieldElements,
                     recognizeBusinessCardsOptions.Locale,
                     recognizeBusinessCardsOptions.Pages.Count == 0 ? null : recognizeBusinessCardsOptions.Pages,
@@ -650,7 +650,7 @@ namespace Azure.AI.FormRecognizer
                 FormContentType formContentType = recognizeInvoicesOptions.ContentType ?? DetectContentType(invoice, nameof(invoice));
 
                 Response response = await ServiceClient.AnalyzeInvoiceAsyncAsync(
-                    formContentType,
+                    GetInternalContentType(formContentType),
                     recognizeInvoicesOptions.IncludeFieldElements,
                     recognizeInvoicesOptions.Locale,
                     recognizeInvoicesOptions.Pages.Count == 0 ? null : recognizeInvoicesOptions.Pages,
@@ -694,7 +694,7 @@ namespace Azure.AI.FormRecognizer
                 FormContentType formContentType = recognizeInvoicesOptions.ContentType ?? DetectContentType(invoice, nameof(invoice));
 
                 Response response = ServiceClient.AnalyzeInvoiceAsync(
-                    formContentType,
+                    GetInternalContentType(formContentType),
                     recognizeInvoicesOptions.IncludeFieldElements,
                     recognizeInvoicesOptions.Locale,
                     recognizeInvoicesOptions.Pages.Count == 0 ? null : recognizeInvoicesOptions.Pages,
@@ -826,7 +826,7 @@ namespace Azure.AI.FormRecognizer
                 FormContentType formContentType = recognizeIdentityDocumentsOptions.ContentType ?? DetectContentType(identityDocument, nameof(identityDocument));
 
                 Response response = await ServiceClient.AnalyzeIdDocumentAsyncAsync(
-                    formContentType,
+                    GetInternalContentType(formContentType),
                     recognizeIdentityDocumentsOptions.IncludeFieldElements,
                     recognizeIdentityDocumentsOptions.Pages.Count == 0 ? null : recognizeIdentityDocumentsOptions.Pages,
                     identityDocument,
@@ -870,7 +870,7 @@ namespace Azure.AI.FormRecognizer
                 FormContentType formContentType = recognizeIdentityDocumentsOptions.ContentType ?? DetectContentType(identityDocument, nameof(identityDocument));
 
                 Response response = ServiceClient.AnalyzeIdDocumentAsync(
-                    formContentType,
+                    GetInternalContentType(formContentType),
                     recognizeIdentityDocumentsOptions.IncludeFieldElements,
                     recognizeIdentityDocumentsOptions.Pages.Count == 0 ? null : recognizeIdentityDocumentsOptions.Pages,
                     identityDocument,
@@ -1001,7 +1001,7 @@ namespace Azure.AI.FormRecognizer
 
                 Response response = ServiceClient.AnalyzeWithCustomModel(
                     guid,
-                    formContentType,
+                    GetInternalContentType(formContentType),
                     includeTextDetails: recognizeCustomFormsOptions.IncludeFieldElements,
                     recognizeCustomFormsOptions.Pages.Count == 0 ? null : recognizeCustomFormsOptions.Pages,
                     form,
@@ -1086,7 +1086,7 @@ namespace Azure.AI.FormRecognizer
 
                 Response response = await ServiceClient.AnalyzeWithCustomModelAsync(
                     guid,
-                    formContentType,
+                    GetInternalContentType(formContentType),
                     includeTextDetails: recognizeCustomFormsOptions.IncludeFieldElements,
                     recognizeCustomFormsOptions.Pages.Count == 0 ? null : recognizeCustomFormsOptions.Pages,
                     form,
@@ -1145,6 +1145,19 @@ namespace Azure.AI.FormRecognizer
         }
 
         #endregion
+
+        private static InternalContentType GetInternalContentType(FormContentType type)
+        {
+            return type switch
+            {
+                FormContentType.Pdf => InternalContentType.ApplicationPdf,
+                FormContentType.Png => InternalContentType.ImagePng,
+                FormContentType.Jpeg => InternalContentType.ImageJpeg,
+                FormContentType.Tiff => InternalContentType.ImageTiff,
+                FormContentType.Bmp => InternalContentType.ImageBmp,
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown ContentType value.")
+            };
+        }
 
         /// <summary>
         /// Used as part of argument validation. Detects the <see cref="FormContentType"/> of a stream and

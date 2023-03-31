@@ -8,10 +8,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.MetricsAdvisor.Administration;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for models. </summary>
     internal static partial class MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2ModelFactory
     {
         /// <summary> Initializes a new instance of AnomalyAlertConfiguration. </summary>
@@ -81,6 +82,17 @@ namespace Azure.AI.MetricsAdvisor.Models
             paths ??= new List<string>();
 
             return new IncidentRootCause(seriesKey, paths?.ToList(), contributionScore, description);
+        }
+
+        /// <summary> Initializes a new instance of DataSourceCredentialEntity. </summary>
+        /// <param name="credentialKind"> Type of data source credential. </param>
+        /// <param name="id"> Unique id of data source credential. </param>
+        /// <param name="name"> Name of data source credential. </param>
+        /// <param name="description"> Description of data source credential. </param>
+        /// <returns> A new <see cref="Administration.DataSourceCredentialEntity"/> instance for mocking. </returns>
+        public static DataSourceCredentialEntity DataSourceCredentialEntity(string credentialKind = "Unknown", string id = null, string name = null, string description = null)
+        {
+            return new UnknownDataSourceCredential(credentialKind, id, name, description);
         }
 
         /// <summary> Initializes a new instance of DataFeedMetric. </summary>

@@ -19,39 +19,39 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(EntityName))
             {
-                writer.WritePropertyName("entityName");
+                writer.WritePropertyName("entityName"u8);
                 writer.WriteStringValue(EntityName);
             }
             if (Optional.IsDefined(EntityConnectionString))
             {
-                writer.WritePropertyName("entityConnectionString");
+                writer.WritePropertyName("entityConnectionString"u8);
                 writer.WriteStringValue(EntityConnectionString);
             }
             if (Optional.IsDefined(ResourceConnectionString))
             {
-                writer.WritePropertyName("resourceConnectionString");
+                writer.WritePropertyName("resourceConnectionString"u8);
                 writer.WriteStringValue(ResourceConnectionString);
             }
             if (Optional.IsDefined(Hostname))
             {
-                writer.WritePropertyName("hostname");
+                writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
             if (Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port");
+                writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
             if (Optional.IsDefined(BiztalkUri))
             {
-                writer.WritePropertyName("biztalkUri");
+                writer.WritePropertyName("biztalkUri"u8);
                 writer.WriteStringValue(BiztalkUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.AppService
 
         internal static RelayServiceConnectionEntityData DeserializeRelayServiceConnectionEntityData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -73,27 +77,27 @@ namespace Azure.ResourceManager.AppService
             Optional<Uri> biztalkUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +107,7 @@ namespace Azure.ResourceManager.AppService
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,27 +116,27 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("entityName"))
+                        if (property0.NameEquals("entityName"u8))
                         {
                             entityName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("entityConnectionString"))
+                        if (property0.NameEquals("entityConnectionString"u8))
                         {
                             entityConnectionString = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("resourceConnectionString"))
+                        if (property0.NameEquals("resourceConnectionString"u8))
                         {
                             resourceConnectionString = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("hostname"))
+                        if (property0.NameEquals("hostname"u8))
                         {
                             hostname = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("port"))
+                        if (property0.NameEquals("port"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -142,7 +146,7 @@ namespace Azure.ResourceManager.AppService
                             port = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("biztalkUri"))
+                        if (property0.NameEquals("biztalkUri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

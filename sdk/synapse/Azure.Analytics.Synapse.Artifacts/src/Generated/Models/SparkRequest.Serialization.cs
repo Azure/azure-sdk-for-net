@@ -18,6 +18,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static SparkRequest DeserializeSparkRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> file = default;
             Optional<string> className = default;
@@ -34,22 +38,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<int> numExecutors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("file"))
+                if (property.NameEquals("file"u8))
                 {
                     file = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("className"))
+                if (property.NameEquals("className"u8))
                 {
                     className = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("args"))
+                if (property.NameEquals("args"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +68,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     args = array;
                     continue;
                 }
-                if (property.NameEquals("jars"))
+                if (property.NameEquals("jars"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +83,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     jars = array;
                     continue;
                 }
-                if (property.NameEquals("pyFiles"))
+                if (property.NameEquals("pyFiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +98,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     pyFiles = array;
                     continue;
                 }
-                if (property.NameEquals("files"))
+                if (property.NameEquals("files"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,7 +113,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     files = array;
                     continue;
                 }
-                if (property.NameEquals("archives"))
+                if (property.NameEquals("archives"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +128,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     archives = array;
                     continue;
                 }
-                if (property.NameEquals("conf"))
+                if (property.NameEquals("conf"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,12 +143,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     conf = dictionary;
                     continue;
                 }
-                if (property.NameEquals("driverMemory"))
+                if (property.NameEquals("driverMemory"u8))
                 {
                     driverMemory = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("driverCores"))
+                if (property.NameEquals("driverCores"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,12 +158,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     driverCores = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("executorMemory"))
+                if (property.NameEquals("executorMemory"u8))
                 {
                     executorMemory = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("executorCores"))
+                if (property.NameEquals("executorCores"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -169,7 +173,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     executorCores = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("numExecutors"))
+                if (property.NameEquals("numExecutors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("deleteAfter");
+            writer.WritePropertyName("deleteAfter"u8);
             writer.WriteObjectValue(DeleteAfter);
-            writer.WritePropertyName("sourceDataStore");
+            writer.WritePropertyName("sourceDataStore"u8);
             writer.WriteObjectValue(SourceDataStore);
             if (Optional.IsCollectionDefined(TargetDataStoreCopySettings))
             {
-                writer.WritePropertyName("targetDataStoreCopySettings");
+                writer.WritePropertyName("targetDataStoreCopySettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetDataStoreCopySettings)
                 {
@@ -35,22 +35,26 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static SourceLifeCycle DeserializeSourceLifeCycle(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataProtectionBackupDeleteSetting deleteAfter = default;
             DataStoreInfoBase sourceDataStore = default;
             Optional<IList<TargetCopySetting>> targetDataStoreCopySettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deleteAfter"))
+                if (property.NameEquals("deleteAfter"u8))
                 {
                     deleteAfter = DataProtectionBackupDeleteSetting.DeserializeDataProtectionBackupDeleteSetting(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sourceDataStore"))
+                if (property.NameEquals("sourceDataStore"u8))
                 {
                     sourceDataStore = DataStoreInfoBase.DeserializeDataStoreInfoBase(property.Value);
                     continue;
                 }
-                if (property.NameEquals("targetDataStoreCopySettings"))
+                if (property.NameEquals("targetDataStoreCopySettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

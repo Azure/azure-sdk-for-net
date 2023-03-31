@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static ServiceAccountThrottlingMatchPattern DeserializeServiceAccountThrottlingMatchPattern(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> path = default;
             Optional<string> method = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("method"))
+                if (property.NameEquals("method"u8))
                 {
                     method = property.Value.GetString();
                     continue;

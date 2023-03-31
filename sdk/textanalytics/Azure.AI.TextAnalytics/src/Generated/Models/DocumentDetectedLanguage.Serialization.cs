@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DetectedLanguage))
             {
-                writer.WritePropertyName("detectedLanguage");
+                writer.WritePropertyName("detectedLanguage"u8);
                 writer.WriteObjectValue(DetectedLanguage.Value);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static DocumentDetectedLanguage DeserializeDocumentDetectedLanguage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DetectedLanguageInternal> detectedLanguage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("detectedLanguage"))
+                if (property.NameEquals("detectedLanguage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

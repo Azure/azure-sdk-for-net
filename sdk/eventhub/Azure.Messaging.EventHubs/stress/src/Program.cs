@@ -59,10 +59,13 @@ public class Program
         // test scenario runs are run in parallel.
 
         var testScenarioTasks = new List<Task>();
-        var testsToRun = opts.All ? Enum.GetValues(typeof(TestScenario)) : new TestScenario[]{StringToTestScenario(opts.Test)};
+        var testsToRun = opts.All ? Enum.GetValues(typeof(TestScenarioName)) : new TestScenarioName[]{StringToTestScenario(opts.Test)};
 
         var testParameters = new TestParameters();
         testParameters.EventHubsConnectionString = eventHubsConnectionString;
+        var runAllRoles = !int.TryParse(opts.Role, out var roleIndex);
+        testParameters.JobIndex = roleIndex;
+        testParameters.RunAllRoles = runAllRoles;
 
         var cancellationSource = new CancellationTokenSource();
         var runDuration = TimeSpan.FromHours(testParameters.DurationInHours);
@@ -74,7 +77,7 @@ public class Program
 
         try
         {
-            foreach (TestScenario testScenario in testsToRun)
+            foreach (TestScenarioName testScenario in testsToRun)
             {
                 var testName = testScenario.ToString();
                 metrics.Client.Context.GlobalProperties["TestName"] = testName;
@@ -86,31 +89,31 @@ public class Program
 
                 switch (testScenario)
                 {
-                    case TestScenario.BufferedProducerTest:
+                    case TestScenarioName.BufferedProducerTest:
                         environment.TryGetValue(EnvironmentVariables.EventHubBufferedProducerTest, out eventHubName);
                         testParameters.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
 
-                        var bufferedProducerTest = new BufferedProducerTest(testParameters, metrics, opts.Role);
+                        var bufferedProducerTest = new BufferedProducerTest(testParameters, metrics);
                         testScenarioTasks.Add(bufferedProducerTest.RunTestAsync(cancellationSource.Token));
                         break;
 
-                    case TestScenario.BurstBufferedProducerTest:
+                    case TestScenarioName.BurstBufferedProducerTest:
                         environment.TryGetValue(EnvironmentVariables.EventHubBurstBufferedProducerTest, out eventHubName);
                         testParameters.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
 
-                        var burstBufferedProducerTest = new BurstBufferedProducerTest(testParameters, metrics, opts.Role);
+                        var burstBufferedProducerTest = new BurstBufferedProducerTest(testParameters, metrics);
                         testScenarioTasks.Add(burstBufferedProducerTest.RunTestAsync(cancellationSource.Token));
                         break;
 
-                    case TestScenario.EventProducerTest:
+                    case TestScenarioName.EventProducerTest:
                         environment.TryGetValue(EnvironmentVariables.EventHubEventProducerTest, out eventHubName);
                         testParameters.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
 
-                        var eventProducerTest = new EventProducerTest(testParameters, metrics, opts.Role);
+                        var eventProducerTest = new EventProducerTest(testParameters, metrics);
                         testScenarioTasks.Add(eventProducerTest.RunTestAsync(cancellationSource.Token));
                         break;
 
-                    case TestScenario.ProcessorTest:
+                    case TestScenarioName.ProcessorTest:
                         // Get the Event Hub name for this test
                         environment.TryGetValue(EnvironmentVariables.EventHubProcessorTest, out eventHubName);
                         testParameters.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
@@ -123,15 +126,15 @@ public class Program
                         environment.TryGetValue(EnvironmentVariables.StorageAccountProcessorTest, out storageConnectionString);
                         testParameters.StorageConnectionString = PromptForResources("Storage Account Connection String", testName, storageConnectionString, opts.Interactive);
 
-                        var processorTest = new ProcessorTest(testParameters, metrics, opts.Role);
+                        var processorTest = new ProcessorTest(testParameters, metrics);
                         testScenarioTasks.Add(processorTest.RunTestAsync(cancellationSource.Token));
                         break;
 
-                    case TestScenario.ConsumerTest:
+                    case TestScenarioName.ConsumerTest:
                         environment.TryGetValue(EnvironmentVariables.EventHubBurstBufferedProducerTest, out eventHubName);
                         testParameters.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
 
-                        var consumerTest = new ConsumerTest(testParameters, metrics, opts.Role);
+                        var consumerTest = new ConsumerTest(testParameters, metrics);
                         testScenarioTasks.Add(consumerTest.RunTestAsync(cancellationSource.Token));
                         break;
                 }
@@ -175,20 +178,20 @@ public class Program
     }
 
     /// <summary>
-    ///   Converts a string into a <see cref="TestScenario"/> value.
+    ///   Converts a string into a <see cref="TestScenarioName"/> value.
     /// </summary>
     ///
-    /// <param name="testScenario">The string to convert to a <see cref="TestScenario"/>.</param>
+    /// <param name="testScenario">The string to convert to a <see cref="TestScenarioName"/>.</param>
     ///
-    /// <returns>The <see cref="TestScenario"/> of the string input.</returns>
+    /// <returns>The <see cref="TestScenarioName"/> of the string input.</returns>
     ///
-    public static TestScenario StringToTestScenario(string testScenario) => testScenario switch
+    public static TestScenarioName StringToTestScenario(string testScenario) => testScenario switch
     {
-        "BufferedProducerTest" or "BuffProd" => TestScenario.BufferedProducerTest,
-        "BurstBufferedProducerTest" or "BurstBuffProd" => TestScenario.BurstBufferedProducerTest,
-        "EventProducerTest" or "EventProd" => TestScenario.EventProducerTest,
-        "ProcessorTest" or "Processor" => TestScenario.ProcessorTest,
-        "ConsumerTest" or "Consumer" => TestScenario.ConsumerTest,
+        "BufferedProducerTest" or "BuffProd" => TestScenarioName.BufferedProducerTest,
+        "BurstBufferedProducerTest" or "BurstBuffProd" => TestScenarioName.BurstBufferedProducerTest,
+        "EventProducerTest" or "EventProd" => TestScenarioName.EventProducerTest,
+        "ProcessorTest" or "Processor" => TestScenarioName.ProcessorTest,
+        "ConsumerTest" or "Consumer" => TestScenarioName.ConsumerTest,
         _ => throw new ArgumentNullException(),
     };
 

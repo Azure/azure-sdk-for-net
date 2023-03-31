@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("messageConnectionSettings");
+            writer.WritePropertyName("messageConnectionSettings"u8);
             writer.WriteObjectValue(MessageConnectionSettings);
-            writer.WritePropertyName("acknowledgementConnectionSettings");
+            writer.WritePropertyName("acknowledgementConnectionSettings"u8);
             writer.WriteObjectValue(AcknowledgementConnectionSettings);
-            writer.WritePropertyName("mdnSettings");
+            writer.WritePropertyName("mdnSettings"u8);
             writer.WriteObjectValue(MdnSettings);
-            writer.WritePropertyName("securitySettings");
+            writer.WritePropertyName("securitySettings"u8);
             writer.WriteObjectValue(SecuritySettings);
-            writer.WritePropertyName("validationSettings");
+            writer.WritePropertyName("validationSettings"u8);
             writer.WriteObjectValue(ValidationSettings);
-            writer.WritePropertyName("envelopeSettings");
+            writer.WritePropertyName("envelopeSettings"u8);
             writer.WriteObjectValue(EnvelopeSettings);
-            writer.WritePropertyName("errorSettings");
+            writer.WritePropertyName("errorSettings"u8);
             writer.WriteObjectValue(ErrorSettings);
             writer.WriteEndObject();
         }
 
         internal static AS2ProtocolSettings DeserializeAS2ProtocolSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AS2MessageConnectionSettings messageConnectionSettings = default;
             AS2AcknowledgementConnectionSettings acknowledgementConnectionSettings = default;
             AS2MdnSettings mdnSettings = default;
@@ -43,37 +47,37 @@ namespace Azure.ResourceManager.Logic.Models
             AS2ErrorSettings errorSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("messageConnectionSettings"))
+                if (property.NameEquals("messageConnectionSettings"u8))
                 {
                     messageConnectionSettings = AS2MessageConnectionSettings.DeserializeAS2MessageConnectionSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("acknowledgementConnectionSettings"))
+                if (property.NameEquals("acknowledgementConnectionSettings"u8))
                 {
                     acknowledgementConnectionSettings = AS2AcknowledgementConnectionSettings.DeserializeAS2AcknowledgementConnectionSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("mdnSettings"))
+                if (property.NameEquals("mdnSettings"u8))
                 {
                     mdnSettings = AS2MdnSettings.DeserializeAS2MdnSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("securitySettings"))
+                if (property.NameEquals("securitySettings"u8))
                 {
                     securitySettings = AS2SecuritySettings.DeserializeAS2SecuritySettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("validationSettings"))
+                if (property.NameEquals("validationSettings"u8))
                 {
                     validationSettings = AS2ValidationSettings.DeserializeAS2ValidationSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("envelopeSettings"))
+                if (property.NameEquals("envelopeSettings"u8))
                 {
                     envelopeSettings = AS2EnvelopeSettings.DeserializeAS2EnvelopeSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("errorSettings"))
+                if (property.NameEquals("errorSettings"u8))
                 {
                     errorSettings = AS2ErrorSettings.DeserializeAS2ErrorSettings(property.Value);
                     continue;

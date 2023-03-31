@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Communication.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("resourceId");
+            writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
-            writer.WritePropertyName("connectionString");
+            writer.WritePropertyName("connectionString"u8);
             writer.WriteStringValue(ConnectionString);
             writer.WriteEndObject();
         }

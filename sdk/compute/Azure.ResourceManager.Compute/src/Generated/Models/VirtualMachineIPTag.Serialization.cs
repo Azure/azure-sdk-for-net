@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IPTagType))
             {
-                writer.WritePropertyName("ipTagType");
+                writer.WritePropertyName("ipTagType"u8);
                 writer.WriteStringValue(IPTagType);
             }
             if (Optional.IsDefined(Tag))
             {
-                writer.WritePropertyName("tag");
+                writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineIPTag DeserializeVirtualMachineIPTag(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ipTagType = default;
             Optional<string> tag = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ipTagType"))
+                if (property.NameEquals("ipTagType"u8))
                 {
                     ipTagType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tag"))
+                if (property.NameEquals("tag"u8))
                 {
                     tag = property.Value.GetString();
                     continue;

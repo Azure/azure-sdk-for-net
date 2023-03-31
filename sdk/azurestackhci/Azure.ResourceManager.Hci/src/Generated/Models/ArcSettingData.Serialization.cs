@@ -19,36 +19,36 @@ namespace Azure.ResourceManager.Hci
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ArcInstanceResourceGroup))
             {
-                writer.WritePropertyName("arcInstanceResourceGroup");
+                writer.WritePropertyName("arcInstanceResourceGroup"u8);
                 writer.WriteStringValue(ArcInstanceResourceGroup);
             }
             if (Optional.IsDefined(ArcApplicationClientId))
             {
-                writer.WritePropertyName("arcApplicationClientId");
+                writer.WritePropertyName("arcApplicationClientId"u8);
                 writer.WriteStringValue(ArcApplicationClientId.Value);
             }
             if (Optional.IsDefined(ArcApplicationTenantId))
             {
-                writer.WritePropertyName("arcApplicationTenantId");
+                writer.WritePropertyName("arcApplicationTenantId"u8);
                 writer.WriteStringValue(ArcApplicationTenantId.Value);
             }
             if (Optional.IsDefined(ArcServicePrincipalObjectId))
             {
-                writer.WritePropertyName("arcServicePrincipalObjectId");
+                writer.WritePropertyName("arcServicePrincipalObjectId"u8);
                 writer.WriteStringValue(ArcServicePrincipalObjectId.Value);
             }
             if (Optional.IsDefined(ArcApplicationObjectId))
             {
-                writer.WritePropertyName("arcApplicationObjectId");
+                writer.WritePropertyName("arcApplicationObjectId"u8);
                 writer.WriteStringValue(ArcApplicationObjectId.Value);
             }
             if (Optional.IsDefined(ConnectivityProperties))
             {
-                writer.WritePropertyName("connectivityProperties");
+                writer.WritePropertyName("connectivityProperties"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ConnectivityProperties);
 #else
@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.Hci
 
         internal static ArcSettingData DeserializeArcSettingData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -76,22 +80,22 @@ namespace Azure.ResourceManager.Hci
             Optional<BinaryData> connectivityProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +105,7 @@ namespace Azure.ResourceManager.Hci
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +114,7 @@ namespace Azure.ResourceManager.Hci
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -120,12 +124,12 @@ namespace Azure.ResourceManager.Hci
                             provisioningState = new HciProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("arcInstanceResourceGroup"))
+                        if (property0.NameEquals("arcInstanceResourceGroup"u8))
                         {
                             arcInstanceResourceGroup = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("arcApplicationClientId"))
+                        if (property0.NameEquals("arcApplicationClientId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -135,7 +139,7 @@ namespace Azure.ResourceManager.Hci
                             arcApplicationClientId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("arcApplicationTenantId"))
+                        if (property0.NameEquals("arcApplicationTenantId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -145,7 +149,7 @@ namespace Azure.ResourceManager.Hci
                             arcApplicationTenantId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("arcServicePrincipalObjectId"))
+                        if (property0.NameEquals("arcServicePrincipalObjectId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -155,7 +159,7 @@ namespace Azure.ResourceManager.Hci
                             arcServicePrincipalObjectId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("arcApplicationObjectId"))
+                        if (property0.NameEquals("arcApplicationObjectId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -165,7 +169,7 @@ namespace Azure.ResourceManager.Hci
                             arcApplicationObjectId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("aggregateState"))
+                        if (property0.NameEquals("aggregateState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -175,7 +179,7 @@ namespace Azure.ResourceManager.Hci
                             aggregateState = new ArcSettingAggregateState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("perNodeDetails"))
+                        if (property0.NameEquals("perNodeDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -190,7 +194,7 @@ namespace Azure.ResourceManager.Hci
                             perNodeDetails = array;
                             continue;
                         }
-                        if (property0.NameEquals("connectivityProperties"))
+                        if (property0.NameEquals("connectivityProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.Dynatrace.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FirstName))
             {
-                writer.WritePropertyName("firstName");
+                writer.WritePropertyName("firstName"u8);
                 writer.WriteStringValue(FirstName);
             }
             if (Optional.IsDefined(LastName))
             {
-                writer.WritePropertyName("lastName");
+                writer.WritePropertyName("lastName"u8);
                 writer.WriteStringValue(LastName);
             }
             if (Optional.IsDefined(EmailAddress))
             {
-                writer.WritePropertyName("emailAddress");
+                writer.WritePropertyName("emailAddress"u8);
                 writer.WriteStringValue(EmailAddress);
             }
             if (Optional.IsDefined(PhoneNumber))
             {
-                writer.WritePropertyName("phoneNumber");
+                writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteStringValue(PhoneNumber);
             }
             if (Optional.IsDefined(Country))
             {
-                writer.WritePropertyName("country");
+                writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
             writer.WriteEndObject();
@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceMonitorUserInfo DeserializeDynatraceMonitorUserInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> firstName = default;
             Optional<string> lastName = default;
             Optional<string> emailAddress = default;
@@ -52,27 +56,27 @@ namespace Azure.ResourceManager.Dynatrace.Models
             Optional<string> country = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("firstName"))
+                if (property.NameEquals("firstName"u8))
                 {
                     firstName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastName"))
+                if (property.NameEquals("lastName"u8))
                 {
                     lastName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("emailAddress"))
+                if (property.NameEquals("emailAddress"u8))
                 {
                     emailAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phoneNumber"))
+                if (property.NameEquals("phoneNumber"u8))
                 {
                     phoneNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("country"))
+                if (property.NameEquals("country"u8))
                 {
                     country = property.Value.GetString();
                     continue;

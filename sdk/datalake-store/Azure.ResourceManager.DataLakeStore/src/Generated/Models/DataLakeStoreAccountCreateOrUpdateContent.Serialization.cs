@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -30,29 +30,29 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultGroup))
             {
-                writer.WritePropertyName("defaultGroup");
+                writer.WritePropertyName("defaultGroup"u8);
                 writer.WriteStringValue(DefaultGroup);
             }
             if (Optional.IsDefined(EncryptionConfig))
             {
-                writer.WritePropertyName("encryptionConfig");
+                writer.WritePropertyName("encryptionConfig"u8);
                 writer.WriteObjectValue(EncryptionConfig);
             }
             if (Optional.IsDefined(EncryptionState))
             {
-                writer.WritePropertyName("encryptionState");
+                writer.WritePropertyName("encryptionState"u8);
                 writer.WriteStringValue(EncryptionState.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(FirewallRules))
             {
-                writer.WritePropertyName("firewallRules");
+                writer.WritePropertyName("firewallRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             }
             if (Optional.IsCollectionDefined(VirtualNetworkRules))
             {
-                writer.WritePropertyName("virtualNetworkRules");
+                writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
@@ -72,17 +72,17 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             }
             if (Optional.IsDefined(FirewallState))
             {
-                writer.WritePropertyName("firewallState");
+                writer.WritePropertyName("firewallState"u8);
                 writer.WriteStringValue(FirewallState.Value.ToSerialString());
             }
             if (Optional.IsDefined(FirewallAllowAzureIPs))
             {
-                writer.WritePropertyName("firewallAllowAzureIps");
+                writer.WritePropertyName("firewallAllowAzureIps"u8);
                 writer.WriteStringValue(FirewallAllowAzureIPs.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(TrustedIdProviders))
             {
-                writer.WritePropertyName("trustedIdProviders");
+                writer.WritePropertyName("trustedIdProviders"u8);
                 writer.WriteStartArray();
                 foreach (var item in TrustedIdProviders)
                 {
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             }
             if (Optional.IsDefined(TrustedIdProviderState))
             {
-                writer.WritePropertyName("trustedIdProviderState");
+                writer.WritePropertyName("trustedIdProviderState"u8);
                 writer.WriteStringValue(TrustedIdProviderState.Value.ToSerialString());
             }
             if (Optional.IsDefined(NewTier))
             {
-                writer.WritePropertyName("newTier");
+                writer.WritePropertyName("newTier"u8);
                 writer.WriteStringValue(NewTier.Value.ToSerialString());
             }
             writer.WriteEndObject();

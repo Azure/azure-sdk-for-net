@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
-    /// <summary> A class representing the EdgeOrderItem data model. </summary>
+    /// <summary>
+    /// A class representing the EdgeOrderItem data model.
+    /// Represents order item contract
+    /// </summary>
     public partial class EdgeOrderItemData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of EdgeOrderItemData. </summary>

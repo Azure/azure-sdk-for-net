@@ -22,10 +22,10 @@ namespace Azure.AI.AnomalyDetector
 
         public static ModelStatus ToModelStatus(this string value)
         {
-            if (string.Equals(value, "CREATED", StringComparison.InvariantCultureIgnoreCase)) return ModelStatus.Created;
-            if (string.Equals(value, "RUNNING", StringComparison.InvariantCultureIgnoreCase)) return ModelStatus.Running;
-            if (string.Equals(value, "READY", StringComparison.InvariantCultureIgnoreCase)) return ModelStatus.Ready;
-            if (string.Equals(value, "FAILED", StringComparison.InvariantCultureIgnoreCase)) return ModelStatus.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CREATED")) return ModelStatus.Created;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RUNNING")) return ModelStatus.Running;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "READY")) return ModelStatus.Ready;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FAILED")) return ModelStatus.Failed;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ModelStatus value.");
         }
     }

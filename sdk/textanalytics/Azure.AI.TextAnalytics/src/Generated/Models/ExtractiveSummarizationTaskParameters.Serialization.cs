@@ -18,27 +18,27 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SentenceCount))
             {
-                writer.WritePropertyName("sentenceCount");
+                writer.WritePropertyName("sentenceCount"u8);
                 writer.WriteNumberValue(SentenceCount.Value);
             }
             if (Optional.IsDefined(SortBy))
             {
-                writer.WritePropertyName("sortBy");
+                writer.WritePropertyName("sortBy"u8);
                 writer.WriteStringValue(SortBy.Value.ToString());
             }
             if (Optional.IsDefined(StringIndexType))
             {
-                writer.WritePropertyName("stringIndexType");
+                writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
             }
             if (Optional.IsDefined(ModelVersion))
             {
-                writer.WritePropertyName("modelVersion");
+                writer.WritePropertyName("modelVersion"u8);
                 writer.WriteStringValue(ModelVersion);
             }
             if (Optional.IsDefined(LoggingOptOut))
             {
-                writer.WritePropertyName("loggingOptOut");
+                writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
             }
             writer.WriteEndObject();
@@ -46,6 +46,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static ExtractiveSummarizationTaskParameters DeserializeExtractiveSummarizationTaskParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> sentenceCount = default;
             Optional<SummarySentencesOrder> sortBy = default;
             Optional<StringIndexType> stringIndexType = default;
@@ -53,7 +57,7 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<bool> loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sentenceCount"))
+                if (property.NameEquals("sentenceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +67,7 @@ namespace Azure.AI.TextAnalytics.Models
                     sentenceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sortBy"))
+                if (property.NameEquals("sortBy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +77,7 @@ namespace Azure.AI.TextAnalytics.Models
                     sortBy = new SummarySentencesOrder(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("stringIndexType"))
+                if (property.NameEquals("stringIndexType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,12 +87,12 @@ namespace Azure.AI.TextAnalytics.Models
                     stringIndexType = new StringIndexType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("modelVersion"))
+                if (property.NameEquals("modelVersion"u8))
                 {
                     modelVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("loggingOptOut"))
+                if (property.NameEquals("loggingOptOut"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

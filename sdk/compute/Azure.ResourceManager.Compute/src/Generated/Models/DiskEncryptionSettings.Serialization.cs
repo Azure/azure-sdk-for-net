@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DiskEncryptionKey))
             {
-                writer.WritePropertyName("diskEncryptionKey");
+                writer.WritePropertyName("diskEncryptionKey"u8);
                 writer.WriteObjectValue(DiskEncryptionKey);
             }
             if (Optional.IsDefined(KeyEncryptionKey))
             {
-                writer.WritePropertyName("keyEncryptionKey");
+                writer.WritePropertyName("keyEncryptionKey"u8);
                 writer.WriteObjectValue(KeyEncryptionKey);
             }
             if (Optional.IsDefined(Enabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
             writer.WriteEndObject();
@@ -35,12 +35,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DiskEncryptionSettings DeserializeDiskEncryptionSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<KeyVaultSecretReference> diskEncryptionKey = default;
             Optional<KeyVaultKeyReference> keyEncryptionKey = default;
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskEncryptionKey"))
+                if (property.NameEquals("diskEncryptionKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
                     diskEncryptionKey = KeyVaultSecretReference.DeserializeKeyVaultSecretReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("keyEncryptionKey"))
+                if (property.NameEquals("keyEncryptionKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
                     keyEncryptionKey = KeyVaultKeyReference.DeserializeKeyVaultKeyReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -36,6 +36,8 @@ namespace Azure.ResourceManager.Hci
 
         private readonly ClientDiagnostics _hciClusterClustersClientDiagnostics;
         private readonly ClustersRestOperations _hciClusterClustersRestClient;
+        private readonly ClientDiagnostics _offerClientDiagnostics;
+        private readonly OffersRestOperations _offerRestClient;
         private readonly HciClusterData _data;
 
         /// <summary> Initializes a new instance of the <see cref="HciClusterResource"/> class for mocking. </summary>
@@ -60,6 +62,9 @@ namespace Azure.ResourceManager.Hci
             _hciClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string hciClusterClustersApiVersion);
             _hciClusterClustersRestClient = new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hciClusterClustersApiVersion);
+            _offerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", OfferResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(OfferResource.ResourceType, out string offerApiVersion);
+            _offerRestClient = new OffersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, offerApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -140,6 +145,119 @@ namespace Azure.ResourceManager.Hci
         public virtual Response<ArcSettingResource> GetArcSetting(string arcSettingName, CancellationToken cancellationToken = default)
         {
             return GetArcSettings().Get(arcSettingName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PublisherResources in the HciCluster. </summary>
+        /// <returns> An object representing collection of PublisherResources and their operations over a PublisherResource. </returns>
+        public virtual PublisherCollection GetPublishers()
+        {
+            return GetCachedClient(Client => new PublisherCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get Publisher resource details of HCI Cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Publishers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="publisherName"> The name of the publisher available within HCI cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PublisherResource>> GetPublisherAsync(string publisherName, CancellationToken cancellationToken = default)
+        {
+            return await GetPublishers().GetAsync(publisherName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get Publisher resource details of HCI Cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Publishers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="publisherName"> The name of the publisher available within HCI cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PublisherResource> GetPublisher(string publisherName, CancellationToken cancellationToken = default)
+        {
+            return GetPublishers().Get(publisherName, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a UpdateSummaryResource along with the instance operations that can be performed on it in the HciCluster. </summary>
+        /// <returns> Returns a <see cref="UpdateSummaryResource" /> object. </returns>
+        public virtual UpdateSummaryResource GetUpdateSummary()
+        {
+            return new UpdateSummaryResource(Client, Id.AppendChildResource("updateSummaries", "default"));
+        }
+
+        /// <summary> Gets a collection of UpdateResources in the HciCluster. </summary>
+        /// <returns> An object representing collection of UpdateResources and their operations over a UpdateResource. </returns>
+        public virtual UpdateCollection GetUpdates()
+        {
+            return GetCachedClient(Client => new UpdateCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get specified Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Updates_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="updateName"> The name of the Update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="updateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="updateName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<UpdateResource>> GetUpdateAsync(string updateName, CancellationToken cancellationToken = default)
+        {
+            return await GetUpdates().GetAsync(updateName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get specified Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Updates_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="updateName"> The name of the Update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="updateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="updateName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<UpdateResource> GetUpdate(string updateName, CancellationToken cancellationToken = default)
+        {
+            return GetUpdates().Get(updateName, cancellationToken);
         }
 
         /// <summary>
@@ -484,6 +602,128 @@ namespace Azure.ResourceManager.Hci
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Extends Software Assurance Benefit to a cluster
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/extendSoftwareAssuranceBenefit</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_ExtendSoftwareAssuranceBenefit</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Software Assurance Change Request Payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<HciClusterResource>> ExtendSoftwareAssuranceBenefitAsync(WaitUntil waitUntil, SoftwareAssuranceChangeContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterResource.ExtendSoftwareAssuranceBenefit");
+            scope.Start();
+            try
+            {
+                var response = await _hciClusterClustersRestClient.ExtendSoftwareAssuranceBenefitAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new HciArmOperation<HciClusterResource>(new HciClusterOperationSource(Client), _hciClusterClustersClientDiagnostics, Pipeline, _hciClusterClustersRestClient.CreateExtendSoftwareAssuranceBenefitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Extends Software Assurance Benefit to a cluster
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/extendSoftwareAssuranceBenefit</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_ExtendSoftwareAssuranceBenefit</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Software Assurance Change Request Payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<HciClusterResource> ExtendSoftwareAssuranceBenefit(WaitUntil waitUntil, SoftwareAssuranceChangeContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterResource.ExtendSoftwareAssuranceBenefit");
+            scope.Start();
+            try
+            {
+                var response = _hciClusterClustersRestClient.ExtendSoftwareAssuranceBenefit(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new HciArmOperation<HciClusterResource>(new HciClusterOperationSource(Client), _hciClusterClustersClientDiagnostics, Pipeline, _hciClusterClustersRestClient.CreateExtendSoftwareAssuranceBenefitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List Offers available across publishers for the HCI Cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/offers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Offers_ListByCluster</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="OfferResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OfferResource> GetOffersAsync(string expand = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _offerRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _offerRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OfferResource(Client, OfferData.DeserializeOfferData(e)), _offerClientDiagnostics, Pipeline, "HciClusterResource.GetOffers", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List Offers available across publishers for the HCI Cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/offers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Offers_ListByCluster</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="OfferResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OfferResource> GetOffers(string expand = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _offerRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _offerRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OfferResource(Client, OfferData.DeserializeOfferData(e)), _offerClientDiagnostics, Pipeline, "HciClusterResource.GetOffers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

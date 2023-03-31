@@ -15,21 +15,25 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("direction");
+            writer.WritePropertyName("direction"u8);
             writer.WriteStringValue(Direction.ToString());
-            writer.WritePropertyName("protocol");
+            writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol);
-            writer.WritePropertyName("source");
+            writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source);
-            writer.WritePropertyName("destination");
+            writer.WritePropertyName("destination"u8);
             writer.WriteStringValue(Destination);
-            writer.WritePropertyName("destinationPort");
+            writer.WritePropertyName("destinationPort"u8);
             writer.WriteStringValue(DestinationPort);
             writer.WriteEndObject();
         }
 
         internal static NetworkConfigurationDiagnosticProfile DeserializeNetworkConfigurationDiagnosticProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             NetworkTrafficDirection direction = default;
             string protocol = default;
             string source = default;
@@ -37,27 +41,27 @@ namespace Azure.ResourceManager.Network.Models
             string destinationPort = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("direction"))
+                if (property.NameEquals("direction"u8))
                 {
                     direction = new NetworkTrafficDirection(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("protocol"))
+                if (property.NameEquals("protocol"u8))
                 {
                     protocol = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     source = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("destination"))
+                if (property.NameEquals("destination"u8))
                 {
                     destination = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("destinationPort"))
+                if (property.NameEquals("destinationPort"u8))
                 {
                     destinationPort = property.Value.GetString();
                     continue;

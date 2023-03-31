@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("ruleId");
+            writer.WritePropertyName("ruleId"u8);
             writer.WriteStringValue(RuleId);
             if (Optional.IsDefined(EnabledState))
             {
-                writer.WritePropertyName("enabledState");
+                writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
             if (Optional.IsDefined(Action))
             {
-                writer.WritePropertyName("action");
+                writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
             writer.WriteEndObject();
@@ -32,17 +32,21 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ManagedRuleOverrideSetting DeserializeManagedRuleOverrideSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string ruleId = default;
             Optional<ManagedRuleSetupState> enabledState = default;
             Optional<OverrideActionType> action = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ruleId"))
+                if (property.NameEquals("ruleId"u8))
                 {
                     ruleId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enabledState"))
+                if (property.NameEquals("enabledState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     enabledState = new ManagedRuleSetupState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

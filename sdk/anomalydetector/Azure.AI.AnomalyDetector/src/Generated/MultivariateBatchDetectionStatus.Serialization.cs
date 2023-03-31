@@ -22,10 +22,10 @@ namespace Azure.AI.AnomalyDetector
 
         public static MultivariateBatchDetectionStatus ToMultivariateBatchDetectionStatus(this string value)
         {
-            if (string.Equals(value, "CREATED", StringComparison.InvariantCultureIgnoreCase)) return MultivariateBatchDetectionStatus.Created;
-            if (string.Equals(value, "RUNNING", StringComparison.InvariantCultureIgnoreCase)) return MultivariateBatchDetectionStatus.Running;
-            if (string.Equals(value, "READY", StringComparison.InvariantCultureIgnoreCase)) return MultivariateBatchDetectionStatus.Ready;
-            if (string.Equals(value, "FAILED", StringComparison.InvariantCultureIgnoreCase)) return MultivariateBatchDetectionStatus.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CREATED")) return MultivariateBatchDetectionStatus.Created;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RUNNING")) return MultivariateBatchDetectionStatus.Running;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "READY")) return MultivariateBatchDetectionStatus.Ready;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FAILED")) return MultivariateBatchDetectionStatus.Failed;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MultivariateBatchDetectionStatus value.");
         }
     }

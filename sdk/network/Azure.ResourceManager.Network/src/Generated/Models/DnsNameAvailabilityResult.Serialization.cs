@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static DnsNameAvailabilityResult DeserializeDnsNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> available = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("available"))
+                if (property.NameEquals("available"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

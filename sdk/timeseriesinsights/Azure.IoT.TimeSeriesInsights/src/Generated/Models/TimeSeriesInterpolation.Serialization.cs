@@ -17,12 +17,12 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
             if (Optional.IsDefined(Boundary))
             {
-                writer.WritePropertyName("boundary");
+                writer.WritePropertyName("boundary"u8);
                 writer.WriteObjectValue(Boundary);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.IoT.TimeSeriesInsights
 
         internal static TimeSeriesInterpolation DeserializeTimeSeriesInterpolation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<InterpolationKind> kind = default;
             Optional<InterpolationBoundary> boundary = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     kind = new InterpolationKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("boundary"))
+                if (property.NameEquals("boundary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

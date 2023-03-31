@@ -14,11 +14,15 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static JWK DeserializeJWK(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<JWKHeader> jwk = default;
             Optional<string> alg = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jwk"))
+                if (property.NameEquals("jwk"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +32,7 @@ namespace Azure.Containers.ContainerRegistry
                     jwk = JWKHeader.DeserializeJWKHeader(property.Value);
                     continue;
                 }
-                if (property.NameEquals("alg"))
+                if (property.NameEquals("alg"u8))
                 {
                     alg = property.Value.GetString();
                     continue;

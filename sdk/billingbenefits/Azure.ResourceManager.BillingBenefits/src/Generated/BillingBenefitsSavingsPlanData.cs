@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BillingBenefits
 {
-    /// <summary> A class representing the BillingBenefitsSavingsPlan data model. </summary>
+    /// <summary>
+    /// A class representing the BillingBenefitsSavingsPlan data model.
+    /// Savings plan
+    /// </summary>
     public partial class BillingBenefitsSavingsPlanData : ResourceData
     {
         /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanData. </summary>

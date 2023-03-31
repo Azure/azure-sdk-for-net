@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Extension))
             {
-                writer.WritePropertyName("extension");
+                writer.WritePropertyName("extension"u8);
                 writer.WriteStringValue(Extension);
             }
             if (Optional.IsDefined(FilePath))
             {
-                writer.WritePropertyName("filePath");
+                writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
             if (Optional.IsDefined(MediaType))
             {
-                writer.WritePropertyName("mediaType");
+                writer.WritePropertyName("mediaType"u8);
                 writer.WriteStringValue(MediaType);
             }
             writer.WriteEndObject();
@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ProjectFileProperties DeserializeProjectFileProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> extension = default;
             Optional<string> filePath = default;
             Optional<DateTimeOffset> lastModified = default;
@@ -43,17 +47,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<long> size = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("extension"))
+                if (property.NameEquals("extension"u8))
                 {
                     extension = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filePath"))
+                if (property.NameEquals("filePath"u8))
                 {
                     filePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastModified"))
+                if (property.NameEquals("lastModified"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,12 +67,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     lastModified = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("mediaType"))
+                if (property.NameEquals("mediaType"u8))
                 {
                     mediaType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("size"))
+                if (property.NameEquals("size"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

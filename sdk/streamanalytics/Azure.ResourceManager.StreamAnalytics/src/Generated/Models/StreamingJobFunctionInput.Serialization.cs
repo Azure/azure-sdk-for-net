@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DataType))
             {
-                writer.WritePropertyName("dataType");
+                writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType);
             }
             if (Optional.IsDefined(IsConfigurationParameter))
             {
                 if (IsConfigurationParameter != null)
                 {
-                    writer.WritePropertyName("isConfigurationParameter");
+                    writer.WritePropertyName("isConfigurationParameter"u8);
                     writer.WriteBooleanValue(IsConfigurationParameter.Value);
                 }
                 else
@@ -37,16 +37,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamingJobFunctionInput DeserializeStreamingJobFunctionInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dataType = default;
             Optional<bool?> isConfigurationParameter = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataType"))
+                if (property.NameEquals("dataType"u8))
                 {
                     dataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isConfigurationParameter"))
+                if (property.NameEquals("isConfigurationParameter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

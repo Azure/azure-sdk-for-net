@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static PolicyAssignmentSummary DeserializePolicyAssignmentSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> policyAssignmentId = default;
             Optional<ResourceIdentifier> policySetDefinitionId = default;
             Optional<PolicySummaryResults> results = default;
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<IReadOnlyList<PolicyGroupSummary>> policyGroups = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("policyAssignmentId"))
+                if (property.NameEquals("policyAssignmentId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +36,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     policyAssignmentId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policySetDefinitionId"))
+                if (property.NameEquals("policySetDefinitionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     policySetDefinitionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("results"))
+                if (property.NameEquals("results"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value);
                     continue;
                 }
-                if (property.NameEquals("policyDefinitions"))
+                if (property.NameEquals("policyDefinitions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +71,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     policyDefinitions = array;
                     continue;
                 }
-                if (property.NameEquals("policyGroups"))
+                if (property.NameEquals("policyGroups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

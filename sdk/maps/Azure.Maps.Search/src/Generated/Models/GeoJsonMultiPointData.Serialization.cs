@@ -16,10 +16,15 @@ namespace Azure.Maps.Search.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("coordinates");
+            writer.WritePropertyName("coordinates"u8);
             writer.WriteStartArray();
             foreach (var item in Coordinates)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteStartArray();
                 foreach (var item0 in item)
                 {
@@ -33,20 +38,31 @@ namespace Azure.Maps.Search.Models
 
         internal static GeoJsonMultiPointData DeserializeGeoJsonMultiPointData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<IList<double>> coordinates = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("coordinates"))
+                if (property.NameEquals("coordinates"u8))
                 {
                     List<IList<double>> array = new List<IList<double>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        List<double> array0 = new List<double>();
-                        foreach (var item0 in item.EnumerateArray())
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array0.Add(item0.GetDouble());
+                            array.Add(null);
                         }
-                        array.Add(array0);
+                        else
+                        {
+                            List<double> array0 = new List<double>();
+                            foreach (var item0 in item.EnumerateArray())
+                            {
+                                array0.Add(item0.GetDouble());
+                            }
+                            array.Add(array0);
+                        }
                     }
                     coordinates = array;
                     continue;

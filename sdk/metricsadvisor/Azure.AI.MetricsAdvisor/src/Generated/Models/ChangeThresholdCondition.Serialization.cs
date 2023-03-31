@@ -15,21 +15,25 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("changePercentage");
+            writer.WritePropertyName("changePercentage"u8);
             writer.WriteNumberValue(ChangePercentage);
-            writer.WritePropertyName("shiftPoint");
+            writer.WritePropertyName("shiftPoint"u8);
             writer.WriteNumberValue(ShiftPoint);
-            writer.WritePropertyName("withinRange");
+            writer.WritePropertyName("withinRange"u8);
             writer.WriteBooleanValue(WithinRange);
-            writer.WritePropertyName("anomalyDetectorDirection");
+            writer.WritePropertyName("anomalyDetectorDirection"u8);
             writer.WriteStringValue(AnomalyDetectorDirection.ToString());
-            writer.WritePropertyName("suppressCondition");
+            writer.WritePropertyName("suppressCondition"u8);
             writer.WriteObjectValue(SuppressCondition);
             writer.WriteEndObject();
         }
 
         internal static ChangeThresholdCondition DeserializeChangeThresholdCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             double changePercentage = default;
             int shiftPoint = default;
             bool withinRange = default;
@@ -37,27 +41,27 @@ namespace Azure.AI.MetricsAdvisor.Models
             SuppressCondition suppressCondition = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("changePercentage"))
+                if (property.NameEquals("changePercentage"u8))
                 {
                     changePercentage = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("shiftPoint"))
+                if (property.NameEquals("shiftPoint"u8))
                 {
                     shiftPoint = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("withinRange"))
+                if (property.NameEquals("withinRange"u8))
                 {
                     withinRange = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("anomalyDetectorDirection"))
+                if (property.NameEquals("anomalyDetectorDirection"u8))
                 {
                     anomalyDetectorDirection = new AnomalyDetectorDirection(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("suppressCondition"))
+                if (property.NameEquals("suppressCondition"u8))
                 {
                     suppressCondition = Models.SuppressCondition.DeserializeSuppressCondition(property.Value);
                     continue;

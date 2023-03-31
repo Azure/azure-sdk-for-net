@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EncryptionAtRestType))
             {
-                writer.WritePropertyName("encryptionAtRestType");
+                writer.WritePropertyName("encryptionAtRestType"u8);
                 writer.WriteStringValue(EncryptionAtRestType.Value.ToString());
             }
             if (Optional.IsDefined(KeyUri))
             {
-                writer.WritePropertyName("keyUri");
+                writer.WritePropertyName("keyUri"u8);
                 writer.WriteStringValue(KeyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SubscriptionId))
             {
-                writer.WritePropertyName("subscriptionId");
+                writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
             if (Optional.IsDefined(LastUpdateStatus))
             {
-                writer.WritePropertyName("lastUpdateStatus");
+                writer.WritePropertyName("lastUpdateStatus"u8);
                 writer.WriteStringValue(LastUpdateStatus.Value.ToString());
             }
             if (Optional.IsDefined(InfrastructureEncryptionState))
             {
-                writer.WritePropertyName("infrastructureEncryptionState");
+                writer.WritePropertyName("infrastructureEncryptionState"u8);
                 writer.WriteStringValue(InfrastructureEncryptionState.Value.ToString());
             }
             writer.WriteEndObject();
@@ -46,24 +46,28 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupResourceEncryptionConfig DeserializeBackupResourceEncryptionConfig(JsonElement element)
         {
-            Optional<EncryptionAtRestType> encryptionAtRestType = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<BackupEncryptionAtRestType> encryptionAtRestType = default;
             Optional<Uri> keyUri = default;
             Optional<string> subscriptionId = default;
             Optional<LastUpdateStatus> lastUpdateStatus = default;
             Optional<InfrastructureEncryptionState> infrastructureEncryptionState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("encryptionAtRestType"))
+                if (property.NameEquals("encryptionAtRestType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    encryptionAtRestType = new EncryptionAtRestType(property.Value.GetString());
+                    encryptionAtRestType = new BackupEncryptionAtRestType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyUri"))
+                if (property.NameEquals("keyUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,12 +77,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     keyUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastUpdateStatus"))
+                if (property.NameEquals("lastUpdateStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     lastUpdateStatus = new LastUpdateStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("infrastructureEncryptionState"))
+                if (property.NameEquals("infrastructureEncryptionState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

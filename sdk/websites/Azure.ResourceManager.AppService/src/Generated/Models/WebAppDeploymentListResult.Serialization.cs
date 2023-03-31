@@ -16,11 +16,15 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static WebAppDeploymentListResult DeserializeWebAppDeploymentListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<WebAppDeploymentData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<WebAppDeploymentData> array = new List<WebAppDeploymentData>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

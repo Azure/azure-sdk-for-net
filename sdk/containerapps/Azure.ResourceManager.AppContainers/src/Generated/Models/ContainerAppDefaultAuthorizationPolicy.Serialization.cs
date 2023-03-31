@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AllowedPrincipals))
             {
-                writer.WritePropertyName("allowedPrincipals");
+                writer.WritePropertyName("allowedPrincipals"u8);
                 writer.WriteObjectValue(AllowedPrincipals);
             }
             if (Optional.IsCollectionDefined(AllowedApplications))
             {
-                writer.WritePropertyName("allowedApplications");
+                writer.WritePropertyName("allowedApplications"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedApplications)
                 {
@@ -36,11 +36,15 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppDefaultAuthorizationPolicy DeserializeContainerAppDefaultAuthorizationPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppAllowedPrincipals> allowedPrincipals = default;
             Optional<IList<string>> allowedApplications = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowedPrincipals"))
+                if (property.NameEquals("allowedPrincipals"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     allowedPrincipals = ContainerAppAllowedPrincipals.DeserializeContainerAppAllowedPrincipals(property.Value);
                     continue;
                 }
-                if (property.NameEquals("allowedApplications"))
+                if (property.NameEquals("allowedApplications"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

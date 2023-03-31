@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PropertyJPath))
             {
-                writer.WritePropertyName("propertyJPath");
+                writer.WritePropertyName("propertyJPath"u8);
                 writer.WriteStringValue(PropertyJPath);
             }
             if (Optional.IsDefined(PropertyType))
             {
-                writer.WritePropertyName("propertyType");
+                writer.WritePropertyName("propertyType"u8);
                 writer.WriteStringValue(PropertyType.Value.ToString());
             }
             if (Optional.IsDefined(ExpectedValue))
             {
-                writer.WritePropertyName("expectedValue");
+                writer.WritePropertyName("expectedValue"u8);
                 writer.WriteStringValue(ExpectedValue);
             }
             if (Optional.IsDefined(Operator))
             {
-                writer.WritePropertyName("operator");
+                writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToString());
             }
             writer.WriteEndObject();
@@ -40,18 +40,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityAutomationTriggeringRule DeserializeSecurityAutomationTriggeringRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> propertyJPath = default;
             Optional<AutomationTriggeringRulePropertyType> propertyType = default;
             Optional<string> expectedValue = default;
             Optional<AutomationTriggeringRuleOperator> @operator = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("propertyJPath"))
+                if (property.NameEquals("propertyJPath"u8))
                 {
                     propertyJPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("propertyType"))
+                if (property.NameEquals("propertyType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,12 +65,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     propertyType = new AutomationTriggeringRulePropertyType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("expectedValue"))
+                if (property.NameEquals("expectedValue"u8))
                 {
                     expectedValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operator"))
+                if (property.NameEquals("operator"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

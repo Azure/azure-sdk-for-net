@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxDeliveryAttempts))
             {
-                writer.WritePropertyName("maxDeliveryAttempts");
+                writer.WritePropertyName("maxDeliveryAttempts"u8);
                 writer.WriteNumberValue(MaxDeliveryAttempts.Value);
             }
             if (Optional.IsDefined(EventTimeToLiveInMinutes))
             {
-                writer.WritePropertyName("eventTimeToLiveInMinutes");
+                writer.WritePropertyName("eventTimeToLiveInMinutes"u8);
                 writer.WriteNumberValue(EventTimeToLiveInMinutes.Value);
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static EventSubscriptionRetryPolicy DeserializeEventSubscriptionRetryPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxDeliveryAttempts = default;
             Optional<int> eventTimeToLiveInMinutes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxDeliveryAttempts"))
+                if (property.NameEquals("maxDeliveryAttempts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     maxDeliveryAttempts = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("eventTimeToLiveInMinutes"))
+                if (property.NameEquals("eventTimeToLiveInMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

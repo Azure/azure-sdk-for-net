@@ -17,17 +17,17 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             if (Optional.IsDefined(GroupCallId))
             {
-                writer.WritePropertyName("groupCallId");
+                writer.WritePropertyName("groupCallId"u8);
                 writer.WriteStringValue(GroupCallId);
             }
             if (Optional.IsDefined(ServerCallId))
             {
-                writer.WritePropertyName("serverCallId");
+                writer.WritePropertyName("serverCallId"u8);
                 writer.WriteStringValue(ServerCallId);
             }
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
             writer.WriteEndObject();

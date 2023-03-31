@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace Azure.Identity
 {
@@ -54,7 +54,6 @@ namespace Azure.Identity
     {
         private const string UnavailableErrorMessage = "EnvironmentCredential authentication unavailable. Environment variables are not fully configured. See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/environmentcredential/troubleshoot";
         private readonly CredentialPipeline _pipeline;
-        private readonly TokenCredentialOptions _options;
 
         internal TokenCredential Credential { get; }
 
@@ -75,53 +74,48 @@ namespace Azure.Identity
             : this(CredentialPipeline.GetInstance(options), options)
         { }
 
+        /// <summary>
+        /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
+        /// If the expected environment variables are not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
+        /// </summary>
+        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        public EnvironmentCredential(EnvironmentCredentialOptions options)
+            : this(CredentialPipeline.GetInstance(options), options)
+        { }
+
         internal EnvironmentCredential(CredentialPipeline pipeline, TokenCredentialOptions options = null)
         {
             _pipeline = pipeline;
-            _options = options ?? new TokenCredentialOptions();
+            options = options ?? new EnvironmentCredentialOptions();
 
-            string tenantId = EnvironmentVariables.TenantId;
-            string clientId = EnvironmentVariables.ClientId;
-            string clientSecret = EnvironmentVariables.ClientSecret;
-            string clientCertificatePath = EnvironmentVariables.ClientCertificatePath;
-            string clientCertificatePassword = EnvironmentVariables.ClientCertificatePassword;
-            string clientSendCertificateChain = EnvironmentVariables.ClientSendCertificateChain;
-            string username = EnvironmentVariables.Username;
-            string password = EnvironmentVariables.Password;
+            EnvironmentCredentialOptions envCredOptions = (options as EnvironmentCredentialOptions) ?? options.Clone<EnvironmentCredentialOptions>();
 
-            // Since the AdditionallyAllowedTenantsCore is internal it cannot be set by the application.
-            // Currently this is only set by the DefaultAzureCredential where it will default to the value
-            // of EnvironmentVariables.AdditionallyAllowedTenants, but can also be altered by the application.
-            // In either case we don't want to alter it.
-            if (_options.AdditionallyAllowedTenantsCore.Count == 0)
-            {
-                _options.AdditionallyAllowedTenantsCore = EnvironmentVariables.AdditionallyAllowedTenants;
-            }
+            string tenantId = envCredOptions.TenantId;
+            string clientId = envCredOptions.ClientId;
+            string clientSecret = envCredOptions.ClientSecret;
+            string clientCertificatePath = envCredOptions.ClientCertificatePath;
+            string clientCertificatePassword = envCredOptions.ClientCertificatePassword;
+            bool sendCertificateChain = envCredOptions.SendCertificateChain;
+            string username = envCredOptions.Username;
+            string password = envCredOptions.Password;
 
             if (!string.IsNullOrEmpty(tenantId) && !string.IsNullOrEmpty(clientId))
             {
                 if (!string.IsNullOrEmpty(clientSecret))
                 {
-                    Credential = new ClientSecretCredential(tenantId, clientId, clientSecret, _options, _pipeline, null);
+                    Credential = new ClientSecretCredential(tenantId, clientId, clientSecret, envCredOptions, _pipeline, null);
                 }
                 else if (!string.IsNullOrEmpty(clientCertificatePath))
                 {
-                    bool sendCertificateChain = !string.IsNullOrEmpty(clientSendCertificateChain) &&
-                        (clientSendCertificateChain == "1" || clientSendCertificateChain == "true");
+                    ClientCertificateCredentialOptions clientCertificateCredentialOptions = envCredOptions.Clone<ClientCertificateCredentialOptions>();
 
-                    ClientCertificateCredentialOptions clientCertificateCredentialOptions = new ClientCertificateCredentialOptions
-                    {
-                        AuthorityHost = _options.AuthorityHost,
-                        IsLoggingPIIEnabled = _options.IsLoggingPIIEnabled,
-                        Transport = _options.Transport,
-                        AdditionallyAllowedTenantsCore = new List<string>(_options.AdditionallyAllowedTenantsCore),
-                        SendCertificateChain = sendCertificateChain
-                    };
+                    clientCertificateCredentialOptions.SendCertificateChain = sendCertificateChain;
+
                     Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, clientCertificatePassword, clientCertificateCredentialOptions, _pipeline, null);
                 }
                 else if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
                 {
-                    Credential = new UsernamePasswordCredential(username, password, tenantId, clientId, _options, _pipeline, null);
+                    Credential = new UsernamePasswordCredential(username, password, tenantId, clientId, envCredOptions, _pipeline, null);
                 }
             }
         }
@@ -185,7 +179,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                 throw scope.FailWrapAndThrow(e);
+                throw scope.FailWrapAndThrow(e);
             }
         }
     }

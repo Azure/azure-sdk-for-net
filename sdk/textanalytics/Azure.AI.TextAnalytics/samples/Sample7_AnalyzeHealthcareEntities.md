@@ -1,23 +1,25 @@
 # Analyzing healthcare entities
+
 This sample demonstrates how to analyze healthcare entities in one or more documents.
 
 ## Create a `TextAnalyticsClient`
-To create a new `TextAnalyticsClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create simply with an API key.
+
+To create a new `TextAnalyticsClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
 
 ```C# Snippet:CreateTextAnalyticsClient
-string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey));
+Uri endpoint = new("<endpoint>");
+AzureKeyCredential credential = new("<apiKey>");
+TextAnalyticsClient client = new(endpoint, credential);
 ```
 
 The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
 ## Perform text analysis on healthcare documents
-To analyze healthcare entities in multiple healthcare documents, call `StartAnalyzeHealthcareEntities` on the `TextAnalyticsClient` by passing the documents as an `IEnumerable<string>` parameter. This returns an `AnalyzeHealthcareEntitiesOperation`, which is a long-running operation that can be used to poll the service until the operation has completed and the results of the text analysis are available.
 
-```C# Snippet:TextAnalyticsAnalyzeHealthcareEntitiesConvenienceAsync
-// Get the documents.
-string document1 =
+To analyze healthcare entities in multiple healthcare documents, call `StartAnalyzeHealthcareEntities` on the `TextAnalyticsClient` by passing the documents as an `IEnumerable<string>` parameter. This returns an `AnalyzeHealthcareEntitiesOperation`.
+
+```C# Snippet:Sample7_AnalyzeHealthcareEntitiesConvenienceAsync_PerformOperation
+string documentA =
     "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM |"
     + " CORONARY ARTERY DISEASE | Signed | DIS |"
     + Environment.NewLine
@@ -35,43 +37,40 @@ string document1 =
     + " to the patient'sincreased symptoms and family history and history left main disease with total"
     + " occasional of his RCA was referred for revascularization with open heart surgery.";
 
-string document2 = "Prescribed 100mg ibuprofen, taken twice daily.";
+string documentB = "Prescribed 100mg ibuprofen, taken twice daily.";
 
-// Prepare the input of the text analysis operation.
-List<string> documentBatch = new()
+// Prepare the input of the text analysis operation. You can add multiple documents to this list and
+// perform the same operation on all of them simultaneously.
+List<string> batchedDocuments = new()
 {
-    document1,
-    document2
+    documentA,
+    documentB
 };
 
-// Start the text analysis operation.
-AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(documentBatch);
-
-await healthOperation.WaitForCompletionAsync();
-
-Console.WriteLine($"The operation has completed.");
-Console.WriteLine();
+// Perform the text analysis operation.
+AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchedDocuments);
+await operation.WaitForCompletionAsync();
 ```
 
-The `AnalyzeHealthcareEntitiesOperation` includes general information about the status of the operation, and it can be queried at any time:
+The `AnalyzeHealthcareEntitiesOperation` includes general information about the status of the long-running operation, and it can be queried at any time:
 
-```C# Snippet:TextAnalyticsSampleHealthcareOperationStatus
+```C# Snippet:Sample7_AnalyzeHealthcareEntitiesConvenienceAsync_ViewOperationStatus
 // View the operation status.
-Console.WriteLine($"Created On   : {healthOperation.CreatedOn}");
-Console.WriteLine($"Expires On   : {healthOperation.ExpiresOn}");
-Console.WriteLine($"Id           : {healthOperation.Id}");
-Console.WriteLine($"Status       : {healthOperation.Status}");
-Console.WriteLine($"Last Modified: {healthOperation.LastModified}");
+Console.WriteLine($"Created On   : {operation.CreatedOn}");
+Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
+Console.WriteLine($"Id           : {operation.Id}");
+Console.WriteLine($"Status       : {operation.Status}");
+Console.WriteLine($"Last Modified: {operation.LastModified}");
 Console.WriteLine();
 ```
 
 Once the long-running operation has completed, you can view the results of the text analysis, including any errors that might have occurred:
 
-```C# Snippet:TextAnalyticsSampleHealthcareConvenienceAsyncViewResults
+```C# Snippet:Sample7_AnalyzeHealthcareEntitiesConvenienceAsync_ViewResults
 // View the operation results.
-await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.Value)
+await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in operation.Value)
 {
-    Console.WriteLine($"Results of \"Healthcare\" Model, version: \"{documentsInPage.ModelVersion}\"");
+    Console.WriteLine($"Analyze Healthcare Entities, model version: \"{documentsInPage.ModelVersion}\"");
     Console.WriteLine();
 
     foreach (AnalyzeHealthcareEntitiesResult documentResult in documentsInPage)
@@ -79,7 +78,7 @@ await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in heal
         if (documentResult.HasError)
         {
             Console.WriteLine($"  Error!");
-            Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}.");
+            Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
             Console.WriteLine($"  Message: {documentResult.Error.Message}");
             continue;
         }
@@ -157,7 +156,7 @@ await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in heal
 }
 ```
 
-See the [README][README] of the Text Analytics client library for more information, including useful links and instructions.
+See the [README] of the Text Analytics client library for more information, including useful links and instructions.
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

@@ -13,7 +13,6 @@ using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.GuestConfiguration;
 using Azure.ResourceManager.GuestConfiguration.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.GuestConfiguration.Samples
 {
@@ -32,16 +31,15 @@ namespace Azure.ResourceManager.GuestConfiguration.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "mySubscriptionId";
-            string resourceGroupName = "myResourceGroupName";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this GuestConfigurationHcrpAssignmentResource
+            string subscriptionId = "mySubscriptionId";
+            string resourceGroupName = "myResourceGroupName";
             string machineName = "myMachineName";
-            GuestConfigurationHcrpAssignmentCollection collection = resourceGroupResource.GetGuestConfigurationHcrpAssignments(machineName);
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.HybridCompute/machines/{2}", subscriptionId, resourceGroupName, machineName));
+            GuestConfigurationHcrpAssignmentCollection collection = client.GetGuestConfigurationHcrpAssignments(scopeId);
 
             // invoke the operation
             string guestConfigurationAssignmentName = "NotInstalledApplicationForWindows";
@@ -93,16 +91,15 @@ Value = "NotePad,sql",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "mySubscriptionId";
-            string resourceGroupName = "myResourceGroupName";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this GuestConfigurationHcrpAssignmentResource
+            string subscriptionId = "mySubscriptionId";
+            string resourceGroupName = "myResourceGroupName";
             string machineName = "myMachineName";
-            GuestConfigurationHcrpAssignmentCollection collection = resourceGroupResource.GetGuestConfigurationHcrpAssignments(machineName);
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.HybridCompute/machines/{2}", subscriptionId, resourceGroupName, machineName));
+            GuestConfigurationHcrpAssignmentCollection collection = client.GetGuestConfigurationHcrpAssignments(scopeId);
 
             // invoke the operation
             string guestConfigurationAssignmentName = "SecureProtocol";
@@ -128,16 +125,15 @@ Value = "NotePad,sql",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "mySubscriptionId";
-            string resourceGroupName = "myResourceGroupName";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this GuestConfigurationHcrpAssignmentResource
+            string subscriptionId = "mySubscriptionId";
+            string resourceGroupName = "myResourceGroupName";
             string machineName = "myMachineName";
-            GuestConfigurationHcrpAssignmentCollection collection = resourceGroupResource.GetGuestConfigurationHcrpAssignments(machineName);
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.HybridCompute/machines/{2}", subscriptionId, resourceGroupName, machineName));
+            GuestConfigurationHcrpAssignmentCollection collection = client.GetGuestConfigurationHcrpAssignments(scopeId);
 
             // invoke the operation
             string guestConfigurationAssignmentName = "SecureProtocol";
@@ -159,16 +155,15 @@ Value = "NotePad,sql",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "mySubscriptionId";
-            string resourceGroupName = "myResourceGroupName";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this GuestConfigurationHcrpAssignmentResource
+            string subscriptionId = "mySubscriptionId";
+            string resourceGroupName = "myResourceGroupName";
             string machineName = "myMachineName";
-            GuestConfigurationHcrpAssignmentCollection collection = resourceGroupResource.GetGuestConfigurationHcrpAssignments(machineName);
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.HybridCompute/machines/{2}", subscriptionId, resourceGroupName, machineName));
+            GuestConfigurationHcrpAssignmentCollection collection = client.GetGuestConfigurationHcrpAssignments(scopeId);
 
             // invoke the operation and iterate over the result
             await foreach (GuestConfigurationHcrpAssignmentResource item in collection.GetAllAsync())

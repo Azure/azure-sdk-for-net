@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static CalculatePriceResultPropertiesPricingCurrencyTotal DeserializeCalculatePriceResultPropertiesPricingCurrencyTotal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> currencyCode = default;
             Optional<float> amount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("currencyCode"))
+                if (property.NameEquals("currencyCode"u8))
                 {
                     currencyCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("amount"))
+                if (property.NameEquals("amount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

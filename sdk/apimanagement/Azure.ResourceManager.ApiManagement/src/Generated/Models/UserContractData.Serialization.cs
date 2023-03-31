@@ -19,21 +19,21 @@ namespace Azure.ResourceManager.ApiManagement
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             if (Optional.IsDefined(Note))
             {
-                writer.WritePropertyName("note");
+                writer.WritePropertyName("note"u8);
                 writer.WriteStringValue(Note);
             }
             if (Optional.IsCollectionDefined(Identities))
             {
-                writer.WritePropertyName("identities");
+                writer.WritePropertyName("identities"u8);
                 writer.WriteStartArray();
                 foreach (var item in Identities)
                 {
@@ -43,22 +43,22 @@ namespace Azure.ResourceManager.ApiManagement
             }
             if (Optional.IsDefined(FirstName))
             {
-                writer.WritePropertyName("firstName");
+                writer.WritePropertyName("firstName"u8);
                 writer.WriteStringValue(FirstName);
             }
             if (Optional.IsDefined(LastName))
             {
-                writer.WritePropertyName("lastName");
+                writer.WritePropertyName("lastName"u8);
                 writer.WriteStringValue(LastName);
             }
             if (Optional.IsDefined(Email))
             {
-                writer.WritePropertyName("email");
+                writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
             if (Optional.IsDefined(RegistriesOn))
             {
-                writer.WritePropertyName("registrationDate");
+                writer.WritePropertyName("registrationDate"u8);
                 writer.WriteStringValue(RegistriesOn.Value, "O");
             }
             writer.WriteEndObject();
@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static UserContractData DeserializeUserContractData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -81,22 +85,22 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<IReadOnlyList<GroupContractProperties>> groups = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,7 +110,7 @@ namespace Azure.ResourceManager.ApiManagement
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -115,7 +119,7 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -125,12 +129,12 @@ namespace Azure.ResourceManager.ApiManagement
                             state = new ApiManagementUserState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("note"))
+                        if (property0.NameEquals("note"u8))
                         {
                             note = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("identities"))
+                        if (property0.NameEquals("identities"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -145,22 +149,22 @@ namespace Azure.ResourceManager.ApiManagement
                             identities = array;
                             continue;
                         }
-                        if (property0.NameEquals("firstName"))
+                        if (property0.NameEquals("firstName"u8))
                         {
                             firstName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastName"))
+                        if (property0.NameEquals("lastName"u8))
                         {
                             lastName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("email"))
+                        if (property0.NameEquals("email"u8))
                         {
                             email = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("registrationDate"))
+                        if (property0.NameEquals("registrationDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -170,7 +174,7 @@ namespace Azure.ResourceManager.ApiManagement
                             registrationDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("groups"))
+                        if (property0.NameEquals("groups"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

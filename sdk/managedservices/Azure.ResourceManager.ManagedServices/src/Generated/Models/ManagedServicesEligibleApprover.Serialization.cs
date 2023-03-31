@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.ManagedServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("principalId");
+            writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
             if (Optional.IsDefined(PrincipalIdDisplayName))
             {
-                writer.WritePropertyName("principalIdDisplayName");
+                writer.WritePropertyName("principalIdDisplayName"u8);
                 writer.WriteStringValue(PrincipalIdDisplayName);
             }
             writer.WriteEndObject();
@@ -28,16 +28,20 @@ namespace Azure.ResourceManager.ManagedServices.Models
 
         internal static ManagedServicesEligibleApprover DeserializeManagedServicesEligibleApprover(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Guid principalId = default;
             Optional<string> principalIdDisplayName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("principalId"))
+                if (property.NameEquals("principalId"u8))
                 {
                     principalId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("principalIdDisplayName"))
+                if (property.NameEquals("principalIdDisplayName"u8))
                 {
                     principalIdDisplayName = property.Value.GetString();
                     continue;

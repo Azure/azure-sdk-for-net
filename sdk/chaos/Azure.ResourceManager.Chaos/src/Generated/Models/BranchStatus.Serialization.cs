@@ -15,28 +15,32 @@ namespace Azure.ResourceManager.Chaos.Models
     {
         internal static BranchStatus DeserializeBranchStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> branchName = default;
             Optional<string> branchId = default;
             Optional<string> status = default;
             Optional<IReadOnlyList<ActionStatus>> actions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("branchName"))
+                if (property.NameEquals("branchName"u8))
                 {
                     branchName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("branchId"))
+                if (property.NameEquals("branchId"u8))
                 {
                     branchId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("actions"))
+                if (property.NameEquals("actions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

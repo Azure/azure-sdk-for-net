@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.NetApp.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Size))
             {
                 if (Size != null)
                 {
-                    writer.WritePropertyName("size");
+                    writer.WritePropertyName("size"u8);
                     writer.WriteNumberValue(Size.Value);
                 }
                 else
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             writer.WriteEndObject();

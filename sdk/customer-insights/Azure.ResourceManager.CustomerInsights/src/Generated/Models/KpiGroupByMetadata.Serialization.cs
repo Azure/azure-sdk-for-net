@@ -15,12 +15,16 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static KpiGroupByMetadata DeserializeKpiGroupByMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyDictionary<string, string>> displayName = default;
             Optional<string> fieldName = default;
             Optional<string> fieldType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,12 +39,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     displayName = dictionary;
                     continue;
                 }
-                if (property.NameEquals("fieldName"))
+                if (property.NameEquals("fieldName"u8))
                 {
                     fieldName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fieldType"))
+                if (property.NameEquals("fieldType"u8))
                 {
                     fieldType = property.Value.GetString();
                     continue;

@@ -15,11 +15,15 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static ContinentsResponse DeserializeContinentsResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ContinentsResponseContinentsItem>> continents = default;
             Optional<IReadOnlyList<ContinentsResponseCountryOrRegionsItem>> countryOrRegions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("continents"))
+                if (property.NameEquals("continents"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continents = array;
                     continue;
                 }
-                if (property.NameEquals("countryOrRegions"))
+                if (property.NameEquals("countryOrRegions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

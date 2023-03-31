@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TemplateRepositoryUri))
             {
-                writer.WritePropertyName("templateRepositoryUrl");
+                writer.WritePropertyName("templateRepositoryUrl"u8);
                 writer.WriteStringValue(TemplateRepositoryUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Owner))
             {
-                writer.WritePropertyName("owner");
+                writer.WritePropertyName("owner"u8);
                 writer.WriteStringValue(Owner);
             }
             if (Optional.IsDefined(RepositoryName))
             {
-                writer.WritePropertyName("repositoryName");
+                writer.WritePropertyName("repositoryName"u8);
                 writer.WriteStringValue(RepositoryName);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(IsPrivate))
             {
-                writer.WritePropertyName("isPrivate");
+                writer.WritePropertyName("isPrivate"u8);
                 writer.WriteBooleanValue(IsPrivate.Value);
             }
             writer.WriteEndObject();
@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static StaticSiteTemplate DeserializeStaticSiteTemplate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> templateRepositoryUrl = default;
             Optional<string> owner = default;
             Optional<string> repositoryName = default;
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> isPrivate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("templateRepositoryUrl"))
+                if (property.NameEquals("templateRepositoryUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,22 +67,22 @@ namespace Azure.ResourceManager.AppService.Models
                     templateRepositoryUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("owner"))
+                if (property.NameEquals("owner"u8))
                 {
                     owner = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("repositoryName"))
+                if (property.NameEquals("repositoryName"u8))
                 {
                     repositoryName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isPrivate"))
+                if (property.NameEquals("isPrivate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

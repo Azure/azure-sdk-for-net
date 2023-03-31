@@ -32,4 +32,4 @@
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
     <Reference Include="System.Transactions" />
   </ItemGroup>
-</Project>  
+</Project>

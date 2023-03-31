@@ -15,18 +15,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static NetworkProperties DeserializeNetworkProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fabricType = default;
             Optional<IReadOnlyList<Subnet>> subnets = default;
             Optional<string> friendlyName = default;
             Optional<string> networkType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fabricType"))
+                if (property.NameEquals("fabricType"u8))
                 {
                     fabricType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subnets"))
+                if (property.NameEquals("subnets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,12 +45,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     subnets = array;
                     continue;
                 }
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkType"))
+                if (property.NameEquals("networkType"u8))
                 {
                     networkType = property.Value.GetString();
                     continue;

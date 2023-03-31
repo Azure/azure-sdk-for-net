@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AvailabilityGroupName))
             {
-                writer.WritePropertyName("availabilityGroupName");
+                writer.WritePropertyName("availabilityGroupName"u8);
                 writer.WriteStringValue(AvailabilityGroupName);
             }
             if (Optional.IsCollectionDefined(LoadBalancerConfigurations))
             {
-                writer.WritePropertyName("loadBalancerConfigurations");
+                writer.WritePropertyName("loadBalancerConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerConfigurations)
                 {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             }
             if (Optional.IsCollectionDefined(MultiSubnetIPConfigurations))
             {
-                writer.WritePropertyName("multiSubnetIpConfigurations");
+                writer.WritePropertyName("multiSubnetIpConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in MultiSubnetIPConfigurations)
                 {
@@ -47,17 +47,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             }
             if (Optional.IsDefined(CreateDefaultAvailabilityGroupIfNotExist))
             {
-                writer.WritePropertyName("createDefaultAvailabilityGroupIfNotExist");
+                writer.WritePropertyName("createDefaultAvailabilityGroupIfNotExist"u8);
                 writer.WriteBooleanValue(CreateDefaultAvailabilityGroupIfNotExist.Value);
             }
             if (Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port");
+                writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
             if (Optional.IsDefined(AvailabilityGroupConfiguration))
             {
-                writer.WritePropertyName("availabilityGroupConfiguration");
+                writer.WritePropertyName("availabilityGroupConfiguration"u8);
                 writer.WriteObjectValue(AvailabilityGroupConfiguration);
             }
             writer.WriteEndObject();
@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         internal static AvailabilityGroupListenerData DeserializeAvailabilityGroupListenerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -79,22 +83,22 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             Optional<AvailabilityGroupConfiguration> availabilityGroupConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,17 +117,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("availabilityGroupName"))
+                        if (property0.NameEquals("availabilityGroupName"u8))
                         {
                             availabilityGroupName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("loadBalancerConfigurations"))
+                        if (property0.NameEquals("loadBalancerConfigurations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -138,7 +142,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             loadBalancerConfigurations = array;
                             continue;
                         }
-                        if (property0.NameEquals("multiSubnetIpConfigurations"))
+                        if (property0.NameEquals("multiSubnetIpConfigurations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -153,7 +157,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             multiSubnetIPConfigurations = array;
                             continue;
                         }
-                        if (property0.NameEquals("createDefaultAvailabilityGroupIfNotExist"))
+                        if (property0.NameEquals("createDefaultAvailabilityGroupIfNotExist"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -163,7 +167,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             createDefaultAvailabilityGroupIfNotExist = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("port"))
+                        if (property0.NameEquals("port"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -173,7 +177,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             port = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("availabilityGroupConfiguration"))
+                        if (property0.NameEquals("availabilityGroupConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

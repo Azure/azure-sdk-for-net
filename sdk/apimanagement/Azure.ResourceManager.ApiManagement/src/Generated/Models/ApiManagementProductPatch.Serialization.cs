@@ -15,41 +15,41 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Terms))
             {
-                writer.WritePropertyName("terms");
+                writer.WritePropertyName("terms"u8);
                 writer.WriteStringValue(Terms);
             }
             if (Optional.IsDefined(IsSubscriptionRequired))
             {
-                writer.WritePropertyName("subscriptionRequired");
+                writer.WritePropertyName("subscriptionRequired"u8);
                 writer.WriteBooleanValue(IsSubscriptionRequired.Value);
             }
             if (Optional.IsDefined(IsApprovalRequired))
             {
-                writer.WritePropertyName("approvalRequired");
+                writer.WritePropertyName("approvalRequired"u8);
                 writer.WriteBooleanValue(IsApprovalRequired.Value);
             }
             if (Optional.IsDefined(SubscriptionsLimit))
             {
-                writer.WritePropertyName("subscriptionsLimit");
+                writer.WritePropertyName("subscriptionsLimit"u8);
                 writer.WriteNumberValue(SubscriptionsLimit.Value);
             }
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             writer.WriteEndObject();

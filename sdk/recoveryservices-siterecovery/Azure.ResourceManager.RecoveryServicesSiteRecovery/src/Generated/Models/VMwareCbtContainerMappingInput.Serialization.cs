@@ -17,29 +17,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyVaultId))
             {
-                writer.WritePropertyName("keyVaultId");
+                writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
             }
             if (Optional.IsDefined(KeyVaultUri))
             {
-                writer.WritePropertyName("keyVaultUri");
+                writer.WritePropertyName("keyVaultUri"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
-            writer.WritePropertyName("storageAccountId");
+            writer.WritePropertyName("storageAccountId"u8);
             writer.WriteStringValue(StorageAccountId);
             if (Optional.IsDefined(StorageAccountSasSecretName))
             {
-                writer.WritePropertyName("storageAccountSasSecretName");
+                writer.WritePropertyName("storageAccountSasSecretName"u8);
                 writer.WriteStringValue(StorageAccountSasSecretName);
             }
             if (Optional.IsDefined(ServiceBusConnectionStringSecretName))
             {
-                writer.WritePropertyName("serviceBusConnectionStringSecretName");
+                writer.WritePropertyName("serviceBusConnectionStringSecretName"u8);
                 writer.WriteStringValue(ServiceBusConnectionStringSecretName);
             }
-            writer.WritePropertyName("targetLocation");
+            writer.WritePropertyName("targetLocation"u8);
             writer.WriteStringValue(TargetLocation);
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

@@ -17,35 +17,39 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("organizationId");
+            writer.WritePropertyName("organizationId"u8);
             writer.WriteStringValue(OrganizationId);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(GcpCredentialType);
-            writer.WritePropertyName("projectId");
+            writer.WritePropertyName("projectId"u8);
             writer.WriteStringValue(ProjectId);
-            writer.WritePropertyName("privateKeyId");
+            writer.WritePropertyName("privateKeyId"u8);
             writer.WriteStringValue(PrivateKeyId);
-            writer.WritePropertyName("privateKey");
+            writer.WritePropertyName("privateKey"u8);
             writer.WriteStringValue(PrivateKey);
-            writer.WritePropertyName("clientEmail");
+            writer.WritePropertyName("clientEmail"u8);
             writer.WriteStringValue(ClientEmail);
-            writer.WritePropertyName("clientId");
+            writer.WritePropertyName("clientId"u8);
             writer.WriteStringValue(ClientId);
-            writer.WritePropertyName("authUri");
+            writer.WritePropertyName("authUri"u8);
             writer.WriteStringValue(AuthUri.AbsoluteUri);
-            writer.WritePropertyName("tokenUri");
+            writer.WritePropertyName("tokenUri"u8);
             writer.WriteStringValue(TokenUri.AbsoluteUri);
-            writer.WritePropertyName("authProviderX509CertUrl");
+            writer.WritePropertyName("authProviderX509CertUrl"u8);
             writer.WriteStringValue(AuthProviderX509CertUri.AbsoluteUri);
-            writer.WritePropertyName("clientX509CertUrl");
+            writer.WritePropertyName("clientX509CertUrl"u8);
             writer.WriteStringValue(ClientX509CertUri.AbsoluteUri);
-            writer.WritePropertyName("authenticationType");
+            writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             writer.WriteEndObject();
         }
 
         internal static GcpCredentialsDetailsProperties DeserializeGcpCredentialsDetailsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string organizationId = default;
             string type = default;
             string projectId = default;
@@ -62,62 +66,62 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             AuthenticationType authenticationType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("organizationId"))
+                if (property.NameEquals("organizationId"u8))
                 {
                     organizationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("projectId"))
+                if (property.NameEquals("projectId"u8))
                 {
                     projectId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateKeyId"))
+                if (property.NameEquals("privateKeyId"u8))
                 {
                     privateKeyId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateKey"))
+                if (property.NameEquals("privateKey"u8))
                 {
                     privateKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientEmail"))
+                if (property.NameEquals("clientEmail"u8))
                 {
                     clientEmail = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientId"))
+                if (property.NameEquals("clientId"u8))
                 {
                     clientId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authUri"))
+                if (property.NameEquals("authUri"u8))
                 {
                     authUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tokenUri"))
+                if (property.NameEquals("tokenUri"u8))
                 {
                     tokenUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("authProviderX509CertUrl"))
+                if (property.NameEquals("authProviderX509CertUrl"u8))
                 {
                     authProviderX509CertUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("clientX509CertUrl"))
+                if (property.NameEquals("clientX509CertUrl"u8))
                 {
                     clientX509CertUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("authenticationProvisioningState"))
+                if (property.NameEquals("authenticationProvisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -127,7 +131,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     authenticationProvisioningState = new AuthenticationProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("grantedPermissions"))
+                if (property.NameEquals("grantedPermissions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -142,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     grantedPermissions = array;
                     continue;
                 }
-                if (property.NameEquals("authenticationType"))
+                if (property.NameEquals("authenticationType"u8))
                 {
                     authenticationType = new AuthenticationType(property.Value.GetString());
                     continue;

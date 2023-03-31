@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AllowedGroups))
             {
-                writer.WritePropertyName("allowedGroups");
+                writer.WritePropertyName("allowedGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedGroups)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(AllowedClientApplications))
             {
-                writer.WritePropertyName("allowedClientApplications");
+                writer.WritePropertyName("allowedClientApplications"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedClientApplications)
                 {
@@ -41,11 +41,15 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static JwtClaimChecks DeserializeJwtClaimChecks(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> allowedGroups = default;
             Optional<IList<string>> allowedClientApplications = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowedGroups"))
+                if (property.NameEquals("allowedGroups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
                     allowedGroups = array;
                     continue;
                 }
-                if (property.NameEquals("allowedClientApplications"))
+                if (property.NameEquals("allowedClientApplications"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

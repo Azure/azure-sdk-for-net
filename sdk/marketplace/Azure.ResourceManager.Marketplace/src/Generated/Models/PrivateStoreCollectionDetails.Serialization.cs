@@ -15,16 +15,20 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static PrivateStoreCollectionDetails DeserializePrivateStoreCollectionDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> collectionName = default;
             Optional<Guid> collectionId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("collectionName"))
+                if (property.NameEquals("collectionName"u8))
                 {
                     collectionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("collectionId"))
+                if (property.NameEquals("collectionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
