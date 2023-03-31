@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(TrackEventsOptions))
             {
                 writer.WritePropertyName("trackEventsOptions"u8);
-                writer.WriteStringValue(TrackEventsOptions.Value.ToString());
+                writer.WriteStringValue(TrackEventsOptions.Value.ToSerialString());
             }
             writer.WritePropertyName("events"u8);
             writer.WriteStartArray();

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static IntegrationServiceEnvironmentNetworkEndPointAccessibilityState Available { get; } = new IntegrationServiceEnvironmentNetworkEndPointAccessibilityState(AvailableValue);
         /// <summary> NotAvailable. </summary>
         public static IntegrationServiceEnvironmentNetworkEndPointAccessibilityState NotAvailable { get; } = new IntegrationServiceEnvironmentNetworkEndPointAccessibilityState(NotAvailableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IntegrationServiceEnvironmentNetworkEndPointAccessibilityState"/> values are the same. </summary>
         public static bool operator ==(IntegrationServiceEnvironmentNetworkEndPointAccessibilityState left, IntegrationServiceEnvironmentNetworkEndPointAccessibilityState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationServiceEnvironmentNetworkEndPointAccessibilityState"/> values are not the same. </summary>

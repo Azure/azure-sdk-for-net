@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <summary> workernode. </summary>
         public static HDInsightRoleName Workernode { get; } = new HDInsightRoleName(WorkernodeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HDInsightRoleName"/> values are the same. </summary>
         public static bool operator ==(HDInsightRoleName left, HDInsightRoleName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HDInsightRoleName"/> values are not the same. </summary>

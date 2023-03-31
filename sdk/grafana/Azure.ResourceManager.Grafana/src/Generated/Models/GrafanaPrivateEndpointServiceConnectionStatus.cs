@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Grafana.Models
         public static GrafanaPrivateEndpointServiceConnectionStatus Approved { get; } = new GrafanaPrivateEndpointServiceConnectionStatus(ApprovedValue);
         /// <summary> Rejected. </summary>
         public static GrafanaPrivateEndpointServiceConnectionStatus Rejected { get; } = new GrafanaPrivateEndpointServiceConnectionStatus(RejectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GrafanaPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(GrafanaPrivateEndpointServiceConnectionStatus left, GrafanaPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GrafanaPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>

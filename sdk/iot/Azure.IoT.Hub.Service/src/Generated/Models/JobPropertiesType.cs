@@ -65,6 +65,9 @@ namespace Azure.IoT.Hub.Service.Models
         public static JobPropertiesType RestoreFromBackup { get; } = new JobPropertiesType(RestoreFromBackupValue);
         /// <summary> failoverDataCopy. </summary>
         public static JobPropertiesType FailoverDataCopy { get; } = new JobPropertiesType(FailoverDataCopyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JobPropertiesType"/> values are the same. </summary>
         public static bool operator ==(JobPropertiesType left, JobPropertiesType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobPropertiesType"/> values are not the same. </summary>

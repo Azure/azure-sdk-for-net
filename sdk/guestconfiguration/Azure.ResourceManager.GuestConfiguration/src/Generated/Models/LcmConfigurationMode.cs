@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static LcmConfigurationMode ApplyAndMonitor { get; } = new LcmConfigurationMode(ApplyAndMonitorValue);
         /// <summary> ApplyAndAutoCorrect. </summary>
         public static LcmConfigurationMode ApplyAndAutoCorrect { get; } = new LcmConfigurationMode(ApplyAndAutoCorrectValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LcmConfigurationMode"/> values are the same. </summary>
         public static bool operator ==(LcmConfigurationMode left, LcmConfigurationMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LcmConfigurationMode"/> values are not the same. </summary>

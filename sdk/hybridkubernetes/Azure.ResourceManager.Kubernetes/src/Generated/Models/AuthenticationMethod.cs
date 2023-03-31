@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public static AuthenticationMethod Token { get; } = new AuthenticationMethod(TokenValue);
         /// <summary> AAD. </summary>
         public static AuthenticationMethod AAD { get; } = new AuthenticationMethod(AADValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AuthenticationMethod"/> values are the same. </summary>
         public static bool operator ==(AuthenticationMethod left, AuthenticationMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AuthenticationMethod"/> values are not the same. </summary>

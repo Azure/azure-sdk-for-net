@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             if (Optional.IsDefined(OperatorType))
             {
                 writer.WritePropertyName("operatorType"u8);
-                writer.WriteStringValue(OperatorType.Value.ToString());
+                writer.WriteStringValue(OperatorType.Value.ToSerialString());
             }
             if (Optional.IsDefined(OperatorParams))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             if (Optional.IsDefined(OperatorScope))
             {
                 writer.WritePropertyName("operatorScope"u8);
-                writer.WriteStringValue(OperatorScope.Value.ToString());
+                writer.WriteStringValue(OperatorScope.Value.ToSerialString());
             }
             if (Optional.IsDefined(SshKnownHostsContents))
             {

@@ -29,6 +29,9 @@ namespace Azure.IoT.Hub.Service.Models
         public static ExportImportDeviceStatus Enabled { get; } = new ExportImportDeviceStatus(EnabledValue);
         /// <summary> disabled. </summary>
         public static ExportImportDeviceStatus Disabled { get; } = new ExportImportDeviceStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ExportImportDeviceStatus"/> values are the same. </summary>
         public static bool operator ==(ExportImportDeviceStatus left, ExportImportDeviceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExportImportDeviceStatus"/> values are not the same. </summary>

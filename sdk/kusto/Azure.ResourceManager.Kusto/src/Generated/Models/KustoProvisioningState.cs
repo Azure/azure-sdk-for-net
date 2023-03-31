@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoProvisioningState Moving { get; } = new KustoProvisioningState(MovingValue);
         /// <summary> Canceled. </summary>
         public static KustoProvisioningState Canceled { get; } = new KustoProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoProvisioningState"/> values are the same. </summary>
         public static bool operator ==(KustoProvisioningState left, KustoProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoProvisioningState"/> values are not the same. </summary>

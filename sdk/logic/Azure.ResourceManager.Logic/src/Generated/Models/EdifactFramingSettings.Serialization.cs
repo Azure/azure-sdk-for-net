@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WritePropertyName("repetitionSeparator"u8);
             writer.WriteNumberValue(RepetitionSeparator);
             writer.WritePropertyName("characterSet"u8);
-            writer.WriteStringValue(CharacterSet.ToString());
+            writer.WriteStringValue(CharacterSet.ToSerialString());
             writer.WritePropertyName("decimalPointIndicator"u8);
             writer.WriteStringValue(DecimalPointIndicator.ToSerialString());
             writer.WritePropertyName("segmentTerminatorSuffix"u8);

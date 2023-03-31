@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.IotHub.Models
         public static IotHubAuthenticationType KeyBased { get; } = new IotHubAuthenticationType(KeyBasedValue);
         /// <summary> identityBased. </summary>
         public static IotHubAuthenticationType IdentityBased { get; } = new IotHubAuthenticationType(IdentityBasedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IotHubAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(IotHubAuthenticationType left, IotHubAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotHubAuthenticationType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static AutoUpgradeOption Enabled { get; } = new AutoUpgradeOption(EnabledValue);
         /// <summary> Disabled. </summary>
         public static AutoUpgradeOption Disabled { get; } = new AutoUpgradeOption(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutoUpgradeOption"/> values are the same. </summary>
         public static bool operator ==(AutoUpgradeOption left, AutoUpgradeOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutoUpgradeOption"/> values are not the same. </summary>

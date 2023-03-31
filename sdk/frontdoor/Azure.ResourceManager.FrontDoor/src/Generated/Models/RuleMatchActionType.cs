@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static RuleMatchActionType Log { get; } = new RuleMatchActionType(LogValue);
         /// <summary> Redirect. </summary>
         public static RuleMatchActionType Redirect { get; } = new RuleMatchActionType(RedirectValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RuleMatchActionType"/> values are the same. </summary>
         public static bool operator ==(RuleMatchActionType left, RuleMatchActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RuleMatchActionType"/> values are not the same. </summary>

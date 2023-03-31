@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static ManagedRuleSetActionType Log { get; } = new ManagedRuleSetActionType(LogValue);
         /// <summary> Redirect. </summary>
         public static ManagedRuleSetActionType Redirect { get; } = new ManagedRuleSetActionType(RedirectValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedRuleSetActionType"/> values are the same. </summary>
         public static bool operator ==(ManagedRuleSetActionType left, ManagedRuleSetActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedRuleSetActionType"/> values are not the same. </summary>

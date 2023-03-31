@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoLanguageExtensionName Python { get; } = new KustoLanguageExtensionName(PythonValue);
         /// <summary> R. </summary>
         public static KustoLanguageExtensionName R { get; } = new KustoLanguageExtensionName(RValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoLanguageExtensionName"/> values are the same. </summary>
         public static bool operator ==(KustoLanguageExtensionName left, KustoLanguageExtensionName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoLanguageExtensionName"/> values are not the same. </summary>

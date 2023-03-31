@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.LabServices.Models
         public static LabServicesSkuCapacityScaleType Manual { get; } = new LabServicesSkuCapacityScaleType(ManualValue);
         /// <summary> The user is permitted to scale this SKU in and out. </summary>
         public static LabServicesSkuCapacityScaleType Automatic { get; } = new LabServicesSkuCapacityScaleType(AutomaticValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LabServicesSkuCapacityScaleType"/> values are the same. </summary>
         public static bool operator ==(LabServicesSkuCapacityScaleType left, LabServicesSkuCapacityScaleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LabServicesSkuCapacityScaleType"/> values are not the same. </summary>

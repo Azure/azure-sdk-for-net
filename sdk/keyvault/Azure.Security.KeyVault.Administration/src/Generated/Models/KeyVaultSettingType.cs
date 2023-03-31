@@ -26,6 +26,9 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary> boolean. </summary>
         public static KeyVaultSettingType Boolean { get; } = new KeyVaultSettingType(BooleanValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KeyVaultSettingType"/> values are the same. </summary>
         public static bool operator ==(KeyVaultSettingType left, KeyVaultSettingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyVaultSettingType"/> values are not the same. </summary>

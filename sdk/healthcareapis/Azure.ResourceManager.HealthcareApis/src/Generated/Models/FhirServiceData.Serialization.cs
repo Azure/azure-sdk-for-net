@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
-                writer.WriteStringValue(Kind.Value.ToString());
+                writer.WriteStringValue(Kind.Value.ToSerialString());
             }
             if (Optional.IsDefined(Identity))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
             if (Optional.IsDefined(ResourceVersionPolicyConfiguration))
             {

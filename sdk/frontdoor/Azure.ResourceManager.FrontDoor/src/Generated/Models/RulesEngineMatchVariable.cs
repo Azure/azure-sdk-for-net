@@ -59,6 +59,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static RulesEngineMatchVariable RequestBody { get; } = new RulesEngineMatchVariable(RequestBodyValue);
         /// <summary> RequestScheme. </summary>
         public static RulesEngineMatchVariable RequestScheme { get; } = new RulesEngineMatchVariable(RequestSchemeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RulesEngineMatchVariable"/> values are the same. </summary>
         public static bool operator ==(RulesEngineMatchVariable left, RulesEngineMatchVariable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RulesEngineMatchVariable"/> values are not the same. </summary>

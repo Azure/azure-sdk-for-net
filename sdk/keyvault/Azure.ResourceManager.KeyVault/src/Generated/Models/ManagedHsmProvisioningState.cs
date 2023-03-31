@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static ManagedHsmProvisioningState SecurityDomainRestore { get; } = new ManagedHsmProvisioningState(SecurityDomainRestoreValue);
         /// <summary> The managed HSM pool is being restored from full HSM backup. </summary>
         public static ManagedHsmProvisioningState Restoring { get; } = new ManagedHsmProvisioningState(RestoringValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedHsmProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ManagedHsmProvisioningState left, ManagedHsmProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedHsmProvisioningState"/> values are not the same. </summary>

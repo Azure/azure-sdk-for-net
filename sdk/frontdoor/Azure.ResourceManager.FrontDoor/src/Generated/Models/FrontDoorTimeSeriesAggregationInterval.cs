@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static FrontDoorTimeSeriesAggregationInterval Hourly { get; } = new FrontDoorTimeSeriesAggregationInterval(HourlyValue);
         /// <summary> Daily. </summary>
         public static FrontDoorTimeSeriesAggregationInterval Daily { get; } = new FrontDoorTimeSeriesAggregationInterval(DailyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FrontDoorTimeSeriesAggregationInterval"/> values are the same. </summary>
         public static bool operator ==(FrontDoorTimeSeriesAggregationInterval left, FrontDoorTimeSeriesAggregationInterval right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorTimeSeriesAggregationInterval"/> values are not the same. </summary>

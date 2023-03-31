@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.IotCentral.Models
         public static IotCentralAppSku ST1 { get; } = new IotCentralAppSku(ST1Value);
         /// <summary> ST2. </summary>
         public static IotCentralAppSku ST2 { get; } = new IotCentralAppSku(ST2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IotCentralAppSku"/> values are the same. </summary>
         public static bool operator ==(IotCentralAppSku left, IotCentralAppSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotCentralAppSku"/> values are not the same. </summary>

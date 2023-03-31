@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
-                writer.WriteStringValue(DefaultAction.Value.ToString());
+                writer.WriteStringValue(DefaultAction.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(IPRules))
             {

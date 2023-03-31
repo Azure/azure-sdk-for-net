@@ -56,6 +56,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static RulesEngineOperator BeginsWith { get; } = new RulesEngineOperator(BeginsWithValue);
         /// <summary> EndsWith. </summary>
         public static RulesEngineOperator EndsWith { get; } = new RulesEngineOperator(EndsWithValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RulesEngineOperator"/> values are the same. </summary>
         public static bool operator ==(RulesEngineOperator left, RulesEngineOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RulesEngineOperator"/> values are not the same. </summary>

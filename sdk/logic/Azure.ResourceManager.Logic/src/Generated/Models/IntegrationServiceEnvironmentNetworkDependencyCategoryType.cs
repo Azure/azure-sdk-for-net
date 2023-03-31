@@ -59,6 +59,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static IntegrationServiceEnvironmentNetworkDependencyCategoryType Sql { get; } = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(SqlValue);
         /// <summary> RegionalService. </summary>
         public static IntegrationServiceEnvironmentNetworkDependencyCategoryType RegionalService { get; } = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(RegionalServiceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IntegrationServiceEnvironmentNetworkDependencyCategoryType"/> values are the same. </summary>
         public static bool operator ==(IntegrationServiceEnvironmentNetworkDependencyCategoryType left, IntegrationServiceEnvironmentNetworkDependencyCategoryType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationServiceEnvironmentNetworkDependencyCategoryType"/> values are not the same. </summary>

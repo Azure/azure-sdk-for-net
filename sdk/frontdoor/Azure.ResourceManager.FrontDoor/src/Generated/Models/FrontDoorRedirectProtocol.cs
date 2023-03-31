@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static FrontDoorRedirectProtocol HttpsOnly { get; } = new FrontDoorRedirectProtocol(HttpsOnlyValue);
         /// <summary> MatchRequest. </summary>
         public static FrontDoorRedirectProtocol MatchRequest { get; } = new FrontDoorRedirectProtocol(MatchRequestValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FrontDoorRedirectProtocol"/> values are the same. </summary>
         public static bool operator ==(FrontDoorRedirectProtocol left, FrontDoorRedirectProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorRedirectProtocol"/> values are not the same. </summary>

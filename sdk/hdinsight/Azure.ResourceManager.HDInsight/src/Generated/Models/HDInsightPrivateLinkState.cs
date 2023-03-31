@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         public static HDInsightPrivateLinkState Disabled { get; } = new HDInsightPrivateLinkState(DisabledValue);
         /// <summary> Enabled. </summary>
         public static HDInsightPrivateLinkState Enabled { get; } = new HDInsightPrivateLinkState(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HDInsightPrivateLinkState"/> values are the same. </summary>
         public static bool operator ==(HDInsightPrivateLinkState left, HDInsightPrivateLinkState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HDInsightPrivateLinkState"/> values are not the same. </summary>

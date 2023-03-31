@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static KeyVaultNetworkRuleBypassOption AzureServices { get; } = new KeyVaultNetworkRuleBypassOption(AzureServicesValue);
         /// <summary> None. </summary>
         public static KeyVaultNetworkRuleBypassOption None { get; } = new KeyVaultNetworkRuleBypassOption(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KeyVaultNetworkRuleBypassOption"/> values are the same. </summary>
         public static bool operator ==(KeyVaultNetworkRuleBypassOption left, KeyVaultNetworkRuleBypassOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyVaultNetworkRuleBypassOption"/> values are not the same. </summary>

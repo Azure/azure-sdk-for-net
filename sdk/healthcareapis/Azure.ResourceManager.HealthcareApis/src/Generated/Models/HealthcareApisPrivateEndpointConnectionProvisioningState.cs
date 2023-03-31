@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static HealthcareApisPrivateEndpointConnectionProvisioningState Deleting { get; } = new HealthcareApisPrivateEndpointConnectionProvisioningState(DeletingValue);
         /// <summary> Failed. </summary>
         public static HealthcareApisPrivateEndpointConnectionProvisioningState Failed { get; } = new HealthcareApisPrivateEndpointConnectionProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HealthcareApisPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(HealthcareApisPrivateEndpointConnectionProvisioningState left, HealthcareApisPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HealthcareApisPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>

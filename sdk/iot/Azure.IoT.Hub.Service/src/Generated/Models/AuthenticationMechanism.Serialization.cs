@@ -28,7 +28,7 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(Type.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.HDInsight
             uri.AppendPath("/providers/Microsoft.HDInsight/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/roles/", false);
-            uri.AppendPath(roleName.ToString(), true);
+            uri.AppendPath(roleName.ToSerialString(), true);
             uri.AppendPath("/resize", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.HDInsight
             uri.AppendPath("/providers/Microsoft.HDInsight/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/roles/", false);
-            uri.AppendPath(roleName.ToString(), true);
+            uri.AppendPath(roleName.ToSerialString(), true);
             uri.AppendPath("/autoscale", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

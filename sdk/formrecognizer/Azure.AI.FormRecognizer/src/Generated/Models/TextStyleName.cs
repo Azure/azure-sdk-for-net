@@ -29,6 +29,9 @@ namespace Azure.AI.FormRecognizer.Models
         public static TextStyleName Other { get; } = new TextStyleName(OtherValue);
         /// <summary> handwriting. </summary>
         public static TextStyleName Handwriting { get; } = new TextStyleName(HandwritingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TextStyleName"/> values are the same. </summary>
         public static bool operator ==(TextStyleName left, TextStyleName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TextStyleName"/> values are not the same. </summary>

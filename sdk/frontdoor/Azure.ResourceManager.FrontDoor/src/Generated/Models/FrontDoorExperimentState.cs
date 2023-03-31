@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static FrontDoorExperimentState Enabled { get; } = new FrontDoorExperimentState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static FrontDoorExperimentState Disabled { get; } = new FrontDoorExperimentState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FrontDoorExperimentState"/> values are the same. </summary>
         public static bool operator ==(FrontDoorExperimentState left, FrontDoorExperimentState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorExperimentState"/> values are not the same. </summary>

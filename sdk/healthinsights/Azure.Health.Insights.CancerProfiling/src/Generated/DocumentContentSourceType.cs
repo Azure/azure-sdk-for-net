@@ -33,6 +33,9 @@ namespace Azure.Health.Insights.CancerProfiling
         public static DocumentContentSourceType Inline { get; } = new DocumentContentSourceType(InlineValue);
         /// <summary> reference. </summary>
         public static DocumentContentSourceType Reference { get; } = new DocumentContentSourceType(ReferenceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DocumentContentSourceType"/> values are the same. </summary>
         public static bool operator ==(DocumentContentSourceType left, DocumentContentSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentContentSourceType"/> values are not the same. </summary>

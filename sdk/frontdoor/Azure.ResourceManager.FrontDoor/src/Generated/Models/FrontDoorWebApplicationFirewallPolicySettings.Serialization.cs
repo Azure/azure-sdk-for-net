@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
-                writer.WriteStringValue(EnabledState.Value.ToString());
+                writer.WriteStringValue(EnabledState.Value.ToSerialString());
             }
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
+                writer.WriteStringValue(Mode.Value.ToSerialString());
             }
             if (Optional.IsDefined(RedirectUri))
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(RequestBodyCheck))
             {
                 writer.WritePropertyName("requestBodyCheck"u8);
-                writer.WriteStringValue(RequestBodyCheck.Value.ToString());
+                writer.WriteStringValue(RequestBodyCheck.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         public static HDInsightDayOfWeek Saturday { get; } = new HDInsightDayOfWeek(SaturdayValue);
         /// <summary> Sunday. </summary>
         public static HDInsightDayOfWeek Sunday { get; } = new HDInsightDayOfWeek(SundayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HDInsightDayOfWeek"/> values are the same. </summary>
         public static bool operator ==(HDInsightDayOfWeek left, HDInsightDayOfWeek right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HDInsightDayOfWeek"/> values are not the same. </summary>

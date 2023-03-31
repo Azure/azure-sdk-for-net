@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static AS2SigningAlgorithm Sha2384 { get; } = new AS2SigningAlgorithm(Sha2384Value);
         /// <summary> SHA2512. </summary>
         public static AS2SigningAlgorithm Sha2512 { get; } = new AS2SigningAlgorithm(Sha2512Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AS2SigningAlgorithm"/> values are the same. </summary>
         public static bool operator ==(AS2SigningAlgorithm left, AS2SigningAlgorithm right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AS2SigningAlgorithm"/> values are not the same. </summary>

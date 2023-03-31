@@ -29,6 +29,9 @@ namespace Azure.Security.KeyVault.Administration
         public static KeyVaultRoleScope Global { get; } = new KeyVaultRoleScope(GlobalValue);
         /// <summary> Keys scope. </summary>
         public static KeyVaultRoleScope Keys { get; } = new KeyVaultRoleScope(KeysValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KeyVaultRoleScope"/> values are the same. </summary>
         public static bool operator ==(KeyVaultRoleScope left, KeyVaultRoleScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyVaultRoleScope"/> values are not the same. </summary>

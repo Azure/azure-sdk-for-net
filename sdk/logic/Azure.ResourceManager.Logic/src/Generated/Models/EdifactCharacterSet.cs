@@ -68,6 +68,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static EdifactCharacterSet Unoy { get; } = new EdifactCharacterSet(UnoyValue);
         /// <summary> KECA. </summary>
         public static EdifactCharacterSet Keca { get; } = new EdifactCharacterSet(KecaValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EdifactCharacterSet"/> values are the same. </summary>
         public static bool operator ==(EdifactCharacterSet left, EdifactCharacterSet right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdifactCharacterSet"/> values are not the same. </summary>

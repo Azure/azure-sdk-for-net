@@ -68,6 +68,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static IdentityAccessStoragePermission GetSas { get; } = new IdentityAccessStoragePermission(GetSasValue);
         /// <summary> deletesas. </summary>
         public static IdentityAccessStoragePermission DeleteSas { get; } = new IdentityAccessStoragePermission(DeleteSasValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IdentityAccessStoragePermission"/> values are the same. </summary>
         public static bool operator ==(IdentityAccessStoragePermission left, IdentityAccessStoragePermission right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IdentityAccessStoragePermission"/> values are not the same. </summary>

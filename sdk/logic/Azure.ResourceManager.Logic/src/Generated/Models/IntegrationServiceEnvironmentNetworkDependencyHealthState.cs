@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static IntegrationServiceEnvironmentNetworkDependencyHealthState Unhealthy { get; } = new IntegrationServiceEnvironmentNetworkDependencyHealthState(UnhealthyValue);
         /// <summary> Unknown. </summary>
         public static IntegrationServiceEnvironmentNetworkDependencyHealthState Unknown { get; } = new IntegrationServiceEnvironmentNetworkDependencyHealthState(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IntegrationServiceEnvironmentNetworkDependencyHealthState"/> values are the same. </summary>
         public static bool operator ==(IntegrationServiceEnvironmentNetworkDependencyHealthState left, IntegrationServiceEnvironmentNetworkDependencyHealthState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationServiceEnvironmentNetworkDependencyHealthState"/> values are not the same. </summary>

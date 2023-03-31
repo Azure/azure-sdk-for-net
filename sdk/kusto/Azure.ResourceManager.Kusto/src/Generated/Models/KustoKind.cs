@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoKind ReadWrite { get; } = new KustoKind(ReadWriteValue);
         /// <summary> ReadOnlyFollowing. </summary>
         public static KustoKind ReadOnlyFollowing { get; } = new KustoKind(ReadOnlyFollowingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoKind"/> values are the same. </summary>
         public static bool operator ==(KustoKind left, KustoKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoKind"/> values are not the same. </summary>

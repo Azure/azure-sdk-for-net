@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.IotCentral.Models
         public static IotCentralAppState Created { get; } = new IotCentralAppState(CreatedValue);
         /// <summary> suspended. </summary>
         public static IotCentralAppState Suspended { get; } = new IotCentralAppState(SuspendedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IotCentralAppState"/> values are the same. </summary>
         public static bool operator ==(IotCentralAppState left, IotCentralAppState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotCentralAppState"/> values are not the same. </summary>

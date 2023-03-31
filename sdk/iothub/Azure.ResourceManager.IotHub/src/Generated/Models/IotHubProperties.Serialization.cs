@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(IPFilterRules))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
-                writer.WriteStringValue(Features.Value.ToString());
+                writer.WriteStringValue(Features.Value.ToSerialString());
             }
             if (Optional.IsDefined(EnableDataResidency))
             {

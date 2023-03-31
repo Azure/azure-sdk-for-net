@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.FrontDoor
             if (Optional.IsDefined(SessionAffinityEnabledState))
             {
                 writer.WritePropertyName("sessionAffinityEnabledState"u8);
-                writer.WriteStringValue(SessionAffinityEnabledState.Value.ToString());
+                writer.WriteStringValue(SessionAffinityEnabledState.Value.ToSerialString());
             }
             if (Optional.IsDefined(SessionAffinityTtlInSeconds))
             {

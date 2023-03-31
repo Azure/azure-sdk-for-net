@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.LoadTesting.Models
         public static LoadTestingCmkIdentityType SystemAssigned { get; } = new LoadTestingCmkIdentityType(SystemAssignedValue);
         /// <summary> UserAssigned. </summary>
         public static LoadTestingCmkIdentityType UserAssigned { get; } = new LoadTestingCmkIdentityType(UserAssignedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LoadTestingCmkIdentityType"/> values are the same. </summary>
         public static bool operator ==(LoadTestingCmkIdentityType left, LoadTestingCmkIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LoadTestingCmkIdentityType"/> values are not the same. </summary>

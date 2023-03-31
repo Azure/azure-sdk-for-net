@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoPrincipalAssignmentType Group { get; } = new KustoPrincipalAssignmentType(GroupValue);
         /// <summary> User. </summary>
         public static KustoPrincipalAssignmentType User { get; } = new KustoPrincipalAssignmentType(UserValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoPrincipalAssignmentType"/> values are the same. </summary>
         public static bool operator ==(KustoPrincipalAssignmentType left, KustoPrincipalAssignmentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoPrincipalAssignmentType"/> values are not the same. </summary>

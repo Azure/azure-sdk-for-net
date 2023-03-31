@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public static KubernetesConfigurationMesageLevel Warning { get; } = new KubernetesConfigurationMesageLevel(WarningValue);
         /// <summary> Information. </summary>
         public static KubernetesConfigurationMesageLevel Information { get; } = new KubernetesConfigurationMesageLevel(InformationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KubernetesConfigurationMesageLevel"/> values are the same. </summary>
         public static bool operator ==(KubernetesConfigurationMesageLevel left, KubernetesConfigurationMesageLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KubernetesConfigurationMesageLevel"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static FhirServiceKind FhirStu3 { get; } = new FhirServiceKind(FhirStu3Value);
         /// <summary> fhir-R4. </summary>
         public static FhirServiceKind FhirR4 { get; } = new FhirServiceKind(FhirR4Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FhirServiceKind"/> values are the same. </summary>
         public static bool operator ==(FhirServiceKind left, FhirServiceKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FhirServiceKind"/> values are not the same. </summary>

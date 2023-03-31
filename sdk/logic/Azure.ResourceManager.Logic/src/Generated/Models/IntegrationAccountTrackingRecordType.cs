@@ -71,6 +71,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static IntegrationAccountTrackingRecordType EdifactFunctionalGroupAcknowledgment { get; } = new IntegrationAccountTrackingRecordType(EdifactFunctionalGroupAcknowledgmentValue);
         /// <summary> EdifactTransactionSetAcknowledgment. </summary>
         public static IntegrationAccountTrackingRecordType EdifactTransactionSetAcknowledgment { get; } = new IntegrationAccountTrackingRecordType(EdifactTransactionSetAcknowledgmentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IntegrationAccountTrackingRecordType"/> values are the same. </summary>
         public static bool operator ==(IntegrationAccountTrackingRecordType left, IntegrationAccountTrackingRecordType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationAccountTrackingRecordType"/> values are not the same. </summary>

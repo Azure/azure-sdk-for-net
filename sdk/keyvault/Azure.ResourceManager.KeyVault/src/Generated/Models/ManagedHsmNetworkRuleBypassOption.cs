@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static ManagedHsmNetworkRuleBypassOption AzureServices { get; } = new ManagedHsmNetworkRuleBypassOption(AzureServicesValue);
         /// <summary> None. </summary>
         public static ManagedHsmNetworkRuleBypassOption None { get; } = new ManagedHsmNetworkRuleBypassOption(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedHsmNetworkRuleBypassOption"/> values are the same. </summary>
         public static bool operator ==(ManagedHsmNetworkRuleBypassOption left, ManagedHsmNetworkRuleBypassOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedHsmNetworkRuleBypassOption"/> values are not the same. </summary>

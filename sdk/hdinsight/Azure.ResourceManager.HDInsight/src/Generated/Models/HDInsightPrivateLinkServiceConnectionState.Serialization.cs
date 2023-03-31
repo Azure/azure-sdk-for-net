@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
+            writer.WriteStringValue(Status.ToSerialString());
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);

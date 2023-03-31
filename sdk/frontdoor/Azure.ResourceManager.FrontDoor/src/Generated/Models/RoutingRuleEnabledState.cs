@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static RoutingRuleEnabledState Enabled { get; } = new RoutingRuleEnabledState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static RoutingRuleEnabledState Disabled { get; } = new RoutingRuleEnabledState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RoutingRuleEnabledState"/> values are the same. </summary>
         public static bool operator ==(RoutingRuleEnabledState left, RoutingRuleEnabledState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoutingRuleEnabledState"/> values are not the same. </summary>

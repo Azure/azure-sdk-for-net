@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static FrontDoorCertificateSource AzureKeyVault { get; } = new FrontDoorCertificateSource(AzureKeyVaultValue);
         /// <summary> FrontDoor. </summary>
         public static FrontDoorCertificateSource FrontDoor { get; } = new FrontDoorCertificateSource(FrontDoorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FrontDoorCertificateSource"/> values are the same. </summary>
         public static bool operator ==(FrontDoorCertificateSource left, FrontDoorCertificateSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorCertificateSource"/> values are not the same. </summary>

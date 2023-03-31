@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in Keys)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in Certificates)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in Storage)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.IotHub.Models
         public static IotHubRoutingSource DeviceJobLifecycleEvents { get; } = new IotHubRoutingSource(DeviceJobLifecycleEventsValue);
         /// <summary> DeviceConnectionStateEvents. </summary>
         public static IotHubRoutingSource DeviceConnectionStateEvents { get; } = new IotHubRoutingSource(DeviceConnectionStateEventsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IotHubRoutingSource"/> values are the same. </summary>
         public static bool operator ==(IotHubRoutingSource left, IotHubRoutingSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotHubRoutingSource"/> values are not the same. </summary>

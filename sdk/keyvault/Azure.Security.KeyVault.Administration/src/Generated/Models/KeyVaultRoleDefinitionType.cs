@@ -26,6 +26,9 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary> Microsoft.Authorization/roleDefinitions. </summary>
         public static KeyVaultRoleDefinitionType MicrosoftAuthorizationRoleDefinitions { get; } = new KeyVaultRoleDefinitionType(MicrosoftAuthorizationRoleDefinitionsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KeyVaultRoleDefinitionType"/> values are the same. </summary>
         public static bool operator ==(KeyVaultRoleDefinitionType left, KeyVaultRoleDefinitionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyVaultRoleDefinitionType"/> values are not the same. </summary>

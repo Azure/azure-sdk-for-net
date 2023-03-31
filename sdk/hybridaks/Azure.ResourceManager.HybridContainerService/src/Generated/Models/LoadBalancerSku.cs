@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static LoadBalancerSku StackedMetallb { get; } = new LoadBalancerSku(StackedMetallbValue);
         /// <summary> unmanaged. </summary>
         public static LoadBalancerSku Unmanaged { get; } = new LoadBalancerSku(UnmanagedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LoadBalancerSku"/> values are the same. </summary>
         public static bool operator ==(LoadBalancerSku left, LoadBalancerSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LoadBalancerSku"/> values are not the same. </summary>

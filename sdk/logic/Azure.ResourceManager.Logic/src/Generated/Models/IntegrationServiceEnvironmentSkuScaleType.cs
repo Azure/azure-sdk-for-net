@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static IntegrationServiceEnvironmentSkuScaleType Automatic { get; } = new IntegrationServiceEnvironmentSkuScaleType(AutomaticValue);
         /// <summary> None. </summary>
         public static IntegrationServiceEnvironmentSkuScaleType None { get; } = new IntegrationServiceEnvironmentSkuScaleType(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IntegrationServiceEnvironmentSkuScaleType"/> values are the same. </summary>
         public static bool operator ==(IntegrationServiceEnvironmentSkuScaleType left, IntegrationServiceEnvironmentSkuScaleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationServiceEnvironmentSkuScaleType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.IoT.Hub.Service.Models
         public static DeviceStatus Enabled { get; } = new DeviceStatus(EnabledValue);
         /// <summary> disabled. </summary>
         public static DeviceStatus Disabled { get; } = new DeviceStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DeviceStatus"/> values are the same. </summary>
         public static bool operator ==(DeviceStatus left, DeviceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceStatus"/> values are not the same. </summary>

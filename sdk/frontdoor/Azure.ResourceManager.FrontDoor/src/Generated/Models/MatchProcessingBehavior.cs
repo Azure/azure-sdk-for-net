@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static MatchProcessingBehavior Continue { get; } = new MatchProcessingBehavior(ContinueValue);
         /// <summary> Stop. </summary>
         public static MatchProcessingBehavior Stop { get; } = new MatchProcessingBehavior(StopValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MatchProcessingBehavior"/> values are the same. </summary>
         public static bool operator ==(MatchProcessingBehavior left, MatchProcessingBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MatchProcessingBehavior"/> values are not the same. </summary>

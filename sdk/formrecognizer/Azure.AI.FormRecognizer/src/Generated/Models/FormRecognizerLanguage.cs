@@ -242,6 +242,9 @@ namespace Azure.AI.FormRecognizer
         public static FormRecognizerLanguage ZhHant { get; } = new FormRecognizerLanguage(ZhHantValue);
         /// <summary> zu. </summary>
         public static FormRecognizerLanguage Zu { get; } = new FormRecognizerLanguage(ZuValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FormRecognizerLanguage"/> values are the same. </summary>
         public static bool operator ==(FormRecognizerLanguage left, FormRecognizerLanguage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FormRecognizerLanguage"/> values are not the same. </summary>

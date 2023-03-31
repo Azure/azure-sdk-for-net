@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static RulesEngineHeaderActionType Delete { get; } = new RulesEngineHeaderActionType(DeleteValue);
         /// <summary> Overwrite. </summary>
         public static RulesEngineHeaderActionType Overwrite { get; } = new RulesEngineHeaderActionType(OverwriteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RulesEngineHeaderActionType"/> values are the same. </summary>
         public static bool operator ==(RulesEngineHeaderActionType left, RulesEngineHeaderActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RulesEngineHeaderActionType"/> values are not the same. </summary>

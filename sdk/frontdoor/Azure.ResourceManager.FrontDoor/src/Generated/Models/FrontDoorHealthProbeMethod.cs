@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static FrontDoorHealthProbeMethod Get { get; } = new FrontDoorHealthProbeMethod(GetValue);
         /// <summary> HEAD. </summary>
         public static FrontDoorHealthProbeMethod Head { get; } = new FrontDoorHealthProbeMethod(HeadValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FrontDoorHealthProbeMethod"/> values are the same. </summary>
         public static bool operator ==(FrontDoorHealthProbeMethod left, FrontDoorHealthProbeMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorHealthProbeMethod"/> values are not the same. </summary>

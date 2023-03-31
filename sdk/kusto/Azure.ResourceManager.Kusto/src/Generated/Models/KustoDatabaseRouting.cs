@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoDatabaseRouting Single { get; } = new KustoDatabaseRouting(SingleValue);
         /// <summary> Multi. </summary>
         public static KustoDatabaseRouting Multi { get; } = new KustoDatabaseRouting(MultiValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoDatabaseRouting"/> values are the same. </summary>
         public static bool operator ==(KustoDatabaseRouting left, KustoDatabaseRouting right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoDatabaseRouting"/> values are not the same. </summary>

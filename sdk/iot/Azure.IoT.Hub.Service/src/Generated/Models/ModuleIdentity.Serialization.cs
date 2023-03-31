@@ -44,7 +44,7 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
-                writer.WriteStringValue(ConnectionState.Value.ToString());
+                writer.WriteStringValue(ConnectionState.Value.ToSerialString());
             }
             if (Optional.IsDefined(ConnectionStateUpdatedTime))
             {

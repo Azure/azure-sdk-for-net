@@ -35,6 +35,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static DocumentAnalysisFeature OcrFont { get; } = new DocumentAnalysisFeature(OcrFontValue);
         /// <summary> Enable extraction of additional fields via the queryFields query parameter. </summary>
         public static DocumentAnalysisFeature QueryFieldsPremium { get; } = new DocumentAnalysisFeature(QueryFieldsPremiumValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DocumentAnalysisFeature"/> values are the same. </summary>
         public static bool operator ==(DocumentAnalysisFeature left, DocumentAnalysisFeature right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentAnalysisFeature"/> values are not the same. </summary>

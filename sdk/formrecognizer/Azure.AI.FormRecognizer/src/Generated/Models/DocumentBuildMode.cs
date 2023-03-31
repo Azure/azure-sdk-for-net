@@ -24,6 +24,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         private const string TemplateValue = "template";
         private const string NeuralValue = "neural";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DocumentBuildMode"/> values are the same. </summary>
         public static bool operator ==(DocumentBuildMode left, DocumentBuildMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentBuildMode"/> values are not the same. </summary>

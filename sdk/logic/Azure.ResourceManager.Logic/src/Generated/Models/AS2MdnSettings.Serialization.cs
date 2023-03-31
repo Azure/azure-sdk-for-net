@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WritePropertyName("sendInboundMDNToMessageBox"u8);
             writer.WriteBooleanValue(SendInboundMdnToMessageBox);
             writer.WritePropertyName("micHashingAlgorithm"u8);
-            writer.WriteStringValue(MicHashingAlgorithm.ToString());
+            writer.WriteStringValue(MicHashingAlgorithm.ToSerialString());
             writer.WriteEndObject();
         }
 

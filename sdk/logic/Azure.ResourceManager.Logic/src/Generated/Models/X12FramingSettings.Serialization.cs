@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WritePropertyName("segmentTerminator"u8);
             writer.WriteNumberValue(SegmentTerminator);
             writer.WritePropertyName("characterSet"u8);
-            writer.WriteStringValue(CharacterSet.ToString());
+            writer.WriteStringValue(CharacterSet.ToSerialString());
             writer.WritePropertyName("segmentTerminatorSuffix"u8);
             writer.WriteStringValue(SegmentTerminatorSuffix.ToSerialString());
             writer.WriteEndObject();

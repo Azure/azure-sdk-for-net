@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoNameUnavailableReason Invalid { get; } = new KustoNameUnavailableReason(InvalidValue);
         /// <summary> AlreadyExists. </summary>
         public static KustoNameUnavailableReason AlreadyExists { get; } = new KustoNameUnavailableReason(AlreadyExistsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoNameUnavailableReason"/> values are the same. </summary>
         public static bool operator ==(KustoNameUnavailableReason left, KustoNameUnavailableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoNameUnavailableReason"/> values are not the same. </summary>

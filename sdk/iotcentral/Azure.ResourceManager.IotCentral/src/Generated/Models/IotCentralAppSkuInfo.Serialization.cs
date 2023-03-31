@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name.ToString());
+            writer.WriteStringValue(Name.ToSerialString());
             writer.WriteEndObject();
         }
 

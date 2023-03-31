@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static HealthcareApisIotIdentityResolutionType Create { get; } = new HealthcareApisIotIdentityResolutionType(CreateValue);
         /// <summary> Lookup. </summary>
         public static HealthcareApisIotIdentityResolutionType Lookup { get; } = new HealthcareApisIotIdentityResolutionType(LookupValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HealthcareApisIotIdentityResolutionType"/> values are the same. </summary>
         public static bool operator ==(HealthcareApisIotIdentityResolutionType left, HealthcareApisIotIdentityResolutionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HealthcareApisIotIdentityResolutionType"/> values are not the same. </summary>

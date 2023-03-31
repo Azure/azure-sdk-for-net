@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         public static HDInsightOSType Windows { get; } = new HDInsightOSType(WindowsValue);
         /// <summary> Linux. </summary>
         public static HDInsightOSType Linux { get; } = new HDInsightOSType(LinuxValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HDInsightOSType"/> values are the same. </summary>
         public static bool operator ==(HDInsightOSType left, HDInsightOSType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HDInsightOSType"/> values are not the same. </summary>

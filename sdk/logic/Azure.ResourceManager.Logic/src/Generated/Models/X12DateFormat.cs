@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static X12DateFormat Ccyymmdd { get; } = new X12DateFormat(CcyymmddValue);
         /// <summary> YYMMDD. </summary>
         public static X12DateFormat Yymmdd { get; } = new X12DateFormat(YymmddValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="X12DateFormat"/> values are the same. </summary>
         public static bool operator ==(X12DateFormat left, X12DateFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="X12DateFormat"/> values are not the same. </summary>

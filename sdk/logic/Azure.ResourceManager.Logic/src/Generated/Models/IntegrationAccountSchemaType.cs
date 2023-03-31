@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static IntegrationAccountSchemaType NotSpecified { get; } = new IntegrationAccountSchemaType(NotSpecifiedValue);
         /// <summary> Xml. </summary>
         public static IntegrationAccountSchemaType Xml { get; } = new IntegrationAccountSchemaType(XmlValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IntegrationAccountSchemaType"/> values are the same. </summary>
         public static bool operator ==(IntegrationAccountSchemaType left, IntegrationAccountSchemaType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationAccountSchemaType"/> values are not the same. </summary>

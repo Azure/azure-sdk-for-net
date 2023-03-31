@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Logic.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("messageFilterType"u8);
-            writer.WriteStringValue(MessageFilterType.ToString());
+            writer.WriteStringValue(MessageFilterType.ToSerialString());
             writer.WriteEndObject();
         }
 

@@ -29,6 +29,9 @@ namespace Azure.IoT.Hub.Service.Models
         public static TwinStatus Enabled { get; } = new TwinStatus(EnabledValue);
         /// <summary> disabled. </summary>
         public static TwinStatus Disabled { get; } = new TwinStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TwinStatus"/> values are the same. </summary>
         public static bool operator ==(TwinStatus left, TwinStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TwinStatus"/> values are not the same. </summary>

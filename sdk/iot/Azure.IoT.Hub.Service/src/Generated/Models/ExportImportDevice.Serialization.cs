@@ -33,12 +33,12 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(ImportMode))
             {
                 writer.WritePropertyName("importMode"u8);
-                writer.WriteStringValue(ImportMode.Value.ToString());
+                writer.WriteStringValue(ImportMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
             if (Optional.IsDefined(StatusReason))
             {

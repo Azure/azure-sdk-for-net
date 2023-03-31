@@ -35,6 +35,9 @@ namespace Azure.IoT.Hub.Service.Models
         public static AuthenticationMechanismType CertificateAuthority { get; } = new AuthenticationMechanismType(CertificateAuthorityValue);
         /// <summary> none. </summary>
         public static AuthenticationMechanismType None { get; } = new AuthenticationMechanismType(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AuthenticationMechanismType"/> values are the same. </summary>
         public static bool operator ==(AuthenticationMechanismType left, AuthenticationMechanismType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AuthenticationMechanismType"/> values are not the same. </summary>

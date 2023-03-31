@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStringValue(FunctionalIdentifierCode);
             }
             writer.WritePropertyName("dateFormat"u8);
-            writer.WriteStringValue(DateFormat.ToString());
+            writer.WriteStringValue(DateFormat.ToSerialString());
             writer.WritePropertyName("timeFormat"u8);
-            writer.WriteStringValue(TimeFormat.ToString());
+            writer.WriteStringValue(TimeFormat.ToSerialString());
             writer.WriteEndObject();
         }
 

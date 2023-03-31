@@ -721,7 +721,7 @@ namespace Azure.AI.FormRecognizer
             }
             if (locale != null)
             {
-                uri.AppendQuery("locale", locale.Value.ToString(), true);
+                uri.AppendQuery("locale", locale.Value.ToSerialString(), true);
             }
             if (pages != null)
             {
@@ -797,7 +797,7 @@ namespace Azure.AI.FormRecognizer
             }
             if (locale != null)
             {
-                uri.AppendQuery("locale", locale.Value.ToString(), true);
+                uri.AppendQuery("locale", locale.Value.ToSerialString(), true);
             }
             if (pages != null)
             {
@@ -933,7 +933,7 @@ namespace Azure.AI.FormRecognizer
             }
             if (locale != null)
             {
-                uri.AppendQuery("locale", locale.Value.ToString(), true);
+                uri.AppendQuery("locale", locale.Value.ToSerialString(), true);
             }
             if (pages != null)
             {
@@ -1009,7 +1009,7 @@ namespace Azure.AI.FormRecognizer
             }
             if (locale != null)
             {
-                uri.AppendQuery("locale", locale.Value.ToString(), true);
+                uri.AppendQuery("locale", locale.Value.ToSerialString(), true);
             }
             if (pages != null)
             {
@@ -1345,7 +1345,7 @@ namespace Azure.AI.FormRecognizer
             }
             if (locale != null)
             {
-                uri.AppendQuery("locale", locale.Value.ToString(), true);
+                uri.AppendQuery("locale", locale.Value.ToSerialString(), true);
             }
             if (pages != null)
             {
@@ -1421,7 +1421,7 @@ namespace Azure.AI.FormRecognizer
             }
             if (locale != null)
             {
-                uri.AppendQuery("locale", locale.Value.ToString(), true);
+                uri.AppendQuery("locale", locale.Value.ToSerialString(), true);
             }
             if (pages != null)
             {
@@ -1557,7 +1557,7 @@ namespace Azure.AI.FormRecognizer
             }
             if (language != null)
             {
-                uri.AppendQuery("language", language.Value.ToString(), true);
+                uri.AppendQuery("language", language.Value.ToSerialString(), true);
             }
             if (readingOrder != null)
             {
@@ -1633,7 +1633,7 @@ namespace Azure.AI.FormRecognizer
             }
             if (language != null)
             {
-                uri.AppendQuery("language", language.Value.ToString(), true);
+                uri.AppendQuery("language", language.Value.ToSerialString(), true);
             }
             if (readingOrder != null)
             {

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static NetworkExperimentResourceState Disabled { get; } = new NetworkExperimentResourceState(DisabledValue);
         /// <summary> Deleting. </summary>
         public static NetworkExperimentResourceState Deleting { get; } = new NetworkExperimentResourceState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetworkExperimentResourceState"/> values are the same. </summary>
         public static bool operator ==(NetworkExperimentResourceState left, NetworkExperimentResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkExperimentResourceState"/> values are not the same. </summary>

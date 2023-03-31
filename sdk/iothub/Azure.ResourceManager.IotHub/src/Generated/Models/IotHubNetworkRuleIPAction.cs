@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> Allow. </summary>
         public static IotHubNetworkRuleIPAction Allow { get; } = new IotHubNetworkRuleIPAction(AllowValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IotHubNetworkRuleIPAction"/> values are the same. </summary>
         public static bool operator ==(IotHubNetworkRuleIPAction left, IotHubNetworkRuleIPAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotHubNetworkRuleIPAction"/> values are not the same. </summary>

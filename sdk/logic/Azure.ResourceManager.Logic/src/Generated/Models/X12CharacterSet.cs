@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static X12CharacterSet Extended { get; } = new X12CharacterSet(ExtendedValue);
         /// <summary> UTF8. </summary>
         public static X12CharacterSet Utf8 { get; } = new X12CharacterSet(Utf8Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="X12CharacterSet"/> values are the same. </summary>
         public static bool operator ==(X12CharacterSet left, X12CharacterSet right) => left.Equals(right);
         /// <summary> Determines if two <see cref="X12CharacterSet"/> values are not the same. </summary>

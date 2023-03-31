@@ -215,6 +215,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoSkuName StandardE8dV5 { get; } = new KustoSkuName(StandardE8dV5Value);
         /// <summary> Standard_E16d_v5. </summary>
         public static KustoSkuName StandardE16dV5 { get; } = new KustoSkuName(StandardE16dV5Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoSkuName"/> values are the same. </summary>
         public static bool operator ==(KustoSkuName left, KustoSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoSkuName"/> values are not the same. </summary>

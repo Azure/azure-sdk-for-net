@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         public static HDInsightFilterMode Recommend { get; } = new HDInsightFilterMode(RecommendValue);
         /// <summary> Default. </summary>
         public static HDInsightFilterMode Default { get; } = new HDInsightFilterMode(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HDInsightFilterMode"/> values are the same. </summary>
         public static bool operator ==(HDInsightFilterMode left, HDInsightFilterMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HDInsightFilterMode"/> values are not the same. </summary>

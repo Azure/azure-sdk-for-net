@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static FrontDoorSkuName StandardAzureFrontDoor { get; } = new FrontDoorSkuName(StandardAzureFrontDoorValue);
         /// <summary> Premium_AzureFrontDoor. </summary>
         public static FrontDoorSkuName PremiumAzureFrontDoor { get; } = new FrontDoorSkuName(PremiumAzureFrontDoorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FrontDoorSkuName"/> values are the same. </summary>
         public static bool operator ==(FrontDoorSkuName left, FrontDoorSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorSkuName"/> values are not the same. </summary>

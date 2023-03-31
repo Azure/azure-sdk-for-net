@@ -16,13 +16,13 @@ namespace Azure.Health.Insights.ClinicalMatching
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(Type.ToSerialString());
             if (Optional.IsDefined(ClinicalType))
             {
                 if (ClinicalType != null)
                 {
                     writer.WritePropertyName("clinicalType"u8);
-                    writer.WriteStringValue(ClinicalType.Value.ToString());
+                    writer.WriteStringValue(ClinicalType.Value.ToSerialString());
                 }
                 else
                 {

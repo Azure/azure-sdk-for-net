@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
-                writer.WriteStringValue(Level.Value.ToString());
+                writer.WriteStringValue(Level.Value.ToSerialString());
             }
             if (Optional.IsDefined(DisplayStatus))
             {

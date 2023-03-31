@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.LoadTesting.Models
         public static LoadTestingProvisioningState Canceled { get; } = new LoadTestingProvisioningState(CanceledValue);
         /// <summary> Deleted. </summary>
         public static LoadTestingProvisioningState Deleted { get; } = new LoadTestingProvisioningState(DeletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LoadTestingProvisioningState"/> values are the same. </summary>
         public static bool operator ==(LoadTestingProvisioningState left, LoadTestingProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LoadTestingProvisioningState"/> values are not the same. </summary>

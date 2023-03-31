@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static DataConnectionKind IotHub { get; } = new DataConnectionKind(IotHubValue);
         /// <summary> CosmosDb. </summary>
         public static DataConnectionKind CosmosDB { get; } = new DataConnectionKind(CosmosDBValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataConnectionKind"/> values are the same. </summary>
         public static bool operator ==(DataConnectionKind left, DataConnectionKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataConnectionKind"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.Health.Insights.ClinicalMatching
 
         /// <summary> trialEligibility. </summary>
         public static TrialMatcherInferenceType TrialEligibility { get; } = new TrialMatcherInferenceType(TrialEligibilityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TrialMatcherInferenceType"/> values are the same. </summary>
         public static bool operator ==(TrialMatcherInferenceType left, TrialMatcherInferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrialMatcherInferenceType"/> values are not the same. </summary>

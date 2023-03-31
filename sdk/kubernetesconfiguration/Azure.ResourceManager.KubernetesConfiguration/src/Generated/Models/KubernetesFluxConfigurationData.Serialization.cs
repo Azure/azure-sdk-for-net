@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteStringValue(Scope.Value.ToString());
+                writer.WriteStringValue(Scope.Value.ToSerialString());
             }
             if (Optional.IsDefined(Namespace))
             {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             if (Optional.IsDefined(SourceKind))
             {
                 writer.WritePropertyName("sourceKind"u8);
-                writer.WriteStringValue(SourceKind.Value.ToString());
+                writer.WriteStringValue(SourceKind.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsReconciliationSuspended))
             {

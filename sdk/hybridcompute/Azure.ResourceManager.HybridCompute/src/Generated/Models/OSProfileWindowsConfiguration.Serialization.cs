@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(AssessmentMode))
             {
                 writer.WritePropertyName("assessmentMode"u8);
-                writer.WriteStringValue(AssessmentMode.Value.ToString());
+                writer.WriteStringValue(AssessmentMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(PatchMode))
             {
                 writer.WritePropertyName("patchMode"u8);
-                writer.WriteStringValue(PatchMode.Value.ToString());
+                writer.WriteStringValue(PatchMode.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OSType.Value.ToString());
+                writer.WriteStringValue(OSType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
-                writer.WriteStringValue(Tier.Value.ToString());
+                writer.WriteStringValue(Tier.Value.ToSerialString());
             }
             if (Optional.IsDefined(ClusterId))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             if (Optional.IsDefined(CreatedOn))
             {

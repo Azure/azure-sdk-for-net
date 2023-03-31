@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> A. </summary>
         public static KeyVaultSkuFamily A { get; } = new KeyVaultSkuFamily(AValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KeyVaultSkuFamily"/> values are the same. </summary>
         public static bool operator ==(KeyVaultSkuFamily left, KeyVaultSkuFamily right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyVaultSkuFamily"/> values are not the same. </summary>

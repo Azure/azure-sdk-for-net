@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoClusterEngineType V2 { get; } = new KustoClusterEngineType(V2Value);
         /// <summary> V3. </summary>
         public static KustoClusterEngineType V3 { get; } = new KustoClusterEngineType(V3Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoClusterEngineType"/> values are the same. </summary>
         public static bool operator ==(KustoClusterEngineType left, KustoClusterEngineType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoClusterEngineType"/> values are not the same. </summary>

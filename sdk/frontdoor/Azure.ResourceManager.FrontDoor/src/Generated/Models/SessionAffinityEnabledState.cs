@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static SessionAffinityEnabledState Enabled { get; } = new SessionAffinityEnabledState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static SessionAffinityEnabledState Disabled { get; } = new SessionAffinityEnabledState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SessionAffinityEnabledState"/> values are the same. </summary>
         public static bool operator ==(SessionAffinityEnabledState left, SessionAffinityEnabledState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SessionAffinityEnabledState"/> values are not the same. </summary>

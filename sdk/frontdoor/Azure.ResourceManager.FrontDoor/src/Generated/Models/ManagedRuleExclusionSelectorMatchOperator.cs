@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static ManagedRuleExclusionSelectorMatchOperator EndsWith { get; } = new ManagedRuleExclusionSelectorMatchOperator(EndsWithValue);
         /// <summary> EqualsAny. </summary>
         public static ManagedRuleExclusionSelectorMatchOperator EqualsAny { get; } = new ManagedRuleExclusionSelectorMatchOperator(EqualsAnyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedRuleExclusionSelectorMatchOperator"/> values are the same. </summary>
         public static bool operator ==(ManagedRuleExclusionSelectorMatchOperator left, ManagedRuleExclusionSelectorMatchOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedRuleExclusionSelectorMatchOperator"/> values are not the same. </summary>

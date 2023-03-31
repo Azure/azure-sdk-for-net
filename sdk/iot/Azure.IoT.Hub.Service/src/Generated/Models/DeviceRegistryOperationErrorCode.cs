@@ -671,6 +671,9 @@ namespace Azure.IoT.Hub.Service.Models
         public static DeviceRegistryOperationErrorCode GenericGatewayTimeout { get; } = new DeviceRegistryOperationErrorCode(GenericGatewayTimeoutValue);
         /// <summary> GatewayTimeout. </summary>
         public static DeviceRegistryOperationErrorCode GatewayTimeout { get; } = new DeviceRegistryOperationErrorCode(GatewayTimeoutValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DeviceRegistryOperationErrorCode"/> values are the same. </summary>
         public static bool operator ==(DeviceRegistryOperationErrorCode left, DeviceRegistryOperationErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceRegistryOperationErrorCode"/> values are not the same. </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(ProviderType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ProviderType.Value.ToString());
+                writer.WriteStringValue(ProviderType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Claims))
             {

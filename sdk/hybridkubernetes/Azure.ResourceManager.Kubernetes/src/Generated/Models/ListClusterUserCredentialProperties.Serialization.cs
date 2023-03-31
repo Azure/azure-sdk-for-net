@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("authenticationMethod"u8);
-            writer.WriteStringValue(AuthenticationMethod.ToString());
+            writer.WriteStringValue(AuthenticationMethod.ToSerialString());
             writer.WritePropertyName("clientProxy"u8);
             writer.WriteBooleanValue(ClientProxy);
             writer.WriteEndObject();

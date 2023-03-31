@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static BackendPrivateEndpointStatus Disconnected { get; } = new BackendPrivateEndpointStatus(DisconnectedValue);
         /// <summary> Timeout. </summary>
         public static BackendPrivateEndpointStatus Timeout { get; } = new BackendPrivateEndpointStatus(TimeoutValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackendPrivateEndpointStatus"/> values are the same. </summary>
         public static bool operator ==(BackendPrivateEndpointStatus left, BackendPrivateEndpointStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackendPrivateEndpointStatus"/> values are not the same. </summary>

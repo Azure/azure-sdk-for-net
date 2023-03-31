@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoDatabaseCallerRole Admin { get; } = new KustoDatabaseCallerRole(AdminValue);
         /// <summary> None. </summary>
         public static KustoDatabaseCallerRole None { get; } = new KustoDatabaseCallerRole(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoDatabaseCallerRole"/> values are the same. </summary>
         public static bool operator ==(KustoDatabaseCallerRole left, KustoDatabaseCallerRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoDatabaseCallerRole"/> values are not the same. </summary>

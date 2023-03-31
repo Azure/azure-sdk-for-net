@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Kusto.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name.ToString());
+            writer.WriteStringValue(Name.ToSerialString());
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
             writer.WritePropertyName("tier"u8);
-            writer.WriteStringValue(Tier.ToString());
+            writer.WriteStringValue(Tier.ToSerialString());
             writer.WriteEndObject();
         }
 

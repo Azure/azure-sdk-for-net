@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public static KubernetesConfigurationProvisioningState Updating { get; } = new KubernetesConfigurationProvisioningState(UpdatingValue);
         /// <summary> Deleting. </summary>
         public static KubernetesConfigurationProvisioningState Deleting { get; } = new KubernetesConfigurationProvisioningState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KubernetesConfigurationProvisioningState"/> values are the same. </summary>
         public static bool operator ==(KubernetesConfigurationProvisioningState left, KubernetesConfigurationProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KubernetesConfigurationProvisioningState"/> values are not the same. </summary>

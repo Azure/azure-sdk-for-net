@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static GuestConfigurationAssignmentType ApplyAndAutoCorrect { get; } = new GuestConfigurationAssignmentType(ApplyAndAutoCorrectValue);
         /// <summary> ApplyAndMonitor. </summary>
         public static GuestConfigurationAssignmentType ApplyAndMonitor { get; } = new GuestConfigurationAssignmentType(ApplyAndMonitorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GuestConfigurationAssignmentType"/> values are the same. </summary>
         public static bool operator ==(GuestConfigurationAssignmentType left, GuestConfigurationAssignmentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GuestConfigurationAssignmentType"/> values are not the same. </summary>

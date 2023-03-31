@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Logic
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("schemaType"u8);
-            writer.WriteStringValue(SchemaType.ToString());
+            writer.WriteStringValue(SchemaType.ToSerialString());
             if (Optional.IsDefined(TargetNamespace))
             {
                 writer.WritePropertyName("targetNamespace"u8);

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("headerActionType"u8);
-            writer.WriteStringValue(HeaderActionType.ToString());
+            writer.WriteStringValue(HeaderActionType.ToSerialString());
             writer.WritePropertyName("headerName"u8);
             writer.WriteStringValue(HeaderName);
             if (Optional.IsDefined(Value))

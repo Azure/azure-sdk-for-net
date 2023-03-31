@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WritePropertyName("trimLeadingAndTrailingSpacesAndZeroes"u8);
             writer.WriteBooleanValue(TrimLeadingAndTrailingSpacesAndZeroes);
             writer.WritePropertyName("trailingSeparatorPolicy"u8);
-            writer.WriteStringValue(TrailingSeparatorPolicy.ToString());
+            writer.WriteStringValue(TrailingSeparatorPolicy.ToSerialString());
             writer.WriteEndObject();
         }
 

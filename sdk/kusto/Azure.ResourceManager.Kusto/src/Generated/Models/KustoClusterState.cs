@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoClusterState Starting { get; } = new KustoClusterState(StartingValue);
         /// <summary> Updating. </summary>
         public static KustoClusterState Updating { get; } = new KustoClusterState(UpdatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoClusterState"/> values are the same. </summary>
         public static bool operator ==(KustoClusterState left, KustoClusterState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoClusterState"/> values are not the same. </summary>

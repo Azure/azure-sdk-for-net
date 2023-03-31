@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static KeyVaultPrivateEndpointServiceConnectionStatus Rejected { get; } = new KeyVaultPrivateEndpointServiceConnectionStatus(RejectedValue);
         /// <summary> Disconnected. </summary>
         public static KeyVaultPrivateEndpointServiceConnectionStatus Disconnected { get; } = new KeyVaultPrivateEndpointServiceConnectionStatus(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KeyVaultPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(KeyVaultPrivateEndpointServiceConnectionStatus left, KeyVaultPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyVaultPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>

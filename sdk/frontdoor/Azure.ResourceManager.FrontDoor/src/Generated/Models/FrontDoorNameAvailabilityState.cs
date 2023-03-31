@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static FrontDoorNameAvailabilityState Available { get; } = new FrontDoorNameAvailabilityState(AvailableValue);
         /// <summary> Unavailable. </summary>
         public static FrontDoorNameAvailabilityState Unavailable { get; } = new FrontDoorNameAvailabilityState(UnavailableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FrontDoorNameAvailabilityState"/> values are the same. </summary>
         public static bool operator ==(FrontDoorNameAvailabilityState left, FrontDoorNameAvailabilityState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorNameAvailabilityState"/> values are not the same. </summary>

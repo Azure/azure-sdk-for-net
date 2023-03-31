@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static LogicApiType Rest { get; } = new LogicApiType(RestValue);
         /// <summary> Soap. </summary>
         public static LogicApiType Soap { get; } = new LogicApiType(SoapValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LogicApiType"/> values are the same. </summary>
         public static bool operator ==(LogicApiType left, LogicApiType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogicApiType"/> values are not the same. </summary>

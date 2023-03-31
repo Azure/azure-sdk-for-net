@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoDatabasePrincipalRole UnrestrictedViewer { get; } = new KustoDatabasePrincipalRole(UnrestrictedViewerValue);
         /// <summary> Viewer. </summary>
         public static KustoDatabasePrincipalRole Viewer { get; } = new KustoDatabasePrincipalRole(ViewerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoDatabasePrincipalRole"/> values are the same. </summary>
         public static bool operator ==(KustoDatabasePrincipalRole left, KustoDatabasePrincipalRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoDatabasePrincipalRole"/> values are not the same. </summary>

@@ -74,6 +74,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static IdentityAccessCertificatePermission Backup { get; } = new IdentityAccessCertificatePermission(BackupValue);
         /// <summary> restore. </summary>
         public static IdentityAccessCertificatePermission Restore { get; } = new IdentityAccessCertificatePermission(RestoreValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IdentityAccessCertificatePermission"/> values are the same. </summary>
         public static bool operator ==(IdentityAccessCertificatePermission left, IdentityAccessCertificatePermission right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IdentityAccessCertificatePermission"/> values are not the same. </summary>

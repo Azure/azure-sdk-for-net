@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static LatencyScorecardAggregationInterval Weekly { get; } = new LatencyScorecardAggregationInterval(WeeklyValue);
         /// <summary> Monthly. </summary>
         public static LatencyScorecardAggregationInterval Monthly { get; } = new LatencyScorecardAggregationInterval(MonthlyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LatencyScorecardAggregationInterval"/> values are the same. </summary>
         public static bool operator ==(LatencyScorecardAggregationInterval left, LatencyScorecardAggregationInterval right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LatencyScorecardAggregationInterval"/> values are not the same. </summary>

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.FluidRelay
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             if (Optional.IsDefined(Encryption))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FluidRelay
             if (Optional.IsDefined(StorageSku))
             {
                 writer.WritePropertyName("storagesku"u8);
-                writer.WriteStringValue(StorageSku.Value.ToString());
+                writer.WriteStringValue(StorageSku.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

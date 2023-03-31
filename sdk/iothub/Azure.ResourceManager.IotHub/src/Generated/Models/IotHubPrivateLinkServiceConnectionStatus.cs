@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.IotHub.Models
         public static IotHubPrivateLinkServiceConnectionStatus Rejected { get; } = new IotHubPrivateLinkServiceConnectionStatus(RejectedValue);
         /// <summary> Disconnected. </summary>
         public static IotHubPrivateLinkServiceConnectionStatus Disconnected { get; } = new IotHubPrivateLinkServiceConnectionStatus(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IotHubPrivateLinkServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(IotHubPrivateLinkServiceConnectionStatus left, IotHubPrivateLinkServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotHubPrivateLinkServiceConnectionStatus"/> values are not the same. </summary>

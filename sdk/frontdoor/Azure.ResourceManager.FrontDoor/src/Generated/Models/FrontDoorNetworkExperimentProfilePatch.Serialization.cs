@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
-                writer.WriteStringValue(EnabledState.Value.ToString());
+                writer.WriteStringValue(EnabledState.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

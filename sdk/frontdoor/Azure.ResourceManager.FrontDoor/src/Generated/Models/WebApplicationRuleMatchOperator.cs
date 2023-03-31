@@ -59,6 +59,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static WebApplicationRuleMatchOperator EndsWith { get; } = new WebApplicationRuleMatchOperator(EndsWithValue);
         /// <summary> RegEx. </summary>
         public static WebApplicationRuleMatchOperator RegEX { get; } = new WebApplicationRuleMatchOperator(RegEXValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WebApplicationRuleMatchOperator"/> values are the same. </summary>
         public static bool operator ==(WebApplicationRuleMatchOperator left, WebApplicationRuleMatchOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebApplicationRuleMatchOperator"/> values are not the same. </summary>

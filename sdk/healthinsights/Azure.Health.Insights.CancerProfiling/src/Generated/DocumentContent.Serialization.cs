@@ -16,7 +16,7 @@ namespace Azure.Health.Insights.CancerProfiling
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sourceType"u8);
-            writer.WriteStringValue(SourceType.ToString());
+            writer.WriteStringValue(SourceType.ToSerialString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
             writer.WriteEndObject();

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static NetworkPolicy Calico { get; } = new NetworkPolicy(CalicoValue);
         /// <summary> flannel. </summary>
         public static NetworkPolicy Flannel { get; } = new NetworkPolicy(FlannelValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetworkPolicy"/> values are the same. </summary>
         public static bool operator ==(NetworkPolicy left, NetworkPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkPolicy"/> values are not the same. </summary>

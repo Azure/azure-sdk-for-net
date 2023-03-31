@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Microsoft.Kusto/clusters/databases/dataConnections. </summary>
         public static KustoDataConnectionType MicrosoftKustoClustersDatabasesDataConnections { get; } = new KustoDataConnectionType(MicrosoftKustoClustersDatabasesDataConnectionsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoDataConnectionType"/> values are the same. </summary>
         public static bool operator ==(KustoDataConnectionType left, KustoDataConnectionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoDataConnectionType"/> values are not the same. </summary>

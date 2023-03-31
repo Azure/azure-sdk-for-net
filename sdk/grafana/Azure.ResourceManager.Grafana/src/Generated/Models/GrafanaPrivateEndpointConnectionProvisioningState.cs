@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Grafana.Models
         public static GrafanaPrivateEndpointConnectionProvisioningState Deleting { get; } = new GrafanaPrivateEndpointConnectionProvisioningState(DeletingValue);
         /// <summary> Failed. </summary>
         public static GrafanaPrivateEndpointConnectionProvisioningState Failed { get; } = new GrafanaPrivateEndpointConnectionProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GrafanaPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(GrafanaPrivateEndpointConnectionProvisioningState left, GrafanaPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GrafanaPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>

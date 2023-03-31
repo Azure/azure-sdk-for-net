@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public static KubernetesConfigurationProvisioningStateType Succeeded { get; } = new KubernetesConfigurationProvisioningStateType(SucceededValue);
         /// <summary> Failed. </summary>
         public static KubernetesConfigurationProvisioningStateType Failed { get; } = new KubernetesConfigurationProvisioningStateType(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KubernetesConfigurationProvisioningStateType"/> values are the same. </summary>
         public static bool operator ==(KubernetesConfigurationProvisioningStateType left, KubernetesConfigurationProvisioningStateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KubernetesConfigurationProvisioningStateType"/> values are not the same. </summary>

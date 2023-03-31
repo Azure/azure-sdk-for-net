@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <summary> ActiveDirectory. </summary>
         public static AuthenticationDirectoryType ActiveDirectory { get; } = new AuthenticationDirectoryType(ActiveDirectoryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AuthenticationDirectoryType"/> values are the same. </summary>
         public static bool operator ==(AuthenticationDirectoryType left, AuthenticationDirectoryType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AuthenticationDirectoryType"/> values are not the same. </summary>

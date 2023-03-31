@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
+                writer.WriteStringValue(State.Value.ToSerialString());
             }
             if (Optional.IsDefined(EndpointsConfiguration))
             {

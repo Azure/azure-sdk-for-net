@@ -35,6 +35,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static DocumentPageKind Slide { get; } = new DocumentPageKind(SlideValue);
         /// <summary> An embedded image from an Office/HTML file. </summary>
         public static DocumentPageKind Image { get; } = new DocumentPageKind(ImageValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DocumentPageKind"/> values are the same. </summary>
         public static bool operator ==(DocumentPageKind left, DocumentPageKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentPageKind"/> values are not the same. </summary>

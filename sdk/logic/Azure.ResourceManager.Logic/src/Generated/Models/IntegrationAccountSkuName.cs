@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static IntegrationAccountSkuName Basic { get; } = new IntegrationAccountSkuName(BasicValue);
         /// <summary> Standard. </summary>
         public static IntegrationAccountSkuName Standard { get; } = new IntegrationAccountSkuName(StandardValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IntegrationAccountSkuName"/> values are the same. </summary>
         public static bool operator ==(IntegrationAccountSkuName left, IntegrationAccountSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationAccountSkuName"/> values are not the same. </summary>

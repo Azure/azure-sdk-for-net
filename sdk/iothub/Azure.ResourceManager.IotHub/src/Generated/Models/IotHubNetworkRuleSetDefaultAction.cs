@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.IotHub.Models
         public static IotHubNetworkRuleSetDefaultAction Deny { get; } = new IotHubNetworkRuleSetDefaultAction(DenyValue);
         /// <summary> Allow. </summary>
         public static IotHubNetworkRuleSetDefaultAction Allow { get; } = new IotHubNetworkRuleSetDefaultAction(AllowValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IotHubNetworkRuleSetDefaultAction"/> values are the same. </summary>
         public static bool operator ==(IotHubNetworkRuleSetDefaultAction left, IotHubNetworkRuleSetDefaultAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotHubNetworkRuleSetDefaultAction"/> values are not the same. </summary>

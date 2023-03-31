@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Dedicated. </summary>
         public static FrontDoorEndpointConnectionCertificateType Dedicated { get; } = new FrontDoorEndpointConnectionCertificateType(DedicatedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FrontDoorEndpointConnectionCertificateType"/> values are the same. </summary>
         public static bool operator ==(FrontDoorEndpointConnectionCertificateType left, FrontDoorEndpointConnectionCertificateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorEndpointConnectionCertificateType"/> values are not the same. </summary>

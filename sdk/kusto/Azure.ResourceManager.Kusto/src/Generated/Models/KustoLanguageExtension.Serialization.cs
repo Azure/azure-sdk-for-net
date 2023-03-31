@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(LanguageExtensionName))
             {
                 writer.WritePropertyName("languageExtensionName"u8);
-                writer.WriteStringValue(LanguageExtensionName.Value.ToString());
+                writer.WriteStringValue(LanguageExtensionName.Value.ToSerialString());
             }
             if (Optional.IsDefined(LanguageExtensionImageName))
             {
                 writer.WritePropertyName("languageExtensionImageName"u8);
-                writer.WriteStringValue(LanguageExtensionImageName.Value.ToString());
+                writer.WriteStringValue(LanguageExtensionImageName.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

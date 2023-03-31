@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoDatabasePrincipalsModificationKind Replace { get; } = new KustoDatabasePrincipalsModificationKind(ReplaceValue);
         /// <summary> None. </summary>
         public static KustoDatabasePrincipalsModificationKind None { get; } = new KustoDatabasePrincipalsModificationKind(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoDatabasePrincipalsModificationKind"/> values are the same. </summary>
         public static bool operator ==(KustoDatabasePrincipalsModificationKind left, KustoDatabasePrincipalsModificationKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoDatabasePrincipalsModificationKind"/> values are not the same. </summary>

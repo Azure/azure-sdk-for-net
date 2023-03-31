@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Kusto.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("role"u8);
-            writer.WriteStringValue(Role.ToString());
+            writer.WriteStringValue(Role.ToSerialString());
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(PrincipalType.ToString());
+            writer.WriteStringValue(PrincipalType.ToSerialString());
             if (Optional.IsDefined(Fqn))
             {
                 writer.WritePropertyName("fqn"u8);

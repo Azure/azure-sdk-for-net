@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static PolicyEnabledState Disabled { get; } = new PolicyEnabledState(DisabledValue);
         /// <summary> Enabled. </summary>
         public static PolicyEnabledState Enabled { get; } = new PolicyEnabledState(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PolicyEnabledState"/> values are the same. </summary>
         public static bool operator ==(PolicyEnabledState left, PolicyEnabledState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyEnabledState"/> values are not the same. </summary>

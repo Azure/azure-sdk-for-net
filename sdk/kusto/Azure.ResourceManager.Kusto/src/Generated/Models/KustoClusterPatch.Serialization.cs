@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(AllowedIPRangeList))
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(EngineType))
             {
                 writer.WritePropertyName("engineType"u8);
-                writer.WriteStringValue(EngineType.Value.ToString());
+                writer.WriteStringValue(EngineType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(AcceptedAudiences))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(RestrictOutboundNetworkAccess))
             {
                 writer.WritePropertyName("restrictOutboundNetworkAccess"u8);
-                writer.WriteStringValue(RestrictOutboundNetworkAccess.Value.ToString());
+                writer.WriteStringValue(RestrictOutboundNetworkAccess.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(AllowedFqdnList))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(PublicIPType))
             {
                 writer.WritePropertyName("publicIPType"u8);
-                writer.WriteStringValue(PublicIPType.Value.ToString());
+                writer.WriteStringValue(PublicIPType.Value.ToSerialString());
             }
             if (Optional.IsDefined(VirtualClusterGraduationProperties))
             {

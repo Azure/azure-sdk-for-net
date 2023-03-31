@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static LogicApiDeploymentParameterVisibility Default { get; } = new LogicApiDeploymentParameterVisibility(DefaultValue);
         /// <summary> Internal. </summary>
         public static LogicApiDeploymentParameterVisibility Internal { get; } = new LogicApiDeploymentParameterVisibility(InternalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LogicApiDeploymentParameterVisibility"/> values are the same. </summary>
         public static bool operator ==(LogicApiDeploymentParameterVisibility left, LogicApiDeploymentParameterVisibility right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogicApiDeploymentParameterVisibility"/> values are not the same. </summary>

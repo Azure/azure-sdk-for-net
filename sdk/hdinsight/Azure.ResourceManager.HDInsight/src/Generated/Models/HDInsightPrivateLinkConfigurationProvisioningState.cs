@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         public static HDInsightPrivateLinkConfigurationProvisioningState Canceled { get; } = new HDInsightPrivateLinkConfigurationProvisioningState(CanceledValue);
         /// <summary> Deleting. </summary>
         public static HDInsightPrivateLinkConfigurationProvisioningState Deleting { get; } = new HDInsightPrivateLinkConfigurationProvisioningState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HDInsightPrivateLinkConfigurationProvisioningState"/> values are the same. </summary>
         public static bool operator ==(HDInsightPrivateLinkConfigurationProvisioningState left, HDInsightPrivateLinkConfigurationProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HDInsightPrivateLinkConfigurationProvisioningState"/> values are not the same. </summary>

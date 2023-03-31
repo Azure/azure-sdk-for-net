@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static WebApplicationRuleMatchVariable Cookies { get; } = new WebApplicationRuleMatchVariable(CookiesValue);
         /// <summary> SocketAddr. </summary>
         public static WebApplicationRuleMatchVariable SocketAddr { get; } = new WebApplicationRuleMatchVariable(SocketAddrValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WebApplicationRuleMatchVariable"/> values are the same. </summary>
         public static bool operator ==(WebApplicationRuleMatchVariable left, WebApplicationRuleMatchVariable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebApplicationRuleMatchVariable"/> values are not the same. </summary>

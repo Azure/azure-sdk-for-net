@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Logic
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("mapType"u8);
-            writer.WriteStringValue(MapType.ToString());
+            writer.WriteStringValue(MapType.ToSerialString());
             if (Optional.IsDefined(ParametersSchema))
             {
                 writer.WritePropertyName("parametersSchema"u8);

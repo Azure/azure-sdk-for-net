@@ -29,6 +29,9 @@ namespace Azure.Health.Insights.ClinicalMatching
         public static ClinicalTrialSource Custom { get; } = new ClinicalTrialSource(CustomValue);
         /// <summary> clinicaltrials.gov. </summary>
         public static ClinicalTrialSource ClinicaltrialsGov { get; } = new ClinicalTrialSource(ClinicaltrialsGovValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ClinicalTrialSource"/> values are the same. </summary>
         public static bool operator ==(ClinicalTrialSource left, ClinicalTrialSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClinicalTrialSource"/> values are not the same. </summary>

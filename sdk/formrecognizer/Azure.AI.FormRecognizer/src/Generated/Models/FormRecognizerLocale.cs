@@ -38,6 +38,9 @@ namespace Azure.AI.FormRecognizer
         public static FormRecognizerLocale EnIN { get; } = new FormRecognizerLocale(EnINValue);
         /// <summary> en-US. </summary>
         public static FormRecognizerLocale EnUS { get; } = new FormRecognizerLocale(EnUSValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FormRecognizerLocale"/> values are the same. </summary>
         public static bool operator ==(FormRecognizerLocale left, FormRecognizerLocale right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FormRecognizerLocale"/> values are not the same. </summary>

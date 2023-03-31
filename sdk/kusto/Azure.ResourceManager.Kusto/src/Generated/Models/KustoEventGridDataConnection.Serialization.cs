@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccountResourceId))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(DataFormat))
             {
                 writer.WritePropertyName("dataFormat"u8);
-                writer.WriteStringValue(DataFormat.Value.ToString());
+                writer.WriteStringValue(DataFormat.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsFirstRecordIgnored))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(BlobStorageEventType))
             {
                 writer.WritePropertyName("blobStorageEventType"u8);
-                writer.WriteStringValue(BlobStorageEventType.Value.ToString());
+                writer.WriteStringValue(BlobStorageEventType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ManagedIdentityResourceId))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(DatabaseRouting))
             {
                 writer.WritePropertyName("databaseRouting"u8);
-                writer.WriteStringValue(DatabaseRouting.Value.ToString());
+                writer.WriteStringValue(DatabaseRouting.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

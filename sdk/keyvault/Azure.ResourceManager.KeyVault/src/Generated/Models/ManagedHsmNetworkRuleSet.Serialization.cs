@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.KeyVault.Models
             if (Optional.IsDefined(Bypass))
             {
                 writer.WritePropertyName("bypass"u8);
-                writer.WriteStringValue(Bypass.Value.ToString());
+                writer.WriteStringValue(Bypass.Value.ToSerialString());
             }
             if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
-                writer.WriteStringValue(DefaultAction.Value.ToString());
+                writer.WriteStringValue(DefaultAction.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(IPRules))
             {

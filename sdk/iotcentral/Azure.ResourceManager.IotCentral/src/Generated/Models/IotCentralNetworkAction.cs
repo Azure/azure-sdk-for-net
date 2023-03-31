@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.IotCentral.Models
         public static IotCentralNetworkAction Allow { get; } = new IotCentralNetworkAction(AllowValue);
         /// <summary> Deny. </summary>
         public static IotCentralNetworkAction Deny { get; } = new IotCentralNetworkAction(DenyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IotCentralNetworkAction"/> values are the same. </summary>
         public static bool operator ==(IotCentralNetworkAction left, IotCentralNetworkAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotCentralNetworkAction"/> values are not the same. </summary>

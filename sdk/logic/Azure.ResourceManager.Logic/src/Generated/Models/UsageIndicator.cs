@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static UsageIndicator Information { get; } = new UsageIndicator(InformationValue);
         /// <summary> Production. </summary>
         public static UsageIndicator Production { get; } = new UsageIndicator(ProductionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UsageIndicator"/> values are the same. </summary>
         public static bool operator ==(UsageIndicator left, UsageIndicator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UsageIndicator"/> values are not the same. </summary>

@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WritePropertyName("overwriteExistingTransactionSetControlNumber"u8);
             writer.WriteBooleanValue(OverwriteExistingTransactionSetControlNumber);
             writer.WritePropertyName("groupHeaderDateFormat"u8);
-            writer.WriteStringValue(GroupHeaderDateFormat.ToString());
+            writer.WriteStringValue(GroupHeaderDateFormat.ToSerialString());
             writer.WritePropertyName("groupHeaderTimeFormat"u8);
-            writer.WriteStringValue(GroupHeaderTimeFormat.ToString());
+            writer.WriteStringValue(GroupHeaderTimeFormat.ToSerialString());
             writer.WritePropertyName("usageIndicator"u8);
-            writer.WriteStringValue(UsageIndicator.ToString());
+            writer.WriteStringValue(UsageIndicator.ToSerialString());
             writer.WriteEndObject();
         }
 

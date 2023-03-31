@@ -35,6 +35,9 @@ namespace Azure.IoT.Hub.Service.Models
         public static TwinAuthenticationType CertificateAuthority { get; } = new TwinAuthenticationType(CertificateAuthorityValue);
         /// <summary> none. </summary>
         public static TwinAuthenticationType None { get; } = new TwinAuthenticationType(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TwinAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(TwinAuthenticationType left, TwinAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TwinAuthenticationType"/> values are not the same. </summary>

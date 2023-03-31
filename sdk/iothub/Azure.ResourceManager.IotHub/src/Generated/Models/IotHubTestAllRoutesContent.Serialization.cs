@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(RoutingSource))
             {
                 writer.WritePropertyName("routingSource"u8);
-                writer.WriteStringValue(RoutingSource.Value.ToString());
+                writer.WriteStringValue(RoutingSource.Value.ToSerialString());
             }
             if (Optional.IsDefined(Message))
             {

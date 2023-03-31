@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static Mode LB { get; } = new Mode(LBValue);
         /// <summary> User. </summary>
         public static Mode User { get; } = new Mode(UserValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="Mode"/> values are the same. </summary>
         public static bool operator ==(Mode left, Mode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Mode"/> values are not the same. </summary>

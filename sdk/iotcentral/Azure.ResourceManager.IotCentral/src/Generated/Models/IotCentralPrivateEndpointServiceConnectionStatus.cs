@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.IotCentral.Models
         public static IotCentralPrivateEndpointServiceConnectionStatus Approved { get; } = new IotCentralPrivateEndpointServiceConnectionStatus(ApprovedValue);
         /// <summary> Rejected. </summary>
         public static IotCentralPrivateEndpointServiceConnectionStatus Rejected { get; } = new IotCentralPrivateEndpointServiceConnectionStatus(RejectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IotCentralPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(IotCentralPrivateEndpointServiceConnectionStatus left, IotCentralPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotCentralPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>

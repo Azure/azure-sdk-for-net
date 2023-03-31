@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static EventHubMessagesCompressionType None { get; } = new EventHubMessagesCompressionType(NoneValue);
         /// <summary> GZip. </summary>
         public static EventHubMessagesCompressionType GZip { get; } = new EventHubMessagesCompressionType(GZipValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventHubMessagesCompressionType"/> values are the same. </summary>
         public static bool operator ==(EventHubMessagesCompressionType left, EventHubMessagesCompressionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventHubMessagesCompressionType"/> values are not the same. </summary>

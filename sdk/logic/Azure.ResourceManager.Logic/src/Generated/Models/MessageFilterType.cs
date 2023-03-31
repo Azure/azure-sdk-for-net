@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static MessageFilterType Include { get; } = new MessageFilterType(IncludeValue);
         /// <summary> Exclude. </summary>
         public static MessageFilterType Exclude { get; } = new MessageFilterType(ExcludeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MessageFilterType"/> values are the same. </summary>
         public static bool operator ==(MessageFilterType left, MessageFilterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MessageFilterType"/> values are not the same. </summary>

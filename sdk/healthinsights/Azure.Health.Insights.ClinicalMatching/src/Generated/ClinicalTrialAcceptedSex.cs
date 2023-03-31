@@ -32,6 +32,9 @@ namespace Azure.Health.Insights.ClinicalMatching
         public static ClinicalTrialAcceptedSex Female { get; } = new ClinicalTrialAcceptedSex(FemaleValue);
         /// <summary> male. </summary>
         public static ClinicalTrialAcceptedSex Male { get; } = new ClinicalTrialAcceptedSex(MaleValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ClinicalTrialAcceptedSex"/> values are the same. </summary>
         public static bool operator ==(ClinicalTrialAcceptedSex left, ClinicalTrialAcceptedSex right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClinicalTrialAcceptedSex"/> values are not the same. </summary>

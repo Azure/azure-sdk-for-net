@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Grafana.Models
         public static GrafanaPublicNetworkAccess Enabled { get; } = new GrafanaPublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static GrafanaPublicNetworkAccess Disabled { get; } = new GrafanaPublicNetworkAccess(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GrafanaPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(GrafanaPublicNetworkAccess left, GrafanaPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GrafanaPublicNetworkAccess"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static ManagedHsmPublicNetworkAccess Enabled { get; } = new ManagedHsmPublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static ManagedHsmPublicNetworkAccess Disabled { get; } = new ManagedHsmPublicNetworkAccess(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedHsmPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(ManagedHsmPublicNetworkAccess left, ManagedHsmPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedHsmPublicNetworkAccess"/> values are not the same. </summary>

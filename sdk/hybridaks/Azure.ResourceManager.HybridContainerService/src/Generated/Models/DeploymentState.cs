@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static DeploymentState Failed { get; } = new DeploymentState(FailedValue);
         /// <summary> upgrading. </summary>
         public static DeploymentState Upgrading { get; } = new DeploymentState(UpgradingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DeploymentState"/> values are the same. </summary>
         public static bool operator ==(DeploymentState left, DeploymentState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeploymentState"/> values are not the same. </summary>

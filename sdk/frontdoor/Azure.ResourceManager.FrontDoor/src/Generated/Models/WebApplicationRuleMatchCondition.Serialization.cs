@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("matchVariable"u8);
-            writer.WriteStringValue(MatchVariable.ToString());
+            writer.WriteStringValue(MatchVariable.ToSerialString());
             if (Optional.IsDefined(Selector))
             {
                 writer.WritePropertyName("selector"u8);
                 writer.WriteStringValue(Selector);
             }
             writer.WritePropertyName("operator"u8);
-            writer.WriteStringValue(Operator.ToString());
+            writer.WriteStringValue(Operator.ToSerialString());
             if (Optional.IsDefined(IsNegateCondition))
             {
                 writer.WritePropertyName("negateCondition"u8);
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in Transforms)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

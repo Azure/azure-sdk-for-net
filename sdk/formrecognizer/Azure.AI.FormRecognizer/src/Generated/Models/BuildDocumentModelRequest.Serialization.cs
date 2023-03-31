@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("buildMode"u8);
-            writer.WriteStringValue(BuildMode.ToString());
+            writer.WriteStringValue(BuildMode.ToSerialString());
             if (Optional.IsDefined(AzureBlobSource))
             {
                 writer.WritePropertyName("azureBlobSource"u8);

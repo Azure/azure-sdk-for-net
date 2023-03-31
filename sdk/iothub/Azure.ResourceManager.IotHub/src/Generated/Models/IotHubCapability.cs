@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.IotHub.Models
         public static IotHubCapability None { get; } = new IotHubCapability(NoneValue);
         /// <summary> DeviceManagement. </summary>
         public static IotHubCapability DeviceManagement { get; } = new IotHubCapability(DeviceManagementValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IotHubCapability"/> values are the same. </summary>
         public static bool operator ==(IotHubCapability left, IotHubCapability right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotHubCapability"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public static ConnectivityStatus Offline { get; } = new ConnectivityStatus(OfflineValue);
         /// <summary> Expired. </summary>
         public static ConnectivityStatus Expired { get; } = new ConnectivityStatus(ExpiredValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConnectivityStatus"/> values are the same. </summary>
         public static bool operator ==(ConnectivityStatus left, ConnectivityStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectivityStatus"/> values are not the same. </summary>

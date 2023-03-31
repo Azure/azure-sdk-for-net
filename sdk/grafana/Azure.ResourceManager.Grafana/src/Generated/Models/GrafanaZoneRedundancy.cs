@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Grafana.Models
         public static GrafanaZoneRedundancy Disabled { get; } = new GrafanaZoneRedundancy(DisabledValue);
         /// <summary> Enabled. </summary>
         public static GrafanaZoneRedundancy Enabled { get; } = new GrafanaZoneRedundancy(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GrafanaZoneRedundancy"/> values are the same. </summary>
         public static bool operator ==(GrafanaZoneRedundancy left, GrafanaZoneRedundancy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GrafanaZoneRedundancy"/> values are not the same. </summary>

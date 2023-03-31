@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> None. </summary>
         public static ManagedHsmActionsRequiredMessage None { get; } = new ManagedHsmActionsRequiredMessage(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedHsmActionsRequiredMessage"/> values are the same. </summary>
         public static bool operator ==(ManagedHsmActionsRequiredMessage left, ManagedHsmActionsRequiredMessage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedHsmActionsRequiredMessage"/> values are not the same. </summary>

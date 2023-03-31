@@ -47,6 +47,9 @@ namespace Azure.IoT.Hub.Service.Models
         public static QueryResultType EnrollmentGroup { get; } = new QueryResultType(EnrollmentGroupValue);
         /// <summary> deviceRegistration. </summary>
         public static QueryResultType DeviceRegistration { get; } = new QueryResultType(DeviceRegistrationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="QueryResultType"/> values are the same. </summary>
         public static bool operator ==(QueryResultType left, QueryResultType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QueryResultType"/> values are not the same. </summary>

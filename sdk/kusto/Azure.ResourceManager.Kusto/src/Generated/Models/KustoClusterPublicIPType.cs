@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoClusterPublicIPType IPv4 { get; } = new KustoClusterPublicIPType(IPv4Value);
         /// <summary> DualStack. </summary>
         public static KustoClusterPublicIPType DualStack { get; } = new KustoClusterPublicIPType(DualStackValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoClusterPublicIPType"/> values are the same. </summary>
         public static bool operator ==(KustoClusterPublicIPType left, KustoClusterPublicIPType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoClusterPublicIPType"/> values are not the same. </summary>

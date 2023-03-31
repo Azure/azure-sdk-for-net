@@ -26,6 +26,9 @@ namespace Azure.Health.Insights.ClinicalMatching
 
         /// <summary> Point. </summary>
         public static GeoJsonGeometryType Point { get; } = new GeoJsonGeometryType(PointValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GeoJsonGeometryType"/> values are the same. </summary>
         public static bool operator ==(GeoJsonGeometryType left, GeoJsonGeometryType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GeoJsonGeometryType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static ActionAfterReboot ContinueConfiguration { get; } = new ActionAfterReboot(ContinueConfigurationValue);
         /// <summary> StopConfiguration. </summary>
         public static ActionAfterReboot StopConfiguration { get; } = new ActionAfterReboot(StopConfigurationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ActionAfterReboot"/> values are the same. </summary>
         public static bool operator ==(ActionAfterReboot left, ActionAfterReboot right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ActionAfterReboot"/> values are not the same. </summary>

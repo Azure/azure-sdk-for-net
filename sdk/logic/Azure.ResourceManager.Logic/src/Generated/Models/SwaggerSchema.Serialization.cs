@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(SchemaType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(SchemaType.Value.ToString());
+                writer.WriteStringValue(SchemaType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Title))
             {

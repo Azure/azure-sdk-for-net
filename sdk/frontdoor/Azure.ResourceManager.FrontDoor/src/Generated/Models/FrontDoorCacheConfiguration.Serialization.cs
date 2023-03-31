@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(QueryParameterStripDirective))
             {
                 writer.WritePropertyName("queryParameterStripDirective"u8);
-                writer.WriteStringValue(QueryParameterStripDirective.Value.ToString());
+                writer.WriteStringValue(QueryParameterStripDirective.Value.ToSerialString());
             }
             if (Optional.IsDefined(QueryParameters))
             {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(DynamicCompression))
             {
                 writer.WritePropertyName("dynamicCompression"u8);
-                writer.WriteStringValue(DynamicCompression.Value.ToString());
+                writer.WriteStringValue(DynamicCompression.Value.ToSerialString());
             }
             if (Optional.IsDefined(CacheDuration))
             {

@@ -18,7 +18,7 @@ namespace Azure.Security.KeyVault.Storage.Models
             writer.WritePropertyName("templateUri"u8);
             writer.WriteStringValue(TemplateUri);
             writer.WritePropertyName("sasType"u8);
-            writer.WriteStringValue(SasType.ToString());
+            writer.WriteStringValue(SasType.ToSerialString());
             writer.WritePropertyName("validityPeriod"u8);
             writer.WriteStringValue(ValidityPeriod);
             if (Optional.IsDefined(SasDefinitionAttributes))

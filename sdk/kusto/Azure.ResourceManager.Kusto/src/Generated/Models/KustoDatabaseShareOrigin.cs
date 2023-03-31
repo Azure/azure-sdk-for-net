@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoDatabaseShareOrigin DataShare { get; } = new KustoDatabaseShareOrigin(DataShareValue);
         /// <summary> Other. </summary>
         public static KustoDatabaseShareOrigin Other { get; } = new KustoDatabaseShareOrigin(OtherValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoDatabaseShareOrigin"/> values are the same. </summary>
         public static bool operator ==(KustoDatabaseShareOrigin left, KustoDatabaseShareOrigin right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoDatabaseShareOrigin"/> values are not the same. </summary>

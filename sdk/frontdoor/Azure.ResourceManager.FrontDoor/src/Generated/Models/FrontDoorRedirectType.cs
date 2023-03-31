@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static FrontDoorRedirectType TemporaryRedirect { get; } = new FrontDoorRedirectType(TemporaryRedirectValue);
         /// <summary> PermanentRedirect. </summary>
         public static FrontDoorRedirectType PermanentRedirect { get; } = new FrontDoorRedirectType(PermanentRedirectValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FrontDoorRedirectType"/> values are the same. </summary>
         public static bool operator ==(FrontDoorRedirectType left, FrontDoorRedirectType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorRedirectType"/> values are not the same. </summary>

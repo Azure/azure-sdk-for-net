@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.IotCentral.Models
         public static IotCentralProvisioningState Failed { get; } = new IotCentralProvisioningState(FailedValue);
         /// <summary> Canceled. </summary>
         public static IotCentralProvisioningState Canceled { get; } = new IotCentralProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IotCentralProvisioningState"/> values are the same. </summary>
         public static bool operator ==(IotCentralProvisioningState left, IotCentralProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotCentralProvisioningState"/> values are not the same. </summary>

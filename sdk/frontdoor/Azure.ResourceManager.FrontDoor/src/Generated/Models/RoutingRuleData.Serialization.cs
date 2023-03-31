@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in AcceptedProtocols)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
-                writer.WriteStringValue(EnabledState.Value.ToString());
+                writer.WriteStringValue(EnabledState.Value.ToSerialString());
             }
             if (Optional.IsDefined(RouteConfiguration))
             {

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Microsoft.Kusto/clusters/attachedDatabaseConfigurations. </summary>
         public static AttachedDatabaseType MicrosoftKustoClustersAttachedDatabaseConfigurations { get; } = new AttachedDatabaseType(MicrosoftKustoClustersAttachedDatabaseConfigurationsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AttachedDatabaseType"/> values are the same. </summary>
         public static bool operator ==(AttachedDatabaseType left, AttachedDatabaseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AttachedDatabaseType"/> values are not the same. </summary>

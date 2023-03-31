@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static WebApplicationRuleType MatchRule { get; } = new WebApplicationRuleType(MatchRuleValue);
         /// <summary> RateLimitRule. </summary>
         public static WebApplicationRuleType RateLimitRule { get; } = new WebApplicationRuleType(RateLimitRuleValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WebApplicationRuleType"/> values are the same. </summary>
         public static bool operator ==(WebApplicationRuleType left, WebApplicationRuleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebApplicationRuleType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static V3SelectionMarkState Selected { get; } = new V3SelectionMarkState(SelectedValue);
         /// <summary> The selection mark is not selected. </summary>
         public static V3SelectionMarkState Unselected { get; } = new V3SelectionMarkState(UnselectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="V3SelectionMarkState"/> values are the same. </summary>
         public static bool operator ==(V3SelectionMarkState left, V3SelectionMarkState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="V3SelectionMarkState"/> values are not the same. </summary>

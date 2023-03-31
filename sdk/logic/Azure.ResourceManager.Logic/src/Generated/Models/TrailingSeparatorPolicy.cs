@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static TrailingSeparatorPolicy Optional { get; } = new TrailingSeparatorPolicy(OptionalValue);
         /// <summary> Mandatory. </summary>
         public static TrailingSeparatorPolicy Mandatory { get; } = new TrailingSeparatorPolicy(MandatoryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TrailingSeparatorPolicy"/> values are the same. </summary>
         public static bool operator ==(TrailingSeparatorPolicy left, TrailingSeparatorPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrailingSeparatorPolicy"/> values are not the same. </summary>

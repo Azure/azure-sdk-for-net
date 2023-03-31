@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(EndpointType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(EndpointType.Value.ToString());
+                writer.WriteStringValue(EndpointType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

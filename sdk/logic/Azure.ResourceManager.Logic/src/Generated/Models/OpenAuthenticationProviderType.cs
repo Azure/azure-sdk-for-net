@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Logic.Models
 
         /// <summary> AAD. </summary>
         public static OpenAuthenticationProviderType AAD { get; } = new OpenAuthenticationProviderType(AADValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OpenAuthenticationProviderType"/> values are the same. </summary>
         public static bool operator ==(OpenAuthenticationProviderType left, OpenAuthenticationProviderType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OpenAuthenticationProviderType"/> values are not the same. </summary>

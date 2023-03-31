@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.IotCentral
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
             if (Optional.IsDefined(NetworkRuleSets))
             {

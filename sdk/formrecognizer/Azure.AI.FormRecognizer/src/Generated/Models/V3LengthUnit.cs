@@ -29,6 +29,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static V3LengthUnit Pixel { get; } = new V3LengthUnit(PixelValue);
         /// <summary> Length unit for PDF files. </summary>
         public static V3LengthUnit Inch { get; } = new V3LengthUnit(InchValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="V3LengthUnit"/> values are the same. </summary>
         public static bool operator ==(V3LengthUnit left, V3LengthUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="V3LengthUnit"/> values are not the same. </summary>

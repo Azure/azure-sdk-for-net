@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.FluidRelay.Models
         public static FluidRelayStorageSku Standard { get; } = new FluidRelayStorageSku(StandardValue);
         /// <summary> basic. </summary>
         public static FluidRelayStorageSku Basic { get; } = new FluidRelayStorageSku(BasicValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FluidRelayStorageSku"/> values are the same. </summary>
         public static bool operator ==(FluidRelayStorageSku left, FluidRelayStorageSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FluidRelayStorageSku"/> values are not the same. </summary>

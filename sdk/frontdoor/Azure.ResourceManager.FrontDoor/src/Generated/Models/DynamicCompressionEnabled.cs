@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static DynamicCompressionEnabled Enabled { get; } = new DynamicCompressionEnabled(EnabledValue);
         /// <summary> Disabled. </summary>
         public static DynamicCompressionEnabled Disabled { get; } = new DynamicCompressionEnabled(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DynamicCompressionEnabled"/> values are the same. </summary>
         public static bool operator ==(DynamicCompressionEnabled left, DynamicCompressionEnabled right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynamicCompressionEnabled"/> values are not the same. </summary>

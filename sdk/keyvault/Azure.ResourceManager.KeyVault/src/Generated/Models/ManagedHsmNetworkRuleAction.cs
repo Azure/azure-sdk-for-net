@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static ManagedHsmNetworkRuleAction Allow { get; } = new ManagedHsmNetworkRuleAction(AllowValue);
         /// <summary> Deny. </summary>
         public static ManagedHsmNetworkRuleAction Deny { get; } = new ManagedHsmNetworkRuleAction(DenyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedHsmNetworkRuleAction"/> values are the same. </summary>
         public static bool operator ==(ManagedHsmNetworkRuleAction left, ManagedHsmNetworkRuleAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedHsmNetworkRuleAction"/> values are not the same. </summary>

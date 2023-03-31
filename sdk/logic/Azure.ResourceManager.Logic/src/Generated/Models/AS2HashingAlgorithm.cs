@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static AS2HashingAlgorithm Sha2384 { get; } = new AS2HashingAlgorithm(Sha2384Value);
         /// <summary> SHA2512. </summary>
         public static AS2HashingAlgorithm Sha2512 { get; } = new AS2HashingAlgorithm(Sha2512Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AS2HashingAlgorithm"/> values are the same. </summary>
         public static bool operator ==(AS2HashingAlgorithm left, AS2HashingAlgorithm right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AS2HashingAlgorithm"/> values are not the same. </summary>

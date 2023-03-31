@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.IotCentral.Models
         public static IotCentralPrivateEndpointConnectionProvisioningState Deleting { get; } = new IotCentralPrivateEndpointConnectionProvisioningState(DeletingValue);
         /// <summary> Failed. </summary>
         public static IotCentralPrivateEndpointConnectionProvisioningState Failed { get; } = new IotCentralPrivateEndpointConnectionProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IotCentralPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(IotCentralPrivateEndpointConnectionProvisioningState left, IotCentralPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotCentralPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>
