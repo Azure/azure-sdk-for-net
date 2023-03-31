@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
-            writer.WriteStringValue(EndpointType.ToString());
+            writer.WriteStringValue(EndpointType.ToSerialString());
             writer.WriteEndObject();
         }
 

@@ -59,6 +59,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public static DeviceProvisioningServicesState FailingOver { get; } = new DeviceProvisioningServicesState(FailingOverValue);
         /// <summary> FailoverFailed. </summary>
         public static DeviceProvisioningServicesState FailoverFailed { get; } = new DeviceProvisioningServicesState(FailoverFailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesState"/> values are the same. </summary>
         public static bool operator ==(DeviceProvisioningServicesState left, DeviceProvisioningServicesState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesState"/> values are not the same. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("operatorType"u8);
-            writer.WriteStringValue(OperatorType.ToString());
+            writer.WriteStringValue(OperatorType.ToSerialString());
             if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);

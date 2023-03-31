@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             if (Optional.IsDefined(ScheduledType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ScheduledType.Value.ToString());
+                writer.WriteStringValue(ScheduledType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Frequency))
             {
                 writer.WritePropertyName("frequency"u8);
-                writer.WriteStringValue(Frequency.Value.ToString());
+                writer.WriteStringValue(Frequency.Value.ToSerialString());
             }
             if (Optional.IsDefined(Time))
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
+                writer.WriteStringValue(State.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

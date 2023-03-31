@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static SapCloudForCustomerSinkWriteBehavior Insert { get; } = new SapCloudForCustomerSinkWriteBehavior(InsertValue);
         /// <summary> Update. </summary>
         public static SapCloudForCustomerSinkWriteBehavior Update { get; } = new SapCloudForCustomerSinkWriteBehavior(UpdateValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SapCloudForCustomerSinkWriteBehavior"/> values are the same. </summary>
         public static bool operator ==(SapCloudForCustomerSinkWriteBehavior left, SapCloudForCustomerSinkWriteBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapCloudForCustomerSinkWriteBehavior"/> values are not the same. </summary>

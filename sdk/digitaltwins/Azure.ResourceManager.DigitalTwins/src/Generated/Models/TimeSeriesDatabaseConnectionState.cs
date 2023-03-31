@@ -59,6 +59,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static TimeSeriesDatabaseConnectionState Moving { get; } = new TimeSeriesDatabaseConnectionState(MovingValue);
         /// <summary> Disabled. </summary>
         public static TimeSeriesDatabaseConnectionState Disabled { get; } = new TimeSeriesDatabaseConnectionState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TimeSeriesDatabaseConnectionState"/> values are the same. </summary>
         public static bool operator ==(TimeSeriesDatabaseConnectionState left, TimeSeriesDatabaseConnectionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TimeSeriesDatabaseConnectionState"/> values are not the same. </summary>

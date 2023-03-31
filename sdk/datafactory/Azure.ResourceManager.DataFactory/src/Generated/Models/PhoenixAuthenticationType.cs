@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static PhoenixAuthenticationType UsernameAndPassword { get; } = new PhoenixAuthenticationType(UsernameAndPasswordValue);
         /// <summary> WindowsAzureHDInsightService. </summary>
         public static PhoenixAuthenticationType WindowsAzureHDInsightService { get; } = new PhoenixAuthenticationType(WindowsAzureHDInsightServiceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PhoenixAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(PhoenixAuthenticationType left, PhoenixAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PhoenixAuthenticationType"/> values are not the same. </summary>

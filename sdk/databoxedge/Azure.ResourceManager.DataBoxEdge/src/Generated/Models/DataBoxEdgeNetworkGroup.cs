@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeNetworkGroup NonRdma { get; } = new DataBoxEdgeNetworkGroup(NonRdmaValue);
         /// <summary> RDMA. </summary>
         public static DataBoxEdgeNetworkGroup Rdma { get; } = new DataBoxEdgeNetworkGroup(RdmaValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeNetworkGroup"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeNetworkGroup left, DataBoxEdgeNetworkGroup right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeNetworkGroup"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static VirtualApplicationGroupType RemoteApp { get; } = new VirtualApplicationGroupType(RemoteAppValue);
         /// <summary> Desktop. </summary>
         public static VirtualApplicationGroupType Desktop { get; } = new VirtualApplicationGroupType(DesktopValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VirtualApplicationGroupType"/> values are the same. </summary>
         public static bool operator ==(VirtualApplicationGroupType left, VirtualApplicationGroupType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualApplicationGroupType"/> values are not the same. </summary>

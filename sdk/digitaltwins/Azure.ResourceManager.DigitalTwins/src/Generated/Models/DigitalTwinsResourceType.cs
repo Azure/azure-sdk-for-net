@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         /// <summary> Microsoft.DigitalTwins/digitalTwinsInstances. </summary>
         public static DigitalTwinsResourceType MicrosoftDigitalTwinsDigitalTwinsInstances { get; } = new DigitalTwinsResourceType(MicrosoftDigitalTwinsDigitalTwinsInstancesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DigitalTwinsResourceType"/> values are the same. </summary>
         public static bool operator ==(DigitalTwinsResourceType left, DigitalTwinsResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DigitalTwinsResourceType"/> values are not the same. </summary>

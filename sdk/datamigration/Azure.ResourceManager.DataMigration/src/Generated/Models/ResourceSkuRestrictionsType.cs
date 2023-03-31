@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> location. </summary>
         public static ResourceSkuRestrictionsType Location { get; } = new ResourceSkuRestrictionsType(LocationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResourceSkuRestrictionsType"/> values are the same. </summary>
         public static bool operator ==(ResourceSkuRestrictionsType left, ResourceSkuRestrictionsType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceSkuRestrictionsType"/> values are not the same. </summary>

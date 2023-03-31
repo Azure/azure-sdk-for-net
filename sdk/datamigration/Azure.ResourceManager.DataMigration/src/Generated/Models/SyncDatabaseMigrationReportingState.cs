@@ -77,6 +77,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static SyncDatabaseMigrationReportingState BackupINProgress { get; } = new SyncDatabaseMigrationReportingState(BackupINProgressValue);
         /// <summary> BACKUP_COMPLETED. </summary>
         public static SyncDatabaseMigrationReportingState BackupCompleted { get; } = new SyncDatabaseMigrationReportingState(BackupCompletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SyncDatabaseMigrationReportingState"/> values are the same. </summary>
         public static bool operator ==(SyncDatabaseMigrationReportingState left, SyncDatabaseMigrationReportingState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SyncDatabaseMigrationReportingState"/> values are not the same. </summary>

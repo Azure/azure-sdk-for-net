@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public static DnsForwardingRuleState Enabled { get; } = new DnsForwardingRuleState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static DnsForwardingRuleState Disabled { get; } = new DnsForwardingRuleState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DnsForwardingRuleState"/> values are the same. </summary>
         public static bool operator ==(DnsForwardingRuleState left, DnsForwardingRuleState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DnsForwardingRuleState"/> values are not the same. </summary>

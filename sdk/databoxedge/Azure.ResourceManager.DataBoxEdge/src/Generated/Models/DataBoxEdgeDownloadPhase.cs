@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeDownloadPhase Downloading { get; } = new DataBoxEdgeDownloadPhase(DownloadingValue);
         /// <summary> Verifying. </summary>
         public static DataBoxEdgeDownloadPhase Verifying { get; } = new DataBoxEdgeDownloadPhase(VerifyingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeDownloadPhase"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeDownloadPhase left, DataBoxEdgeDownloadPhase right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeDownloadPhase"/> values are not the same. </summary>

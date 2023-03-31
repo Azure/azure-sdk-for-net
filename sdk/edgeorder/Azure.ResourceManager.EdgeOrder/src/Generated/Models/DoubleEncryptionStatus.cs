@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static DoubleEncryptionStatus Disabled { get; } = new DoubleEncryptionStatus(DisabledValue);
         /// <summary> Double encryption is enabled. </summary>
         public static DoubleEncryptionStatus Enabled { get; } = new DoubleEncryptionStatus(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DoubleEncryptionStatus"/> values are the same. </summary>
         public static bool operator ==(DoubleEncryptionStatus left, DoubleEncryptionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DoubleEncryptionStatus"/> values are not the same. </summary>

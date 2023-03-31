@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static HealthCheckStatus Warning { get; } = new HealthCheckStatus(WarningValue);
         /// <summary> Unknown. </summary>
         public static HealthCheckStatus Unknown { get; } = new HealthCheckStatus(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HealthCheckStatus"/> values are the same. </summary>
         public static bool operator ==(HealthCheckStatus left, HealthCheckStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HealthCheckStatus"/> values are not the same. </summary>

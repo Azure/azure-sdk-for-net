@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DevSpaces.Models
 
         /// <summary> Standard. </summary>
         public static DevSpacesSkuTier Standard { get; } = new DevSpacesSkuTier(StandardValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DevSpacesSkuTier"/> values are the same. </summary>
         public static bool operator ==(DevSpacesSkuTier left, DevSpacesSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevSpacesSkuTier"/> values are not the same. </summary>

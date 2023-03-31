@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(SyncStatus))
             {
                 writer.WritePropertyName("syncStatus"u8);
-                writer.WriteStringValue(SyncStatus.Value.ToString());
+                writer.WriteStringValue(SyncStatus.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

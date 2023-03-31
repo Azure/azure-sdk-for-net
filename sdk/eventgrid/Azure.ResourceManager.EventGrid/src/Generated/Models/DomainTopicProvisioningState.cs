@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static DomainTopicProvisioningState Canceled { get; } = new DomainTopicProvisioningState(CanceledValue);
         /// <summary> Failed. </summary>
         public static DomainTopicProvisioningState Failed { get; } = new DomainTopicProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DomainTopicProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DomainTopicProvisioningState left, DomainTopicProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DomainTopicProvisioningState"/> values are not the same. </summary>

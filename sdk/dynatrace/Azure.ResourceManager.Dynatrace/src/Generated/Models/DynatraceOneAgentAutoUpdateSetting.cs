@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static DynatraceOneAgentAutoUpdateSetting Enabled { get; } = new DynatraceOneAgentAutoUpdateSetting(EnabledValue);
         /// <summary> DISABLED. </summary>
         public static DynatraceOneAgentAutoUpdateSetting Disabled { get; } = new DynatraceOneAgentAutoUpdateSetting(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DynatraceOneAgentAutoUpdateSetting"/> values are the same. </summary>
         public static bool operator ==(DynatraceOneAgentAutoUpdateSetting left, DynatraceOneAgentAutoUpdateSetting right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynatraceOneAgentAutoUpdateSetting"/> values are not the same. </summary>

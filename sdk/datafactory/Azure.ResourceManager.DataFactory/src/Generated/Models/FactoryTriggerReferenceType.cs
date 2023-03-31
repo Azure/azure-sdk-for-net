@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> TriggerReference. </summary>
         public static FactoryTriggerReferenceType TriggerReference { get; } = new FactoryTriggerReferenceType(TriggerReferenceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FactoryTriggerReferenceType"/> values are the same. </summary>
         public static bool operator ==(FactoryTriggerReferenceType left, FactoryTriggerReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FactoryTriggerReferenceType"/> values are not the same. </summary>

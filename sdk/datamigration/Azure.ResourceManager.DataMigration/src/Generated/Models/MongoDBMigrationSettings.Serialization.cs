@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(Replication))
             {
                 writer.WritePropertyName("replication"u8);
-                writer.WriteStringValue(Replication.Value.ToString());
+                writer.WriteStringValue(Replication.Value.ToSerialString());
             }
             writer.WritePropertyName("source"u8);
             writer.WriteObjectValue(Source);

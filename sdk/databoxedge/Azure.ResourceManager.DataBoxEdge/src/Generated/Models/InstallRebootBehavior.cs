@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static InstallRebootBehavior RequiresReboot { get; } = new InstallRebootBehavior(RequiresRebootValue);
         /// <summary> RequestReboot. </summary>
         public static InstallRebootBehavior RequestReboot { get; } = new InstallRebootBehavior(RequestRebootValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InstallRebootBehavior"/> values are the same. </summary>
         public static bool operator ==(InstallRebootBehavior left, InstallRebootBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InstallRebootBehavior"/> values are not the same. </summary>

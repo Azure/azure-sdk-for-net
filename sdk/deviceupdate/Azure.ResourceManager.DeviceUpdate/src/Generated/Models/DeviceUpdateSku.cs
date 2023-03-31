@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public static DeviceUpdateSku Free { get; } = new DeviceUpdateSku(FreeValue);
         /// <summary> Standard. </summary>
         public static DeviceUpdateSku Standard { get; } = new DeviceUpdateSku(StandardValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DeviceUpdateSku"/> values are the same. </summary>
         public static bool operator ==(DeviceUpdateSku left, DeviceUpdateSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceUpdateSku"/> values are not the same. </summary>

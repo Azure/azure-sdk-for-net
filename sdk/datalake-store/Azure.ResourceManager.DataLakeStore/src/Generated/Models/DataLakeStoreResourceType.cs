@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 
         /// <summary> Microsoft.DataLakeStore/accounts. </summary>
         public static DataLakeStoreResourceType MicrosoftDataLakeStoreAccounts { get; } = new DataLakeStoreResourceType(MicrosoftDataLakeStoreAccountsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataLakeStoreResourceType"/> values are the same. </summary>
         public static bool operator ==(DataLakeStoreResourceType left, DataLakeStoreResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataLakeStoreResourceType"/> values are not the same. </summary>

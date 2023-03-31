@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeStorageAccountSslStatus Enabled { get; } = new DataBoxEdgeStorageAccountSslStatus(EnabledValue);
         /// <summary> Disabled. </summary>
         public static DataBoxEdgeStorageAccountSslStatus Disabled { get; } = new DataBoxEdgeStorageAccountSslStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeStorageAccountSslStatus"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeStorageAccountSslStatus left, DataBoxEdgeStorageAccountSslStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeStorageAccountSslStatus"/> values are not the same. </summary>

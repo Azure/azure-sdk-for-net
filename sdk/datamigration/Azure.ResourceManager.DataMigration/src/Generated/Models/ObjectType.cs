@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static ObjectType View { get; } = new ObjectType(ViewValue);
         /// <summary> Function. </summary>
         public static ObjectType Function { get; } = new ObjectType(FunctionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ObjectType"/> values are the same. </summary>
         public static bool operator ==(ObjectType left, ObjectType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ObjectType"/> values are not the same. </summary>

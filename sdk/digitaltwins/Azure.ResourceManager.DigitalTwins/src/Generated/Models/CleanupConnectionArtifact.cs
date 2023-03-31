@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static CleanupConnectionArtifact True { get; } = new CleanupConnectionArtifact(TrueValue);
         /// <summary> false. </summary>
         public static CleanupConnectionArtifact False { get; } = new CleanupConnectionArtifact(FalseValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CleanupConnectionArtifact"/> values are the same. </summary>
         public static bool operator ==(CleanupConnectionArtifact left, CleanupConnectionArtifact right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CleanupConnectionArtifact"/> values are not the same. </summary>

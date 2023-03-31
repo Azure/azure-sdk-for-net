@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WritePropertyName("productDetails"u8);
             writer.WriteObjectValue(ProductDetails);
             writer.WritePropertyName("orderItemType"u8);
-            writer.WriteStringValue(OrderItemType.ToString());
+            writer.WriteStringValue(OrderItemType.ToSerialString());
             if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);

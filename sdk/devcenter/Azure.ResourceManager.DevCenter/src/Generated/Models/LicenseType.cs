@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Windows_Client. </summary>
         public static LicenseType WindowsClient { get; } = new LicenseType(WindowsClientValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LicenseType"/> values are the same. </summary>
         public static bool operator ==(LicenseType left, LicenseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LicenseType"/> values are not the same. </summary>

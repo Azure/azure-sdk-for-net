@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WritePropertyName("rateLimitThreshold"u8);
             writer.WriteNumberValue(RateLimitThreshold);
             writer.WritePropertyName("metricId"u8);
-            writer.WriteStringValue(MetricId.ToString());
+            writer.WriteStringValue(MetricId.ToSerialString());
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ApplicationGroupPolicyType.ToString());
+            writer.WriteStringValue(ApplicationGroupPolicyType.ToSerialString());
             writer.WriteEndObject();
         }
 

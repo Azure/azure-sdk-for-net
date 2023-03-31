@@ -74,6 +74,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeOrderState PickupCompleted { get; } = new DataBoxEdgeOrderState(PickupCompletedValue);
         /// <summary> AwaitingDrop. </summary>
         public static DataBoxEdgeOrderState AwaitingDrop { get; } = new DataBoxEdgeOrderState(AwaitingDropValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeOrderState"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeOrderState left, DataBoxEdgeOrderState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeOrderState"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static DynatraceSingleSignOnState Disable { get; } = new DynatraceSingleSignOnState(DisableValue);
         /// <summary> Existing. </summary>
         public static DynatraceSingleSignOnState Existing { get; } = new DynatraceSingleSignOnState(ExistingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DynatraceSingleSignOnState"/> values are the same. </summary>
         public static bool operator ==(DynatraceSingleSignOnState left, DynatraceSingleSignOnState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynatraceSingleSignOnState"/> values are not the same. </summary>

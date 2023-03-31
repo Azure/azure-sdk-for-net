@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static CommandType Finish { get; } = new CommandType(FinishValue);
         /// <summary> restart. </summary>
         public static CommandType Restart { get; } = new CommandType(RestartValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CommandType"/> values are the same. </summary>
         public static bool operator ==(CommandType left, CommandType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommandType"/> values are not the same. </summary>

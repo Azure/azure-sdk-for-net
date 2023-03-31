@@ -56,6 +56,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static SessionHostHealthCheckName MetaDataServiceCheck { get; } = new SessionHostHealthCheckName(MetaDataServiceCheckValue);
         /// <summary> Verifies that the AppAttachService is healthy (there were no issues during package staging). The AppAttachService is used to enable the staging/registration (and eventual deregistration/destaging) of MSIX apps that have been set up by the tenant admin. This checks whether the component had any failures during package staging. Failures in staging will prevent some MSIX apps from working properly for the end user. If this check fails, it is non fatal and the machine still can service connections, main issue may be certain apps will not work for end-users. </summary>
         public static SessionHostHealthCheckName AppAttachHealthCheck { get; } = new SessionHostHealthCheckName(AppAttachHealthCheckValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SessionHostHealthCheckName"/> values are the same. </summary>
         public static bool operator ==(SessionHostHealthCheckName left, SessionHostHealthCheckName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SessionHostHealthCheckName"/> values are not the same. </summary>

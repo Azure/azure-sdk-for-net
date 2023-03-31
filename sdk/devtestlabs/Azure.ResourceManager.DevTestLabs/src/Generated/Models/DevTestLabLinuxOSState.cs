@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static DevTestLabLinuxOSState DeprovisionRequested { get; } = new DevTestLabLinuxOSState(DeprovisionRequestedValue);
         /// <summary> DeprovisionApplied. </summary>
         public static DevTestLabLinuxOSState DeprovisionApplied { get; } = new DevTestLabLinuxOSState(DeprovisionAppliedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DevTestLabLinuxOSState"/> values are the same. </summary>
         public static bool operator ==(DevTestLabLinuxOSState left, DevTestLabLinuxOSState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabLinuxOSState"/> values are not the same. </summary>

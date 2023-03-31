@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             if (Optional.IsDefined(HostType))
             {
                 writer.WritePropertyName("hostType"u8);
-                writer.WriteStringValue(HostType.Value.ToString());
+                writer.WriteStringValue(HostType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Namespace))
             {

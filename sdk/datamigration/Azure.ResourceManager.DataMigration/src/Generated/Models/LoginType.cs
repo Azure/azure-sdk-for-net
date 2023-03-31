@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static LoginType ExternalUser { get; } = new LoginType(ExternalUserValue);
         /// <summary> ExternalGroup. </summary>
         public static LoginType ExternalGroup { get; } = new LoginType(ExternalGroupValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LoginType"/> values are the same. </summary>
         public static bool operator ==(LoginType left, LoginType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LoginType"/> values are not the same. </summary>

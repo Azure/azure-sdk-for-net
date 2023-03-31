@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static DigitalTwinsAuthenticationType KeyBased { get; } = new DigitalTwinsAuthenticationType(KeyBasedValue);
         /// <summary> IdentityBased. </summary>
         public static DigitalTwinsAuthenticationType IdentityBased { get; } = new DigitalTwinsAuthenticationType(IdentityBasedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DigitalTwinsAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(DigitalTwinsAuthenticationType left, DigitalTwinsAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DigitalTwinsAuthenticationType"/> values are not the same. </summary>

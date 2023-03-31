@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static HostPoolLoadBalancerType DepthFirst { get; } = new HostPoolLoadBalancerType(DepthFirstValue);
         /// <summary> Persistent. </summary>
         public static HostPoolLoadBalancerType Persistent { get; } = new HostPoolLoadBalancerType(PersistentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HostPoolLoadBalancerType"/> values are the same. </summary>
         public static bool operator ==(HostPoolLoadBalancerType left, HostPoolLoadBalancerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HostPoolLoadBalancerType"/> values are not the same. </summary>

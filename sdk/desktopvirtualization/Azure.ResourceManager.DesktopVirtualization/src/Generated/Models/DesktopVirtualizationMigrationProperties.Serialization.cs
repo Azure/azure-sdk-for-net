@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
-                writer.WriteStringValue(Operation.Value.ToString());
+                writer.WriteStringValue(Operation.Value.ToSerialString());
             }
             if (Optional.IsDefined(MigrationPath))
             {

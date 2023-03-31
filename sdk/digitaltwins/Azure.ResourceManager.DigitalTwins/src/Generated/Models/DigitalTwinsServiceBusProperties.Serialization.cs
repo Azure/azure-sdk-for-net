@@ -65,11 +65,11 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
             }
             writer.WritePropertyName("endpointType"u8);
-            writer.WriteStringValue(EndpointType.ToString());
+            writer.WriteStringValue(EndpointType.ToSerialString());
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
-                writer.WriteStringValue(AuthenticationType.Value.ToString());
+                writer.WriteStringValue(AuthenticationType.Value.ToSerialString());
             }
             if (Optional.IsDefined(DeadLetterSecret))
             {

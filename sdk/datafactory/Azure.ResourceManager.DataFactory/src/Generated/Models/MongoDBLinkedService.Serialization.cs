@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
-                writer.WriteStringValue(AuthenticationType.Value.ToString());
+                writer.WriteStringValue(AuthenticationType.Value.ToSerialString());
             }
             writer.WritePropertyName("databaseName"u8);
 #if NET6_0_OR_GREATER

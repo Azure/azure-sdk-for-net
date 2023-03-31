@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteStringValue(Authentication.Value.ToString());
+                writer.WriteStringValue(Authentication.Value.ToSerialString());
             }
             if (Optional.IsDefined(AdditionalSettings))
             {

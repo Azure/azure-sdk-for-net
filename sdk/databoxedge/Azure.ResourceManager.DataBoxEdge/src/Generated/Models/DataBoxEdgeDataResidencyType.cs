@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeDataResidencyType GeoZoneReplication { get; } = new DataBoxEdgeDataResidencyType(GeoZoneReplicationValue);
         /// <summary> ZoneReplication. </summary>
         public static DataBoxEdgeDataResidencyType ZoneReplication { get; } = new DataBoxEdgeDataResidencyType(ZoneReplicationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeDataResidencyType"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeDataResidencyType left, DataBoxEdgeDataResidencyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeDataResidencyType"/> values are not the same. </summary>

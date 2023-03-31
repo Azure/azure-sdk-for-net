@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Datadog.Models
         public static MonitoringStatus Enabled { get; } = new MonitoringStatus(EnabledValue);
         /// <summary> Disabled. </summary>
         public static MonitoringStatus Disabled { get; } = new MonitoringStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MonitoringStatus"/> values are the same. </summary>
         public static bool operator ==(MonitoringStatus left, MonitoringStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitoringStatus"/> values are not the same. </summary>

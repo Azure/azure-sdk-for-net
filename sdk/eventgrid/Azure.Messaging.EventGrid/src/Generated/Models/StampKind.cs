@@ -32,6 +32,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static StampKind AseV1 { get; } = new StampKind(AseV1Value);
         /// <summary> App Service Plan is running on an App Service Environment V2. </summary>
         public static StampKind AseV2 { get; } = new StampKind(AseV2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StampKind"/> values are the same. </summary>
         public static bool operator ==(StampKind left, StampKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StampKind"/> values are not the same. </summary>

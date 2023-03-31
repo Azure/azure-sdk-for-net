@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static ProductAvailabilityStage SignUp { get; } = new ProductAvailabilityStage(SignUpValue);
         /// <summary> Product is not available. </summary>
         public static ProductAvailabilityStage Unavailable { get; } = new ProductAvailabilityStage(UnavailableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProductAvailabilityStage"/> values are the same. </summary>
         public static bool operator ==(ProductAvailabilityStage left, ProductAvailabilityStage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProductAvailabilityStage"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static PersistentVolumeRestoreMode RestoreWithVolumeData { get; } = new PersistentVolumeRestoreMode(RestoreWithVolumeDataValue);
         /// <summary> RestoreWithoutVolumeData. </summary>
         public static PersistentVolumeRestoreMode RestoreWithoutVolumeData { get; } = new PersistentVolumeRestoreMode(RestoreWithoutVolumeDataValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PersistentVolumeRestoreMode"/> values are the same. </summary>
         public static bool operator ==(PersistentVolumeRestoreMode left, PersistentVolumeRestoreMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PersistentVolumeRestoreMode"/> values are not the same. </summary>

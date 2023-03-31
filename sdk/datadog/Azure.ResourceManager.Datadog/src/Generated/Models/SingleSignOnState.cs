@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Datadog.Models
         public static SingleSignOnState Disable { get; } = new SingleSignOnState(DisableValue);
         /// <summary> Existing. </summary>
         public static SingleSignOnState Existing { get; } = new SingleSignOnState(ExistingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SingleSignOnState"/> values are the same. </summary>
         public static bool operator ==(SingleSignOnState left, SingleSignOnState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SingleSignOnState"/> values are not the same. </summary>

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static EdgeKeyVaultSyncStatus KeyVaultSyncing { get; } = new EdgeKeyVaultSyncStatus(KeyVaultSyncingValue);
         /// <summary> KeyVaultNotSynced. </summary>
         public static EdgeKeyVaultSyncStatus KeyVaultNotSynced { get; } = new EdgeKeyVaultSyncStatus(KeyVaultNotSyncedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EdgeKeyVaultSyncStatus"/> values are the same. </summary>
         public static bool operator ==(EdgeKeyVaultSyncStatus left, EdgeKeyVaultSyncStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeKeyVaultSyncStatus"/> values are not the same. </summary>

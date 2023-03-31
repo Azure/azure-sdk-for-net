@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
             if (Optional.IsDefined(Target))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(CycleType))
             {
                 writer.WritePropertyName("cycleType"u8);
-                writer.WriteStringValue(CycleType.Value.ToString());
+                writer.WriteStringValue(CycleType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

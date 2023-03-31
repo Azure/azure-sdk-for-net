@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeNodeStatus Rebooting { get; } = new DataBoxEdgeNodeStatus(RebootingValue);
         /// <summary> ShuttingDown. </summary>
         public static DataBoxEdgeNodeStatus ShuttingDown { get; } = new DataBoxEdgeNodeStatus(ShuttingDownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeNodeStatus"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeNodeStatus left, DataBoxEdgeNodeStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeNodeStatus"/> values are not the same. </summary>

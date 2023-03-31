@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(SupportedFilterType.ToString());
+            writer.WriteStringValue(SupportedFilterType.ToSerialString());
             writer.WritePropertyName("supportedValues"u8);
             writer.WriteStartArray();
             foreach (var item in SupportedValues)

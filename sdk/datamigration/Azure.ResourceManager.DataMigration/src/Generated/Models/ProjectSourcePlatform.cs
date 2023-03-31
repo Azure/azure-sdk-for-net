@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static ProjectSourcePlatform MongoDB { get; } = new ProjectSourcePlatform(MongoDBValue);
         /// <summary> Unknown. </summary>
         public static ProjectSourcePlatform Unknown { get; } = new ProjectSourcePlatform(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProjectSourcePlatform"/> values are the same. </summary>
         public static bool operator ==(ProjectSourcePlatform left, ProjectSourcePlatform right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProjectSourcePlatform"/> values are not the same. </summary>

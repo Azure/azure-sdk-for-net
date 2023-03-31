@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static HostPoolSsoSecretType SharedKeyInKeyVault { get; } = new HostPoolSsoSecretType(SharedKeyInKeyVaultValue);
         /// <summary> CertificateInKeyVault. </summary>
         public static HostPoolSsoSecretType CertificateInKeyVault { get; } = new HostPoolSsoSecretType(CertificateInKeyVaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HostPoolSsoSecretType"/> values are the same. </summary>
         public static bool operator ==(HostPoolSsoSecretType left, HostPoolSsoSecretType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HostPoolSsoSecretType"/> values are not the same. </summary>

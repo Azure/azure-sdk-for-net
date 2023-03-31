@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(StorageAccountStatus))
             {
                 writer.WritePropertyName("storageAccountStatus"u8);
-                writer.WriteStringValue(StorageAccountStatus.Value.ToString());
+                writer.WriteStringValue(StorageAccountStatus.Value.ToSerialString());
             }
             writer.WritePropertyName("dataPolicy"u8);
-            writer.WriteStringValue(DataPolicy.ToString());
+            writer.WriteStringValue(DataPolicy.ToSerialString());
             if (Optional.IsDefined(StorageAccountCredentialId))
             {
                 writer.WritePropertyName("storageAccountCredentialId"u8);

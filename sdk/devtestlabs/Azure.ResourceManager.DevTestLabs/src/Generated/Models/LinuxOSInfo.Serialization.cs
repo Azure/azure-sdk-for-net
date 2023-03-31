@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(LinuxOSState))
             {
                 writer.WritePropertyName("linuxOsState"u8);
-                writer.WriteStringValue(LinuxOSState.Value.ToString());
+                writer.WriteStringValue(LinuxOSState.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

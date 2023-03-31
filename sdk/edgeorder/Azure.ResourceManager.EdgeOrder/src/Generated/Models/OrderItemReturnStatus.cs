@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static OrderItemReturnStatus ReturnableWithFee { get; } = new OrderItemReturnStatus(ReturnableWithFeeValue);
         /// <summary> Order item not returnable. </summary>
         public static OrderItemReturnStatus NotReturnable { get; } = new OrderItemReturnStatus(NotReturnableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OrderItemReturnStatus"/> values are the same. </summary>
         public static bool operator ==(OrderItemReturnStatus left, OrderItemReturnStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OrderItemReturnStatus"/> values are not the same. </summary>

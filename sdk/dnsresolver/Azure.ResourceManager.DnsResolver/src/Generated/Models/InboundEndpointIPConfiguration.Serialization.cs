@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIpAllocationMethod"u8);
-                writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
+                writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

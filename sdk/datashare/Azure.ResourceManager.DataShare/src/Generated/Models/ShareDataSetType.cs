@@ -65,6 +65,9 @@ namespace Azure.ResourceManager.DataShare.Models
         public static ShareDataSetType SqlDWTable { get; } = new ShareDataSetType(SqlDWTableValue);
         /// <summary> SynapseWorkspaceSqlPoolTable. </summary>
         public static ShareDataSetType SynapseWorkspaceSqlPoolTable { get; } = new ShareDataSetType(SynapseWorkspaceSqlPoolTableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ShareDataSetType"/> values are the same. </summary>
         public static bool operator ==(ShareDataSetType left, ShareDataSetType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ShareDataSetType"/> values are not the same. </summary>

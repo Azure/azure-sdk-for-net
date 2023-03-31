@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(KeyVaultSyncStatus))
             {
                 writer.WritePropertyName("keyVaultSyncStatus"u8);
-                writer.WriteStringValue(KeyVaultSyncStatus.Value.ToString());
+                writer.WriteStringValue(KeyVaultSyncStatus.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

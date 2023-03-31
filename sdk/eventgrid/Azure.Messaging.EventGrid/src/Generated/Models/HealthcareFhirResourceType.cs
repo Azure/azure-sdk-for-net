@@ -506,6 +506,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static HealthcareFhirResourceType VerificationResult { get; } = new HealthcareFhirResourceType(VerificationResultValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
         public static HealthcareFhirResourceType VisionPrescription { get; } = new HealthcareFhirResourceType(VisionPrescriptionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HealthcareFhirResourceType"/> values are the same. </summary>
         public static bool operator ==(HealthcareFhirResourceType left, HealthcareFhirResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HealthcareFhirResourceType"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> StopDevBox. </summary>
         public static ScheduledType StopDevBox { get; } = new ScheduledType(StopDevBoxValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScheduledType"/> values are the same. </summary>
         public static bool operator ==(ScheduledType left, ScheduledType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScheduledType"/> values are not the same. </summary>

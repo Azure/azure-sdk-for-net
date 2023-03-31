@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("alwaysEncryptedAkvAuthType"u8);
-            writer.WriteStringValue(AlwaysEncryptedAkvAuthType.ToString());
+            writer.WriteStringValue(AlwaysEncryptedAkvAuthType.ToSerialString());
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);

@@ -59,6 +59,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static DigitalTwinsEndpointProvisioningState Moving { get; } = new DigitalTwinsEndpointProvisioningState(MovingValue);
         /// <summary> Disabled. </summary>
         public static DigitalTwinsEndpointProvisioningState Disabled { get; } = new DigitalTwinsEndpointProvisioningState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DigitalTwinsEndpointProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DigitalTwinsEndpointProvisioningState left, DigitalTwinsEndpointProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DigitalTwinsEndpointProvisioningState"/> values are not the same. </summary>

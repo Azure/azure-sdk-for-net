@@ -29,6 +29,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static AcsRecordingChannelType Mixed { get; } = new AcsRecordingChannelType(MixedValue);
         /// <summary> Unmixed. </summary>
         public static AcsRecordingChannelType Unmixed { get; } = new AcsRecordingChannelType(UnmixedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AcsRecordingChannelType"/> values are the same. </summary>
         public static bool operator ==(AcsRecordingChannelType left, AcsRecordingChannelType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AcsRecordingChannelType"/> values are not the same. </summary>

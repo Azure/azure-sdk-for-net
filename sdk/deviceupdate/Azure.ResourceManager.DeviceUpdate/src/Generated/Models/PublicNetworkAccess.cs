@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public static PublicNetworkAccess Enabled { get; } = new PublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static PublicNetworkAccess Disabled { get; } = new PublicNetworkAccess(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(PublicNetworkAccess left, PublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PublicNetworkAccess"/> values are not the same. </summary>

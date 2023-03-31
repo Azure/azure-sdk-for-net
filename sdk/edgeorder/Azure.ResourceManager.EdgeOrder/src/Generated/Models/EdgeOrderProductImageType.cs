@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static EdgeOrderProductImageType BulletImage { get; } = new EdgeOrderProductImageType(BulletImageValue);
         /// <summary> Generic image. </summary>
         public static EdgeOrderProductImageType GenericImage { get; } = new EdgeOrderProductImageType(GenericImageValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EdgeOrderProductImageType"/> values are the same. </summary>
         public static bool operator ==(EdgeOrderProductImageType left, EdgeOrderProductImageType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeOrderProductImageType"/> values are not the same. </summary>

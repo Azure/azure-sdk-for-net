@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Allow. </summary>
         public static EventHubsNetworkRuleIPAction Allow { get; } = new EventHubsNetworkRuleIPAction(AllowValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventHubsNetworkRuleIPAction"/> values are the same. </summary>
         public static bool operator ==(EventHubsNetworkRuleIPAction left, EventHubsNetworkRuleIPAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventHubsNetworkRuleIPAction"/> values are not the same. </summary>

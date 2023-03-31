@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// Serialized Name: AADObjectType.ServicePrincipal
         /// </summary>
         public static AadObjectIdentifierType ServicePrincipal { get; } = new AadObjectIdentifierType(ServicePrincipalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AadObjectIdentifierType"/> values are the same. </summary>
         public static bool operator ==(AadObjectIdentifierType left, AadObjectIdentifierType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AadObjectIdentifierType"/> values are not the same. </summary>

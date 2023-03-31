@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(ActivationState))
             {
                 writer.WritePropertyName("activationState"u8);
-                writer.WriteStringValue(ActivationState.Value.ToString());
+                writer.WriteStringValue(ActivationState.Value.ToSerialString());
             }
             if (Optional.IsDefined(PartnerTopicFriendlyDescription))
             {

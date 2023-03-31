@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static KubernetesClusterRestoreExistingResourcePolicy Skip { get; } = new KubernetesClusterRestoreExistingResourcePolicy(SkipValue);
         /// <summary> Patch. </summary>
         public static KubernetesClusterRestoreExistingResourcePolicy Patch { get; } = new KubernetesClusterRestoreExistingResourcePolicy(PatchValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KubernetesClusterRestoreExistingResourcePolicy"/> values are the same. </summary>
         public static bool operator ==(KubernetesClusterRestoreExistingResourcePolicy left, KubernetesClusterRestoreExistingResourcePolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KubernetesClusterRestoreExistingResourcePolicy"/> values are not the same. </summary>

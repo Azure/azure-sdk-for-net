@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DataShare.Models
 
         /// <summary> ScheduleBased. </summary>
         public static SynchronizationSettingKind ScheduleBased { get; } = new SynchronizationSettingKind(ScheduleBasedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynchronizationSettingKind"/> values are the same. </summary>
         public static bool operator ==(SynchronizationSettingKind left, SynchronizationSettingKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynchronizationSettingKind"/> values are not the same. </summary>

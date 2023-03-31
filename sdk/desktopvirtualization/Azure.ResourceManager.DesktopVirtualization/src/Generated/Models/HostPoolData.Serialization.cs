@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("hostPoolType"u8);
-            writer.WriteStringValue(HostPoolType.ToString());
+            writer.WriteStringValue(HostPoolType.ToSerialString());
             if (Optional.IsDefined(PersonalDesktopAssignmentType))
             {
                 writer.WritePropertyName("personalDesktopAssignmentType"u8);
-                writer.WriteStringValue(PersonalDesktopAssignmentType.Value.ToString());
+                writer.WriteStringValue(PersonalDesktopAssignmentType.Value.ToSerialString());
             }
             if (Optional.IsDefined(CustomRdpProperty))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WriteNumberValue(MaxSessionLimit.Value);
             }
             writer.WritePropertyName("loadBalancerType"u8);
-            writer.WriteStringValue(LoadBalancerType.ToString());
+            writer.WriteStringValue(LoadBalancerType.ToSerialString());
             if (Optional.IsDefined(Ring))
             {
                 writer.WritePropertyName("ring"u8);
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(SsoSecretType))
             {
                 writer.WritePropertyName("ssoSecretType"u8);
-                writer.WriteStringValue(SsoSecretType.Value.ToString());
+                writer.WriteStringValue(SsoSecretType.Value.ToSerialString());
             }
             writer.WritePropertyName("preferredAppGroupType"u8);
-            writer.WriteStringValue(PreferredAppGroupType.ToString());
+            writer.WriteStringValue(PreferredAppGroupType.ToSerialString());
             if (Optional.IsDefined(StartVmOnConnect))
             {
                 writer.WritePropertyName("startVMOnConnect"u8);

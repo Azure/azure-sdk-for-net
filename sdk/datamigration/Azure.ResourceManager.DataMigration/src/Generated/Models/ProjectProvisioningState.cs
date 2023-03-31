@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static ProjectProvisioningState Deleting { get; } = new ProjectProvisioningState(DeletingValue);
         /// <summary> Succeeded. </summary>
         public static ProjectProvisioningState Succeeded { get; } = new ProjectProvisioningState(SucceededValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProjectProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ProjectProvisioningState left, ProjectProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProjectProvisioningState"/> values are not the same. </summary>

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteStringValue(Enabled.Value.ToString());
+                writer.WriteStringValue(Enabled.Value.ToSerialString());
             }
             if (Optional.IsDefined(ExpireOn))
             {

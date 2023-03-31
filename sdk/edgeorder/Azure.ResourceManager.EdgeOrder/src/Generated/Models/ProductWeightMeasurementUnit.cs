@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static ProductWeightMeasurementUnit Lbs { get; } = new ProductWeightMeasurementUnit(LbsValue);
         /// <summary> Kilograms. </summary>
         public static ProductWeightMeasurementUnit Kgs { get; } = new ProductWeightMeasurementUnit(KgsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProductWeightMeasurementUnit"/> values are the same. </summary>
         public static bool operator ==(ProductWeightMeasurementUnit left, ProductWeightMeasurementUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProductWeightMeasurementUnit"/> values are not the same. </summary>

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(AllowPublicIP))
             {
                 writer.WritePropertyName("allowPublicIp"u8);
-                writer.WriteStringValue(AllowPublicIP.Value.ToString());
+                writer.WriteStringValue(AllowPublicIP.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

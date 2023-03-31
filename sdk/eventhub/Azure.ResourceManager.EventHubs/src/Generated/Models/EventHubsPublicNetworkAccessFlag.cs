@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static EventHubsPublicNetworkAccessFlag Disabled { get; } = new EventHubsPublicNetworkAccessFlag(DisabledValue);
         /// <summary> SecuredByPerimeter. </summary>
         public static EventHubsPublicNetworkAccessFlag SecuredByPerimeter { get; } = new EventHubsPublicNetworkAccessFlag(SecuredByPerimeterValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventHubsPublicNetworkAccessFlag"/> values are the same. </summary>
         public static bool operator ==(EventHubsPublicNetworkAccessFlag left, EventHubsPublicNetworkAccessFlag right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventHubsPublicNetworkAccessFlag"/> values are not the same. </summary>

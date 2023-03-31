@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AutoUpdate))
             {
                 writer.WritePropertyName("autoUpdate"u8);
-                writer.WriteStringValue(AutoUpdate.Value.ToString());
+                writer.WriteStringValue(AutoUpdate.Value.ToSerialString());
             }
             if (Optional.IsDefined(UpdateDelayOffset))
             {

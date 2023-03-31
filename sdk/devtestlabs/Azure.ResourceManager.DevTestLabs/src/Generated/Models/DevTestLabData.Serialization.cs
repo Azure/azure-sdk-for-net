@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(LabStorageType))
             {
                 writer.WritePropertyName("labStorageType"u8);
-                writer.WriteStringValue(LabStorageType.Value.ToString());
+                writer.WriteStringValue(LabStorageType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(MandatoryArtifactsResourceIdsLinux))
             {
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(PremiumDataDisks))
             {
                 writer.WritePropertyName("premiumDataDisks"u8);
-                writer.WriteStringValue(PremiumDataDisks.Value.ToString());
+                writer.WriteStringValue(PremiumDataDisks.Value.ToSerialString());
             }
             if (Optional.IsDefined(EnvironmentPermission))
             {
                 writer.WritePropertyName("environmentPermission"u8);
-                writer.WriteStringValue(EnvironmentPermission.Value.ToString());
+                writer.WriteStringValue(EnvironmentPermission.Value.ToSerialString());
             }
             if (Optional.IsDefined(Announcement))
             {

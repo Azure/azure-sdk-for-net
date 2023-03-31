@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             JsonSerializer.Serialize(writer, JsonDocument.Parse(Text.ToString()).RootElement);
 #endif
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ScriptType.ToString());
+            writer.WriteStringValue(ScriptType.ToSerialString());
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);

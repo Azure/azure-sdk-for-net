@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
-                writer.WriteStringValue(LicenseType.Value.ToString());
+                writer.WriteStringValue(LicenseType.Value.ToSerialString());
             }
             if (Optional.IsDefined(LocalAdministrator))
             {
                 writer.WritePropertyName("localAdministrator"u8);
-                writer.WriteStringValue(LocalAdministrator.Value.ToString());
+                writer.WriteStringValue(LocalAdministrator.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

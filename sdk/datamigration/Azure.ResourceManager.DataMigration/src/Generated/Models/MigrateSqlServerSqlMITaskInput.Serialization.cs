@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(BackupMode))
             {
                 writer.WritePropertyName("backupMode"u8);
-                writer.WriteStringValue(BackupMode.Value.ToString());
+                writer.WriteStringValue(BackupMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(AadDomainName))
             {

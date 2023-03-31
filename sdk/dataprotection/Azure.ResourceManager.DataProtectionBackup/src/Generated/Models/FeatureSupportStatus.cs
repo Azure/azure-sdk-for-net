@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static FeatureSupportStatus PublicPreview { get; } = new FeatureSupportStatus(PublicPreviewValue);
         /// <summary> GenerallyAvailable. </summary>
         public static FeatureSupportStatus GenerallyAvailable { get; } = new FeatureSupportStatus(GenerallyAvailableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FeatureSupportStatus"/> values are the same. </summary>
         public static bool operator ==(FeatureSupportStatus left, FeatureSupportStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FeatureSupportStatus"/> values are not the same. </summary>

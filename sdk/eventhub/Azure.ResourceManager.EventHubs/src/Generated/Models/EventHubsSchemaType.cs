@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static EventHubsSchemaType Unknown { get; } = new EventHubsSchemaType(UnknownValue);
         /// <summary> Avro. </summary>
         public static EventHubsSchemaType Avro { get; } = new EventHubsSchemaType(AvroValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventHubsSchemaType"/> values are the same. </summary>
         public static bool operator ==(EventHubsSchemaType left, EventHubsSchemaType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventHubsSchemaType"/> values are not the same. </summary>

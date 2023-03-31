@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteObjectValue(EncryptedPassword);
             }
             writer.WritePropertyName("userType"u8);
-            writer.WriteStringValue(UserType.ToString());
+            writer.WriteStringValue(UserType.ToSerialString());
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

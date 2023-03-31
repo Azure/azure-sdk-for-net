@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static BackupMode CreateBackup { get; } = new BackupMode(CreateBackupValue);
         /// <summary> ExistingBackup. </summary>
         public static BackupMode ExistingBackup { get; } = new BackupMode(ExistingBackupValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupMode"/> values are the same. </summary>
         public static bool operator ==(BackupMode left, BackupMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupMode"/> values are not the same. </summary>

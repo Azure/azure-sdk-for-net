@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(PersistentVolumeRestoreMode))
             {
                 writer.WritePropertyName("persistentVolumeRestoreMode"u8);
-                writer.WriteStringValue(PersistentVolumeRestoreMode.Value.ToString());
+                writer.WriteStringValue(PersistentVolumeRestoreMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(ConflictPolicy))
             {
                 writer.WritePropertyName("conflictPolicy"u8);
-                writer.WriteStringValue(ConflictPolicy.Value.ToString());
+                writer.WriteStringValue(ConflictPolicy.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(NamespaceMappings))
             {

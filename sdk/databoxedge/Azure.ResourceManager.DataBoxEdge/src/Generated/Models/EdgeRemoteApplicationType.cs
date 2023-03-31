@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static EdgeRemoteApplicationType LocalUI { get; } = new EdgeRemoteApplicationType(LocalUIValue);
         /// <summary> AllApplications. </summary>
         public static EdgeRemoteApplicationType AllApplications { get; } = new EdgeRemoteApplicationType(AllApplicationsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EdgeRemoteApplicationType"/> values are the same. </summary>
         public static bool operator ==(EdgeRemoteApplicationType left, EdgeRemoteApplicationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeRemoteApplicationType"/> values are not the same. </summary>

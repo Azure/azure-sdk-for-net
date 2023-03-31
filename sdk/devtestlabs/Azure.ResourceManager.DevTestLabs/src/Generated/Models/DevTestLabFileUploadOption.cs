@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static DevTestLabFileUploadOption UploadFilesAndGenerateSasTokens { get; } = new DevTestLabFileUploadOption(UploadFilesAndGenerateSasTokensValue);
         /// <summary> None. </summary>
         public static DevTestLabFileUploadOption None { get; } = new DevTestLabFileUploadOption(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DevTestLabFileUploadOption"/> values are the same. </summary>
         public static bool operator ==(DevTestLabFileUploadOption left, DevTestLabFileUploadOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabFileUploadOption"/> values are not the same. </summary>

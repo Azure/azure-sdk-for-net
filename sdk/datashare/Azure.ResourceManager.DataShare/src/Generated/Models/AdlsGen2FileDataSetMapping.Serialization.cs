@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataShare.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("dataSetId"u8);
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataShare.Models
             if (Optional.IsDefined(OutputType))
             {
                 writer.WritePropertyName("outputType"u8);
-                writer.WriteStringValue(OutputType.Value.ToString());
+                writer.WriteStringValue(OutputType.Value.ToSerialString());
             }
             writer.WritePropertyName("resourceGroup"u8);
             writer.WriteStringValue(ResourceGroup);

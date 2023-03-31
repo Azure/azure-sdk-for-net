@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DevCenter
             if (Optional.IsDefined(DomainJoinType))
             {
                 writer.WritePropertyName("domainJoinType"u8);
-                writer.WriteStringValue(DomainJoinType.Value.ToString());
+                writer.WriteStringValue(DomainJoinType.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

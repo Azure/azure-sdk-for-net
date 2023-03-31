@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.DataBox.Models
         public static NotificationStageName Created { get; } = new NotificationStageName(CreatedValue);
         /// <summary> Notification at shipped devices to customer stage. </summary>
         public static NotificationStageName ShippedToCustomer { get; } = new NotificationStageName(ShippedToCustomerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NotificationStageName"/> values are the same. </summary>
         public static bool operator ==(NotificationStageName left, NotificationStageName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NotificationStageName"/> values are not the same. </summary>

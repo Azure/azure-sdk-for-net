@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static StorageSettingType LocallyRedundant { get; } = new StorageSettingType(LocallyRedundantValue);
         /// <summary> ZoneRedundant. </summary>
         public static StorageSettingType ZoneRedundant { get; } = new StorageSettingType(ZoneRedundantValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageSettingType"/> values are the same. </summary>
         public static bool operator ==(StorageSettingType left, StorageSettingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageSettingType"/> values are not the same. </summary>

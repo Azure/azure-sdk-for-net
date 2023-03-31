@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static DynatraceMonitoringStatus Enabled { get; } = new DynatraceMonitoringStatus(EnabledValue);
         /// <summary> Disabled. </summary>
         public static DynatraceMonitoringStatus Disabled { get; } = new DynatraceMonitoringStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DynatraceMonitoringStatus"/> values are the same. </summary>
         public static bool operator ==(DynatraceMonitoringStatus left, DynatraceMonitoringStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynatraceMonitoringStatus"/> values are not the same. </summary>

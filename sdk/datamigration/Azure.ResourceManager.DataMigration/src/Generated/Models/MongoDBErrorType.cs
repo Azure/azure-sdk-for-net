@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static MongoDBErrorType ValidationError { get; } = new MongoDBErrorType(ValidationErrorValue);
         /// <summary> Warning. </summary>
         public static MongoDBErrorType Warning { get; } = new MongoDBErrorType(WarningValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MongoDBErrorType"/> values are the same. </summary>
         public static bool operator ==(MongoDBErrorType left, MongoDBErrorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MongoDBErrorType"/> values are not the same. </summary>

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public static DeviceProvisioningServicesAccessKeyRight RegistrationStatusRead { get; } = new DeviceProvisioningServicesAccessKeyRight(RegistrationStatusReadValue);
         /// <summary> RegistrationStatusWrite. </summary>
         public static DeviceProvisioningServicesAccessKeyRight RegistrationStatusWrite { get; } = new DeviceProvisioningServicesAccessKeyRight(RegistrationStatusWriteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesAccessKeyRight"/> values are the same. </summary>
         public static bool operator ==(DeviceProvisioningServicesAccessKeyRight left, DeviceProvisioningServicesAccessKeyRight right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesAccessKeyRight"/> values are not the same. </summary>

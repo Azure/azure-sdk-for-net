@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(SourceType))
             {
                 writer.WritePropertyName("sourceType"u8);
-                writer.WriteStringValue(SourceType.Value.ToString());
+                writer.WriteStringValue(SourceType.Value.ToSerialString());
             }
             if (Optional.IsDefined(FolderPath))
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

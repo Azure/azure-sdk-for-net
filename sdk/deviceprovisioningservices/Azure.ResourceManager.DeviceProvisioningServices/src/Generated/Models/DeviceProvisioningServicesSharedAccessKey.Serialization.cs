@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WriteStringValue(SecondaryKey);
             }
             writer.WritePropertyName("rights"u8);
-            writer.WriteStringValue(Rights.ToString());
+            writer.WriteStringValue(Rights.ToSerialString());
             writer.WriteEndObject();
         }
 

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("dataFormat"u8);
-            writer.WriteStringValue(DataFormat.ToString());
+            writer.WriteStringValue(DataFormat.ToSerialString());
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

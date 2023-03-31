@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeRoleStatus Enabled { get; } = new DataBoxEdgeRoleStatus(EnabledValue);
         /// <summary> Disabled. </summary>
         public static DataBoxEdgeRoleStatus Disabled { get; } = new DataBoxEdgeRoleStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeRoleStatus"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeRoleStatus left, DataBoxEdgeRoleStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeRoleStatus"/> values are not the same. </summary>

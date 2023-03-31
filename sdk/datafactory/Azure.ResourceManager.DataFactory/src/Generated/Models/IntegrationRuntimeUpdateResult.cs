@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static IntegrationRuntimeUpdateResult Succeed { get; } = new IntegrationRuntimeUpdateResult(SucceedValue);
         /// <summary> Fail. </summary>
         public static IntegrationRuntimeUpdateResult Fail { get; } = new IntegrationRuntimeUpdateResult(FailValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IntegrationRuntimeUpdateResult"/> values are the same. </summary>
         public static bool operator ==(IntegrationRuntimeUpdateResult left, IntegrationRuntimeUpdateResult right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationRuntimeUpdateResult"/> values are not the same. </summary>

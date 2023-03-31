@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LocationType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(LocationType.Value.ToString());
+                writer.WriteStringValue(LocationType.Value.ToSerialString());
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();

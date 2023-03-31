@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteStringValue(Action.Value.ToString());
+                writer.WriteStringValue(Action.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

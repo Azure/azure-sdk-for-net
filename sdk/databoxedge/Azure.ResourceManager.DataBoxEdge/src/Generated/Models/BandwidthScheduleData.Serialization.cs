@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             writer.WriteStartArray();
             foreach (var item in Days)
             {
-                writer.WriteStringValue(item.ToString());
+                writer.WriteStringValue(item.ToSerialString());
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

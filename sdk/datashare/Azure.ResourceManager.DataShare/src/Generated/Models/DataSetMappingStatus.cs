@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataShare.Models
         public static DataSetMappingStatus Ok { get; } = new DataSetMappingStatus(OkValue);
         /// <summary> Broken. </summary>
         public static DataSetMappingStatus Broken { get; } = new DataSetMappingStatus(BrokenValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataSetMappingStatus"/> values are the same. </summary>
         public static bool operator ==(DataSetMappingStatus left, DataSetMappingStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataSetMappingStatus"/> values are not the same. </summary>

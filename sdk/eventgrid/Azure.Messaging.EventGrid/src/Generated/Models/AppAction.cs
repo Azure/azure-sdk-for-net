@@ -41,6 +41,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static AppAction Completed { get; } = new AppAction(CompletedValue);
         /// <summary> The job has failed to complete. </summary>
         public static AppAction Failed { get; } = new AppAction(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppAction"/> values are the same. </summary>
         public static bool operator ==(AppAction left, AppAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppAction"/> values are not the same. </summary>

@@ -77,6 +77,9 @@ namespace Azure.ResourceManager.DataBox.Models
         public static DataBoxCopyStatus DriveCorrupted { get; } = new DataBoxCopyStatus(DriveCorruptedValue);
         /// <summary> Copy failed due to modified or removed metadata files. </summary>
         public static DataBoxCopyStatus MetadataFilesModifiedOrRemoved { get; } = new DataBoxCopyStatus(MetadataFilesModifiedOrRemovedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxCopyStatus"/> values are the same. </summary>
         public static bool operator ==(DataBoxCopyStatus left, DataBoxCopyStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxCopyStatus"/> values are not the same. </summary>

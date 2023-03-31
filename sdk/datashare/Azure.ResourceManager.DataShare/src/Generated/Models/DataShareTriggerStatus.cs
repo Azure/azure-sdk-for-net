@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataShare.Models
         public static DataShareTriggerStatus Inactive { get; } = new DataShareTriggerStatus(InactiveValue);
         /// <summary> SourceSynchronizationSettingDeleted. </summary>
         public static DataShareTriggerStatus SourceSynchronizationSettingDeleted { get; } = new DataShareTriggerStatus(SourceSynchronizationSettingDeletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataShareTriggerStatus"/> values are the same. </summary>
         public static bool operator ==(DataShareTriggerStatus left, DataShareTriggerStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataShareTriggerStatus"/> values are not the same. </summary>

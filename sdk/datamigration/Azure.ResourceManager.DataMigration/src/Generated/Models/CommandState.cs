@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static CommandState Succeeded { get; } = new CommandState(SucceededValue);
         /// <summary> Failed. </summary>
         public static CommandState Failed { get; } = new CommandState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CommandState"/> values are the same. </summary>
         public static bool operator ==(CommandState left, CommandState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommandState"/> values are not the same. </summary>

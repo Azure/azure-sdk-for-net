@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeUserType LocalManagement { get; } = new DataBoxEdgeUserType(LocalManagementValue);
         /// <summary> ARM. </summary>
         public static DataBoxEdgeUserType Arm { get; } = new DataBoxEdgeUserType(ArmValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeUserType"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeUserType left, DataBoxEdgeUserType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeUserType"/> values are not the same. </summary>

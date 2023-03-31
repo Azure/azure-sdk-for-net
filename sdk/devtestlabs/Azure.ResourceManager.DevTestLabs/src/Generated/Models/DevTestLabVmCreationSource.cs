@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static DevTestLabVmCreationSource FromGalleryImage { get; } = new DevTestLabVmCreationSource(FromGalleryImageValue);
         /// <summary> FromSharedGalleryImage. </summary>
         public static DevTestLabVmCreationSource FromSharedGalleryImage { get; } = new DevTestLabVmCreationSource(FromSharedGalleryImageValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DevTestLabVmCreationSource"/> values are the same. </summary>
         public static bool operator ==(DevTestLabVmCreationSource left, DevTestLabVmCreationSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabVmCreationSource"/> values are not the same. </summary>

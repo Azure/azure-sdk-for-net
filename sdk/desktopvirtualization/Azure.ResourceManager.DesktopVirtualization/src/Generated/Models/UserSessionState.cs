@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static UserSessionState LogOff { get; } = new UserSessionState(LogOffValue);
         /// <summary> UserProfileDiskMounted. </summary>
         public static UserSessionState UserProfileDiskMounted { get; } = new UserSessionState(UserProfileDiskMountedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UserSessionState"/> values are the same. </summary>
         public static bool operator ==(UserSessionState left, UserSessionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UserSessionState"/> values are not the same. </summary>

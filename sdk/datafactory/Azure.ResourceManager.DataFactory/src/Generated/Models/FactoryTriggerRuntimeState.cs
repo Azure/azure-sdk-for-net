@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static FactoryTriggerRuntimeState Stopped { get; } = new FactoryTriggerRuntimeState(StoppedValue);
         /// <summary> Disabled. </summary>
         public static FactoryTriggerRuntimeState Disabled { get; } = new FactoryTriggerRuntimeState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FactoryTriggerRuntimeState"/> values are the same. </summary>
         public static bool operator ==(FactoryTriggerRuntimeState left, FactoryTriggerRuntimeState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FactoryTriggerRuntimeState"/> values are not the same. </summary>

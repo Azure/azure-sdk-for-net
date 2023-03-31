@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ServicePrincipalCredentialType))
             {
                 writer.WritePropertyName("servicePrincipalCredentialType"u8);
-                writer.WriteStringValue(ServicePrincipalCredentialType.Value.ToString());
+                writer.WriteStringValue(ServicePrincipalCredentialType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ServicePrincipalCredential))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectionMode))
             {
                 writer.WritePropertyName("connectionMode"u8);
-                writer.WriteStringValue(ConnectionMode.Value.ToString());
+                writer.WriteStringValue(ConnectionMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

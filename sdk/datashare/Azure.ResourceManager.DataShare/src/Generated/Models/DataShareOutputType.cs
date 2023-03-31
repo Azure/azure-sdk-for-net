@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataShare.Models
         public static DataShareOutputType Csv { get; } = new DataShareOutputType(CsvValue);
         /// <summary> Parquet. </summary>
         public static DataShareOutputType Parquet { get; } = new DataShareOutputType(ParquetValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataShareOutputType"/> values are the same. </summary>
         public static bool operator ==(DataShareOutputType left, DataShareOutputType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataShareOutputType"/> values are not the same. </summary>

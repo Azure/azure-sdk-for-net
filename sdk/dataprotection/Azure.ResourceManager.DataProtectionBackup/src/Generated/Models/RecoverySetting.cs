@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> FailIfExists. </summary>
         public static RecoverySetting FailIfExists { get; } = new RecoverySetting(FailIfExistsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RecoverySetting"/> values are the same. </summary>
         public static bool operator ==(RecoverySetting left, RecoverySetting right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecoverySetting"/> values are not the same. </summary>

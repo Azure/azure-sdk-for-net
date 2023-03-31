@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeRoleAddonProvisioningState Failed { get; } = new DataBoxEdgeRoleAddonProvisioningState(FailedValue);
         /// <summary> Deleting. </summary>
         public static DataBoxEdgeRoleAddonProvisioningState Deleting { get; } = new DataBoxEdgeRoleAddonProvisioningState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeRoleAddonProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeRoleAddonProvisioningState left, DataBoxEdgeRoleAddonProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeRoleAddonProvisioningState"/> values are not the same. </summary>

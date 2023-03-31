@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(ResourceRegionType))
             {
                 writer.WritePropertyName("resourceRegionType"u8);
-                writer.WriteStringValue(ResourceRegionType.Value.ToString());
+                writer.WriteStringValue(ResourceRegionType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(SupportedLocations))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteStartArray();
                 foreach (var item in SupportedScopesForSource)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

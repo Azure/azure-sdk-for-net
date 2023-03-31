@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(Input);
             }
             writer.WritePropertyName("commandType"u8);
-            writer.WriteStringValue(CommandType.ToString());
+            writer.WriteStringValue(CommandType.ToSerialString());
             writer.WriteEndObject();
         }
 

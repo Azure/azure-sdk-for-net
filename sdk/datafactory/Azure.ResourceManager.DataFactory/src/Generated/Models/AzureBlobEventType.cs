@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static AzureBlobEventType MicrosoftStorageBlobCreated { get; } = new AzureBlobEventType(MicrosoftStorageBlobCreatedValue);
         /// <summary> Microsoft.Storage.BlobDeleted. </summary>
         public static AzureBlobEventType MicrosoftStorageBlobDeleted { get; } = new AzureBlobEventType(MicrosoftStorageBlobDeletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AzureBlobEventType"/> values are the same. </summary>
         public static bool operator ==(AzureBlobEventType left, AzureBlobEventType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureBlobEventType"/> values are not the same. </summary>

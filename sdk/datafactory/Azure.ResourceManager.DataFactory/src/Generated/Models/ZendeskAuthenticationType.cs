@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static ZendeskAuthenticationType Basic { get; } = new ZendeskAuthenticationType(BasicValue);
         /// <summary> Token. </summary>
         public static ZendeskAuthenticationType Token { get; } = new ZendeskAuthenticationType(TokenValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ZendeskAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(ZendeskAuthenticationType left, ZendeskAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ZendeskAuthenticationType"/> values are not the same. </summary>

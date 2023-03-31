@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             JsonSerializer.Serialize(writer, JsonDocument.Parse(LogPath.ToString()).RootElement);
 #endif
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(LocationType.ToString());
+            writer.WriteStringValue(LocationType.ToSerialString());
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AccessCredential))

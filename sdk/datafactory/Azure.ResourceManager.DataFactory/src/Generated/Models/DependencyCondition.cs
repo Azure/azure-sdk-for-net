@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static DependencyCondition Skipped { get; } = new DependencyCondition(SkippedValue);
         /// <summary> Completed. </summary>
         public static DependencyCondition Completed { get; } = new DependencyCondition(CompletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DependencyCondition"/> values are the same. </summary>
         public static bool operator ==(DependencyCondition left, DependencyCondition right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DependencyCondition"/> values are not the same. </summary>

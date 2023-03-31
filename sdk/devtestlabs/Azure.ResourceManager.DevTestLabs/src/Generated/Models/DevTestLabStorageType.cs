@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static DevTestLabStorageType Premium { get; } = new DevTestLabStorageType(PremiumValue);
         /// <summary> StandardSSD. </summary>
         public static DevTestLabStorageType StandardSsd { get; } = new DevTestLabStorageType(StandardSsdValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DevTestLabStorageType"/> values are the same. </summary>
         public static bool operator ==(DevTestLabStorageType left, DevTestLabStorageType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabStorageType"/> values are not the same. </summary>

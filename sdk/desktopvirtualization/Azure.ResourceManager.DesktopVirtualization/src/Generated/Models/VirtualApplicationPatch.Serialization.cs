@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(CommandLineSetting))
             {
                 writer.WritePropertyName("commandLineSetting"u8);
-                writer.WriteStringValue(CommandLineSetting.Value.ToString());
+                writer.WriteStringValue(CommandLineSetting.Value.ToSerialString());
             }
             if (Optional.IsDefined(CommandLineArguments))
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(ApplicationType))
             {
                 writer.WritePropertyName("applicationType"u8);
-                writer.WriteStringValue(ApplicationType.Value.ToString());
+                writer.WriteStringValue(ApplicationType.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

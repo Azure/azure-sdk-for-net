@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static DevTestLabUsagePermissionType Deny { get; } = new DevTestLabUsagePermissionType(DenyValue);
         /// <summary> Allow. </summary>
         public static DevTestLabUsagePermissionType Allow { get; } = new DevTestLabUsagePermissionType(AllowValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DevTestLabUsagePermissionType"/> values are the same. </summary>
         public static bool operator ==(DevTestLabUsagePermissionType left, DevTestLabUsagePermissionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabUsagePermissionType"/> values are not the same. </summary>

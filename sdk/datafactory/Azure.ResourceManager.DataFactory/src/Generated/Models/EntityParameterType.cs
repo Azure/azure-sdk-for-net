@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static EntityParameterType Array { get; } = new EntityParameterType(ArrayValue);
         /// <summary> SecureString. </summary>
         public static EntityParameterType SecureString { get; } = new EntityParameterType(SecureStringValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EntityParameterType"/> values are the same. </summary>
         public static bool operator ==(EntityParameterType left, EntityParameterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EntityParameterType"/> values are not the same. </summary>

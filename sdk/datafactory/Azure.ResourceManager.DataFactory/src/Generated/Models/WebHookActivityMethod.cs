@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> POST. </summary>
         public static WebHookActivityMethod Post { get; } = new WebHookActivityMethod(PostValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WebHookActivityMethod"/> values are the same. </summary>
         public static bool operator ==(WebHookActivityMethod left, WebHookActivityMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebHookActivityMethod"/> values are not the same. </summary>

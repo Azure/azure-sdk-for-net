@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(ShipmentType))
             {
                 writer.WritePropertyName("shipmentType"u8);
-                writer.WriteStringValue(ShipmentType.Value.ToString());
+                writer.WriteStringValue(ShipmentType.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

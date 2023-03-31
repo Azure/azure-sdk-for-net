@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static SalesforceSourceReadBehavior Query { get; } = new SalesforceSourceReadBehavior(QueryValue);
         /// <summary> QueryAll. </summary>
         public static SalesforceSourceReadBehavior QueryAll { get; } = new SalesforceSourceReadBehavior(QueryAllValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SalesforceSourceReadBehavior"/> values are the same. </summary>
         public static bool operator ==(SalesforceSourceReadBehavior left, SalesforceSourceReadBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SalesforceSourceReadBehavior"/> values are not the same. </summary>

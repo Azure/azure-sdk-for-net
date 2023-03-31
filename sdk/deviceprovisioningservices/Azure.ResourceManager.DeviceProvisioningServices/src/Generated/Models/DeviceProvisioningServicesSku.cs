@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         /// <summary> S1. </summary>
         public static DeviceProvisioningServicesSku S1 { get; } = new DeviceProvisioningServicesSku(S1Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesSku"/> values are the same. </summary>
         public static bool operator ==(DeviceProvisioningServicesSku left, DeviceProvisioningServicesSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesSku"/> values are not the same. </summary>

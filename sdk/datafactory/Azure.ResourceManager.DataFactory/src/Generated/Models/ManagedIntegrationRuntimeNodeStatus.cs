@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static ManagedIntegrationRuntimeNodeStatus Recycling { get; } = new ManagedIntegrationRuntimeNodeStatus(RecyclingValue);
         /// <summary> Unavailable. </summary>
         public static ManagedIntegrationRuntimeNodeStatus Unavailable { get; } = new ManagedIntegrationRuntimeNodeStatus(UnavailableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedIntegrationRuntimeNodeStatus"/> values are the same. </summary>
         public static bool operator ==(ManagedIntegrationRuntimeNodeStatus left, ManagedIntegrationRuntimeNodeStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedIntegrationRuntimeNodeStatus"/> values are not the same. </summary>

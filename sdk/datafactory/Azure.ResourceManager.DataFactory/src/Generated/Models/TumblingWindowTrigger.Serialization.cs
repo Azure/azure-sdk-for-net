@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("frequency"u8);
-            writer.WriteStringValue(Frequency.ToString());
+            writer.WriteStringValue(Frequency.ToSerialString());
             writer.WritePropertyName("interval"u8);
             writer.WriteNumberValue(Interval);
             writer.WritePropertyName("startTime"u8);

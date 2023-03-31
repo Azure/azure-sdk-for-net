@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Elastic.Models
         public static LiftrResourceCategory Unknown { get; } = new LiftrResourceCategory(UnknownValue);
         /// <summary> MonitorLogs. </summary>
         public static LiftrResourceCategory MonitorLogs { get; } = new LiftrResourceCategory(MonitorLogsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LiftrResourceCategory"/> values are the same. </summary>
         public static bool operator ==(LiftrResourceCategory left, LiftrResourceCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LiftrResourceCategory"/> values are not the same. </summary>

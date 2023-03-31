@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static MongoDBShardKeyOrder Reverse { get; } = new MongoDBShardKeyOrder(ReverseValue);
         /// <summary> Hashed. </summary>
         public static MongoDBShardKeyOrder Hashed { get; } = new MongoDBShardKeyOrder(HashedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MongoDBShardKeyOrder"/> values are the same. </summary>
         public static bool operator ==(MongoDBShardKeyOrder left, MongoDBShardKeyOrder right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MongoDBShardKeyOrder"/> values are not the same. </summary>

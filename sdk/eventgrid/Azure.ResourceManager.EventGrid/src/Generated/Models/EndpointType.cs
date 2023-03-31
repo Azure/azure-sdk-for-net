@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static EndpointType ServiceBusTopic { get; } = new EndpointType(ServiceBusTopicValue);
         /// <summary> AzureFunction. </summary>
         public static EndpointType AzureFunction { get; } = new EndpointType(AzureFunctionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EndpointType"/> values are the same. </summary>
         public static bool operator ==(EndpointType left, EndpointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EndpointType"/> values are not the same. </summary>

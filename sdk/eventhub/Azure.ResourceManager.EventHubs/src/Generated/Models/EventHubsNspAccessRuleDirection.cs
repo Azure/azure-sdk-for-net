@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static EventHubsNspAccessRuleDirection Inbound { get; } = new EventHubsNspAccessRuleDirection(InboundValue);
         /// <summary> Outbound. </summary>
         public static EventHubsNspAccessRuleDirection Outbound { get; } = new EventHubsNspAccessRuleDirection(OutboundValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventHubsNspAccessRuleDirection"/> values are the same. </summary>
         public static bool operator ==(EventHubsNspAccessRuleDirection left, EventHubsNspAccessRuleDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventHubsNspAccessRuleDirection"/> values are not the same. </summary>

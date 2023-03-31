@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeResourceMoveStatus ResourceMoveInProgress { get; } = new DataBoxEdgeResourceMoveStatus(ResourceMoveInProgressValue);
         /// <summary> ResourceMoveFailed. </summary>
         public static DataBoxEdgeResourceMoveStatus ResourceMoveFailed { get; } = new DataBoxEdgeResourceMoveStatus(ResourceMoveFailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeResourceMoveStatus"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeResourceMoveStatus left, DataBoxEdgeResourceMoveStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeResourceMoveStatus"/> values are not the same. </summary>

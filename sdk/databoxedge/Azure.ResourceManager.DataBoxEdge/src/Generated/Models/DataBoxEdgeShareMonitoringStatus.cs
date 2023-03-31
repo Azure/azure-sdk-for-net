@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeShareMonitoringStatus Enabled { get; } = new DataBoxEdgeShareMonitoringStatus(EnabledValue);
         /// <summary> Disabled. </summary>
         public static DataBoxEdgeShareMonitoringStatus Disabled { get; } = new DataBoxEdgeShareMonitoringStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeShareMonitoringStatus"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeShareMonitoringStatus left, DataBoxEdgeShareMonitoringStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeShareMonitoringStatus"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public static StorageTargetType Iscsi { get; } = new StorageTargetType(IscsiValue);
         /// <summary> None. </summary>
         public static StorageTargetType None { get; } = new StorageTargetType(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageTargetType"/> values are the same. </summary>
         public static bool operator ==(StorageTargetType left, StorageTargetType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageTargetType"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Expression. </summary>
         public static FactoryExpressionType Expression { get; } = new FactoryExpressionType(ExpressionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FactoryExpressionType"/> values are the same. </summary>
         public static bool operator ==(FactoryExpressionType left, FactoryExpressionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FactoryExpressionType"/> values are not the same. </summary>

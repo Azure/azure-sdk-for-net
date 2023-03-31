@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static DevTestLabSourceControlType GitHub { get; } = new DevTestLabSourceControlType(GitHubValue);
         /// <summary> StorageAccount. </summary>
         public static DevTestLabSourceControlType StorageAccount { get; } = new DevTestLabSourceControlType(StorageAccountValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DevTestLabSourceControlType"/> values are the same. </summary>
         public static bool operator ==(DevTestLabSourceControlType left, DevTestLabSourceControlType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabSourceControlType"/> values are not the same. </summary>

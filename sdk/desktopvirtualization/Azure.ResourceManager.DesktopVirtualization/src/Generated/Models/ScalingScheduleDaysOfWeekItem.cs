@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static ScalingScheduleDaysOfWeekItem Friday { get; } = new ScalingScheduleDaysOfWeekItem(FridayValue);
         /// <summary> Saturday. </summary>
         public static ScalingScheduleDaysOfWeekItem Saturday { get; } = new ScalingScheduleDaysOfWeekItem(SaturdayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScalingScheduleDaysOfWeekItem"/> values are the same. </summary>
         public static bool operator ==(ScalingScheduleDaysOfWeekItem left, ScalingScheduleDaysOfWeekItem right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScalingScheduleDaysOfWeekItem"/> values are not the same. </summary>

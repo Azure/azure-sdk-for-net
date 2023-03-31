@@ -200,6 +200,9 @@ namespace Azure.ResourceManager.DataBox.Models
         public static DataCenterCode SN6 { get; } = new DataCenterCode(SN6Value);
         /// <summary> BJS20. </summary>
         public static DataCenterCode BJS20 { get; } = new DataCenterCode(BJS20Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataCenterCode"/> values are the same. </summary>
         public static bool operator ==(DataCenterCode left, DataCenterCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataCenterCode"/> values are not the same. </summary>

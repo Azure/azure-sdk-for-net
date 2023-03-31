@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static TaskState FailedInputValidation { get; } = new TaskState(FailedInputValidationValue);
         /// <summary> Faulted. </summary>
         public static TaskState Faulted { get; } = new TaskState(FaultedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TaskState"/> values are the same. </summary>
         public static bool operator ==(TaskState left, TaskState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TaskState"/> values are not the same. </summary>

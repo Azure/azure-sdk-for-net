@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeJobType Restore { get; } = new DataBoxEdgeJobType(RestoreValue);
         /// <summary> TriggerSupportPackage. </summary>
         public static DataBoxEdgeJobType TriggerSupportPackage { get; } = new DataBoxEdgeJobType(TriggerSupportPackageValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeJobType"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeJobType left, DataBoxEdgeJobType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeJobType"/> values are not the same. </summary>

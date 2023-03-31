@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static EdgeOrderProductMeteringType Recurring { get; } = new EdgeOrderProductMeteringType(RecurringValue);
         /// <summary> Adhoc billing. </summary>
         public static EdgeOrderProductMeteringType Adhoc { get; } = new EdgeOrderProductMeteringType(AdhocValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EdgeOrderProductMeteringType"/> values are the same. </summary>
         public static bool operator ==(EdgeOrderProductMeteringType left, EdgeOrderProductMeteringType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeOrderProductMeteringType"/> values are not the same. </summary>

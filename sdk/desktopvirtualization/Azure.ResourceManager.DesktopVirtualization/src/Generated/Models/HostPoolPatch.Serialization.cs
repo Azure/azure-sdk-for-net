@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(PersonalDesktopAssignmentType))
             {
                 writer.WritePropertyName("personalDesktopAssignmentType"u8);
-                writer.WriteStringValue(PersonalDesktopAssignmentType.Value.ToString());
+                writer.WriteStringValue(PersonalDesktopAssignmentType.Value.ToSerialString());
             }
             if (Optional.IsDefined(LoadBalancerType))
             {
                 writer.WritePropertyName("loadBalancerType"u8);
-                writer.WriteStringValue(LoadBalancerType.Value.ToString());
+                writer.WriteStringValue(LoadBalancerType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Ring))
             {
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(SsoSecretType))
             {
                 writer.WritePropertyName("ssoSecretType"u8);
-                writer.WriteStringValue(SsoSecretType.Value.ToString());
+                writer.WriteStringValue(SsoSecretType.Value.ToSerialString());
             }
             if (Optional.IsDefined(PreferredAppGroupType))
             {
                 writer.WritePropertyName("preferredAppGroupType"u8);
-                writer.WriteStringValue(PreferredAppGroupType.Value.ToString());
+                writer.WriteStringValue(PreferredAppGroupType.Value.ToSerialString());
             }
             if (Optional.IsDefined(StartVmOnConnect))
             {

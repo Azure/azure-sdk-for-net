@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static BackupVaultImmutabilityState Unlocked { get; } = new BackupVaultImmutabilityState(UnlockedValue);
         /// <summary> Locked. </summary>
         public static BackupVaultImmutabilityState Locked { get; } = new BackupVaultImmutabilityState(LockedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupVaultImmutabilityState"/> values are the same. </summary>
         public static bool operator ==(BackupVaultImmutabilityState left, BackupVaultImmutabilityState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupVaultImmutabilityState"/> values are not the same. </summary>

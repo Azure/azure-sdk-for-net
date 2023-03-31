@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static DataFlowComputeType MemoryOptimized { get; } = new DataFlowComputeType(MemoryOptimizedValue);
         /// <summary> ComputeOptimized. </summary>
         public static DataFlowComputeType ComputeOptimized { get; } = new DataFlowComputeType(ComputeOptimizedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataFlowComputeType"/> values are the same. </summary>
         public static bool operator ==(DataFlowComputeType left, DataFlowComputeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFlowComputeType"/> values are not the same. </summary>

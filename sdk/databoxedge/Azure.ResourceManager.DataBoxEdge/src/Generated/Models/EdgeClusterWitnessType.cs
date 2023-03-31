@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static EdgeClusterWitnessType Cloud { get; } = new EdgeClusterWitnessType(CloudValue);
         /// <summary> FileShare. </summary>
         public static EdgeClusterWitnessType FileShare { get; } = new EdgeClusterWitnessType(FileShareValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EdgeClusterWitnessType"/> values are the same. </summary>
         public static bool operator ==(EdgeClusterWitnessType left, EdgeClusterWitnessType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeClusterWitnessType"/> values are not the same. </summary>

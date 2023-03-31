@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeSkuAvailability Available { get; } = new DataBoxEdgeSkuAvailability(AvailableValue);
         /// <summary> Unavailable. </summary>
         public static DataBoxEdgeSkuAvailability Unavailable { get; } = new DataBoxEdgeSkuAvailability(UnavailableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeSkuAvailability"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeSkuAvailability left, DataBoxEdgeSkuAvailability right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeSkuAvailability"/> values are not the same. </summary>

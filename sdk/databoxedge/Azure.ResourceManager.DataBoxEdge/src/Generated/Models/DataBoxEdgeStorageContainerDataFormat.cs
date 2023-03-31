@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeStorageContainerDataFormat PageBlob { get; } = new DataBoxEdgeStorageContainerDataFormat(PageBlobValue);
         /// <summary> AzureFile. </summary>
         public static DataBoxEdgeStorageContainerDataFormat AzureFile { get; } = new DataBoxEdgeStorageContainerDataFormat(AzureFileValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeStorageContainerDataFormat"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeStorageContainerDataFormat left, DataBoxEdgeStorageContainerDataFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeStorageContainerDataFormat"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> Premium Tier. </summary>
         public static ElasticSanSkuTier Premium { get; } = new ElasticSanSkuTier(PremiumValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ElasticSanSkuTier"/> values are the same. </summary>
         public static bool operator ==(ElasticSanSkuTier left, ElasticSanSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ElasticSanSkuTier"/> values are not the same. </summary>

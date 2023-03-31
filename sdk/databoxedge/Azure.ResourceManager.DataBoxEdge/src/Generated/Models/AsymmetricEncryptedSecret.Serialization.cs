@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStringValue(EncryptionCertThumbprint);
             }
             writer.WritePropertyName("encryptionAlgorithm"u8);
-            writer.WriteStringValue(EncryptionAlgorithm.ToString());
+            writer.WriteStringValue(EncryptionAlgorithm.ToSerialString());
             writer.WriteEndObject();
         }
 

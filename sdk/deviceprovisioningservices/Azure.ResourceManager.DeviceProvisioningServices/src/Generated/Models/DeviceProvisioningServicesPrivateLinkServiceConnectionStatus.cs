@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public static DeviceProvisioningServicesPrivateLinkServiceConnectionStatus Rejected { get; } = new DeviceProvisioningServicesPrivateLinkServiceConnectionStatus(RejectedValue);
         /// <summary> Disconnected. </summary>
         public static DeviceProvisioningServicesPrivateLinkServiceConnectionStatus Disconnected { get; } = new DeviceProvisioningServicesPrivateLinkServiceConnectionStatus(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesPrivateLinkServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(DeviceProvisioningServicesPrivateLinkServiceConnectionStatus left, DeviceProvisioningServicesPrivateLinkServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesPrivateLinkServiceConnectionStatus"/> values are not the same. </summary>

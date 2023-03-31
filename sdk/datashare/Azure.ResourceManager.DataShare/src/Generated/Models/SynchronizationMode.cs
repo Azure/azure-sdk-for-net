@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataShare.Models
         public static SynchronizationMode Incremental { get; } = new SynchronizationMode(IncrementalValue);
         /// <summary> FullSync. </summary>
         public static SynchronizationMode FullSync { get; } = new SynchronizationMode(FullSyncValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynchronizationMode"/> values are the same. </summary>
         public static bool operator ==(SynchronizationMode left, SynchronizationMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynchronizationMode"/> values are not the same. </summary>

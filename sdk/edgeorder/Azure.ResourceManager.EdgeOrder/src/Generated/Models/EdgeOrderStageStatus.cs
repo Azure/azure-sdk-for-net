@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static EdgeOrderStageStatus Cancelled { get; } = new EdgeOrderStageStatus(CancelledValue);
         /// <summary> Stage is cancelling. </summary>
         public static EdgeOrderStageStatus Cancelling { get; } = new EdgeOrderStageStatus(CancellingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EdgeOrderStageStatus"/> values are the same. </summary>
         public static bool operator ==(EdgeOrderStageStatus left, EdgeOrderStageStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeOrderStageStatus"/> values are not the same. </summary>

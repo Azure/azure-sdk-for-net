@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static BillingType Pav2 { get; } = new BillingType(Pav2Value);
         /// <summary> Purchase billing. </summary>
         public static BillingType Purchase { get; } = new BillingType(PurchaseValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BillingType"/> values are the same. </summary>
         public static bool operator ==(BillingType left, BillingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingType"/> values are not the same. </summary>

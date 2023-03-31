@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static RunQueryOrderByField TriggerName { get; } = new RunQueryOrderByField(TriggerNameValue);
         /// <summary> TriggerRunTimestamp. </summary>
         public static RunQueryOrderByField TriggerRunTimestamp { get; } = new RunQueryOrderByField(TriggerRunTimestampValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RunQueryOrderByField"/> values are the same. </summary>
         public static bool operator ==(RunQueryOrderByField left, RunQueryOrderByField right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RunQueryOrderByField"/> values are not the same. </summary>

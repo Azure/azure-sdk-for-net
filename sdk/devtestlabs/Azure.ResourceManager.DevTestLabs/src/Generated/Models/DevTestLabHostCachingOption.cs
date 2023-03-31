@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static DevTestLabHostCachingOption ReadOnly { get; } = new DevTestLabHostCachingOption(ReadOnlyValue);
         /// <summary> ReadWrite. </summary>
         public static DevTestLabHostCachingOption ReadWrite { get; } = new DevTestLabHostCachingOption(ReadWriteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DevTestLabHostCachingOption"/> values are the same. </summary>
         public static bool operator ==(DevTestLabHostCachingOption left, DevTestLabHostCachingOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabHostCachingOption"/> values are not the same. </summary>

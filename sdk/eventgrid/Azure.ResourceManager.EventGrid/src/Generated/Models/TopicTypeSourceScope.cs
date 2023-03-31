@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static TopicTypeSourceScope AzureSubscription { get; } = new TopicTypeSourceScope(AzureSubscriptionValue);
         /// <summary> ManagementGroup. </summary>
         public static TopicTypeSourceScope ManagementGroup { get; } = new TopicTypeSourceScope(ManagementGroupValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TopicTypeSourceScope"/> values are the same. </summary>
         public static bool operator ==(TopicTypeSourceScope left, TopicTypeSourceScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TopicTypeSourceScope"/> values are not the same. </summary>

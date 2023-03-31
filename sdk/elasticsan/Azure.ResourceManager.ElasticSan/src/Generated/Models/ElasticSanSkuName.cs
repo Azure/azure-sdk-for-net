@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public static ElasticSanSkuName PremiumLrs { get; } = new ElasticSanSkuName(PremiumLrsValue);
         /// <summary> Premium zone redundant storage. </summary>
         public static ElasticSanSkuName PremiumZrs { get; } = new ElasticSanSkuName(PremiumZrsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ElasticSanSkuName"/> values are the same. </summary>
         public static bool operator ==(ElasticSanSkuName left, ElasticSanSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ElasticSanSkuName"/> values are not the same. </summary>

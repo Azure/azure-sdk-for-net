@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Dynatrace
             if (Optional.IsDefined(SingleSignOnState))
             {
                 writer.WritePropertyName("singleSignOnState"u8);
-                writer.WriteStringValue(SingleSignOnState.Value.ToString());
+                writer.WriteStringValue(SingleSignOnState.Value.ToSerialString());
             }
             if (Optional.IsDefined(EnterpriseAppId))
             {

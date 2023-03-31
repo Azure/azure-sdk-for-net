@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static SsisMigrationOverwriteOption Ignore { get; } = new SsisMigrationOverwriteOption(IgnoreValue);
         /// <summary> Overwrite. </summary>
         public static SsisMigrationOverwriteOption Overwrite { get; } = new SsisMigrationOverwriteOption(OverwriteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SsisMigrationOverwriteOption"/> values are the same. </summary>
         public static bool operator ==(SsisMigrationOverwriteOption left, SsisMigrationOverwriteOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SsisMigrationOverwriteOption"/> values are not the same. </summary>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
-                writer.WriteStringValue(AuthenticationType.Value.ToString());
+                writer.WriteStringValue(AuthenticationType.Value.ToSerialString());
             }
             writer.WritePropertyName("certificate"u8);
             writer.WriteStringValue(Certificate);

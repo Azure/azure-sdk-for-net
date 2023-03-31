@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(HostCaching))
             {
                 writer.WritePropertyName("hostCaching"u8);
-                writer.WriteStringValue(HostCaching.Value.ToString());
+                writer.WriteStringValue(HostCaching.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

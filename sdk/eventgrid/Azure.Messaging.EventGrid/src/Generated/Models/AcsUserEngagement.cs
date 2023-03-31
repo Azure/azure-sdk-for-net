@@ -29,6 +29,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static AcsUserEngagement View { get; } = new AcsUserEngagement(ViewValue);
         /// <summary> click. </summary>
         public static AcsUserEngagement Click { get; } = new AcsUserEngagement(ClickValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AcsUserEngagement"/> values are the same. </summary>
         public static bool operator ==(AcsUserEngagement left, AcsUserEngagement right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AcsUserEngagement"/> values are not the same. </summary>

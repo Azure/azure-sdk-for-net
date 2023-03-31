@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static StorageSettingStoreType OperationalStore { get; } = new StorageSettingStoreType(OperationalStoreValue);
         /// <summary> VaultStore. </summary>
         public static StorageSettingStoreType VaultStore { get; } = new StorageSettingStoreType(VaultStoreValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageSettingStoreType"/> values are the same. </summary>
         public static bool operator ==(StorageSettingStoreType left, StorageSettingStoreType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageSettingStoreType"/> values are not the same. </summary>

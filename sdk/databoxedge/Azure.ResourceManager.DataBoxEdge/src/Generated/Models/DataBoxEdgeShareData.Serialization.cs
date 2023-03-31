@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("shareStatus"u8);
-            writer.WriteStringValue(ShareStatus.ToString());
+            writer.WriteStringValue(ShareStatus.ToSerialString());
             writer.WritePropertyName("monitoringStatus"u8);
-            writer.WriteStringValue(MonitoringStatus.ToString());
+            writer.WriteStringValue(MonitoringStatus.ToSerialString());
             if (Optional.IsDefined(AzureContainerInfo))
             {
                 writer.WritePropertyName("azureContainerInfo"u8);
                 writer.WriteObjectValue(AzureContainerInfo);
             }
             writer.WritePropertyName("accessProtocol"u8);
-            writer.WriteStringValue(AccessProtocol.ToString());
+            writer.WriteStringValue(AccessProtocol.ToSerialString());
             if (Optional.IsCollectionDefined(UserAccessRights))
             {
                 writer.WritePropertyName("userAccessRights"u8);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(DataPolicy))
             {
                 writer.WritePropertyName("dataPolicy"u8);
-                writer.WriteStringValue(DataPolicy.Value.ToString());
+                writer.WriteStringValue(DataPolicy.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

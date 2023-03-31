@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static RecordPropertyAndItemRemoval True { get; } = new RecordPropertyAndItemRemoval(TrueValue);
         /// <summary> false. </summary>
         public static RecordPropertyAndItemRemoval False { get; } = new RecordPropertyAndItemRemoval(FalseValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RecordPropertyAndItemRemoval"/> values are the same. </summary>
         public static bool operator ==(RecordPropertyAndItemRemoval left, RecordPropertyAndItemRemoval right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecordPropertyAndItemRemoval"/> values are not the same. </summary>

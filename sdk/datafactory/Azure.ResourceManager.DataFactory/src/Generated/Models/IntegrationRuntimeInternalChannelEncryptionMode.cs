@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static IntegrationRuntimeInternalChannelEncryptionMode SslEncrypted { get; } = new IntegrationRuntimeInternalChannelEncryptionMode(SslEncryptedValue);
         /// <summary> NotEncrypted. </summary>
         public static IntegrationRuntimeInternalChannelEncryptionMode NotEncrypted { get; } = new IntegrationRuntimeInternalChannelEncryptionMode(NotEncryptedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IntegrationRuntimeInternalChannelEncryptionMode"/> values are the same. </summary>
         public static bool operator ==(IntegrationRuntimeInternalChannelEncryptionMode left, IntegrationRuntimeInternalChannelEncryptionMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationRuntimeInternalChannelEncryptionMode"/> values are not the same. </summary>

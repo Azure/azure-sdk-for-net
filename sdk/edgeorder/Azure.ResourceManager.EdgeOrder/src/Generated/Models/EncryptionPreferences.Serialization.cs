@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (Optional.IsDefined(DoubleEncryptionStatus))
             {
                 writer.WritePropertyName("doubleEncryptionStatus"u8);
-                writer.WriteStringValue(DoubleEncryptionStatus.Value.ToString());
+                writer.WriteStringValue(DoubleEncryptionStatus.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

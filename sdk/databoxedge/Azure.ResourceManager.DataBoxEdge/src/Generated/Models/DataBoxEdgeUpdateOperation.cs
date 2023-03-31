@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeUpdateOperation Download { get; } = new DataBoxEdgeUpdateOperation(DownloadValue);
         /// <summary> Install. </summary>
         public static DataBoxEdgeUpdateOperation Install { get; } = new DataBoxEdgeUpdateOperation(InstallValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeUpdateOperation"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeUpdateOperation left, DataBoxEdgeUpdateOperation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeUpdateOperation"/> values are not the same. </summary>

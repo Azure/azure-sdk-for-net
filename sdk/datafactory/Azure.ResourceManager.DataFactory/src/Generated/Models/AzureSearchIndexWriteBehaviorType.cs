@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static AzureSearchIndexWriteBehaviorType Merge { get; } = new AzureSearchIndexWriteBehaviorType(MergeValue);
         /// <summary> Upload. </summary>
         public static AzureSearchIndexWriteBehaviorType Upload { get; } = new AzureSearchIndexWriteBehaviorType(UploadValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AzureSearchIndexWriteBehaviorType"/> values are the same. </summary>
         public static bool operator ==(AzureSearchIndexWriteBehaviorType left, AzureSearchIndexWriteBehaviorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureSearchIndexWriteBehaviorType"/> values are not the same. </summary>

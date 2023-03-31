@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(TransportProtocol))
             {
                 writer.WritePropertyName("transportProtocol"u8);
-                writer.WriteStringValue(TransportProtocol.Value.ToString());
+                writer.WriteStringValue(TransportProtocol.Value.ToSerialString());
             }
             if (Optional.IsDefined(BackendPort))
             {

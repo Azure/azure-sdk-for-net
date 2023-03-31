@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static DynatraceOneAgentAvailabilityState Unknown { get; } = new DynatraceOneAgentAvailabilityState(UnknownValue);
         /// <summary> UNMONITORED. </summary>
         public static DynatraceOneAgentAvailabilityState Unmonitored { get; } = new DynatraceOneAgentAvailabilityState(UnmonitoredValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DynatraceOneAgentAvailabilityState"/> values are the same. </summary>
         public static bool operator ==(DynatraceOneAgentAvailabilityState left, DynatraceOneAgentAvailabilityState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynatraceOneAgentAvailabilityState"/> values are not the same. </summary>

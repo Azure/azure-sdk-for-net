@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static SessionHostLoadBalancingAlgorithm BreadthFirst { get; } = new SessionHostLoadBalancingAlgorithm(BreadthFirstValue);
         /// <summary> DepthFirst. </summary>
         public static SessionHostLoadBalancingAlgorithm DepthFirst { get; } = new SessionHostLoadBalancingAlgorithm(DepthFirstValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SessionHostLoadBalancingAlgorithm"/> values are the same. </summary>
         public static bool operator ==(SessionHostLoadBalancingAlgorithm left, SessionHostLoadBalancingAlgorithm right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SessionHostLoadBalancingAlgorithm"/> values are not the same. </summary>

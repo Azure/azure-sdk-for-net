@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static PosixComplianceStatus Enabled { get; } = new PosixComplianceStatus(EnabledValue);
         /// <summary> Disabled. </summary>
         public static PosixComplianceStatus Disabled { get; } = new PosixComplianceStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PosixComplianceStatus"/> values are the same. </summary>
         public static bool operator ==(PosixComplianceStatus left, PosixComplianceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PosixComplianceStatus"/> values are not the same. </summary>

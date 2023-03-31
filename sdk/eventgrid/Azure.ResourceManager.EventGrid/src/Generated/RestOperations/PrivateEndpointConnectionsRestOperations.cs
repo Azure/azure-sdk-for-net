@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.EventGrid
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.EventGrid/", false);
-            uri.AppendPath(parentType.ToString(), true);
+            uri.AppendPath(parentType.ToSerialString(), true);
             uri.AppendPath("/", false);
             uri.AppendPath(parentName, true);
             uri.AppendPath("/privateEndpointConnections/", false);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.EventGrid
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.EventGrid/", false);
-            uri.AppendPath(parentType.ToString(), true);
+            uri.AppendPath(parentType.ToSerialString(), true);
             uri.AppendPath("/", false);
             uri.AppendPath(parentName, true);
             uri.AppendPath("/privateEndpointConnections/", false);
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.EventGrid
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.EventGrid/", false);
-            uri.AppendPath(parentType.ToString(), true);
+            uri.AppendPath(parentType.ToSerialString(), true);
             uri.AppendPath("/", false);
             uri.AppendPath(parentName, true);
             uri.AppendPath("/privateEndpointConnections/", false);
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.EventGrid
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.EventGrid/", false);
-            uri.AppendPath(parentType.ToString(), true);
+            uri.AppendPath(parentType.ToSerialString(), true);
             uri.AppendPath("/", false);
             uri.AppendPath(parentName, true);
             uri.AppendPath("/privateEndpointConnections", false);

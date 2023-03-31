@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(MappingType.ToString());
+            writer.WriteStringValue(MappingType.ToSerialString());
             writer.WriteEndObject();
         }
 

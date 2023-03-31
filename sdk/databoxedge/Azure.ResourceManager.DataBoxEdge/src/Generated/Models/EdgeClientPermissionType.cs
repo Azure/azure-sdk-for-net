@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static EdgeClientPermissionType ReadOnly { get; } = new EdgeClientPermissionType(ReadOnlyValue);
         /// <summary> ReadWrite. </summary>
         public static EdgeClientPermissionType ReadWrite { get; } = new EdgeClientPermissionType(ReadWriteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EdgeClientPermissionType"/> values are the same. </summary>
         public static bool operator ==(EdgeClientPermissionType left, EdgeClientPermissionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeClientPermissionType"/> values are not the same. </summary>

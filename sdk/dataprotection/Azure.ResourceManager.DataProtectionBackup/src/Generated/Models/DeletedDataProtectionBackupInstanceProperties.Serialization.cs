@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(ValidationType))
             {
                 writer.WritePropertyName("validationType"u8);
-                writer.WriteStringValue(ValidationType.Value.ToString());
+                writer.WriteStringValue(ValidationType.Value.ToSerialString());
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);

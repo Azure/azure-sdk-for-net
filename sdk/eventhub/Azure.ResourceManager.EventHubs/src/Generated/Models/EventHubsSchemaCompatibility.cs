@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static EventHubsSchemaCompatibility Backward { get; } = new EventHubsSchemaCompatibility(BackwardValue);
         /// <summary> Forward. </summary>
         public static EventHubsSchemaCompatibility Forward { get; } = new EventHubsSchemaCompatibility(ForwardValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventHubsSchemaCompatibility"/> values are the same. </summary>
         public static bool operator ==(EventHubsSchemaCompatibility left, EventHubsSchemaCompatibility right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventHubsSchemaCompatibility"/> values are not the same. </summary>

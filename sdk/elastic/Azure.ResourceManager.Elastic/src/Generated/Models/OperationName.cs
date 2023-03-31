@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Elastic.Models
         public static OperationName Add { get; } = new OperationName(AddValue);
         /// <summary> Delete. </summary>
         public static OperationName Delete { get; } = new OperationName(DeleteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OperationName"/> values are the same. </summary>
         public static bool operator ==(OperationName left, OperationName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationName"/> values are not the same. </summary>

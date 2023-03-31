@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Elastic.Models
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             if (Optional.IsDefined(MonitoringStatus))
             {
                 writer.WritePropertyName("monitoringStatus"u8);
-                writer.WriteStringValue(MonitoringStatus.Value.ToString());
+                writer.WriteStringValue(MonitoringStatus.Value.ToSerialString());
             }
             if (Optional.IsDefined(ElasticProperties))
             {

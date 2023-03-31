@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static SqlAlwaysEncryptedAkvAuthType ManagedIdentity { get; } = new SqlAlwaysEncryptedAkvAuthType(ManagedIdentityValue);
         /// <summary> UserAssignedManagedIdentity. </summary>
         public static SqlAlwaysEncryptedAkvAuthType UserAssignedManagedIdentity { get; } = new SqlAlwaysEncryptedAkvAuthType(UserAssignedManagedIdentityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlAlwaysEncryptedAkvAuthType"/> values are the same. </summary>
         public static bool operator ==(SqlAlwaysEncryptedAkvAuthType left, SqlAlwaysEncryptedAkvAuthType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlAlwaysEncryptedAkvAuthType"/> values are not the same. </summary>

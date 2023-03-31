@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeMountType Volume { get; } = new DataBoxEdgeMountType(VolumeValue);
         /// <summary> HostPath. </summary>
         public static DataBoxEdgeMountType HostPath { get; } = new DataBoxEdgeMountType(HostPathValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeMountType"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeMountType left, DataBoxEdgeMountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeMountType"/> values are not the same. </summary>

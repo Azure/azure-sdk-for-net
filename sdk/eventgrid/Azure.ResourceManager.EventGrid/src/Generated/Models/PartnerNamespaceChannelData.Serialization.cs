@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(ChannelType))
             {
                 writer.WritePropertyName("channelType"u8);
-                writer.WriteStringValue(ChannelType.Value.ToString());
+                writer.WriteStringValue(ChannelType.Value.ToSerialString());
             }
             if (Optional.IsDefined(PartnerTopicInfo))
             {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             if (Optional.IsDefined(ReadinessState))
             {
                 writer.WritePropertyName("readinessState"u8);
-                writer.WriteStringValue(ReadinessState.Value.ToString());
+                writer.WriteStringValue(ReadinessState.Value.ToSerialString());
             }
             if (Optional.IsDefined(ExpireOnIfNotActivated))
             {

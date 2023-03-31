@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static PersonalDesktopAssignmentType Automatic { get; } = new PersonalDesktopAssignmentType(AutomaticValue);
         /// <summary> Direct. </summary>
         public static PersonalDesktopAssignmentType Direct { get; } = new PersonalDesktopAssignmentType(DirectValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PersonalDesktopAssignmentType"/> values are the same. </summary>
         public static bool operator ==(PersonalDesktopAssignmentType left, PersonalDesktopAssignmentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PersonalDesktopAssignmentType"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static ShareAccessType Read { get; } = new ShareAccessType(ReadValue);
         /// <summary> Custom. </summary>
         public static ShareAccessType Custom { get; } = new ShareAccessType(CustomValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ShareAccessType"/> values are the same. </summary>
         public static bool operator ==(ShareAccessType left, ShareAccessType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ShareAccessType"/> values are not the same. </summary>

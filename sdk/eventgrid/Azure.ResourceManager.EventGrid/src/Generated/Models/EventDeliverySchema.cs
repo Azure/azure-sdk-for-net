@@ -30,6 +30,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static EventDeliverySchema EventGridSchema { get; } = new EventDeliverySchema(EventGridSchemaValue);
         /// <summary> CustomInputSchema. </summary>
         public static EventDeliverySchema CustomInputSchema { get; } = new EventDeliverySchema(CustomInputSchemaValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventDeliverySchema"/> values are the same. </summary>
         public static bool operator ==(EventDeliverySchema left, EventDeliverySchema right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventDeliverySchema"/> values are not the same. </summary>

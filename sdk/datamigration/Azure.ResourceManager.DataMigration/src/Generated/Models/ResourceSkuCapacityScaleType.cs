@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static ResourceSkuCapacityScaleType Manual { get; } = new ResourceSkuCapacityScaleType(ManualValue);
         /// <summary> None. </summary>
         public static ResourceSkuCapacityScaleType None { get; } = new ResourceSkuCapacityScaleType(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResourceSkuCapacityScaleType"/> values are the same. </summary>
         public static bool operator ==(ResourceSkuCapacityScaleType left, ResourceSkuCapacityScaleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceSkuCapacityScaleType"/> values are not the same. </summary>

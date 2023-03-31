@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static SupportedFilterType ShipToCountries { get; } = new SupportedFilterType(ShipToCountriesValue);
         /// <summary> Double encryption status. </summary>
         public static SupportedFilterType DoubleEncryptionStatus { get; } = new SupportedFilterType(DoubleEncryptionStatusValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SupportedFilterType"/> values are the same. </summary>
         public static bool operator ==(SupportedFilterType left, SupportedFilterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SupportedFilterType"/> values are not the same. </summary>

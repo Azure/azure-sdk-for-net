@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static HDInsightActivityDebugInfoOptionSetting Always { get; } = new HDInsightActivityDebugInfoOptionSetting(AlwaysValue);
         /// <summary> Failure. </summary>
         public static HDInsightActivityDebugInfoOptionSetting Failure { get; } = new HDInsightActivityDebugInfoOptionSetting(FailureValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HDInsightActivityDebugInfoOptionSetting"/> values are the same. </summary>
         public static bool operator ==(HDInsightActivityDebugInfoOptionSetting left, HDInsightActivityDebugInfoOptionSetting right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HDInsightActivityDebugInfoOptionSetting"/> values are not the same. </summary>

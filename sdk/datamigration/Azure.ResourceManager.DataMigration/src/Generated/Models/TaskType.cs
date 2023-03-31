@@ -137,6 +137,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static TaskType ServiceInstallOci { get; } = new TaskType(ServiceInstallOciValue);
         /// <summary> MigrateSchemaSqlServerSqlDb. </summary>
         public static TaskType MigrateSchemaSqlServerSqlDB { get; } = new TaskType(MigrateSchemaSqlServerSqlDBValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TaskType"/> values are the same. </summary>
         public static bool operator ==(TaskType left, TaskType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TaskType"/> values are not the same. </summary>

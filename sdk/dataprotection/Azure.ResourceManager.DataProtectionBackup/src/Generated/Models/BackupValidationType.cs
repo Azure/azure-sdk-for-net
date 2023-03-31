@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static BackupValidationType ShallowValidation { get; } = new BackupValidationType(ShallowValidationValue);
         /// <summary> DeepValidation. </summary>
         public static BackupValidationType DeepValidation { get; } = new BackupValidationType(DeepValidationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupValidationType"/> values are the same. </summary>
         public static bool operator ==(BackupValidationType left, BackupValidationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupValidationType"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static DevTestLabCustomImageOSType Linux { get; } = new DevTestLabCustomImageOSType(LinuxValue);
         /// <summary> None. </summary>
         public static DevTestLabCustomImageOSType None { get; } = new DevTestLabCustomImageOSType(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DevTestLabCustomImageOSType"/> values are the same. </summary>
         public static bool operator ==(DevTestLabCustomImageOSType left, DevTestLabCustomImageOSType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabCustomImageOSType"/> values are not the same. </summary>

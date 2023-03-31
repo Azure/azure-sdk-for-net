@@ -59,6 +59,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static DataProtectionBackupMonth October { get; } = new DataProtectionBackupMonth(OctoberValue);
         /// <summary> September. </summary>
         public static DataProtectionBackupMonth September { get; } = new DataProtectionBackupMonth(SeptemberValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataProtectionBackupMonth"/> values are the same. </summary>
         public static bool operator ==(DataProtectionBackupMonth left, DataProtectionBackupMonth right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataProtectionBackupMonth"/> values are not the same. </summary>

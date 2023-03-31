@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static EventHubsSkuName Standard { get; } = new EventHubsSkuName(StandardValue);
         /// <summary> Premium. </summary>
         public static EventHubsSkuName Premium { get; } = new EventHubsSkuName(PremiumValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventHubsSkuName"/> values are the same. </summary>
         public static bool operator ==(EventHubsSkuName left, EventHubsSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventHubsSkuName"/> values are not the same. </summary>

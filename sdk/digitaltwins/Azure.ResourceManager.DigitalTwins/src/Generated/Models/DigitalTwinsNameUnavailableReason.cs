@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static DigitalTwinsNameUnavailableReason Invalid { get; } = new DigitalTwinsNameUnavailableReason(InvalidValue);
         /// <summary> AlreadyExists. </summary>
         public static DigitalTwinsNameUnavailableReason AlreadyExists { get; } = new DigitalTwinsNameUnavailableReason(AlreadyExistsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DigitalTwinsNameUnavailableReason"/> values are the same. </summary>
         public static bool operator ==(DigitalTwinsNameUnavailableReason left, DigitalTwinsNameUnavailableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DigitalTwinsNameUnavailableReason"/> values are not the same. </summary>

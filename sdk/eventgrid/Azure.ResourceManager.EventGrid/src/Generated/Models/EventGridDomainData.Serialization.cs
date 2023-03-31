@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(InputSchema))
             {
                 writer.WritePropertyName("inputSchema"u8);
-                writer.WriteStringValue(InputSchema.Value.ToString());
+                writer.WriteStringValue(InputSchema.Value.ToSerialString());
             }
             if (Optional.IsDefined(InputSchemaMapping))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(InboundIPRules))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(DataResidencyBoundary))
             {
                 writer.WritePropertyName("dataResidencyBoundary"u8);
-                writer.WriteStringValue(DataResidencyBoundary.Value.ToString());
+                writer.WriteStringValue(DataResidencyBoundary.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

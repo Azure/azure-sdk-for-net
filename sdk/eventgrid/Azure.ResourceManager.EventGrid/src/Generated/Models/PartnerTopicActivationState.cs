@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static PartnerTopicActivationState Activated { get; } = new PartnerTopicActivationState(ActivatedValue);
         /// <summary> Deactivated. </summary>
         public static PartnerTopicActivationState Deactivated { get; } = new PartnerTopicActivationState(DeactivatedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PartnerTopicActivationState"/> values are the same. </summary>
         public static bool operator ==(PartnerTopicActivationState left, PartnerTopicActivationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PartnerTopicActivationState"/> values are not the same. </summary>

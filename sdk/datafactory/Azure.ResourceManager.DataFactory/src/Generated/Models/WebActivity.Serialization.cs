@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("method"u8);
-            writer.WriteStringValue(Method.ToString());
+            writer.WriteStringValue(Method.ToSerialString());
             writer.WritePropertyName("url"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Uri);

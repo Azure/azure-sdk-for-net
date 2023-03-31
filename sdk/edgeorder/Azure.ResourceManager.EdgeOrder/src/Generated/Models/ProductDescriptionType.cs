@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Base description. </summary>
         public static ProductDescriptionType Base { get; } = new ProductDescriptionType(BaseValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProductDescriptionType"/> values are the same. </summary>
         public static bool operator ==(ProductDescriptionType left, ProductDescriptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProductDescriptionType"/> values are not the same. </summary>

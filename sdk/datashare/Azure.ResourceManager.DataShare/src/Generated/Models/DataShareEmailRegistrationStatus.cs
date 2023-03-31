@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataShare.Models
         public static DataShareEmailRegistrationStatus Activated { get; } = new DataShareEmailRegistrationStatus(ActivatedValue);
         /// <summary> ActivationAttemptsExhausted. </summary>
         public static DataShareEmailRegistrationStatus ActivationAttemptsExhausted { get; } = new DataShareEmailRegistrationStatus(ActivationAttemptsExhaustedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataShareEmailRegistrationStatus"/> values are the same. </summary>
         public static bool operator ==(DataShareEmailRegistrationStatus left, DataShareEmailRegistrationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataShareEmailRegistrationStatus"/> values are not the same. </summary>

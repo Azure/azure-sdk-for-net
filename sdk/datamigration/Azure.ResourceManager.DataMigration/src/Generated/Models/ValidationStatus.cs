@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static ValidationStatus Stopped { get; } = new ValidationStatus(StoppedValue);
         /// <summary> Failed. </summary>
         public static ValidationStatus Failed { get; } = new ValidationStatus(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ValidationStatus"/> values are the same. </summary>
         public static bool operator ==(ValidationStatus left, ValidationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ValidationStatus"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static DataResidencyBoundary WithinGeopair { get; } = new DataResidencyBoundary(WithinGeopairValue);
         /// <summary> WithinRegion. </summary>
         public static DataResidencyBoundary WithinRegion { get; } = new DataResidencyBoundary(WithinRegionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataResidencyBoundary"/> values are the same. </summary>
         public static bool operator ==(DataResidencyBoundary left, DataResidencyBoundary right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataResidencyBoundary"/> values are not the same. </summary>

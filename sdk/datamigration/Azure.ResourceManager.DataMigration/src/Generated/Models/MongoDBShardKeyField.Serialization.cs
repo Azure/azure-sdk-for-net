@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("order"u8);
-            writer.WriteStringValue(Order.ToString());
+            writer.WriteStringValue(Order.ToSerialString());
             writer.WriteEndObject();
         }
 

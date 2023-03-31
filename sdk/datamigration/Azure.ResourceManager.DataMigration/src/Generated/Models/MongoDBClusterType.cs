@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static MongoDBClusterType CosmosDB { get; } = new MongoDBClusterType(CosmosDBValue);
         /// <summary> MongoDb. </summary>
         public static MongoDBClusterType MongoDB { get; } = new MongoDBClusterType(MongoDBValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MongoDBClusterType"/> values are the same. </summary>
         public static bool operator ==(MongoDBClusterType left, MongoDBClusterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MongoDBClusterType"/> values are not the same. </summary>

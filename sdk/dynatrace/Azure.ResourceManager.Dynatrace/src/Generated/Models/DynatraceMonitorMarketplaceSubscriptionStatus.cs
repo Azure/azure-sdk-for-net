@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static DynatraceMonitorMarketplaceSubscriptionStatus Active { get; } = new DynatraceMonitorMarketplaceSubscriptionStatus(ActiveValue);
         /// <summary> Suspended. </summary>
         public static DynatraceMonitorMarketplaceSubscriptionStatus Suspended { get; } = new DynatraceMonitorMarketplaceSubscriptionStatus(SuspendedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DynatraceMonitorMarketplaceSubscriptionStatus"/> values are the same. </summary>
         public static bool operator ==(DynatraceMonitorMarketplaceSubscriptionStatus left, DynatraceMonitorMarketplaceSubscriptionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynatraceMonitorMarketplaceSubscriptionStatus"/> values are not the same. </summary>

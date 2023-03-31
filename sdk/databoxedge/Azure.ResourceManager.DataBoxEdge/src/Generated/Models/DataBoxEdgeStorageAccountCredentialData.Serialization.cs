@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStringValue(ConnectionString);
             }
             writer.WritePropertyName("sslStatus"u8);
-            writer.WriteStringValue(SslStatus.ToString());
+            writer.WriteStringValue(SslStatus.ToSerialString());
             if (Optional.IsDefined(BlobDomainName))
             {
                 writer.WritePropertyName("blobDomainName"u8);
                 writer.WriteStringValue(BlobDomainName);
             }
             writer.WritePropertyName("accountType"u8);
-            writer.WriteStringValue(AccountType.ToString());
+            writer.WriteStringValue(AccountType.ToSerialString());
             if (Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);

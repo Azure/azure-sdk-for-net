@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> Allow. </summary>
         public static ElasticSanVirtualNetworkRuleAction Allow { get; } = new ElasticSanVirtualNetworkRuleAction(AllowValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ElasticSanVirtualNetworkRuleAction"/> values are the same. </summary>
         public static bool operator ==(ElasticSanVirtualNetworkRuleAction left, ElasticSanVirtualNetworkRuleAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ElasticSanVirtualNetworkRuleAction"/> values are not the same. </summary>

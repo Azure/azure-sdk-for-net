@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static EdgeKubernetesState Failed { get; } = new EdgeKubernetesState(FailedValue);
         /// <summary> Deleting. </summary>
         public static EdgeKubernetesState Deleting { get; } = new EdgeKubernetesState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EdgeKubernetesState"/> values are the same. </summary>
         public static bool operator ==(EdgeKubernetesState left, EdgeKubernetesState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeKubernetesState"/> values are not the same. </summary>

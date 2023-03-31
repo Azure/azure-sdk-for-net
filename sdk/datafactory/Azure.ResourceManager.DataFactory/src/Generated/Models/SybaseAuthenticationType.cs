@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static SybaseAuthenticationType Basic { get; } = new SybaseAuthenticationType(BasicValue);
         /// <summary> Windows. </summary>
         public static SybaseAuthenticationType Windows { get; } = new SybaseAuthenticationType(WindowsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SybaseAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(SybaseAuthenticationType left, SybaseAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SybaseAuthenticationType"/> values are not the same. </summary>

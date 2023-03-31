@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public static DeviceProvisioningServicesPublicNetworkAccess Enabled { get; } = new DeviceProvisioningServicesPublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static DeviceProvisioningServicesPublicNetworkAccess Disabled { get; } = new DeviceProvisioningServicesPublicNetworkAccess(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(DeviceProvisioningServicesPublicNetworkAccess left, DeviceProvisioningServicesPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesPublicNetworkAccess"/> values are not the same. </summary>

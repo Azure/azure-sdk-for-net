@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static DynatraceSsoStatus Enabled { get; } = new DynatraceSsoStatus(EnabledValue);
         /// <summary> Disabled. </summary>
         public static DynatraceSsoStatus Disabled { get; } = new DynatraceSsoStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DynatraceSsoStatus"/> values are the same. </summary>
         public static bool operator ==(DynatraceSsoStatus left, DynatraceSsoStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynatraceSsoStatus"/> values are not the same. </summary>

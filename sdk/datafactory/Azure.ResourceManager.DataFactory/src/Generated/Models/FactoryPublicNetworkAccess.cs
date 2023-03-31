@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static FactoryPublicNetworkAccess Enabled { get; } = new FactoryPublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static FactoryPublicNetworkAccess Disabled { get; } = new FactoryPublicNetworkAccess(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FactoryPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(FactoryPublicNetworkAccess left, FactoryPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FactoryPublicNetworkAccess"/> values are not the same. </summary>

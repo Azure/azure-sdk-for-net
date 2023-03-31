@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public static DnsResolverProvisioningState Failed { get; } = new DnsResolverProvisioningState(FailedValue);
         /// <summary> Canceled. </summary>
         public static DnsResolverProvisioningState Canceled { get; } = new DnsResolverProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DnsResolverProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DnsResolverProvisioningState left, DnsResolverProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DnsResolverProvisioningState"/> values are not the same. </summary>

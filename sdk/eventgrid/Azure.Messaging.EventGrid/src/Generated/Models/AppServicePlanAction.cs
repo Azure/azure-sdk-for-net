@@ -26,6 +26,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> App Service plan is being updated. </summary>
         public static AppServicePlanAction Updated { get; } = new AppServicePlanAction(UpdatedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppServicePlanAction"/> values are the same. </summary>
         public static bool operator ==(AppServicePlanAction left, AppServicePlanAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppServicePlanAction"/> values are not the same. </summary>

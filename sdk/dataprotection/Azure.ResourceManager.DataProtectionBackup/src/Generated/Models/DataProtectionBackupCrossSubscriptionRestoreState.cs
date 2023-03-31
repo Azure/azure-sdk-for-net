@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static DataProtectionBackupCrossSubscriptionRestoreState PermanentlyDisabled { get; } = new DataProtectionBackupCrossSubscriptionRestoreState(PermanentlyDisabledValue);
         /// <summary> Enabled. </summary>
         public static DataProtectionBackupCrossSubscriptionRestoreState Enabled { get; } = new DataProtectionBackupCrossSubscriptionRestoreState(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataProtectionBackupCrossSubscriptionRestoreState"/> values are the same. </summary>
         public static bool operator ==(DataProtectionBackupCrossSubscriptionRestoreState left, DataProtectionBackupCrossSubscriptionRestoreState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataProtectionBackupCrossSubscriptionRestoreState"/> values are not the same. </summary>

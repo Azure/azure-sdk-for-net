@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             writer.WritePropertyName("secretStoreType"u8);
-            writer.WriteStringValue(SecretStoreType.ToString());
+            writer.WriteStringValue(SecretStoreType.ToSerialString());
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> ManagedVirtualNetworkReference. </summary>
         public static ManagedVirtualNetworkReferenceType ManagedVirtualNetworkReference { get; } = new ManagedVirtualNetworkReferenceType(ManagedVirtualNetworkReferenceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedVirtualNetworkReferenceType"/> values are the same. </summary>
         public static bool operator ==(ManagedVirtualNetworkReferenceType left, ManagedVirtualNetworkReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedVirtualNetworkReferenceType"/> values are not the same. </summary>

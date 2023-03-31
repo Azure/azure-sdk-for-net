@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Frequency))
             {
                 writer.WritePropertyName("frequency"u8);
-                writer.WriteStringValue(Frequency.Value.ToString());
+                writer.WriteStringValue(Frequency.Value.ToSerialString());
             }
             if (Optional.IsDefined(Interval))
             {

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         /// <summary> KeyBased. </summary>
         public static AuthenticationType KeyBased { get; } = new AuthenticationType(KeyBasedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AuthenticationType"/> values are the same. </summary>
         public static bool operator ==(AuthenticationType left, AuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AuthenticationType"/> values are not the same. </summary>

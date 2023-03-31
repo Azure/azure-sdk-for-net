@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
             if (Optional.IsDefined(FactName))
             {
                 writer.WritePropertyName("factName"u8);
-                writer.WriteStringValue(FactName.Value.ToString());
+                writer.WriteStringValue(FactName.Value.ToSerialString());
             }
             if (Optional.IsDefined(FactData))
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(EvaluatorType))
             {
                 writer.WritePropertyName("evaluatorType"u8);
-                writer.WriteStringValue(EvaluatorType.Value.ToString());
+                writer.WriteStringValue(EvaluatorType.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

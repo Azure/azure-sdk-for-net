@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteStringValue(Sku.Value.ToString());
+                writer.WriteStringValue(Sku.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

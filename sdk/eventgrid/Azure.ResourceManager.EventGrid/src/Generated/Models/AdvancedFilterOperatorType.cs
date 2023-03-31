@@ -80,6 +80,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static AdvancedFilterOperatorType IsNullOrUndefined { get; } = new AdvancedFilterOperatorType(IsNullOrUndefinedValue);
         /// <summary> IsNotNull. </summary>
         public static AdvancedFilterOperatorType IsNotNull { get; } = new AdvancedFilterOperatorType(IsNotNullValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AdvancedFilterOperatorType"/> values are the same. </summary>
         public static bool operator ==(AdvancedFilterOperatorType left, AdvancedFilterOperatorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AdvancedFilterOperatorType"/> values are not the same. </summary>

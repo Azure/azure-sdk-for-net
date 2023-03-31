@@ -56,6 +56,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static ScenarioSource MySqlrds { get; } = new ScenarioSource(MySqlrdsValue);
         /// <summary> PostgreSQLRDS. </summary>
         public static ScenarioSource PostgreSqlrds { get; } = new ScenarioSource(PostgreSqlrdsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScenarioSource"/> values are the same. </summary>
         public static bool operator ==(ScenarioSource left, ScenarioSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScenarioSource"/> values are not the same. </summary>

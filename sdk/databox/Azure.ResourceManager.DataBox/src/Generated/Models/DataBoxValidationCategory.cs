@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <summary> JobCreationValidation. </summary>
         public static DataBoxValidationCategory JobCreationValidation { get; } = new DataBoxValidationCategory(JobCreationValidationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxValidationCategory"/> values are the same. </summary>
         public static bool operator ==(DataBoxValidationCategory left, DataBoxValidationCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxValidationCategory"/> values are not the same. </summary>

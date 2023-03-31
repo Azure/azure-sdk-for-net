@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> DataBoxEdgeDevice. </summary>
         public static DataBoxEdgeDeviceType DataBoxEdgeDevice { get; } = new DataBoxEdgeDeviceType(DataBoxEdgeDeviceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeDeviceType"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeDeviceType left, DataBoxEdgeDeviceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeDeviceType"/> values are not the same. </summary>

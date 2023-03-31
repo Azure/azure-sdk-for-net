@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static TeradataAuthenticationType Basic { get; } = new TeradataAuthenticationType(BasicValue);
         /// <summary> Windows. </summary>
         public static TeradataAuthenticationType Windows { get; } = new TeradataAuthenticationType(WindowsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TeradataAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(TeradataAuthenticationType left, TeradataAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TeradataAuthenticationType"/> values are not the same. </summary>

@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.Dynatrace.Models
             if (Optional.IsDefined(SendAadLogs))
             {
                 writer.WritePropertyName("sendAadLogs"u8);
-                writer.WriteStringValue(SendAadLogs.Value.ToString());
+                writer.WriteStringValue(SendAadLogs.Value.ToSerialString());
             }
             if (Optional.IsDefined(SendSubscriptionLogs))
             {
                 writer.WritePropertyName("sendSubscriptionLogs"u8);
-                writer.WriteStringValue(SendSubscriptionLogs.Value.ToString());
+                writer.WriteStringValue(SendSubscriptionLogs.Value.ToSerialString());
             }
             if (Optional.IsDefined(SendActivityLogs))
             {
                 writer.WritePropertyName("sendActivityLogs"u8);
-                writer.WriteStringValue(SendActivityLogs.Value.ToString());
+                writer.WriteStringValue(SendActivityLogs.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(FilteringTags))
             {

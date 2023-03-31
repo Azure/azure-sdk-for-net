@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static StoredProcedureParameterType Boolean { get; } = new StoredProcedureParameterType(BooleanValue);
         /// <summary> Date. </summary>
         public static StoredProcedureParameterType Date { get; } = new StoredProcedureParameterType(DateValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StoredProcedureParameterType"/> values are the same. </summary>
         public static bool operator ==(StoredProcedureParameterType left, StoredProcedureParameterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StoredProcedureParameterType"/> values are not the same. </summary>

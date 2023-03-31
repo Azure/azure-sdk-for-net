@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(DisplayOnChart))
             {
                 writer.WritePropertyName("displayOnChart"u8);
-                writer.WriteStringValue(DisplayOnChart.Value.ToString());
+                writer.WriteStringValue(DisplayOnChart.Value.ToSerialString());
             }
             if (Optional.IsDefined(SendNotificationWhenExceeded))
             {
                 writer.WritePropertyName("sendNotificationWhenExceeded"u8);
-                writer.WriteStringValue(SendNotificationWhenExceeded.Value.ToString());
+                writer.WriteStringValue(SendNotificationWhenExceeded.Value.ToSerialString());
             }
             if (Optional.IsDefined(NotificationSent))
             {

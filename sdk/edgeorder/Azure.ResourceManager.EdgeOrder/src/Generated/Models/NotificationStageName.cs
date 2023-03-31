@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static NotificationStageName Shipped { get; } = new NotificationStageName(ShippedValue);
         /// <summary> Notification at order item delivered to customer. </summary>
         public static NotificationStageName Delivered { get; } = new NotificationStageName(DeliveredValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NotificationStageName"/> values are the same. </summary>
         public static bool operator ==(NotificationStageName left, NotificationStageName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NotificationStageName"/> values are not the same. </summary>

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static AuthenticationType ActiveDirectoryIntegrated { get; } = new AuthenticationType(ActiveDirectoryIntegratedValue);
         /// <summary> ActiveDirectoryPassword. </summary>
         public static AuthenticationType ActiveDirectoryPassword { get; } = new AuthenticationType(ActiveDirectoryPasswordValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AuthenticationType"/> values are the same. </summary>
         public static bool operator ==(AuthenticationType left, AuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AuthenticationType"/> values are not the same. </summary>

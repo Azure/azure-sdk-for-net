@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Elastic.Models
             if (Optional.IsDefined(OperationName))
             {
                 writer.WritePropertyName("operationName"u8);
-                writer.WriteStringValue(OperationName.Value.ToString());
+                writer.WriteStringValue(OperationName.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

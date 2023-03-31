@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Elastic.Models
         public static SendingLog True { get; } = new SendingLog(TrueValue);
         /// <summary> False. </summary>
         public static SendingLog False { get; } = new SendingLog(FalseValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SendingLog"/> values are the same. </summary>
         public static bool operator ==(SendingLog left, SendingLog right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SendingLog"/> values are not the same. </summary>

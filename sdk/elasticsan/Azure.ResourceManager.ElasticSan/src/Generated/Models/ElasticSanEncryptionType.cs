@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> Volume is encrypted at rest with Platform managed key. It is the default encryption type. </summary>
         public static ElasticSanEncryptionType EncryptionAtRestWithPlatformKey { get; } = new ElasticSanEncryptionType(EncryptionAtRestWithPlatformKeyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ElasticSanEncryptionType"/> values are the same. </summary>
         public static bool operator ==(ElasticSanEncryptionType left, ElasticSanEncryptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ElasticSanEncryptionType"/> values are not the same. </summary>

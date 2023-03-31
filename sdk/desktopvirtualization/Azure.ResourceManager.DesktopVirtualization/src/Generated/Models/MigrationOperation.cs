@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static MigrationOperation Hide { get; } = new MigrationOperation(HideValue);
         /// <summary> Unhide the hostpool. </summary>
         public static MigrationOperation Unhide { get; } = new MigrationOperation(UnhideValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MigrationOperation"/> values are the same. </summary>
         public static bool operator ==(MigrationOperation left, MigrationOperation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MigrationOperation"/> values are not the same. </summary>

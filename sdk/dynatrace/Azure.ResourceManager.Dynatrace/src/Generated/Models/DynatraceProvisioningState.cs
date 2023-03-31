@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static DynatraceProvisioningState Deleted { get; } = new DynatraceProvisioningState(DeletedValue);
         /// <summary> NotSpecified. </summary>
         public static DynatraceProvisioningState NotSpecified { get; } = new DynatraceProvisioningState(NotSpecifiedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DynatraceProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DynatraceProvisioningState left, DynatraceProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynatraceProvisioningState"/> values are not the same. </summary>

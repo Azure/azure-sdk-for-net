@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("operand"u8);
-            writer.WriteStringValue(Operand.ToString());
+            writer.WriteStringValue(Operand.ToSerialString());
             writer.WritePropertyName("operator"u8);
-            writer.WriteStringValue(Operator.ToString());
+            writer.WriteStringValue(Operator.ToSerialString());
             writer.WritePropertyName("values"u8);
             writer.WriteStartArray();
             foreach (var item in Values)

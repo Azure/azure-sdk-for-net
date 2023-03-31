@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static BackupAbsoluteMarker FirstOfWeek { get; } = new BackupAbsoluteMarker(FirstOfWeekValue);
         /// <summary> FirstOfYear. </summary>
         public static BackupAbsoluteMarker FirstOfYear { get; } = new BackupAbsoluteMarker(FirstOfYearValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupAbsoluteMarker"/> values are the same. </summary>
         public static bool operator ==(BackupAbsoluteMarker left, BackupAbsoluteMarker right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupAbsoluteMarker"/> values are not the same. </summary>

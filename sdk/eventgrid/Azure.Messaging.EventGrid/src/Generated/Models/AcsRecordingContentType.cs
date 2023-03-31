@@ -29,6 +29,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static AcsRecordingContentType AudioVideo { get; } = new AcsRecordingContentType(AudioVideoValue);
         /// <summary> Audio. </summary>
         public static AcsRecordingContentType Audio { get; } = new AcsRecordingContentType(AudioValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AcsRecordingContentType"/> values are the same. </summary>
         public static bool operator ==(AcsRecordingContentType left, AcsRecordingContentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AcsRecordingContentType"/> values are not the same. </summary>

@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static ProductDisabledReason NotAvailable { get; } = new ProductDisabledReason(NotAvailableValue);
         /// <summary> The product is out of stock. </summary>
         public static ProductDisabledReason OutOfStock { get; } = new ProductDisabledReason(OutOfStockValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProductDisabledReason"/> values are the same. </summary>
         public static bool operator ==(ProductDisabledReason left, ProductDisabledReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProductDisabledReason"/> values are not the same. </summary>

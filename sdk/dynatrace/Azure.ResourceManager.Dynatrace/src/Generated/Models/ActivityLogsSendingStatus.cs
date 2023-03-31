@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static ActivityLogsSendingStatus Enabled { get; } = new ActivityLogsSendingStatus(EnabledValue);
         /// <summary> Disabled. </summary>
         public static ActivityLogsSendingStatus Disabled { get; } = new ActivityLogsSendingStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ActivityLogsSendingStatus"/> values are the same. </summary>
         public static bool operator ==(ActivityLogsSendingStatus left, ActivityLogsSendingStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ActivityLogsSendingStatus"/> values are not the same. </summary>

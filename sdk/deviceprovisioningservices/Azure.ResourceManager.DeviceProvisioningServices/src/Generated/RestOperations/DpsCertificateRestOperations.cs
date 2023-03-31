@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             }
             if (certificatePurpose != null)
             {
-                uri.AppendQuery("certificate.purpose", certificatePurpose.Value.ToString(), true);
+                uri.AppendQuery("certificate.purpose", certificatePurpose.Value.ToSerialString(), true);
             }
             if (certificateCreatedOn != null)
             {
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             }
             if (certificatePurpose != null)
             {
-                uri.AppendQuery("certificate.purpose", certificatePurpose.Value.ToString(), true);
+                uri.AppendQuery("certificate.purpose", certificatePurpose.Value.ToSerialString(), true);
             }
             if (certificateCreatedOn != null)
             {
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             }
             if (certificatePurpose != null)
             {
-                uri.AppendQuery("certificate.purpose", certificatePurpose.Value.ToString(), true);
+                uri.AppendQuery("certificate.purpose", certificatePurpose.Value.ToSerialString(), true);
             }
             if (certificateCreatedOn != null)
             {

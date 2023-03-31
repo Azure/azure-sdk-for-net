@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("userConsent"u8);
-            writer.WriteStringValue(UserConsent.ToString());
+            writer.WriteStringValue(UserConsent.ToSerialString());
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

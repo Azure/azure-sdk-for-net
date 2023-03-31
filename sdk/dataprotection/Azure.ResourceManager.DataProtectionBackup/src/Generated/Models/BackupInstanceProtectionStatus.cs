@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static BackupInstanceProtectionStatus SoftDeleted { get; } = new BackupInstanceProtectionStatus(SoftDeletedValue);
         /// <summary> SoftDeleting. </summary>
         public static BackupInstanceProtectionStatus SoftDeleting { get; } = new BackupInstanceProtectionStatus(SoftDeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupInstanceProtectionStatus"/> values are the same. </summary>
         public static bool operator ==(BackupInstanceProtectionStatus left, BackupInstanceProtectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupInstanceProtectionStatus"/> values are not the same. </summary>

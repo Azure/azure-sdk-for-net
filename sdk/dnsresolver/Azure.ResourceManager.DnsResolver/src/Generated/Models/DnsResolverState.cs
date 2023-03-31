@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public static DnsResolverState Connected { get; } = new DnsResolverState(ConnectedValue);
         /// <summary> Disconnected. </summary>
         public static DnsResolverState Disconnected { get; } = new DnsResolverState(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DnsResolverState"/> values are the same. </summary>
         public static bool operator ==(DnsResolverState left, DnsResolverState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DnsResolverState"/> values are not the same. </summary>

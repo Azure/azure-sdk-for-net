@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static DynatraceOneAgentUpdateStatus UpdatePending { get; } = new DynatraceOneAgentUpdateStatus(UpdatePendingValue);
         /// <summary> UPDATE_PROBLEM. </summary>
         public static DynatraceOneAgentUpdateStatus UpdateProblem { get; } = new DynatraceOneAgentUpdateStatus(UpdateProblemValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DynatraceOneAgentUpdateStatus"/> values are the same. </summary>
         public static bool operator ==(DynatraceOneAgentUpdateStatus left, DynatraceOneAgentUpdateStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynatraceOneAgentUpdateStatus"/> values are not the same. </summary>

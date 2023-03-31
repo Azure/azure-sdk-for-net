@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static EnableStatus Enabled { get; } = new EnableStatus(EnabledValue);
         /// <summary> Disabled. </summary>
         public static EnableStatus Disabled { get; } = new EnableStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EnableStatus"/> values are the same. </summary>
         public static bool operator ==(EnableStatus left, EnableStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EnableStatus"/> values are not the same. </summary>

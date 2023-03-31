@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static DynatraceMonitorResourceTagAction Include { get; } = new DynatraceMonitorResourceTagAction(IncludeValue);
         /// <summary> Exclude. </summary>
         public static DynatraceMonitorResourceTagAction Exclude { get; } = new DynatraceMonitorResourceTagAction(ExcludeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DynatraceMonitorResourceTagAction"/> values are the same. </summary>
         public static bool operator ==(DynatraceMonitorResourceTagAction left, DynatraceMonitorResourceTagAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynatraceMonitorResourceTagAction"/> values are not the same. </summary>

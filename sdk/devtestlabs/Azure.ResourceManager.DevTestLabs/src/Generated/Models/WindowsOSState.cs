@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static WindowsOSState SysprepRequested { get; } = new WindowsOSState(SysprepRequestedValue);
         /// <summary> SysprepApplied. </summary>
         public static WindowsOSState SysprepApplied { get; } = new WindowsOSState(SysprepAppliedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WindowsOSState"/> values are the same. </summary>
         public static bool operator ==(WindowsOSState left, WindowsOSState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WindowsOSState"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static EndpointType EventGrid { get; } = new EndpointType(EventGridValue);
         /// <summary> ServiceBus. </summary>
         public static EndpointType ServiceBus { get; } = new EndpointType(ServiceBusValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EndpointType"/> values are the same. </summary>
         public static bool operator ==(EndpointType left, EndpointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EndpointType"/> values are not the same. </summary>

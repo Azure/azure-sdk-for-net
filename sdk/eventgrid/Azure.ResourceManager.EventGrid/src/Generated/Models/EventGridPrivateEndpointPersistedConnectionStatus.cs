@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static EventGridPrivateEndpointPersistedConnectionStatus Rejected { get; } = new EventGridPrivateEndpointPersistedConnectionStatus(RejectedValue);
         /// <summary> Disconnected. </summary>
         public static EventGridPrivateEndpointPersistedConnectionStatus Disconnected { get; } = new EventGridPrivateEndpointPersistedConnectionStatus(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventGridPrivateEndpointPersistedConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(EventGridPrivateEndpointPersistedConnectionStatus left, EventGridPrivateEndpointPersistedConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventGridPrivateEndpointPersistedConnectionStatus"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static AcsRecordingFormatType Mp3 { get; } = new AcsRecordingFormatType(Mp3Value);
         /// <summary> Mp4. </summary>
         public static AcsRecordingFormatType Mp4 { get; } = new AcsRecordingFormatType(Mp4Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AcsRecordingFormatType"/> values are the same. </summary>
         public static bool operator ==(AcsRecordingFormatType left, AcsRecordingFormatType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AcsRecordingFormatType"/> values are not the same. </summary>
