@@ -2,7 +2,9 @@
 
 ## 1.0.0-beta.3 (2023-04-28)
 
-### Features Added
+### Features 
+
+- Add support for new version 2023-02-01
 
 ### Breaking Changes
 
