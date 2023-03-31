@@ -56,6 +56,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static BackupManagementType BackupProtectedItemCountSummary { get; } = new BackupManagementType(BackupProtectedItemCountSummaryValue);
         /// <summary> BackupProtectionContainerCountSummary. </summary>
         public static BackupManagementType BackupProtectionContainerCountSummary { get; } = new BackupManagementType(BackupProtectionContainerCountSummaryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupManagementType"/> values are the same. </summary>
         public static bool operator ==(BackupManagementType left, BackupManagementType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupManagementType"/> values are not the same. </summary>

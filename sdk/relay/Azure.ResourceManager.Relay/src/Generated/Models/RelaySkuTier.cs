@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Relay.Models
 
         /// <summary> Standard. </summary>
         public static RelaySkuTier Standard { get; } = new RelaySkuTier(StandardValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RelaySkuTier"/> values are the same. </summary>
         public static bool operator ==(RelaySkuTier left, RelaySkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RelaySkuTier"/> values are not the same. </summary>

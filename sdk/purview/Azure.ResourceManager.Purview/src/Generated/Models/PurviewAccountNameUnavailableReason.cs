@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Purview.Models
         public static PurviewAccountNameUnavailableReason Invalid { get; } = new PurviewAccountNameUnavailableReason(InvalidValue);
         /// <summary> AlreadyExists. </summary>
         public static PurviewAccountNameUnavailableReason AlreadyExists { get; } = new PurviewAccountNameUnavailableReason(AlreadyExistsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PurviewAccountNameUnavailableReason"/> values are the same. </summary>
         public static bool operator ==(PurviewAccountNameUnavailableReason left, PurviewAccountNameUnavailableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PurviewAccountNameUnavailableReason"/> values are not the same. </summary>

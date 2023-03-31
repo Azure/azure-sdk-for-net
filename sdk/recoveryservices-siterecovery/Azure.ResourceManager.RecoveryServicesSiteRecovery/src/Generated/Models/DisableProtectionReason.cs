@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static DisableProtectionReason NotSpecified { get; } = new DisableProtectionReason(NotSpecifiedValue);
         /// <summary> MigrationComplete. </summary>
         public static DisableProtectionReason MigrationComplete { get; } = new DisableProtectionReason(MigrationCompleteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DisableProtectionReason"/> values are the same. </summary>
         public static bool operator ==(DisableProtectionReason left, DisableProtectionReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DisableProtectionReason"/> values are not the same. </summary>

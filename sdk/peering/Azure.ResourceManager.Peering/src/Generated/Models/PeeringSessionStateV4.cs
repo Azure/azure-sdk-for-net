@@ -56,6 +56,9 @@ namespace Azure.ResourceManager.Peering.Models
         public static PeeringSessionStateV4 PendingUpdate { get; } = new PeeringSessionStateV4(PendingUpdateValue);
         /// <summary> PendingRemove. </summary>
         public static PeeringSessionStateV4 PendingRemove { get; } = new PeeringSessionStateV4(PendingRemoveValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PeeringSessionStateV4"/> values are the same. </summary>
         public static bool operator ==(PeeringSessionStateV4 left, PeeringSessionStateV4 right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PeeringSessionStateV4"/> values are not the same. </summary>

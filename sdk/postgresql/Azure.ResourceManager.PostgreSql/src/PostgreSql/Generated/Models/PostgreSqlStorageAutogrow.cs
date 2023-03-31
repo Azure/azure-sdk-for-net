@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public static PostgreSqlStorageAutogrow Enabled { get; } = new PostgreSqlStorageAutogrow(EnabledValue);
         /// <summary> Disabled. </summary>
         public static PostgreSqlStorageAutogrow Disabled { get; } = new PostgreSqlStorageAutogrow(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlStorageAutogrow"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlStorageAutogrow left, PostgreSqlStorageAutogrow right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlStorageAutogrow"/> values are not the same. </summary>

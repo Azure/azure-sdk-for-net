@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> EdgeZone. </summary>
         public static ExtendedLocationType EdgeZone { get; } = new ExtendedLocationType(EdgeZoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ExtendedLocationType"/> values are the same. </summary>
         public static bool operator ==(ExtendedLocationType left, ExtendedLocationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExtendedLocationType"/> values are not the same. </summary>

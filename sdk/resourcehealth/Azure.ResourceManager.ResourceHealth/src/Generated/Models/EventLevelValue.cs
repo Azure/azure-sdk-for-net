@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static EventLevelValue Warning { get; } = new EventLevelValue(WarningValue);
         /// <summary> Informational. </summary>
         public static EventLevelValue Informational { get; } = new EventLevelValue(InformationalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventLevelValue"/> values are the same. </summary>
         public static bool operator ==(EventLevelValue left, EventLevelValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventLevelValue"/> values are not the same. </summary>

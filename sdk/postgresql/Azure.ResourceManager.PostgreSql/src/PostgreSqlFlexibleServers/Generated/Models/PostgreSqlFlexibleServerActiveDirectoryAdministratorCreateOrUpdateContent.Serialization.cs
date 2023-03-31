@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (Optional.IsDefined(PrincipalType))
             {
                 writer.WritePropertyName("principalType"u8);
-                writer.WriteStringValue(PrincipalType.Value.ToString());
+                writer.WriteStringValue(PrincipalType.Value.ToSerialString());
             }
             if (Optional.IsDefined(PrincipalName))
             {

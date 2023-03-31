@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static VirtualMachineSecurityType TrustedLaunch { get; } = new VirtualMachineSecurityType(TrustedLaunchValue);
         /// <summary> ConfidentialVM. </summary>
         public static VirtualMachineSecurityType ConfidentialVm { get; } = new VirtualMachineSecurityType(ConfidentialVmValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VirtualMachineSecurityType"/> values are the same. </summary>
         public static bool operator ==(VirtualMachineSecurityType left, VirtualMachineSecurityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualMachineSecurityType"/> values are not the same. </summary>

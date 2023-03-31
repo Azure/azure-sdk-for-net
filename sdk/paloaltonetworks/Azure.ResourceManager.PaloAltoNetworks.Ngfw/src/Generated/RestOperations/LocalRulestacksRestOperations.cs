@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 uri.AppendQuery("top", top.Value, true);
             }
-            uri.AppendQuery("type", type.ToString(), true);
+            uri.AppendQuery("type", type.ToSerialString(), true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -1209,7 +1209,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 uri.AppendQuery("top", top.Value, true);
             }
-            uri.AppendQuery("type", type.ToString(), true);
+            uri.AppendQuery("type", type.ToSerialString(), true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);

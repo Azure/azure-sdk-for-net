@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static RecoveryServicesSkuName Standard { get; } = new RecoveryServicesSkuName(StandardValue);
         /// <summary> RS0. </summary>
         public static RecoveryServicesSkuName RS0 { get; } = new RecoveryServicesSkuName(RS0Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RecoveryServicesSkuName"/> values are the same. </summary>
         public static bool operator ==(RecoveryServicesSkuName left, RecoveryServicesSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecoveryServicesSkuName"/> values are not the same. </summary>

@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static MigrationItemOperation PauseReplication { get; } = new MigrationItemOperation(PauseReplicationValue);
         /// <summary> ResumeReplication. </summary>
         public static MigrationItemOperation ResumeReplication { get; } = new MigrationItemOperation(ResumeReplicationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MigrationItemOperation"/> values are the same. </summary>
         public static bool operator ==(MigrationItemOperation left, MigrationItemOperation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MigrationItemOperation"/> values are not the same. </summary>

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(AcquireStorageAccountLock))
             {
                 writer.WritePropertyName("acquireStorageAccountLock"u8);
-                writer.WriteStringValue(AcquireStorageAccountLock.Value.ToString());
+                writer.WriteStringValue(AcquireStorageAccountLock.Value.ToSerialString());
             }
             if (Optional.IsDefined(FriendlyName))
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
-                writer.WriteStringValue(BackupManagementType.Value.ToString());
+                writer.WriteStringValue(BackupManagementType.Value.ToSerialString());
             }
             if (Optional.IsDefined(RegistrationStatus))
             {

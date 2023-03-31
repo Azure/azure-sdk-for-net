@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static EventSourceValue ResourceHealth { get; } = new EventSourceValue(ResourceHealthValue);
         /// <summary> ServiceHealth. </summary>
         public static EventSourceValue ServiceHealth { get; } = new EventSourceValue(ServiceHealthValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventSourceValue"/> values are the same. </summary>
         public static bool operator ==(EventSourceValue left, EventSourceValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventSourceValue"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PrivateDns.Models
         public static VirtualNetworkLinkState InProgress { get; } = new VirtualNetworkLinkState(InProgressValue);
         /// <summary> Completed. </summary>
         public static VirtualNetworkLinkState Completed { get; } = new VirtualNetworkLinkState(CompletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VirtualNetworkLinkState"/> values are the same. </summary>
         public static bool operator ==(VirtualNetworkLinkState left, VirtualNetworkLinkState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkLinkState"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Peering.Models
         public static PeeringSessionAddressProvider Microsoft { get; } = new PeeringSessionAddressProvider(MicrosoftValue);
         /// <summary> Peer. </summary>
         public static PeeringSessionAddressProvider Peer { get; } = new PeeringSessionAddressProvider(PeerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PeeringSessionAddressProvider"/> values are the same. </summary>
         public static bool operator ==(PeeringSessionAddressProvider left, PeeringSessionAddressProvider right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PeeringSessionAddressProvider"/> values are not the same. </summary>

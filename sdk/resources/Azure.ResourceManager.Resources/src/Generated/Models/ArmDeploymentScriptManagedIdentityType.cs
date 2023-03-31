@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> UserAssigned. </summary>
         public static ArmDeploymentScriptManagedIdentityType UserAssigned { get; } = new ArmDeploymentScriptManagedIdentityType(UserAssignedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ArmDeploymentScriptManagedIdentityType"/> values are the same. </summary>
         public static bool operator ==(ArmDeploymentScriptManagedIdentityType left, ArmDeploymentScriptManagedIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArmDeploymentScriptManagedIdentityType"/> values are not the same. </summary>

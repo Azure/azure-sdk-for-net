@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public static MoverResourceInputType MoverResourceId { get; } = new MoverResourceInputType(MoverResourceIdValue);
         /// <summary> MoveResourceSourceId. </summary>
         public static MoverResourceInputType MoverResourceSourceId { get; } = new MoverResourceInputType(MoverResourceSourceIdValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MoverResourceInputType"/> values are the same. </summary>
         public static bool operator ==(MoverResourceInputType left, MoverResourceInputType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MoverResourceInputType"/> values are not the same. </summary>

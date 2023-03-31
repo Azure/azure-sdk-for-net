@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static VmEncryptionType OnePassEncrypted { get; } = new VmEncryptionType(OnePassEncryptedValue);
         /// <summary> TwoPassEncrypted. </summary>
         public static VmEncryptionType TwoPassEncrypted { get; } = new VmEncryptionType(TwoPassEncryptedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VmEncryptionType"/> values are the same. </summary>
         public static bool operator ==(VmEncryptionType left, VmEncryptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VmEncryptionType"/> values are not the same. </summary>

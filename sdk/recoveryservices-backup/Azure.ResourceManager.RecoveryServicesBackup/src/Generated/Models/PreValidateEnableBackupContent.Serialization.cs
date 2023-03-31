@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
-                writer.WriteStringValue(ResourceType.Value.ToString());
+                writer.WriteStringValue(ResourceType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ResourceId))
             {

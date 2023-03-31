@@ -59,6 +59,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static RedisEnterpriseClusterResourceState DisableFailed { get; } = new RedisEnterpriseClusterResourceState(DisableFailedValue);
         /// <summary> Disabled. </summary>
         public static RedisEnterpriseClusterResourceState Disabled { get; } = new RedisEnterpriseClusterResourceState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RedisEnterpriseClusterResourceState"/> values are the same. </summary>
         public static bool operator ==(RedisEnterpriseClusterResourceState left, RedisEnterpriseClusterResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisEnterpriseClusterResourceState"/> values are not the same. </summary>

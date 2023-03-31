@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static VaultPublicNetworkAccess Enabled { get; } = new VaultPublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static VaultPublicNetworkAccess Disabled { get; } = new VaultPublicNetworkAccess(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VaultPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(VaultPublicNetworkAccess left, VaultPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VaultPublicNetworkAccess"/> values are not the same. </summary>

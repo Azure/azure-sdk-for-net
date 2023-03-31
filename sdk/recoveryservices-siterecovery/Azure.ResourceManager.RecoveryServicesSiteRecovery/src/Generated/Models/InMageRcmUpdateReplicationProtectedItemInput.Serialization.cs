@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
-                writer.WriteStringValue(LicenseType.Value.ToString());
+                writer.WriteStringValue(LicenseType.Value.ToSerialString());
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);

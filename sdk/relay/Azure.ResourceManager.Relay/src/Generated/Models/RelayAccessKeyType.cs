@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Relay.Models
         public static RelayAccessKeyType PrimaryKey { get; } = new RelayAccessKeyType(PrimaryKeyValue);
         /// <summary> SecondaryKey. </summary>
         public static RelayAccessKeyType SecondaryKey { get; } = new RelayAccessKeyType(SecondaryKeyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RelayAccessKeyType"/> values are the same. </summary>
         public static bool operator ==(RelayAccessKeyType left, RelayAccessKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RelayAccessKeyType"/> values are not the same. </summary>

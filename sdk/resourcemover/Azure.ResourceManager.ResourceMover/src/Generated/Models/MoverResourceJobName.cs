@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         /// <summary> InitialSync. </summary>
         public static MoverResourceJobName InitialSync { get; } = new MoverResourceJobName(InitialSyncValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MoverResourceJobName"/> values are the same. </summary>
         public static bool operator ==(MoverResourceJobName left, MoverResourceJobName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MoverResourceJobName"/> values are not the same. </summary>

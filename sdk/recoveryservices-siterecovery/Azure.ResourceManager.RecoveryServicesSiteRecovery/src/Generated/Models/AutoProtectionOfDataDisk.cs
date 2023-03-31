@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static AutoProtectionOfDataDisk Disabled { get; } = new AutoProtectionOfDataDisk(DisabledValue);
         /// <summary> Enabled. </summary>
         public static AutoProtectionOfDataDisk Enabled { get; } = new AutoProtectionOfDataDisk(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutoProtectionOfDataDisk"/> values are the same. </summary>
         public static bool operator ==(AutoProtectionOfDataDisk left, AutoProtectionOfDataDisk right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutoProtectionOfDataDisk"/> values are not the same. </summary>

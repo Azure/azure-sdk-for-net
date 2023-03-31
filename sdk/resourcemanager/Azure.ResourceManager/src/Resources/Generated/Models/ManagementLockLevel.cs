@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static ManagementLockLevel CanNotDelete { get; } = new ManagementLockLevel(CanNotDeleteValue);
         /// <summary> ReadOnly. </summary>
         public static ManagementLockLevel ReadOnly { get; } = new ManagementLockLevel(ReadOnlyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagementLockLevel"/> values are the same. </summary>
         public static bool operator ==(ManagementLockLevel left, ManagementLockLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagementLockLevel"/> values are not the same. </summary>

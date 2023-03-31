@@ -56,6 +56,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static HealthErrorCategory AgentAutoUpdateRunAsAccountExpiry { get; } = new HealthErrorCategory(AgentAutoUpdateRunAsAccountExpiryValue);
         /// <summary> AgentAutoUpdateRunAsAccountExpired. </summary>
         public static HealthErrorCategory AgentAutoUpdateRunAsAccountExpired { get; } = new HealthErrorCategory(AgentAutoUpdateRunAsAccountExpiredValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HealthErrorCategory"/> values are the same. </summary>
         public static bool operator ==(HealthErrorCategory left, HealthErrorCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HealthErrorCategory"/> values are not the same. </summary>

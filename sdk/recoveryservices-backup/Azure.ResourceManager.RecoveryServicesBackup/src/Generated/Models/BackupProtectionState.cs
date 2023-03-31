@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static BackupProtectionState ProtectionPaused { get; } = new BackupProtectionState(ProtectionPausedValue);
         /// <summary> BackupsSuspended. </summary>
         public static BackupProtectionState BackupsSuspended { get; } = new BackupProtectionState(BackupsSuspendedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupProtectionState"/> values are the same. </summary>
         public static bool operator ==(BackupProtectionState left, BackupProtectionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupProtectionState"/> values are not the same. </summary>

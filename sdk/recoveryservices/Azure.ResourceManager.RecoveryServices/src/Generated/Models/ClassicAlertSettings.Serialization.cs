@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(AlertsForCriticalOperations))
             {
                 writer.WritePropertyName("alertsForCriticalOperations"u8);
-                writer.WriteStringValue(AlertsForCriticalOperations.Value.ToString());
+                writer.WriteStringValue(AlertsForCriticalOperations.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

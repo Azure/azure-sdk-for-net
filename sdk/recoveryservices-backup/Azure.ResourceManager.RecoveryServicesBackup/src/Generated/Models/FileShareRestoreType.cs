@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static FileShareRestoreType FullShareRestore { get; } = new FileShareRestoreType(FullShareRestoreValue);
         /// <summary> ItemLevelRestore. </summary>
         public static FileShareRestoreType ItemLevelRestore { get; } = new FileShareRestoreType(ItemLevelRestoreValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FileShareRestoreType"/> values are the same. </summary>
         public static bool operator ==(FileShareRestoreType left, FileShareRestoreType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FileShareRestoreType"/> values are not the same. </summary>

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.PrivateDns.Models
         public static PrivateDnsProvisioningState Failed { get; } = new PrivateDnsProvisioningState(FailedValue);
         /// <summary> Canceled. </summary>
         public static PrivateDnsProvisioningState Canceled { get; } = new PrivateDnsProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PrivateDnsProvisioningState"/> values are the same. </summary>
         public static bool operator ==(PrivateDnsProvisioningState left, PrivateDnsProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PrivateDnsProvisioningState"/> values are not the same. </summary>

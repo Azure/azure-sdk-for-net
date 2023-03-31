@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             if (Optional.IsDefined(MinimumTlsVersion))
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
-                writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
+                writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
             }
             if (Optional.IsDefined(Encryption))
             {

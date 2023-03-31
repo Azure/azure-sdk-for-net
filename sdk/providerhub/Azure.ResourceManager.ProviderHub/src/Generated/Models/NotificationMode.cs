@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static NotificationMode EventHub { get; } = new NotificationMode(EventHubValue);
         /// <summary> WebHook. </summary>
         public static NotificationMode WebHook { get; } = new NotificationMode(WebHookValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NotificationMode"/> values are the same. </summary>
         public static bool operator ==(NotificationMode left, NotificationMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NotificationMode"/> values are not the same. </summary>

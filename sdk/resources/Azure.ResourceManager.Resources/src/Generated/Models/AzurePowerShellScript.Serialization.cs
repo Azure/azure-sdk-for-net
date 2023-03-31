@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteEndObject();
             }
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ContainerSettings))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(CleanupPreference))
             {
                 writer.WritePropertyName("cleanupPreference"u8);
-                writer.WriteStringValue(CleanupPreference.Value.ToString());
+                writer.WriteStringValue(CleanupPreference.Value.ToSerialString());
             }
             if (Optional.IsDefined(PrimaryScriptUri))
             {

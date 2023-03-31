@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (Optional.IsDefined(ActiveDirectoryAuth))
             {
                 writer.WritePropertyName("activeDirectoryAuth"u8);
-                writer.WriteStringValue(ActiveDirectoryAuth.Value.ToString());
+                writer.WriteStringValue(ActiveDirectoryAuth.Value.ToSerialString());
             }
             if (Optional.IsDefined(PasswordAuth))
             {
                 writer.WritePropertyName("passwordAuth"u8);
-                writer.WriteStringValue(PasswordAuth.Value.ToString());
+                writer.WriteStringValue(PasswordAuth.Value.ToSerialString());
             }
             if (Optional.IsDefined(TenantId))
             {

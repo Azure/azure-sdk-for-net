@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Purview.Models
         public static PurviewPublicNetworkAccess Enabled { get; } = new PurviewPublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static PurviewPublicNetworkAccess Disabled { get; } = new PurviewPublicNetworkAccess(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PurviewPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(PurviewPublicNetworkAccess left, PurviewPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PurviewPublicNetworkAccess"/> values are not the same. </summary>

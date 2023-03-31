@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(BackupType))
             {
                 writer.WritePropertyName("backupType"u8);
-                writer.WriteStringValue(BackupType.Value.ToString());
+                writer.WriteStringValue(BackupType.Value.ToSerialString());
             }
             if (Optional.IsDefined(EnableCompression))
             {

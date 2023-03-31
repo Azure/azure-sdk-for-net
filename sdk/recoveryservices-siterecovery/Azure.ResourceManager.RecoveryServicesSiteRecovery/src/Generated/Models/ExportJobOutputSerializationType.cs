@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static ExportJobOutputSerializationType Xml { get; } = new ExportJobOutputSerializationType(XmlValue);
         /// <summary> Excel. </summary>
         public static ExportJobOutputSerializationType Excel { get; } = new ExportJobOutputSerializationType(ExcelValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ExportJobOutputSerializationType"/> values are the same. </summary>
         public static bool operator ==(ExportJobOutputSerializationType left, ExportJobOutputSerializationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExportJobOutputSerializationType"/> values are not the same. </summary>

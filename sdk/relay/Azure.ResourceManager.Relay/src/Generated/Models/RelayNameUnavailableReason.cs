@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Relay.Models
         public static RelayNameUnavailableReason NameInLockdown { get; } = new RelayNameUnavailableReason(NameInLockdownValue);
         /// <summary> TooManyNamespaceInCurrentSubscription. </summary>
         public static RelayNameUnavailableReason TooManyNamespaceInCurrentSubscription { get; } = new RelayNameUnavailableReason(TooManyNamespaceInCurrentSubscriptionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RelayNameUnavailableReason"/> values are the same. </summary>
         public static bool operator ==(RelayNameUnavailableReason left, RelayNameUnavailableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RelayNameUnavailableReason"/> values are not the same. </summary>

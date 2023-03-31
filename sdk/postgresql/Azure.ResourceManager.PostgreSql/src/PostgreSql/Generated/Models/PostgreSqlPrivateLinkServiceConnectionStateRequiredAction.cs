@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
         /// <summary> None. </summary>
         public static PostgreSqlPrivateLinkServiceConnectionStateRequiredAction None { get; } = new PostgreSqlPrivateLinkServiceConnectionStateRequiredAction(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlPrivateLinkServiceConnectionStateRequiredAction"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlPrivateLinkServiceConnectionStateRequiredAction left, PostgreSqlPrivateLinkServiceConnectionStateRequiredAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlPrivateLinkServiceConnectionStateRequiredAction"/> values are not the same. </summary>

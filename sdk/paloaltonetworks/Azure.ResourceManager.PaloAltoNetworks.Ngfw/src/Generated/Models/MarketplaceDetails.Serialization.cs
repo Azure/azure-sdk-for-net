@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             if (Optional.IsDefined(MarketplaceSubscriptionStatus))
             {
                 writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
-                writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToString());
+                writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

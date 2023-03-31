@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Relay
                 writer.WriteStartArray();
                 foreach (var item in Rights)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

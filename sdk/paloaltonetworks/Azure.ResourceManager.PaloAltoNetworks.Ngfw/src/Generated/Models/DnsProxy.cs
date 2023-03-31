@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static DnsProxy Disabled { get; } = new DnsProxy(DisabledValue);
         /// <summary> ENABLED. </summary>
         public static DnsProxy Enabled { get; } = new DnsProxy(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DnsProxy"/> values are the same. </summary>
         public static bool operator ==(DnsProxy left, DnsProxy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DnsProxy"/> values are not the same. </summary>

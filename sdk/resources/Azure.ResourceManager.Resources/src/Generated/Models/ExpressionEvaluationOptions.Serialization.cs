@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteStringValue(Scope.Value.ToString());
+                writer.WriteStringValue(Scope.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

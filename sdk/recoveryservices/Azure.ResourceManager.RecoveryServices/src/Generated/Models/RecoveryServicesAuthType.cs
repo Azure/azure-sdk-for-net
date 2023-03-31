@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static RecoveryServicesAuthType AccessControlService { get; } = new RecoveryServicesAuthType(AccessControlServiceValue);
         /// <summary> AzureActiveDirectory. </summary>
         public static RecoveryServicesAuthType AzureActiveDirectory { get; } = new RecoveryServicesAuthType(AzureActiveDirectoryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RecoveryServicesAuthType"/> values are the same. </summary>
         public static bool operator ==(RecoveryServicesAuthType left, RecoveryServicesAuthType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecoveryServicesAuthType"/> values are not the same. </summary>

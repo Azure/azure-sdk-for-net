@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.PolicyInsights
             if (Optional.IsDefined(ComplianceState))
             {
                 writer.WritePropertyName("complianceState"u8);
-                writer.WriteStringValue(ComplianceState.Value.ToString());
+                writer.WriteStringValue(ComplianceState.Value.ToSerialString());
             }
             if (Optional.IsDefined(ExpireOn))
             {

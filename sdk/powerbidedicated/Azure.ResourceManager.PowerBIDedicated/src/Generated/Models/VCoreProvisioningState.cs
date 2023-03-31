@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
 
         /// <summary> Succeeded. </summary>
         public static VCoreProvisioningState Succeeded { get; } = new VCoreProvisioningState(SucceededValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VCoreProvisioningState"/> values are the same. </summary>
         public static bool operator ==(VCoreProvisioningState left, VCoreProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VCoreProvisioningState"/> values are not the same. </summary>

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Peering.Models
         public static PeeringRole Escalation { get; } = new PeeringRole(EscalationValue);
         /// <summary> Other. </summary>
         public static PeeringRole Other { get; } = new PeeringRole(OtherValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PeeringRole"/> values are the same. </summary>
         public static bool operator ==(PeeringRole left, PeeringRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PeeringRole"/> values are not the same. </summary>

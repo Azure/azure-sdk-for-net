@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static BackupType SnapshotFull { get; } = new BackupType(SnapshotFullValue);
         /// <summary> SnapshotCopyOnlyFull. </summary>
         public static BackupType SnapshotCopyOnlyFull { get; } = new BackupType(SnapshotCopyOnlyFullValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupType"/> values are the same. </summary>
         public static bool operator ==(BackupType left, BackupType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupType"/> values are not the same. </summary>

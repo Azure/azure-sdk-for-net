@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public static FieldRestrictionResult Removed { get; } = new FieldRestrictionResult(RemovedValue);
         /// <summary> The field and/or values will be denied by policy. </summary>
         public static FieldRestrictionResult Deny { get; } = new FieldRestrictionResult(DenyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FieldRestrictionResult"/> values are the same. </summary>
         public static bool operator ==(FieldRestrictionResult left, FieldRestrictionResult right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FieldRestrictionResult"/> values are not the same. </summary>

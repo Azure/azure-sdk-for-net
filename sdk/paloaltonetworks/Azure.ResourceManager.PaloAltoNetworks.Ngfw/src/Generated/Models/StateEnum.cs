@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static StateEnum Disabled { get; } = new StateEnum(DisabledValue);
         /// <summary> ENABLED. </summary>
         public static StateEnum Enabled { get; } = new StateEnum(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StateEnum"/> values are the same. </summary>
         public static bool operator ==(StateEnum left, StateEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StateEnum"/> values are not the same. </summary>

@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Peering.Models
         public static PeeringPrefixValidationState Warning { get; } = new PeeringPrefixValidationState(WarningValue);
         /// <summary> Unknown. </summary>
         public static PeeringPrefixValidationState Unknown { get; } = new PeeringPrefixValidationState(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PeeringPrefixValidationState"/> values are the same. </summary>
         public static bool operator ==(PeeringPrefixValidationState left, PeeringPrefixValidationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PeeringPrefixValidationState"/> values are not the same. </summary>

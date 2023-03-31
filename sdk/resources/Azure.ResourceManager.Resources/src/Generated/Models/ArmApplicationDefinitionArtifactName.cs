@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static ArmApplicationDefinitionArtifactName CreateUiDefinition { get; } = new ArmApplicationDefinitionArtifactName(CreateUiDefinitionValue);
         /// <summary> MainTemplateParameters. </summary>
         public static ArmApplicationDefinitionArtifactName MainTemplateParameters { get; } = new ArmApplicationDefinitionArtifactName(MainTemplateParametersValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ArmApplicationDefinitionArtifactName"/> values are the same. </summary>
         public static bool operator ==(ArmApplicationDefinitionArtifactName left, ArmApplicationDefinitionArtifactName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArmApplicationDefinitionArtifactName"/> values are not the same. </summary>

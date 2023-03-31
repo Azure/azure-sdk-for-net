@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static RoutingType Failover { get; } = new RoutingType(FailoverValue);
         /// <summary> CascadeExtension. </summary>
         public static RoutingType CascadeExtension { get; } = new RoutingType(CascadeExtensionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RoutingType"/> values are the same. </summary>
         public static bool operator ==(RoutingType left, RoutingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoutingType"/> values are not the same. </summary>

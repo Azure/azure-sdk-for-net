@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static BackupProtectionStatus Protected { get; } = new BackupProtectionStatus(ProtectedValue);
         /// <summary> ProtectionFailed. </summary>
         public static BackupProtectionStatus ProtectionFailed { get; } = new BackupProtectionStatus(ProtectionFailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupProtectionStatus"/> values are the same. </summary>
         public static bool operator ==(BackupProtectionStatus left, BackupProtectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupProtectionStatus"/> values are not the same. </summary>

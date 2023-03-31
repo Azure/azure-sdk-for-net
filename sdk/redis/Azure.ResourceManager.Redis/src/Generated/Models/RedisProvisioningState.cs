@@ -59,6 +59,9 @@ namespace Azure.ResourceManager.Redis.Models
         public static RedisProvisioningState Unprovisioning { get; } = new RedisProvisioningState(UnprovisioningValue);
         /// <summary> Updating. </summary>
         public static RedisProvisioningState Updating { get; } = new RedisProvisioningState(UpdatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RedisProvisioningState"/> values are the same. </summary>
         public static bool operator ==(RedisProvisioningState left, RedisProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisProvisioningState"/> values are not the same. </summary>

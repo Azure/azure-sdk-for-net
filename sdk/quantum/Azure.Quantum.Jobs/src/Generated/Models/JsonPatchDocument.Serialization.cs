@@ -16,7 +16,7 @@ namespace Azure.Quantum.Jobs.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("op"u8);
-            writer.WriteStringValue(Op.ToString());
+            writer.WriteStringValue(Op.ToSerialString());
             writer.WritePropertyName("path"u8);
             writer.WriteStringValue(Path);
             if (Optional.IsDefined(Value))

@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static WorkloadItemType SapAseDatabase { get; } = new WorkloadItemType(SapAseDatabaseValue);
         /// <summary> SAPHanaDBInstance. </summary>
         public static WorkloadItemType SapHanaDBInstance { get; } = new WorkloadItemType(SapHanaDBInstanceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WorkloadItemType"/> values are the same. </summary>
         public static bool operator ==(WorkloadItemType left, WorkloadItemType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadItemType"/> values are not the same. </summary>

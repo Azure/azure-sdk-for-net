@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static ActionEnum DenyResetServer { get; } = new ActionEnum(DenyResetServerValue);
         /// <summary> DenyResetBoth. </summary>
         public static ActionEnum DenyResetBoth { get; } = new ActionEnum(DenyResetBothValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ActionEnum"/> values are the same. </summary>
         public static bool operator ==(ActionEnum left, ActionEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ActionEnum"/> values are not the same. </summary>

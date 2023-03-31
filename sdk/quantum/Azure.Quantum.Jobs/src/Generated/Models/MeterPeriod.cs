@@ -29,6 +29,9 @@ namespace Azure.Quantum.Jobs.Models
         public static MeterPeriod None { get; } = new MeterPeriod(NoneValue);
         /// <summary> Monthly. </summary>
         public static MeterPeriod Monthly { get; } = new MeterPeriod(MonthlyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MeterPeriod"/> values are the same. </summary>
         public static bool operator ==(MeterPeriod left, MeterPeriod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MeterPeriod"/> values are not the same. </summary>

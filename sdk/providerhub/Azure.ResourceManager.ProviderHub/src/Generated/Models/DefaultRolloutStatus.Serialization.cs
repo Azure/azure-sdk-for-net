@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(NextTrafficRegion))
             {
                 writer.WritePropertyName("nextTrafficRegion"u8);
-                writer.WriteStringValue(NextTrafficRegion.Value.ToString());
+                writer.WriteStringValue(NextTrafficRegion.Value.ToSerialString());
             }
             if (Optional.IsDefined(NextTrafficRegionScheduledOn))
             {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(SubscriptionReregistrationResult))
             {
                 writer.WritePropertyName("subscriptionReregistrationResult"u8);
-                writer.WriteStringValue(SubscriptionReregistrationResult.Value.ToString());
+                writer.WriteStringValue(SubscriptionReregistrationResult.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(CompletedRegions))
             {

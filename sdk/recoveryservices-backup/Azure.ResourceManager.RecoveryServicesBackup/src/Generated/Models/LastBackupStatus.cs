@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static LastBackupStatus Unhealthy { get; } = new LastBackupStatus(UnhealthyValue);
         /// <summary> IRPending. </summary>
         public static LastBackupStatus IRPending { get; } = new LastBackupStatus(IRPendingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LastBackupStatus"/> values are the same. </summary>
         public static bool operator ==(LastBackupStatus left, LastBackupStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LastBackupStatus"/> values are not the same. </summary>

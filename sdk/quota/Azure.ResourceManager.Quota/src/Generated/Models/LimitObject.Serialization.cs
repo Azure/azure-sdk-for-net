@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Quota.Models
             if (Optional.IsDefined(LimitType))
             {
                 writer.WritePropertyName("limitType"u8);
-                writer.WriteStringValue(LimitType.Value.ToString());
+                writer.WriteStringValue(LimitType.Value.ToSerialString());
             }
             writer.WritePropertyName("limitObjectType"u8);
-            writer.WriteStringValue(LimitObjectType.ToString());
+            writer.WriteStringValue(LimitObjectType.ToSerialString());
             writer.WriteEndObject();
         }
 

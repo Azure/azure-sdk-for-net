@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Redis.Models
         public static RedisRebootType SecondaryNode { get; } = new RedisRebootType(SecondaryNodeValue);
         /// <summary> AllNodes. </summary>
         public static RedisRebootType AllNodes { get; } = new RedisRebootType(AllNodesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RedisRebootType"/> values are the same. </summary>
         public static bool operator ==(RedisRebootType left, RedisRebootType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisRebootType"/> values are not the same. </summary>

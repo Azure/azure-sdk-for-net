@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <summary> LimitValue. </summary>
         public static LimitType LimitValue { get; } = new LimitType(LimitValueValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LimitType"/> values are the same. </summary>
         public static bool operator ==(LimitType left, LimitType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LimitType"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static InMageV2RpRecoveryPointType LatestCrashConsistent { get; } = new InMageV2RpRecoveryPointType(LatestCrashConsistentValue);
         /// <summary> LatestProcessed. </summary>
         public static InMageV2RpRecoveryPointType LatestProcessed { get; } = new InMageV2RpRecoveryPointType(LatestProcessedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InMageV2RpRecoveryPointType"/> values are the same. </summary>
         public static bool operator ==(InMageV2RpRecoveryPointType left, InMageV2RpRecoveryPointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InMageV2RpRecoveryPointType"/> values are not the same. </summary>

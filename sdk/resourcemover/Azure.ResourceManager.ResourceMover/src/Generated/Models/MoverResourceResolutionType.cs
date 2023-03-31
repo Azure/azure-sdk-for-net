@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public static MoverResourceResolutionType Manual { get; } = new MoverResourceResolutionType(ManualValue);
         /// <summary> Automatic. </summary>
         public static MoverResourceResolutionType Automatic { get; } = new MoverResourceResolutionType(AutomaticValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MoverResourceResolutionType"/> values are the same. </summary>
         public static bool operator ==(MoverResourceResolutionType left, MoverResourceResolutionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MoverResourceResolutionType"/> values are not the same. </summary>

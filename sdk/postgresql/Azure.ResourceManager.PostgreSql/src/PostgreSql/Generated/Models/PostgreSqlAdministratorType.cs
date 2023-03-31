@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
         /// <summary> ActiveDirectory. </summary>
         public static PostgreSqlAdministratorType ActiveDirectory { get; } = new PostgreSqlAdministratorType(ActiveDirectoryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlAdministratorType"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlAdministratorType left, PostgreSqlAdministratorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlAdministratorType"/> values are not the same. </summary>

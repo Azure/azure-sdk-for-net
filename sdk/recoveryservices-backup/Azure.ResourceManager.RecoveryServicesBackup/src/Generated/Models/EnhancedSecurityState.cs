@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static EnhancedSecurityState Enabled { get; } = new EnhancedSecurityState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static EnhancedSecurityState Disabled { get; } = new EnhancedSecurityState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EnhancedSecurityState"/> values are the same. </summary>
         public static bool operator ==(EnhancedSecurityState left, EnhancedSecurityState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EnhancedSecurityState"/> values are not the same. </summary>

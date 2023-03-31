@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WritePropertyName("quotaId"u8);
             writer.WriteStringValue(QuotaId);
             writer.WritePropertyName("effect"u8);
-            writer.WriteStringValue(Effect.ToString());
+            writer.WriteStringValue(Effect.ToSerialString());
             if (Optional.IsCollectionDefined(RequiredFeatures))
             {
                 writer.WritePropertyName("requiredFeatures"u8);

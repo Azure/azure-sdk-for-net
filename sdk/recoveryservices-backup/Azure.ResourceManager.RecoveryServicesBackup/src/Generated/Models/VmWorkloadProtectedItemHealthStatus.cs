@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static VmWorkloadProtectedItemHealthStatus NotReachable { get; } = new VmWorkloadProtectedItemHealthStatus(NotReachableValue);
         /// <summary> IRPending. </summary>
         public static VmWorkloadProtectedItemHealthStatus IRPending { get; } = new VmWorkloadProtectedItemHealthStatus(IRPendingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VmWorkloadProtectedItemHealthStatus"/> values are the same. </summary>
         public static bool operator ==(VmWorkloadProtectedItemHealthStatus left, VmWorkloadProtectedItemHealthStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VmWorkloadProtectedItemHealthStatus"/> values are not the same. </summary>

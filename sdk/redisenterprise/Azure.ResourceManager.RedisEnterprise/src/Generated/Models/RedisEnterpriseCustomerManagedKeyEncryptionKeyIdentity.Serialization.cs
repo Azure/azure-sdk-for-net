@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             if (Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("identityType"u8);
-                writer.WriteStringValue(IdentityType.Value.ToString());
+                writer.WriteStringValue(IdentityType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

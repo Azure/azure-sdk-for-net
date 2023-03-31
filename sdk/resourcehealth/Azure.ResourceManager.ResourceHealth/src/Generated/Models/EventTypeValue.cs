@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static EventTypeValue EmergingIssues { get; } = new EventTypeValue(EmergingIssuesValue);
         /// <summary> SecurityAdvisory. </summary>
         public static EventTypeValue SecurityAdvisory { get; } = new EventTypeValue(SecurityAdvisoryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventTypeValue"/> values are the same. </summary>
         public static bool operator ==(EventTypeValue left, EventTypeValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventTypeValue"/> values are not the same. </summary>

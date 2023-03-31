@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RestorePointType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(RestorePointType.Value.ToString());
+                writer.WriteStringValue(RestorePointType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(RecoveryPointTierDetails))
             {

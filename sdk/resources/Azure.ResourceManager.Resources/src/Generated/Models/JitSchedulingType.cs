@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static JitSchedulingType Once { get; } = new JitSchedulingType(OnceValue);
         /// <summary> Recurring. </summary>
         public static JitSchedulingType Recurring { get; } = new JitSchedulingType(RecurringValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JitSchedulingType"/> values are the same. </summary>
         public static bool operator ==(JitSchedulingType left, JitSchedulingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JitSchedulingType"/> values are not the same. </summary>

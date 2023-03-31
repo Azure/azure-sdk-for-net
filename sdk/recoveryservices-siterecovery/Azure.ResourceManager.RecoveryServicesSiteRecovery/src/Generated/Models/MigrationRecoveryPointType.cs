@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static MigrationRecoveryPointType ApplicationConsistent { get; } = new MigrationRecoveryPointType(ApplicationConsistentValue);
         /// <summary> CrashConsistent. </summary>
         public static MigrationRecoveryPointType CrashConsistent { get; } = new MigrationRecoveryPointType(CrashConsistentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MigrationRecoveryPointType"/> values are the same. </summary>
         public static bool operator ==(MigrationRecoveryPointType left, MigrationRecoveryPointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MigrationRecoveryPointType"/> values are not the same. </summary>

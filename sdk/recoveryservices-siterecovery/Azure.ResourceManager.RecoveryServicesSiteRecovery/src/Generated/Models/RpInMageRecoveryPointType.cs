@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static RpInMageRecoveryPointType LatestTag { get; } = new RpInMageRecoveryPointType(LatestTagValue);
         /// <summary> Custom. </summary>
         public static RpInMageRecoveryPointType Custom { get; } = new RpInMageRecoveryPointType(CustomValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RpInMageRecoveryPointType"/> values are the same. </summary>
         public static bool operator ==(RpInMageRecoveryPointType left, RpInMageRecoveryPointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RpInMageRecoveryPointType"/> values are not the same. </summary>

@@ -38,6 +38,9 @@ namespace Azure.MixedReality.RemoteRendering
         public static RenderingSessionStatus Ready { get; } = new RenderingSessionStatus(ReadyValue);
         /// <summary> The rendering session has been stopped with the &apos;Stop Session&apos; operation. This is a terminal state. </summary>
         public static RenderingSessionStatus Stopped { get; } = new RenderingSessionStatus(StoppedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RenderingSessionStatus"/> values are the same. </summary>
         public static bool operator ==(RenderingSessionStatus left, RenderingSessionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RenderingSessionStatus"/> values are not the same. </summary>

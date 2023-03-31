@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlFlexibleServerSkuTier GeneralPurpose { get; } = new PostgreSqlFlexibleServerSkuTier(GeneralPurposeValue);
         /// <summary> MemoryOptimized. </summary>
         public static PostgreSqlFlexibleServerSkuTier MemoryOptimized { get; } = new PostgreSqlFlexibleServerSkuTier(MemoryOptimizedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerSkuTier"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerSkuTier left, PostgreSqlFlexibleServerSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerSkuTier"/> values are not the same. </summary>

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static FileShareRecoveryType RestoreDisks { get; } = new FileShareRecoveryType(RestoreDisksValue);
         /// <summary> Offline. </summary>
         public static FileShareRecoveryType Offline { get; } = new FileShareRecoveryType(OfflineValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FileShareRecoveryType"/> values are the same. </summary>
         public static bool operator ==(FileShareRecoveryType left, FileShareRecoveryType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FileShareRecoveryType"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static ReservationTerm P3Y { get; } = new ReservationTerm(P3YValue);
         /// <summary> P5Y. </summary>
         public static ReservationTerm P5Y { get; } = new ReservationTerm(P5YValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ReservationTerm"/> values are the same. </summary>
         public static bool operator ==(ReservationTerm left, ReservationTerm right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReservationTerm"/> values are not the same. </summary>

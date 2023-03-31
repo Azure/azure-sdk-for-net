@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlFlexibleServerPrincipalType Group { get; } = new PostgreSqlFlexibleServerPrincipalType(GroupValue);
         /// <summary> ServicePrincipal. </summary>
         public static PostgreSqlFlexibleServerPrincipalType ServicePrincipal { get; } = new PostgreSqlFlexibleServerPrincipalType(ServicePrincipalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerPrincipalType"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerPrincipalType left, PostgreSqlFlexibleServerPrincipalType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerPrincipalType"/> values are not the same. </summary>

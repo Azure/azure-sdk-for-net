@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(OverwriteOption))
             {
                 writer.WritePropertyName("overwriteOption"u8);
-                writer.WriteStringValue(OverwriteOption.Value.ToString());
+                writer.WriteStringValue(OverwriteOption.Value.ToSerialString());
             }
             if (Optional.IsDefined(ContainerId))
             {

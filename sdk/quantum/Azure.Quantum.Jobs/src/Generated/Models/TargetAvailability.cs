@@ -32,6 +32,9 @@ namespace Azure.Quantum.Jobs.Models
         public static TargetAvailability Degraded { get; } = new TargetAvailability(DegradedValue);
         /// <summary> Unavailable. </summary>
         public static TargetAvailability Unavailable { get; } = new TargetAvailability(UnavailableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TargetAvailability"/> values are the same. </summary>
         public static bool operator ==(TargetAvailability left, TargetAvailability right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TargetAvailability"/> values are not the same. </summary>

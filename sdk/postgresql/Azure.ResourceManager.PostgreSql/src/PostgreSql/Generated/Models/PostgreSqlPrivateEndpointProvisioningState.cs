@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public static PostgreSqlPrivateEndpointProvisioningState Failed { get; } = new PostgreSqlPrivateEndpointProvisioningState(FailedValue);
         /// <summary> Rejecting. </summary>
         public static PostgreSqlPrivateEndpointProvisioningState Rejecting { get; } = new PostgreSqlPrivateEndpointProvisioningState(RejectingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlPrivateEndpointProvisioningState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlPrivateEndpointProvisioningState left, PostgreSqlPrivateEndpointProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlPrivateEndpointProvisioningState"/> values are not the same. </summary>

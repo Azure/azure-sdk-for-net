@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(templateSpecName, true);
             if (expand != null)
             {
-                uri.AppendQuery("$expand", expand.Value.ToString(), true);
+                uri.AppendQuery("$expand", expand.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Resources/templateSpecs/", false);
             if (expand != null)
             {
-                uri.AppendQuery("$expand", expand.Value.ToString(), true);
+                uri.AppendQuery("$expand", expand.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Resources/templateSpecs/", false);
             if (expand != null)
             {
-                uri.AppendQuery("$expand", expand.Value.ToString(), true);
+                uri.AppendQuery("$expand", expand.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

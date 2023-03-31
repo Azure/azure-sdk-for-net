@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
-                writer.WriteStringValue(BackupManagementType.Value.ToString());
+                writer.WriteStringValue(BackupManagementType.Value.ToSerialString());
             }
             if (Optional.IsDefined(RegistrationStatus))
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStringValue(HealthStatus);
             }
             writer.WritePropertyName("backupEngineType"u8);
-            writer.WriteStringValue(BackupEngineType.ToString());
+            writer.WriteStringValue(BackupEngineType.ToSerialString());
             if (Optional.IsDefined(CanReRegister))
             {
                 writer.WritePropertyName("canReRegister"u8);

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static ProtocolType TCP { get; } = new ProtocolType(TCPValue);
         /// <summary> UDP. </summary>
         public static ProtocolType UDP { get; } = new ProtocolType(UDPValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProtocolType"/> values are the same. </summary>
         public static bool operator ==(ProtocolType left, ProtocolType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProtocolType"/> values are not the same. </summary>

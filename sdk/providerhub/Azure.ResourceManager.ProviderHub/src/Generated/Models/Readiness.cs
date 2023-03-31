@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Readiness RemovedFromARM { get; } = new Readiness(RemovedFromARMValue);
         /// <summary> Retired. </summary>
         public static Readiness Retired { get; } = new Readiness(RetiredValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="Readiness"/> values are the same. </summary>
         public static bool operator ==(Readiness left, Readiness right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Readiness"/> values are not the same. </summary>

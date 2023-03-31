@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static ResourceHealthStatus PersistentUnhealthy { get; } = new ResourceHealthStatus(PersistentUnhealthyValue);
         /// <summary> Invalid. </summary>
         public static ResourceHealthStatus Invalid { get; } = new ResourceHealthStatus(InvalidValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResourceHealthStatus"/> values are the same. </summary>
         public static bool operator ==(ResourceHealthStatus left, ResourceHealthStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceHealthStatus"/> values are not the same. </summary>

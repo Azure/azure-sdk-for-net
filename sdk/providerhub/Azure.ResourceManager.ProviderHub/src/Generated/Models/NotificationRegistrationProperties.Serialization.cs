@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(NotificationMode))
             {
                 writer.WritePropertyName("notificationMode"u8);
-                writer.WriteStringValue(NotificationMode.Value.ToString());
+                writer.WriteStringValue(NotificationMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(MessageScope))
             {
                 writer.WritePropertyName("messageScope"u8);
-                writer.WriteStringValue(MessageScope.Value.ToString());
+                writer.WriteStringValue(MessageScope.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(IncludedEvents))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

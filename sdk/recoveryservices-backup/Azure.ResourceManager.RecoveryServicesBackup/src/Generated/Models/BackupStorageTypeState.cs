@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static BackupStorageTypeState Locked { get; } = new BackupStorageTypeState(LockedValue);
         /// <summary> Unlocked. </summary>
         public static BackupStorageTypeState Unlocked { get; } = new BackupStorageTypeState(UnlockedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupStorageTypeState"/> values are the same. </summary>
         public static bool operator ==(BackupStorageTypeState left, BackupStorageTypeState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupStorageTypeState"/> values are not the same. </summary>

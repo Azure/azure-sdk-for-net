@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             if (Optional.IsDefined(CreatedByType))
             {
                 writer.WritePropertyName("createdByType"u8);
-                writer.WriteStringValue(CreatedByType.Value.ToString());
+                writer.WriteStringValue(CreatedByType.Value.ToSerialString());
             }
             if (Optional.IsDefined(CreatedOn))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             if (Optional.IsDefined(LastModifiedByType))
             {
                 writer.WritePropertyName("lastModifiedByType"u8);
-                writer.WriteStringValue(LastModifiedByType.Value.ToString());
+                writer.WriteStringValue(LastModifiedByType.Value.ToSerialString());
             }
             if (Optional.IsDefined(LastModifiedOn))
             {

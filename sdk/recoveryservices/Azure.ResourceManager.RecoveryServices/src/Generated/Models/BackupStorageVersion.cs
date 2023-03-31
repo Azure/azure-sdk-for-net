@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static BackupStorageVersion V2 { get; } = new BackupStorageVersion(V2Value);
         /// <summary> Unassigned. </summary>
         public static BackupStorageVersion Unassigned { get; } = new BackupStorageVersion(UnassignedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupStorageVersion"/> values are the same. </summary>
         public static bool operator ==(BackupStorageVersion left, BackupStorageVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupStorageVersion"/> values are not the same. </summary>

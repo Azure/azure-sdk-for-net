@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             if (Optional.IsDefined(EnableDnsProxy))
             {
                 writer.WritePropertyName("enableDnsProxy"u8);
-                writer.WriteStringValue(EnableDnsProxy.Value.ToString());
+                writer.WriteStringValue(EnableDnsProxy.Value.ToSerialString());
             }
             if (Optional.IsDefined(EnabledDnsType))
             {
                 writer.WritePropertyName("enabledDnsType"u8);
-                writer.WriteStringValue(EnabledDnsType.Value.ToString());
+                writer.WriteStringValue(EnabledDnsType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(DnsServers))
             {

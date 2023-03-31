@@ -38,6 +38,9 @@ namespace Azure.Quantum.Jobs.Models
         public static JobStatus Failed { get; } = new JobStatus(FailedValue);
         /// <summary> Cancelled. </summary>
         public static JobStatus Cancelled { get; } = new JobStatus(CancelledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JobStatus"/> values are the same. </summary>
         public static bool operator ==(JobStatus left, JobStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobStatus"/> values are not the same. </summary>

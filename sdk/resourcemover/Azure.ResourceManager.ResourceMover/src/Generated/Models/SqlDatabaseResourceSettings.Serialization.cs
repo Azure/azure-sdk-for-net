@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (Optional.IsDefined(ZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
-                writer.WriteStringValue(ZoneRedundant.Value.ToString());
+                writer.WriteStringValue(ZoneRedundant.Value.ToSerialString());
             }
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);

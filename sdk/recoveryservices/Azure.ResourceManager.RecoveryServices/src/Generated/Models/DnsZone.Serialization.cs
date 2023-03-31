@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(SubResource))
             {
                 writer.WritePropertyName("subResource"u8);
-                writer.WriteStringValue(SubResource.Value.ToString());
+                writer.WriteStringValue(SubResource.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

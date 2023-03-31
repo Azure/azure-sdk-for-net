@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Peering
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Peering/legacyPeerings", false);
             uri.AppendQuery("peeringLocation", peeringLocation, true);
-            uri.AppendQuery("kind", kind.ToString(), true);
+            uri.AppendQuery("kind", kind.ToSerialString(), true);
             if (asn != null)
             {
                 uri.AppendQuery("asn", asn.Value, true);
             }
             if (directPeeringType != null)
             {
-                uri.AppendQuery("directPeeringType", directPeeringType.Value.ToString(), true);
+                uri.AppendQuery("directPeeringType", directPeeringType.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

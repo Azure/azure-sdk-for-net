@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Relay.Models
         public static RelayAccessRight Send { get; } = new RelayAccessRight(SendValue);
         /// <summary> Listen. </summary>
         public static RelayAccessRight Listen { get; } = new RelayAccessRight(ListenValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RelayAccessRight"/> values are the same. </summary>
         public static bool operator ==(RelayAccessRight left, RelayAccessRight right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RelayAccessRight"/> values are not the same. </summary>

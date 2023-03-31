@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Quota.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("limitObjectType"u8);
-            writer.WriteStringValue(LimitObjectType.ToString());
+            writer.WriteStringValue(LimitObjectType.ToSerialString());
             writer.WriteEndObject();
         }
 

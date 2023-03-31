@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/patchSchedules/", false);
-            uri.AppendPath(defaultName.ToString(), true);
+            uri.AppendPath(defaultName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/patchSchedules/", false);
-            uri.AppendPath(defaultName.ToString(), true);
+            uri.AppendPath(defaultName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/patchSchedules/", false);
-            uri.AppendPath(defaultName.ToString(), true);
+            uri.AppendPath(defaultName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

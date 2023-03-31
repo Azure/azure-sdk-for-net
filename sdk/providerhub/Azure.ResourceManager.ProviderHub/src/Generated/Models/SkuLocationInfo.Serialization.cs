@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(InfoType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(InfoType.Value.ToString());
+                writer.WriteStringValue(InfoType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

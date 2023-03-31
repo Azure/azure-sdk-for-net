@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ProtectionState))
             {
                 writer.WritePropertyName("protectionState"u8);
-                writer.WriteStringValue(ProtectionState.Value.ToString());
+                writer.WriteStringValue(ProtectionState.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(HealthDetails))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
-                writer.WriteStringValue(CreateMode.Value.ToString());
+                writer.WriteStringValue(CreateMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(DeferredDeletedOn))
             {

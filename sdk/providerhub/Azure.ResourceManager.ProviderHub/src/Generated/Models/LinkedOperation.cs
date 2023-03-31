@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static LinkedOperation CrossResourceGroupResourceMove { get; } = new LinkedOperation(CrossResourceGroupResourceMoveValue);
         /// <summary> CrossSubscriptionResourceMove. </summary>
         public static LinkedOperation CrossSubscriptionResourceMove { get; } = new LinkedOperation(CrossSubscriptionResourceMoveValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LinkedOperation"/> values are the same. </summary>
         public static bool operator ==(LinkedOperation left, LinkedOperation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LinkedOperation"/> values are not the same. </summary>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(ManagementType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ManagementType.Value.ToString());
+                writer.WriteStringValue(ManagementType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ApplicationId))
             {

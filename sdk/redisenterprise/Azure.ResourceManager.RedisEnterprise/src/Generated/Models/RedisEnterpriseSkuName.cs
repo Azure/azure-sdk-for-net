@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static RedisEnterpriseSkuName EnterpriseFlashF700 { get; } = new RedisEnterpriseSkuName(EnterpriseFlashF700Value);
         /// <summary> EnterpriseFlash_F1500. </summary>
         public static RedisEnterpriseSkuName EnterpriseFlashF1500 { get; } = new RedisEnterpriseSkuName(EnterpriseFlashF1500Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RedisEnterpriseSkuName"/> values are the same. </summary>
         public static bool operator ==(RedisEnterpriseSkuName left, RedisEnterpriseSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisEnterpriseSkuName"/> values are not the same. </summary>

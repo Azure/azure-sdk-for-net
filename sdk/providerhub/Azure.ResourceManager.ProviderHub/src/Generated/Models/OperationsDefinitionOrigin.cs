@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static OperationsDefinitionOrigin User { get; } = new OperationsDefinitionOrigin(UserValue);
         /// <summary> System. </summary>
         public static OperationsDefinitionOrigin System { get; } = new OperationsDefinitionOrigin(SystemValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OperationsDefinitionOrigin"/> values are the same. </summary>
         public static bool operator ==(OperationsDefinitionOrigin left, OperationsDefinitionOrigin right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationsDefinitionOrigin"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlFlexibleServerPasswordAuthEnum Enabled { get; } = new PostgreSqlFlexibleServerPasswordAuthEnum(EnabledValue);
         /// <summary> Disabled. </summary>
         public static PostgreSqlFlexibleServerPasswordAuthEnum Disabled { get; } = new PostgreSqlFlexibleServerPasswordAuthEnum(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerPasswordAuthEnum"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerPasswordAuthEnum left, PostgreSqlFlexibleServerPasswordAuthEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerPasswordAuthEnum"/> values are not the same. </summary>

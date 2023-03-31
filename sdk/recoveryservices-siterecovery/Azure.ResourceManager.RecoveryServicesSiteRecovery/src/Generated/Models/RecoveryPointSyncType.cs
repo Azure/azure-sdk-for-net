@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static RecoveryPointSyncType MultiVmSyncRecoveryPoint { get; } = new RecoveryPointSyncType(MultiVmSyncRecoveryPointValue);
         /// <summary> PerVmRecoveryPoint. </summary>
         public static RecoveryPointSyncType PerVmRecoveryPoint { get; } = new RecoveryPointSyncType(PerVmRecoveryPointValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RecoveryPointSyncType"/> values are the same. </summary>
         public static bool operator ==(RecoveryPointSyncType left, RecoveryPointSyncType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecoveryPointSyncType"/> values are not the same. </summary>

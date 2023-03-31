@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Peering.Models
         public static PeeringProvisioningState Deleting { get; } = new PeeringProvisioningState(DeletingValue);
         /// <summary> Failed. </summary>
         public static PeeringProvisioningState Failed { get; } = new PeeringProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PeeringProvisioningState"/> values are the same. </summary>
         public static bool operator ==(PeeringProvisioningState left, PeeringProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PeeringProvisioningState"/> values are not the same. </summary>

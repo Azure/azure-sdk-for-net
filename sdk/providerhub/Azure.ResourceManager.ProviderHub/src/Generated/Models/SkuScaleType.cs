@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static SkuScaleType Manual { get; } = new SkuScaleType(ManualValue);
         /// <summary> Automatic. </summary>
         public static SkuScaleType Automatic { get; } = new SkuScaleType(AutomaticValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SkuScaleType"/> values are the same. </summary>
         public static bool operator ==(SkuScaleType left, SkuScaleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SkuScaleType"/> values are not the same. </summary>

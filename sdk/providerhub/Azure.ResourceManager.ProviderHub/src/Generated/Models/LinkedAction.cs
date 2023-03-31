@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static LinkedAction Validate { get; } = new LinkedAction(ValidateValue);
         /// <summary> Enabled. </summary>
         public static LinkedAction Enabled { get; } = new LinkedAction(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LinkedAction"/> values are the same. </summary>
         public static bool operator ==(LinkedAction left, LinkedAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LinkedAction"/> values are not the same. </summary>

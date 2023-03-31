@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static DiskAccountType PremiumLrs { get; } = new DiskAccountType(PremiumLrsValue);
         /// <summary> StandardSSD_LRS. </summary>
         public static DiskAccountType StandardSsdLrs { get; } = new DiskAccountType(StandardSsdLrsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DiskAccountType"/> values are the same. </summary>
         public static bool operator ==(DiskAccountType left, DiskAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskAccountType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static PersistenceSettingAofFrequency OneSecond { get; } = new PersistenceSettingAofFrequency(OneSecondValue);
         /// <summary> always. </summary>
         public static PersistenceSettingAofFrequency Always { get; } = new PersistenceSettingAofFrequency(AlwaysValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PersistenceSettingAofFrequency"/> values are the same. </summary>
         public static bool operator ==(PersistenceSettingAofFrequency left, PersistenceSettingAofFrequency right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PersistenceSettingAofFrequency"/> values are not the same. </summary>

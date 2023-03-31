@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static HyperVReplicaAzureRpRecoveryPointType LatestApplicationConsistent { get; } = new HyperVReplicaAzureRpRecoveryPointType(LatestApplicationConsistentValue);
         /// <summary> LatestProcessed. </summary>
         public static HyperVReplicaAzureRpRecoveryPointType LatestProcessed { get; } = new HyperVReplicaAzureRpRecoveryPointType(LatestProcessedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HyperVReplicaAzureRpRecoveryPointType"/> values are the same. </summary>
         public static bool operator ==(HyperVReplicaAzureRpRecoveryPointType left, HyperVReplicaAzureRpRecoveryPointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HyperVReplicaAzureRpRecoveryPointType"/> values are not the same. </summary>

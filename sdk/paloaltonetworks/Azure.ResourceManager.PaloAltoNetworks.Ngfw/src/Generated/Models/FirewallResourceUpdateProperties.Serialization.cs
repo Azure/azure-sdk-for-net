@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             if (Optional.IsDefined(IsPanoramaManaged))
             {
                 writer.WritePropertyName("isPanoramaManaged"u8);
-                writer.WriteStringValue(IsPanoramaManaged.Value.ToString());
+                writer.WriteStringValue(IsPanoramaManaged.Value.ToSerialString());
             }
             if (Optional.IsDefined(PanoramaConfig))
             {

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version.Value.ToString());
+                writer.WriteStringValue(Version.Value.ToSerialString());
             }
             if (Optional.IsDefined(SslEnforcement))
             {
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.PostgreSql.Models
             if (Optional.IsDefined(MinimalTlsVersion))
             {
                 writer.WritePropertyName("minimalTlsVersion"u8);
-                writer.WriteStringValue(MinimalTlsVersion.Value.ToString());
+                writer.WriteStringValue(MinimalTlsVersion.Value.ToSerialString());
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
             if (Optional.IsDefined(ReplicationRole))
             {

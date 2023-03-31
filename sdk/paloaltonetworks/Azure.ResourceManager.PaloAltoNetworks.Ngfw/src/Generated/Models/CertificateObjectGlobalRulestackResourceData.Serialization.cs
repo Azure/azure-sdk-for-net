@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WriteStringValue(CertificateSignerResourceId);
             }
             writer.WritePropertyName("certificateSelfSigned"u8);
-            writer.WriteStringValue(CertificateSelfSigned.ToString());
+            writer.WriteStringValue(CertificateSelfSigned.ToSerialString());
             if (Optional.IsDefined(AuditComment))
             {
                 writer.WritePropertyName("auditComment"u8);

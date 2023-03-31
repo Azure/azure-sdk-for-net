@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(ProviderType))
             {
                 writer.WritePropertyName("providerType"u8);
-                writer.WriteStringValue(ProviderType.Value.ToString());
+                writer.WriteStringValue(ProviderType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(RequiredFeatures))
             {

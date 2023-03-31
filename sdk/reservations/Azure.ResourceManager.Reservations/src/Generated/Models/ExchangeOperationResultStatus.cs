@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static ExchangeOperationResultStatus PendingRefunds { get; } = new ExchangeOperationResultStatus(PendingRefundsValue);
         /// <summary> PendingPurchases. </summary>
         public static ExchangeOperationResultStatus PendingPurchases { get; } = new ExchangeOperationResultStatus(PendingPurchasesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ExchangeOperationResultStatus"/> values are the same. </summary>
         public static bool operator ==(ExchangeOperationResultStatus left, ExchangeOperationResultStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExchangeOperationResultStatus"/> values are not the same. </summary>

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PostgreSql
             uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/servers/", false);
             uri.AppendPath(serverName, true);
             uri.AppendPath("/securityAlertPolicies/", false);
-            uri.AppendPath(securityAlertPolicyName.ToString(), true);
+            uri.AppendPath(securityAlertPolicyName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.PostgreSql
             uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/servers/", false);
             uri.AppendPath(serverName, true);
             uri.AppendPath("/securityAlertPolicies/", false);
-            uri.AppendPath(securityAlertPolicyName.ToString(), true);
+            uri.AppendPath(securityAlertPolicyName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static BackupCreateMode Default { get; } = new BackupCreateMode(DefaultValue);
         /// <summary> Recover. </summary>
         public static BackupCreateMode Recover { get; } = new BackupCreateMode(RecoverValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupCreateMode"/> values are the same. </summary>
         public static bool operator ==(BackupCreateMode left, BackupCreateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupCreateMode"/> values are not the same. </summary>

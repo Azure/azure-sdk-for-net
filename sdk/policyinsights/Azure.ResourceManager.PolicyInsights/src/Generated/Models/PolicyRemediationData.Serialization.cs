@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PolicyInsights
             if (Optional.IsDefined(ResourceDiscoveryMode))
             {
                 writer.WritePropertyName("resourceDiscoveryMode"u8);
-                writer.WriteStringValue(ResourceDiscoveryMode.Value.ToString());
+                writer.WriteStringValue(ResourceDiscoveryMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(Filter))
             {

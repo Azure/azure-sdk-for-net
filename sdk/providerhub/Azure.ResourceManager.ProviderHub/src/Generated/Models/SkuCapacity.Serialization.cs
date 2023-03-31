@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(ScaleType))
             {
                 writer.WritePropertyName("scaleType"u8);
-                writer.WriteStringValue(ScaleType.Value.ToString());
+                writer.WriteStringValue(ScaleType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

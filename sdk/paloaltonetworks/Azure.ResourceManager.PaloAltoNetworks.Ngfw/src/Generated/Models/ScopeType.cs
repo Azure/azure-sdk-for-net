@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static ScopeType Local { get; } = new ScopeType(LocalValue);
         /// <summary> GLOBAL. </summary>
         public static ScopeType Global { get; } = new ScopeType(GlobalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScopeType"/> values are the same. </summary>
         public static bool operator ==(ScopeType left, ScopeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScopeType"/> values are not the same. </summary>

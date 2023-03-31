@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static ResourceProviderType TenantOnly { get; } = new ResourceProviderType(TenantOnlyValue);
         /// <summary> AuthorizationFree. </summary>
         public static ResourceProviderType AuthorizationFree { get; } = new ResourceProviderType(AuthorizationFreeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResourceProviderType"/> values are the same. </summary>
         public static bool operator ==(ResourceProviderType left, ResourceProviderType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceProviderType"/> values are not the same. </summary>

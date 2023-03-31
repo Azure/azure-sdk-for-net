@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static IdentityManagementType Actor { get; } = new IdentityManagementType(ActorValue);
         /// <summary> DelegatedResourceIdentity. </summary>
         public static IdentityManagementType DelegatedResourceIdentity { get; } = new IdentityManagementType(DelegatedResourceIdentityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IdentityManagementType"/> values are the same. </summary>
         public static bool operator ==(IdentityManagementType left, IdentityManagementType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IdentityManagementType"/> values are not the same. </summary>

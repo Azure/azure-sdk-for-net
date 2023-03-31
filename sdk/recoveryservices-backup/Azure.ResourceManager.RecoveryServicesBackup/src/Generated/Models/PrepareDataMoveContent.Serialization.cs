@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WritePropertyName("targetRegion"u8);
             writer.WriteStringValue(TargetRegion);
             writer.WritePropertyName("dataMoveLevel"u8);
-            writer.WriteStringValue(DataMoveLevel.ToString());
+            writer.WriteStringValue(DataMoveLevel.ToSerialString());
             if (Optional.IsCollectionDefined(SourceContainerArmIds))
             {
                 writer.WritePropertyName("sourceContainerArmIds"u8);

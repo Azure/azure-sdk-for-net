@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static BackupEncryptionAtRestType MicrosoftManaged { get; } = new BackupEncryptionAtRestType(MicrosoftManagedValue);
         /// <summary> CustomerManaged. </summary>
         public static BackupEncryptionAtRestType CustomerManaged { get; } = new BackupEncryptionAtRestType(CustomerManagedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupEncryptionAtRestType"/> values are the same. </summary>
         public static bool operator ==(BackupEncryptionAtRestType left, BackupEncryptionAtRestType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupEncryptionAtRestType"/> values are not the same. </summary>

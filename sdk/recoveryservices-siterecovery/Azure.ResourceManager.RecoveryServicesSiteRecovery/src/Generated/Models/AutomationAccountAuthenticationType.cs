@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static AutomationAccountAuthenticationType RunAsAccount { get; } = new AutomationAccountAuthenticationType(RunAsAccountValue);
         /// <summary> SystemAssignedIdentity. </summary>
         public static AutomationAccountAuthenticationType SystemAssignedIdentity { get; } = new AutomationAccountAuthenticationType(SystemAssignedIdentityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutomationAccountAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(AutomationAccountAuthenticationType left, AutomationAccountAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationAccountAuthenticationType"/> values are not the same. </summary>

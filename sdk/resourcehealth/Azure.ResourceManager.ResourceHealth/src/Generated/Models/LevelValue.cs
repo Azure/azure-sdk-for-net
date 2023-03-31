@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static LevelValue Critical { get; } = new LevelValue(CriticalValue);
         /// <summary> Warning. </summary>
         public static LevelValue Warning { get; } = new LevelValue(WarningValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LevelValue"/> values are the same. </summary>
         public static bool operator ==(LevelValue left, LevelValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LevelValue"/> values are not the same. </summary>

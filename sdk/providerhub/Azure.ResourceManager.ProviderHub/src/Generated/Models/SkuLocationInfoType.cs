@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static SkuLocationInfoType EdgeZone { get; } = new SkuLocationInfoType(EdgeZoneValue);
         /// <summary> ArcZone. </summary>
         public static SkuLocationInfoType ArcZone { get; } = new SkuLocationInfoType(ArcZoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SkuLocationInfoType"/> values are the same. </summary>
         public static bool operator ==(SkuLocationInfoType left, SkuLocationInfoType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SkuLocationInfoType"/> values are not the same. </summary>

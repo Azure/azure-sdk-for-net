@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static BackupStorageType ZoneRedundant { get; } = new BackupStorageType(ZoneRedundantValue);
         /// <summary> ReadAccessGeoZoneRedundant. </summary>
         public static BackupStorageType ReadAccessGeoZoneRedundant { get; } = new BackupStorageType(ReadAccessGeoZoneRedundantValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupStorageType"/> values are the same. </summary>
         public static bool operator ==(BackupStorageType left, BackupStorageType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupStorageType"/> values are not the same. </summary>

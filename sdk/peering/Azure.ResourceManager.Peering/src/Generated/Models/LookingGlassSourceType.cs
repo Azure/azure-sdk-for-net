@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Peering.Models
         public static LookingGlassSourceType EdgeSite { get; } = new LookingGlassSourceType(EdgeSiteValue);
         /// <summary> AzureRegion. </summary>
         public static LookingGlassSourceType AzureRegion { get; } = new LookingGlassSourceType(AzureRegionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LookingGlassSourceType"/> values are the same. </summary>
         public static bool operator ==(LookingGlassSourceType left, LookingGlassSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LookingGlassSourceType"/> values are not the same. </summary>

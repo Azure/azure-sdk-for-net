@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Peering.Models
             if (Optional.IsDefined(SessionAddressProvider))
             {
                 writer.WritePropertyName("sessionAddressProvider"u8);
-                writer.WriteStringValue(SessionAddressProvider.Value.ToString());
+                writer.WriteStringValue(SessionAddressProvider.Value.ToSerialString());
             }
             if (Optional.IsDefined(UseForPeeringService))
             {

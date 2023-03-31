@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ResourceHealth
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.ResourceHealth/emergingIssues/", false);
-            uri.AppendPath(issueName.ToString(), true);
+            uri.AppendPath(issueName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

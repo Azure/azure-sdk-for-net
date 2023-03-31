@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static RedisEnterpriseDatabaseLinkState LinkFailed { get; } = new RedisEnterpriseDatabaseLinkState(LinkFailedValue);
         /// <summary> UnlinkFailed. </summary>
         public static RedisEnterpriseDatabaseLinkState UnlinkFailed { get; } = new RedisEnterpriseDatabaseLinkState(UnlinkFailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RedisEnterpriseDatabaseLinkState"/> values are the same. </summary>
         public static bool operator ==(RedisEnterpriseDatabaseLinkState left, RedisEnterpriseDatabaseLinkState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisEnterpriseDatabaseLinkState"/> values are not the same. </summary>

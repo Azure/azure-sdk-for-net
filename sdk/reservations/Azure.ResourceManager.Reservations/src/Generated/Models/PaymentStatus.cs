@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static PaymentStatus Scheduled { get; } = new PaymentStatus(ScheduledValue);
         /// <summary> Cancelled. </summary>
         public static PaymentStatus Cancelled { get; } = new PaymentStatus(CancelledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PaymentStatus"/> values are the same. </summary>
         public static bool operator ==(PaymentStatus left, PaymentStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PaymentStatus"/> values are not the same. </summary>

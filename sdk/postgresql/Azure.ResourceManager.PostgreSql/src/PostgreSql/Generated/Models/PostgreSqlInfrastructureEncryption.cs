@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public static PostgreSqlInfrastructureEncryption Enabled { get; } = new PostgreSqlInfrastructureEncryption(EnabledValue);
         /// <summary> Additional (2nd) layer of encryption for data at rest. </summary>
         public static PostgreSqlInfrastructureEncryption Disabled { get; } = new PostgreSqlInfrastructureEncryption(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlInfrastructureEncryption"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlInfrastructureEncryption left, PostgreSqlInfrastructureEncryption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlInfrastructureEncryption"/> values are not the same. </summary>

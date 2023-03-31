@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(MabServerType))
             {
                 writer.WritePropertyName("mabServerType"u8);
-                writer.WriteStringValue(MabServerType.Value.ToString());
+                writer.WriteStringValue(MabServerType.Value.ToSerialString());
             }
             if (Optional.IsDefined(WorkloadType))
             {
                 writer.WritePropertyName("workloadType"u8);
-                writer.WriteStringValue(WorkloadType.Value.ToString());
+                writer.WriteStringValue(WorkloadType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ErrorDetails))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
-                writer.WriteStringValue(BackupManagementType.Value.ToString());
+                writer.WriteStringValue(BackupManagementType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Operation))
             {

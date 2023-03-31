@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static ScriptCleanupOptions OnSuccess { get; } = new ScriptCleanupOptions(OnSuccessValue);
         /// <summary> OnExpiration. </summary>
         public static ScriptCleanupOptions OnExpiration { get; } = new ScriptCleanupOptions(OnExpirationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScriptCleanupOptions"/> values are the same. </summary>
         public static bool operator ==(ScriptCleanupOptions left, ScriptCleanupOptions right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptCleanupOptions"/> values are not the same. </summary>

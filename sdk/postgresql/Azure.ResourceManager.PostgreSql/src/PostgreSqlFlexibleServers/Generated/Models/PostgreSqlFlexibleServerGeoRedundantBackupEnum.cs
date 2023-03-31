@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlFlexibleServerGeoRedundantBackupEnum Enabled { get; } = new PostgreSqlFlexibleServerGeoRedundantBackupEnum(EnabledValue);
         /// <summary> Disabled. </summary>
         public static PostgreSqlFlexibleServerGeoRedundantBackupEnum Disabled { get; } = new PostgreSqlFlexibleServerGeoRedundantBackupEnum(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerGeoRedundantBackupEnum"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerGeoRedundantBackupEnum left, PostgreSqlFlexibleServerGeoRedundantBackupEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerGeoRedundantBackupEnum"/> values are not the same. </summary>

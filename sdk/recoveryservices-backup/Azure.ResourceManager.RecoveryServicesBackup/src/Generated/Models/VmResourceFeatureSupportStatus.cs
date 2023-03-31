@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static VmResourceFeatureSupportStatus DefaultOn { get; } = new VmResourceFeatureSupportStatus(DefaultOnValue);
         /// <summary> NotSupported. </summary>
         public static VmResourceFeatureSupportStatus NotSupported { get; } = new VmResourceFeatureSupportStatus(NotSupportedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VmResourceFeatureSupportStatus"/> values are the same. </summary>
         public static bool operator ==(VmResourceFeatureSupportStatus left, VmResourceFeatureSupportStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VmResourceFeatureSupportStatus"/> values are not the same. </summary>

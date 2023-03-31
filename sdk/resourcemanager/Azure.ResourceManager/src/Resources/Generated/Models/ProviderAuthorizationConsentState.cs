@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static ProviderAuthorizationConsentState NotRequired { get; } = new ProviderAuthorizationConsentState(NotRequiredValue);
         /// <summary> Consented. </summary>
         public static ProviderAuthorizationConsentState Consented { get; } = new ProviderAuthorizationConsentState(ConsentedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProviderAuthorizationConsentState"/> values are the same. </summary>
         public static bool operator ==(ProviderAuthorizationConsentState left, ProviderAuthorizationConsentState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProviderAuthorizationConsentState"/> values are not the same. </summary>

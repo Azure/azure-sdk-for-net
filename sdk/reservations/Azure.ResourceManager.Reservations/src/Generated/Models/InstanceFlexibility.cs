@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static InstanceFlexibility On { get; } = new InstanceFlexibility(OnValue);
         /// <summary> Off. </summary>
         public static InstanceFlexibility Off { get; } = new InstanceFlexibility(OffValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InstanceFlexibility"/> values are the same. </summary>
         public static bool operator ==(InstanceFlexibility left, InstanceFlexibility right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InstanceFlexibility"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static AdvSecurityObjectTypeEnum UrlCustom { get; } = new AdvSecurityObjectTypeEnum(UrlCustomValue);
         /// <summary> feeds. </summary>
         public static AdvSecurityObjectTypeEnum Feeds { get; } = new AdvSecurityObjectTypeEnum(FeedsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AdvSecurityObjectTypeEnum"/> values are the same. </summary>
         public static bool operator ==(AdvSecurityObjectTypeEnum left, AdvSecurityObjectTypeEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AdvSecurityObjectTypeEnum"/> values are not the same. </summary>

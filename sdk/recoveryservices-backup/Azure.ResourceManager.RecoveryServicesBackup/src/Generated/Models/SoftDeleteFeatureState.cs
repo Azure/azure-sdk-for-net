@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static SoftDeleteFeatureState Enabled { get; } = new SoftDeleteFeatureState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static SoftDeleteFeatureState Disabled { get; } = new SoftDeleteFeatureState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SoftDeleteFeatureState"/> values are the same. </summary>
         public static bool operator ==(SoftDeleteFeatureState left, SoftDeleteFeatureState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SoftDeleteFeatureState"/> values are not the same. </summary>

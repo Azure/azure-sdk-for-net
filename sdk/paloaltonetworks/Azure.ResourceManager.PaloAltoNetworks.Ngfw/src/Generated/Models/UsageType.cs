@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static UsageType Payg { get; } = new UsageType(PaygValue);
         /// <summary> COMMITTED. </summary>
         public static UsageType Committed { get; } = new UsageType(CommittedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UsageType"/> values are the same. </summary>
         public static bool operator ==(UsageType left, UsageType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UsageType"/> values are not the same. </summary>

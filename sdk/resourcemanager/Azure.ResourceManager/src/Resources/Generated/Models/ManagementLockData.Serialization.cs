@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Resources
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("level"u8);
-            writer.WriteStringValue(Level.ToString());
+            writer.WriteStringValue(Level.ToSerialString());
             if (Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes"u8);

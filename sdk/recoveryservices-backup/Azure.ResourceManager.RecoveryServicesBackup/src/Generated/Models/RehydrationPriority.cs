@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static RehydrationPriority Standard { get; } = new RehydrationPriority(StandardValue);
         /// <summary> High. </summary>
         public static RehydrationPriority High { get; } = new RehydrationPriority(HighValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RehydrationPriority"/> values are the same. </summary>
         public static bool operator ==(RehydrationPriority left, RehydrationPriority right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RehydrationPriority"/> values are not the same. </summary>

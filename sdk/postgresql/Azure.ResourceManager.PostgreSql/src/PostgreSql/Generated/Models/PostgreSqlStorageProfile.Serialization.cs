@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             if (Optional.IsDefined(GeoRedundantBackup))
             {
                 writer.WritePropertyName("geoRedundantBackup"u8);
-                writer.WriteStringValue(GeoRedundantBackup.Value.ToString());
+                writer.WriteStringValue(GeoRedundantBackup.Value.ToSerialString());
             }
             if (Optional.IsDefined(StorageInMB))
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             if (Optional.IsDefined(StorageAutogrow))
             {
                 writer.WritePropertyName("storageAutogrow"u8);
-                writer.WriteStringValue(StorageAutogrow.Value.ToString());
+                writer.WriteStringValue(StorageAutogrow.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

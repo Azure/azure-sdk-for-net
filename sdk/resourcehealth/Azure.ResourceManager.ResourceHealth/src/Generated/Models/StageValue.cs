@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static StageValue Resolve { get; } = new StageValue(ResolveValue);
         /// <summary> Archived. </summary>
         public static StageValue Archived { get; } = new StageValue(ArchivedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StageValue"/> values are the same. </summary>
         public static bool operator ==(StageValue left, StageValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StageValue"/> values are not the same. </summary>

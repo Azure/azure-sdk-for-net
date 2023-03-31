@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/managementGroups/", false);
             uri.AppendPath(managementGroupName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyEvents/", false);
-            uri.AppendPath(policyEventType.ToString(), true);
+            uri.AppendPath(policyEventType.ToSerialString(), true);
             uri.AppendPath("/queryResults", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (policyQuerySettings?.Top != null)
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyEvents/", false);
-            uri.AppendPath(policyEventType.ToString(), true);
+            uri.AppendPath(policyEventType.ToSerialString(), true);
             uri.AppendPath("/queryResults", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (policyQuerySettings?.Top != null)
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyEvents/", false);
-            uri.AppendPath(policyEventType.ToString(), true);
+            uri.AppendPath(policyEventType.ToSerialString(), true);
             uri.AppendPath("/queryResults", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (policyQuerySettings?.Top != null)
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/", false);
             uri.AppendPath(resourceId, false);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyEvents/", false);
-            uri.AppendPath(policyEventType.ToString(), true);
+            uri.AppendPath(policyEventType.ToSerialString(), true);
             uri.AppendPath("/queryResults", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (policyQuerySettings?.Top != null)
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/policySetDefinitions/", false);
             uri.AppendPath(policySetDefinitionName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyEvents/", false);
-            uri.AppendPath(policyEventType.ToString(), true);
+            uri.AppendPath(policyEventType.ToSerialString(), true);
             uri.AppendPath("/queryResults", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (policyQuerySettings?.Top != null)
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/policyDefinitions/", false);
             uri.AppendPath(policyDefinitionName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyEvents/", false);
-            uri.AppendPath(policyEventType.ToString(), true);
+            uri.AppendPath(policyEventType.ToSerialString(), true);
             uri.AppendPath("/queryResults", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (policyQuerySettings?.Top != null)
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/policyAssignments/", false);
             uri.AppendPath(policyAssignmentName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyEvents/", false);
-            uri.AppendPath(policyEventType.ToString(), true);
+            uri.AppendPath(policyEventType.ToSerialString(), true);
             uri.AppendPath("/queryResults", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (policyQuerySettings?.Top != null)
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/policyAssignments/", false);
             uri.AppendPath(policyAssignmentName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyEvents/", false);
-            uri.AppendPath(policyEventType.ToString(), true);
+            uri.AppendPath(policyEventType.ToSerialString(), true);
             uri.AppendPath("/queryResults", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (policyQuerySettings?.Top != null)

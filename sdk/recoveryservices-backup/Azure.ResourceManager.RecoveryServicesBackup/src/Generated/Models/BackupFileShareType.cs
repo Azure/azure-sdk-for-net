@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static BackupFileShareType Xsmb { get; } = new BackupFileShareType(XsmbValue);
         /// <summary> XSync. </summary>
         public static BackupFileShareType XSync { get; } = new BackupFileShareType(XSyncValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupFileShareType"/> values are the same. </summary>
         public static bool operator ==(BackupFileShareType left, BackupFileShareType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupFileShareType"/> values are not the same. </summary>

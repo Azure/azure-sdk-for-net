@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(ExtendedLocationType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ExtendedLocationType.Value.ToString());
+                writer.WriteStringValue(ExtendedLocationType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Name))
             {

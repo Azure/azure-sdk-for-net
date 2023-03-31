@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         /// <summary> default. </summary>
         public static PolicyEventType Default { get; } = new PolicyEventType(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PolicyEventType"/> values are the same. </summary>
         public static bool operator ==(PolicyEventType left, PolicyEventType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyEventType"/> values are not the same. </summary>

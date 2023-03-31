@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static ThrottlingMetricType NumberOfRequests { get; } = new ThrottlingMetricType(NumberOfRequestsValue);
         /// <summary> NumberOfResources. </summary>
         public static ThrottlingMetricType NumberOfResources { get; } = new ThrottlingMetricType(NumberOfResourcesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ThrottlingMetricType"/> values are the same. </summary>
         public static bool operator ==(ThrottlingMetricType left, ThrottlingMetricType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ThrottlingMetricType"/> values are not the same. </summary>

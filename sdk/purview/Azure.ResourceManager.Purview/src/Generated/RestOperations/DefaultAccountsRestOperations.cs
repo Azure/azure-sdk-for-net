@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Purview
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Purview/getDefaultAccount", false);
             uri.AppendQuery("scopeTenantId", scopeTenantId, true);
-            uri.AppendQuery("scopeType", scopeType.ToString(), true);
+            uri.AppendQuery("scopeType", scopeType.ToSerialString(), true);
             if (scope != null)
             {
                 uri.AppendQuery("scope", scope, true);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Purview
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Purview/removeDefaultAccount", false);
             uri.AppendQuery("scopeTenantId", scopeTenantId, true);
-            uri.AppendQuery("scopeType", scopeType.ToString(), true);
+            uri.AppendQuery("scopeType", scopeType.ToSerialString(), true);
             if (scope != null)
             {
                 uri.AppendQuery("scope", scope, true);

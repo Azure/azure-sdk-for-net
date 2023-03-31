@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(StorageModelType))
             {
                 writer.WritePropertyName("storageModelType"u8);
-                writer.WriteStringValue(StorageModelType.Value.ToString());
+                writer.WriteStringValue(StorageModelType.Value.ToSerialString());
             }
             if (Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("storageType"u8);
-                writer.WriteStringValue(StorageType.Value.ToString());
+                writer.WriteStringValue(StorageType.Value.ToSerialString());
             }
             if (Optional.IsDefined(StorageTypeState))
             {
                 writer.WritePropertyName("storageTypeState"u8);
-                writer.WriteStringValue(StorageTypeState.Value.ToString());
+                writer.WriteStringValue(StorageTypeState.Value.ToSerialString());
             }
             if (Optional.IsDefined(EnableCrossRegionRestore))
             {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(DedupState))
             {
                 writer.WritePropertyName("dedupState"u8);
-                writer.WriteStringValue(DedupState.Value.ToString());
+                writer.WriteStringValue(DedupState.Value.ToSerialString());
             }
             if (Optional.IsDefined(XcoolState))
             {
                 writer.WritePropertyName("xcoolState"u8);
-                writer.WriteStringValue(XcoolState.Value.ToString());
+                writer.WriteStringValue(XcoolState.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

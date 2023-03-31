@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(JitApprovalMode))
             {
                 writer.WritePropertyName("jitApprovalMode"u8);
-                writer.WriteStringValue(JitApprovalMode.Value.ToString());
+                writer.WriteStringValue(JitApprovalMode.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(JitApprovers))
             {

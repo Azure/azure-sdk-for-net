@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public static MoverTargetAvailabilityZone Three { get; } = new MoverTargetAvailabilityZone(ThreeValue);
         /// <summary> NA. </summary>
         public static MoverTargetAvailabilityZone NA { get; } = new MoverTargetAvailabilityZone(NAValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MoverTargetAvailabilityZone"/> values are the same. </summary>
         public static bool operator ==(MoverTargetAvailabilityZone left, MoverTargetAvailabilityZone right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MoverTargetAvailabilityZone"/> values are not the same. </summary>

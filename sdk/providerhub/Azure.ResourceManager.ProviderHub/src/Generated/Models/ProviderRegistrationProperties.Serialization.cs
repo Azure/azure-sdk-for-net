@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             if (Optional.IsDefined(SubscriptionLifecycleNotificationSpecifications))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(ProviderType))
             {
                 writer.WritePropertyName("providerType"u8);
-                writer.WriteStringValue(ProviderType.Value.ToString());
+                writer.WriteStringValue(ProviderType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(RequiredFeatures))
             {

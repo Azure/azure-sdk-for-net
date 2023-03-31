@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static VaultXcoolState Enabled { get; } = new VaultXcoolState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static VaultXcoolState Disabled { get; } = new VaultXcoolState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VaultXcoolState"/> values are the same. </summary>
         public static bool operator ==(VaultXcoolState left, VaultXcoolState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VaultXcoolState"/> values are not the same. </summary>

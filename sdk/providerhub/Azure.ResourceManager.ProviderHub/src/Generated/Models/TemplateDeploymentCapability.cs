@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static TemplateDeploymentCapability Default { get; } = new TemplateDeploymentCapability(DefaultValue);
         /// <summary> Preflight. </summary>
         public static TemplateDeploymentCapability Preflight { get; } = new TemplateDeploymentCapability(PreflightValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TemplateDeploymentCapability"/> values are the same. </summary>
         public static bool operator ==(TemplateDeploymentCapability left, TemplateDeploymentCapability right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TemplateDeploymentCapability"/> values are not the same. </summary>

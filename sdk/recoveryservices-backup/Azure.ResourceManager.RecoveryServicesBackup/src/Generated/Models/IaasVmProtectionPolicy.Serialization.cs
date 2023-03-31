@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(PolicyType))
             {
                 writer.WritePropertyName("policyType"u8);
-                writer.WriteStringValue(PolicyType.Value.ToString());
+                writer.WriteStringValue(PolicyType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ProtectedItemsCount))
             {

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static InMageRcmFailbackRecoveryPointType ApplicationConsistent { get; } = new InMageRcmFailbackRecoveryPointType(ApplicationConsistentValue);
         /// <summary> CrashConsistent. </summary>
         public static InMageRcmFailbackRecoveryPointType CrashConsistent { get; } = new InMageRcmFailbackRecoveryPointType(CrashConsistentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InMageRcmFailbackRecoveryPointType"/> values are the same. </summary>
         public static bool operator ==(InMageRcmFailbackRecoveryPointType left, InMageRcmFailbackRecoveryPointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InMageRcmFailbackRecoveryPointType"/> values are not the same. </summary>

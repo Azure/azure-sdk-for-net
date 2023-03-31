@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static VaultSubResourceType AzureBackupSecondary { get; } = new VaultSubResourceType(AzureBackupSecondaryValue);
         /// <summary> AzureSiteRecovery. </summary>
         public static VaultSubResourceType AzureSiteRecovery { get; } = new VaultSubResourceType(AzureSiteRecoveryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VaultSubResourceType"/> values are the same. </summary>
         public static bool operator ==(VaultSubResourceType left, VaultSubResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VaultSubResourceType"/> values are not the same. </summary>

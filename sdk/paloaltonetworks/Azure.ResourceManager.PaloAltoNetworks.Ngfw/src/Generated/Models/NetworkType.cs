@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static NetworkType Vnet { get; } = new NetworkType(VnetValue);
         /// <summary> VWAN. </summary>
         public static NetworkType Vwan { get; } = new NetworkType(VwanValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetworkType"/> values are the same. </summary>
         public static bool operator ==(NetworkType left, NetworkType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkType"/> values are not the same. </summary>

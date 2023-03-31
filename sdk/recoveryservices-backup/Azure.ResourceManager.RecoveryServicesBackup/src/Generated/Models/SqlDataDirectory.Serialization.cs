@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(DirectoryType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(DirectoryType.Value.ToString());
+                writer.WriteStringValue(DirectoryType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Path))
             {

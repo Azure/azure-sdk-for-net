@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public static PolicyStateType Default { get; } = new PolicyStateType(DefaultValue);
         /// <summary> latest. </summary>
         public static PolicyStateType Latest { get; } = new PolicyStateType(LatestValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PolicyStateType"/> values are the same. </summary>
         public static bool operator ==(PolicyStateType left, PolicyStateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyStateType"/> values are not the same. </summary>

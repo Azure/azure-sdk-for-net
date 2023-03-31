@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static RecoveryMode FileRecovery { get; } = new RecoveryMode(FileRecoveryValue);
         /// <summary> WorkloadRecovery. </summary>
         public static RecoveryMode WorkloadRecovery { get; } = new RecoveryMode(WorkloadRecoveryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RecoveryMode"/> values are the same. </summary>
         public static bool operator ==(RecoveryMode left, RecoveryMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecoveryMode"/> values are not the same. </summary>

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ResourceMover
             uri.AppendPath("/unresolvedDependencies", false);
             if (dependencyLevel != null)
             {
-                uri.AppendQuery("dependencyLevel", dependencyLevel.Value.ToString(), true);
+                uri.AppendQuery("dependencyLevel", dependencyLevel.Value.ToSerialString(), true);
             }
             if (orderby != null)
             {

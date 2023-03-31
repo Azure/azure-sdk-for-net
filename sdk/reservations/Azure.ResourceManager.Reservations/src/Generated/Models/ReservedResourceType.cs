@@ -101,6 +101,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static ReservedResourceType SqlEdge { get; } = new ReservedResourceType(SqlEdgeValue);
         /// <summary> VirtualMachineSoftware. </summary>
         public static ReservedResourceType VirtualMachineSoftware { get; } = new ReservedResourceType(VirtualMachineSoftwareValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ReservedResourceType"/> values are the same. </summary>
         public static bool operator ==(ReservedResourceType left, ReservedResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReservedResourceType"/> values are not the same. </summary>

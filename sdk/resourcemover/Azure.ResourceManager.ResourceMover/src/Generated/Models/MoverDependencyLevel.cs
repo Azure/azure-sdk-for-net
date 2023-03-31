@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public static MoverDependencyLevel Direct { get; } = new MoverDependencyLevel(DirectValue);
         /// <summary> Descendant. </summary>
         public static MoverDependencyLevel Descendant { get; } = new MoverDependencyLevel(DescendantValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MoverDependencyLevel"/> values are the same. </summary>
         public static bool operator ==(MoverDependencyLevel left, MoverDependencyLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MoverDependencyLevel"/> values are not the same. </summary>

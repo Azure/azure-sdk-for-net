@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static PersistenceSettingRdbFrequency SixHours { get; } = new PersistenceSettingRdbFrequency(SixHoursValue);
         /// <summary> 12h. </summary>
         public static PersistenceSettingRdbFrequency TwelveHours { get; } = new PersistenceSettingRdbFrequency(TwelveHoursValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PersistenceSettingRdbFrequency"/> values are the same. </summary>
         public static bool operator ==(PersistenceSettingRdbFrequency left, PersistenceSettingRdbFrequency right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PersistenceSettingRdbFrequency"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public static MoverDependencyType RequiredForPrepare { get; } = new MoverDependencyType(RequiredForPrepareValue);
         /// <summary> RequiredForMove. </summary>
         public static MoverDependencyType RequiredForMove { get; } = new MoverDependencyType(RequiredForMoveValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MoverDependencyType"/> values are the same. </summary>
         public static bool operator ==(MoverDependencyType left, MoverDependencyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MoverDependencyType"/> values are not the same. </summary>

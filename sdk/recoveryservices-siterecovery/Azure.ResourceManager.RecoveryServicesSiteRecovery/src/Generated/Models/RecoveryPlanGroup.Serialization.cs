@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("groupType"u8);
-            writer.WriteStringValue(GroupType.ToString());
+            writer.WriteStringValue(GroupType.ToSerialString());
             if (Optional.IsCollectionDefined(ReplicationProtectedItems))
             {
                 writer.WritePropertyName("replicationProtectedItems"u8);

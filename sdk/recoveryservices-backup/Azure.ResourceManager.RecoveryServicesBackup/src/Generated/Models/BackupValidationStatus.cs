@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static BackupValidationStatus Succeeded { get; } = new BackupValidationStatus(SucceededValue);
         /// <summary> Failed. </summary>
         public static BackupValidationStatus Failed { get; } = new BackupValidationStatus(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupValidationStatus"/> values are the same. </summary>
         public static bool operator ==(BackupValidationStatus left, BackupValidationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupValidationStatus"/> values are not the same. </summary>

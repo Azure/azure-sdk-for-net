@@ -68,6 +68,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static MabServerType StorageContainer { get; } = new MabServerType(StorageContainerValue);
         /// <summary> GenericContainer. </summary>
         public static MabServerType GenericContainer { get; } = new MabServerType(GenericContainerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MabServerType"/> values are the same. </summary>
         public static bool operator ==(MabServerType left, MabServerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MabServerType"/> values are not the same. </summary>

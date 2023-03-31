@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(DiskType))
             {
                 writer.WritePropertyName("diskType"u8);
-                writer.WriteStringValue(DiskType.Value.ToString());
+                writer.WriteStringValue(DiskType.Value.ToSerialString());
             }
             if (Optional.IsDefined(TargetAvailabilitySetId))
             {
@@ -113,12 +113,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
-                writer.WriteStringValue(LicenseType.Value.ToString());
+                writer.WriteStringValue(LicenseType.Value.ToSerialString());
             }
             if (Optional.IsDefined(SqlServerLicenseType))
             {
                 writer.WritePropertyName("sqlServerLicenseType"u8);
-                writer.WriteStringValue(SqlServerLicenseType.Value.ToString());
+                writer.WriteStringValue(SqlServerLicenseType.Value.ToSerialString());
             }
             if (Optional.IsDefined(TargetVmSize))
             {

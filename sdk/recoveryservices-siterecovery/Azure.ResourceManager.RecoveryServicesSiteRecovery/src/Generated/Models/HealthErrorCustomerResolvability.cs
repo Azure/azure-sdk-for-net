@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static HealthErrorCustomerResolvability Allowed { get; } = new HealthErrorCustomerResolvability(AllowedValue);
         /// <summary> NotAllowed. </summary>
         public static HealthErrorCustomerResolvability NotAllowed { get; } = new HealthErrorCustomerResolvability(NotAllowedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HealthErrorCustomerResolvability"/> values are the same. </summary>
         public static bool operator ==(HealthErrorCustomerResolvability left, HealthErrorCustomerResolvability right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HealthErrorCustomerResolvability"/> values are not the same. </summary>

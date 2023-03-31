@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WritePropertyName("recoverySubscriptionId"u8);
             writer.WriteStringValue(RecoverySubscriptionId);
             writer.WritePropertyName("recoveryAvailabilityType"u8);
-            writer.WriteStringValue(RecoveryAvailabilityType.ToString());
+            writer.WriteStringValue(RecoveryAvailabilityType.ToSerialString());
             if (Optional.IsDefined(ProtectionProfileCustomInput))
             {
                 writer.WritePropertyName("protectionProfileCustomInput"u8);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(AutoProtectionOfDataDisk))
             {
                 writer.WritePropertyName("autoProtectionOfDataDisk"u8);
-                writer.WriteStringValue(AutoProtectionOfDataDisk.Value.ToString());
+                writer.WriteStringValue(AutoProtectionOfDataDisk.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(VmDisks))
             {
@@ -105,12 +105,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(AgentAutoUpdateStatus))
             {
                 writer.WritePropertyName("agentAutoUpdateStatus"u8);
-                writer.WriteStringValue(AgentAutoUpdateStatus.Value.ToString());
+                writer.WriteStringValue(AgentAutoUpdateStatus.Value.ToSerialString());
             }
             if (Optional.IsDefined(AutomationAccountAuthenticationType))
             {
                 writer.WritePropertyName("automationAccountAuthenticationType"u8);
-                writer.WriteStringValue(AutomationAccountAuthenticationType.Value.ToString());
+                writer.WriteStringValue(AutomationAccountAuthenticationType.Value.ToSerialString());
             }
             if (Optional.IsDefined(AutomationAccountArmId))
             {

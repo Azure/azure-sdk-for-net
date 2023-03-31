@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Quantum.Models
         public static UsableStatus No { get; } = new UsableStatus(NoValue);
         /// <summary> Partial. </summary>
         public static UsableStatus Partial { get; } = new UsableStatus(PartialValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UsableStatus"/> values are the same. </summary>
         public static bool operator ==(UsableStatus left, UsableStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UsableStatus"/> values are not the same. </summary>

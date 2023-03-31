@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static ArmPolicyParameterType Float { get; } = new ArmPolicyParameterType(FloatValue);
         /// <summary> DateTime. </summary>
         public static ArmPolicyParameterType DateTime { get; } = new ArmPolicyParameterType(DateTimeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ArmPolicyParameterType"/> values are the same. </summary>
         public static bool operator ==(ArmPolicyParameterType left, ArmPolicyParameterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArmPolicyParameterType"/> values are not the same. </summary>

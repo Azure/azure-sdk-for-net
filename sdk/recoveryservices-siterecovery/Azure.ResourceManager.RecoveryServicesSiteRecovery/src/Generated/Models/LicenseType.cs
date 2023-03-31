@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static LicenseType NoLicenseType { get; } = new LicenseType(NoLicenseTypeValue);
         /// <summary> WindowsServer. </summary>
         public static LicenseType WindowsServer { get; } = new LicenseType(WindowsServerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LicenseType"/> values are the same. </summary>
         public static bool operator ==(LicenseType left, LicenseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LicenseType"/> values are not the same. </summary>

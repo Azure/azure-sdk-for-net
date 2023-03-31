@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static PresenceStatus Present { get; } = new PresenceStatus(PresentValue);
         /// <summary> NotPresent. </summary>
         public static PresenceStatus NotPresent { get; } = new PresenceStatus(NotPresentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PresenceStatus"/> values are the same. </summary>
         public static bool operator ==(PresenceStatus left, PresenceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PresenceStatus"/> values are not the same. </summary>

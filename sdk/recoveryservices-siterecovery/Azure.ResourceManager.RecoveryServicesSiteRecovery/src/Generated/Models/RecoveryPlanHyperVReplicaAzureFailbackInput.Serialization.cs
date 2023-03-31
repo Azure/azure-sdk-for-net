@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataSyncOption"u8);
-            writer.WriteStringValue(DataSyncOption.ToString());
+            writer.WriteStringValue(DataSyncOption.ToSerialString());
             writer.WritePropertyName("recoveryVmCreationOption"u8);
-            writer.WriteStringValue(RecoveryVmCreationOption.ToString());
+            writer.WriteStringValue(RecoveryVmCreationOption.ToSerialString());
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();

@@ -59,6 +59,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static ResourcesProvisioningState Succeeded { get; } = new ResourcesProvisioningState(SucceededValue);
         /// <summary> Updating. </summary>
         public static ResourcesProvisioningState Updating { get; } = new ResourcesProvisioningState(UpdatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResourcesProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ResourcesProvisioningState left, ResourcesProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourcesProvisioningState"/> values are not the same. </summary>

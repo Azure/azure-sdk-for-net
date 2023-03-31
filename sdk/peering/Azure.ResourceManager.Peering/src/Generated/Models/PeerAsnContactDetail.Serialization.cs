@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Peering.Models
             if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
-                writer.WriteStringValue(Role.Value.ToString());
+                writer.WriteStringValue(Role.Value.ToSerialString());
             }
             if (Optional.IsDefined(Email))
             {

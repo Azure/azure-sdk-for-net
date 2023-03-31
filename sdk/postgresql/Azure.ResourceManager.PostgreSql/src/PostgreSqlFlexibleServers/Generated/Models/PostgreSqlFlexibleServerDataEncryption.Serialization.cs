@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (Optional.IsDefined(KeyType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(KeyType.Value.ToString());
+                writer.WriteStringValue(KeyType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

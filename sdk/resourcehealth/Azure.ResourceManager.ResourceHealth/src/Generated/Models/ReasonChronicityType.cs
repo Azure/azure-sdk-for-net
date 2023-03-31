@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static ReasonChronicityType Transient { get; } = new ReasonChronicityType(TransientValue);
         /// <summary> Persistent. </summary>
         public static ReasonChronicityType Persistent { get; } = new ReasonChronicityType(PersistentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ReasonChronicityType"/> values are the same. </summary>
         public static bool operator ==(ReasonChronicityType left, ReasonChronicityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReasonChronicityType"/> values are not the same. </summary>

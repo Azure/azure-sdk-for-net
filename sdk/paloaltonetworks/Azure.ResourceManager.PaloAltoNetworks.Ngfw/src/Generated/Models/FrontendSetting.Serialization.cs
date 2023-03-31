@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("protocol"u8);
-            writer.WriteStringValue(Protocol.ToString());
+            writer.WriteStringValue(Protocol.ToSerialString());
             writer.WritePropertyName("frontendConfiguration"u8);
             writer.WriteObjectValue(FrontendConfiguration);
             writer.WritePropertyName("backendConfiguration"u8);

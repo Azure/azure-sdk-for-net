@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("failoverDirection"u8);
-            writer.WriteStringValue(FailoverDirection.ToString());
+            writer.WriteStringValue(FailoverDirection.ToSerialString());
             writer.WritePropertyName("networkType"u8);
             writer.WriteStringValue(NetworkType);
             if (Optional.IsDefined(NetworkId))

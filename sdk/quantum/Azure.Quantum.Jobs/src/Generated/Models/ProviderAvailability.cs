@@ -32,6 +32,9 @@ namespace Azure.Quantum.Jobs.Models
         public static ProviderAvailability Degraded { get; } = new ProviderAvailability(DegradedValue);
         /// <summary> Unavailable. </summary>
         public static ProviderAvailability Unavailable { get; } = new ProviderAvailability(UnavailableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProviderAvailability"/> values are the same. </summary>
         public static bool operator ==(ProviderAvailability left, ProviderAvailability right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProviderAvailability"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static RestoreOverwriteOption FailOnConflict { get; } = new RestoreOverwriteOption(FailOnConflictValue);
         /// <summary> Overwrite. </summary>
         public static RestoreOverwriteOption Overwrite { get; } = new RestoreOverwriteOption(OverwriteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RestoreOverwriteOption"/> values are the same. </summary>
         public static bool operator ==(RestoreOverwriteOption left, RestoreOverwriteOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RestoreOverwriteOption"/> values are not the same. </summary>

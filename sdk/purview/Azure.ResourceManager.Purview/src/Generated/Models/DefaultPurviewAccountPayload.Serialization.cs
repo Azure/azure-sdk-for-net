@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Purview.Models
             if (Optional.IsDefined(ScopeType))
             {
                 writer.WritePropertyName("scopeType"u8);
-                writer.WriteStringValue(ScopeType.Value.ToString());
+                writer.WriteStringValue(ScopeType.Value.ToSerialString());
             }
             if (Optional.IsDefined(SubscriptionId))
             {

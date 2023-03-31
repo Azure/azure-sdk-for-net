@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.Peering.Models
         public static DirectPeeringType Voice { get; } = new DirectPeeringType(VoiceValue);
         /// <summary> EdgeZoneForOperators. </summary>
         public static DirectPeeringType EdgeZoneForOperators { get; } = new DirectPeeringType(EdgeZoneForOperatorsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DirectPeeringType"/> values are the same. </summary>
         public static bool operator ==(DirectPeeringType left, DirectPeeringType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DirectPeeringType"/> values are not the same. </summary>

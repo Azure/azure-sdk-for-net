@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
         /// <summary> Default. </summary>
         public static PostgreSqlSecurityAlertPolicyName Default { get; } = new PostgreSqlSecurityAlertPolicyName(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlSecurityAlertPolicyName"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlSecurityAlertPolicyName left, PostgreSqlSecurityAlertPolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlSecurityAlertPolicyName"/> values are not the same. </summary>

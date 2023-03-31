@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public static PostgreSqlVirtualNetworkRuleState Deleting { get; } = new PostgreSqlVirtualNetworkRuleState(DeletingValue);
         /// <summary> Unknown. </summary>
         public static PostgreSqlVirtualNetworkRuleState Unknown { get; } = new PostgreSqlVirtualNetworkRuleState(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlVirtualNetworkRuleState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlVirtualNetworkRuleState left, PostgreSqlVirtualNetworkRuleState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlVirtualNetworkRuleState"/> values are not the same. </summary>

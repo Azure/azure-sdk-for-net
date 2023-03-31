@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlFlexibleServerConfigurationDataType Integer { get; } = new PostgreSqlFlexibleServerConfigurationDataType(IntegerValue);
         /// <summary> Enumeration. </summary>
         public static PostgreSqlFlexibleServerConfigurationDataType Enumeration { get; } = new PostgreSqlFlexibleServerConfigurationDataType(EnumerationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerConfigurationDataType"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerConfigurationDataType left, PostgreSqlFlexibleServerConfigurationDataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerConfigurationDataType"/> values are not the same. </summary>

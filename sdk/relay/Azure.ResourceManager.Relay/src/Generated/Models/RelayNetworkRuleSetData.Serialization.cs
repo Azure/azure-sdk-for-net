@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Relay
             if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
-                writer.WriteStringValue(DefaultAction.Value.ToString());
+                writer.WriteStringValue(DefaultAction.Value.ToSerialString());
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(IPRules))
             {

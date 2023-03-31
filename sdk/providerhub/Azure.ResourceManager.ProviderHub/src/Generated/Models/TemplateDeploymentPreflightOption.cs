@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static TemplateDeploymentPreflightOption TestOnly { get; } = new TemplateDeploymentPreflightOption(TestOnlyValue);
         /// <summary> RegisteredOnly. </summary>
         public static TemplateDeploymentPreflightOption RegisteredOnly { get; } = new TemplateDeploymentPreflightOption(RegisteredOnlyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TemplateDeploymentPreflightOption"/> values are the same. </summary>
         public static bool operator ==(TemplateDeploymentPreflightOption left, TemplateDeploymentPreflightOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TemplateDeploymentPreflightOption"/> values are not the same. </summary>

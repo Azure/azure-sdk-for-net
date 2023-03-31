@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ManagementGroups
             uri.AppendQuery("api-version", _apiVersion, true);
             if (expand != null)
             {
-                uri.AppendQuery("$expand", expand.Value.ToString(), true);
+                uri.AppendQuery("$expand", expand.Value.ToSerialString(), true);
             }
             if (recurse != null)
             {

@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             if (Optional.IsDefined(UsageType))
             {
                 writer.WritePropertyName("usageType"u8);
-                writer.WriteStringValue(UsageType.Value.ToString());
+                writer.WriteStringValue(UsageType.Value.ToSerialString());
             }
             writer.WritePropertyName("billingCycle"u8);
-            writer.WriteStringValue(BillingCycle.ToString());
+            writer.WriteStringValue(BillingCycle.ToSerialString());
             writer.WritePropertyName("planId"u8);
             writer.WriteStringValue(PlanId);
             writer.WriteEndObject();

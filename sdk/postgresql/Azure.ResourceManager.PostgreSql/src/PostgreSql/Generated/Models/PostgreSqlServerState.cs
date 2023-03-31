@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public static PostgreSqlServerState Disabled { get; } = new PostgreSqlServerState(DisabledValue);
         /// <summary> Inaccessible. </summary>
         public static PostgreSqlServerState Inaccessible { get; } = new PostgreSqlServerState(InaccessibleValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlServerState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlServerState left, PostgreSqlServerState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlServerState"/> values are not the same. </summary>

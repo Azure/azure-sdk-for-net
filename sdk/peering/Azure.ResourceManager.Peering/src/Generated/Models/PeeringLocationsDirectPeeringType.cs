@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.Peering.Models
         public static PeeringLocationsDirectPeeringType Voice { get; } = new PeeringLocationsDirectPeeringType(VoiceValue);
         /// <summary> EdgeZoneForOperators. </summary>
         public static PeeringLocationsDirectPeeringType EdgeZoneForOperators { get; } = new PeeringLocationsDirectPeeringType(EdgeZoneForOperatorsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PeeringLocationsDirectPeeringType"/> values are the same. </summary>
         public static bool operator ==(PeeringLocationsDirectPeeringType left, PeeringLocationsDirectPeeringType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PeeringLocationsDirectPeeringType"/> values are not the same. </summary>

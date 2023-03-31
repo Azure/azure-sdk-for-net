@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(DisableProtectionReason))
             {
                 writer.WritePropertyName("disableProtectionReason"u8);
-                writer.WriteStringValue(DisableProtectionReason.Value.ToString());
+                writer.WriteStringValue(DisableProtectionReason.Value.ToSerialString());
             }
             if (Optional.IsDefined(ReplicationProviderInput))
             {

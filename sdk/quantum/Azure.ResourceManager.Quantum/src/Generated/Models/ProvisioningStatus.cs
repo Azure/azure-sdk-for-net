@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Quantum.Models
         public static ProvisioningStatus ProviderProvisioning { get; } = new ProvisioningStatus(ProviderProvisioningValue);
         /// <summary> Failed. </summary>
         public static ProvisioningStatus Failed { get; } = new ProvisioningStatus(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProvisioningStatus"/> values are the same. </summary>
         public static bool operator ==(ProvisioningStatus left, ProvisioningStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProvisioningStatus"/> values are not the same. </summary>

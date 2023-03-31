@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Peering
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(RecoveryPointType))
             {
                 writer.WritePropertyName("recoveryPointType"u8);
-                writer.WriteStringValue(RecoveryPointType.Value.ToString());
+                writer.WriteStringValue(RecoveryPointType.Value.ToSerialString());
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);

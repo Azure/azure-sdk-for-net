@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(DurationType))
             {
                 writer.WritePropertyName("durationType"u8);
-                writer.WriteStringValue(DurationType.Value.ToString());
+                writer.WriteStringValue(DurationType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

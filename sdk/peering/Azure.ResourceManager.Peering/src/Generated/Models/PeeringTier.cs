@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Peering.Models
         public static PeeringTier Basic { get; } = new PeeringTier(BasicValue);
         /// <summary> Premium. </summary>
         public static PeeringTier Premium { get; } = new PeeringTier(PremiumValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PeeringTier"/> values are the same. </summary>
         public static bool operator ==(PeeringTier left, PeeringTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PeeringTier"/> values are not the same. </summary>

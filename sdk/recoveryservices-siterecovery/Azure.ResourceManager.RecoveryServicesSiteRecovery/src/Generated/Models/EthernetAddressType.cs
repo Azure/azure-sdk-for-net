@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static EthernetAddressType Dynamic { get; } = new EthernetAddressType(DynamicValue);
         /// <summary> Static. </summary>
         public static EthernetAddressType Static { get; } = new EthernetAddressType(StaticValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EthernetAddressType"/> values are the same. </summary>
         public static bool operator ==(EthernetAddressType left, EthernetAddressType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EthernetAddressType"/> values are not the same. </summary>

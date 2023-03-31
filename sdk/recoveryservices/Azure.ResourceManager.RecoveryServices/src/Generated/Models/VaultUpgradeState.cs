@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static VaultUpgradeState Upgraded { get; } = new VaultUpgradeState(UpgradedValue);
         /// <summary> Failed. </summary>
         public static VaultUpgradeState Failed { get; } = new VaultUpgradeState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VaultUpgradeState"/> values are the same. </summary>
         public static bool operator ==(VaultUpgradeState left, VaultUpgradeState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VaultUpgradeState"/> values are not the same. </summary>

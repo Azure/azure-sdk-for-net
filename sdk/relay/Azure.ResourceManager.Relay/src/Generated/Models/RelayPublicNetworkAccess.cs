@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Relay.Models
         public static RelayPublicNetworkAccess Disabled { get; } = new RelayPublicNetworkAccess(DisabledValue);
         /// <summary> SecuredByPerimeter. </summary>
         public static RelayPublicNetworkAccess SecuredByPerimeter { get; } = new RelayPublicNetworkAccess(SecuredByPerimeterValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RelayPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(RelayPublicNetworkAccess left, RelayPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RelayPublicNetworkAccess"/> values are not the same. </summary>

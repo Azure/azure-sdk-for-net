@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Purview.Models
 
         /// <summary> Standard. </summary>
         public static PurviewAccountSkuName Standard { get; } = new PurviewAccountSkuName(StandardValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PurviewAccountSkuName"/> values are the same. </summary>
         public static bool operator ==(PurviewAccountSkuName left, PurviewAccountSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PurviewAccountSkuName"/> values are not the same. </summary>

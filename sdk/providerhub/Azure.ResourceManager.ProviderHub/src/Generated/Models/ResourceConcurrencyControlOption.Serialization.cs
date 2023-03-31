@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteStringValue(Policy.Value.ToString());
+                writer.WriteStringValue(Policy.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

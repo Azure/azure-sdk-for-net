@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static LastUpdateStatus Initialized { get; } = new LastUpdateStatus(InitializedValue);
         /// <summary> FirstInitialization. </summary>
         public static LastUpdateStatus FirstInitialization { get; } = new LastUpdateStatus(FirstInitializationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LastUpdateStatus"/> values are the same. </summary>
         public static bool operator ==(LastUpdateStatus left, LastUpdateStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LastUpdateStatus"/> values are not the same. </summary>
