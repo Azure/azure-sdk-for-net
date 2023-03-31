@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static ListServiceAlertsSortByField StartOn { get; } = new ListServiceAlertsSortByField(StartOnValue);
         /// <summary> lastModifiedDateTime. </summary>
         public static ListServiceAlertsSortByField LastModifiedOn { get; } = new ListServiceAlertsSortByField(LastModifiedOnValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ListServiceAlertsSortByField"/> values are the same. </summary>
         public static bool operator ==(ListServiceAlertsSortByField left, ListServiceAlertsSortByField right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ListServiceAlertsSortByField"/> values are not the same. </summary>

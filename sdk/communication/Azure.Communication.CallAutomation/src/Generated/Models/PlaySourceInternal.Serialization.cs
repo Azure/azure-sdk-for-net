@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sourceType"u8);
-            writer.WriteStringValue(SourceType.ToString());
+            writer.WriteStringValue(SourceType.ToSerialString());
             if (Optional.IsDefined(PlaySourceId))
             {
                 writer.WritePropertyName("playSourceId"u8);

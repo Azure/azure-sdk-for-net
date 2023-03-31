@@ -29,6 +29,9 @@ namespace Azure.Communication.MediaComposition
         public static InputGroupType GridBased { get; } = new InputGroupType(GridBasedValue);
         /// <summary> autoGridBased. </summary>
         public static InputGroupType AutoGridBased { get; } = new InputGroupType(AutoGridBasedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InputGroupType"/> values are the same. </summary>
         public static bool operator ==(InputGroupType left, InputGroupType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InputGroupType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Communication.Models
         public static CommunicationNameAvailabilityReason Invalid { get; } = new CommunicationNameAvailabilityReason(InvalidValue);
         /// <summary> AlreadyExists. </summary>
         public static CommunicationNameAvailabilityReason AlreadyExists { get; } = new CommunicationNameAvailabilityReason(AlreadyExistsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CommunicationNameAvailabilityReason"/> values are the same. </summary>
         public static bool operator ==(CommunicationNameAvailabilityReason left, CommunicationNameAvailabilityReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommunicationNameAvailabilityReason"/> values are not the same. </summary>

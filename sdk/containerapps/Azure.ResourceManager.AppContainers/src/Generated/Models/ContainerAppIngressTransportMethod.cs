@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static ContainerAppIngressTransportMethod Http2 { get; } = new ContainerAppIngressTransportMethod(Http2Value);
         /// <summary> tcp. </summary>
         public static ContainerAppIngressTransportMethod Tcp { get; } = new ContainerAppIngressTransportMethod(TcpValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerAppIngressTransportMethod"/> values are the same. </summary>
         public static bool operator ==(ContainerAppIngressTransportMethod left, ContainerAppIngressTransportMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppIngressTransportMethod"/> values are not the same. </summary>

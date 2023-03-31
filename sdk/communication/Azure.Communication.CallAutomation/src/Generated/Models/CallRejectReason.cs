@@ -32,6 +32,9 @@ namespace Azure.Communication.CallAutomation
         public static CallRejectReason Busy { get; } = new CallRejectReason(BusyValue);
         /// <summary> forbidden. </summary>
         public static CallRejectReason Forbidden { get; } = new CallRejectReason(ForbiddenValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CallRejectReason"/> values are the same. </summary>
         public static bool operator ==(CallRejectReason left, CallRejectReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CallRejectReason"/> values are not the same. </summary>

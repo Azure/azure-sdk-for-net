@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Permission))
             {
                 writer.WritePropertyName("permissions"u8);
-                writer.WriteStringValue(Permission.Value.ToString());
+                writer.WriteStringValue(Permission.Value.ToSerialString());
             }
             if (Optional.IsDefined(CommunityGalleryInfo))
             {

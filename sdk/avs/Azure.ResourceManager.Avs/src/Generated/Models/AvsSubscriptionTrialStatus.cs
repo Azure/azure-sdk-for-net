@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static AvsSubscriptionTrialStatus TrialUsed { get; } = new AvsSubscriptionTrialStatus(TrialUsedValue);
         /// <summary> TrialDisabled. </summary>
         public static AvsSubscriptionTrialStatus TrialDisabled { get; } = new AvsSubscriptionTrialStatus(TrialDisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AvsSubscriptionTrialStatus"/> values are the same. </summary>
         public static bool operator ==(AvsSubscriptionTrialStatus left, AvsSubscriptionTrialStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvsSubscriptionTrialStatus"/> values are not the same. </summary>

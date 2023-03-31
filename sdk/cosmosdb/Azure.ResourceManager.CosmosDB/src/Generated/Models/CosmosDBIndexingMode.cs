@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBIndexingMode Lazy { get; } = new CosmosDBIndexingMode(LazyValue);
         /// <summary> none. </summary>
         public static CosmosDBIndexingMode None { get; } = new CosmosDBIndexingMode(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CosmosDBIndexingMode"/> values are the same. </summary>
         public static bool operator ==(CosmosDBIndexingMode left, CosmosDBIndexingMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBIndexingMode"/> values are not the same. </summary>

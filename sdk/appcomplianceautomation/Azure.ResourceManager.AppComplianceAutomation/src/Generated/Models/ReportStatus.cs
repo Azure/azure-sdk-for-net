@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static ReportStatus Failed { get; } = new ReportStatus(FailedValue);
         /// <summary> Disabled. </summary>
         public static ReportStatus Disabled { get; } = new ReportStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ReportStatus"/> values are the same. </summary>
         public static bool operator ==(ReportStatus left, ReportStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReportStatus"/> values are not the same. </summary>

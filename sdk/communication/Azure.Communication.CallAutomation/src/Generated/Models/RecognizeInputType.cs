@@ -29,6 +29,9 @@ namespace Azure.Communication.CallAutomation
         public static RecognizeInputType Dtmf { get; } = new RecognizeInputType(DtmfValue);
         /// <summary> choices. </summary>
         public static RecognizeInputType Choices { get; } = new RecognizeInputType(ChoicesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RecognizeInputType"/> values are the same. </summary>
         public static bool operator ==(RecognizeInputType left, RecognizeInputType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecognizeInputType"/> values are not the same. </summary>

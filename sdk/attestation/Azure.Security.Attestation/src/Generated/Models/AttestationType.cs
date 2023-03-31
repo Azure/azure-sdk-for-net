@@ -32,6 +32,9 @@ namespace Azure.Security.Attestation
         public static AttestationType OpenEnclave { get; } = new AttestationType(OpenEnclaveValue);
         /// <summary> Edge TPM Virtualization Based Security. </summary>
         public static AttestationType Tpm { get; } = new AttestationType(TpmValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AttestationType"/> values are the same. </summary>
         public static bool operator ==(AttestationType left, AttestationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AttestationType"/> values are not the same. </summary>

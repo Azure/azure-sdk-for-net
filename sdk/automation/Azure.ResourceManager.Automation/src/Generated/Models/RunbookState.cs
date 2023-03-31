@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static RunbookState Edit { get; } = new RunbookState(EditValue);
         /// <summary> Published. </summary>
         public static RunbookState Published { get; } = new RunbookState(PublishedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RunbookState"/> values are the same. </summary>
         public static bool operator ==(RunbookState left, RunbookState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RunbookState"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static SnapshotType NodePool { get; } = new SnapshotType(NodePoolValue);
         /// <summary> The snapshot is a snapshot of a managed cluster. </summary>
         public static SnapshotType ManagedCluster { get; } = new SnapshotType(ManagedClusterValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SnapshotType"/> values are the same. </summary>
         public static bool operator ==(SnapshotType left, SnapshotType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SnapshotType"/> values are not the same. </summary>

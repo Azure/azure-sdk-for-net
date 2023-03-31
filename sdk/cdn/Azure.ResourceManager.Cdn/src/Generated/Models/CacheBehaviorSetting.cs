@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static CacheBehaviorSetting Override { get; } = new CacheBehaviorSetting(OverrideValue);
         /// <summary> SetIfMissing. </summary>
         public static CacheBehaviorSetting SetIfMissing { get; } = new CacheBehaviorSetting(SetIfMissingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CacheBehaviorSetting"/> values are the same. </summary>
         public static bool operator ==(CacheBehaviorSetting left, CacheBehaviorSetting right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CacheBehaviorSetting"/> values are not the same. </summary>

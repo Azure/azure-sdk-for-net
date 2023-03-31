@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.Consumption.Models
         public static ConsumptionEventType NewCredit { get; } = new ConsumptionEventType(NewCreditValue);
         /// <summary> CreditExpired. </summary>
         public static ConsumptionEventType CreditExpired { get; } = new ConsumptionEventType(CreditExpiredValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConsumptionEventType"/> values are the same. </summary>
         public static bool operator ==(ConsumptionEventType left, ConsumptionEventType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConsumptionEventType"/> values are not the same. </summary>

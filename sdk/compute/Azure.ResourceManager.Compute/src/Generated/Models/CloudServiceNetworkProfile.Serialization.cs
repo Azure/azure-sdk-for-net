@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SlotType))
             {
                 writer.WritePropertyName("slotType"u8);
-                writer.WriteStringValue(SlotType.Value.ToString());
+                writer.WriteStringValue(SlotType.Value.ToSerialString());
             }
             if (Optional.IsDefined(SwappableCloudService))
             {

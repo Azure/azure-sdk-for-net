@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ApiSchemaType Xml { get; } = new ApiSchemaType(XmlValue);
         /// <summary> Json schema type. </summary>
         public static ApiSchemaType Json { get; } = new ApiSchemaType(JsonValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApiSchemaType"/> values are the same. </summary>
         public static bool operator ==(ApiSchemaType left, ApiSchemaType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApiSchemaType"/> values are not the same. </summary>

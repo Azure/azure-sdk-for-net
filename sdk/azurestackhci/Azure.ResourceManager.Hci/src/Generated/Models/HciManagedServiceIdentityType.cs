@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Hci.Models
         public static HciManagedServiceIdentityType UserAssigned { get; } = new HciManagedServiceIdentityType(UserAssignedValue);
         /// <summary> SystemAssigned, UserAssigned. </summary>
         public static HciManagedServiceIdentityType SystemAssignedUserAssigned { get; } = new HciManagedServiceIdentityType(SystemAssignedUserAssignedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HciManagedServiceIdentityType"/> values are the same. </summary>
         public static bool operator ==(HciManagedServiceIdentityType left, HciManagedServiceIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HciManagedServiceIdentityType"/> values are not the same. </summary>

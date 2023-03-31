@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> IPv4. </summary>
         public static PreferredIPVersion IPv4 { get; } = new PreferredIPVersion(IPv4Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PreferredIPVersion"/> values are the same. </summary>
         public static bool operator ==(PreferredIPVersion left, PreferredIPVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PreferredIPVersion"/> values are not the same. </summary>

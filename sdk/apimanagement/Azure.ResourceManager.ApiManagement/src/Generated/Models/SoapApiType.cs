@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static SoapApiType WebSocket { get; } = new SoapApiType(WebSocketValue);
         /// <summary> Imports the API having a GraphQL front end. </summary>
         public static SoapApiType GraphQL { get; } = new SoapApiType(GraphQLValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SoapApiType"/> values are the same. </summary>
         public static bool operator ==(SoapApiType left, SoapApiType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SoapApiType"/> values are not the same. </summary>

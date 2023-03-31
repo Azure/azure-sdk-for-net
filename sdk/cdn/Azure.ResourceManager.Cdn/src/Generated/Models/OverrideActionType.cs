@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static OverrideActionType Log { get; } = new OverrideActionType(LogValue);
         /// <summary> Redirect. </summary>
         public static OverrideActionType Redirect { get; } = new OverrideActionType(RedirectValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OverrideActionType"/> values are the same. </summary>
         public static bool operator ==(OverrideActionType left, OverrideActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OverrideActionType"/> values are not the same. </summary>

@@ -77,6 +77,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public static PredictionModelLifeCycle HumanIntervention { get; } = new PredictionModelLifeCycle(HumanInterventionValue);
         /// <summary> Failed. </summary>
         public static PredictionModelLifeCycle Failed { get; } = new PredictionModelLifeCycle(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PredictionModelLifeCycle"/> values are the same. </summary>
         public static bool operator ==(PredictionModelLifeCycle left, PredictionModelLifeCycle right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PredictionModelLifeCycle"/> values are not the same. </summary>

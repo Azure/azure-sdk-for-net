@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static WorkloadNetworkSegmentStatus Success { get; } = new WorkloadNetworkSegmentStatus(SuccessValue);
         /// <summary> FAILURE. </summary>
         public static WorkloadNetworkSegmentStatus Failure { get; } = new WorkloadNetworkSegmentStatus(FailureValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WorkloadNetworkSegmentStatus"/> values are the same. </summary>
         public static bool operator ==(WorkloadNetworkSegmentStatus left, WorkloadNetworkSegmentStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkSegmentStatus"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ApiManagementPrivateEndpointConnectionProvisioningState Deleting { get; } = new ApiManagementPrivateEndpointConnectionProvisioningState(DeletingValue);
         /// <summary> Failed. </summary>
         public static ApiManagementPrivateEndpointConnectionProvisioningState Failed { get; } = new ApiManagementPrivateEndpointConnectionProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApiManagementPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ApiManagementPrivateEndpointConnectionProvisioningState left, ApiManagementPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApiManagementPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> In. </summary>
         public static BudgetOperatorType In { get; } = new BudgetOperatorType(InValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BudgetOperatorType"/> values are the same. </summary>
         public static bool operator ==(BudgetOperatorType left, BudgetOperatorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BudgetOperatorType"/> values are not the same. </summary>

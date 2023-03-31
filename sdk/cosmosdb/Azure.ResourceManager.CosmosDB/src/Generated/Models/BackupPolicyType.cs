@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static BackupPolicyType Periodic { get; } = new BackupPolicyType(PeriodicValue);
         /// <summary> Continuous. </summary>
         public static BackupPolicyType Continuous { get; } = new BackupPolicyType(ContinuousValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupPolicyType"/> values are the same. </summary>
         public static bool operator ==(BackupPolicyType left, BackupPolicyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupPolicyType"/> values are not the same. </summary>

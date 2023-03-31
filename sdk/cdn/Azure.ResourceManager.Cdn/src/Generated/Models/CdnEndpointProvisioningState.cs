@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static CdnEndpointProvisioningState Deleting { get; } = new CdnEndpointProvisioningState(DeletingValue);
         /// <summary> Creating. </summary>
         public static CdnEndpointProvisioningState Creating { get; } = new CdnEndpointProvisioningState(CreatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CdnEndpointProvisioningState"/> values are the same. </summary>
         public static bool operator ==(CdnEndpointProvisioningState left, CdnEndpointProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CdnEndpointProvisioningState"/> values are not the same. </summary>

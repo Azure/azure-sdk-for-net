@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static KubeletDiskType OS { get; } = new KubeletDiskType(OSValue);
         /// <summary> Kubelet will use the temporary disk for its data. </summary>
         public static KubeletDiskType Temporary { get; } = new KubeletDiskType(TemporaryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KubeletDiskType"/> values are the same. </summary>
         public static bool operator ==(KubeletDiskType left, KubeletDiskType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KubeletDiskType"/> values are not the same. </summary>

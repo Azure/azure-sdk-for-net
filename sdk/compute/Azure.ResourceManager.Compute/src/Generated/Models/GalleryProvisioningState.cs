@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static GalleryProvisioningState Deleting { get; } = new GalleryProvisioningState(DeletingValue);
         /// <summary> Migrating. </summary>
         public static GalleryProvisioningState Migrating { get; } = new GalleryProvisioningState(MigratingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GalleryProvisioningState"/> values are the same. </summary>
         public static bool operator ==(GalleryProvisioningState left, GalleryProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GalleryProvisioningState"/> values are not the same. </summary>

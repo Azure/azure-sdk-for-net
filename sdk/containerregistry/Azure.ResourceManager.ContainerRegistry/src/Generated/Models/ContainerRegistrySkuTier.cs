@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistrySkuTier Standard { get; } = new ContainerRegistrySkuTier(StandardValue);
         /// <summary> Premium. </summary>
         public static ContainerRegistrySkuTier Premium { get; } = new ContainerRegistrySkuTier(PremiumValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistrySkuTier"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistrySkuTier left, ContainerRegistrySkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistrySkuTier"/> values are not the same. </summary>

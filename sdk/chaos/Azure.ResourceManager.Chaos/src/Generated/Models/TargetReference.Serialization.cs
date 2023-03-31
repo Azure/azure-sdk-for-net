@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ReferenceType.ToString());
+            writer.WriteStringValue(ReferenceType.ToSerialString());
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WriteEndObject();

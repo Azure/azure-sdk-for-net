@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static AggregatedReplicationState Completed { get; } = new AggregatedReplicationState(CompletedValue);
         /// <summary> Failed. </summary>
         public static AggregatedReplicationState Failed { get; } = new AggregatedReplicationState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AggregatedReplicationState"/> values are the same. </summary>
         public static bool operator ==(AggregatedReplicationState left, AggregatedReplicationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AggregatedReplicationState"/> values are not the same. </summary>

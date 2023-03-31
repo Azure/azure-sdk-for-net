@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Advisor.Models
         public static Category Cost { get; } = new Category(CostValue);
         /// <summary> OperationalExcellence. </summary>
         public static Category OperationalExcellence { get; } = new Category(OperationalExcellenceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="Category"/> values are the same. </summary>
         public static bool operator ==(Category left, Category right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Category"/> values are not the same. </summary>

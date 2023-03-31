@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(Scheme))
             {
                 writer.WritePropertyName("scheme"u8);
-                writer.WriteStringValue(Scheme.Value.ToString());
+                writer.WriteStringValue(Scheme.Value.ToSerialString());
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ProbeActionType.ToString());
+            writer.WriteStringValue(ProbeActionType.ToSerialString());
             writer.WriteEndObject();
         }
 

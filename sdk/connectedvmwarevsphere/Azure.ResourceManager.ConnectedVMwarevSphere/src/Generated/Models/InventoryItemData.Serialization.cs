@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("inventoryType"u8);
-            writer.WriteStringValue(InventoryType.ToString());
+            writer.WriteStringValue(InventoryType.ToSerialString());
             if (Optional.IsDefined(ManagedResourceId))
             {
                 writer.WritePropertyName("managedResourceId"u8);

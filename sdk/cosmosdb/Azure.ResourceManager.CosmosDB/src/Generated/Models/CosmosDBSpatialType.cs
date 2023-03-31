@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBSpatialType Polygon { get; } = new CosmosDBSpatialType(PolygonValue);
         /// <summary> MultiPolygon. </summary>
         public static CosmosDBSpatialType MultiPolygon { get; } = new CosmosDBSpatialType(MultiPolygonValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CosmosDBSpatialType"/> values are the same. </summary>
         public static bool operator ==(CosmosDBSpatialType left, CosmosDBSpatialType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBSpatialType"/> values are not the same. </summary>

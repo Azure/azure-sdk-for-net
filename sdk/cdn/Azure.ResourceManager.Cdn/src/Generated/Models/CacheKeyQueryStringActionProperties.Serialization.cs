@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
-            writer.WriteStringValue(ActionType.ToString());
+            writer.WriteStringValue(ActionType.ToSerialString());
             writer.WritePropertyName("queryStringBehavior"u8);
-            writer.WriteStringValue(QueryStringBehavior.ToString());
+            writer.WriteStringValue(QueryStringBehavior.ToSerialString());
             if (Optional.IsDefined(QueryParameters))
             {
                 if (QueryParameters != null)

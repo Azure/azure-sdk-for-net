@@ -21,7 +21,7 @@ namespace Azure.Communication.Identity.Models
                 writer.WriteStartArray();
                 foreach (var item in CreateTokenWithScopes)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

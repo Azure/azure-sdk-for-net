@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static ContainerAppSourceControlOperationState Failed { get; } = new ContainerAppSourceControlOperationState(FailedValue);
         /// <summary> Canceled. </summary>
         public static ContainerAppSourceControlOperationState Canceled { get; } = new ContainerAppSourceControlOperationState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerAppSourceControlOperationState"/> values are the same. </summary>
         public static bool operator ==(ContainerAppSourceControlOperationState left, ContainerAppSourceControlOperationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppSourceControlOperationState"/> values are not the same. </summary>

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static BuildpackBindingProvisioningState Failed { get; } = new BuildpackBindingProvisioningState(FailedValue);
         /// <summary> Deleting. </summary>
         public static BuildpackBindingProvisioningState Deleting { get; } = new BuildpackBindingProvisioningState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BuildpackBindingProvisioningState"/> values are the same. </summary>
         public static bool operator ==(BuildpackBindingProvisioningState left, BuildpackBindingProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BuildpackBindingProvisioningState"/> values are not the same. </summary>

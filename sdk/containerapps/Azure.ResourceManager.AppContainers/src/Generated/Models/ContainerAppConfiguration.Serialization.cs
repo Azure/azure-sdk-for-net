@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(ActiveRevisionsMode))
             {
                 writer.WritePropertyName("activeRevisionsMode"u8);
-                writer.WriteStringValue(ActiveRevisionsMode.Value.ToString());
+                writer.WriteStringValue(ActiveRevisionsMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(Ingress))
             {

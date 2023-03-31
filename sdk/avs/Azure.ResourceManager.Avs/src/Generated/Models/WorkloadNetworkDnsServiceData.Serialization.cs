@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(LogLevel))
             {
                 writer.WritePropertyName("logLevel"u8);
-                writer.WriteStringValue(LogLevel.Value.ToString());
+                writer.WriteStringValue(LogLevel.Value.ToSerialString());
             }
             if (Optional.IsDefined(Revision))
             {

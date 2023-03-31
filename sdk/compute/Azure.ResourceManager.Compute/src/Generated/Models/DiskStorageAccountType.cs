@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static DiskStorageAccountType StandardSsdZrs { get; } = new DiskStorageAccountType(StandardSsdZrsValue);
         /// <summary> Premium SSD v2 locally redundant storage. Best for production and performance-sensitive workloads that consistently require low latency and high IOPS and throughput. </summary>
         public static DiskStorageAccountType PremiumV2Lrs { get; } = new DiskStorageAccountType(PremiumV2LrsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DiskStorageAccountType"/> values are the same. </summary>
         public static bool operator ==(DiskStorageAccountType left, DiskStorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskStorageAccountType"/> values are not the same. </summary>

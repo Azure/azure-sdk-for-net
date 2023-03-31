@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WritePropertyName("count"u8);
             writer.WriteNumberValue(Count);
             writer.WritePropertyName("sku"u8);
-            writer.WriteStringValue(Sku.ToString());
+            writer.WriteStringValue(Sku.ToSerialString());
             writer.WriteEndObject();
         }
 

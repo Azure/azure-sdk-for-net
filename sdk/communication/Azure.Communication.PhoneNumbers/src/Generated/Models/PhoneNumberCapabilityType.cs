@@ -35,6 +35,9 @@ namespace Azure.Communication.PhoneNumbers
         public static PhoneNumberCapabilityType Outbound { get; } = new PhoneNumberCapabilityType(OutboundValue);
         /// <summary> inbound+outbound. </summary>
         public static PhoneNumberCapabilityType InboundOutbound { get; } = new PhoneNumberCapabilityType(InboundOutboundValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PhoneNumberCapabilityType"/> values are the same. </summary>
         public static bool operator ==(PhoneNumberCapabilityType left, PhoneNumberCapabilityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PhoneNumberCapabilityType"/> values are not the same. </summary>

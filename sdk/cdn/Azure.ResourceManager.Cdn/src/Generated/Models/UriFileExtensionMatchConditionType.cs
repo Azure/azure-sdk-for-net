@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> DeliveryRuleUrlFileExtensionMatchConditionParameters. </summary>
         public static UriFileExtensionMatchConditionType UriFileExtensionMatchCondition { get; } = new UriFileExtensionMatchConditionType(UriFileExtensionMatchConditionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UriFileExtensionMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(UriFileExtensionMatchConditionType left, UriFileExtensionMatchConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UriFileExtensionMatchConditionType"/> values are not the same. </summary>

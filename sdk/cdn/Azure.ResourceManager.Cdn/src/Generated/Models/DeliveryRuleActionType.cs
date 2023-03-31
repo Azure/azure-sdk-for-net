@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static DeliveryRuleActionType OriginGroupOverride { get; } = new DeliveryRuleActionType(OriginGroupOverrideValue);
         /// <summary> RouteConfigurationOverride. </summary>
         public static DeliveryRuleActionType RouteConfigurationOverride { get; } = new DeliveryRuleActionType(RouteConfigurationOverrideValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DeliveryRuleActionType"/> values are the same. </summary>
         public static bool operator ==(DeliveryRuleActionType left, DeliveryRuleActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeliveryRuleActionType"/> values are not the same. </summary>

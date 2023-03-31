@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ManagedClusterGuardrailsProfileLevel Warning { get; } = new ManagedClusterGuardrailsProfileLevel(WarningValue);
         /// <summary> Enforcement. </summary>
         public static ManagedClusterGuardrailsProfileLevel Enforcement { get; } = new ManagedClusterGuardrailsProfileLevel(EnforcementValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedClusterGuardrailsProfileLevel"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterGuardrailsProfileLevel left, ManagedClusterGuardrailsProfileLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterGuardrailsProfileLevel"/> values are not the same. </summary>

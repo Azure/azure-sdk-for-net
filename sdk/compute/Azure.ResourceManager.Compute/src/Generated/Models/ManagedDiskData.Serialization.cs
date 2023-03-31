@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(HyperVGeneration))
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
-                writer.WriteStringValue(HyperVGeneration.Value.ToString());
+                writer.WriteStringValue(HyperVGeneration.Value.ToSerialString());
             }
             if (Optional.IsDefined(PurchasePlan))
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(NetworkAccessPolicy))
             {
                 writer.WritePropertyName("networkAccessPolicy"u8);
-                writer.WriteStringValue(NetworkAccessPolicy.Value.ToString());
+                writer.WriteStringValue(NetworkAccessPolicy.Value.ToSerialString());
             }
             if (Optional.IsDefined(DiskAccessId))
             {
@@ -158,12 +158,12 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
             if (Optional.IsDefined(DataAccessAuthMode))
             {
                 writer.WritePropertyName("dataAccessAuthMode"u8);
-                writer.WriteStringValue(DataAccessAuthMode.Value.ToString());
+                writer.WriteStringValue(DataAccessAuthMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsOptimizedForFrequentAttach))
             {

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Hci.Models
         public static HciClusterDiagnosticLevel Basic { get; } = new HciClusterDiagnosticLevel(BasicValue);
         /// <summary> Enhanced. </summary>
         public static HciClusterDiagnosticLevel Enhanced { get; } = new HciClusterDiagnosticLevel(EnhancedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HciClusterDiagnosticLevel"/> values are the same. </summary>
         public static bool operator ==(HciClusterDiagnosticLevel left, HciClusterDiagnosticLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HciClusterDiagnosticLevel"/> values are not the same. </summary>

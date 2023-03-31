@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static PowerOnBootOption Enabled { get; } = new PowerOnBootOption(EnabledValue);
         /// <summary> disabled. </summary>
         public static PowerOnBootOption Disabled { get; } = new PowerOnBootOption(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PowerOnBootOption"/> values are the same. </summary>
         public static bool operator ==(PowerOnBootOption left, PowerOnBootOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PowerOnBootOption"/> values are not the same. </summary>

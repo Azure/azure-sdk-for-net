@@ -26,7 +26,7 @@ namespace Azure.Security.Attestation
             if (Optional.IsDefined(CertificateResolution))
             {
                 writer.WritePropertyName("x-ms-policycertificates-result"u8);
-                writer.WriteStringValue(CertificateResolution.Value.ToString());
+                writer.WriteStringValue(CertificateResolution.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

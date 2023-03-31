@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static BearerTokenSendingMethod AuthorizationHeader { get; } = new BearerTokenSendingMethod(AuthorizationHeaderValue);
         /// <summary> query. </summary>
         public static BearerTokenSendingMethod Query { get; } = new BearerTokenSendingMethod(QueryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BearerTokenSendingMethod"/> values are the same. </summary>
         public static bool operator ==(BearerTokenSendingMethod left, BearerTokenSendingMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BearerTokenSendingMethod"/> values are not the same. </summary>

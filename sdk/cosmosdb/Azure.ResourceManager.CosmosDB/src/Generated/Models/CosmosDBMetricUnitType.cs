@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBMetricUnitType BytesPerSecond { get; } = new CosmosDBMetricUnitType(BytesPerSecondValue);
         /// <summary> Milliseconds. </summary>
         public static CosmosDBMetricUnitType Milliseconds { get; } = new CosmosDBMetricUnitType(MillisecondsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CosmosDBMetricUnitType"/> values are the same. </summary>
         public static bool operator ==(CosmosDBMetricUnitType left, CosmosDBMetricUnitType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBMetricUnitType"/> values are not the same. </summary>

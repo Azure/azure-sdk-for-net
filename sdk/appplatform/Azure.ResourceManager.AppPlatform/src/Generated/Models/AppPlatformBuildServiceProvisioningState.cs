@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformBuildServiceProvisioningState Failed { get; } = new AppPlatformBuildServiceProvisioningState(FailedValue);
         /// <summary> Deleting. </summary>
         public static AppPlatformBuildServiceProvisioningState Deleting { get; } = new AppPlatformBuildServiceProvisioningState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppPlatformBuildServiceProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AppPlatformBuildServiceProvisioningState left, AppPlatformBuildServiceProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformBuildServiceProvisioningState"/> values are not the same. </summary>

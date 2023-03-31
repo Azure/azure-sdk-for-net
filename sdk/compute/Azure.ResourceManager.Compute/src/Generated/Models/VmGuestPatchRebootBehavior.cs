@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static VmGuestPatchRebootBehavior AlwaysRequiresReboot { get; } = new VmGuestPatchRebootBehavior(AlwaysRequiresRebootValue);
         /// <summary> CanRequestReboot. </summary>
         public static VmGuestPatchRebootBehavior CanRequestReboot { get; } = new VmGuestPatchRebootBehavior(CanRequestRebootValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VmGuestPatchRebootBehavior"/> values are the same. </summary>
         public static bool operator ==(VmGuestPatchRebootBehavior left, VmGuestPatchRebootBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VmGuestPatchRebootBehavior"/> values are not the same. </summary>

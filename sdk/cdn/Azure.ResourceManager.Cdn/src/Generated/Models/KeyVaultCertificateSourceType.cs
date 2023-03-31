@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> KeyVaultCertificateSourceParameters. </summary>
         public static KeyVaultCertificateSourceType KeyVaultCertificateSource { get; } = new KeyVaultCertificateSourceType(KeyVaultCertificateSourceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KeyVaultCertificateSourceType"/> values are the same. </summary>
         public static bool operator ==(KeyVaultCertificateSourceType left, KeyVaultCertificateSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyVaultCertificateSourceType"/> values are not the same. </summary>

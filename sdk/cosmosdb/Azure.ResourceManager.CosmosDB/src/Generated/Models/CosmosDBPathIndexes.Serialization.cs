@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(DataType))
             {
                 writer.WritePropertyName("dataType"u8);
-                writer.WriteStringValue(DataType.Value.ToString());
+                writer.WriteStringValue(DataType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Precision))
             {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
-                writer.WriteStringValue(Kind.Value.ToString());
+                writer.WriteStringValue(Kind.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

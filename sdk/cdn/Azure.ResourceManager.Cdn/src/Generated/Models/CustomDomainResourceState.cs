@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static CustomDomainResourceState Active { get; } = new CustomDomainResourceState(ActiveValue);
         /// <summary> Deleting. </summary>
         public static CustomDomainResourceState Deleting { get; } = new CustomDomainResourceState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CustomDomainResourceState"/> values are the same. </summary>
         public static bool operator ==(CustomDomainResourceState left, CustomDomainResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CustomDomainResourceState"/> values are not the same. </summary>

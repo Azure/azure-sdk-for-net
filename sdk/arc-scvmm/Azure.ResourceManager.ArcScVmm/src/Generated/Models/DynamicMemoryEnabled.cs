@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public static DynamicMemoryEnabled False { get; } = new DynamicMemoryEnabled(FalseValue);
         /// <summary> true. </summary>
         public static DynamicMemoryEnabled True { get; } = new DynamicMemoryEnabled(TrueValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DynamicMemoryEnabled"/> values are the same. </summary>
         public static bool operator ==(DynamicMemoryEnabled left, DynamicMemoryEnabled right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynamicMemoryEnabled"/> values are not the same. </summary>

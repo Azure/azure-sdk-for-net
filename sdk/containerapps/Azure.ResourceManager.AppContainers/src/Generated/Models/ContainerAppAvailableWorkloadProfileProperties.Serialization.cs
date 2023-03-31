@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(BillingMeterCategory))
             {
                 writer.WritePropertyName("billingMeterCategory"u8);
-                writer.WriteStringValue(BillingMeterCategory.Value.ToString());
+                writer.WriteStringValue(BillingMeterCategory.Value.ToSerialString());
             }
             if (Optional.IsDefined(Applicability))
             {
                 writer.WritePropertyName("applicability"u8);
-                writer.WriteStringValue(Applicability.Value.ToString());
+                writer.WriteStringValue(Applicability.Value.ToSerialString());
             }
             if (Optional.IsDefined(Cores))
             {

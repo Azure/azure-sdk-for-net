@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static ConfidentialLedgerRoleName Contributor { get; } = new ConfidentialLedgerRoleName(ContributorValue);
         /// <summary> Administrator. </summary>
         public static ConfidentialLedgerRoleName Administrator { get; } = new ConfidentialLedgerRoleName(AdministratorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConfidentialLedgerRoleName"/> values are the same. </summary>
         public static bool operator ==(ConfidentialLedgerRoleName left, ConfidentialLedgerRoleName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConfidentialLedgerRoleName"/> values are not the same. </summary>

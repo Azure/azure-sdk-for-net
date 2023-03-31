@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/", false);
-            uri.AppendPath(workloadNetworkName.ToString(), true);
+            uri.AppendPath(workloadNetworkName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

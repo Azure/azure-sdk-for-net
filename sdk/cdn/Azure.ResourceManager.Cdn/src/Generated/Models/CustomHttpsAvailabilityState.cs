@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static CustomHttpsAvailabilityState DeletingCertificate { get; } = new CustomHttpsAvailabilityState(DeletingCertificateValue);
         /// <summary> CertificateDeleted. </summary>
         public static CustomHttpsAvailabilityState CertificateDeleted { get; } = new CustomHttpsAvailabilityState(CertificateDeletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CustomHttpsAvailabilityState"/> values are the same. </summary>
         public static bool operator ==(CustomHttpsAvailabilityState left, CustomHttpsAvailabilityState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CustomHttpsAvailabilityState"/> values are not the same. </summary>

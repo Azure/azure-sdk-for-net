@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Communication.Models
         public static DomainRecordVerificationType Dkim2 { get; } = new DomainRecordVerificationType(Dkim2Value);
         /// <summary> DMARC. </summary>
         public static DomainRecordVerificationType Dmarc { get; } = new DomainRecordVerificationType(DmarcValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DomainRecordVerificationType"/> values are the same. </summary>
         public static bool operator ==(DomainRecordVerificationType left, DomainRecordVerificationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DomainRecordVerificationType"/> values are not the same. </summary>

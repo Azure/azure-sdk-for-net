@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static AlertProcessingRuleActionType AddActionGroups { get; } = new AlertProcessingRuleActionType(AddActionGroupsValue);
         /// <summary> RemoveAllActionGroups. </summary>
         public static AlertProcessingRuleActionType RemoveAllActionGroups { get; } = new AlertProcessingRuleActionType(RemoveAllActionGroupsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AlertProcessingRuleActionType"/> values are the same. </summary>
         public static bool operator ==(AlertProcessingRuleActionType left, AlertProcessingRuleActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AlertProcessingRuleActionType"/> values are not the same. </summary>

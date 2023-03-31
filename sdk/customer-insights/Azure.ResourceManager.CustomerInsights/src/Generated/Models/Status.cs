@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public static Status Active { get; } = new Status(ActiveValue);
         /// <summary> Deleted. </summary>
         public static Status Deleted { get; } = new Status(DeletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="Status"/> values are the same. </summary>
         public static bool operator ==(Status left, Status right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Status"/> values are not the same. </summary>

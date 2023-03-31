@@ -29,6 +29,9 @@ namespace Azure.AI.AnomalyDetector
         public static DataSchema OneTable { get; } = new DataSchema(OneTableValue);
         /// <summary> MultiTable means that your input data are separated in multiple CSV files, in each file containing one &apos;timestamp&apos; column and one &apos;variable&apos; column, and the CSV file name should indicate the name of the variable. The default DataSchema is OneTable. </summary>
         public static DataSchema MultiTable { get; } = new DataSchema(MultiTableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataSchema"/> values are the same. </summary>
         public static bool operator ==(DataSchema left, DataSchema right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataSchema"/> values are not the same. </summary>

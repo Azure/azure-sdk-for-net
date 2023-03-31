@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static SharingProfileGroupType Subscriptions { get; } = new SharingProfileGroupType(SubscriptionsValue);
         /// <summary> AADTenants. </summary>
         public static SharingProfileGroupType AADTenants { get; } = new SharingProfileGroupType(AADTenantsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SharingProfileGroupType"/> values are the same. </summary>
         public static bool operator ==(SharingProfileGroupType left, SharingProfileGroupType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SharingProfileGroupType"/> values are not the same. </summary>

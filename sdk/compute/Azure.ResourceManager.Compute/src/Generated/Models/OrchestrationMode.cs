@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static OrchestrationMode Uniform { get; } = new OrchestrationMode(UniformValue);
         /// <summary> Flexible. </summary>
         public static OrchestrationMode Flexible { get; } = new OrchestrationMode(FlexibleValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OrchestrationMode"/> values are the same. </summary>
         public static bool operator ==(OrchestrationMode left, OrchestrationMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OrchestrationMode"/> values are not the same. </summary>

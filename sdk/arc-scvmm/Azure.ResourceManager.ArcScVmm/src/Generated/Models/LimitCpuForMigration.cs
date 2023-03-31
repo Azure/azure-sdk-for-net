@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public static LimitCpuForMigration False { get; } = new LimitCpuForMigration(FalseValue);
         /// <summary> true. </summary>
         public static LimitCpuForMigration True { get; } = new LimitCpuForMigration(TrueValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LimitCpuForMigration"/> values are the same. </summary>
         public static bool operator ==(LimitCpuForMigration left, LimitCpuForMigration right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LimitCpuForMigration"/> values are not the same. </summary>

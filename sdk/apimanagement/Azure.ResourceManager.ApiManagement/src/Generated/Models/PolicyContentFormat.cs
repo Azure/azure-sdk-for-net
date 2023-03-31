@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static PolicyContentFormat RawXml { get; } = new PolicyContentFormat(RawXmlValue);
         /// <summary> The policy document is not Xml encoded and is hosted on a http endpoint accessible from the API Management service. </summary>
         public static PolicyContentFormat RawXmlLink { get; } = new PolicyContentFormat(RawXmlLinkValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PolicyContentFormat"/> values are the same. </summary>
         public static bool operator ==(PolicyContentFormat left, PolicyContentFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyContentFormat"/> values are not the same. </summary>

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(WindowsServerSubscription))
             {
                 writer.WritePropertyName("windowsServerSubscription"u8);
-                writer.WriteStringValue(WindowsServerSubscription.Value.ToString());
+                writer.WriteStringValue(WindowsServerSubscription.Value.ToSerialString());
             }
             if (Optional.IsDefined(DiagnosticLevel))
             {
                 writer.WritePropertyName("diagnosticLevel"u8);
-                writer.WriteStringValue(DiagnosticLevel.Value.ToString());
+                writer.WriteStringValue(DiagnosticLevel.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

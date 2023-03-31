@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
-            writer.WriteStringValue(ActionType.ToString());
+            writer.WriteStringValue(ActionType.ToSerialString());
             writer.WritePropertyName("sourcePattern"u8);
             writer.WriteStringValue(SourcePattern);
             writer.WritePropertyName("destination"u8);

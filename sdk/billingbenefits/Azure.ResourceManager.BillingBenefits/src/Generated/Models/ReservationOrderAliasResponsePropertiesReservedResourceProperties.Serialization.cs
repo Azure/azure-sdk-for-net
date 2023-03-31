@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(InstanceFlexibility))
             {
                 writer.WritePropertyName("instanceFlexibility"u8);
-                writer.WriteStringValue(InstanceFlexibility.Value.ToString());
+                writer.WriteStringValue(InstanceFlexibility.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

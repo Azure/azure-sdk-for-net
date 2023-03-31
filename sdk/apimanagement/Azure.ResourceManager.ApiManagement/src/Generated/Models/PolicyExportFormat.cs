@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static PolicyExportFormat Xml { get; } = new PolicyExportFormat(XmlValue);
         /// <summary> The contents are inline and Content type is a non XML encoded policy document. </summary>
         public static PolicyExportFormat RawXml { get; } = new PolicyExportFormat(RawXmlValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PolicyExportFormat"/> values are the same. </summary>
         public static bool operator ==(PolicyExportFormat left, PolicyExportFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyExportFormat"/> values are not the same. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(HostnameType.ToString());
+            writer.WriteStringValue(HostnameType.ToSerialString());
             writer.WritePropertyName("hostName"u8);
             writer.WriteStringValue(HostName);
             if (Optional.IsDefined(KeyVaultSecretUri))
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(CertificateSource))
             {
                 writer.WritePropertyName("certificateSource"u8);
-                writer.WriteStringValue(CertificateSource.Value.ToString());
+                writer.WriteStringValue(CertificateSource.Value.ToSerialString());
             }
             if (Optional.IsDefined(CertificateStatus))
             {
                 writer.WritePropertyName("certificateStatus"u8);
-                writer.WriteStringValue(CertificateStatus.Value.ToString());
+                writer.WriteStringValue(CertificateStatus.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

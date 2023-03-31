@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WritePropertyName("ipAddressRange"u8);
             writer.WriteStringValue(IPAddressRange);
             writer.WritePropertyName("action"u8);
-            writer.WriteStringValue(Action.ToString());
+            writer.WriteStringValue(Action.ToSerialString());
             writer.WriteEndObject();
         }
 

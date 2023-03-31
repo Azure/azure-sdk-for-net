@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Use Cilium for networking in the Kubernetes cluster. </summary>
         public static EbpfDataplane Cilium { get; } = new EbpfDataplane(CiliumValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EbpfDataplane"/> values are the same. </summary>
         public static bool operator ==(EbpfDataplane left, EbpfDataplane right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EbpfDataplane"/> values are not the same. </summary>

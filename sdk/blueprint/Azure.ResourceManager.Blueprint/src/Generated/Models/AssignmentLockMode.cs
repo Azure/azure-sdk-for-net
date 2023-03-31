@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Blueprint.Models
         public static AssignmentLockMode AllResourcesReadOnly { get; } = new AssignmentLockMode(AllResourcesReadOnlyValue);
         /// <summary> AllResourcesDoNotDelete. </summary>
         public static AssignmentLockMode AllResourcesDoNotDelete { get; } = new AssignmentLockMode(AllResourcesDoNotDeleteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AssignmentLockMode"/> values are the same. </summary>
         public static bool operator ==(AssignmentLockMode left, AssignmentLockMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AssignmentLockMode"/> values are not the same. </summary>

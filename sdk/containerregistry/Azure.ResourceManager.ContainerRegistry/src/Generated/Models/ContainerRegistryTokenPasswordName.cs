@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryTokenPasswordName Password1 { get; } = new ContainerRegistryTokenPasswordName(Password1Value);
         /// <summary> password2. </summary>
         public static ContainerRegistryTokenPasswordName Password2 { get; } = new ContainerRegistryTokenPasswordName(Password2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistryTokenPasswordName"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryTokenPasswordName left, ContainerRegistryTokenPasswordName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryTokenPasswordName"/> values are not the same. </summary>

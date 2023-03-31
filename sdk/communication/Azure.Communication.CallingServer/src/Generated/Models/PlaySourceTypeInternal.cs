@@ -26,6 +26,9 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> file. </summary>
         public static PlaySourceTypeInternal File { get; } = new PlaySourceTypeInternal(FileValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PlaySourceTypeInternal"/> values are the same. </summary>
         public static bool operator ==(PlaySourceTypeInternal left, PlaySourceTypeInternal right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PlaySourceTypeInternal"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static BackendProtocol Http { get; } = new BackendProtocol(HttpValue);
         /// <summary> The Backend is a SOAP service. </summary>
         public static BackendProtocol Soap { get; } = new BackendProtocol(SoapValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackendProtocol"/> values are the same. </summary>
         public static bool operator ==(BackendProtocol left, BackendProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackendProtocol"/> values are not the same. </summary>

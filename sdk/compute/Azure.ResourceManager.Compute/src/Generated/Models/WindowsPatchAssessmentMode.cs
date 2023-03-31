@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static WindowsPatchAssessmentMode ImageDefault { get; } = new WindowsPatchAssessmentMode(ImageDefaultValue);
         /// <summary> AutomaticByPlatform. </summary>
         public static WindowsPatchAssessmentMode AutomaticByPlatform { get; } = new WindowsPatchAssessmentMode(AutomaticByPlatformValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WindowsPatchAssessmentMode"/> values are the same. </summary>
         public static bool operator ==(WindowsPatchAssessmentMode left, WindowsPatchAssessmentMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WindowsPatchAssessmentMode"/> values are not the same. </summary>

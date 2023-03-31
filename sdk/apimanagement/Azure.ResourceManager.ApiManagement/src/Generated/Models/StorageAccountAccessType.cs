@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static StorageAccountAccessType SystemAssignedManagedIdentity { get; } = new StorageAccountAccessType(SystemAssignedManagedIdentityValue);
         /// <summary> Use user assigned managed identity. </summary>
         public static StorageAccountAccessType UserAssignedManagedIdentity { get; } = new StorageAccountAccessType(UserAssignedManagedIdentityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageAccountAccessType"/> values are the same. </summary>
         public static bool operator ==(StorageAccountAccessType left, StorageAccountAccessType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageAccountAccessType"/> values are not the same. </summary>

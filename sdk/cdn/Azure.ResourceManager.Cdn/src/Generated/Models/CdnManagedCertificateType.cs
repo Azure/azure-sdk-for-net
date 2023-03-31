@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static CdnManagedCertificateType Shared { get; } = new CdnManagedCertificateType(SharedValue);
         /// <summary> Dedicated. </summary>
         public static CdnManagedCertificateType Dedicated { get; } = new CdnManagedCertificateType(DedicatedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CdnManagedCertificateType"/> values are the same. </summary>
         public static bool operator ==(CdnManagedCertificateType left, CdnManagedCertificateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CdnManagedCertificateType"/> values are not the same. </summary>

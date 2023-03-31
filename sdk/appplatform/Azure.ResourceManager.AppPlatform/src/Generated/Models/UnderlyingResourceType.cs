@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         /// <summary> AzureFileVolume. </summary>
         public static UnderlyingResourceType AzureFileVolume { get; } = new UnderlyingResourceType(AzureFileVolumeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UnderlyingResourceType"/> values are the same. </summary>
         public static bool operator ==(UnderlyingResourceType left, UnderlyingResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UnderlyingResourceType"/> values are not the same. </summary>

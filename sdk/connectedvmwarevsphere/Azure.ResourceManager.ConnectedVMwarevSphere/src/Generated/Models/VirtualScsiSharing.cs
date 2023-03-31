@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static VirtualScsiSharing PhysicalSharing { get; } = new VirtualScsiSharing(PhysicalSharingValue);
         /// <summary> virtualSharing. </summary>
         public static VirtualScsiSharing VirtualSharing { get; } = new VirtualScsiSharing(VirtualSharingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VirtualScsiSharing"/> values are the same. </summary>
         public static bool operator ==(VirtualScsiSharing left, VirtualScsiSharing right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualScsiSharing"/> values are not the same. </summary>

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ContainerServiceOSSku Windows2019 { get; } = new ContainerServiceOSSku(Windows2019Value);
         /// <summary> Windows2022. </summary>
         public static ContainerServiceOSSku Windows2022 { get; } = new ContainerServiceOSSku(Windows2022Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerServiceOSSku"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceOSSku left, ContainerServiceOSSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceOSSku"/> values are not the same. </summary>

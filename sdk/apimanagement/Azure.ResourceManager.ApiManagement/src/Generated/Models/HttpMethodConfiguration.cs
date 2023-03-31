@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static HttpMethodConfiguration Get { get; } = new HttpMethodConfiguration(GetValue);
         /// <summary> POST. </summary>
         public static HttpMethodConfiguration Post { get; } = new HttpMethodConfiguration(PostValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HttpMethodConfiguration"/> values are the same. </summary>
         public static bool operator ==(HttpMethodConfiguration left, HttpMethodConfiguration right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HttpMethodConfiguration"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static LogMetricsGranularity PT1H { get; } = new LogMetricsGranularity(PT1HValue);
         /// <summary> P1D. </summary>
         public static LogMetricsGranularity P1D { get; } = new LogMetricsGranularity(P1DValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LogMetricsGranularity"/> values are the same. </summary>
         public static bool operator ==(LogMetricsGranularity left, LogMetricsGranularity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogMetricsGranularity"/> values are not the same. </summary>

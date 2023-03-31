@@ -35,6 +35,9 @@ namespace Azure.Communication.MediaComposition
         public static AudiencePosition Bottom { get; } = new AudiencePosition(BottomValue);
         /// <summary> left. </summary>
         public static AudiencePosition Left { get; } = new AudiencePosition(LeftValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AudiencePosition"/> values are the same. </summary>
         public static bool operator ==(AudiencePosition left, AudiencePosition right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AudiencePosition"/> values are not the same. </summary>

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Architecture))
             {
                 writer.WritePropertyName("architecture"u8);
-                writer.WriteStringValue(Architecture.Value.ToString());
+                writer.WriteStringValue(Architecture.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

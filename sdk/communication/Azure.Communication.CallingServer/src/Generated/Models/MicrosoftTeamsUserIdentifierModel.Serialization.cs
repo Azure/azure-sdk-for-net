@@ -25,7 +25,7 @@ namespace Azure.Communication
             if (Optional.IsDefined(Cloud))
             {
                 writer.WritePropertyName("cloud"u8);
-                writer.WriteStringValue(Cloud.Value.ToString());
+                writer.WriteStringValue(Cloud.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformGatewayRouteConfigProtocol Http { get; } = new AppPlatformGatewayRouteConfigProtocol(HttpValue);
         /// <summary> HTTPS. </summary>
         public static AppPlatformGatewayRouteConfigProtocol Https { get; } = new AppPlatformGatewayRouteConfigProtocol(HttpsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppPlatformGatewayRouteConfigProtocol"/> values are the same. </summary>
         public static bool operator ==(AppPlatformGatewayRouteConfigProtocol left, AppPlatformGatewayRouteConfigProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformGatewayRouteConfigProtocol"/> values are not the same. </summary>

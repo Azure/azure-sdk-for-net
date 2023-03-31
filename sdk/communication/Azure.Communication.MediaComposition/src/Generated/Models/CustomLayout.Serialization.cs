@@ -37,7 +37,7 @@ namespace Azure.Communication.MediaComposition
             }
             writer.WriteEndObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
@@ -51,7 +51,7 @@ namespace Azure.Communication.MediaComposition
             if (Optional.IsDefined(ScalingMode))
             {
                 writer.WritePropertyName("scalingMode"u8);
-                writer.WriteStringValue(ScalingMode.Value.ToString());
+                writer.WriteStringValue(ScalingMode.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

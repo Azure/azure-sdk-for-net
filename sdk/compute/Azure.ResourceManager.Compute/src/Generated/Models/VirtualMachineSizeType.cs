@@ -521,6 +521,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static VirtualMachineSizeType StandardNV12 { get; } = new VirtualMachineSizeType(StandardNV12Value);
         /// <summary> Standard_NV24. </summary>
         public static VirtualMachineSizeType StandardNV24 { get; } = new VirtualMachineSizeType(StandardNV24Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VirtualMachineSizeType"/> values are the same. </summary>
         public static bool operator ==(VirtualMachineSizeType left, VirtualMachineSizeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualMachineSizeType"/> values are not the same. </summary>

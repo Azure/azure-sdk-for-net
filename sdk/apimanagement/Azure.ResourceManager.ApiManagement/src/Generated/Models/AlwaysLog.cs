@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Always log all erroneous request regardless of sampling settings. </summary>
         public static AlwaysLog AllErrors { get; } = new AlwaysLog(AllErrorsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AlwaysLog"/> values are the same. </summary>
         public static bool operator ==(AlwaysLog left, AlwaysLog right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AlwaysLog"/> values are not the same. </summary>

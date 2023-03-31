@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
-            writer.WriteStringValue(ActionType.ToString());
+            writer.WriteStringValue(ActionType.ToSerialString());
             writer.WritePropertyName("originGroup"u8);
             JsonSerializer.Serialize(writer, OriginGroup); writer.WriteEndObject();
         }

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static ContainerAppProvisioningState Canceled { get; } = new ContainerAppProvisioningState(CanceledValue);
         /// <summary> Deleting. </summary>
         public static ContainerAppProvisioningState Deleting { get; } = new ContainerAppProvisioningState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerAppProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ContainerAppProvisioningState left, ContainerAppProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppProvisioningState"/> values are not the same. </summary>

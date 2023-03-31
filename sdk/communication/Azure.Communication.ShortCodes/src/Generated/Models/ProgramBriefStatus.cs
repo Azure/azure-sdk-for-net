@@ -41,6 +41,9 @@ namespace Azure.Communication.ShortCodes.Models
         public static ProgramBriefStatus Draft { get; } = new ProgramBriefStatus(DraftValue);
         /// <summary> denied. </summary>
         public static ProgramBriefStatus Denied { get; } = new ProgramBriefStatus(DeniedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProgramBriefStatus"/> values are the same. </summary>
         public static bool operator ==(ProgramBriefStatus left, ProgramBriefStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProgramBriefStatus"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.BotService.Models
         public static BotServiceSkuTier Free { get; } = new BotServiceSkuTier(FreeValue);
         /// <summary> Standard. </summary>
         public static BotServiceSkuTier Standard { get; } = new BotServiceSkuTier(StandardValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BotServiceSkuTier"/> values are the same. </summary>
         public static bool operator ==(BotServiceSkuTier left, BotServiceSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BotServiceSkuTier"/> values are not the same. </summary>

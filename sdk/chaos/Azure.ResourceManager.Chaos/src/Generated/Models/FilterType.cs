@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Simple. </summary>
         public static FilterType Simple { get; } = new FilterType(SimpleValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FilterType"/> values are the same. </summary>
         public static bool operator ==(FilterType left, FilterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FilterType"/> values are not the same. </summary>

@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.Blueprint.Models
         public static AssignmentProvisioningState Canceled { get; } = new AssignmentProvisioningState(CanceledValue);
         /// <summary> deleting. </summary>
         public static AssignmentProvisioningState Deleting { get; } = new AssignmentProvisioningState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AssignmentProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AssignmentProvisioningState left, AssignmentProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AssignmentProvisioningState"/> values are not the same. </summary>

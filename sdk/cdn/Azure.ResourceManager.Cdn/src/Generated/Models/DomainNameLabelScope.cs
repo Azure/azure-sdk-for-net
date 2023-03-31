@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static DomainNameLabelScope ResourceGroupReuse { get; } = new DomainNameLabelScope(ResourceGroupReuseValue);
         /// <summary> NoReuse. </summary>
         public static DomainNameLabelScope NoReuse { get; } = new DomainNameLabelScope(NoReuseValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DomainNameLabelScope"/> values are the same. </summary>
         public static bool operator ==(DomainNameLabelScope left, DomainNameLabelScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DomainNameLabelScope"/> values are not the same. </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SecurityEncryptionType))
             {
                 writer.WritePropertyName("securityEncryptionType"u8);
-                writer.WriteStringValue(SecurityEncryptionType.Value.ToString());
+                writer.WriteStringValue(SecurityEncryptionType.Value.ToSerialString());
             }
             if (Optional.IsDefined(DiskEncryptionSet))
             {

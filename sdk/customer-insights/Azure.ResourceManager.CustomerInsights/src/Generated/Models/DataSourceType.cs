@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public static DataSourceType LinkInteraction { get; } = new DataSourceType(LinkInteractionValue);
         /// <summary> SystemDefault. </summary>
         public static DataSourceType SystemDefault { get; } = new DataSourceType(SystemDefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataSourceType"/> values are the same. </summary>
         public static bool operator ==(DataSourceType left, DataSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataSourceType"/> values are not the same. </summary>

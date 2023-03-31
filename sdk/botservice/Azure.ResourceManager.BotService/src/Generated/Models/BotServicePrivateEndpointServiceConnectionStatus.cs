@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.BotService.Models
         public static BotServicePrivateEndpointServiceConnectionStatus Approved { get; } = new BotServicePrivateEndpointServiceConnectionStatus(ApprovedValue);
         /// <summary> Rejected. </summary>
         public static BotServicePrivateEndpointServiceConnectionStatus Rejected { get; } = new BotServicePrivateEndpointServiceConnectionStatus(RejectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BotServicePrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(BotServicePrivateEndpointServiceConnectionStatus left, BotServicePrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BotServicePrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>

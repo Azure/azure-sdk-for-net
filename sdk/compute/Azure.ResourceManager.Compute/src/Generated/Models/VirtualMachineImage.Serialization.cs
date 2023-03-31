@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(HyperVGeneration))
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
-                writer.WriteStringValue(HyperVGeneration.Value.ToString());
+                writer.WriteStringValue(HyperVGeneration.Value.ToSerialString());
             }
             if (Optional.IsDefined(Disallowed))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Architecture))
             {
                 writer.WritePropertyName("architecture"u8);
-                writer.WriteStringValue(Architecture.Value.ToString());
+                writer.WriteStringValue(Architecture.Value.ToSerialString());
             }
             if (Optional.IsDefined(ImageDeprecationStatus))
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automation.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name.ToString());
+            writer.WriteStringValue(Name.ToSerialString());
             if (Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static PortMirroringProfileStatus Success { get; } = new PortMirroringProfileStatus(SuccessValue);
         /// <summary> FAILURE. </summary>
         public static PortMirroringProfileStatus Failure { get; } = new PortMirroringProfileStatus(FailureValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PortMirroringProfileStatus"/> values are the same. </summary>
         public static bool operator ==(PortMirroringProfileStatus left, PortMirroringProfileStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PortMirroringProfileStatus"/> values are not the same. </summary>

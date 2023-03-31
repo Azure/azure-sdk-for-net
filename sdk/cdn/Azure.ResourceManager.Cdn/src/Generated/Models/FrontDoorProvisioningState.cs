@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static FrontDoorProvisioningState Deleting { get; } = new FrontDoorProvisioningState(DeletingValue);
         /// <summary> Creating. </summary>
         public static FrontDoorProvisioningState Creating { get; } = new FrontDoorProvisioningState(CreatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FrontDoorProvisioningState"/> values are the same. </summary>
         public static bool operator ==(FrontDoorProvisioningState left, FrontDoorProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorProvisioningState"/> values are not the same. </summary>

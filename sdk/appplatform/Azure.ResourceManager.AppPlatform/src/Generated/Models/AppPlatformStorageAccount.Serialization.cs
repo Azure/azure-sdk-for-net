@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WritePropertyName("accountKey"u8);
             writer.WriteStringValue(AccountKey);
             writer.WritePropertyName("storageType"u8);
-            writer.WriteStringValue(StorageType.ToString());
+            writer.WriteStringValue(StorageType.ToSerialString());
             writer.WriteEndObject();
         }
 

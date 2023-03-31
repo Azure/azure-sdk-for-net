@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.BotService.Models
         public static BotServiceSkuName F0 { get; } = new BotServiceSkuName(F0Value);
         /// <summary> S1. </summary>
         public static BotServiceSkuName S1 { get; } = new BotServiceSkuName(S1Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BotServiceSkuName"/> values are the same. </summary>
         public static bool operator ==(BotServiceSkuName left, BotServiceSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BotServiceSkuName"/> values are not the same. </summary>

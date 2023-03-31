@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(IdentityProviderType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(IdentityProviderType.Value.ToString());
+                writer.WriteStringValue(IdentityProviderType.Value.ToSerialString());
             }
             if (Optional.IsDefined(SignInTenant))
             {

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static AgentPoolType VirtualMachineScaleSets { get; } = new AgentPoolType(VirtualMachineScaleSetsValue);
         /// <summary> Use of this is strongly discouraged. </summary>
         public static AgentPoolType AvailabilitySet { get; } = new AgentPoolType(AvailabilitySetValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AgentPoolType"/> values are the same. </summary>
         public static bool operator ==(AgentPoolType left, AgentPoolType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgentPoolType"/> values are not the same. </summary>

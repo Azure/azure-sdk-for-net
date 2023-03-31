@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartArray();
             foreach (var item in SourceTriggerEvents)
             {
-                writer.WriteStringValue(item.ToString());
+                writer.WriteStringValue(item.ToSerialString());
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);

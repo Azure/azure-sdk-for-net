@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Hci.Models
         public static WindowsServerSubscription Disabled { get; } = new WindowsServerSubscription(DisabledValue);
         /// <summary> Enabled. </summary>
         public static WindowsServerSubscription Enabled { get; } = new WindowsServerSubscription(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WindowsServerSubscription"/> values are the same. </summary>
         public static bool operator ==(WindowsServerSubscription left, WindowsServerSubscription right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WindowsServerSubscription"/> values are not the same. </summary>

@@ -20,7 +20,7 @@ namespace Azure.Communication.ShortCodes.Models
             writer.WritePropertyName("currencyCode"u8);
             writer.WriteStringValue(CurrencyCode);
             writer.WritePropertyName("billingFrequency"u8);
-            writer.WriteStringValue(BillingFrequency.ToString());
+            writer.WriteStringValue(BillingFrequency.ToSerialString());
             writer.WriteEndObject();
         }
 

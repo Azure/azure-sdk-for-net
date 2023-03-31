@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.BillingBenefits
             if (Optional.IsDefined(Term))
             {
                 writer.WritePropertyName("term"u8);
-                writer.WriteStringValue(Term.Value.ToString());
+                writer.WriteStringValue(Term.Value.ToSerialString());
             }
             if (Optional.IsDefined(BillingPlan))
             {
                 writer.WritePropertyName("billingPlan"u8);
-                writer.WriteStringValue(BillingPlan.Value.ToString());
+                writer.WriteStringValue(BillingPlan.Value.ToSerialString());
             }
             if (Optional.IsDefined(AppliedScopeType))
             {
                 writer.WritePropertyName("appliedScopeType"u8);
-                writer.WriteStringValue(AppliedScopeType.Value.ToString());
+                writer.WriteStringValue(AppliedScopeType.Value.ToSerialString());
             }
             if (Optional.IsDefined(AppliedScopeProperties))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.BillingBenefits
             if (Optional.IsDefined(ReservedResourceType))
             {
                 writer.WritePropertyName("reservedResourceType"u8);
-                writer.WriteStringValue(ReservedResourceType.Value.ToString());
+                writer.WriteStringValue(ReservedResourceType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ReviewOn))
             {

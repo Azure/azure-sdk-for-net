@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static DscConfigurationState Edit { get; } = new DscConfigurationState(EditValue);
         /// <summary> Published. </summary>
         public static DscConfigurationState Published { get; } = new DscConfigurationState(PublishedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DscConfigurationState"/> values are the same. </summary>
         public static bool operator ==(DscConfigurationState left, DscConfigurationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DscConfigurationState"/> values are not the same. </summary>

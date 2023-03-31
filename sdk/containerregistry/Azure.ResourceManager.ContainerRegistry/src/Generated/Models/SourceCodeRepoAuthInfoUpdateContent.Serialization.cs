@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(TokenType))
             {
                 writer.WritePropertyName("tokenType"u8);
-                writer.WriteStringValue(TokenType.Value.ToString());
+                writer.WriteStringValue(TokenType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Token))
             {

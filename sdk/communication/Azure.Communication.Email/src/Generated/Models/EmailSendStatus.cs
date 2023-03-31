@@ -38,6 +38,9 @@ namespace Azure.Communication.Email
         public static EmailSendStatus Failed { get; } = new EmailSendStatus(FailedValue);
         /// <summary> Canceled. </summary>
         public static EmailSendStatus Canceled { get; } = new EmailSendStatus(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EmailSendStatus"/> values are the same. </summary>
         public static bool operator ==(EmailSendStatus left, EmailSendStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EmailSendStatus"/> values are not the same. </summary>

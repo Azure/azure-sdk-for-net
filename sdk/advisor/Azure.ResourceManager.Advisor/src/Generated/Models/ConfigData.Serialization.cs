@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Advisor.Models
             if (Optional.IsDefined(LowCpuThreshold))
             {
                 writer.WritePropertyName("lowCpuThreshold"u8);
-                writer.WriteStringValue(LowCpuThreshold.Value.ToString());
+                writer.WriteStringValue(LowCpuThreshold.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Digests))
             {

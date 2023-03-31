@@ -28,7 +28,7 @@ namespace Azure.AI.Language.QuestionAnswering
             if (Optional.IsDefined(LogicalOperation))
             {
                 writer.WritePropertyName("logicalOperation"u8);
-                writer.WriteStringValue(LogicalOperation.Value.ToString());
+                writer.WriteStringValue(LogicalOperation.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

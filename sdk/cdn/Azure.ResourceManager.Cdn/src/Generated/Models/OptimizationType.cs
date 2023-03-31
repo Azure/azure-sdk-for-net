@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static OptimizationType LargeFileDownload { get; } = new OptimizationType(LargeFileDownloadValue);
         /// <summary> DynamicSiteAcceleration. </summary>
         public static OptimizationType DynamicSiteAcceleration { get; } = new OptimizationType(DynamicSiteAccelerationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OptimizationType"/> values are the same. </summary>
         public static bool operator ==(OptimizationType left, OptimizationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OptimizationType"/> values are not the same. </summary>

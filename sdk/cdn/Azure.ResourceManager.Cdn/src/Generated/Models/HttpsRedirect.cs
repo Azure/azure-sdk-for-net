@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static HttpsRedirect Enabled { get; } = new HttpsRedirect(EnabledValue);
         /// <summary> Disabled. </summary>
         public static HttpsRedirect Disabled { get; } = new HttpsRedirect(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HttpsRedirect"/> values are the same. </summary>
         public static bool operator ==(HttpsRedirect left, HttpsRedirect right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HttpsRedirect"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static ContainerAppAccessMode ReadOnly { get; } = new ContainerAppAccessMode(ReadOnlyValue);
         /// <summary> ReadWrite. </summary>
         public static ContainerAppAccessMode ReadWrite { get; } = new ContainerAppAccessMode(ReadWriteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerAppAccessMode"/> values are the same. </summary>
         public static bool operator ==(ContainerAppAccessMode left, ContainerAppAccessMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppAccessMode"/> values are not the same. </summary>

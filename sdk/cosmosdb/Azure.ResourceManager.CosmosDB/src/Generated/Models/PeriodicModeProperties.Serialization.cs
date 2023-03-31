@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(BackupStorageRedundancy))
             {
                 writer.WritePropertyName("backupStorageRedundancy"u8);
-                writer.WriteStringValue(BackupStorageRedundancy.Value.ToString());
+                writer.WriteStringValue(BackupStorageRedundancy.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

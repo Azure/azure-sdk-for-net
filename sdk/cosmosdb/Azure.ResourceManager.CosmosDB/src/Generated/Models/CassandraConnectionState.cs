@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CassandraConnectionState InternalOperatorToDataCenterCertificateError { get; } = new CassandraConnectionState(InternalOperatorToDataCenterCertificateErrorValue);
         /// <summary> InternalError. </summary>
         public static CassandraConnectionState InternalError { get; } = new CassandraConnectionState(InternalErrorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CassandraConnectionState"/> values are the same. </summary>
         public static bool operator ==(CassandraConnectionState left, CassandraConnectionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CassandraConnectionState"/> values are not the same. </summary>

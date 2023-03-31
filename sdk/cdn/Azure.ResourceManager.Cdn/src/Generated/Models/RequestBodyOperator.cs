@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static RequestBodyOperator GreaterThanOrEqual { get; } = new RequestBodyOperator(GreaterThanOrEqualValue);
         /// <summary> RegEx. </summary>
         public static RequestBodyOperator RegEx { get; } = new RequestBodyOperator(RegExValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RequestBodyOperator"/> values are the same. </summary>
         public static bool operator ==(RequestBodyOperator left, RequestBodyOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RequestBodyOperator"/> values are not the same. </summary>

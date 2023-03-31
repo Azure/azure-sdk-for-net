@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Communication.Models
         public static DomainManagement CustomerManaged { get; } = new DomainManagement(CustomerManagedValue);
         /// <summary> CustomerManagedInExchangeOnline. </summary>
         public static DomainManagement CustomerManagedInExchangeOnline { get; } = new DomainManagement(CustomerManagedInExchangeOnlineValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DomainManagement"/> values are the same. </summary>
         public static bool operator ==(DomainManagement left, DomainManagement right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DomainManagement"/> values are not the same. </summary>

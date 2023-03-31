@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryExportPolicyStatus Enabled { get; } = new ContainerRegistryExportPolicyStatus(EnabledValue);
         /// <summary> disabled. </summary>
         public static ContainerRegistryExportPolicyStatus Disabled { get; } = new ContainerRegistryExportPolicyStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistryExportPolicyStatus"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryExportPolicyStatus left, ContainerRegistryExportPolicyStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryExportPolicyStatus"/> values are not the same. </summary>

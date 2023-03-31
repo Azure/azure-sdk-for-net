@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static RoleAssignmentEnablementRuleType Justification { get; } = new RoleAssignmentEnablementRuleType(JustificationValue);
         /// <summary> Ticketing. </summary>
         public static RoleAssignmentEnablementRuleType Ticketing { get; } = new RoleAssignmentEnablementRuleType(TicketingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RoleAssignmentEnablementRuleType"/> values are the same. </summary>
         public static bool operator ==(RoleAssignmentEnablementRuleType left, RoleAssignmentEnablementRuleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoleAssignmentEnablementRuleType"/> values are not the same. </summary>

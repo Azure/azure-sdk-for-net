@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static ContainerGroupSku Dedicated { get; } = new ContainerGroupSku(DedicatedValue);
         /// <summary> Confidential. </summary>
         public static ContainerGroupSku Confidential { get; } = new ContainerGroupSku(ConfidentialValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerGroupSku"/> values are the same. </summary>
         public static bool operator ==(ContainerGroupSku left, ContainerGroupSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerGroupSku"/> values are not the same. </summary>

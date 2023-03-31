@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static NotificationName AccountClosedPublisher { get; } = new NotificationName(AccountClosedPublisherValue);
         /// <summary> The following email recipients and users will receive email notifications when subscription usage gets close to usage quota. </summary>
         public static NotificationName QuotaLimitApproachingPublisherNotificationMessage { get; } = new NotificationName(QuotaLimitApproachingPublisherNotificationMessageValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NotificationName"/> values are the same. </summary>
         public static bool operator ==(NotificationName left, NotificationName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NotificationName"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static HybridWorkerGroup User { get; } = new HybridWorkerGroup(UserValue);
         /// <summary> System. </summary>
         public static HybridWorkerGroup System { get; } = new HybridWorkerGroup(SystemValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HybridWorkerGroup"/> values are the same. </summary>
         public static bool operator ==(HybridWorkerGroup left, HybridWorkerGroup right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HybridWorkerGroup"/> values are not the same. </summary>

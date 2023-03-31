@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("os"u8);
-            writer.WriteStringValue(OS.ToString());
+            writer.WriteStringValue(OS.ToSerialString());
             if (Optional.IsDefined(Architecture))
             {
                 writer.WritePropertyName("architecture"u8);
-                writer.WriteStringValue(Architecture.Value.ToString());
+                writer.WriteStringValue(Architecture.Value.ToSerialString());
             }
             if (Optional.IsDefined(Variant))
             {
                 writer.WritePropertyName("variant"u8);
-                writer.WriteStringValue(Variant.Value.ToString());
+                writer.WriteStringValue(Variant.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

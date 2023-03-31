@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryUsageUnit Count { get; } = new ContainerRegistryUsageUnit(CountValue);
         /// <summary> Bytes. </summary>
         public static ContainerRegistryUsageUnit Bytes { get; } = new ContainerRegistryUsageUnit(BytesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistryUsageUnit"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryUsageUnit left, ContainerRegistryUsageUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryUsageUnit"/> values are not the same. </summary>

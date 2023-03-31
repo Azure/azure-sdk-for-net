@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ScaleDownMode Delete { get; } = new ScaleDownMode(DeleteValue);
         /// <summary> Attempt to start deallocated instances (if they exist) during scale up and deallocate instances during scale down. </summary>
         public static ScaleDownMode Deallocate { get; } = new ScaleDownMode(DeallocateValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScaleDownMode"/> values are the same. </summary>
         public static bool operator ==(ScaleDownMode left, ScaleDownMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScaleDownMode"/> values are not the same. </summary>

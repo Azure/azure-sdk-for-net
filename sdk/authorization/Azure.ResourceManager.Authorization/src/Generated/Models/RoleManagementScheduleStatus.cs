@@ -89,6 +89,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static RoleManagementScheduleStatus ScheduleCreated { get; } = new RoleManagementScheduleStatus(ScheduleCreatedValue);
         /// <summary> PendingExternalProvisioning. </summary>
         public static RoleManagementScheduleStatus PendingExternalProvisioning { get; } = new RoleManagementScheduleStatus(PendingExternalProvisioningValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RoleManagementScheduleStatus"/> values are the same. </summary>
         public static bool operator ==(RoleManagementScheduleStatus left, RoleManagementScheduleStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoleManagementScheduleStatus"/> values are not the same. </summary>

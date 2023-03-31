@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformAppProvisioningState Updating { get; } = new AppPlatformAppProvisioningState(UpdatingValue);
         /// <summary> Deleting. </summary>
         public static AppPlatformAppProvisioningState Deleting { get; } = new AppPlatformAppProvisioningState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppPlatformAppProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AppPlatformAppProvisioningState left, AppPlatformAppProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformAppProvisioningState"/> values are not the same. </summary>

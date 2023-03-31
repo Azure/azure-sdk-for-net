@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static VirtualNetworkType External { get; } = new VirtualNetworkType(ExternalValue);
         /// <summary> The service is part of Virtual Network and it is only accessible from within the virtual network. </summary>
         public static VirtualNetworkType Internal { get; } = new VirtualNetworkType(InternalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VirtualNetworkType"/> values are the same. </summary>
         public static bool operator ==(VirtualNetworkType left, VirtualNetworkType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkType"/> values are not the same. </summary>

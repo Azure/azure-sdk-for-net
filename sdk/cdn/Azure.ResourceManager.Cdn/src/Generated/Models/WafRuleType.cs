@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static WafRuleType Custom { get; } = new WafRuleType(CustomValue);
         /// <summary> bot. </summary>
         public static WafRuleType Bot { get; } = new WafRuleType(BotValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WafRuleType"/> values are the same. </summary>
         public static bool operator ==(WafRuleType left, WafRuleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WafRuleType"/> values are not the same. </summary>

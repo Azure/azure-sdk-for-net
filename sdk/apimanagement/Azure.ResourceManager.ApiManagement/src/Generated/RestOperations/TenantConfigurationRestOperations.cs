@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/tenant/", false);
-            uri.AppendPath(configurationName.ToString(), true);
+            uri.AppendPath(configurationName.ToSerialString(), true);
             uri.AppendPath("/deploy", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/tenant/", false);
-            uri.AppendPath(configurationName.ToString(), true);
+            uri.AppendPath(configurationName.ToSerialString(), true);
             uri.AppendPath("/save", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/tenant/", false);
-            uri.AppendPath(configurationName.ToString(), true);
+            uri.AppendPath(configurationName.ToSerialString(), true);
             uri.AppendPath("/validate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/tenant/", false);
-            uri.AppendPath(configurationName.ToString(), true);
+            uri.AppendPath(configurationName.ToSerialString(), true);
             uri.AppendPath("/syncState", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

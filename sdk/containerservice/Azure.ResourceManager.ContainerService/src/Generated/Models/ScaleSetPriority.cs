@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ScaleSetPriority Spot { get; } = new ScaleSetPriority(SpotValue);
         /// <summary> Regular VMs will be used. </summary>
         public static ScaleSetPriority Regular { get; } = new ScaleSetPriority(RegularValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScaleSetPriority"/> values are the same. </summary>
         public static bool operator ==(ScaleSetPriority left, ScaleSetPriority right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScaleSetPriority"/> values are not the same. </summary>

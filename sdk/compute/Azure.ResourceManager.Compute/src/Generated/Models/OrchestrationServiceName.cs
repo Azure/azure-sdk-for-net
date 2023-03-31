@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> AutomaticRepairs. </summary>
         public static OrchestrationServiceName AutomaticRepairs { get; } = new OrchestrationServiceName(AutomaticRepairsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OrchestrationServiceName"/> values are the same. </summary>
         public static bool operator ==(OrchestrationServiceName left, OrchestrationServiceName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OrchestrationServiceName"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static SecurityType TrustedLaunch { get; } = new SecurityType(TrustedLaunchValue);
         /// <summary> ConfidentialVM. </summary>
         public static SecurityType ConfidentialVm { get; } = new SecurityType(ConfidentialVmValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityType"/> values are the same. </summary>
         public static bool operator ==(SecurityType left, SecurityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityType"/> values are not the same. </summary>

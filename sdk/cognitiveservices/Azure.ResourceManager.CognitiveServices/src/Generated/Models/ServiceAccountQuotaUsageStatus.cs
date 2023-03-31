@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static ServiceAccountQuotaUsageStatus InOverage { get; } = new ServiceAccountQuotaUsageStatus(InOverageValue);
         /// <summary> Unknown. </summary>
         public static ServiceAccountQuotaUsageStatus Unknown { get; } = new ServiceAccountQuotaUsageStatus(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceAccountQuotaUsageStatus"/> values are the same. </summary>
         public static bool operator ==(ServiceAccountQuotaUsageStatus left, ServiceAccountQuotaUsageStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceAccountQuotaUsageStatus"/> values are not the same. </summary>

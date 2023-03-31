@@ -55,16 +55,16 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendQuery("api-version", _apiVersion, true);
             foreach (var param in metrics)
             {
-                uri.AppendQuery("metrics", param.ToString(), true);
+                uri.AppendQuery("metrics", param.ToSerialString(), true);
             }
             uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
             uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
-            uri.AppendQuery("granularity", granularity.ToString(), true);
+            uri.AppendQuery("granularity", granularity.ToSerialString(), true);
             if (groupBy != null)
             {
                 foreach (var param0 in groupBy)
                 {
-                    uri.AppendQuery("groupBy", param0.ToString(), true);
+                    uri.AppendQuery("groupBy", param0.ToSerialString(), true);
                 }
             }
             if (continents != null)
@@ -194,11 +194,11 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendQuery("api-version", _apiVersion, true);
             foreach (var param in rankings)
             {
-                uri.AppendQuery("rankings", param.ToString(), true);
+                uri.AppendQuery("rankings", param.ToSerialString(), true);
             }
             foreach (var param0 in metrics)
             {
-                uri.AppendQuery("metrics", param0.ToString(), true);
+                uri.AppendQuery("metrics", param0.ToSerialString(), true);
             }
             uri.AppendQuery("maxRanking", maxRanking, true);
             uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
@@ -465,30 +465,30 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendQuery("api-version", _apiVersion, true);
             foreach (var param in metrics)
             {
-                uri.AppendQuery("metrics", param.ToString(), true);
+                uri.AppendQuery("metrics", param.ToSerialString(), true);
             }
             uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
             uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
-            uri.AppendQuery("granularity", granularity.ToString(), true);
+            uri.AppendQuery("granularity", granularity.ToSerialString(), true);
             if (actions != null)
             {
                 foreach (var param0 in actions)
                 {
-                    uri.AppendQuery("actions", param0.ToString(), true);
+                    uri.AppendQuery("actions", param0.ToSerialString(), true);
                 }
             }
             if (groupBy != null)
             {
                 foreach (var param0 in groupBy)
                 {
-                    uri.AppendQuery("groupBy", param0.ToString(), true);
+                    uri.AppendQuery("groupBy", param0.ToSerialString(), true);
                 }
             }
             if (ruleTypes != null)
             {
                 foreach (var param0 in ruleTypes)
                 {
-                    uri.AppendQuery("ruleTypes", param0.ToString(), true);
+                    uri.AppendQuery("ruleTypes", param0.ToSerialString(), true);
                 }
             }
             request.Uri = uri;
@@ -588,27 +588,27 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendQuery("api-version", _apiVersion, true);
             foreach (var param in metrics)
             {
-                uri.AppendQuery("metrics", param.ToString(), true);
+                uri.AppendQuery("metrics", param.ToSerialString(), true);
             }
             uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
             uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
             uri.AppendQuery("maxRanking", maxRanking, true);
             foreach (var param0 in rankings)
             {
-                uri.AppendQuery("rankings", param0.ToString(), true);
+                uri.AppendQuery("rankings", param0.ToSerialString(), true);
             }
             if (actions != null)
             {
                 foreach (var param1 in actions)
                 {
-                    uri.AppendQuery("actions", param1.ToString(), true);
+                    uri.AppendQuery("actions", param1.ToSerialString(), true);
                 }
             }
             if (ruleTypes != null)
             {
                 foreach (var param1 in ruleTypes)
                 {
-                    uri.AppendQuery("ruleTypes", param1.ToString(), true);
+                    uri.AppendQuery("ruleTypes", param1.ToSerialString(), true);
                 }
             }
             request.Uri = uri;

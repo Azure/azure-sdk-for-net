@@ -25,7 +25,7 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(VoiceGender))
             {
                 writer.WritePropertyName("voiceGender"u8);
-                writer.WriteStringValue(VoiceGender.Value.ToString());
+                writer.WriteStringValue(VoiceGender.Value.ToSerialString());
             }
             if (Optional.IsDefined(VoiceName))
             {

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Billing
             if (Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
-                writer.WriteStringValue(Family.Value.ToString());
+                writer.WriteStringValue(Family.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Logos))
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Billing
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

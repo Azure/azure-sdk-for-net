@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> DeliveryRuleRemoteAddressConditionParameters. </summary>
         public static RemoteAddressMatchConditionType RemoteAddressCondition { get; } = new RemoteAddressMatchConditionType(RemoteAddressConditionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RemoteAddressMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(RemoteAddressMatchConditionType left, RemoteAddressMatchConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RemoteAddressMatchConditionType"/> values are not the same. </summary>

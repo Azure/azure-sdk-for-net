@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Communication.Models
         public static UserEngagementTracking Disabled { get; } = new UserEngagementTracking(DisabledValue);
         /// <summary> Enabled. </summary>
         public static UserEngagementTracking Enabled { get; } = new UserEngagementTracking(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UserEngagementTracking"/> values are the same. </summary>
         public static bool operator ==(UserEngagementTracking left, UserEngagementTracking right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UserEngagementTracking"/> values are not the same. </summary>

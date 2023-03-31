@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static RoleManagementScheduleMemberType Direct { get; } = new RoleManagementScheduleMemberType(DirectValue);
         /// <summary> Group. </summary>
         public static RoleManagementScheduleMemberType Group { get; } = new RoleManagementScheduleMemberType(GroupValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RoleManagementScheduleMemberType"/> values are the same. </summary>
         public static bool operator ==(RoleManagementScheduleMemberType left, RoleManagementScheduleMemberType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoleManagementScheduleMemberType"/> values are not the same. </summary>

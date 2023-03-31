@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(ProbeType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ProbeType.Value.ToString());
+                writer.WriteStringValue(ProbeType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

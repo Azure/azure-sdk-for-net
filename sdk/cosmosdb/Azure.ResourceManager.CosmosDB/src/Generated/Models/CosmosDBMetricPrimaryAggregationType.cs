@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBMetricPrimaryAggregationType Maximum { get; } = new CosmosDBMetricPrimaryAggregationType(MaximumValue);
         /// <summary> Last. </summary>
         public static CosmosDBMetricPrimaryAggregationType Last { get; } = new CosmosDBMetricPrimaryAggregationType(LastValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CosmosDBMetricPrimaryAggregationType"/> values are the same. </summary>
         public static bool operator ==(CosmosDBMetricPrimaryAggregationType left, CosmosDBMetricPrimaryAggregationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBMetricPrimaryAggregationType"/> values are not the same. </summary>

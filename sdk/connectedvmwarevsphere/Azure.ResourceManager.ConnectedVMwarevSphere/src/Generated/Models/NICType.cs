@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static NICType E1000E { get; } = new NICType(E1000EValue);
         /// <summary> pcnet32. </summary>
         public static NICType Pcnet32 { get; } = new NICType(Pcnet32Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NICType"/> values are the same. </summary>
         public static bool operator ==(NICType left, NICType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NICType"/> values are not the same. </summary>

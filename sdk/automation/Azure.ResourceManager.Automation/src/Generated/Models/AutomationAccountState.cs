@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static AutomationAccountState Unavailable { get; } = new AutomationAccountState(UnavailableValue);
         /// <summary> Suspended. </summary>
         public static AutomationAccountState Suspended { get; } = new AutomationAccountState(SuspendedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutomationAccountState"/> values are the same. </summary>
         public static bool operator ==(AutomationAccountState left, AutomationAccountState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationAccountState"/> values are not the same. </summary>

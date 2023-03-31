@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static ProvisioningAction Uninstall { get; } = new ProvisioningAction(UninstallValue);
         /// <summary> repair. </summary>
         public static ProvisioningAction Repair { get; } = new ProvisioningAction(RepairValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProvisioningAction"/> values are the same. </summary>
         public static bool operator ==(ProvisioningAction left, ProvisioningAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProvisioningAction"/> values are not the same. </summary>

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(HostingModel))
             {
                 writer.WritePropertyName("hostingModel"u8);
-                writer.WriteStringValue(HostingModel.Value.ToString());
+                writer.WriteStringValue(HostingModel.Value.ToSerialString());
             }
             if (Optional.IsDefined(PlanType))
             {

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> DockerCompatible. </summary>
         public static BatchVmContainerType DockerCompatible { get; } = new BatchVmContainerType(DockerCompatibleValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BatchVmContainerType"/> values are the same. </summary>
         public static bool operator ==(BatchVmContainerType left, BatchVmContainerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchVmContainerType"/> values are not the same. </summary>

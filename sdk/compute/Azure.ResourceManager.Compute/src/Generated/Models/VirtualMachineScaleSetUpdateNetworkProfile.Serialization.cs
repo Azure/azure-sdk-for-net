@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(NetworkApiVersion))
             {
                 writer.WritePropertyName("networkApiVersion"u8);
-                writer.WriteStringValue(NetworkApiVersion.Value.ToString());
+                writer.WriteStringValue(NetworkApiVersion.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

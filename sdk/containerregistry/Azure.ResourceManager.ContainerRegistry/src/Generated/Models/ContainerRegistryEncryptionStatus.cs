@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryEncryptionStatus Enabled { get; } = new ContainerRegistryEncryptionStatus(EnabledValue);
         /// <summary> disabled. </summary>
         public static ContainerRegistryEncryptionStatus Disabled { get; } = new ContainerRegistryEncryptionStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistryEncryptionStatus"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryEncryptionStatus left, ContainerRegistryEncryptionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryEncryptionStatus"/> values are not the same. </summary>

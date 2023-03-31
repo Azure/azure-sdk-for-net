@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static GalleryExtendedLocationType EdgeZone { get; } = new GalleryExtendedLocationType(EdgeZoneValue);
         /// <summary> Unknown. </summary>
         public static GalleryExtendedLocationType Unknown { get; } = new GalleryExtendedLocationType(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GalleryExtendedLocationType"/> values are the same. </summary>
         public static bool operator ==(GalleryExtendedLocationType left, GalleryExtendedLocationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GalleryExtendedLocationType"/> values are not the same. </summary>

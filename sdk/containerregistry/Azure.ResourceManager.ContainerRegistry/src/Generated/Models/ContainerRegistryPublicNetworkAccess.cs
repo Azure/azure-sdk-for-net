@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryPublicNetworkAccess Enabled { get; } = new ContainerRegistryPublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static ContainerRegistryPublicNetworkAccess Disabled { get; } = new ContainerRegistryPublicNetworkAccess(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistryPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryPublicNetworkAccess left, ContainerRegistryPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryPublicNetworkAccess"/> values are not the same. </summary>

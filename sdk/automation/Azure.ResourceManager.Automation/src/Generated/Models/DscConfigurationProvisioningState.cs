@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Succeeded. </summary>
         public static DscConfigurationProvisioningState Succeeded { get; } = new DscConfigurationProvisioningState(SucceededValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DscConfigurationProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DscConfigurationProvisioningState left, DscConfigurationProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DscConfigurationProvisioningState"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public static OSType Linux { get; } = new OSType(LinuxValue);
         /// <summary> Other. </summary>
         public static OSType Other { get; } = new OSType(OtherValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OSType"/> values are the same. </summary>
         public static bool operator ==(OSType left, OSType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OSType"/> values are not the same. </summary>

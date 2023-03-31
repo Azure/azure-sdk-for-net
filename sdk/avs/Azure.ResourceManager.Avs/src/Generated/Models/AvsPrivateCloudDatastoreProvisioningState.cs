@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static AvsPrivateCloudDatastoreProvisioningState Deleting { get; } = new AvsPrivateCloudDatastoreProvisioningState(DeletingValue);
         /// <summary> Canceled. </summary>
         public static AvsPrivateCloudDatastoreProvisioningState Canceled { get; } = new AvsPrivateCloudDatastoreProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AvsPrivateCloudDatastoreProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AvsPrivateCloudDatastoreProvisioningState left, AvsPrivateCloudDatastoreProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvsPrivateCloudDatastoreProvisioningState"/> values are not the same. </summary>

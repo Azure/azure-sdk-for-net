@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static ConfidentialLedgerProvisioningState Deleting { get; } = new ConfidentialLedgerProvisioningState(DeletingValue);
         /// <summary> Updating. </summary>
         public static ConfidentialLedgerProvisioningState Updating { get; } = new ConfidentialLedgerProvisioningState(UpdatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConfidentialLedgerProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ConfidentialLedgerProvisioningState left, ConfidentialLedgerProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConfidentialLedgerProvisioningState"/> values are not the same. </summary>

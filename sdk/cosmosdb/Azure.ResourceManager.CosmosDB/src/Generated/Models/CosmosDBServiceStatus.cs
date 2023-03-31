@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBServiceStatus Error { get; } = new CosmosDBServiceStatus(ErrorValue);
         /// <summary> Stopped. </summary>
         public static CosmosDBServiceStatus Stopped { get; } = new CosmosDBServiceStatus(StoppedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CosmosDBServiceStatus"/> values are the same. </summary>
         public static bool operator ==(CosmosDBServiceStatus left, CosmosDBServiceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBServiceStatus"/> values are not the same. </summary>

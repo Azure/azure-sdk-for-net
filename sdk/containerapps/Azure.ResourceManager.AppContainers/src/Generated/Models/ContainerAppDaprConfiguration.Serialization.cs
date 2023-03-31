@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(AppProtocol))
             {
                 writer.WritePropertyName("appProtocol"u8);
-                writer.WriteStringValue(AppProtocol.Value.ToString());
+                writer.WriteStringValue(AppProtocol.Value.ToSerialString());
             }
             if (Optional.IsDefined(AppPort))
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(LogLevel))
             {
                 writer.WritePropertyName("logLevel"u8);
-                writer.WriteStringValue(LogLevel.Value.ToString());
+                writer.WriteStringValue(LogLevel.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsApiLoggingEnabled))
             {

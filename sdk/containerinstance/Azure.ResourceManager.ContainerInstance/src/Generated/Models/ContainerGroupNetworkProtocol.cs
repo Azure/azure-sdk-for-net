@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static ContainerGroupNetworkProtocol Tcp { get; } = new ContainerGroupNetworkProtocol(TcpValue);
         /// <summary> UDP. </summary>
         public static ContainerGroupNetworkProtocol Udp { get; } = new ContainerGroupNetworkProtocol(UdpValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerGroupNetworkProtocol"/> values are the same. </summary>
         public static bool operator ==(ContainerGroupNetworkProtocol left, ContainerGroupNetworkProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerGroupNetworkProtocol"/> values are not the same. </summary>

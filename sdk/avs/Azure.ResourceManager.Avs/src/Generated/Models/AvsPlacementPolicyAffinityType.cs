@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static AvsPlacementPolicyAffinityType Affinity { get; } = new AvsPlacementPolicyAffinityType(AffinityValue);
         /// <summary> AntiAffinity. </summary>
         public static AvsPlacementPolicyAffinityType AntiAffinity { get; } = new AvsPlacementPolicyAffinityType(AntiAffinityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AvsPlacementPolicyAffinityType"/> values are the same. </summary>
         public static bool operator ==(AvsPlacementPolicyAffinityType left, AvsPlacementPolicyAffinityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvsPlacementPolicyAffinityType"/> values are not the same. </summary>

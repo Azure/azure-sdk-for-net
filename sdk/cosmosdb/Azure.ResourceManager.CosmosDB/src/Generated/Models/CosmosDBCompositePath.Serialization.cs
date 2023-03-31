@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Order))
             {
                 writer.WritePropertyName("order"u8);
-                writer.WriteStringValue(Order.Value.ToString());
+                writer.WriteStringValue(Order.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("access"u8);
-            writer.WriteStringValue(Access.ToString());
+            writer.WriteStringValue(Access.ToSerialString());
             writer.WritePropertyName("durationInSeconds"u8);
             writer.WriteNumberValue(DurationInSeconds);
             if (Optional.IsDefined(GetSecureVmGuestStateSas))

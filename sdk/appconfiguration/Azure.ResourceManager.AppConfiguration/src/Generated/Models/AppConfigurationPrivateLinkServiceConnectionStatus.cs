@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static AppConfigurationPrivateLinkServiceConnectionStatus Rejected { get; } = new AppConfigurationPrivateLinkServiceConnectionStatus(RejectedValue);
         /// <summary> Disconnected. </summary>
         public static AppConfigurationPrivateLinkServiceConnectionStatus Disconnected { get; } = new AppConfigurationPrivateLinkServiceConnectionStatus(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppConfigurationPrivateLinkServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(AppConfigurationPrivateLinkServiceConnectionStatus left, AppConfigurationPrivateLinkServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppConfigurationPrivateLinkServiceConnectionStatus"/> values are not the same. </summary>

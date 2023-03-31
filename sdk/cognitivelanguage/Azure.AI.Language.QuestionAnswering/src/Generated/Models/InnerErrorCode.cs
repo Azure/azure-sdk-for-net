@@ -41,6 +41,9 @@ namespace Azure.AI.Language.QuestionAnswering
         public static InnerErrorCode AzureCognitiveSearchThrottling { get; } = new InnerErrorCode(AzureCognitiveSearchThrottlingValue);
         /// <summary> ExtractionFailure. </summary>
         public static InnerErrorCode ExtractionFailure { get; } = new InnerErrorCode(ExtractionFailureValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InnerErrorCode"/> values are the same. </summary>
         public static bool operator ==(InnerErrorCode left, InnerErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InnerErrorCode"/> values are not the same. </summary>

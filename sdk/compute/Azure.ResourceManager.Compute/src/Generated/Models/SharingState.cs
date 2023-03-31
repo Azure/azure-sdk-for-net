@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static SharingState Failed { get; } = new SharingState(FailedValue);
         /// <summary> Unknown. </summary>
         public static SharingState Unknown { get; } = new SharingState(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SharingState"/> values are the same. </summary>
         public static bool operator ==(SharingState left, SharingState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SharingState"/> values are not the same. </summary>

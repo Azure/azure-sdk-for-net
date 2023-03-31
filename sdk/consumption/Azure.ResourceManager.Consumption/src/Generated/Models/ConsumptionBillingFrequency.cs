@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Consumption.Models
         public static ConsumptionBillingFrequency Quarter { get; } = new ConsumptionBillingFrequency(QuarterValue);
         /// <summary> Year. </summary>
         public static ConsumptionBillingFrequency Year { get; } = new ConsumptionBillingFrequency(YearValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConsumptionBillingFrequency"/> values are the same. </summary>
         public static bool operator ==(ConsumptionBillingFrequency left, ConsumptionBillingFrequency right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConsumptionBillingFrequency"/> values are not the same. </summary>

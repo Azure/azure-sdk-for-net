@@ -86,6 +86,9 @@ namespace Azure.ResourceManager.Consumption.Models
         public static RecipientNotificationLanguageCode PortuguesePortugal { get; } = new RecipientNotificationLanguageCode(PortuguesePortugalValue);
         /// <summary> sv-se. </summary>
         public static RecipientNotificationLanguageCode SwedishSweden { get; } = new RecipientNotificationLanguageCode(SwedishSwedenValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RecipientNotificationLanguageCode"/> values are the same. </summary>
         public static bool operator ==(RecipientNotificationLanguageCode left, RecipientNotificationLanguageCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecipientNotificationLanguageCode"/> values are not the same. </summary>

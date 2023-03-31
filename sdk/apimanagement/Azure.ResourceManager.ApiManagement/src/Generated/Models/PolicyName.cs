@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> policy. </summary>
         public static PolicyName Policy { get; } = new PolicyName(PolicyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PolicyName"/> values are the same. </summary>
         public static bool operator ==(PolicyName left, PolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyName"/> values are not the same. </summary>

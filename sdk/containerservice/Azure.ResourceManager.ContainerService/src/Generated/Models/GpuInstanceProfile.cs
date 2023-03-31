@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static GpuInstanceProfile Mig4G { get; } = new GpuInstanceProfile(Mig4GValue);
         /// <summary> MIG7g. </summary>
         public static GpuInstanceProfile Mig7G { get; } = new GpuInstanceProfile(Mig7GValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GpuInstanceProfile"/> values are the same. </summary>
         public static bool operator ==(GpuInstanceProfile left, GpuInstanceProfile right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GpuInstanceProfile"/> values are not the same. </summary>

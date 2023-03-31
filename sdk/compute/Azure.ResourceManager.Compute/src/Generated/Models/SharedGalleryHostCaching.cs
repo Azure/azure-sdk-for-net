@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static SharedGalleryHostCaching ReadOnly { get; } = new SharedGalleryHostCaching(ReadOnlyValue);
         /// <summary> ReadWrite. </summary>
         public static SharedGalleryHostCaching ReadWrite { get; } = new SharedGalleryHostCaching(ReadWriteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SharedGalleryHostCaching"/> values are the same. </summary>
         public static bool operator ==(SharedGalleryHostCaching left, SharedGalleryHostCaching right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SharedGalleryHostCaching"/> values are not the same. </summary>

@@ -61,23 +61,23 @@ namespace Azure.ResourceManager.AlertsManagement
             }
             if (monitorService != null)
             {
-                uri.AppendQuery("monitorService", monitorService.Value.ToString(), true);
+                uri.AppendQuery("monitorService", monitorService.Value.ToSerialString(), true);
             }
             if (monitorCondition != null)
             {
-                uri.AppendQuery("monitorCondition", monitorCondition.Value.ToString(), true);
+                uri.AppendQuery("monitorCondition", monitorCondition.Value.ToSerialString(), true);
             }
             if (severity != null)
             {
-                uri.AppendQuery("severity", severity.Value.ToString(), true);
+                uri.AppendQuery("severity", severity.Value.ToSerialString(), true);
             }
             if (smartGroupState != null)
             {
-                uri.AppendQuery("smartGroupState", smartGroupState.Value.ToString(), true);
+                uri.AppendQuery("smartGroupState", smartGroupState.Value.ToSerialString(), true);
             }
             if (timeRange != null)
             {
-                uri.AppendQuery("timeRange", timeRange.Value.ToString(), true);
+                uri.AppendQuery("timeRange", timeRange.Value.ToSerialString(), true);
             }
             if (pageCount != null)
             {
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.AlertsManagement
             }
             if (sortBy != null)
             {
-                uri.AppendQuery("sortBy", sortBy.Value.ToString(), true);
+                uri.AppendQuery("sortBy", sortBy.Value.ToSerialString(), true);
             }
             if (sortOrder != null)
             {
-                uri.AppendQuery("sortOrder", sortOrder.Value.ToString(), true);
+                uri.AppendQuery("sortOrder", sortOrder.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.AlertsManagement
             uri.AppendPath(smartGroupId, true);
             uri.AppendPath("/changeState", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("newState", newState.ToString(), true);
+            uri.AppendQuery("newState", newState.ToSerialString(), true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static GallerySharingPermissionType Groups { get; } = new GallerySharingPermissionType(GroupsValue);
         /// <summary> Community. </summary>
         public static GallerySharingPermissionType Community { get; } = new GallerySharingPermissionType(CommunityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GallerySharingPermissionType"/> values are the same. </summary>
         public static bool operator ==(GallerySharingPermissionType left, GallerySharingPermissionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GallerySharingPermissionType"/> values are not the same. </summary>

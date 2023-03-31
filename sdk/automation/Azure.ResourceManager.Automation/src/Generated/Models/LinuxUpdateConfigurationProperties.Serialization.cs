@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(IncludedPackageClassifications))
             {
                 writer.WritePropertyName("includedPackageClassifications"u8);
-                writer.WriteStringValue(IncludedPackageClassifications.Value.ToString());
+                writer.WriteStringValue(IncludedPackageClassifications.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ExcludedPackageNameMasks))
             {

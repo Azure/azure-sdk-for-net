@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CassandraAuthenticationMethod None { get; } = new CassandraAuthenticationMethod(NoneValue);
         /// <summary> Cassandra. </summary>
         public static CassandraAuthenticationMethod Cassandra { get; } = new CassandraAuthenticationMethod(CassandraValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CassandraAuthenticationMethod"/> values are the same. </summary>
         public static bool operator ==(CassandraAuthenticationMethod left, CassandraAuthenticationMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CassandraAuthenticationMethod"/> values are not the same. </summary>

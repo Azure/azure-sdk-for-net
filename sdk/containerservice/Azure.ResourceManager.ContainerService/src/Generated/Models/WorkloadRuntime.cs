@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static WorkloadRuntime WasmWasi { get; } = new WorkloadRuntime(WasmWasiValue);
         /// <summary> Nodes can use (Kata + Cloud Hypervisor + Hyper-V) to enable Nested VM-based pods (Preview). Due to the use Hyper-V, AKS node OS itself is a nested VM (the root OS) of Hyper-V. Thus it can only be used with VM series that support Nested Virtualization such as Dv3 series. </summary>
         public static WorkloadRuntime KataMshvVmIsolation { get; } = new WorkloadRuntime(KataMshvVmIsolationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WorkloadRuntime"/> values are the same. </summary>
         public static bool operator ==(WorkloadRuntime left, WorkloadRuntime right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadRuntime"/> values are not the same. </summary>

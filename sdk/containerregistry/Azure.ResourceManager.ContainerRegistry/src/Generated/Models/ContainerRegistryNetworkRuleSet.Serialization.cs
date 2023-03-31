@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("defaultAction"u8);
-            writer.WriteStringValue(DefaultAction.ToString());
+            writer.WriteStringValue(DefaultAction.ToSerialString());
             if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static LinuxUpdateClassification Security { get; } = new LinuxUpdateClassification(SecurityValue);
         /// <summary> Other. </summary>
         public static LinuxUpdateClassification Other { get; } = new LinuxUpdateClassification(OtherValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LinuxUpdateClassification"/> values are the same. </summary>
         public static bool operator ==(LinuxUpdateClassification left, LinuxUpdateClassification right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LinuxUpdateClassification"/> values are not the same. </summary>

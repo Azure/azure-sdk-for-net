@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Equal. </summary>
         public static IsDeviceOperator Equal { get; } = new IsDeviceOperator(EqualValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IsDeviceOperator"/> values are the same. </summary>
         public static bool operator ==(IsDeviceOperator left, IsDeviceOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IsDeviceOperator"/> values are not the same. </summary>

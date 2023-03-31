@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static RoleManagementApprovalMode Parallel { get; } = new RoleManagementApprovalMode(ParallelValue);
         /// <summary> NoApproval. </summary>
         public static RoleManagementApprovalMode NoApproval { get; } = new RoleManagementApprovalMode(NoApprovalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RoleManagementApprovalMode"/> values are the same. </summary>
         public static bool operator ==(RoleManagementApprovalMode left, RoleManagementApprovalMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoleManagementApprovalMode"/> values are not the same. </summary>

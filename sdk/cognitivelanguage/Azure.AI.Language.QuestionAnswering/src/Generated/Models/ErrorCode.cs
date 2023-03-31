@@ -65,6 +65,9 @@ namespace Azure.AI.Language.QuestionAnswering
         public static ErrorCode InternalServerError { get; } = new ErrorCode(InternalServerErrorValue);
         /// <summary> ServiceUnavailable. </summary>
         public static ErrorCode ServiceUnavailable { get; } = new ErrorCode(ServiceUnavailableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ErrorCode"/> values are the same. </summary>
         public static bool operator ==(ErrorCode left, ErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ErrorCode"/> values are not the same. </summary>

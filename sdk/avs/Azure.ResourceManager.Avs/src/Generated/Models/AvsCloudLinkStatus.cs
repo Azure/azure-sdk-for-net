@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static AvsCloudLinkStatus Failed { get; } = new AvsCloudLinkStatus(FailedValue);
         /// <summary> Disconnected. </summary>
         public static AvsCloudLinkStatus Disconnected { get; } = new AvsCloudLinkStatus(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AvsCloudLinkStatus"/> values are the same. </summary>
         public static bool operator ==(AvsCloudLinkStatus left, AvsCloudLinkStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvsCloudLinkStatus"/> values are not the same. </summary>

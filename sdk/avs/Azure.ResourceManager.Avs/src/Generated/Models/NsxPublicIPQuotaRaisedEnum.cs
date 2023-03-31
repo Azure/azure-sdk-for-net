@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static NsxPublicIPQuotaRaisedEnum Enabled { get; } = new NsxPublicIPQuotaRaisedEnum(EnabledValue);
         /// <summary> Disabled. </summary>
         public static NsxPublicIPQuotaRaisedEnum Disabled { get; } = new NsxPublicIPQuotaRaisedEnum(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NsxPublicIPQuotaRaisedEnum"/> values are the same. </summary>
         public static bool operator ==(NsxPublicIPQuotaRaisedEnum left, NsxPublicIPQuotaRaisedEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NsxPublicIPQuotaRaisedEnum"/> values are not the same. </summary>

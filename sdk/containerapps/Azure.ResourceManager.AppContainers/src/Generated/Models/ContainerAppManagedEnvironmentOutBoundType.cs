@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static ContainerAppManagedEnvironmentOutBoundType LoadBalancer { get; } = new ContainerAppManagedEnvironmentOutBoundType(LoadBalancerValue);
         /// <summary> UserDefinedRouting. </summary>
         public static ContainerAppManagedEnvironmentOutBoundType UserDefinedRouting { get; } = new ContainerAppManagedEnvironmentOutBoundType(UserDefinedRoutingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerAppManagedEnvironmentOutBoundType"/> values are the same. </summary>
         public static bool operator ==(ContainerAppManagedEnvironmentOutBoundType left, ContainerAppManagedEnvironmentOutBoundType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppManagedEnvironmentOutBoundType"/> values are not the same. </summary>

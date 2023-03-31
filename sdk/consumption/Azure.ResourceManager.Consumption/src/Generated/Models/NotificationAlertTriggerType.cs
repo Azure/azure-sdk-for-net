@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Consumption.Models
         public static NotificationAlertTriggerType GreaterThan { get; } = new NotificationAlertTriggerType(GreaterThanValue);
         /// <summary> Alert will be triggered if the evaluated cost is greater than or equal to the threshold value. </summary>
         public static NotificationAlertTriggerType GreaterThanOrEqualTo { get; } = new NotificationAlertTriggerType(GreaterThanOrEqualToValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NotificationAlertTriggerType"/> values are the same. </summary>
         public static bool operator ==(NotificationAlertTriggerType left, NotificationAlertTriggerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NotificationAlertTriggerType"/> values are not the same. </summary>

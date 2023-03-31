@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryBaseImageDependencyType BuildTime { get; } = new ContainerRegistryBaseImageDependencyType(BuildTimeValue);
         /// <summary> RunTime. </summary>
         public static ContainerRegistryBaseImageDependencyType RunTime { get; } = new ContainerRegistryBaseImageDependencyType(RunTimeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistryBaseImageDependencyType"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryBaseImageDependencyType left, ContainerRegistryBaseImageDependencyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryBaseImageDependencyType"/> values are not the same. </summary>

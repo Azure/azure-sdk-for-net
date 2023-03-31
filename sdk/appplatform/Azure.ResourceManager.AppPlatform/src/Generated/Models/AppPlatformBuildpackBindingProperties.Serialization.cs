@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(BindingType))
             {
                 writer.WritePropertyName("bindingType"u8);
-                writer.WriteStringValue(BindingType.Value.ToString());
+                writer.WriteStringValue(BindingType.Value.ToSerialString());
             }
             if (Optional.IsDefined(LaunchProperties))
             {

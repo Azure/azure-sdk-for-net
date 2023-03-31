@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static CognitiveServicesPrivateEndpointServiceConnectionStatus Approved { get; } = new CognitiveServicesPrivateEndpointServiceConnectionStatus(ApprovedValue);
         /// <summary> Rejected. </summary>
         public static CognitiveServicesPrivateEndpointServiceConnectionStatus Rejected { get; } = new CognitiveServicesPrivateEndpointServiceConnectionStatus(RejectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CognitiveServicesPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(CognitiveServicesPrivateEndpointServiceConnectionStatus left, CognitiveServicesPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CognitiveServicesPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>

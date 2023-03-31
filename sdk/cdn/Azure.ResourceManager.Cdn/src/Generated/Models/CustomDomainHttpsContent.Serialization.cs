@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("certificateSource"u8);
-            writer.WriteStringValue(CertificateSource.ToString());
+            writer.WriteStringValue(CertificateSource.ToSerialString());
             writer.WritePropertyName("protocolType"u8);
-            writer.WriteStringValue(ProtocolType.ToString());
+            writer.WriteStringValue(ProtocolType.ToSerialString());
             if (Optional.IsDefined(MinimumTlsVersion))
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);

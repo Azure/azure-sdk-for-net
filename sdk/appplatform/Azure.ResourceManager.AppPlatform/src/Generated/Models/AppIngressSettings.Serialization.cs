@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(SessionAffinity))
             {
                 writer.WritePropertyName("sessionAffinity"u8);
-                writer.WriteStringValue(SessionAffinity.Value.ToString());
+                writer.WriteStringValue(SessionAffinity.Value.ToSerialString());
             }
             if (Optional.IsDefined(SessionCookieMaxAge))
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(BackendProtocol))
             {
                 writer.WritePropertyName("backendProtocol"u8);
-                writer.WriteStringValue(BackendProtocol.Value.ToString());
+                writer.WriteStringValue(BackendProtocol.Value.ToSerialString());
             }
             if (Optional.IsDefined(ClientAuth))
             {

@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(TriggerType))
             {
                 writer.WritePropertyName("triggerType"u8);
-                writer.WriteStringValue(TriggerType.Value.ToString());
+                writer.WriteStringValue(TriggerType.Value.ToSerialString());
             }
             if (Optional.IsDefined(TriggerOperation))
             {
                 writer.WritePropertyName("triggerOperation"u8);
-                writer.WriteStringValue(TriggerOperation.Value.ToString());
+                writer.WriteStringValue(TriggerOperation.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

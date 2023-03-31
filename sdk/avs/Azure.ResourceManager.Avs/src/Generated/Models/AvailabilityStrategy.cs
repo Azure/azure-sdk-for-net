@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static AvailabilityStrategy SingleZone { get; } = new AvailabilityStrategy(SingleZoneValue);
         /// <summary> DualZone. </summary>
         public static AvailabilityStrategy DualZone { get; } = new AvailabilityStrategy(DualZoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AvailabilityStrategy"/> values are the same. </summary>
         public static bool operator ==(AvailabilityStrategy left, AvailabilityStrategy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvailabilityStrategy"/> values are not the same. </summary>

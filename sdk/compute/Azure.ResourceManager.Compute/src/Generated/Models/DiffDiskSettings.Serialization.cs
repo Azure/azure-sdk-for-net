@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Option))
             {
                 writer.WritePropertyName("option"u8);
-                writer.WriteStringValue(Option.Value.ToString());
+                writer.WriteStringValue(Option.Value.ToSerialString());
             }
             if (Optional.IsDefined(Placement))
             {
                 writer.WritePropertyName("placement"u8);
-                writer.WriteStringValue(Placement.Value.ToString());
+                writer.WriteStringValue(Placement.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

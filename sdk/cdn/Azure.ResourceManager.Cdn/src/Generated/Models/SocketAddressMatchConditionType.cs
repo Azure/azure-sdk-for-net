@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> DeliveryRuleSocketAddrConditionParameters. </summary>
         public static SocketAddressMatchConditionType SocketAddressCondition { get; } = new SocketAddressMatchConditionType(SocketAddressConditionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SocketAddressMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(SocketAddressMatchConditionType left, SocketAddressMatchConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SocketAddressMatchConditionType"/> values are not the same. </summary>

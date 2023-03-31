@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryOSArchitecture Arm { get; } = new ContainerRegistryOSArchitecture(ArmValue);
         /// <summary> arm64. </summary>
         public static ContainerRegistryOSArchitecture Arm64 { get; } = new ContainerRegistryOSArchitecture(Arm64Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistryOSArchitecture"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryOSArchitecture left, ContainerRegistryOSArchitecture right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryOSArchitecture"/> values are not the same. </summary>

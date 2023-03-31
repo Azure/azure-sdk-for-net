@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
             if (Optional.IsDefined(Description))
             {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(ActionsRequired))
             {
                 writer.WritePropertyName("actionsRequired"u8);
-                writer.WriteStringValue(ActionsRequired.Value.ToString());
+                writer.WriteStringValue(ActionsRequired.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

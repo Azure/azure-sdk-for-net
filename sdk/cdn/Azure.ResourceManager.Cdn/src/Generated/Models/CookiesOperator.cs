@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static CookiesOperator GreaterThanOrEqual { get; } = new CookiesOperator(GreaterThanOrEqualValue);
         /// <summary> RegEx. </summary>
         public static CookiesOperator RegEx { get; } = new CookiesOperator(RegExValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CookiesOperator"/> values are the same. </summary>
         public static bool operator ==(CookiesOperator left, CookiesOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CookiesOperator"/> values are not the same. </summary>

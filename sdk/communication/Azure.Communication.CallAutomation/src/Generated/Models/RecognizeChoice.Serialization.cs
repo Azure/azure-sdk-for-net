@@ -28,7 +28,7 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(Tone))
             {
                 writer.WritePropertyName("tone"u8);
-                writer.WriteStringValue(Tone.Value.ToString());
+                writer.WriteStringValue(Tone.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

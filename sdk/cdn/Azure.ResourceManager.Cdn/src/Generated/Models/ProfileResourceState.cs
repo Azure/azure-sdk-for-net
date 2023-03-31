@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static ProfileResourceState Deleting { get; } = new ProfileResourceState(DeletingValue);
         /// <summary> Disabled. </summary>
         public static ProfileResourceState Disabled { get; } = new ProfileResourceState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProfileResourceState"/> values are the same. </summary>
         public static bool operator ==(ProfileResourceState left, ProfileResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProfileResourceState"/> values are not the same. </summary>

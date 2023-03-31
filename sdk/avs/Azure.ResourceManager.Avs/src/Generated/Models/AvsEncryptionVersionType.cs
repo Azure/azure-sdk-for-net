@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static AvsEncryptionVersionType Fixed { get; } = new AvsEncryptionVersionType(FixedValue);
         /// <summary> AutoDetected. </summary>
         public static AvsEncryptionVersionType AutoDetected { get; } = new AvsEncryptionVersionType(AutoDetectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AvsEncryptionVersionType"/> values are the same. </summary>
         public static bool operator ==(AvsEncryptionVersionType left, AvsEncryptionVersionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvsEncryptionVersionType"/> values are not the same. </summary>

@@ -62,6 +62,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static CdnSkuName StandardPlus955BandWidthChinaCdn { get; } = new CdnSkuName(StandardPlus955BandWidthChinaCdnValue);
         /// <summary> StandardPlus_AvgBandWidth_ChinaCdn. </summary>
         public static CdnSkuName StandardPlusAvgBandWidthChinaCdn { get; } = new CdnSkuName(StandardPlusAvgBandWidthChinaCdnValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CdnSkuName"/> values are the same. </summary>
         public static bool operator ==(CdnSkuName left, CdnSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CdnSkuName"/> values are not the same. </summary>

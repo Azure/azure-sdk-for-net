@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static SocketAddressOperator Any { get; } = new SocketAddressOperator(AnyValue);
         /// <summary> IPMatch. </summary>
         public static SocketAddressOperator IPMatch { get; } = new SocketAddressOperator(IPMatchValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SocketAddressOperator"/> values are the same. </summary>
         public static bool operator ==(SocketAddressOperator left, SocketAddressOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SocketAddressOperator"/> values are not the same. </summary>

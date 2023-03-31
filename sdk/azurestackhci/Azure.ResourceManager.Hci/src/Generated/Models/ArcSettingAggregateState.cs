@@ -77,6 +77,9 @@ namespace Azure.ResourceManager.Hci.Models
         public static ArcSettingAggregateState Provisioning { get; } = new ArcSettingAggregateState(ProvisioningValue);
         /// <summary> DisableInProgress. </summary>
         public static ArcSettingAggregateState DisableInProgress { get; } = new ArcSettingAggregateState(DisableInProgressValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ArcSettingAggregateState"/> values are the same. </summary>
         public static bool operator ==(ArcSettingAggregateState left, ArcSettingAggregateState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArcSettingAggregateState"/> values are not the same. </summary>

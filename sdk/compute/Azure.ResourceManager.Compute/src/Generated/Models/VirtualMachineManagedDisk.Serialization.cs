@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
-                writer.WriteStringValue(StorageAccountType.Value.ToString());
+                writer.WriteStringValue(StorageAccountType.Value.ToSerialString());
             }
             if (Optional.IsDefined(DiskEncryptionSet))
             {

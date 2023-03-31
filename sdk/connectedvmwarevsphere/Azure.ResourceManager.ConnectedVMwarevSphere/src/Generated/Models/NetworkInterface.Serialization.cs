@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             if (Optional.IsDefined(NicType))
             {
                 writer.WritePropertyName("nicType"u8);
-                writer.WriteStringValue(NicType.Value.ToString());
+                writer.WriteStringValue(NicType.Value.ToSerialString());
             }
             if (Optional.IsDefined(PowerOnBoot))
             {
                 writer.WritePropertyName("powerOnBoot"u8);
-                writer.WriteStringValue(PowerOnBoot.Value.ToString());
+                writer.WriteStringValue(PowerOnBoot.Value.ToSerialString());
             }
             if (Optional.IsDefined(DeviceKey))
             {

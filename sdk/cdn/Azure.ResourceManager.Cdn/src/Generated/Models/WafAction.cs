@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static WafAction Log { get; } = new WafAction(LogValue);
         /// <summary> redirect. </summary>
         public static WafAction Redirect { get; } = new WafAction(RedirectValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WafAction"/> values are the same. </summary>
         public static bool operator ==(WafAction left, WafAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WafAction"/> values are not the same. </summary>

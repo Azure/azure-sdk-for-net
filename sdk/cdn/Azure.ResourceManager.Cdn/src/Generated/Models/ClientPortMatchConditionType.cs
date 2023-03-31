@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> DeliveryRuleClientPortConditionParameters. </summary>
         public static ClientPortMatchConditionType ClientPortCondition { get; } = new ClientPortMatchConditionType(ClientPortConditionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ClientPortMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(ClientPortMatchConditionType left, ClientPortMatchConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClientPortMatchConditionType"/> values are not the same. </summary>

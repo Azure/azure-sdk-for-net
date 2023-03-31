@@ -29,6 +29,9 @@ namespace Azure.Communication.MediaComposition
         public static RtmpMode Push { get; } = new RtmpMode(PushValue);
         /// <summary> pull. </summary>
         public static RtmpMode Pull { get; } = new RtmpMode(PullValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RtmpMode"/> values are the same. </summary>
         public static bool operator ==(RtmpMode left, RtmpMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RtmpMode"/> values are not the same. </summary>

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(SnapshotType))
             {
                 writer.WritePropertyName("snapshotType"u8);
-                writer.WriteStringValue(SnapshotType.Value.ToString());
+                writer.WriteStringValue(SnapshotType.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

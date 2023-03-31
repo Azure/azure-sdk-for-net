@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(QueryStringCachingBehavior))
             {
                 writer.WritePropertyName("queryStringCachingBehavior"u8);
-                writer.WriteStringValue(QueryStringCachingBehavior.Value.ToString());
+                writer.WriteStringValue(QueryStringCachingBehavior.Value.ToSerialString());
             }
             if (Optional.IsDefined(QueryParameters))
             {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(IsCompressionEnabled))
             {
                 writer.WritePropertyName("isCompressionEnabled"u8);
-                writer.WriteStringValue(IsCompressionEnabled.Value.ToString());
+                writer.WriteStringValue(IsCompressionEnabled.Value.ToSerialString());
             }
             if (Optional.IsDefined(CacheBehavior))
             {
                 writer.WritePropertyName("cacheBehavior"u8);
-                writer.WriteStringValue(CacheBehavior.Value.ToString());
+                writer.WriteStringValue(CacheBehavior.Value.ToSerialString());
             }
             if (Optional.IsDefined(CacheDuration))
             {

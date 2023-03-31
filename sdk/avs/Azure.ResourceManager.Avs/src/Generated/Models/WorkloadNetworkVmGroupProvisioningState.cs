@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static WorkloadNetworkVmGroupProvisioningState Updating { get; } = new WorkloadNetworkVmGroupProvisioningState(UpdatingValue);
         /// <summary> Canceled. </summary>
         public static WorkloadNetworkVmGroupProvisioningState Canceled { get; } = new WorkloadNetworkVmGroupProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WorkloadNetworkVmGroupProvisioningState"/> values are the same. </summary>
         public static bool operator ==(WorkloadNetworkVmGroupProvisioningState left, WorkloadNetworkVmGroupProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkVmGroupProvisioningState"/> values are not the same. </summary>

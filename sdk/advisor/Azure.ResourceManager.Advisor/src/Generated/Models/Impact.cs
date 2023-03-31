@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Advisor.Models
         public static Impact Medium { get; } = new Impact(MediumValue);
         /// <summary> Low. </summary>
         public static Impact Low { get; } = new Impact(LowValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="Impact"/> values are the same. </summary>
         public static bool operator ==(Impact left, Impact right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Impact"/> values are not the same. </summary>

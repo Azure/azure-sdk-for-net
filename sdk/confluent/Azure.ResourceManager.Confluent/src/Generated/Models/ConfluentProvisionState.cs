@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.Confluent.Models
         public static ConfluentProvisionState Deleted { get; } = new ConfluentProvisionState(DeletedValue);
         /// <summary> NotSpecified. </summary>
         public static ConfluentProvisionState NotSpecified { get; } = new ConfluentProvisionState(NotSpecifiedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConfluentProvisionState"/> values are the same. </summary>
         public static bool operator ==(ConfluentProvisionState left, ConfluentProvisionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConfluentProvisionState"/> values are not the same. </summary>

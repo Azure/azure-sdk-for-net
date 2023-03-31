@@ -26,6 +26,9 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> websocket. </summary>
         public static MediaStreamingTransport Websocket { get; } = new MediaStreamingTransport(WebsocketValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MediaStreamingTransport"/> values are the same. </summary>
         public static bool operator ==(MediaStreamingTransport left, MediaStreamingTransport right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaStreamingTransport"/> values are not the same. </summary>

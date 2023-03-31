@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("keyKind"u8);
-            writer.WriteStringValue(KeyKind.ToString());
+            writer.WriteStringValue(KeyKind.ToSerialString());
             writer.WriteEndObject();
         }
     }

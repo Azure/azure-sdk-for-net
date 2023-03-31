@@ -29,6 +29,9 @@ namespace Azure.Security.Attestation
         public static PolicyModification Updated { get; } = new PolicyModification(UpdatedValue);
         /// <summary> The specified policy object was removed. </summary>
         public static PolicyModification Removed { get; } = new PolicyModification(RemovedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PolicyModification"/> values are the same. </summary>
         public static bool operator ==(PolicyModification left, PolicyModification right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyModification"/> values are not the same. </summary>

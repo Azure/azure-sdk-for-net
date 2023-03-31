@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CassandraNodeState Moving { get; } = new CassandraNodeState(MovingValue);
         /// <summary> Stopped. </summary>
         public static CassandraNodeState Stopped { get; } = new CassandraNodeState(StoppedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CassandraNodeState"/> values are the same. </summary>
         public static bool operator ==(CassandraNodeState left, CassandraNodeState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CassandraNodeState"/> values are not the same. </summary>

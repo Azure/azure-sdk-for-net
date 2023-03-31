@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static IsPass True { get; } = new IsPass(TrueValue);
         /// <summary> False. </summary>
         public static IsPass False { get; } = new IsPass(FalseValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IsPass"/> values are the same. </summary>
         public static bool operator ==(IsPass left, IsPass right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IsPass"/> values are not the same. </summary>

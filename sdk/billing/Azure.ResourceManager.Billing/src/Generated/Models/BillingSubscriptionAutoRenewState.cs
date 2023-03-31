@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Billing.Models
         public static BillingSubscriptionAutoRenewState Off { get; } = new BillingSubscriptionAutoRenewState(OffValue);
         /// <summary> On. </summary>
         public static BillingSubscriptionAutoRenewState On { get; } = new BillingSubscriptionAutoRenewState(OnValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BillingSubscriptionAutoRenewState"/> values are the same. </summary>
         public static bool operator ==(BillingSubscriptionAutoRenewState left, BillingSubscriptionAutoRenewState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingSubscriptionAutoRenewState"/> values are not the same. </summary>

@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.Billing.Models
         public static BillingSubscriptionStatus Cancelled { get; } = new BillingSubscriptionStatus(CancelledValue);
         /// <summary> Suspended. </summary>
         public static BillingSubscriptionStatus Suspended { get; } = new BillingSubscriptionStatus(SuspendedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BillingSubscriptionStatus"/> values are the same. </summary>
         public static bool operator ==(BillingSubscriptionStatus left, BillingSubscriptionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingSubscriptionStatus"/> values are not the same. </summary>

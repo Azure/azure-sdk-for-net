@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> DeliveryRuleHeaderActionParameters. </summary>
         public static HeaderActionType HeaderAction { get; } = new HeaderActionType(HeaderActionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HeaderActionType"/> values are the same. </summary>
         public static bool operator ==(HeaderActionType left, HeaderActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HeaderActionType"/> values are not the same. </summary>

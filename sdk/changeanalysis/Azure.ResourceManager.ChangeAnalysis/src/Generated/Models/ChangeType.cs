@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
         public static ChangeType Remove { get; } = new ChangeType(RemoveValue);
         /// <summary> Update. </summary>
         public static ChangeType Update { get; } = new ChangeType(UpdateValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ChangeType"/> values are the same. </summary>
         public static bool operator ==(ChangeType left, ChangeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ChangeType"/> values are not the same. </summary>

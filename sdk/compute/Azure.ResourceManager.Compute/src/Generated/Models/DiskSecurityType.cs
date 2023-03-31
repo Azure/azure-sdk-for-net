@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static DiskSecurityType ConfidentialVmDiskEncryptedWithPlatformKey { get; } = new DiskSecurityType(ConfidentialVmDiskEncryptedWithPlatformKeyValue);
         /// <summary> Indicates Confidential VM disk with both OS disk and VM guest state encrypted with a customer managed key. </summary>
         public static DiskSecurityType ConfidentialVmDiskEncryptedWithCustomerKey { get; } = new DiskSecurityType(ConfidentialVmDiskEncryptedWithCustomerKeyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DiskSecurityType"/> values are the same. </summary>
         public static bool operator ==(DiskSecurityType left, DiskSecurityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskSecurityType"/> values are not the same. </summary>

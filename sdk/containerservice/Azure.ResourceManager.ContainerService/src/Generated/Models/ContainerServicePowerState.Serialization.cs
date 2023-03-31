@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
-                writer.WriteStringValue(Code.Value.ToString());
+                writer.WriteStringValue(Code.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

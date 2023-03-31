@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppBackendProtocol Grpc { get; } = new AppBackendProtocol(GrpcValue);
         /// <summary> Default. </summary>
         public static AppBackendProtocol Default { get; } = new AppBackendProtocol(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppBackendProtocol"/> values are the same. </summary>
         public static bool operator ==(AppBackendProtocol left, AppBackendProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppBackendProtocol"/> values are not the same. </summary>

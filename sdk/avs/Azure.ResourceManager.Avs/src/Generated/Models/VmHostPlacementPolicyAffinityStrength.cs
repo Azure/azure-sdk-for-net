@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static VmHostPlacementPolicyAffinityStrength Should { get; } = new VmHostPlacementPolicyAffinityStrength(ShouldValue);
         /// <summary> Must. </summary>
         public static VmHostPlacementPolicyAffinityStrength Must { get; } = new VmHostPlacementPolicyAffinityStrength(MustValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VmHostPlacementPolicyAffinityStrength"/> values are the same. </summary>
         public static bool operator ==(VmHostPlacementPolicyAffinityStrength left, VmHostPlacementPolicyAffinityStrength right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VmHostPlacementPolicyAffinityStrength"/> values are not the same. </summary>

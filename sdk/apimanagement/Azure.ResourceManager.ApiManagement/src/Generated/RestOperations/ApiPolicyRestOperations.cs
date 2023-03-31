@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/apis/", false);
             uri.AppendPath(apiId, true);
             uri.AppendPath("/policies/", false);
-            uri.AppendPath(policyId.ToString(), true);
+            uri.AppendPath(policyId.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -232,10 +232,10 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/apis/", false);
             uri.AppendPath(apiId, true);
             uri.AppendPath("/policies/", false);
-            uri.AppendPath(policyId.ToString(), true);
+            uri.AppendPath(policyId.ToSerialString(), true);
             if (format != null)
             {
-                uri.AppendQuery("format", format.Value.ToString(), true);
+                uri.AppendQuery("format", format.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/apis/", false);
             uri.AppendPath(apiId, true);
             uri.AppendPath("/policies/", false);
-            uri.AppendPath(policyId.ToString(), true);
+            uri.AppendPath(policyId.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (ifMatch != null)
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/apis/", false);
             uri.AppendPath(apiId, true);
             uri.AppendPath("/policies/", false);
-            uri.AppendPath(policyId.ToString(), true);
+            uri.AppendPath(policyId.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("If-Match", ifMatch);

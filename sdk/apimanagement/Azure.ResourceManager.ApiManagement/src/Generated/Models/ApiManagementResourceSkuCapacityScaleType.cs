@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ApiManagementResourceSkuCapacityScaleType Manual { get; } = new ApiManagementResourceSkuCapacityScaleType(ManualValue);
         /// <summary> Scaling not supported. </summary>
         public static ApiManagementResourceSkuCapacityScaleType None { get; } = new ApiManagementResourceSkuCapacityScaleType(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApiManagementResourceSkuCapacityScaleType"/> values are the same. </summary>
         public static bool operator ==(ApiManagementResourceSkuCapacityScaleType left, ApiManagementResourceSkuCapacityScaleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApiManagementResourceSkuCapacityScaleType"/> values are not the same. </summary>

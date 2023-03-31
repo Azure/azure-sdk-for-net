@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformSkuRestrictionsReasonCode QuotaId { get; } = new AppPlatformSkuRestrictionsReasonCode(QuotaIdValue);
         /// <summary> NotAvailableForSubscription. </summary>
         public static AppPlatformSkuRestrictionsReasonCode NotAvailableForSubscription { get; } = new AppPlatformSkuRestrictionsReasonCode(NotAvailableForSubscriptionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppPlatformSkuRestrictionsReasonCode"/> values are the same. </summary>
         public static bool operator ==(AppPlatformSkuRestrictionsReasonCode left, AppPlatformSkuRestrictionsReasonCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformSkuRestrictionsReasonCode"/> values are not the same. </summary>

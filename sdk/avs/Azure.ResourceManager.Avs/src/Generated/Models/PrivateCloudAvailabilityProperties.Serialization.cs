@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Avs.Models
             if (Optional.IsDefined(Strategy))
             {
                 writer.WritePropertyName("strategy"u8);
-                writer.WriteStringValue(Strategy.Value.ToString());
+                writer.WriteStringValue(Strategy.Value.ToSerialString());
             }
             if (Optional.IsDefined(Zone))
             {

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBPartitionKind Range { get; } = new CosmosDBPartitionKind(RangeValue);
         /// <summary> MultiHash. </summary>
         public static CosmosDBPartitionKind MultiHash { get; } = new CosmosDBPartitionKind(MultiHashValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CosmosDBPartitionKind"/> values are the same. </summary>
         public static bool operator ==(CosmosDBPartitionKind left, CosmosDBPartitionKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBPartitionKind"/> values are not the same. </summary>

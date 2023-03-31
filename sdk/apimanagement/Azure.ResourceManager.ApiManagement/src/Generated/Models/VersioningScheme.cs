@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static VersioningScheme Query { get; } = new VersioningScheme(QueryValue);
         /// <summary> Header. </summary>
         public static VersioningScheme Header { get; } = new VersioningScheme(HeaderValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VersioningScheme"/> values are the same. </summary>
         public static bool operator ==(VersioningScheme left, VersioningScheme right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VersioningScheme"/> values are not the same. </summary>

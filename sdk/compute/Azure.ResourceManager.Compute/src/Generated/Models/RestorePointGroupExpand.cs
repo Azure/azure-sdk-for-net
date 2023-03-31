@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> restorePoints. </summary>
         public static RestorePointGroupExpand RestorePoints { get; } = new RestorePointGroupExpand(RestorePointsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RestorePointGroupExpand"/> values are the same. </summary>
         public static bool operator ==(RestorePointGroupExpand left, RestorePointGroupExpand right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RestorePointGroupExpand"/> values are not the same. </summary>

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             if (Optional.IsDefined(JobCount))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
+                writer.WriteStringValue(State.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsLogVerboseEnabled))
             {

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             if (Optional.IsDefined(AllocationMethod))
             {
                 writer.WritePropertyName("allocationMethod"u8);
-                writer.WriteStringValue(AllocationMethod.Value.ToString());
+                writer.WriteStringValue(AllocationMethod.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(DnsServers))
             {

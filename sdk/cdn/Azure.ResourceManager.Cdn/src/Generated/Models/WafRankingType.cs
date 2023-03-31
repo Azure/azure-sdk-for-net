@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static WafRankingType CountryOrRegion { get; } = new WafRankingType(CountryOrRegionValue);
         /// <summary> ruleType. </summary>
         public static WafRankingType RuleType { get; } = new WafRankingType(RuleTypeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WafRankingType"/> values are the same. </summary>
         public static bool operator ==(WafRankingType left, WafRankingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WafRankingType"/> values are not the same. </summary>

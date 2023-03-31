@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static CognitiveServicesNetworkRuleAction Allow { get; } = new CognitiveServicesNetworkRuleAction(AllowValue);
         /// <summary> Deny. </summary>
         public static CognitiveServicesNetworkRuleAction Deny { get; } = new CognitiveServicesNetworkRuleAction(DenyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CognitiveServicesNetworkRuleAction"/> values are the same. </summary>
         public static bool operator ==(CognitiveServicesNetworkRuleAction left, CognitiveServicesNetworkRuleAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CognitiveServicesNetworkRuleAction"/> values are not the same. </summary>

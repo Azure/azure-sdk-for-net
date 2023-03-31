@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ContainerServiceTrustedAccessRoleBindingProvisioningState Succeeded { get; } = new ContainerServiceTrustedAccessRoleBindingProvisioningState(SucceededValue);
         /// <summary> Updating. </summary>
         public static ContainerServiceTrustedAccessRoleBindingProvisioningState Updating { get; } = new ContainerServiceTrustedAccessRoleBindingProvisioningState(UpdatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerServiceTrustedAccessRoleBindingProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceTrustedAccessRoleBindingProvisioningState left, ContainerServiceTrustedAccessRoleBindingProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceTrustedAccessRoleBindingProvisioningState"/> values are not the same. </summary>

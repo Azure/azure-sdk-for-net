@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Avs.Models
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
+                writer.WriteStringValue(State.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(VmMembers))
             {
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Avs.Models
             if (Optional.IsDefined(AffinityStrength))
             {
                 writer.WritePropertyName("affinityStrength"u8);
-                writer.WriteStringValue(AffinityStrength.Value.ToString());
+                writer.WriteStringValue(AffinityStrength.Value.ToSerialString());
             }
             if (Optional.IsDefined(AzureHybridBenefitType))
             {
                 writer.WritePropertyName("azureHybridBenefitType"u8);
-                writer.WriteStringValue(AzureHybridBenefitType.Value.ToString());
+                writer.WriteStringValue(AzureHybridBenefitType.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

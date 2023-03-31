@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Communication.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("verificationType"u8);
-            writer.WriteStringValue(VerificationType.ToString());
+            writer.WriteStringValue(VerificationType.ToSerialString());
             writer.WriteEndObject();
         }
     }

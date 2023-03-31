@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(BackendPoolType))
             {
                 writer.WritePropertyName("backendPoolType"u8);
-                writer.WriteStringValue(BackendPoolType.Value.ToString());
+                writer.WriteStringValue(BackendPoolType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

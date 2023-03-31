@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.BotService.Models
         public static BotServicePrivateEndpointConnectionProvisioningState Deleting { get; } = new BotServicePrivateEndpointConnectionProvisioningState(DeletingValue);
         /// <summary> Failed. </summary>
         public static BotServicePrivateEndpointConnectionProvisioningState Failed { get; } = new BotServicePrivateEndpointConnectionProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BotServicePrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(BotServicePrivateEndpointConnectionProvisioningState left, BotServicePrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BotServicePrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>

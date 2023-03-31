@@ -29,6 +29,9 @@ namespace Azure.Communication.ShortCodes.Models
         public static MessageDirectionality OneWay { get; } = new MessageDirectionality(OneWayValue);
         /// <summary> twoWay. </summary>
         public static MessageDirectionality TwoWay { get; } = new MessageDirectionality(TwoWayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MessageDirectionality"/> values are the same. </summary>
         public static bool operator ==(MessageDirectionality left, MessageDirectionality right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MessageDirectionality"/> values are not the same. </summary>

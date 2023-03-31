@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ApiType WebSocket { get; } = new ApiType(WebSocketValue);
         /// <summary> graphql. </summary>
         public static ApiType GraphQL { get; } = new ApiType(GraphQLValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApiType"/> values are the same. </summary>
         public static bool operator ==(ApiType left, ApiType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApiType"/> values are not the same. </summary>

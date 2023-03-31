@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static AppConfigurationActionsRequired None { get; } = new AppConfigurationActionsRequired(NoneValue);
         /// <summary> Recreate. </summary>
         public static AppConfigurationActionsRequired Recreate { get; } = new AppConfigurationActionsRequired(RecreateValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppConfigurationActionsRequired"/> values are the same. </summary>
         public static bool operator ==(AppConfigurationActionsRequired left, AppConfigurationActionsRequired right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppConfigurationActionsRequired"/> values are not the same. </summary>

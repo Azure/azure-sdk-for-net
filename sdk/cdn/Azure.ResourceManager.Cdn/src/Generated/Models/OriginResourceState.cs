@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static OriginResourceState Active { get; } = new OriginResourceState(ActiveValue);
         /// <summary> Deleting. </summary>
         public static OriginResourceState Deleting { get; } = new OriginResourceState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OriginResourceState"/> values are the same. </summary>
         public static bool operator ==(OriginResourceState left, OriginResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OriginResourceState"/> values are not the same. </summary>

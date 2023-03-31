@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> Microsoft.AppConfiguration/configurationStores. </summary>
         public static AppConfigurationResourceType MicrosoftAppConfigurationConfigurationStores { get; } = new AppConfigurationResourceType(MicrosoftAppConfigurationConfigurationStoresValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppConfigurationResourceType"/> values are the same. </summary>
         public static bool operator ==(AppConfigurationResourceType left, AppConfigurationResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppConfigurationResourceType"/> values are not the same. </summary>

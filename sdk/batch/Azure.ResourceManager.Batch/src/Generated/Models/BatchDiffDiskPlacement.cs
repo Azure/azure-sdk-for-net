@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> CacheDisk. </summary>
         public static BatchDiffDiskPlacement CacheDisk { get; } = new BatchDiffDiskPlacement(CacheDiskValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BatchDiffDiskPlacement"/> values are the same. </summary>
         public static bool operator ==(BatchDiffDiskPlacement left, BatchDiffDiskPlacement right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchDiffDiskPlacement"/> values are not the same. </summary>

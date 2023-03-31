@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static ComputePublicIPAddressSkuTier Regional { get; } = new ComputePublicIPAddressSkuTier(RegionalValue);
         /// <summary> Global. </summary>
         public static ComputePublicIPAddressSkuTier Global { get; } = new ComputePublicIPAddressSkuTier(GlobalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ComputePublicIPAddressSkuTier"/> values are the same. </summary>
         public static bool operator ==(ComputePublicIPAddressSkuTier left, ComputePublicIPAddressSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputePublicIPAddressSkuTier"/> values are not the same. </summary>

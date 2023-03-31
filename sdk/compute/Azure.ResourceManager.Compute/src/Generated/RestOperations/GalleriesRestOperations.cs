@@ -209,11 +209,11 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", _apiVersion, true);
             if (select != null)
             {
-                uri.AppendQuery("$select", select.Value.ToString(), true);
+                uri.AppendQuery("$select", select.Value.ToSerialString(), true);
             }
             if (expand != null)
             {
-                uri.AppendQuery("$expand", expand.Value.ToString(), true);
+                uri.AppendQuery("$expand", expand.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

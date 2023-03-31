@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static RoleManagementAssignmentLevel Assignment { get; } = new RoleManagementAssignmentLevel(AssignmentValue);
         /// <summary> Eligibility. </summary>
         public static RoleManagementAssignmentLevel Eligibility { get; } = new RoleManagementAssignmentLevel(EligibilityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RoleManagementAssignmentLevel"/> values are the same. </summary>
         public static bool operator ==(RoleManagementAssignmentLevel left, RoleManagementAssignmentLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoleManagementAssignmentLevel"/> values are not the same. </summary>

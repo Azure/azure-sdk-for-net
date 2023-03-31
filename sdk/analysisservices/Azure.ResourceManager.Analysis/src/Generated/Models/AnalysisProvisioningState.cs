@@ -59,6 +59,9 @@ namespace Azure.ResourceManager.Analysis.Models
         public static AnalysisProvisioningState Preparing { get; } = new AnalysisProvisioningState(PreparingValue);
         /// <summary> Scaling. </summary>
         public static AnalysisProvisioningState Scaling { get; } = new AnalysisProvisioningState(ScalingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AnalysisProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AnalysisProvisioningState left, AnalysisProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalysisProvisioningState"/> values are not the same. </summary>

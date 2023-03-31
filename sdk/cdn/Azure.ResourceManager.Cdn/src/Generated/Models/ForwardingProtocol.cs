@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static ForwardingProtocol HttpsOnly { get; } = new ForwardingProtocol(HttpsOnlyValue);
         /// <summary> MatchRequest. </summary>
         public static ForwardingProtocol MatchRequest { get; } = new ForwardingProtocol(MatchRequestValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ForwardingProtocol"/> values are the same. </summary>
         public static bool operator ==(ForwardingProtocol left, ForwardingProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ForwardingProtocol"/> values are not the same. </summary>

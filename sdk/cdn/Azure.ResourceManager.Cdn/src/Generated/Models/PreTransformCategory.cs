@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static PreTransformCategory UriEncode { get; } = new PreTransformCategory(UriEncodeValue);
         /// <summary> RemoveNulls. </summary>
         public static PreTransformCategory RemoveNulls { get; } = new PreTransformCategory(RemoveNullsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PreTransformCategory"/> values are the same. </summary>
         public static bool operator ==(PreTransformCategory left, PreTransformCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PreTransformCategory"/> values are not the same. </summary>

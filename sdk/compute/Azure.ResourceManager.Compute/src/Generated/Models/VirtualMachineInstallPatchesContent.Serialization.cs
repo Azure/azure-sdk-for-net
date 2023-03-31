@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStringValue(MaximumDuration.Value, "P");
             }
             writer.WritePropertyName("rebootSetting"u8);
-            writer.WriteStringValue(RebootSetting.ToString());
+            writer.WriteStringValue(RebootSetting.ToSerialString());
             if (Optional.IsDefined(WindowsParameters))
             {
                 writer.WritePropertyName("windowsParameters"u8);

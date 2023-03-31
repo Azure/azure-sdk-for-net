@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static MonitorCondition Fired { get; } = new MonitorCondition(FiredValue);
         /// <summary> Resolved. </summary>
         public static MonitorCondition Resolved { get; } = new MonitorCondition(ResolvedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MonitorCondition"/> values are the same. </summary>
         public static bool operator ==(MonitorCondition left, MonitorCondition right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorCondition"/> values are not the same. </summary>

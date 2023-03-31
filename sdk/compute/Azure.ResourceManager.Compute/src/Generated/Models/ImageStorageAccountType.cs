@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static ImageStorageAccountType PremiumLrs { get; } = new ImageStorageAccountType(PremiumLrsValue);
         /// <summary> StandardSSD_LRS. </summary>
         public static ImageStorageAccountType StandardSsdLrs { get; } = new ImageStorageAccountType(StandardSsdLrsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ImageStorageAccountType"/> values are the same. </summary>
         public static bool operator ==(ImageStorageAccountType left, ImageStorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImageStorageAccountType"/> values are not the same. </summary>

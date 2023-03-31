@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> DeliveryRuleUrlPathMatchConditionParameters. </summary>
         public static UriPathMatchConditionType UriPathMatchCondition { get; } = new UriPathMatchConditionType(UriPathMatchConditionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UriPathMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(UriPathMatchConditionType left, UriPathMatchConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UriPathMatchConditionType"/> values are not the same. </summary>

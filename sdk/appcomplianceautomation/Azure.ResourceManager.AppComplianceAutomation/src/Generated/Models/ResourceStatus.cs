@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static ResourceStatus Unhealthy { get; } = new ResourceStatus(UnhealthyValue);
         /// <summary> NotApplicable. </summary>
         public static ResourceStatus NotApplicable { get; } = new ResourceStatus(NotApplicableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResourceStatus"/> values are the same. </summary>
         public static bool operator ==(ResourceStatus left, ResourceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceStatus"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.Communication.MediaComposition
         public static StreamStatus Running { get; } = new StreamStatus(RunningValue);
         /// <summary> stopped. </summary>
         public static StreamStatus Stopped { get; } = new StreamStatus(StoppedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StreamStatus"/> values are the same. </summary>
         public static bool operator ==(StreamStatus left, StreamStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamStatus"/> values are not the same. </summary>

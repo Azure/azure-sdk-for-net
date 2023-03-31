@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ApiManagementServiceSkuType Consumption { get; } = new ApiManagementServiceSkuType(ConsumptionValue);
         /// <summary> Isolated SKU of Api Management. </summary>
         public static ApiManagementServiceSkuType Isolated { get; } = new ApiManagementServiceSkuType(IsolatedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApiManagementServiceSkuType"/> values are the same. </summary>
         public static bool operator ==(ApiManagementServiceSkuType left, ApiManagementServiceSkuType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApiManagementServiceSkuType"/> values are not the same. </summary>

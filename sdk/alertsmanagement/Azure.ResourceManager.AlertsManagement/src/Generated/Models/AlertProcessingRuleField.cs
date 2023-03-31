@@ -56,6 +56,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static AlertProcessingRuleField Description { get; } = new AlertProcessingRuleField(DescriptionValue);
         /// <summary> AlertContext. </summary>
         public static AlertProcessingRuleField AlertContext { get; } = new AlertProcessingRuleField(AlertContextValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AlertProcessingRuleField"/> values are the same. </summary>
         public static bool operator ==(AlertProcessingRuleField left, AlertProcessingRuleField right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AlertProcessingRuleField"/> values are not the same. </summary>

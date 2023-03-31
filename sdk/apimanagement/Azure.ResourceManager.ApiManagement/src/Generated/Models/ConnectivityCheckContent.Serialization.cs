@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(PreferredIPVersion))
             {
                 writer.WritePropertyName("preferredIPVersion"u8);
-                writer.WriteStringValue(PreferredIPVersion.Value.ToString());
+                writer.WriteStringValue(PreferredIPVersion.Value.ToSerialString());
             }
             if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
-                writer.WriteStringValue(Protocol.Value.ToString());
+                writer.WriteStringValue(Protocol.Value.ToSerialString());
             }
             if (Optional.IsDefined(ProtocolConfiguration))
             {

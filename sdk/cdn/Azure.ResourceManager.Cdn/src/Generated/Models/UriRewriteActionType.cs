@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> DeliveryRuleUrlRewriteActionParameters. </summary>
         public static UriRewriteActionType UriRewriteAction { get; } = new UriRewriteActionType(UriRewriteActionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UriRewriteActionType"/> values are the same. </summary>
         public static bool operator ==(UriRewriteActionType left, UriRewriteActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UriRewriteActionType"/> values are not the same. </summary>

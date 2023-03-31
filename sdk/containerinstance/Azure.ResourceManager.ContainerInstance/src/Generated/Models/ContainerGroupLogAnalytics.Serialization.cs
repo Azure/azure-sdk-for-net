@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(LogType))
             {
                 writer.WritePropertyName("logType"u8);
-                writer.WriteStringValue(LogType.Value.ToString());
+                writer.WriteStringValue(LogType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Metadata))
             {

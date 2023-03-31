@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static ScsiControllerType Pvscsi { get; } = new ScsiControllerType(PvscsiValue);
         /// <summary> lsilogicsas. </summary>
         public static ScsiControllerType Lsilogicsas { get; } = new ScsiControllerType(LsilogicsasValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScsiControllerType"/> values are the same. </summary>
         public static bool operator ==(ScsiControllerType left, ScsiControllerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScsiControllerType"/> values are not the same. </summary>

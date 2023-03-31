@@ -48,7 +48,7 @@ namespace Azure.Communication.PhoneNumbers
             uri.AppendPath("/availablePhoneNumbers/countries/", false);
             uri.AppendPath(twoLetterIsoCountryName, true);
             uri.AppendPath("/areaCodes", false);
-            uri.AppendQuery("phoneNumberType", phoneNumberType.ToString(), true);
+            uri.AppendQuery("phoneNumberType", phoneNumberType.ToSerialString(), true);
             if (skip != null)
             {
                 uri.AppendQuery("skip", skip.Value, true);
@@ -59,7 +59,7 @@ namespace Azure.Communication.PhoneNumbers
             }
             if (assignmentType != null)
             {
-                uri.AppendQuery("assignmentType", assignmentType.Value.ToString(), true);
+                uri.AppendQuery("assignmentType", assignmentType.Value.ToSerialString(), true);
             }
             if (locality != null)
             {
@@ -333,11 +333,11 @@ namespace Azure.Communication.PhoneNumbers
             }
             if (phoneNumberType != null)
             {
-                uri.AppendQuery("phoneNumberType", phoneNumberType.Value.ToString(), true);
+                uri.AppendQuery("phoneNumberType", phoneNumberType.Value.ToSerialString(), true);
             }
             if (assignmentType != null)
             {
-                uri.AppendQuery("assignmentType", assignmentType.Value.ToString(), true);
+                uri.AppendQuery("assignmentType", assignmentType.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

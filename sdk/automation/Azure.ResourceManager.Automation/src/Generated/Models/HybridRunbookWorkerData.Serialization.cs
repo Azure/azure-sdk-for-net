@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(WorkerType))
             {
                 writer.WritePropertyName("workerType"u8);
-                writer.WriteStringValue(WorkerType.Value.ToString());
+                writer.WriteStringValue(WorkerType.Value.ToSerialString());
             }
             if (Optional.IsDefined(WorkerName))
             {

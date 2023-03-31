@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static ContainerAppProtocol Http { get; } = new ContainerAppProtocol(HttpValue);
         /// <summary> grpc. </summary>
         public static ContainerAppProtocol Grpc { get; } = new ContainerAppProtocol(GrpcValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerAppProtocol"/> values are the same. </summary>
         public static bool operator ==(ContainerAppProtocol left, ContainerAppProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppProtocol"/> values are not the same. </summary>

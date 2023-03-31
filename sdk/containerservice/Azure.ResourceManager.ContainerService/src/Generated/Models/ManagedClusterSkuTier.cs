@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ManagedClusterSkuTier Paid { get; } = new ManagedClusterSkuTier(PaidValue);
         /// <summary> No guaranteed SLA, no additional charges. Free tier clusters have an SLO of 99.5%. </summary>
         public static ManagedClusterSkuTier Free { get; } = new ManagedClusterSkuTier(FreeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedClusterSkuTier"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterSkuTier left, ManagedClusterSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterSkuTier"/> values are not the same. </summary>

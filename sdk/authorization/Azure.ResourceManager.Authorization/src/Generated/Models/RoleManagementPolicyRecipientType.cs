@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static RoleManagementPolicyRecipientType Approver { get; } = new RoleManagementPolicyRecipientType(ApproverValue);
         /// <summary> Admin. </summary>
         public static RoleManagementPolicyRecipientType Admin { get; } = new RoleManagementPolicyRecipientType(AdminValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RoleManagementPolicyRecipientType"/> values are the same. </summary>
         public static bool operator ==(RoleManagementPolicyRecipientType left, RoleManagementPolicyRecipientType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoleManagementPolicyRecipientType"/> values are not the same. </summary>

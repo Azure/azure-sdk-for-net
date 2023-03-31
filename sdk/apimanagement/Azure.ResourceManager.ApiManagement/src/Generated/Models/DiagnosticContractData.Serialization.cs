@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(AlwaysLog))
             {
                 writer.WritePropertyName("alwaysLog"u8);
-                writer.WriteStringValue(AlwaysLog.Value.ToString());
+                writer.WriteStringValue(AlwaysLog.Value.ToSerialString());
             }
             if (Optional.IsDefined(LoggerId))
             {
@@ -52,17 +52,17 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(HttpCorrelationProtocol))
             {
                 writer.WritePropertyName("httpCorrelationProtocol"u8);
-                writer.WriteStringValue(HttpCorrelationProtocol.Value.ToString());
+                writer.WriteStringValue(HttpCorrelationProtocol.Value.ToSerialString());
             }
             if (Optional.IsDefined(Verbosity))
             {
                 writer.WritePropertyName("verbosity"u8);
-                writer.WriteStringValue(Verbosity.Value.ToString());
+                writer.WriteStringValue(Verbosity.Value.ToSerialString());
             }
             if (Optional.IsDefined(OperationNameFormat))
             {
                 writer.WritePropertyName("operationNameFormat"u8);
-                writer.WriteStringValue(OperationNameFormat.Value.ToString());
+                writer.WriteStringValue(OperationNameFormat.Value.ToSerialString());
             }
             if (Optional.IsDefined(Metrics))
             {

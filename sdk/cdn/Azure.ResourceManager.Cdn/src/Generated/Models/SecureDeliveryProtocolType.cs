@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static SecureDeliveryProtocolType ServerNameIndication { get; } = new SecureDeliveryProtocolType(ServerNameIndicationValue);
         /// <summary> IPBased. </summary>
         public static SecureDeliveryProtocolType IPBased { get; } = new SecureDeliveryProtocolType(IPBasedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecureDeliveryProtocolType"/> values are the same. </summary>
         public static bool operator ==(SecureDeliveryProtocolType left, SecureDeliveryProtocolType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecureDeliveryProtocolType"/> values are not the same. </summary>

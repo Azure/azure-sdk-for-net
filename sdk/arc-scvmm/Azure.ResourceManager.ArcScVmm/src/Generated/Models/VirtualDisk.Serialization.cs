@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             if (Optional.IsDefined(CreateDiffDisk))
             {
                 writer.WritePropertyName("createDiffDisk"u8);
-                writer.WriteStringValue(CreateDiffDisk.Value.ToString());
+                writer.WriteStringValue(CreateDiffDisk.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

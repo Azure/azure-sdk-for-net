@@ -56,6 +56,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ContentFormat OpenApiJsonLink { get; } = new ContentFormat(OpenApiJsonLinkValue);
         /// <summary> The GraphQL API endpoint hosted on a publicly accessible internet address. </summary>
         public static ContentFormat GraphQLLink { get; } = new ContentFormat(GraphQLLinkValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContentFormat"/> values are the same. </summary>
         public static bool operator ==(ContentFormat left, ContentFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContentFormat"/> values are not the same. </summary>

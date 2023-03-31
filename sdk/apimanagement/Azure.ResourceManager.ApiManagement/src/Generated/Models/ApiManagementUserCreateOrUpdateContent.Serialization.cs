@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
+                writer.WriteStringValue(State.Value.ToSerialString());
             }
             if (Optional.IsDefined(Note))
             {
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(AppType))
             {
                 writer.WritePropertyName("appType"u8);
-                writer.WriteStringValue(AppType.Value.ToString());
+                writer.WriteStringValue(AppType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Confirmation))
             {
                 writer.WritePropertyName("confirmation"u8);
-                writer.WriteStringValue(Confirmation.Value.ToString());
+                writer.WriteStringValue(Confirmation.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

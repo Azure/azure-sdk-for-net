@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static HostNameOperator GreaterThanOrEqual { get; } = new HostNameOperator(GreaterThanOrEqualValue);
         /// <summary> RegEx. </summary>
         public static HostNameOperator RegEx { get; } = new HostNameOperator(RegExValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HostNameOperator"/> values are the same. </summary>
         public static bool operator ==(HostNameOperator left, HostNameOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HostNameOperator"/> values are not the same. </summary>

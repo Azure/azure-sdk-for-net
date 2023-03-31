@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CassandraProvisioningState Failed { get; } = new CassandraProvisioningState(FailedValue);
         /// <summary> Canceled. </summary>
         public static CassandraProvisioningState Canceled { get; } = new CassandraProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CassandraProvisioningState"/> values are the same. </summary>
         public static bool operator ==(CassandraProvisioningState left, CassandraProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CassandraProvisioningState"/> values are not the same. </summary>

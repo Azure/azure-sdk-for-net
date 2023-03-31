@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static AppContainersSkuName Consumption { get; } = new AppContainersSkuName(ConsumptionValue);
         /// <summary> Premium SKU of Managed Environment. </summary>
         public static AppContainersSkuName Premium { get; } = new AppContainersSkuName(PremiumValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppContainersSkuName"/> values are the same. </summary>
         public static bool operator ==(AppContainersSkuName left, AppContainersSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppContainersSkuName"/> values are not the same. </summary>

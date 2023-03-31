@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static OperationNameFormat Name { get; } = new OperationNameFormat(NameValue);
         /// <summary> HTTP_VERB URL. </summary>
         public static OperationNameFormat Uri { get; } = new OperationNameFormat(UriValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OperationNameFormat"/> values are the same. </summary>
         public static bool operator ==(OperationNameFormat left, OperationNameFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationNameFormat"/> values are not the same. </summary>

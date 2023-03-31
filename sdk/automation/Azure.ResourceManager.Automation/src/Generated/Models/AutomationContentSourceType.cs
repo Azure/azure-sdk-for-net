@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static AutomationContentSourceType EmbeddedContent { get; } = new AutomationContentSourceType(EmbeddedContentValue);
         /// <summary> uri. </summary>
         public static AutomationContentSourceType Uri { get; } = new AutomationContentSourceType(UriValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutomationContentSourceType"/> values are the same. </summary>
         public static bool operator ==(AutomationContentSourceType left, AutomationContentSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationContentSourceType"/> values are not the same. </summary>

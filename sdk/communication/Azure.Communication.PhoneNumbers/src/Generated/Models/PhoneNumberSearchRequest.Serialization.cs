@@ -16,9 +16,9 @@ namespace Azure.Communication.PhoneNumbers
         {
             writer.WriteStartObject();
             writer.WritePropertyName("phoneNumberType"u8);
-            writer.WriteStringValue(PhoneNumberType.ToString());
+            writer.WriteStringValue(PhoneNumberType.ToSerialString());
             writer.WritePropertyName("assignmentType"u8);
-            writer.WriteStringValue(AssignmentType.ToString());
+            writer.WriteStringValue(AssignmentType.ToSerialString());
             writer.WritePropertyName("capabilities"u8);
             writer.WriteObjectValue(Capabilities);
             if (Optional.IsDefined(AreaCode))

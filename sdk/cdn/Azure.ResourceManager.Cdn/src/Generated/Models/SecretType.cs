@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static SecretType ManagedCertificate { get; } = new SecretType(ManagedCertificateValue);
         /// <summary> AzureFirstPartyManagedCertificate. </summary>
         public static SecretType AzureFirstPartyManagedCertificate { get; } = new SecretType(AzureFirstPartyManagedCertificateValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecretType"/> values are the same. </summary>
         public static bool operator ==(SecretType left, SecretType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecretType"/> values are not the same. </summary>

@@ -38,6 +38,9 @@ namespace Azure.Communication.Chat
         public static ChatMessageType ParticipantAdded { get; } = new ChatMessageType(ParticipantAddedValue);
         /// <summary> participantRemoved. </summary>
         public static ChatMessageType ParticipantRemoved { get; } = new ChatMessageType(ParticipantRemovedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ChatMessageType"/> values are the same. </summary>
         public static bool operator ==(ChatMessageType left, ChatMessageType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ChatMessageType"/> values are not the same. </summary>

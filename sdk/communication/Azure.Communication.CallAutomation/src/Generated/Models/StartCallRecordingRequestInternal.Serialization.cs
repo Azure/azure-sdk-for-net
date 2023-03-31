@@ -25,17 +25,17 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(RecordingContentType))
             {
                 writer.WritePropertyName("recordingContentType"u8);
-                writer.WriteStringValue(RecordingContentType.Value.ToString());
+                writer.WriteStringValue(RecordingContentType.Value.ToSerialString());
             }
             if (Optional.IsDefined(RecordingChannelType))
             {
                 writer.WritePropertyName("recordingChannelType"u8);
-                writer.WriteStringValue(RecordingChannelType.Value.ToString());
+                writer.WriteStringValue(RecordingChannelType.Value.ToSerialString());
             }
             if (Optional.IsDefined(RecordingFormatType))
             {
                 writer.WritePropertyName("recordingFormatType"u8);
-                writer.WriteStringValue(RecordingFormatType.Value.ToString());
+                writer.WriteStringValue(RecordingFormatType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(AudioChannelParticipantOrdering))
             {

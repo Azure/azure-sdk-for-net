@@ -29,6 +29,9 @@ namespace Azure.Communication.Rooms
         public static RoomJoinPolicy InviteOnly { get; } = new RoomJoinPolicy(InviteOnlyValue);
         /// <summary> CommunicationServiceUsers. </summary>
         public static RoomJoinPolicy CommunicationServiceUsers { get; } = new RoomJoinPolicy(CommunicationServiceUsersValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RoomJoinPolicy"/> values are the same. </summary>
         public static bool operator ==(RoomJoinPolicy left, RoomJoinPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoomJoinPolicy"/> values are not the same. </summary>

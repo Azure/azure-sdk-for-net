@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
+                writer.WriteStringValue(Mode.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ExcludedPrincipals))
             {

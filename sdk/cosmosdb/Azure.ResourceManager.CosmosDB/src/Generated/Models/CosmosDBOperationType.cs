@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBOperationType Delete { get; } = new CosmosDBOperationType(DeleteValue);
         /// <summary> SystemOperation. </summary>
         public static CosmosDBOperationType SystemOperation { get; } = new CosmosDBOperationType(SystemOperationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CosmosDBOperationType"/> values are the same. </summary>
         public static bool operator ==(CosmosDBOperationType left, CosmosDBOperationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBOperationType"/> values are not the same. </summary>

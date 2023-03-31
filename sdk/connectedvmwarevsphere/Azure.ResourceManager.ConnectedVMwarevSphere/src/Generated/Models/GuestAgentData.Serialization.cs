@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             if (Optional.IsDefined(ProvisioningAction))
             {
                 writer.WritePropertyName("provisioningAction"u8);
-                writer.WriteStringValue(ProvisioningAction.Value.ToString());
+                writer.WriteStringValue(ProvisioningAction.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

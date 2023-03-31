@@ -18,7 +18,7 @@ namespace Azure.Communication.MediaComposition
             writer.WritePropertyName("teamsJoinUrl"u8);
             writer.WriteStringValue(TeamsJoinUrl);
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             if (Optional.IsDefined(PlaceholderImageUri))
             {
                 writer.WritePropertyName("placeholderImageUri"u8);

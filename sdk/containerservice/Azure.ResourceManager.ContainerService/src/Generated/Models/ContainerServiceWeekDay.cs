@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ContainerServiceWeekDay Friday { get; } = new ContainerServiceWeekDay(FridayValue);
         /// <summary> Saturday. </summary>
         public static ContainerServiceWeekDay Saturday { get; } = new ContainerServiceWeekDay(SaturdayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerServiceWeekDay"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceWeekDay left, ContainerServiceWeekDay right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceWeekDay"/> values are not the same. </summary>

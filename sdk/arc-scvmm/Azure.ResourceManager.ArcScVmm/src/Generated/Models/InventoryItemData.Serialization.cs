@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ArcScVmm
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("inventoryType"u8);
-            writer.WriteStringValue(InventoryType.ToString());
+            writer.WriteStringValue(InventoryType.ToSerialString());
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

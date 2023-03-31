@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static ConflictResolutionMode LastWriterWins { get; } = new ConflictResolutionMode(LastWriterWinsValue);
         /// <summary> Custom. </summary>
         public static ConflictResolutionMode Custom { get; } = new ConflictResolutionMode(CustomValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConflictResolutionMode"/> values are the same. </summary>
         public static bool operator ==(ConflictResolutionMode left, ConflictResolutionMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConflictResolutionMode"/> values are not the same. </summary>

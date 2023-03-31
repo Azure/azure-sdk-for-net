@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Hci.Models
         public static ClusterNodeType FirstParty { get; } = new ClusterNodeType(FirstPartyValue);
         /// <summary> ThirdParty. </summary>
         public static ClusterNodeType ThirdParty { get; } = new ClusterNodeType(ThirdPartyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ClusterNodeType"/> values are the same. </summary>
         public static bool operator ==(ClusterNodeType left, ClusterNodeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterNodeType"/> values are not the same. </summary>

@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static RoleManagementScheduleRequestType SelfExtend { get; } = new RoleManagementScheduleRequestType(SelfExtendValue);
         /// <summary> SelfRenew. </summary>
         public static RoleManagementScheduleRequestType SelfRenew { get; } = new RoleManagementScheduleRequestType(SelfRenewValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RoleManagementScheduleRequestType"/> values are the same. </summary>
         public static bool operator ==(RoleManagementScheduleRequestType left, RoleManagementScheduleRequestType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoleManagementScheduleRequestType"/> values are not the same. </summary>

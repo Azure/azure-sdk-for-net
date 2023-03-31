@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WriteStartArray();
                 foreach (var item in EnablementRules)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("ruleType"u8);
-            writer.WriteStringValue(RuleType.ToString());
+            writer.WriteStringValue(RuleType.ToSerialString());
             if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);

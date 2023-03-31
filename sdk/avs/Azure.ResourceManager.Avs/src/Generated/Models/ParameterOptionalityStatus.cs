@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static ParameterOptionalityStatus Optional { get; } = new ParameterOptionalityStatus(OptionalValue);
         /// <summary> Required. </summary>
         public static ParameterOptionalityStatus Required { get; } = new ParameterOptionalityStatus(RequiredValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ParameterOptionalityStatus"/> values are the same. </summary>
         public static bool operator ==(ParameterOptionalityStatus left, ParameterOptionalityStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ParameterOptionalityStatus"/> values are not the same. </summary>

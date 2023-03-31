@@ -16,9 +16,9 @@ namespace Azure.Communication.PhoneNumbers
         {
             writer.WriteStartObject();
             writer.WritePropertyName("calling"u8);
-            writer.WriteStringValue(Calling.ToString());
+            writer.WriteStringValue(Calling.ToSerialString());
             writer.WritePropertyName("sms"u8);
-            writer.WriteStringValue(Sms.ToString());
+            writer.WriteStringValue(Sms.ToSerialString());
             writer.WriteEndObject();
         }
 

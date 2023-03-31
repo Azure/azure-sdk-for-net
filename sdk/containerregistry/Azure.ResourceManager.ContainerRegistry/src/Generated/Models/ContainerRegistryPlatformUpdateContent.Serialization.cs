@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(OS))
             {
                 writer.WritePropertyName("os"u8);
-                writer.WriteStringValue(OS.Value.ToString());
+                writer.WriteStringValue(OS.Value.ToSerialString());
             }
             if (Optional.IsDefined(Architecture))
             {
                 writer.WritePropertyName("architecture"u8);
-                writer.WriteStringValue(Architecture.Value.ToString());
+                writer.WriteStringValue(Architecture.Value.ToSerialString());
             }
             if (Optional.IsDefined(Variant))
             {
                 writer.WritePropertyName("variant"u8);
-                writer.WriteStringValue(Variant.Value.ToString());
+                writer.WriteStringValue(Variant.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

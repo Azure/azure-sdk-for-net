@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(IndexingMode))
             {
                 writer.WritePropertyName("indexingMode"u8);
-                writer.WriteStringValue(IndexingMode.Value.ToString());
+                writer.WriteStringValue(IndexingMode.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(IncludedPaths))
             {

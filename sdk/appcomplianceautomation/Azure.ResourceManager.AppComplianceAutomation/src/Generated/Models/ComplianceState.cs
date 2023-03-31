@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static ComplianceState Healthy { get; } = new ComplianceState(HealthyValue);
         /// <summary> Unhealthy. </summary>
         public static ComplianceState Unhealthy { get; } = new ComplianceState(UnhealthyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ComplianceState"/> values are the same. </summary>
         public static bool operator ==(ComplianceState left, ComplianceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComplianceState"/> values are not the same. </summary>

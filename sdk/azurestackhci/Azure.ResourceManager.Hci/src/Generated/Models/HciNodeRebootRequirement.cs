@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Hci.Models
         public static HciNodeRebootRequirement True { get; } = new HciNodeRebootRequirement(TrueValue);
         /// <summary> False. </summary>
         public static HciNodeRebootRequirement False { get; } = new HciNodeRebootRequirement(FalseValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HciNodeRebootRequirement"/> values are the same. </summary>
         public static bool operator ==(HciNodeRebootRequirement left, HciNodeRebootRequirement right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HciNodeRebootRequirement"/> values are not the same. </summary>

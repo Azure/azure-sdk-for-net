@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBServiceSize CosmosD8S { get; } = new CosmosDBServiceSize(CosmosD8SValue);
         /// <summary> Cosmos.D16s. </summary>
         public static CosmosDBServiceSize CosmosD16S { get; } = new CosmosDBServiceSize(CosmosD16SValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CosmosDBServiceSize"/> values are the same. </summary>
         public static bool operator ==(CosmosDBServiceSize left, CosmosDBServiceSize right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBServiceSize"/> values are not the same. </summary>

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static WorkloadNetworkPublicIPProvisioningState Updating { get; } = new WorkloadNetworkPublicIPProvisioningState(UpdatingValue);
         /// <summary> Canceled. </summary>
         public static WorkloadNetworkPublicIPProvisioningState Canceled { get; } = new WorkloadNetworkPublicIPProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WorkloadNetworkPublicIPProvisioningState"/> values are the same. </summary>
         public static bool operator ==(WorkloadNetworkPublicIPProvisioningState left, WorkloadNetworkPublicIPProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkPublicIPProvisioningState"/> values are not the same. </summary>

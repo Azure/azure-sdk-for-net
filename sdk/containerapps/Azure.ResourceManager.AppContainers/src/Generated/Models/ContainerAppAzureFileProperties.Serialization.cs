@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(AccessMode))
             {
                 writer.WritePropertyName("accessMode"u8);
-                writer.WriteStringValue(AccessMode.Value.ToString());
+                writer.WriteStringValue(AccessMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(ShareName))
             {

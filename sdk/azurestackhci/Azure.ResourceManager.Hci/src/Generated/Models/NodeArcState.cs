@@ -77,6 +77,9 @@ namespace Azure.ResourceManager.Hci.Models
         public static NodeArcState Provisioning { get; } = new NodeArcState(ProvisioningValue);
         /// <summary> DisableInProgress. </summary>
         public static NodeArcState DisableInProgress { get; } = new NodeArcState(DisableInProgressValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NodeArcState"/> values are the same. </summary>
         public static bool operator ==(NodeArcState left, NodeArcState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NodeArcState"/> values are not the same. </summary>

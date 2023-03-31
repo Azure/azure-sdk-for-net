@@ -25,7 +25,7 @@ namespace Azure.AI.AnomalyDetector
                 if (DataSchema != null)
                 {
                     writer.WritePropertyName("dataSchema"u8);
-                    writer.WriteStringValue(DataSchema.Value.ToString());
+                    writer.WriteStringValue(DataSchema.Value.ToSerialString());
                 }
                 else
                 {

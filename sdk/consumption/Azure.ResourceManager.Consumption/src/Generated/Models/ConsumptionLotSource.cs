@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Consumption.Models
         public static ConsumptionLotSource PromotionalCredit { get; } = new ConsumptionLotSource(PromotionalCreditValue);
         /// <summary> ConsumptionCommitment. </summary>
         public static ConsumptionLotSource ConsumptionCommitment { get; } = new ConsumptionLotSource(ConsumptionCommitmentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConsumptionLotSource"/> values are the same. </summary>
         public static bool operator ==(ConsumptionLotSource left, ConsumptionLotSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConsumptionLotSource"/> values are not the same. </summary>

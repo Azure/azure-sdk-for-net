@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         public static AgFoodPlatformPrivateEndpointServiceConnectionStatus Approved { get; } = new AgFoodPlatformPrivateEndpointServiceConnectionStatus(ApprovedValue);
         /// <summary> Rejected. </summary>
         public static AgFoodPlatformPrivateEndpointServiceConnectionStatus Rejected { get; } = new AgFoodPlatformPrivateEndpointServiceConnectionStatus(RejectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AgFoodPlatformPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(AgFoodPlatformPrivateEndpointServiceConnectionStatus left, AgFoodPlatformPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgFoodPlatformPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>

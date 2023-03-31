@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Consumption.Models
         public static BudgetTimeGrainType BillingQuarter { get; } = new BudgetTimeGrainType(BillingQuarterValue);
         /// <summary> BillingAnnual. </summary>
         public static BudgetTimeGrainType BillingAnnual { get; } = new BudgetTimeGrainType(BillingAnnualValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BudgetTimeGrainType"/> values are the same. </summary>
         public static bool operator ==(BudgetTimeGrainType left, BudgetTimeGrainType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BudgetTimeGrainType"/> values are not the same. </summary>

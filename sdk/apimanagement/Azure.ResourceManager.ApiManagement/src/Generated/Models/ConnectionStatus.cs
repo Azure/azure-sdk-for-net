@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ConnectionStatus Disconnected { get; } = new ConnectionStatus(DisconnectedValue);
         /// <summary> Degraded. </summary>
         public static ConnectionStatus Degraded { get; } = new ConnectionStatus(DegradedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(ConnectionStatus left, ConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectionStatus"/> values are not the same. </summary>

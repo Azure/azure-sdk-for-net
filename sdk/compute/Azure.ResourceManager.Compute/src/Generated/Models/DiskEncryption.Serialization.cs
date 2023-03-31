@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(EncryptionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(EncryptionType.Value.ToString());
+                writer.WriteStringValue(EncryptionType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

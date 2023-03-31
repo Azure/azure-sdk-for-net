@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(GroupType))
             {
                 writer.WritePropertyName("groupType"u8);
-                writer.WriteStringValue(GroupType.Value.ToString());
+                writer.WriteStringValue(GroupType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Credential))
             {

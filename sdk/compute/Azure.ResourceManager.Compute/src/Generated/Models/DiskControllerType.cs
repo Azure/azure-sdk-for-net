@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static DiskControllerType Scsi { get; } = new DiskControllerType(ScsiValue);
         /// <summary> NVMe. </summary>
         public static DiskControllerType NVMe { get; } = new DiskControllerType(NVMeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DiskControllerType"/> values are the same. </summary>
         public static bool operator ==(DiskControllerType left, DiskControllerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskControllerType"/> values are not the same. </summary>

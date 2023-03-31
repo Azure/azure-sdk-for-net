@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static MachineExtensionStatusLevelType Warning { get; } = new MachineExtensionStatusLevelType(WarningValue);
         /// <summary> Error. </summary>
         public static MachineExtensionStatusLevelType Error { get; } = new MachineExtensionStatusLevelType(ErrorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineExtensionStatusLevelType"/> values are the same. </summary>
         public static bool operator ==(MachineExtensionStatusLevelType left, MachineExtensionStatusLevelType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineExtensionStatusLevelType"/> values are not the same. </summary>

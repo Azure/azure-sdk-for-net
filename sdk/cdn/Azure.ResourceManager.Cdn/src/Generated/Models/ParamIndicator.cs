@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static ParamIndicator KeyId { get; } = new ParamIndicator(KeyIdValue);
         /// <summary> Signature. </summary>
         public static ParamIndicator Signature { get; } = new ParamIndicator(SignatureValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ParamIndicator"/> values are the same. </summary>
         public static bool operator ==(ParamIndicator left, ParamIndicator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ParamIndicator"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static RuleIsCompressionEnabled Enabled { get; } = new RuleIsCompressionEnabled(EnabledValue);
         /// <summary> Disabled. </summary>
         public static RuleIsCompressionEnabled Disabled { get; } = new RuleIsCompressionEnabled(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RuleIsCompressionEnabled"/> values are the same. </summary>
         public static bool operator ==(RuleIsCompressionEnabled left, RuleIsCompressionEnabled right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RuleIsCompressionEnabled"/> values are not the same. </summary>

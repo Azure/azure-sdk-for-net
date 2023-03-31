@@ -33,7 +33,7 @@ namespace Azure.AI.AnomalyDetector
                 if (FillNAMethod != null)
                 {
                     writer.WritePropertyName("fillNAMethod"u8);
-                    writer.WriteStringValue(FillNAMethod.Value.ToString());
+                    writer.WriteStringValue(FillNAMethod.Value.ToSerialString());
                 }
                 else
                 {

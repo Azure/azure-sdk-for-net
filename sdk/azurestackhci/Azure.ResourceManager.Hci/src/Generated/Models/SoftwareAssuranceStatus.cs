@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Hci.Models
         public static SoftwareAssuranceStatus Enabled { get; } = new SoftwareAssuranceStatus(EnabledValue);
         /// <summary> Disabled. </summary>
         public static SoftwareAssuranceStatus Disabled { get; } = new SoftwareAssuranceStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SoftwareAssuranceStatus"/> values are the same. </summary>
         public static bool operator ==(SoftwareAssuranceStatus left, SoftwareAssuranceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SoftwareAssuranceStatus"/> values are not the same. </summary>

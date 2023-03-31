@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ContainerServiceOSType Linux { get; } = new ContainerServiceOSType(LinuxValue);
         /// <summary> Use Windows. </summary>
         public static ContainerServiceOSType Windows { get; } = new ContainerServiceOSType(WindowsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerServiceOSType"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceOSType left, ContainerServiceOSType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceOSType"/> values are not the same. </summary>

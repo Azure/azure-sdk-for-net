@@ -146,6 +146,9 @@ namespace Azure.Communication.ShortCodes.Models
         public static MessageContentCategory TwoFactorAuthentication { get; } = new MessageContentCategory(TwoFactorAuthenticationValue);
         /// <summary> other. </summary>
         public static MessageContentCategory Other { get; } = new MessageContentCategory(OtherValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MessageContentCategory"/> values are the same. </summary>
         public static bool operator ==(MessageContentCategory left, MessageContentCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MessageContentCategory"/> values are not the same. </summary>

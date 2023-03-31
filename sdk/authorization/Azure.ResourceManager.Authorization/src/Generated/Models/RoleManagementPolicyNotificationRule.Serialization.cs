@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.Authorization.Models
             if (Optional.IsDefined(NotificationDeliveryType))
             {
                 writer.WritePropertyName("notificationType"u8);
-                writer.WriteStringValue(NotificationDeliveryType.Value.ToString());
+                writer.WriteStringValue(NotificationDeliveryType.Value.ToSerialString());
             }
             if (Optional.IsDefined(NotificationLevel))
             {
                 writer.WritePropertyName("notificationLevel"u8);
-                writer.WriteStringValue(NotificationLevel.Value.ToString());
+                writer.WriteStringValue(NotificationLevel.Value.ToSerialString());
             }
             if (Optional.IsDefined(RecipientType))
             {
                 writer.WritePropertyName("recipientType"u8);
-                writer.WriteStringValue(RecipientType.Value.ToString());
+                writer.WriteStringValue(RecipientType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(NotificationRecipients))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("ruleType"u8);
-            writer.WriteStringValue(RuleType.ToString());
+            writer.WriteStringValue(RuleType.ToSerialString());
             if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);

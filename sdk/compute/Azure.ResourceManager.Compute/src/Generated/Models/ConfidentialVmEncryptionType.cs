@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static ConfidentialVmEncryptionType EncryptedWithPmk { get; } = new ConfidentialVmEncryptionType(EncryptedWithPmkValue);
         /// <summary> EncryptedWithCmk. </summary>
         public static ConfidentialVmEncryptionType EncryptedWithCmk { get; } = new ConfidentialVmEncryptionType(EncryptedWithCmkValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConfidentialVmEncryptionType"/> values are the same. </summary>
         public static bool operator ==(ConfidentialVmEncryptionType left, ConfidentialVmEncryptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConfidentialVmEncryptionType"/> values are not the same. </summary>

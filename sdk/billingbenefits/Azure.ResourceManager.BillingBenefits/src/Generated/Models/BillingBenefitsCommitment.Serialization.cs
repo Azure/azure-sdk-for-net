@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(Grain))
             {
                 writer.WritePropertyName("grain"u8);
-                writer.WriteStringValue(Grain.Value.ToString());
+                writer.WriteStringValue(Grain.Value.ToSerialString());
             }
             if (Optional.IsDefined(CurrencyCode))
             {

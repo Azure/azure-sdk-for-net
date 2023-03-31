@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> DeliveryRuleOriginGroupOverrideActionParameters. </summary>
         public static OriginGroupOverrideActionType OriginGroupOverrideAction { get; } = new OriginGroupOverrideActionType(OriginGroupOverrideActionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OriginGroupOverrideActionType"/> values are the same. </summary>
         public static bool operator ==(OriginGroupOverrideActionType left, OriginGroupOverrideActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OriginGroupOverrideActionType"/> values are not the same. </summary>

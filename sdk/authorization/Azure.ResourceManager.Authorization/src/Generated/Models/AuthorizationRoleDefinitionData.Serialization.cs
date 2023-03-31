@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Authorization
             if (Optional.IsDefined(RoleType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(RoleType.Value.ToString());
+                writer.WriteStringValue(RoleType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Permissions))
             {

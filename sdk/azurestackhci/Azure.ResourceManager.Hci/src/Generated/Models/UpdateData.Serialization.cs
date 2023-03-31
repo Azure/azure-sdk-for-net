@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Hci
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
+                writer.WriteStringValue(State.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Prerequisites))
             {
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.Hci
             if (Optional.IsDefined(RebootRequired))
             {
                 writer.WritePropertyName("rebootRequired"u8);
-                writer.WriteStringValue(RebootRequired.Value.ToString());
+                writer.WriteStringValue(RebootRequired.Value.ToSerialString());
             }
             if (Optional.IsDefined(HealthState))
             {
                 writer.WritePropertyName("healthState"u8);
-                writer.WriteStringValue(HealthState.Value.ToString());
+                writer.WriteStringValue(HealthState.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(HealthCheckResult))
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Hci
             if (Optional.IsDefined(AvailabilityType))
             {
                 writer.WritePropertyName("availabilityType"u8);
-                writer.WriteStringValue(AvailabilityType.Value.ToString());
+                writer.WriteStringValue(AvailabilityType.Value.ToSerialString());
             }
             if (Optional.IsDefined(PackageType))
             {

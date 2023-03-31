@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static ConfidentialLedgerType Public { get; } = new ConfidentialLedgerType(PublicValue);
         /// <summary> Private. </summary>
         public static ConfidentialLedgerType Private { get; } = new ConfidentialLedgerType(PrivateValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConfidentialLedgerType"/> values are the same. </summary>
         public static bool operator ==(ConfidentialLedgerType left, ConfidentialLedgerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConfidentialLedgerType"/> values are not the same. </summary>

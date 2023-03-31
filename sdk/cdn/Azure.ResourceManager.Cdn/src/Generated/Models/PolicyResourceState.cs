@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static PolicyResourceState Disabled { get; } = new PolicyResourceState(DisabledValue);
         /// <summary> Deleting. </summary>
         public static PolicyResourceState Deleting { get; } = new PolicyResourceState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PolicyResourceState"/> values are the same. </summary>
         public static bool operator ==(PolicyResourceState left, PolicyResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyResourceState"/> values are not the same. </summary>

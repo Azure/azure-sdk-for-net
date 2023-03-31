@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(SourceControlType))
             {
                 writer.WritePropertyName("sourceControlType"u8);
-                writer.WriteStringValue(SourceControlType.Value.ToString());
+                writer.WriteStringValue(SourceControlType.Value.ToSerialString());
             }
             if (Optional.IsDefined(RepositoryUri))
             {

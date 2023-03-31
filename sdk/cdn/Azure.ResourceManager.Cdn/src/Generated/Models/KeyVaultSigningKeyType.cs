@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> KeyVaultSigningKeyParameters. </summary>
         public static KeyVaultSigningKeyType KeyVaultSigningKey { get; } = new KeyVaultSigningKeyType(KeyVaultSigningKeyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KeyVaultSigningKeyType"/> values are the same. </summary>
         public static bool operator ==(KeyVaultSigningKeyType left, KeyVaultSigningKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyVaultSigningKeyType"/> values are not the same. </summary>

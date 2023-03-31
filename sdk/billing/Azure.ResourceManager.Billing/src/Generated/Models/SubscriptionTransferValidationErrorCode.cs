@@ -95,6 +95,9 @@ namespace Azure.ResourceManager.Billing.Models
         public static SubscriptionTransferValidationErrorCode SubscriptionNotActive { get; } = new SubscriptionTransferValidationErrorCode(SubscriptionNotActiveValue);
         /// <summary> SubscriptionTypeNotSupported. </summary>
         public static SubscriptionTransferValidationErrorCode SubscriptionTypeNotSupported { get; } = new SubscriptionTransferValidationErrorCode(SubscriptionTypeNotSupportedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SubscriptionTransferValidationErrorCode"/> values are the same. </summary>
         public static bool operator ==(SubscriptionTransferValidationErrorCode left, SubscriptionTransferValidationErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SubscriptionTransferValidationErrorCode"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBAccountCreateMode Default { get; } = new CosmosDBAccountCreateMode(DefaultValue);
         /// <summary> Restore. </summary>
         public static CosmosDBAccountCreateMode Restore { get; } = new CosmosDBAccountCreateMode(RestoreValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CosmosDBAccountCreateMode"/> values are the same. </summary>
         public static bool operator ==(CosmosDBAccountCreateMode left, CosmosDBAccountCreateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBAccountCreateMode"/> values are not the same. </summary>

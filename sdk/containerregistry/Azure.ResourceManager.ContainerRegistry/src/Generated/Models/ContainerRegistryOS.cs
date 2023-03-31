@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryOS Windows { get; } = new ContainerRegistryOS(WindowsValue);
         /// <summary> Linux. </summary>
         public static ContainerRegistryOS Linux { get; } = new ContainerRegistryOS(LinuxValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistryOS"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryOS left, ContainerRegistryOS right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryOS"/> values are not the same. </summary>

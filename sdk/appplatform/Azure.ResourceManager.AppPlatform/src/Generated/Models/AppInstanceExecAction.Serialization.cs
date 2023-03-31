@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ProbeActionType.ToString());
+            writer.WriteStringValue(ProbeActionType.ToSerialString());
             writer.WriteEndObject();
         }
 

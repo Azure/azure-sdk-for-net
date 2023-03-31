@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static ProfileProvisioningState Deleting { get; } = new ProfileProvisioningState(DeletingValue);
         /// <summary> Creating. </summary>
         public static ProfileProvisioningState Creating { get; } = new ProfileProvisioningState(CreatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProfileProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ProfileProvisioningState left, ProfileProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProfileProvisioningState"/> values are not the same. </summary>

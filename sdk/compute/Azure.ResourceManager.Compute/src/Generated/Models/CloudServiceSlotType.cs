@@ -33,6 +33,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static CloudServiceSlotType Production { get; } = new CloudServiceSlotType(ProductionValue);
         /// <summary> Staging. </summary>
         public static CloudServiceSlotType Staging { get; } = new CloudServiceSlotType(StagingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CloudServiceSlotType"/> values are the same. </summary>
         public static bool operator ==(CloudServiceSlotType left, CloudServiceSlotType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CloudServiceSlotType"/> values are not the same. </summary>

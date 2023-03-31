@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public static BillingBenefitsAppliedScopeType Shared { get; } = new BillingBenefitsAppliedScopeType(SharedValue);
         /// <summary> ManagementGroup. </summary>
         public static BillingBenefitsAppliedScopeType ManagementGroup { get; } = new BillingBenefitsAppliedScopeType(ManagementGroupValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BillingBenefitsAppliedScopeType"/> values are the same. </summary>
         public static bool operator ==(BillingBenefitsAppliedScopeType left, BillingBenefitsAppliedScopeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingBenefitsAppliedScopeType"/> values are not the same. </summary>

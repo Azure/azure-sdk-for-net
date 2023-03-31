@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static SourceControlStreamType Error { get; } = new SourceControlStreamType(ErrorValue);
         /// <summary> Output. </summary>
         public static SourceControlStreamType Output { get; } = new SourceControlStreamType(OutputValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SourceControlStreamType"/> values are the same. </summary>
         public static bool operator ==(SourceControlStreamType left, SourceControlStreamType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SourceControlStreamType"/> values are not the same. </summary>

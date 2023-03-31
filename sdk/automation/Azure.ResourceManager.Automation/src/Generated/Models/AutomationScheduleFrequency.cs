@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static AutomationScheduleFrequency Month { get; } = new AutomationScheduleFrequency(MonthValue);
         /// <summary> The minimum allowed interval for Minute schedules is 15 minutes. </summary>
         public static AutomationScheduleFrequency Minute { get; } = new AutomationScheduleFrequency(MinuteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutomationScheduleFrequency"/> values are the same. </summary>
         public static bool operator ==(AutomationScheduleFrequency left, AutomationScheduleFrequency right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationScheduleFrequency"/> values are not the same. </summary>

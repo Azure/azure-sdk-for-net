@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static AvsPrivateCloudClusterProvisioningState Updating { get; } = new AvsPrivateCloudClusterProvisioningState(UpdatingValue);
         /// <summary> Canceled. </summary>
         public static AvsPrivateCloudClusterProvisioningState Canceled { get; } = new AvsPrivateCloudClusterProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AvsPrivateCloudClusterProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AvsPrivateCloudClusterProvisioningState left, AvsPrivateCloudClusterProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvsPrivateCloudClusterProvisioningState"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.Communication.CallingServer
         public static CallLocatorKindInternal GroupCallLocator { get; } = new CallLocatorKindInternal(GroupCallLocatorValue);
         /// <summary> serverCallLocator. </summary>
         public static CallLocatorKindInternal ServerCallLocator { get; } = new CallLocatorKindInternal(ServerCallLocatorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CallLocatorKindInternal"/> values are the same. </summary>
         public static bool operator ==(CallLocatorKindInternal left, CallLocatorKindInternal right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CallLocatorKindInternal"/> values are not the same. </summary>

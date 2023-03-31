@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static ExpressRouteAuthorizationProvisioningState Updating { get; } = new ExpressRouteAuthorizationProvisioningState(UpdatingValue);
         /// <summary> Canceled. </summary>
         public static ExpressRouteAuthorizationProvisioningState Canceled { get; } = new ExpressRouteAuthorizationProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ExpressRouteAuthorizationProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ExpressRouteAuthorizationProvisioningState left, ExpressRouteAuthorizationProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressRouteAuthorizationProvisioningState"/> values are not the same. </summary>

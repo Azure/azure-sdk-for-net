@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(LoggerType))
             {
                 writer.WritePropertyName("loggerType"u8);
-                writer.WriteStringValue(LoggerType.Value.ToString());
+                writer.WriteStringValue(LoggerType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Description))
             {

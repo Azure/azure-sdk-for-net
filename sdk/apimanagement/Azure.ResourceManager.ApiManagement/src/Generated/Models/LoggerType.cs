@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static LoggerType ApplicationInsights { get; } = new LoggerType(ApplicationInsightsValue);
         /// <summary> Azure Monitor. </summary>
         public static LoggerType AzureMonitor { get; } = new LoggerType(AzureMonitorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LoggerType"/> values are the same. </summary>
         public static bool operator ==(LoggerType left, LoggerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LoggerType"/> values are not the same. </summary>

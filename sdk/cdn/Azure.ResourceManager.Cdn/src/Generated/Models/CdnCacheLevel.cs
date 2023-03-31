@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> All. </summary>
         public static CdnCacheLevel All { get; } = new CdnCacheLevel(AllValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CdnCacheLevel"/> values are the same. </summary>
         public static bool operator ==(CdnCacheLevel left, CdnCacheLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CdnCacheLevel"/> values are not the same. </summary>

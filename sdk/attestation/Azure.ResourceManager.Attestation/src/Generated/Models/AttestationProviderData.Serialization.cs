@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Attestation
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
             if (Optional.IsDefined(AttestUri))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Attestation
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

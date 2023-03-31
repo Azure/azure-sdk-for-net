@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static ContainerAppNameUnavailableReason Invalid { get; } = new ContainerAppNameUnavailableReason(InvalidValue);
         /// <summary> AlreadyExists. </summary>
         public static ContainerAppNameUnavailableReason AlreadyExists { get; } = new ContainerAppNameUnavailableReason(AlreadyExistsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerAppNameUnavailableReason"/> values are the same. </summary>
         public static bool operator ==(ContainerAppNameUnavailableReason left, ContainerAppNameUnavailableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppNameUnavailableReason"/> values are not the same. </summary>

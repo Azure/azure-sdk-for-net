@@ -32,6 +32,9 @@ namespace Azure.Communication
         public static CommunicationCloudEnvironmentModel Dod { get; } = new CommunicationCloudEnvironmentModel(DodValue);
         /// <summary> gcch. </summary>
         public static CommunicationCloudEnvironmentModel Gcch { get; } = new CommunicationCloudEnvironmentModel(GcchValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CommunicationCloudEnvironmentModel"/> values are the same. </summary>
         public static bool operator ==(CommunicationCloudEnvironmentModel left, CommunicationCloudEnvironmentModel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommunicationCloudEnvironmentModel"/> values are not the same. </summary>

@@ -27,6 +27,9 @@ namespace Azure.Communication.Identity
 
         /// <summary> chat. </summary>
         public static CommunicationTokenScope Chat { get; } = new CommunicationTokenScope(ChatValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CommunicationTokenScope"/> values are the same. </summary>
         public static bool operator ==(CommunicationTokenScope left, CommunicationTokenScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommunicationTokenScope"/> values are not the same. </summary>

@@ -62,6 +62,9 @@ namespace Azure.Containers.ContainerRegistry
         public static ArtifactArchitecture S390X { get; } = new ArtifactArchitecture(S390XValue);
         /// <summary> Wasm. </summary>
         public static ArtifactArchitecture Wasm { get; } = new ArtifactArchitecture(WasmValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ArtifactArchitecture"/> values are the same. </summary>
         public static bool operator ==(ArtifactArchitecture left, ArtifactArchitecture right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArtifactArchitecture"/> values are not the same. </summary>

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Hci
             if (Optional.IsDefined(HealthState))
             {
                 writer.WritePropertyName("healthState"u8);
-                writer.WriteStringValue(HealthState.Value.ToString());
+                writer.WriteStringValue(HealthState.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(HealthCheckResult))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Hci
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
+                writer.WriteStringValue(State.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

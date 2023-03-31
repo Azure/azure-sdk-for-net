@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBBackupStorageRedundancy Local { get; } = new CosmosDBBackupStorageRedundancy(LocalValue);
         /// <summary> Zone. </summary>
         public static CosmosDBBackupStorageRedundancy Zone { get; } = new CosmosDBBackupStorageRedundancy(ZoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CosmosDBBackupStorageRedundancy"/> values are the same. </summary>
         public static bool operator ==(CosmosDBBackupStorageRedundancy left, CosmosDBBackupStorageRedundancy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBBackupStorageRedundancy"/> values are not the same. </summary>

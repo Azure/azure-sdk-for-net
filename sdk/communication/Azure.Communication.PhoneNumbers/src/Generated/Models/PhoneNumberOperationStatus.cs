@@ -35,6 +35,9 @@ namespace Azure.Communication.PhoneNumbers
         public static PhoneNumberOperationStatus Succeeded { get; } = new PhoneNumberOperationStatus(SucceededValue);
         /// <summary> failed. </summary>
         public static PhoneNumberOperationStatus Failed { get; } = new PhoneNumberOperationStatus(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PhoneNumberOperationStatus"/> values are the same. </summary>
         public static bool operator ==(PhoneNumberOperationStatus left, PhoneNumberOperationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PhoneNumberOperationStatus"/> values are not the same. </summary>

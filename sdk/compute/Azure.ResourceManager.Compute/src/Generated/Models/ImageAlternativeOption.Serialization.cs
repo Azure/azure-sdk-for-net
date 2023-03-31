@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(AlternativeType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(AlternativeType.Value.ToString());
+                writer.WriteStringValue(AlternativeType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Value))
             {

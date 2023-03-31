@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> DeliveryRuleIsDeviceConditionParameters. </summary>
         public static IsDeviceMatchConditionType IsDeviceCondition { get; } = new IsDeviceMatchConditionType(IsDeviceConditionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IsDeviceMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(IsDeviceMatchConditionType left, IsDeviceMatchConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IsDeviceMatchConditionType"/> values are not the same. </summary>

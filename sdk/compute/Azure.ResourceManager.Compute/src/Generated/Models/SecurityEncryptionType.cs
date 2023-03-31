@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static SecurityEncryptionType VmGuestStateOnly { get; } = new SecurityEncryptionType(VmGuestStateOnlyValue);
         /// <summary> DiskWithVMGuestState. </summary>
         public static SecurityEncryptionType DiskWithVmGuestState { get; } = new SecurityEncryptionType(DiskWithVmGuestStateValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityEncryptionType"/> values are the same. </summary>
         public static bool operator ==(SecurityEncryptionType left, SecurityEncryptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityEncryptionType"/> values are not the same. </summary>

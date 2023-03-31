@@ -29,6 +29,9 @@ namespace Azure.Communication.CallAutomation
         public static GenderType Male { get; } = new GenderType(MaleValue);
         /// <summary> female. </summary>
         public static GenderType Female { get; } = new GenderType(FemaleValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GenderType"/> values are the same. </summary>
         public static bool operator ==(GenderType left, GenderType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GenderType"/> values are not the same. </summary>

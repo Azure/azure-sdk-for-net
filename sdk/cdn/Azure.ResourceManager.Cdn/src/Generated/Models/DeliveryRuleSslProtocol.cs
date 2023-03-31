@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string Tls1_0Value = "TLSv1";
         private const string Tls1_1Value = "TLSv1.1";
         private const string Tls1_2Value = "TLSv1.2";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DeliveryRuleSslProtocol"/> values are the same. </summary>
         public static bool operator ==(DeliveryRuleSslProtocol left, DeliveryRuleSslProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeliveryRuleSslProtocol"/> values are not the same. </summary>

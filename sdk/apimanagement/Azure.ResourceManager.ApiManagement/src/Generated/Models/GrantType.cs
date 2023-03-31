@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static GrantType ResourceOwnerPassword { get; } = new GrantType(ResourceOwnerPasswordValue);
         /// <summary> Client Credentials Grant flow as described https://tools.ietf.org/html/rfc6749#section-4.4. </summary>
         public static GrantType ClientCredentials { get; } = new GrantType(ClientCredentialsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GrantType"/> values are the same. </summary>
         public static bool operator ==(GrantType left, GrantType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GrantType"/> values are not the same. </summary>

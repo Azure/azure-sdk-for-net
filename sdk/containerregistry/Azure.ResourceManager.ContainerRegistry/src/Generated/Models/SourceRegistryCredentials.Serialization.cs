@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(LoginMode))
             {
                 writer.WritePropertyName("loginMode"u8);
-                writer.WriteStringValue(LoginMode.Value.ToString());
+                writer.WriteStringValue(LoginMode.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

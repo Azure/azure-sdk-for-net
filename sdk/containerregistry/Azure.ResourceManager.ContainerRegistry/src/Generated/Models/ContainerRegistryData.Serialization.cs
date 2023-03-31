@@ -69,17 +69,17 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
             if (Optional.IsDefined(NetworkRuleBypassOptions))
             {
                 writer.WritePropertyName("networkRuleBypassOptions"u8);
-                writer.WriteStringValue(NetworkRuleBypassOptions.Value.ToString());
+                writer.WriteStringValue(NetworkRuleBypassOptions.Value.ToSerialString());
             }
             if (Optional.IsDefined(ZoneRedundancy))
             {
                 writer.WritePropertyName("zoneRedundancy"u8);
-                writer.WriteStringValue(ZoneRedundancy.Value.ToString());
+                writer.WriteStringValue(ZoneRedundancy.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

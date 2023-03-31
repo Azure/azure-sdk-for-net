@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static WindowsVmLicenseType None { get; } = new WindowsVmLicenseType(NoneValue);
         /// <summary> Enables Azure Hybrid User Benefits for Windows VMs. </summary>
         public static WindowsVmLicenseType WindowsServer { get; } = new WindowsVmLicenseType(WindowsServerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WindowsVmLicenseType"/> values are the same. </summary>
         public static bool operator ==(WindowsVmLicenseType left, WindowsVmLicenseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WindowsVmLicenseType"/> values are not the same. </summary>

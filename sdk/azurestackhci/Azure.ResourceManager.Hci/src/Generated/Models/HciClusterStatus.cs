@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.Hci.Models
         public static HciClusterStatus Failed { get; } = new HciClusterStatus(FailedValue);
         /// <summary> InProgress. </summary>
         public static HciClusterStatus InProgress { get; } = new HciClusterStatus(InProgressValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HciClusterStatus"/> values are the same. </summary>
         public static bool operator ==(HciClusterStatus left, HciClusterStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HciClusterStatus"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.Communication.ShortCodes.Models
         public static MessageDirection ToUser { get; } = new MessageDirection(ToUserValue);
         /// <summary> fromUser. </summary>
         public static MessageDirection FromUser { get; } = new MessageDirection(FromUserValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MessageDirection"/> values are the same. </summary>
         public static bool operator ==(MessageDirection left, MessageDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MessageDirection"/> values are not the same. </summary>

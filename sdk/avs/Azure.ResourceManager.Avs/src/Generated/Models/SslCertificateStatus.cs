@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static SslCertificateStatus Enabled { get; } = new SslCertificateStatus(EnabledValue);
         /// <summary> Disabled. </summary>
         public static SslCertificateStatus Disabled { get; } = new SslCertificateStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SslCertificateStatus"/> values are the same. </summary>
         public static bool operator ==(SslCertificateStatus left, SslCertificateStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SslCertificateStatus"/> values are not the same. </summary>

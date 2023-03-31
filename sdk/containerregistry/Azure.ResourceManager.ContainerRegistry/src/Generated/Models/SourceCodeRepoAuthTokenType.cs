@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static SourceCodeRepoAuthTokenType Pat { get; } = new SourceCodeRepoAuthTokenType(PatValue);
         /// <summary> OAuth. </summary>
         public static SourceCodeRepoAuthTokenType OAuth { get; } = new SourceCodeRepoAuthTokenType(OAuthValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SourceCodeRepoAuthTokenType"/> values are the same. </summary>
         public static bool operator ==(SourceCodeRepoAuthTokenType left, SourceCodeRepoAuthTokenType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SourceCodeRepoAuthTokenType"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Microsoft-Windows-Shell-Setup. </summary>
         public static ComponentName MicrosoftWindowsShellSetup { get; } = new ComponentName(MicrosoftWindowsShellSetupValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ComponentName"/> values are the same. </summary>
         public static bool operator ==(ComponentName left, ComponentName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComponentName"/> values are not the same. </summary>

@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(OrchestrationMode))
             {
                 writer.WritePropertyName("orchestrationMode"u8);
-                writer.WriteStringValue(OrchestrationMode.Value.ToString());
+                writer.WriteStringValue(OrchestrationMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(SpotRestorePolicy))
             {

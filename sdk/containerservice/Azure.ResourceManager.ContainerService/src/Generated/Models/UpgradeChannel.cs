@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static UpgradeChannel NodeImage { get; } = new UpgradeChannel(NodeImageValue);
         /// <summary> Disables auto-upgrades and keeps the cluster at its current version of Kubernetes. </summary>
         public static UpgradeChannel None { get; } = new UpgradeChannel(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UpgradeChannel"/> values are the same. </summary>
         public static bool operator ==(UpgradeChannel left, UpgradeChannel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UpgradeChannel"/> values are not the same. </summary>

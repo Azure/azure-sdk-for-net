@@ -63,6 +63,9 @@ namespace Azure.Containers.ContainerRegistry
         public static ArtifactOperatingSystem Solaris { get; } = new ArtifactOperatingSystem(SolarisValue);
         /// <summary> windows. </summary>
         public static ArtifactOperatingSystem Windows { get; } = new ArtifactOperatingSystem(WindowsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ArtifactOperatingSystem"/> values are the same. </summary>
         public static bool operator ==(ArtifactOperatingSystem left, ArtifactOperatingSystem right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArtifactOperatingSystem"/> values are not the same. </summary>

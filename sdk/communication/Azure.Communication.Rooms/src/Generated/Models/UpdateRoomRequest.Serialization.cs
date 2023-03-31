@@ -28,7 +28,7 @@ namespace Azure.Communication.Rooms
             if (Optional.IsDefined(RoomJoinPolicy))
             {
                 writer.WritePropertyName("roomJoinPolicy"u8);
-                writer.WriteStringValue(RoomJoinPolicy.Value.ToString());
+                writer.WriteStringValue(RoomJoinPolicy.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Participants))
             {

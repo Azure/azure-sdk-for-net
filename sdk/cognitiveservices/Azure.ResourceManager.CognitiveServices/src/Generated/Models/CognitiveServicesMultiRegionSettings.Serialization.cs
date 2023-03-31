@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(RoutingMethod))
             {
                 writer.WritePropertyName("routingMethod"u8);
-                writer.WriteStringValue(RoutingMethod.Value.ToString());
+                writer.WriteStringValue(RoutingMethod.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Regions))
             {

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> NoAction. </summary>
         public static CertificateDeleteAction NoAction { get; } = new CertificateDeleteAction(NoActionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CertificateDeleteAction"/> values are the same. </summary>
         public static bool operator ==(CertificateDeleteAction left, CertificateDeleteAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CertificateDeleteAction"/> values are not the same. </summary>

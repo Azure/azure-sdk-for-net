@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static ProvisioningState Accepted { get; } = new ProvisioningState(AcceptedValue);
         /// <summary> Created. </summary>
         public static ProvisioningState Created { get; } = new ProvisioningState(CreatedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ProvisioningState left, ProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProvisioningState"/> values are not the same. </summary>

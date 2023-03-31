@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Batch.Models
         public static BatchPrivateEndpointConnectionProvisioningState Failed { get; } = new BatchPrivateEndpointConnectionProvisioningState(FailedValue);
         /// <summary> The user has cancelled the connection creation. </summary>
         public static BatchPrivateEndpointConnectionProvisioningState Cancelled { get; } = new BatchPrivateEndpointConnectionProvisioningState(CancelledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BatchPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(BatchPrivateEndpointConnectionProvisioningState left, BatchPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>

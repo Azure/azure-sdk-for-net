@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static HeaderAction Overwrite { get; } = new HeaderAction(OverwriteValue);
         /// <summary> Delete. </summary>
         public static HeaderAction Delete { get; } = new HeaderAction(DeleteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HeaderAction"/> values are the same. </summary>
         public static bool operator ==(HeaderAction left, HeaderAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HeaderAction"/> values are not the same. </summary>

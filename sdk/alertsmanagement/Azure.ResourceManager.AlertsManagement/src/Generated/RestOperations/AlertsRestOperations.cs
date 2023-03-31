@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AlertsManagement
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.AlertsManagement/alertsMetaData", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("identifier", identifier.ToString(), true);
+            uri.AppendQuery("identifier", identifier.ToSerialString(), true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -119,19 +119,19 @@ namespace Azure.ResourceManager.AlertsManagement
             }
             if (monitorService != null)
             {
-                uri.AppendQuery("monitorService", monitorService.Value.ToString(), true);
+                uri.AppendQuery("monitorService", monitorService.Value.ToSerialString(), true);
             }
             if (monitorCondition != null)
             {
-                uri.AppendQuery("monitorCondition", monitorCondition.Value.ToString(), true);
+                uri.AppendQuery("monitorCondition", monitorCondition.Value.ToSerialString(), true);
             }
             if (severity != null)
             {
-                uri.AppendQuery("severity", severity.Value.ToString(), true);
+                uri.AppendQuery("severity", severity.Value.ToSerialString(), true);
             }
             if (alertState != null)
             {
-                uri.AppendQuery("alertState", alertState.Value.ToString(), true);
+                uri.AppendQuery("alertState", alertState.Value.ToSerialString(), true);
             }
             if (alertRule != null)
             {
@@ -155,11 +155,11 @@ namespace Azure.ResourceManager.AlertsManagement
             }
             if (sortBy != null)
             {
-                uri.AppendQuery("sortBy", sortBy.Value.ToString(), true);
+                uri.AppendQuery("sortBy", sortBy.Value.ToSerialString(), true);
             }
             if (sortOrder != null)
             {
-                uri.AppendQuery("sortOrder", sortOrder.Value.ToString(), true);
+                uri.AppendQuery("sortOrder", sortOrder.Value.ToSerialString(), true);
             }
             if (select != null)
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AlertsManagement
             }
             if (timeRange != null)
             {
-                uri.AppendQuery("timeRange", timeRange.Value.ToString(), true);
+                uri.AppendQuery("timeRange", timeRange.Value.ToSerialString(), true);
             }
             if (customTimeRange != null)
             {
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.AlertsManagement
             uri.AppendPath(alertId, true);
             uri.AppendPath("/changestate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("newState", newState.ToString(), true);
+            uri.AppendQuery("newState", newState.ToSerialString(), true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             if (comment != null)
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.AlertsManagement
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.AlertsManagement/alertsSummary", false);
-            uri.AppendQuery("groupby", groupby.ToString(), true);
+            uri.AppendQuery("groupby", groupby.ToSerialString(), true);
             if (includeSmartGroupsCount != null)
             {
                 uri.AppendQuery("includeSmartGroupsCount", includeSmartGroupsCount.Value, true);
@@ -521,19 +521,19 @@ namespace Azure.ResourceManager.AlertsManagement
             }
             if (monitorService != null)
             {
-                uri.AppendQuery("monitorService", monitorService.Value.ToString(), true);
+                uri.AppendQuery("monitorService", monitorService.Value.ToSerialString(), true);
             }
             if (monitorCondition != null)
             {
-                uri.AppendQuery("monitorCondition", monitorCondition.Value.ToString(), true);
+                uri.AppendQuery("monitorCondition", monitorCondition.Value.ToSerialString(), true);
             }
             if (severity != null)
             {
-                uri.AppendQuery("severity", severity.Value.ToString(), true);
+                uri.AppendQuery("severity", severity.Value.ToSerialString(), true);
             }
             if (alertState != null)
             {
-                uri.AppendQuery("alertState", alertState.Value.ToString(), true);
+                uri.AppendQuery("alertState", alertState.Value.ToSerialString(), true);
             }
             if (alertRule != null)
             {
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.AlertsManagement
             }
             if (timeRange != null)
             {
-                uri.AppendQuery("timeRange", timeRange.Value.ToString(), true);
+                uri.AppendQuery("timeRange", timeRange.Value.ToSerialString(), true);
             }
             if (customTimeRange != null)
             {

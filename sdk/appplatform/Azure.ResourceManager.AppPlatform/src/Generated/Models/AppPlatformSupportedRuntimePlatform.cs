@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformSupportedRuntimePlatform Java { get; } = new AppPlatformSupportedRuntimePlatform(JavaValue);
         /// <summary> .NET Core. </summary>
         public static AppPlatformSupportedRuntimePlatform NetCore { get; } = new AppPlatformSupportedRuntimePlatform(NetCoreValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppPlatformSupportedRuntimePlatform"/> values are the same. </summary>
         public static bool operator ==(AppPlatformSupportedRuntimePlatform left, AppPlatformSupportedRuntimePlatform right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformSupportedRuntimePlatform"/> values are not the same. </summary>

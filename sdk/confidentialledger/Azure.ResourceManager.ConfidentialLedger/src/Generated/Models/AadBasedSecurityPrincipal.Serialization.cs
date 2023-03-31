@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             if (Optional.IsDefined(LedgerRoleName))
             {
                 writer.WritePropertyName("ledgerRoleName"u8);
-                writer.WriteStringValue(LedgerRoleName.Value.ToString());
+                writer.WriteStringValue(LedgerRoleName.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

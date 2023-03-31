@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public static BillingBenefitsProvisioningState Expired { get; } = new BillingBenefitsProvisioningState(ExpiredValue);
         /// <summary> Failed. </summary>
         public static BillingBenefitsProvisioningState Failed { get; } = new BillingBenefitsProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BillingBenefitsProvisioningState"/> values are the same. </summary>
         public static bool operator ==(BillingBenefitsProvisioningState left, BillingBenefitsProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingBenefitsProvisioningState"/> values are not the same. </summary>

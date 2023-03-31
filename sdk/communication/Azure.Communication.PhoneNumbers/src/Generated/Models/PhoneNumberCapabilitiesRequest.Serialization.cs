@@ -18,12 +18,12 @@ namespace Azure.Communication.PhoneNumbers
             if (Optional.IsDefined(Calling))
             {
                 writer.WritePropertyName("calling"u8);
-                writer.WriteStringValue(Calling.Value.ToString());
+                writer.WriteStringValue(Calling.Value.ToSerialString());
             }
             if (Optional.IsDefined(Sms))
             {
                 writer.WritePropertyName("sms"u8);
-                writer.WriteStringValue(Sms.Value.ToString());
+                writer.WriteStringValue(Sms.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

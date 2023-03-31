@@ -29,6 +29,9 @@ namespace Azure.Communication.NetworkTraversal
         public static RouteType Any { get; } = new RouteType(AnyValue);
         /// <summary> nearest. </summary>
         public static RouteType Nearest { get; } = new RouteType(NearestValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RouteType"/> values are the same. </summary>
         public static bool operator ==(RouteType left, RouteType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RouteType"/> values are not the same. </summary>

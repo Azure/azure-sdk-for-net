@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static WafRankingGroupBy HttpStatusCode { get; } = new WafRankingGroupBy(HttpStatusCodeValue);
         /// <summary> customDomain. </summary>
         public static WafRankingGroupBy CustomDomain { get; } = new WafRankingGroupBy(CustomDomainValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WafRankingGroupBy"/> values are the same. </summary>
         public static bool operator ==(WafRankingGroupBy left, WafRankingGroupBy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WafRankingGroupBy"/> values are not the same. </summary>

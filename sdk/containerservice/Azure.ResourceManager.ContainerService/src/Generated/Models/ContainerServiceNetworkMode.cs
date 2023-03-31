@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ContainerServiceNetworkMode Transparent { get; } = new ContainerServiceNetworkMode(TransparentValue);
         /// <summary> This is no longer supported. </summary>
         public static ContainerServiceNetworkMode Bridge { get; } = new ContainerServiceNetworkMode(BridgeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerServiceNetworkMode"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceNetworkMode left, ContainerServiceNetworkMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceNetworkMode"/> values are not the same. </summary>

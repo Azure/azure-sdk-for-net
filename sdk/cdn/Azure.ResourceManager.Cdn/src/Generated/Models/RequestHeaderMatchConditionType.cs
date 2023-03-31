@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> DeliveryRuleRequestHeaderConditionParameters. </summary>
         public static RequestHeaderMatchConditionType RequestHeaderCondition { get; } = new RequestHeaderMatchConditionType(RequestHeaderConditionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RequestHeaderMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(RequestHeaderMatchConditionType left, RequestHeaderMatchConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RequestHeaderMatchConditionType"/> values are not the same. </summary>

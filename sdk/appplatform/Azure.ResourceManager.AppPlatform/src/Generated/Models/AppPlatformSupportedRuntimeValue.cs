@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformSupportedRuntimeValue Java17 { get; } = new AppPlatformSupportedRuntimeValue(Java17Value);
         /// <summary> NetCore_31. </summary>
         public static AppPlatformSupportedRuntimeValue NetCore31 { get; } = new AppPlatformSupportedRuntimeValue(NetCore31Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppPlatformSupportedRuntimeValue"/> values are the same. </summary>
         public static bool operator ==(AppPlatformSupportedRuntimeValue left, AppPlatformSupportedRuntimeValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformSupportedRuntimeValue"/> values are not the same. </summary>

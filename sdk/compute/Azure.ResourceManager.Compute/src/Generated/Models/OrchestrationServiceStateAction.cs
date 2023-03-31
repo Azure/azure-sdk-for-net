@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static OrchestrationServiceStateAction Resume { get; } = new OrchestrationServiceStateAction(ResumeValue);
         /// <summary> Suspend. </summary>
         public static OrchestrationServiceStateAction Suspend { get; } = new OrchestrationServiceStateAction(SuspendValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OrchestrationServiceStateAction"/> values are the same. </summary>
         public static bool operator ==(OrchestrationServiceStateAction left, OrchestrationServiceStateAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OrchestrationServiceStateAction"/> values are not the same. </summary>

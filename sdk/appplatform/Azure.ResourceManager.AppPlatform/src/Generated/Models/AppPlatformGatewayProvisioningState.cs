@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformGatewayProvisioningState Failed { get; } = new AppPlatformGatewayProvisioningState(FailedValue);
         /// <summary> Deleting. </summary>
         public static AppPlatformGatewayProvisioningState Deleting { get; } = new AppPlatformGatewayProvisioningState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppPlatformGatewayProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AppPlatformGatewayProvisioningState left, AppPlatformGatewayProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformGatewayProvisioningState"/> values are not the same. </summary>

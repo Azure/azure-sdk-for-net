@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static NetworkAccessPolicy AllowPrivate { get; } = new NetworkAccessPolicy(AllowPrivateValue);
         /// <summary> The disk cannot be exported. </summary>
         public static NetworkAccessPolicy DenyAll { get; } = new NetworkAccessPolicy(DenyAllValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetworkAccessPolicy"/> values are the same. </summary>
         public static bool operator ==(NetworkAccessPolicy left, NetworkAccessPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkAccessPolicy"/> values are not the same. </summary>

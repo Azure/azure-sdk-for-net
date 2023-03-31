@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static AddonProvisioningState Updating { get; } = new AddonProvisioningState(UpdatingValue);
         /// <summary> Canceled. </summary>
         public static AddonProvisioningState Canceled { get; } = new AddonProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AddonProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AddonProvisioningState left, AddonProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AddonProvisioningState"/> values are not the same. </summary>

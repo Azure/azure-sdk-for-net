@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Billing
             if (Optional.IsDefined(AutoRenew))
             {
                 writer.WritePropertyName("autoRenew"u8);
-                writer.WriteStringValue(AutoRenew.Value.ToString());
+                writer.WriteStringValue(AutoRenew.Value.ToSerialString());
             }
             if (Optional.IsDefined(BeneficiaryTenantId))
             {

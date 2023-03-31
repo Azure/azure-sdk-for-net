@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteStartArray();
             foreach (var item in DaysOfWeek)
             {
-                writer.WriteStringValue(item.ToString());
+                writer.WriteStringValue(item.ToSerialString());
             }
             writer.WriteEndArray();
             writer.WritePropertyName("recurrenceType"u8);
-            writer.WriteStringValue(RecurrenceType.ToString());
+            writer.WriteStringValue(RecurrenceType.ToSerialString());
             if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);

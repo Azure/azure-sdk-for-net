@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static GalleryReplicationMode Full { get; } = new GalleryReplicationMode(FullValue);
         /// <summary> Shallow. </summary>
         public static GalleryReplicationMode Shallow { get; } = new GalleryReplicationMode(ShallowValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GalleryReplicationMode"/> values are the same. </summary>
         public static bool operator ==(GalleryReplicationMode left, GalleryReplicationMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GalleryReplicationMode"/> values are not the same. </summary>

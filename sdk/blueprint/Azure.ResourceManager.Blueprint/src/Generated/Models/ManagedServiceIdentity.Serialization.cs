@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Blueprint.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(IdentityType.ToString());
+            writer.WriteStringValue(IdentityType.ToSerialString());
             if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);

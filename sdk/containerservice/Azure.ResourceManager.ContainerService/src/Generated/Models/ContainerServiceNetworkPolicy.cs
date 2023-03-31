@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ContainerServiceNetworkPolicy Calico { get; } = new ContainerServiceNetworkPolicy(CalicoValue);
         /// <summary> Use Azure network policies. See [differences between Azure and Calico policies](https://docs.microsoft.com/azure/aks/use-network-policies#differences-between-azure-and-calico-policies-and-their-capabilities) for more information. </summary>
         public static ContainerServiceNetworkPolicy Azure { get; } = new ContainerServiceNetworkPolicy(AzureValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerServiceNetworkPolicy"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceNetworkPolicy left, ContainerServiceNetworkPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceNetworkPolicy"/> values are not the same. </summary>

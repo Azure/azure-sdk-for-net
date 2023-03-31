@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> Email channel auth method. 0 Password (Default); 1 Graph. </summary>
-    public enum EmailChannelAuthMethod
+    public enum EmailChannelAuthMethod : int
     {
         /// <summary> Basic authentication. </summary>
         Password = 0,

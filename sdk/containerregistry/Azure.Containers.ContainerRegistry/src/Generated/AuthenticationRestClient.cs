@@ -51,7 +51,7 @@ namespace Azure.Containers.ContainerRegistry
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
             var content = new FormUrlEncodedContent();
-            content.Add("grant_type", grantType.ToString());
+            content.Add("grant_type", grantType.ToSerialString());
             content.Add("service", service);
             if (tenant != null)
             {

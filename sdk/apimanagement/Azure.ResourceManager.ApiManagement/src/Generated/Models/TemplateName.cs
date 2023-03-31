@@ -65,6 +65,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static TemplateName RejectDeveloperNotificationMessage { get; } = new TemplateName(RejectDeveloperNotificationMessageValue);
         /// <summary> requestDeveloperNotificationMessage. </summary>
         public static TemplateName RequestDeveloperNotificationMessage { get; } = new TemplateName(RequestDeveloperNotificationMessageValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TemplateName"/> values are the same. </summary>
         public static bool operator ==(TemplateName left, TemplateName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TemplateName"/> values are not the same. </summary>

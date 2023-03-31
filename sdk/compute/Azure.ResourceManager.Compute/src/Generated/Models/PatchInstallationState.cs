@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static PatchInstallationState NotSelected { get; } = new PatchInstallationState(NotSelectedValue);
         /// <summary> Pending. </summary>
         public static PatchInstallationState Pending { get; } = new PatchInstallationState(PendingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PatchInstallationState"/> values are the same. </summary>
         public static bool operator ==(PatchInstallationState left, PatchInstallationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PatchInstallationState"/> values are not the same. </summary>

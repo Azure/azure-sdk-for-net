@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             if (Optional.IsDefined(DiskMode))
             {
                 writer.WritePropertyName("diskMode"u8);
-                writer.WriteStringValue(DiskMode.Value.ToString());
+                writer.WriteStringValue(DiskMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(ControllerKey))
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             if (Optional.IsDefined(DiskType))
             {
                 writer.WritePropertyName("diskType"u8);
-                writer.WriteStringValue(DiskType.Value.ToString());
+                writer.WriteStringValue(DiskType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

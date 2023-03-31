@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Hci.Models
         public static HciAvailabilityType Online { get; } = new HciAvailabilityType(OnlineValue);
         /// <summary> Notify. </summary>
         public static HciAvailabilityType Notify { get; } = new HciAvailabilityType(NotifyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HciAvailabilityType"/> values are the same. </summary>
         public static bool operator ==(HciAvailabilityType left, HciAvailabilityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HciAvailabilityType"/> values are not the same. </summary>

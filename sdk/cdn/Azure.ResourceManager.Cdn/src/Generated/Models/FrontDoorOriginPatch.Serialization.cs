@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
-                writer.WriteStringValue(EnabledState.Value.ToString());
+                writer.WriteStringValue(EnabledState.Value.ToSerialString());
             }
             if (Optional.IsDefined(EnforceCertificateNameCheck))
             {

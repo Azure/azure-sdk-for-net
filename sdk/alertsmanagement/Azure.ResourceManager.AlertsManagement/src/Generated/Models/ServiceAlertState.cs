@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static ServiceAlertState Acknowledged { get; } = new ServiceAlertState(AcknowledgedValue);
         /// <summary> Closed. </summary>
         public static ServiceAlertState Closed { get; } = new ServiceAlertState(ClosedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceAlertState"/> values are the same. </summary>
         public static bool operator ==(ServiceAlertState left, ServiceAlertState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceAlertState"/> values are not the same. </summary>

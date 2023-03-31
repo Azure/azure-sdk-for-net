@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static ServiceAccountUsageUnitType BytesPerSecond { get; } = new ServiceAccountUsageUnitType(BytesPerSecondValue);
         /// <summary> Milliseconds. </summary>
         public static ServiceAccountUsageUnitType Milliseconds { get; } = new ServiceAccountUsageUnitType(MillisecondsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceAccountUsageUnitType"/> values are the same. </summary>
         public static bool operator ==(ServiceAccountUsageUnitType left, ServiceAccountUsageUnitType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceAccountUsageUnitType"/> values are not the same. </summary>

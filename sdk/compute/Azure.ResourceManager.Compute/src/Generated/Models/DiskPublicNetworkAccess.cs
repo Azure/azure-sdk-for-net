@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static DiskPublicNetworkAccess Enabled { get; } = new DiskPublicNetworkAccess(EnabledValue);
         /// <summary> You cannot access the underlying data of the disk publicly on the internet even when NetworkAccessPolicy is set to AllowAll. You can access the data via the SAS URI only from your trusted Azure VNET when NetworkAccessPolicy is set to AllowPrivate. </summary>
         public static DiskPublicNetworkAccess Disabled { get; } = new DiskPublicNetworkAccess(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DiskPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(DiskPublicNetworkAccess left, DiskPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskPublicNetworkAccess"/> values are not the same. </summary>

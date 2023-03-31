@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static GlobalReachConnectionStatus Connecting { get; } = new GlobalReachConnectionStatus(ConnectingValue);
         /// <summary> Disconnected. </summary>
         public static GlobalReachConnectionStatus Disconnected { get; } = new GlobalReachConnectionStatus(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GlobalReachConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(GlobalReachConnectionStatus left, GlobalReachConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GlobalReachConnectionStatus"/> values are not the same. </summary>

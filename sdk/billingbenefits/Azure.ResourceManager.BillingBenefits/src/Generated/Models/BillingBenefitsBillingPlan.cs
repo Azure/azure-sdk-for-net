@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> P1M. </summary>
         public static BillingBenefitsBillingPlan P1M { get; } = new BillingBenefitsBillingPlan(P1MValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BillingBenefitsBillingPlan"/> values are the same. </summary>
         public static bool operator ==(BillingBenefitsBillingPlan left, BillingBenefitsBillingPlan right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingBenefitsBillingPlan"/> values are not the same. </summary>

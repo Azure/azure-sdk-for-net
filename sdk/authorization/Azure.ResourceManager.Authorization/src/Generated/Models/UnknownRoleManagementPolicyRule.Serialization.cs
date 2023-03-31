@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("ruleType"u8);
-            writer.WriteStringValue(RuleType.ToString());
+            writer.WriteStringValue(RuleType.ToSerialString());
             if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);

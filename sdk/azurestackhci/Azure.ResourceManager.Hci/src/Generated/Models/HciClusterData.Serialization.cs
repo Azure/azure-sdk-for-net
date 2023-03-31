@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Hci
             if (Optional.IsDefined(TypeIdentityType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(TypeIdentityType.Value.ToString());
+                writer.WriteStringValue(TypeIdentityType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {

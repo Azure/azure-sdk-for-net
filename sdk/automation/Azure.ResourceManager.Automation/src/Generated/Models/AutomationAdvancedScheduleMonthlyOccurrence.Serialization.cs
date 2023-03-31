@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Day))
             {
                 writer.WritePropertyName("day"u8);
-                writer.WriteStringValue(Day.Value.ToString());
+                writer.WriteStringValue(Day.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

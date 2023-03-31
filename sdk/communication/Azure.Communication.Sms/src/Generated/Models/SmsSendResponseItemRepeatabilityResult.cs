@@ -29,6 +29,9 @@ namespace Azure.Communication.Sms
         public static SmsSendResponseItemRepeatabilityResult Accepted { get; } = new SmsSendResponseItemRepeatabilityResult(AcceptedValue);
         /// <summary> rejected. </summary>
         public static SmsSendResponseItemRepeatabilityResult Rejected { get; } = new SmsSendResponseItemRepeatabilityResult(RejectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SmsSendResponseItemRepeatabilityResult"/> values are the same. </summary>
         public static bool operator ==(SmsSendResponseItemRepeatabilityResult left, SmsSendResponseItemRepeatabilityResult right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SmsSendResponseItemRepeatabilityResult"/> values are not the same. </summary>

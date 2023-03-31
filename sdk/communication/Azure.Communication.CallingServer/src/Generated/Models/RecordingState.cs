@@ -29,6 +29,9 @@ namespace Azure.Communication.CallingServer
         public static RecordingState Active { get; } = new RecordingState(ActiveValue);
         /// <summary> inactive. </summary>
         public static RecordingState Inactive { get; } = new RecordingState(InactiveValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RecordingState"/> values are the same. </summary>
         public static bool operator ==(RecordingState left, RecordingState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecordingState"/> values are not the same. </summary>

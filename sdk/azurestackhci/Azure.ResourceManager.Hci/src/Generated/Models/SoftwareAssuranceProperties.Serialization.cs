@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(SoftwareAssuranceStatus))
             {
                 writer.WritePropertyName("softwareAssuranceStatus"u8);
-                writer.WriteStringValue(SoftwareAssuranceStatus.Value.ToString());
+                writer.WriteStringValue(SoftwareAssuranceStatus.Value.ToSerialString());
             }
             if (Optional.IsDefined(SoftwareAssuranceIntent))
             {
                 writer.WritePropertyName("softwareAssuranceIntent"u8);
-                writer.WriteStringValue(SoftwareAssuranceIntent.Value.ToString());
+                writer.WriteStringValue(SoftwareAssuranceIntent.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

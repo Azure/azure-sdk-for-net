@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PassName))
             {
                 writer.WritePropertyName("passName"u8);
-                writer.WriteStringValue(PassName.Value.ToString());
+                writer.WriteStringValue(PassName.Value.ToSerialString());
             }
             if (Optional.IsDefined(ComponentName))
             {
                 writer.WritePropertyName("componentName"u8);
-                writer.WriteStringValue(ComponentName.Value.ToString());
+                writer.WriteStringValue(ComponentName.Value.ToSerialString());
             }
             if (Optional.IsDefined(SettingName))
             {

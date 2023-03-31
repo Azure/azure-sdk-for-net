@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.BotService.Models
         public static BotServiceKind Function { get; } = new BotServiceKind(FunctionValue);
         /// <summary> azurebot. </summary>
         public static BotServiceKind Azurebot { get; } = new BotServiceKind(AzurebotValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BotServiceKind"/> values are the same. </summary>
         public static bool operator ==(BotServiceKind left, BotServiceKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BotServiceKind"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryTokenCertificateName Certificate1 { get; } = new ContainerRegistryTokenCertificateName(Certificate1Value);
         /// <summary> certificate2. </summary>
         public static ContainerRegistryTokenCertificateName Certificate2 { get; } = new ContainerRegistryTokenCertificateName(Certificate2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistryTokenCertificateName"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryTokenCertificateName left, ContainerRegistryTokenCertificateName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryTokenCertificateName"/> values are not the same. </summary>

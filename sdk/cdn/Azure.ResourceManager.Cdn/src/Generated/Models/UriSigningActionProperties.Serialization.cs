@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
-            writer.WriteStringValue(ActionType.ToString());
+            writer.WriteStringValue(ActionType.ToSerialString());
             if (Optional.IsDefined(Algorithm))
             {
                 writer.WritePropertyName("algorithm"u8);
-                writer.WriteStringValue(Algorithm.Value.ToString());
+                writer.WriteStringValue(Algorithm.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ParameterNameOverride))
             {

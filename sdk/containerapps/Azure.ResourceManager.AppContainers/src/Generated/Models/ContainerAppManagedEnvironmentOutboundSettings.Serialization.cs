@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(OutBoundType))
             {
                 writer.WritePropertyName("outBoundType"u8);
-                writer.WriteStringValue(OutBoundType.Value.ToString());
+                writer.WriteStringValue(OutBoundType.Value.ToSerialString());
             }
             if (Optional.IsDefined(VirtualNetworkApplianceIP))
             {

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CompositePathSortOrder Ascending { get; } = new CompositePathSortOrder(AscendingValue);
         /// <summary> descending. </summary>
         public static CompositePathSortOrder Descending { get; } = new CompositePathSortOrder(DescendingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CompositePathSortOrder"/> values are the same. </summary>
         public static bool operator ==(CompositePathSortOrder left, CompositePathSortOrder right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CompositePathSortOrder"/> values are not the same. </summary>

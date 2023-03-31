@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(EncryptionType))
             {
                 writer.WritePropertyName("encryptionType"u8);
-                writer.WriteStringValue(EncryptionType.Value.ToString());
+                writer.WriteStringValue(EncryptionType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ActiveKey))
             {

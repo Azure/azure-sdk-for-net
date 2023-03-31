@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Equal. </summary>
         public static RequestSchemeOperator Equal { get; } = new RequestSchemeOperator(EqualValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RequestSchemeOperator"/> values are the same. </summary>
         public static bool operator ==(RequestSchemeOperator left, RequestSchemeOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RequestSchemeOperator"/> values are not the same. </summary>

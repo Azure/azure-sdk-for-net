@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static ControlFamilyStatus Healthy { get; } = new ControlFamilyStatus(HealthyValue);
         /// <summary> Unhealthy. </summary>
         public static ControlFamilyStatus Unhealthy { get; } = new ControlFamilyStatus(UnhealthyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ControlFamilyStatus"/> values are the same. </summary>
         public static bool operator ==(ControlFamilyStatus left, ControlFamilyStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ControlFamilyStatus"/> values are not the same. </summary>

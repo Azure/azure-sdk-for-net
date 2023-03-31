@@ -74,6 +74,9 @@ namespace Azure.ResourceManager.Hci.Models
         public static ArcExtensionAggregateState Accepted { get; } = new ArcExtensionAggregateState(AcceptedValue);
         /// <summary> Provisioning. </summary>
         public static ArcExtensionAggregateState Provisioning { get; } = new ArcExtensionAggregateState(ProvisioningValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ArcExtensionAggregateState"/> values are the same. </summary>
         public static bool operator ==(ArcExtensionAggregateState left, ArcExtensionAggregateState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArcExtensionAggregateState"/> values are not the same. </summary>

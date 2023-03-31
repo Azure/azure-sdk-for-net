@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static PatchOperationStatus Succeeded { get; } = new PatchOperationStatus(SucceededValue);
         /// <summary> CompletedWithWarnings. </summary>
         public static PatchOperationStatus CompletedWithWarnings { get; } = new PatchOperationStatus(CompletedWithWarningsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PatchOperationStatus"/> values are the same. </summary>
         public static bool operator ==(PatchOperationStatus left, PatchOperationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PatchOperationStatus"/> values are not the same. </summary>

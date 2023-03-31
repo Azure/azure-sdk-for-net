@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static EndpointResourceState Stopped { get; } = new EndpointResourceState(StoppedValue);
         /// <summary> Stopping. </summary>
         public static EndpointResourceState Stopping { get; } = new EndpointResourceState(StoppingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EndpointResourceState"/> values are the same. </summary>
         public static bool operator ==(EndpointResourceState left, EndpointResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EndpointResourceState"/> values are not the same. </summary>

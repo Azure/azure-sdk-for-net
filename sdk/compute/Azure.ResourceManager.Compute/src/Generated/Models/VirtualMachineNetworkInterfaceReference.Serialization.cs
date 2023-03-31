@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(DeleteOption))
             {
                 writer.WritePropertyName("deleteOption"u8);
-                writer.WriteStringValue(DeleteOption.Value.ToString());
+                writer.WriteStringValue(DeleteOption.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

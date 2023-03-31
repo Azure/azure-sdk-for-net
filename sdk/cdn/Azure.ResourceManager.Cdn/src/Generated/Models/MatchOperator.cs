@@ -59,6 +59,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static MatchOperator EndsWith { get; } = new MatchOperator(EndsWithValue);
         /// <summary> RegEx. </summary>
         public static MatchOperator RegEx { get; } = new MatchOperator(RegExValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MatchOperator"/> values are the same. </summary>
         public static bool operator ==(MatchOperator left, MatchOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MatchOperator"/> values are not the same. </summary>

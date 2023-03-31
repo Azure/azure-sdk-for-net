@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static AvsEncryptionState Enabled { get; } = new AvsEncryptionState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static AvsEncryptionState Disabled { get; } = new AvsEncryptionState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AvsEncryptionState"/> values are the same. </summary>
         public static bool operator ==(AvsEncryptionState left, AvsEncryptionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvsEncryptionState"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         /// <summary> TextFormat. </summary>
         public static FormatType TextFormat { get; } = new FormatType(TextFormatValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FormatType"/> values are the same. </summary>
         public static bool operator ==(FormatType left, FormatType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FormatType"/> values are not the same. </summary>

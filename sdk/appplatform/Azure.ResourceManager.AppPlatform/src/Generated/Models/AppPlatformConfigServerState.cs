@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformConfigServerState Succeeded { get; } = new AppPlatformConfigServerState(SucceededValue);
         /// <summary> Updating. </summary>
         public static AppPlatformConfigServerState Updating { get; } = new AppPlatformConfigServerState(UpdatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppPlatformConfigServerState"/> values are the same. </summary>
         public static bool operator ==(AppPlatformConfigServerState left, AppPlatformConfigServerState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformConfigServerState"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> clientRequestCount. </summary>
         public static WafMetric ClientRequestCount { get; } = new WafMetric(ClientRequestCountValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WafMetric"/> values are the same. </summary>
         public static bool operator ==(WafMetric left, WafMetric right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WafMetric"/> values are not the same. </summary>

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PrivateIPAddressVersion))
             {
                 writer.WritePropertyName("privateIPAddressVersion"u8);
-                writer.WriteStringValue(PrivateIPAddressVersion.Value.ToString());
+                writer.WriteStringValue(PrivateIPAddressVersion.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ApplicationGatewayBackendAddressPools))
             {

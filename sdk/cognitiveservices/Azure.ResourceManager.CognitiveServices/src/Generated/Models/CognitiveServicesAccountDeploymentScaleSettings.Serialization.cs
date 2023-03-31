@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(ScaleType))
             {
                 writer.WritePropertyName("scaleType"u8);
-                writer.WriteStringValue(ScaleType.Value.ToString());
+                writer.WriteStringValue(ScaleType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Capacity))
             {

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppSessionAffinity Cookie { get; } = new AppSessionAffinity(CookieValue);
         /// <summary> None. </summary>
         public static AppSessionAffinity None { get; } = new AppSessionAffinity(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppSessionAffinity"/> values are the same. </summary>
         public static bool operator ==(AppSessionAffinity left, AppSessionAffinity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppSessionAffinity"/> values are not the same. </summary>

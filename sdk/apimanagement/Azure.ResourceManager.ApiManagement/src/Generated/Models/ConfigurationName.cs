@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> configuration. </summary>
         public static ConfigurationName Configuration { get; } = new ConfigurationName(ConfigurationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConfigurationName"/> values are the same. </summary>
         public static bool operator ==(ConfigurationName left, ConfigurationName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConfigurationName"/> values are not the same. </summary>

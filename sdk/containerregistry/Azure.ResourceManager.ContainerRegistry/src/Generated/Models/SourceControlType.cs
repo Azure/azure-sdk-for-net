@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static SourceControlType Github { get; } = new SourceControlType(GithubValue);
         /// <summary> VisualStudioTeamService. </summary>
         public static SourceControlType VisualStudioTeamService { get; } = new SourceControlType(VisualStudioTeamServiceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SourceControlType"/> values are the same. </summary>
         public static bool operator ==(SourceControlType left, SourceControlType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SourceControlType"/> values are not the same. </summary>

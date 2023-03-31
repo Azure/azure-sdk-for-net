@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
-                writer.WriteStringValue(Protocol.Value.ToString());
+                writer.WriteStringValue(Protocol.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

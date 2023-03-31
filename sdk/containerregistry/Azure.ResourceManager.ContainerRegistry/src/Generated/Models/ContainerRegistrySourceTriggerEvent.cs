@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistrySourceTriggerEvent Commit { get; } = new ContainerRegistrySourceTriggerEvent(CommitValue);
         /// <summary> pullrequest. </summary>
         public static ContainerRegistrySourceTriggerEvent PullRequest { get; } = new ContainerRegistrySourceTriggerEvent(PullRequestValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistrySourceTriggerEvent"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistrySourceTriggerEvent left, ContainerRegistrySourceTriggerEvent right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistrySourceTriggerEvent"/> values are not the same. </summary>

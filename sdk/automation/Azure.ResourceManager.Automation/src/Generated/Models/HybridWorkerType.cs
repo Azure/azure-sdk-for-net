@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static HybridWorkerType HybridV1 { get; } = new HybridWorkerType(HybridV1Value);
         /// <summary> HybridV2. </summary>
         public static HybridWorkerType HybridV2 { get; } = new HybridWorkerType(HybridV2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HybridWorkerType"/> values are the same. </summary>
         public static bool operator ==(HybridWorkerType left, HybridWorkerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HybridWorkerType"/> values are not the same. </summary>

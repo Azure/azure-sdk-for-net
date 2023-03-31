@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Count. </summary>
         public static FrontDoorUsageUnit Count { get; } = new FrontDoorUsageUnit(CountValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FrontDoorUsageUnit"/> values are the same. </summary>
         public static bool operator ==(FrontDoorUsageUnit left, FrontDoorUsageUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorUsageUnit"/> values are not the same. </summary>

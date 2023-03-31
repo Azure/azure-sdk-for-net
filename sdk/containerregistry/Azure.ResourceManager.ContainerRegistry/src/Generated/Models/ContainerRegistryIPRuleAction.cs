@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Allow. </summary>
         public static ContainerRegistryIPRuleAction Allow { get; } = new ContainerRegistryIPRuleAction(AllowValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistryIPRuleAction"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryIPRuleAction left, ContainerRegistryIPRuleAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryIPRuleAction"/> values are not the same. </summary>

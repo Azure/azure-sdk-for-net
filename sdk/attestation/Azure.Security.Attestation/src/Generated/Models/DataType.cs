@@ -29,6 +29,9 @@ namespace Azure.Security.Attestation
         public static DataType Binary { get; } = new DataType(BinaryValue);
         /// <summary> The contents of the field should be treated as a JSON object and may be further interpreted by MAA. </summary>
         public static DataType Json { get; } = new DataType(JsonValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataType"/> values are the same. </summary>
         public static bool operator ==(DataType left, DataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataType"/> values are not the same. </summary>

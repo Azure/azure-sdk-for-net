@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static SourceControlSourceType VsoTfvc { get; } = new SourceControlSourceType(VsoTfvcValue);
         /// <summary> GitHub. </summary>
         public static SourceControlSourceType GitHub { get; } = new SourceControlSourceType(GitHubValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SourceControlSourceType"/> values are the same. </summary>
         public static bool operator ==(SourceControlSourceType left, SourceControlSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SourceControlSourceType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Blueprint.Models
         public static AssignmentDeleteBehavior None { get; } = new AssignmentDeleteBehavior(NoneValue);
         /// <summary> all. </summary>
         public static AssignmentDeleteBehavior All { get; } = new AssignmentDeleteBehavior(AllValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AssignmentDeleteBehavior"/> values are the same. </summary>
         public static bool operator ==(AssignmentDeleteBehavior left, AssignmentDeleteBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AssignmentDeleteBehavior"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryCpuVariant V7 { get; } = new ContainerRegistryCpuVariant(V7Value);
         /// <summary> v8. </summary>
         public static ContainerRegistryCpuVariant V8 { get; } = new ContainerRegistryCpuVariant(V8Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistryCpuVariant"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryCpuVariant left, ContainerRegistryCpuVariant right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryCpuVariant"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Microsoft.ContainerRegistry/registries. </summary>
         public static ContainerRegistryResourceType MicrosoftContainerRegistryRegistries { get; } = new ContainerRegistryResourceType(MicrosoftContainerRegistryRegistriesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistryResourceType"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryResourceType left, ContainerRegistryResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryResourceType"/> values are not the same. </summary>

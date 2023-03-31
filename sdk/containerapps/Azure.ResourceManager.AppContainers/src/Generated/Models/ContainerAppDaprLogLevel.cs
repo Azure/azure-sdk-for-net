@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static ContainerAppDaprLogLevel Warn { get; } = new ContainerAppDaprLogLevel(WarnValue);
         /// <summary> error. </summary>
         public static ContainerAppDaprLogLevel Error { get; } = new ContainerAppDaprLogLevel(ErrorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerAppDaprLogLevel"/> values are the same. </summary>
         public static bool operator ==(ContainerAppDaprLogLevel left, ContainerAppDaprLogLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppDaprLogLevel"/> values are not the same. </summary>

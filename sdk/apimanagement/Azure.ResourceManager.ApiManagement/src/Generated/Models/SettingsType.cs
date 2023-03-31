@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> public. </summary>
         public static SettingsType Public { get; } = new SettingsType(PublicValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SettingsType"/> values are the same. </summary>
         public static bool operator ==(SettingsType left, SettingsType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SettingsType"/> values are not the same. </summary>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ConfidentialVmEncryptionType))
             {
                 writer.WritePropertyName("confidentialVMEncryptionType"u8);
-                writer.WriteStringValue(ConfidentialVmEncryptionType.Value.ToString());
+                writer.WriteStringValue(ConfidentialVmEncryptionType.Value.ToSerialString());
             }
             if (Optional.IsDefined(SecureVmDiskEncryptionSetId))
             {

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Transport))
             {
                 writer.WritePropertyName("transport"u8);
-                writer.WriteStringValue(Transport.Value.ToString());
+                writer.WriteStringValue(Transport.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Traffic))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(ClientCertificateMode))
             {
                 writer.WritePropertyName("clientCertificateMode"u8);
-                writer.WriteStringValue(ClientCertificateMode.Value.ToString());
+                writer.WriteStringValue(ClientCertificateMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(CorsPolicy))
             {
