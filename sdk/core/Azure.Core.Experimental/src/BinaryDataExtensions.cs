@@ -16,23 +16,23 @@ namespace Azure.Core.Dynamic
         /// </summary>
         public static dynamic ToDynamic(this BinaryData data)
         {
-            return new DynamicJson(MutableJsonDocument.Parse(data).RootElement, new DynamicJsonOptions());
+            return new DynamicData(MutableJsonDocument.Parse(data).RootElement, new DynamicDataOptions());
         }
 
         /// <summary>
         /// Return the content of the BinaryData as a dynamic type.
         /// </summary>
-        public static dynamic ToDynamic(this BinaryData data, DynamicJsonNameMapping propertyNameCasing)
+        public static dynamic ToDynamic(this BinaryData data, DynamicDataNameMapping propertyNameCasing)
         {
-            return new DynamicJson(MutableJsonDocument.Parse(data).RootElement, new DynamicJsonOptions() {  PropertyNameCasing = propertyNameCasing });
+            return new DynamicData(MutableJsonDocument.Parse(data).RootElement, new DynamicDataOptions() {  PropertyNameCasing = propertyNameCasing });
         }
 
         /// <summary>
         /// Return the content of the BinaryData as a dynamic type.
         /// </summary>
-        public static dynamic ToDynamic(this BinaryData data, DynamicJsonOptions options)
+        public static dynamic ToDynamic(this BinaryData data, DynamicDataOptions options)
         {
-            return new DynamicJson(MutableJsonDocument.Parse(data).RootElement, options);
+            return new DynamicData(MutableJsonDocument.Parse(data).RootElement, options);
         }
     }
 }
