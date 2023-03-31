@@ -126,7 +126,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (_fileRequestIntent != null)
             {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -230,7 +230,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (_fileRequestIntent != null)
             {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -311,7 +311,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (_fileRequestIntent != null)
             {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -378,7 +378,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (_fileRequestIntent != null)
             {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -493,7 +493,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (_fileRequestIntent != null)
             {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -591,7 +591,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (_fileRequestIntent != null)
             {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -664,7 +664,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (_fileRequestIntent != null)
             {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -730,7 +730,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (_fileRequestIntent != null)
             {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -810,7 +810,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (_fileRequestIntent != null)
             {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -891,7 +891,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (_fileRequestIntent != null)
             {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -963,7 +963,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (_fileRequestIntent != null)
             {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             if (optionalbody != null)
@@ -1204,7 +1204,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (_fileRequestIntent != null)
             {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -1336,7 +1336,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (_fileRequestIntent != null)
             {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -1426,7 +1426,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (_fileRequestIntent != null)
             {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -1514,7 +1514,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (_fileRequestIntent != null)
             {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -1605,7 +1605,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (_fileRequestIntent != null)
             {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -1736,7 +1736,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (_fileRequestIntent != null)
             {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;

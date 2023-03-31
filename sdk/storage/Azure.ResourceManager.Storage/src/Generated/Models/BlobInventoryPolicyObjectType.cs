@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static BlobInventoryPolicyObjectType Blob { get; } = new BlobInventoryPolicyObjectType(BlobValue);
         /// <summary> Container. </summary>
         public static BlobInventoryPolicyObjectType Container { get; } = new BlobInventoryPolicyObjectType(ContainerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BlobInventoryPolicyObjectType"/> values are the same. </summary>
         public static bool operator ==(BlobInventoryPolicyObjectType left, BlobInventoryPolicyObjectType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobInventoryPolicyObjectType"/> values are not the same. </summary>

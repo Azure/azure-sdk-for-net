@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary> default. </summary>
         public static SynapseDedicatedSqlMinimalTlsSettingName Default { get; } = new SynapseDedicatedSqlMinimalTlsSettingName(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseDedicatedSqlMinimalTlsSettingName"/> values are the same. </summary>
         public static bool operator ==(SynapseDedicatedSqlMinimalTlsSettingName left, SynapseDedicatedSqlMinimalTlsSettingName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseDedicatedSqlMinimalTlsSettingName"/> values are not the same. </summary>

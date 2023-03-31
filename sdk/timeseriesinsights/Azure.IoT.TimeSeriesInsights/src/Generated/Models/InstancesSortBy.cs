@@ -29,6 +29,9 @@ namespace Azure.IoT.TimeSeriesInsights
         public static InstancesSortBy Rank { get; } = new InstancesSortBy(RankValue);
         /// <summary> DisplayName. </summary>
         public static InstancesSortBy DisplayName { get; } = new InstancesSortBy(DisplayNameValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InstancesSortBy"/> values are the same. </summary>
         public static bool operator ==(InstancesSortBy left, InstancesSortBy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InstancesSortBy"/> values are not the same. </summary>

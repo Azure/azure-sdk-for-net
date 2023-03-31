@@ -71,6 +71,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static IotSecurityRecommendationType IotSharedCredentials { get; } = new IotSecurityRecommendationType(IotSharedCredentialsValue);
         /// <summary> Insecure TLS configurations detected. Immediate upgrade recommended. </summary>
         public static IotSecurityRecommendationType IotVulnerableTlsCipherSuite { get; } = new IotSecurityRecommendationType(IotVulnerableTlsCipherSuiteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IotSecurityRecommendationType"/> values are the same. </summary>
         public static bool operator ==(IotSecurityRecommendationType left, IotSecurityRecommendationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotSecurityRecommendationType"/> values are not the same. </summary>

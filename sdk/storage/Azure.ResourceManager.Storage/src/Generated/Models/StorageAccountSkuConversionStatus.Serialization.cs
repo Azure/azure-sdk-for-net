@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(TargetSkuName))
             {
                 writer.WritePropertyName("targetSkuName"u8);
-                writer.WriteStringValue(TargetSkuName.Value.ToString());
+                writer.WriteStringValue(TargetSkuName.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

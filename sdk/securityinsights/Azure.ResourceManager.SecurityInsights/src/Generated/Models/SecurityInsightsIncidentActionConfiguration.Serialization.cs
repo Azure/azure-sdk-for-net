@@ -19,22 +19,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
-                writer.WriteStringValue(Severity.Value.ToString());
+                writer.WriteStringValue(Severity.Value.ToSerialString());
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
             if (Optional.IsDefined(Classification))
             {
                 writer.WritePropertyName("classification"u8);
-                writer.WriteStringValue(Classification.Value.ToString());
+                writer.WriteStringValue(Classification.Value.ToSerialString());
             }
             if (Optional.IsDefined(ClassificationReason))
             {
                 writer.WritePropertyName("classificationReason"u8);
-                writer.WriteStringValue(ClassificationReason.Value.ToString());
+                writer.WriteStringValue(ClassificationReason.Value.ToSerialString());
             }
             if (Optional.IsDefined(ClassificationComment))
             {

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static SqlImageSku Enterprise { get; } = new SqlImageSku(EnterpriseValue);
         /// <summary> Web. </summary>
         public static SqlImageSku Web { get; } = new SqlImageSku(WebValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlImageSku"/> values are the same. </summary>
         public static bool operator ==(SqlImageSku left, SqlImageSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlImageSku"/> values are not the same. </summary>

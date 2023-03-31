@@ -44,6 +44,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static ParameterType Array { get; } = new ParameterType(ArrayValue);
         /// <summary> SecureString. </summary>
         public static ParameterType SecureString { get; } = new ParameterType(SecureStringValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ParameterType"/> values are the same. </summary>
         public static bool operator ==(ParameterType left, ParameterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ParameterType"/> values are not the same. </summary>

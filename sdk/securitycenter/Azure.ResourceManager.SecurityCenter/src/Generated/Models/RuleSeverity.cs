@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static RuleSeverity Informational { get; } = new RuleSeverity(InformationalValue);
         /// <summary> Obsolete. </summary>
         public static RuleSeverity Obsolete { get; } = new RuleSeverity(ObsoleteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RuleSeverity"/> values are the same. </summary>
         public static bool operator ==(RuleSeverity left, RuleSeverity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RuleSeverity"/> values are not the same. </summary>

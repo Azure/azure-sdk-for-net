@@ -35,6 +35,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static CellOutputType Stream { get; } = new CellOutputType(StreamValue);
         /// <summary> error. </summary>
         public static CellOutputType Error { get; } = new CellOutputType(ErrorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CellOutputType"/> values are the same. </summary>
         public static bool operator ==(CellOutputType left, CellOutputType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CellOutputType"/> values are not the same. </summary>

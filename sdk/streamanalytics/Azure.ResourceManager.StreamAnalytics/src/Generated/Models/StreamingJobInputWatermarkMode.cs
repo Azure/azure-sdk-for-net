@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static StreamingJobInputWatermarkMode None { get; } = new StreamingJobInputWatermarkMode(NoneValue);
         /// <summary> ReadWatermark. </summary>
         public static StreamingJobInputWatermarkMode ReadWatermark { get; } = new StreamingJobInputWatermarkMode(ReadWatermarkValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StreamingJobInputWatermarkMode"/> values are the same. </summary>
         public static bool operator ==(StreamingJobInputWatermarkMode left, StreamingJobInputWatermarkMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamingJobInputWatermarkMode"/> values are not the same. </summary>

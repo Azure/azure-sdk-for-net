@@ -35,6 +35,9 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static SparkSessionResultType Failed { get; } = new SparkSessionResultType(FailedValue);
         /// <summary> Cancelled. </summary>
         public static SparkSessionResultType Cancelled { get; } = new SparkSessionResultType(CancelledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SparkSessionResultType"/> values are the same. </summary>
         public static bool operator ==(SparkSessionResultType left, SparkSessionResultType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SparkSessionResultType"/> values are not the same. </summary>

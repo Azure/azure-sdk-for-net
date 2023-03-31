@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static JitNetworkAccessPortProtocol Udp { get; } = new JitNetworkAccessPortProtocol(UdpValue);
         /// <summary> *. </summary>
         public static JitNetworkAccessPortProtocol All { get; } = new JitNetworkAccessPortProtocol(AllValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JitNetworkAccessPortProtocol"/> values are the same. </summary>
         public static bool operator ==(JitNetworkAccessPortProtocol left, JitNetworkAccessPortProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JitNetworkAccessPortProtocol"/> values are not the same. </summary>

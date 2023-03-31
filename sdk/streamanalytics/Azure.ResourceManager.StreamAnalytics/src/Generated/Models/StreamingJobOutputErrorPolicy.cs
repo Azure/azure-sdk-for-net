@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static StreamingJobOutputErrorPolicy Stop { get; } = new StreamingJobOutputErrorPolicy(StopValue);
         /// <summary> Drop. </summary>
         public static StreamingJobOutputErrorPolicy Drop { get; } = new StreamingJobOutputErrorPolicy(DropValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StreamingJobOutputErrorPolicy"/> values are the same. </summary>
         public static bool operator ==(StreamingJobOutputErrorPolicy left, StreamingJobOutputErrorPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamingJobOutputErrorPolicy"/> values are not the same. </summary>

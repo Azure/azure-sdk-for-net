@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static StorageAccountSasSignedResourceType C { get; } = new StorageAccountSasSignedResourceType(CValue);
         /// <summary> o. </summary>
         public static StorageAccountSasSignedResourceType O { get; } = new StorageAccountSasSignedResourceType(OValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageAccountSasSignedResourceType"/> values are the same. </summary>
         public static bool operator ==(StorageAccountSasSignedResourceType left, StorageAccountSasSignedResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageAccountSasSignedResourceType"/> values are not the same. </summary>

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static StorageKind FileStorage { get; } = new StorageKind(FileStorageValue);
         /// <summary> BlockBlobStorage. </summary>
         public static StorageKind BlockBlobStorage { get; } = new StorageKind(BlockBlobStorageValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageKind"/> values are the same. </summary>
         public static bool operator ==(StorageKind left, StorageKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageKind"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static SparkStatementLanguageType DotNetSpark { get; } = new SparkStatementLanguageType(DotNetSparkValue);
         /// <summary> sql. </summary>
         public static SparkStatementLanguageType Sql { get; } = new SparkStatementLanguageType(SqlValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SparkStatementLanguageType"/> values are the same. </summary>
         public static bool operator ==(SparkStatementLanguageType left, SparkStatementLanguageType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SparkStatementLanguageType"/> values are not the same. </summary>

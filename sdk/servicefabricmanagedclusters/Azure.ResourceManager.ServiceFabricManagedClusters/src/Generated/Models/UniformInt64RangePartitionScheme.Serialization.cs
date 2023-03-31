@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WritePropertyName("highKey"u8);
             writer.WriteNumberValue(HighKey);
             writer.WritePropertyName("partitionScheme"u8);
-            writer.WriteStringValue(PartitionScheme.ToString());
+            writer.WriteStringValue(PartitionScheme.ToSerialString());
             writer.WriteEndObject();
         }
 

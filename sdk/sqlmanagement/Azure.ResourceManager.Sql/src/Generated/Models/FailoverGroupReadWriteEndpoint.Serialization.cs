@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("failoverPolicy"u8);
-            writer.WriteStringValue(FailoverPolicy.ToString());
+            writer.WriteStringValue(FailoverPolicy.ToSerialString());
             if (Optional.IsDefined(FailoverWithDataLossGracePeriodMinutes))
             {
                 writer.WritePropertyName("failoverWithDataLossGracePeriodMinutes"u8);

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static CloudEndpointChangeEnumerationActivityState InitialEnumerationInProgress { get; } = new CloudEndpointChangeEnumerationActivityState(InitialEnumerationInProgressValue);
         /// <summary> EnumerationInProgress. </summary>
         public static CloudEndpointChangeEnumerationActivityState EnumerationInProgress { get; } = new CloudEndpointChangeEnumerationActivityState(EnumerationInProgressValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CloudEndpointChangeEnumerationActivityState"/> values are the same. </summary>
         public static bool operator ==(CloudEndpointChangeEnumerationActivityState left, CloudEndpointChangeEnumerationActivityState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CloudEndpointChangeEnumerationActivityState"/> values are not the same. </summary>

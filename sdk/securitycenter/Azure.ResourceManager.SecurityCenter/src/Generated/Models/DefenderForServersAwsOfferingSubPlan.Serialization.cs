@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(AvailableSubPlanType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(AvailableSubPlanType.Value.ToString());
+                writer.WriteStringValue(AvailableSubPlanType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

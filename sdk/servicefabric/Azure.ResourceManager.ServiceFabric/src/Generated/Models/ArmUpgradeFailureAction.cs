@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static ArmUpgradeFailureAction Rollback { get; } = new ArmUpgradeFailureAction(RollbackValue);
         /// <summary> Indicates that a manual repair will need to be performed by the administrator if the upgrade fails. Service Fabric will not proceed to the next upgrade domain automatically. </summary>
         public static ArmUpgradeFailureAction Manual { get; } = new ArmUpgradeFailureAction(ManualValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ArmUpgradeFailureAction"/> values are the same. </summary>
         public static bool operator ==(ArmUpgradeFailureAction left, ArmUpgradeFailureAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArmUpgradeFailureAction"/> values are not the same. </summary>

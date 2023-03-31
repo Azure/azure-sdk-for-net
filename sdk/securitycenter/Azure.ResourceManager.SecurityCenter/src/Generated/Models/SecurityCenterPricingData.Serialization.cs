@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(PricingTier))
             {
                 writer.WritePropertyName("pricingTier"u8);
-                writer.WriteStringValue(PricingTier.Value.ToString());
+                writer.WriteStringValue(PricingTier.Value.ToSerialString());
             }
             if (Optional.IsDefined(SubPlan))
             {

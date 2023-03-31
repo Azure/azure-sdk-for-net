@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
-                writer.WriteStringValue(Domain.Value.ToString());
+                writer.WriteStringValue(Domain.Value.ToSerialString());
             }
             if (Optional.IsDefined(ModelVersion))
             {
@@ -36,14 +36,14 @@ namespace Azure.AI.TextAnalytics.Legacy
                 writer.WriteStartArray();
                 foreach (var item in PiiCategories)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType"u8);
-                writer.WriteStringValue(StringIndexType.Value.ToString());
+                writer.WriteStringValue(StringIndexType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Subscription.Models
             if (Optional.IsDefined(Workload))
             {
                 writer.WritePropertyName("workload"u8);
-                writer.WriteStringValue(Workload.Value.ToString());
+                writer.WriteStringValue(Workload.Value.ToSerialString());
             }
             if (Optional.IsDefined(BillingScope))
             {

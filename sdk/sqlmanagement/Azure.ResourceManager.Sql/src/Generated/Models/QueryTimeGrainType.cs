@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static QueryTimeGrainType PT1H { get; } = new QueryTimeGrainType(PT1HValue);
         /// <summary> P1D. </summary>
         public static QueryTimeGrainType P1D { get; } = new QueryTimeGrainType(P1DValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="QueryTimeGrainType"/> values are the same. </summary>
         public static bool operator ==(QueryTimeGrainType left, QueryTimeGrainType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QueryTimeGrainType"/> values are not the same. </summary>

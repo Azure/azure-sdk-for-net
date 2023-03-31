@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static ServiceFabricManagedDataDiskType StandardSsdLrs { get; } = new ServiceFabricManagedDataDiskType(StandardSsdLrsValue);
         /// <summary> Premium SSD locally redundant storage. Best for production and performance sensitive workloads. </summary>
         public static ServiceFabricManagedDataDiskType PremiumLrs { get; } = new ServiceFabricManagedDataDiskType(PremiumLrsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedDataDiskType"/> values are the same. </summary>
         public static bool operator ==(ServiceFabricManagedDataDiskType left, ServiceFabricManagedDataDiskType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceFabricManagedDataDiskType"/> values are not the same. </summary>

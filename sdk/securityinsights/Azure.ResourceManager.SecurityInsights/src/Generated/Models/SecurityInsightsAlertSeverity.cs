@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsAlertSeverity Low { get; } = new SecurityInsightsAlertSeverity(LowValue);
         /// <summary> Informational severity. </summary>
         public static SecurityInsightsAlertSeverity Informational { get; } = new SecurityInsightsAlertSeverity(InformationalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityInsightsAlertSeverity"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsAlertSeverity left, SecurityInsightsAlertSeverity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsAlertSeverity"/> values are not the same. </summary>

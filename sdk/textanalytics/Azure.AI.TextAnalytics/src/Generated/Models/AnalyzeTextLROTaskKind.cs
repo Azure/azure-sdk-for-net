@@ -56,6 +56,9 @@ namespace Azure.AI.TextAnalytics.Models
         public static AnalyzeTextLROTaskKind CustomMultiLabelClassification { get; } = new AnalyzeTextLROTaskKind(CustomMultiLabelClassificationValue);
         /// <summary> AbstractiveSummarization. </summary>
         public static AnalyzeTextLROTaskKind AbstractiveSummarization { get; } = new AnalyzeTextLROTaskKind(AbstractiveSummarizationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AnalyzeTextLROTaskKind"/> values are the same. </summary>
         public static bool operator ==(AnalyzeTextLROTaskKind left, AnalyzeTextLROTaskKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyzeTextLROTaskKind"/> values are not the same. </summary>

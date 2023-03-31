@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SignalR.Models
             if (Optional.IsDefined(AuthType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(AuthType.Value.ToString());
+                writer.WriteStringValue(AuthType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ManagedIdentity))
             {

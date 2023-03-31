@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Export))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Export)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in DisabledDataSources)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(UnmaskedIPLoggingStatus))
             {
                 writer.WritePropertyName("unmaskedIpLoggingStatus"u8);
-                writer.WriteStringValue(UnmaskedIPLoggingStatus.Value.ToString());
+                writer.WriteStringValue(UnmaskedIPLoggingStatus.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(AdditionalWorkspaces))
             {

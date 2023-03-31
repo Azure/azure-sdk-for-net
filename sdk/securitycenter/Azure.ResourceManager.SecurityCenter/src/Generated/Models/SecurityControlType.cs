@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityControlType BuiltIn { get; } = new SecurityControlType(BuiltInValue);
         /// <summary> Non Microsoft Defender for Cloud managed assessments. </summary>
         public static SecurityControlType Custom { get; } = new SecurityControlType(CustomValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityControlType"/> values are the same. </summary>
         public static bool operator ==(SecurityControlType left, SecurityControlType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityControlType"/> values are not the same. </summary>

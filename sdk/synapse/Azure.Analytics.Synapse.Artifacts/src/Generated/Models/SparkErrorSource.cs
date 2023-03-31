@@ -35,6 +35,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static SparkErrorSource Unknown { get; } = new SparkErrorSource(UnknownValue);
         /// <summary> Dependency. </summary>
         public static SparkErrorSource Dependency { get; } = new SparkErrorSource(DependencyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SparkErrorSource"/> values are the same. </summary>
         public static bool operator ==(SparkErrorSource left, SparkErrorSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SparkErrorSource"/> values are not the same. </summary>

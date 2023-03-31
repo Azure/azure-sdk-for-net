@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StorageSync
             if (Optional.IsDefined(CloudTiering))
             {
                 writer.WritePropertyName("cloudTiering"u8);
-                writer.WriteStringValue(CloudTiering.Value.ToString());
+                writer.WriteStringValue(CloudTiering.Value.ToSerialString());
             }
             if (Optional.IsDefined(VolumeFreeSpacePercent))
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StorageSync
             if (Optional.IsDefined(OfflineDataTransfer))
             {
                 writer.WritePropertyName("offlineDataTransfer"u8);
-                writer.WriteStringValue(OfflineDataTransfer.Value.ToString());
+                writer.WriteStringValue(OfflineDataTransfer.Value.ToSerialString());
             }
             if (Optional.IsDefined(OfflineDataTransferShareName))
             {
@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.StorageSync
             if (Optional.IsDefined(InitialDownloadPolicy))
             {
                 writer.WritePropertyName("initialDownloadPolicy"u8);
-                writer.WriteStringValue(InitialDownloadPolicy.Value.ToString());
+                writer.WriteStringValue(InitialDownloadPolicy.Value.ToSerialString());
             }
             if (Optional.IsDefined(LocalCacheMode))
             {
                 writer.WritePropertyName("localCacheMode"u8);
-                writer.WriteStringValue(LocalCacheMode.Value.ToString());
+                writer.WriteStringValue(LocalCacheMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(InitialUploadPolicy))
             {
                 writer.WritePropertyName("initialUploadPolicy"u8);
-                writer.WriteStringValue(InitialUploadPolicy.Value.ToString());
+                writer.WriteStringValue(InitialUploadPolicy.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

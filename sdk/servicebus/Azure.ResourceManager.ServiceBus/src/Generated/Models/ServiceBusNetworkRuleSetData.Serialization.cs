@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceBus
             if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
-                writer.WriteStringValue(DefaultAction.Value.ToString());
+                writer.WriteStringValue(DefaultAction.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(VirtualNetworkRules))
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceBus
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

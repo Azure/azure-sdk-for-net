@@ -29,6 +29,9 @@ namespace Azure.AI.TextAnalytics
         public static ClassificationType Single { get; } = new ClassificationType(SingleValue);
         /// <summary> Multi. </summary>
         public static ClassificationType Multi { get; } = new ClassificationType(MultiValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ClassificationType"/> values are the same. </summary>
         public static bool operator ==(ClassificationType left, ClassificationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClassificationType"/> values are not the same. </summary>

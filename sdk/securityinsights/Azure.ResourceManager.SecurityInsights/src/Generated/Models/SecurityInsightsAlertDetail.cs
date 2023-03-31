@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsAlertDetail DisplayName { get; } = new SecurityInsightsAlertDetail(DisplayNameValue);
         /// <summary> Alert severity. </summary>
         public static SecurityInsightsAlertDetail Severity { get; } = new SecurityInsightsAlertDetail(SeverityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityInsightsAlertDetail"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsAlertDetail left, SecurityInsightsAlertDetail right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsAlertDetail"/> values are not the same. </summary>

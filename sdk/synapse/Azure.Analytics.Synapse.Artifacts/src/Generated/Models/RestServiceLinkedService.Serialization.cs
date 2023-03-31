@@ -67,7 +67,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue(EnableServerCertificateValidation);
             }
             writer.WritePropertyName("authenticationType"u8);
-            writer.WriteStringValue(AuthenticationType.ToString());
+            writer.WriteStringValue(AuthenticationType.ToSerialString());
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);

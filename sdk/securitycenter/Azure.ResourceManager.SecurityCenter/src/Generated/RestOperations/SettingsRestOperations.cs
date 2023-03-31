@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Security/settings/", false);
-            uri.AppendPath(settingName.ToString(), true);
+            uri.AppendPath(settingName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Security/settings/", false);
-            uri.AppendPath(settingName.ToString(), true);
+            uri.AppendPath(settingName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(ConnectionType))
             {
                 writer.WritePropertyName("connectionType"u8);
-                writer.WriteStringValue(ConnectionType.Value.ToString());
+                writer.WriteStringValue(ConnectionType.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

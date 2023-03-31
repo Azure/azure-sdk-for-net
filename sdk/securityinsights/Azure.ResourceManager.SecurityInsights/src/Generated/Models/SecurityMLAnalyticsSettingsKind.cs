@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Anomaly. </summary>
         public static SecurityMLAnalyticsSettingsKind Anomaly { get; } = new SecurityMLAnalyticsSettingsKind(AnomalyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityMLAnalyticsSettingsKind"/> values are the same. </summary>
         public static bool operator ==(SecurityMLAnalyticsSettingsKind left, SecurityMLAnalyticsSettingsKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityMLAnalyticsSettingsKind"/> values are not the same. </summary>

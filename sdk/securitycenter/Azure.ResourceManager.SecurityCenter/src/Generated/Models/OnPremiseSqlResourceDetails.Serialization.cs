@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WritePropertyName("machineName"u8);
             writer.WriteStringValue(MachineName);
             writer.WritePropertyName("source"u8);
-            writer.WriteStringValue(Source.ToString());
+            writer.WriteStringValue(Source.ToSerialString());
             writer.WriteEndObject();
         }
 

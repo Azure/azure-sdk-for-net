@@ -26,7 +26,7 @@ namespace Azure.AI.TextAnalytics
             writer.WritePropertyName("value"u8);
             writer.WriteNumberValue(Value);
             writer.WritePropertyName("resolutionKind"u8);
-            writer.WriteStringValue(ResolutionKind.ToString());
+            writer.WriteStringValue(ResolutionKind.ToSerialString());
             writer.WriteEndObject();
         }
 

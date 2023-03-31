@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static ManagedInstanceLicenseType LicenseIncluded { get; } = new ManagedInstanceLicenseType(LicenseIncludedValue);
         /// <summary> BasePrice. </summary>
         public static ManagedInstanceLicenseType BasePrice { get; } = new ManagedInstanceLicenseType(BasePriceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedInstanceLicenseType"/> values are the same. </summary>
         public static bool operator ==(ManagedInstanceLicenseType left, ManagedInstanceLicenseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedInstanceLicenseType"/> values are not the same. </summary>

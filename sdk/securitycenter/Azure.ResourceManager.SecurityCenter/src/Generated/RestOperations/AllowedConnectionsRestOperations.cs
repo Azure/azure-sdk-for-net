@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath("/providers/Microsoft.Security/locations/", false);
             uri.AppendPath(ascLocation, true);
             uri.AppendPath("/allowedConnections/", false);
-            uri.AppendPath(connectionType.ToString(), true);
+            uri.AppendPath(connectionType.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

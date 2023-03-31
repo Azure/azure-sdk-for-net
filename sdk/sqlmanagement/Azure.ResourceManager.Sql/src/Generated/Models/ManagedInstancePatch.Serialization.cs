@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(ManagedInstanceCreateMode))
             {
                 writer.WritePropertyName("managedInstanceCreateMode"u8);
-                writer.WriteStringValue(ManagedInstanceCreateMode.Value.ToString());
+                writer.WriteStringValue(ManagedInstanceCreateMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(AdministratorLogin))
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
-                writer.WriteStringValue(LicenseType.Value.ToString());
+                writer.WriteStringValue(LicenseType.Value.ToSerialString());
             }
             if (Optional.IsDefined(VCores))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(ProxyOverride))
             {
                 writer.WritePropertyName("proxyOverride"u8);
-                writer.WriteStringValue(ProxyOverride.Value.ToString());
+                writer.WriteStringValue(ProxyOverride.Value.ToSerialString());
             }
             if (Optional.IsDefined(TimezoneId))
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(RequestedBackupStorageRedundancy))
             {
                 writer.WritePropertyName("requestedBackupStorageRedundancy"u8);
-                writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
+                writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> None. </summary>
         public static SqlPrivateLinkServiceConnectionActionsRequired None { get; } = new SqlPrivateLinkServiceConnectionActionsRequired(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlPrivateLinkServiceConnectionActionsRequired"/> values are the same. </summary>
         public static bool operator ==(SqlPrivateLinkServiceConnectionActionsRequired left, SqlPrivateLinkServiceConnectionActionsRequired right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlPrivateLinkServiceConnectionActionsRequired"/> values are not the same. </summary>

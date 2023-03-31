@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static DataRefreshType Blocking { get; } = new DataRefreshType(BlockingValue);
         /// <summary> Nonblocking. </summary>
         public static DataRefreshType Nonblocking { get; } = new DataRefreshType(NonblockingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataRefreshType"/> values are the same. </summary>
         public static bool operator ==(DataRefreshType left, DataRefreshType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataRefreshType"/> values are not the same. </summary>

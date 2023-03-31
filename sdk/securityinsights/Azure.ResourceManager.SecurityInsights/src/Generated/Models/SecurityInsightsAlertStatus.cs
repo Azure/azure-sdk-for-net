@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsAlertStatus Dismissed { get; } = new SecurityInsightsAlertStatus(DismissedValue);
         /// <summary> Alert is being handled. </summary>
         public static SecurityInsightsAlertStatus InProgress { get; } = new SecurityInsightsAlertStatus(InProgressValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityInsightsAlertStatus"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsAlertStatus left, SecurityInsightsAlertStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsAlertStatus"/> values are not the same. </summary>

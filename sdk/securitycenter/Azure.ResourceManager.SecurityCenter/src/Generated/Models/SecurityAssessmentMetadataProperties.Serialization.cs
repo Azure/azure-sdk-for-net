@@ -34,21 +34,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("severity"u8);
-            writer.WriteStringValue(Severity.ToString());
+            writer.WriteStringValue(Severity.ToSerialString());
             if (Optional.IsDefined(UserImpact))
             {
                 writer.WritePropertyName("userImpact"u8);
-                writer.WriteStringValue(UserImpact.Value.ToString());
+                writer.WriteStringValue(UserImpact.Value.ToSerialString());
             }
             if (Optional.IsDefined(ImplementationEffort))
             {
                 writer.WritePropertyName("implementationEffort"u8);
-                writer.WriteStringValue(ImplementationEffort.Value.ToString());
+                writer.WriteStringValue(ImplementationEffort.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Threats))
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Threats)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteBooleanValue(IsPreview.Value);
             }
             writer.WritePropertyName("assessmentType"u8);
-            writer.WriteStringValue(AssessmentType.ToString());
+            writer.WriteStringValue(AssessmentType.ToSerialString());
             if (Optional.IsDefined(PartnerData))
             {
                 writer.WritePropertyName("partnerData"u8);

@@ -177,7 +177,7 @@ namespace Azure.Storage.Files.DataLake
             }
             if (expiryOptions != null)
             {
-                request.Headers.Add("x-ms-expiry-option", expiryOptions.Value.ToString());
+                request.Headers.Add("x-ms-expiry-option", expiryOptions.Value.ToSerialString());
             }
             if (expiresOn != null)
             {
@@ -1461,7 +1461,7 @@ namespace Azure.Storage.Files.DataLake
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", _version);
-            request.Headers.Add("x-ms-expiry-option", expiryOptions.ToString());
+            request.Headers.Add("x-ms-expiry-option", expiryOptions.ToSerialString());
             if (expiresOn != null)
             {
                 request.Headers.Add("x-ms-expiry-time", expiresOn);

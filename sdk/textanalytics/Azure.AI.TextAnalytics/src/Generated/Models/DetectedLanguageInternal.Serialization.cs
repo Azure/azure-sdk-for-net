@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(Script))
             {
                 writer.WritePropertyName("script"u8);
-                writer.WriteStringValue(Script.Value.ToString());
+                writer.WriteStringValue(Script.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

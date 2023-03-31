@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlPrivateLinkServiceConnectionStatus Rejected { get; } = new SqlPrivateLinkServiceConnectionStatus(RejectedValue);
         /// <summary> Disconnected. </summary>
         public static SqlPrivateLinkServiceConnectionStatus Disconnected { get; } = new SqlPrivateLinkServiceConnectionStatus(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlPrivateLinkServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(SqlPrivateLinkServiceConnectionStatus left, SqlPrivateLinkServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlPrivateLinkServiceConnectionStatus"/> values are not the same. </summary>

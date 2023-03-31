@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseDataFlowComputeType MemoryOptimized { get; } = new SynapseDataFlowComputeType(MemoryOptimizedValue);
         /// <summary> ComputeOptimized. </summary>
         public static SynapseDataFlowComputeType ComputeOptimized { get; } = new SynapseDataFlowComputeType(ComputeOptimizedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseDataFlowComputeType"/> values are the same. </summary>
         public static bool operator ==(SynapseDataFlowComputeType left, SynapseDataFlowComputeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseDataFlowComputeType"/> values are not the same. </summary>

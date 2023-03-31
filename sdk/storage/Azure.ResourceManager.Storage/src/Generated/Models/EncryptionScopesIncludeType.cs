@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static EncryptionScopesIncludeType Enabled { get; } = new EncryptionScopesIncludeType(EnabledValue);
         /// <summary> Disabled. </summary>
         public static EncryptionScopesIncludeType Disabled { get; } = new EncryptionScopesIncludeType(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EncryptionScopesIncludeType"/> values are the same. </summary>
         public static bool operator ==(EncryptionScopesIncludeType left, EncryptionScopesIncludeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EncryptionScopesIncludeType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static StorageMoverCopyMode Additive { get; } = new StorageMoverCopyMode(AdditiveValue);
         /// <summary> Mirror. </summary>
         public static StorageMoverCopyMode Mirror { get; } = new StorageMoverCopyMode(MirrorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageMoverCopyMode"/> values are the same. </summary>
         public static bool operator ==(StorageMoverCopyMode left, StorageMoverCopyMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageMoverCopyMode"/> values are not the same. </summary>

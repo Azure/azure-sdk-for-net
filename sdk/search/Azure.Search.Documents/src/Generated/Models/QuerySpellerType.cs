@@ -29,6 +29,9 @@ namespace Azure.Search.Documents.Models
         public static QuerySpellerType None { get; } = new QuerySpellerType(NoneValue);
         /// <summary> Speller corrects individual query terms using a static lexicon for the language specified by the queryLanguage parameter. </summary>
         public static QuerySpellerType Lexicon { get; } = new QuerySpellerType(LexiconValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="QuerySpellerType"/> values are the same. </summary>
         public static bool operator ==(QuerySpellerType left, QuerySpellerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QuerySpellerType"/> values are not the same. </summary>

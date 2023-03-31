@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Support.Models
         public static PreferredContactMethod Email { get; } = new PreferredContactMethod(EmailValue);
         /// <summary> phone. </summary>
         public static PreferredContactMethod Phone { get; } = new PreferredContactMethod(PhoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PreferredContactMethod"/> values are the same. </summary>
         public static bool operator ==(PreferredContactMethod left, PreferredContactMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PreferredContactMethod"/> values are not the same. </summary>

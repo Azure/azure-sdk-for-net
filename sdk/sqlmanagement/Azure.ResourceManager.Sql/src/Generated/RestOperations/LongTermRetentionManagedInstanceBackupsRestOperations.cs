@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Sql
             }
             if (databaseState != null)
             {
-                uri.AppendQuery("databaseState", databaseState.Value.ToString(), true);
+                uri.AppendQuery("databaseState", databaseState.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Sql
             }
             if (databaseState != null)
             {
-                uri.AppendQuery("databaseState", databaseState.Value.ToString(), true);
+                uri.AppendQuery("databaseState", databaseState.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Sql
             }
             if (databaseState != null)
             {
-                uri.AppendQuery("databaseState", databaseState.Value.ToString(), true);
+                uri.AppendQuery("databaseState", databaseState.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.Sql
             }
             if (databaseState != null)
             {
-                uri.AppendQuery("databaseState", databaseState.Value.ToString(), true);
+                uri.AppendQuery("databaseState", databaseState.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.Sql
             }
             if (databaseState != null)
             {
-                uri.AppendQuery("databaseState", databaseState.Value.ToString(), true);
+                uri.AppendQuery("databaseState", databaseState.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -874,7 +874,7 @@ namespace Azure.ResourceManager.Sql
             }
             if (databaseState != null)
             {
-                uri.AppendQuery("databaseState", databaseState.Value.ToString(), true);
+                uri.AppendQuery("databaseState", databaseState.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

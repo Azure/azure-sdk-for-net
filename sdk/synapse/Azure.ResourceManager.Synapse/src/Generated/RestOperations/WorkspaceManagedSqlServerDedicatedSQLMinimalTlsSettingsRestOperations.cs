@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Synapse
             uri.AppendPath("/providers/Microsoft.Synapse/workspaces/", false);
             uri.AppendPath(workspaceName, true);
             uri.AppendPath("/dedicatedSQLminimalTlsSettings/", false);
-            uri.AppendPath(dedicatedSQLminimalTlsSettingsName.ToString(), true);
+            uri.AppendPath(dedicatedSQLminimalTlsSettingsName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

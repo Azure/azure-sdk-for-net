@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static FailoverGroupReplicationRole Primary { get; } = new FailoverGroupReplicationRole(PrimaryValue);
         /// <summary> Secondary. </summary>
         public static FailoverGroupReplicationRole Secondary { get; } = new FailoverGroupReplicationRole(SecondaryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FailoverGroupReplicationRole"/> values are the same. </summary>
         public static bool operator ==(FailoverGroupReplicationRole left, FailoverGroupReplicationRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FailoverGroupReplicationRole"/> values are not the same. </summary>

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/capabilities", false);
             if (include != null)
             {
-                uri.AppendQuery("include", include.Value.ToString(), true);
+                uri.AppendQuery("include", include.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityFamilyProvisioningState Failed { get; } = new SecurityFamilyProvisioningState(FailedValue);
         /// <summary> Updating. </summary>
         public static SecurityFamilyProvisioningState Updating { get; } = new SecurityFamilyProvisioningState(UpdatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityFamilyProvisioningState"/> values are the same. </summary>
         public static bool operator ==(SecurityFamilyProvisioningState left, SecurityFamilyProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityFamilyProvisioningState"/> values are not the same. </summary>

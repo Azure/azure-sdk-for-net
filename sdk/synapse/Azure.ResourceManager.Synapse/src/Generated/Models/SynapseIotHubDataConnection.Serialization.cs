@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IotHubResourceId))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(DataFormat))
             {
                 writer.WritePropertyName("dataFormat"u8);
-                writer.WriteStringValue(DataFormat.Value.ToString());
+                writer.WriteStringValue(DataFormat.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(EventSystemProperties))
             {

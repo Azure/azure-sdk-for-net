@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(ConfigurationType))
             {
                 writer.WritePropertyName("configurationType"u8);
-                writer.WriteStringValue(ConfigurationType.Value.ToString());
+                writer.WriteStringValue(ConfigurationType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

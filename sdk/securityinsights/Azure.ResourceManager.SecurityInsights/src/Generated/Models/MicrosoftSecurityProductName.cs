@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static MicrosoftSecurityProductName AzureActiveDirectoryIdentityProtection { get; } = new MicrosoftSecurityProductName(AzureActiveDirectoryIdentityProtectionValue);
         /// <summary> Azure Security Center for IoT. </summary>
         public static MicrosoftSecurityProductName AzureSecurityCenterForIot { get; } = new MicrosoftSecurityProductName(AzureSecurityCenterForIotValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MicrosoftSecurityProductName"/> values are the same. </summary>
         public static bool operator ==(MicrosoftSecurityProductName left, MicrosoftSecurityProductName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MicrosoftSecurityProductName"/> values are not the same. </summary>

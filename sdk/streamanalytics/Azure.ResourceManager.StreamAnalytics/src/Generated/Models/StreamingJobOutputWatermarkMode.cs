@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static StreamingJobOutputWatermarkMode SendCurrentPartitionWatermark { get; } = new StreamingJobOutputWatermarkMode(SendCurrentPartitionWatermarkValue);
         /// <summary> SendLowestWatermarkAcrossPartitions. </summary>
         public static StreamingJobOutputWatermarkMode SendLowestWatermarkAcrossPartitions { get; } = new StreamingJobOutputWatermarkMode(SendLowestWatermarkAcrossPartitionsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StreamingJobOutputWatermarkMode"/> values are the same. </summary>
         public static bool operator ==(StreamingJobOutputWatermarkMode left, StreamingJobOutputWatermarkMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamingJobOutputWatermarkMode"/> values are not the same. </summary>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             if (Optional.IsDefined(IPAddressType))
             {
                 writer.WritePropertyName("ipAddressType"u8);
-                writer.WriteStringValue(IPAddressType.Value.ToString());
+                writer.WriteStringValue(IPAddressType.Value.ToSerialString());
             }
             if (Optional.IsDefined(LoadBalancerBackendAddressPoolId))
             {

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.StoragePool
             }
             writer.WriteEndArray();
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
+            writer.WriteStringValue(Status.ToSerialString());
             if (Optional.IsCollectionDefined(Disks))
             {
                 writer.WritePropertyName("disks"u8);

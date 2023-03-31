@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> allowPolybaseExport. </summary>
         public static ManagedInstanceServerConfigurationOptionName AllowPolybaseExport { get; } = new ManagedInstanceServerConfigurationOptionName(AllowPolybaseExportValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedInstanceServerConfigurationOptionName"/> values are the same. </summary>
         public static bool operator ==(ManagedInstanceServerConfigurationOptionName left, ManagedInstanceServerConfigurationOptionName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedInstanceServerConfigurationOptionName"/> values are not the same. </summary>

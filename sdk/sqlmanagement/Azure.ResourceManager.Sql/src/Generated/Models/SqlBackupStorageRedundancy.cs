@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlBackupStorageRedundancy Zone { get; } = new SqlBackupStorageRedundancy(ZoneValue);
         /// <summary> GeoZone. </summary>
         public static SqlBackupStorageRedundancy GeoZone { get; } = new SqlBackupStorageRedundancy(GeoZoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlBackupStorageRedundancy"/> values are the same. </summary>
         public static bool operator ==(SqlBackupStorageRedundancy left, SqlBackupStorageRedundancy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlBackupStorageRedundancy"/> values are not the same. </summary>

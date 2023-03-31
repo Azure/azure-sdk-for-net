@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static BigDataPoolNodeSizeFamily HardwareAcceleratedFpga { get; } = new BigDataPoolNodeSizeFamily(HardwareAcceleratedFpgaValue);
         /// <summary> HardwareAcceleratedGPU. </summary>
         public static BigDataPoolNodeSizeFamily HardwareAcceleratedGpu { get; } = new BigDataPoolNodeSizeFamily(HardwareAcceleratedGpuValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BigDataPoolNodeSizeFamily"/> values are the same. </summary>
         public static bool operator ==(BigDataPoolNodeSizeFamily left, BigDataPoolNodeSizeFamily right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BigDataPoolNodeSizeFamily"/> values are not the same. </summary>

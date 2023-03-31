@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static StoragePublicNetworkAccess Enabled { get; } = new StoragePublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static StoragePublicNetworkAccess Disabled { get; } = new StoragePublicNetworkAccess(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StoragePublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(StoragePublicNetworkAccess left, StoragePublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StoragePublicNetworkAccess"/> values are not the same. </summary>

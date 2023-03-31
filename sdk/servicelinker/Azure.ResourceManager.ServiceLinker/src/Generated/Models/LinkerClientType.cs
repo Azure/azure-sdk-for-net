@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public static LinkerClientType Nodejs { get; } = new LinkerClientType(NodejsValue);
         /// <summary> springBoot. </summary>
         public static LinkerClientType SpringBoot { get; } = new LinkerClientType(SpringBootValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LinkerClientType"/> values are the same. </summary>
         public static bool operator ==(LinkerClientType left, LinkerClientType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LinkerClientType"/> values are not the same. </summary>

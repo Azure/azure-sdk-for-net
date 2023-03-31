@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(OperationMode))
             {
                 writer.WritePropertyName("operationMode"u8);
-                writer.WriteStringValue(OperationMode.Value.ToString());
+                writer.WriteStringValue(OperationMode.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

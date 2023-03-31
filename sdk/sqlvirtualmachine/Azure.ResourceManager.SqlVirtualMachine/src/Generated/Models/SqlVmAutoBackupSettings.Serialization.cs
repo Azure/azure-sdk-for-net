@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             if (Optional.IsDefined(BackupScheduleType))
             {
                 writer.WritePropertyName("backupScheduleType"u8);
-                writer.WriteStringValue(BackupScheduleType.Value.ToString());
+                writer.WriteStringValue(BackupScheduleType.Value.ToSerialString());
             }
             if (Optional.IsDefined(FullBackupFrequency))
             {
                 writer.WritePropertyName("fullBackupFrequency"u8);
-                writer.WriteStringValue(FullBackupFrequency.Value.ToString());
+                writer.WriteStringValue(FullBackupFrequency.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(DaysOfWeek))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WriteStartArray();
                 foreach (var item in DaysOfWeek)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

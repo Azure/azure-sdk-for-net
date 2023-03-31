@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static AutomationRulePropertyChangedConditionSupportedChangedType ChangedFrom { get; } = new AutomationRulePropertyChangedConditionSupportedChangedType(ChangedFromValue);
         /// <summary> Evaluate the condition on the updated value of the property. </summary>
         public static AutomationRulePropertyChangedConditionSupportedChangedType ChangedTo { get; } = new AutomationRulePropertyChangedConditionSupportedChangedType(ChangedToValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutomationRulePropertyChangedConditionSupportedChangedType"/> values are the same. </summary>
         public static bool operator ==(AutomationRulePropertyChangedConditionSupportedChangedType left, AutomationRulePropertyChangedConditionSupportedChangedType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationRulePropertyChangedConditionSupportedChangedType"/> values are not the same. </summary>

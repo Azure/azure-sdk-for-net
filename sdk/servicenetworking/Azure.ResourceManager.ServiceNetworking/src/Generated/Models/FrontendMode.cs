@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         /// <summary> public. </summary>
         public static FrontendMode Public { get; } = new FrontendMode(PublicValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FrontendMode"/> values are the same. </summary>
         public static bool operator ==(FrontendMode left, FrontendMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontendMode"/> values are not the same. </summary>

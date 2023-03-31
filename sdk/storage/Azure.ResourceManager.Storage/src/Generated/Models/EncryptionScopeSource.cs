@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static EncryptionScopeSource Storage { get; } = new EncryptionScopeSource(StorageValue);
         /// <summary> Microsoft.KeyVault. </summary>
         public static EncryptionScopeSource KeyVault { get; } = new EncryptionScopeSource(KeyVaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EncryptionScopeSource"/> values are the same. </summary>
         public static bool operator ==(EncryptionScopeSource left, EncryptionScopeSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EncryptionScopeSource"/> values are not the same. </summary>

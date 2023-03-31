@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlAlwaysEncryptedEnclaveType Default { get; } = new SqlAlwaysEncryptedEnclaveType(DefaultValue);
         /// <summary> VBS. </summary>
         public static SqlAlwaysEncryptedEnclaveType Vbs { get; } = new SqlAlwaysEncryptedEnclaveType(VbsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlAlwaysEncryptedEnclaveType"/> values are the same. </summary>
         public static bool operator ==(SqlAlwaysEncryptedEnclaveType left, SqlAlwaysEncryptedEnclaveType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlAlwaysEncryptedEnclaveType"/> values are not the same. </summary>

@@ -335,6 +335,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityAssessmentTechnique WindowsManagementInstrumentation { get; } = new SecurityAssessmentTechnique(WindowsManagementInstrumentationValue);
         /// <summary> File and Directory Permissions Modification. </summary>
         public static SecurityAssessmentTechnique FileAndDirectoryPermissionsModification { get; } = new SecurityAssessmentTechnique(FileAndDirectoryPermissionsModificationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityAssessmentTechnique"/> values are the same. </summary>
         public static bool operator ==(SecurityAssessmentTechnique left, SecurityAssessmentTechnique right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityAssessmentTechnique"/> values are not the same. </summary>

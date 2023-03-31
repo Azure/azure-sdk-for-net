@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState Enabled { get; } = new ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState(EnabledValue);
         /// <summary> disabled. </summary>
         public static ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState Disabled { get; } = new ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState left, ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState"/> values are not the same. </summary>

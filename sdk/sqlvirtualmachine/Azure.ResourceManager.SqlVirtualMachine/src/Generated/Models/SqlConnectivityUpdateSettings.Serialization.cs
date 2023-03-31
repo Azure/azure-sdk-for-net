@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             if (Optional.IsDefined(ConnectivityType))
             {
                 writer.WritePropertyName("connectivityType"u8);
-                writer.WriteStringValue(ConnectivityType.Value.ToString());
+                writer.WriteStringValue(ConnectivityType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Port))
             {

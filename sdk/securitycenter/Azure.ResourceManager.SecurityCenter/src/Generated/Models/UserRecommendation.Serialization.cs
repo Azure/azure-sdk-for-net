@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(RecommendationAction))
             {
                 writer.WritePropertyName("recommendationAction"u8);
-                writer.WriteStringValue(RecommendationAction.Value.ToString());
+                writer.WriteStringValue(RecommendationAction.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

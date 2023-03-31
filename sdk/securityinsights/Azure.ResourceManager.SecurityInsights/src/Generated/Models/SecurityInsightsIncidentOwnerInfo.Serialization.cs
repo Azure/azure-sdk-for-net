@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(OwnerType))
             {
                 writer.WritePropertyName("ownerType"u8);
-                writer.WriteStringValue(OwnerType.Value.ToString());
+                writer.WriteStringValue(OwnerType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

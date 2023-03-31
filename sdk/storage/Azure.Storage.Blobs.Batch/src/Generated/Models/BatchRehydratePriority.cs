@@ -29,6 +29,9 @@ namespace Azure.Storage.Blobs.Batch.Models
         public static BatchRehydratePriority High { get; } = new BatchRehydratePriority(HighValue);
         /// <summary> Standard. </summary>
         public static BatchRehydratePriority Standard { get; } = new BatchRehydratePriority(StandardValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BatchRehydratePriority"/> values are the same. </summary>
         public static bool operator ==(BatchRehydratePriority left, BatchRehydratePriority right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchRehydratePriority"/> values are not the same. </summary>

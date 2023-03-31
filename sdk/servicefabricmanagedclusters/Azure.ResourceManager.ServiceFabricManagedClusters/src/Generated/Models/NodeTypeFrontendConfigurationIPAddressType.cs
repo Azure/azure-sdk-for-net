@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static NodeTypeFrontendConfigurationIPAddressType IPv4 { get; } = new NodeTypeFrontendConfigurationIPAddressType(IPv4Value);
         /// <summary> IPv6 address type. </summary>
         public static NodeTypeFrontendConfigurationIPAddressType IPv6 { get; } = new NodeTypeFrontendConfigurationIPAddressType(IPv6Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NodeTypeFrontendConfigurationIPAddressType"/> values are the same. </summary>
         public static bool operator ==(NodeTypeFrontendConfigurationIPAddressType left, NodeTypeFrontendConfigurationIPAddressType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NodeTypeFrontendConfigurationIPAddressType"/> values are not the same. </summary>

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static StreamAnalyticsQueryTestingResultStatus Timeout { get; } = new StreamAnalyticsQueryTestingResultStatus(TimeoutValue);
         /// <summary> The query testing operation failed due to an unknown error . </summary>
         public static StreamAnalyticsQueryTestingResultStatus UnknownError { get; } = new StreamAnalyticsQueryTestingResultStatus(UnknownErrorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StreamAnalyticsQueryTestingResultStatus"/> values are the same. </summary>
         public static bool operator ==(StreamAnalyticsQueryTestingResultStatus left, StreamAnalyticsQueryTestingResultStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamAnalyticsQueryTestingResultStatus"/> values are not the same. </summary>

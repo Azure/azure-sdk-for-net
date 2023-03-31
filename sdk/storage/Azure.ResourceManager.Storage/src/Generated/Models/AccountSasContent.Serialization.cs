@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Storage.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("signedServices"u8);
-            writer.WriteStringValue(Services.ToString());
+            writer.WriteStringValue(Services.ToSerialString());
             writer.WritePropertyName("signedResourceTypes"u8);
-            writer.WriteStringValue(ResourceTypes.ToString());
+            writer.WriteStringValue(ResourceTypes.ToSerialString());
             writer.WritePropertyName("signedPermission"u8);
-            writer.WriteStringValue(Permissions.ToString());
+            writer.WriteStringValue(Permissions.ToSerialString());
             if (Optional.IsDefined(IPAddressOrRange))
             {
                 writer.WritePropertyName("signedIp"u8);

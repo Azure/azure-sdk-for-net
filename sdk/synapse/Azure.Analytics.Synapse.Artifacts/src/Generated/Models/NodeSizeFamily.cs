@@ -29,6 +29,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static NodeSizeFamily None { get; } = new NodeSizeFamily(NoneValue);
         /// <summary> MemoryOptimized. </summary>
         public static NodeSizeFamily MemoryOptimized { get; } = new NodeSizeFamily(MemoryOptimizedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NodeSizeFamily"/> values are the same. </summary>
         public static bool operator ==(NodeSizeFamily left, NodeSizeFamily right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NodeSizeFamily"/> values are not the same. </summary>

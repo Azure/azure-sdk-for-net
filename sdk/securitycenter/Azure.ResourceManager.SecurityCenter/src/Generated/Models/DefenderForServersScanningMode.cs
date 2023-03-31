@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Default. </summary>
         public static DefenderForServersScanningMode Default { get; } = new DefenderForServersScanningMode(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DefenderForServersScanningMode"/> values are the same. </summary>
         public static bool operator ==(DefenderForServersScanningMode left, DefenderForServersScanningMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DefenderForServersScanningMode"/> values are not the same. </summary>

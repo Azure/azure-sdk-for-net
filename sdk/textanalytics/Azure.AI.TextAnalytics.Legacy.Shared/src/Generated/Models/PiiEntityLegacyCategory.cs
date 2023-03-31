@@ -542,6 +542,9 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
         public static PiiEntityLegacyCategory All { get; } = new PiiEntityLegacyCategory(AllValue);
         /// <summary> Default. </summary>
         public static PiiEntityLegacyCategory Default { get; } = new PiiEntityLegacyCategory(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PiiEntityLegacyCategory"/> values are the same. </summary>
         public static bool operator ==(PiiEntityLegacyCategory left, PiiEntityLegacyCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PiiEntityLegacyCategory"/> values are not the same. </summary>

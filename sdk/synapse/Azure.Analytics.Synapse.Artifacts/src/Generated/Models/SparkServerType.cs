@@ -32,6 +32,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static SparkServerType SharkServer2 { get; } = new SparkServerType(SharkServer2Value);
         /// <summary> SparkThriftServer. </summary>
         public static SparkServerType SparkThriftServer { get; } = new SparkServerType(SparkThriftServerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SparkServerType"/> values are the same. </summary>
         public static bool operator ==(SparkServerType left, SparkServerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SparkServerType"/> values are not the same. </summary>

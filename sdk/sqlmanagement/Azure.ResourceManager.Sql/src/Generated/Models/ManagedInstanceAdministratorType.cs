@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> ActiveDirectory. </summary>
         public static ManagedInstanceAdministratorType ActiveDirectory { get; } = new ManagedInstanceAdministratorType(ActiveDirectoryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedInstanceAdministratorType"/> values are the same. </summary>
         public static bool operator ==(ManagedInstanceAdministratorType left, ManagedInstanceAdministratorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedInstanceAdministratorType"/> values are not the same. </summary>

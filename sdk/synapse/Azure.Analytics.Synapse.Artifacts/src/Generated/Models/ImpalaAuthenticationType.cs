@@ -32,6 +32,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static ImpalaAuthenticationType SaslUsername { get; } = new ImpalaAuthenticationType(SaslUsernameValue);
         /// <summary> UsernameAndPassword. </summary>
         public static ImpalaAuthenticationType UsernameAndPassword { get; } = new ImpalaAuthenticationType(UsernameAndPasswordValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ImpalaAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(ImpalaAuthenticationType left, ImpalaAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImpalaAuthenticationType"/> values are not the same. </summary>

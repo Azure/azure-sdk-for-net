@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (DefaultLanguageCode != null)
                 {
                     writer.WritePropertyName("defaultLanguageCode"u8);
-                    writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
+                    writer.WriteStringValue(DefaultLanguageCode.Value.ToSerialString());
                 }
                 else
                 {
@@ -34,7 +34,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in VisualFeatures)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

@@ -29,6 +29,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static FtpAuthenticationType Basic { get; } = new FtpAuthenticationType(BasicValue);
         /// <summary> Anonymous. </summary>
         public static FtpAuthenticationType Anonymous { get; } = new FtpAuthenticationType(AnonymousValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FtpAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(FtpAuthenticationType left, FtpAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FtpAuthenticationType"/> values are not the same. </summary>

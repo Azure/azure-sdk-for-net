@@ -29,6 +29,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static GoogleAdWordsAuthenticationType ServiceAuthentication { get; } = new GoogleAdWordsAuthenticationType(ServiceAuthenticationValue);
         /// <summary> UserAuthentication. </summary>
         public static GoogleAdWordsAuthenticationType UserAuthentication { get; } = new GoogleAdWordsAuthenticationType(UserAuthenticationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GoogleAdWordsAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(GoogleAdWordsAuthenticationType left, GoogleAdWordsAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GoogleAdWordsAuthenticationType"/> values are not the same. </summary>

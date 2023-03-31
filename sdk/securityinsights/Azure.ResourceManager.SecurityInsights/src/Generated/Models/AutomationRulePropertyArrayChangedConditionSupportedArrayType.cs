@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static AutomationRulePropertyArrayChangedConditionSupportedArrayType Tactics { get; } = new AutomationRulePropertyArrayChangedConditionSupportedArrayType(TacticsValue);
         /// <summary> Evaluate the condition on the comments. </summary>
         public static AutomationRulePropertyArrayChangedConditionSupportedArrayType Comments { get; } = new AutomationRulePropertyArrayChangedConditionSupportedArrayType(CommentsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutomationRulePropertyArrayChangedConditionSupportedArrayType"/> values are the same. </summary>
         public static bool operator ==(AutomationRulePropertyArrayChangedConditionSupportedArrayType left, AutomationRulePropertyArrayChangedConditionSupportedArrayType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationRulePropertyArrayChangedConditionSupportedArrayType"/> values are not the same. </summary>

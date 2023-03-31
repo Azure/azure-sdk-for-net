@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(ServerKeyType))
             {
                 writer.WritePropertyName("serverKeyType"u8);
-                writer.WriteStringValue(ServerKeyType.Value.ToString());
+                writer.WriteStringValue(ServerKeyType.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsAutoRotationEnabled))
             {

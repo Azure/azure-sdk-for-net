@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static AvailabilityGroupReplicaFailoverMode Automatic { get; } = new AvailabilityGroupReplicaFailoverMode(AutomaticValue);
         /// <summary> MANUAL. </summary>
         public static AvailabilityGroupReplicaFailoverMode Manual { get; } = new AvailabilityGroupReplicaFailoverMode(ManualValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AvailabilityGroupReplicaFailoverMode"/> values are the same. </summary>
         public static bool operator ==(AvailabilityGroupReplicaFailoverMode left, AvailabilityGroupReplicaFailoverMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvailabilityGroupReplicaFailoverMode"/> values are not the same. </summary>

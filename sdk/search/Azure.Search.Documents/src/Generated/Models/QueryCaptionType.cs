@@ -29,6 +29,9 @@ namespace Azure.Search.Documents.Models
         public static QueryCaptionType None { get; } = new QueryCaptionType(NoneValue);
         /// <summary> Extracts captions from the matching documents that contain passages relevant to the search query. </summary>
         public static QueryCaptionType Extractive { get; } = new QueryCaptionType(ExtractiveValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="QueryCaptionType"/> values are the same. </summary>
         public static bool operator ==(QueryCaptionType left, QueryCaptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QueryCaptionType"/> values are not the same. </summary>

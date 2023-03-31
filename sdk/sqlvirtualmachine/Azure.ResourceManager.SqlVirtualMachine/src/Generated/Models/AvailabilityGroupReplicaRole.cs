@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static AvailabilityGroupReplicaRole Primary { get; } = new AvailabilityGroupReplicaRole(PrimaryValue);
         /// <summary> SECONDARY. </summary>
         public static AvailabilityGroupReplicaRole Secondary { get; } = new AvailabilityGroupReplicaRole(SecondaryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AvailabilityGroupReplicaRole"/> values are the same. </summary>
         public static bool operator ==(AvailabilityGroupReplicaRole left, AvailabilityGroupReplicaRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvailabilityGroupReplicaRole"/> values are not the same. </summary>

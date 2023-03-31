@@ -29,6 +29,9 @@ namespace Azure.AI.TextAnalytics
         public static SummarySentencesOrder Offset { get; } = new SummarySentencesOrder(OffsetValue);
         /// <summary> Indicates that results should be sorted in order of importance (i.e. rank score) according to the model. </summary>
         public static SummarySentencesOrder Rank { get; } = new SummarySentencesOrder(RankValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SummarySentencesOrder"/> values are the same. </summary>
         public static bool operator ==(SummarySentencesOrder left, SummarySentencesOrder right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SummarySentencesOrder"/> values are not the same. </summary>

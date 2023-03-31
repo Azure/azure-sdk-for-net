@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static UnmaskedIPLoggingStatus Disabled { get; } = new UnmaskedIPLoggingStatus(DisabledValue);
         /// <summary> Unmasked IP logging is enabled. </summary>
         public static UnmaskedIPLoggingStatus Enabled { get; } = new UnmaskedIPLoggingStatus(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UnmaskedIPLoggingStatus"/> values are the same. </summary>
         public static bool operator ==(UnmaskedIPLoggingStatus left, UnmaskedIPLoggingStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UnmaskedIPLoggingStatus"/> values are not the same. </summary>

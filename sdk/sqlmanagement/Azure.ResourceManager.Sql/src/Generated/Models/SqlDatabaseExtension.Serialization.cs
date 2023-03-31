@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(OperationMode))
             {
                 writer.WritePropertyName("operationMode"u8);
-                writer.WriteStringValue(OperationMode.Value.ToString());
+                writer.WriteStringValue(OperationMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(StorageKeyType))
             {
                 writer.WritePropertyName("storageKeyType"u8);
-                writer.WriteStringValue(StorageKeyType.Value.ToString());
+                writer.WriteStringValue(StorageKeyType.Value.ToSerialString());
             }
             if (Optional.IsDefined(StorageKey))
             {

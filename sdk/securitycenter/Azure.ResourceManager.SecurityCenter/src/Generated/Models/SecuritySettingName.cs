@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecuritySettingName WdatpUnifiedSolution { get; } = new SecuritySettingName(WdatpUnifiedSolutionValue);
         /// <summary> Sentinel. </summary>
         public static SecuritySettingName Sentinel { get; } = new SecuritySettingName(SentinelValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecuritySettingName"/> values are the same. </summary>
         public static bool operator ==(SecuritySettingName left, SecuritySettingName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecuritySettingName"/> values are not the same. </summary>

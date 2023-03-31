@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static StorageEncryptionKeyType Service { get; } = new StorageEncryptionKeyType(ServiceValue);
         /// <summary> Account. </summary>
         public static StorageEncryptionKeyType Account { get; } = new StorageEncryptionKeyType(AccountValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageEncryptionKeyType"/> values are the same. </summary>
         public static bool operator ==(StorageEncryptionKeyType left, StorageEncryptionKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageEncryptionKeyType"/> values are not the same. </summary>

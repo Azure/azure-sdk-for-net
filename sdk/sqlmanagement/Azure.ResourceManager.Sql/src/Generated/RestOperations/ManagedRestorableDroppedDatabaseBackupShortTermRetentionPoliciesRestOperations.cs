@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/restorableDroppedDatabases/", false);
             uri.AppendPath(restorableDroppedDatabaseId, true);
             uri.AppendPath("/backupShortTermRetentionPolicies/", false);
-            uri.AppendPath(policyName.ToString(), true);
+            uri.AppendPath(policyName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/restorableDroppedDatabases/", false);
             uri.AppendPath(restorableDroppedDatabaseId, true);
             uri.AppendPath("/backupShortTermRetentionPolicies/", false);
-            uri.AppendPath(policyName.ToString(), true);
+            uri.AppendPath(policyName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/restorableDroppedDatabases/", false);
             uri.AppendPath(restorableDroppedDatabaseId, true);
             uri.AppendPath("/backupShortTermRetentionPolicies/", false);
-            uri.AppendPath(policyName.ToString(), true);
+            uri.AppendPath(policyName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

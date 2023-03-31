@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static TrafficRoutingMethod MultiValue { get; } = new TrafficRoutingMethod(MultiValueValue);
         /// <summary> Subnet. </summary>
         public static TrafficRoutingMethod Subnet { get; } = new TrafficRoutingMethod(SubnetValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TrafficRoutingMethod"/> values are the same. </summary>
         public static bool operator ==(TrafficRoutingMethod left, TrafficRoutingMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrafficRoutingMethod"/> values are not the same. </summary>

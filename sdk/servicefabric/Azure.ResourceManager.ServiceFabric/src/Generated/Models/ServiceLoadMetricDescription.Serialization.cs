@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(Weight))
             {
                 writer.WritePropertyName("weight"u8);
-                writer.WriteStringValue(Weight.Value.ToString());
+                writer.WriteStringValue(Weight.Value.ToSerialString());
             }
             if (Optional.IsDefined(PrimaryDefaultLoad))
             {

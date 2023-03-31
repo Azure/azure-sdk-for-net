@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static BlobInventoryPolicyFormat Csv { get; } = new BlobInventoryPolicyFormat(CsvValue);
         /// <summary> Parquet. </summary>
         public static BlobInventoryPolicyFormat Parquet { get; } = new BlobInventoryPolicyFormat(ParquetValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BlobInventoryPolicyFormat"/> values are the same. </summary>
         public static bool operator ==(BlobInventoryPolicyFormat left, BlobInventoryPolicyFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobInventoryPolicyFormat"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static LocalCacheMode DownloadNewAndModifiedFiles { get; } = new LocalCacheMode(DownloadNewAndModifiedFilesValue);
         /// <summary> UpdateLocallyCachedFiles. </summary>
         public static LocalCacheMode UpdateLocallyCachedFiles { get; } = new LocalCacheMode(UpdateLocallyCachedFilesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LocalCacheMode"/> values are the same. </summary>
         public static bool operator ==(LocalCacheMode left, LocalCacheMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LocalCacheMode"/> values are not the same. </summary>

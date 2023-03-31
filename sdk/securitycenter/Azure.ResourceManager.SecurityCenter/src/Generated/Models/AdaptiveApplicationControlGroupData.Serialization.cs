@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(EnforcementMode))
             {
                 writer.WritePropertyName("enforcementMode"u8);
-                writer.WriteStringValue(EnforcementMode.Value.ToString());
+                writer.WriteStringValue(EnforcementMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(ProtectionMode))
             {

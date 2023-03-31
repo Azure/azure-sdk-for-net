@@ -35,6 +35,9 @@ namespace Azure.Storage.Files.DataLake.Models
         public static PathExpiryOptions RelativeToNow { get; } = new PathExpiryOptions(RelativeToNowValue);
         /// <summary> Absolute. </summary>
         public static PathExpiryOptions Absolute { get; } = new PathExpiryOptions(AbsoluteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PathExpiryOptions"/> values are the same. </summary>
         public static bool operator ==(PathExpiryOptions left, PathExpiryOptions right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PathExpiryOptions"/> values are not the same. </summary>

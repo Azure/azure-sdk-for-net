@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityAssessmentUserImpact Moderate { get; } = new SecurityAssessmentUserImpact(ModerateValue);
         /// <summary> High. </summary>
         public static SecurityAssessmentUserImpact High { get; } = new SecurityAssessmentUserImpact(HighValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityAssessmentUserImpact"/> values are the same. </summary>
         public static bool operator ==(SecurityAssessmentUserImpact left, SecurityAssessmentUserImpact right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityAssessmentUserImpact"/> values are not the same. </summary>

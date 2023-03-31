@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> The source of the governance rule is assessments. </summary>
         public static GovernanceRuleSourceResourceType Assessments { get; } = new GovernanceRuleSourceResourceType(AssessmentsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GovernanceRuleSourceResourceType"/> values are the same. </summary>
         public static bool operator ==(GovernanceRuleSourceResourceType left, GovernanceRuleSourceResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GovernanceRuleSourceResourceType"/> values are not the same. </summary>

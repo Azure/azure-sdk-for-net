@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> deleted. </summary>
         public static BlobContainerState Deleted { get; } = new BlobContainerState(DeletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BlobContainerState"/> values are the same. </summary>
         public static bool operator ==(BlobContainerState left, BlobContainerState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobContainerState"/> values are not the same. </summary>

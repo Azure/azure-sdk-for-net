@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static DistributedAvailabilityGroupReplicationMode Async { get; } = new DistributedAvailabilityGroupReplicationMode(AsyncValue);
         /// <summary> Sync. </summary>
         public static DistributedAvailabilityGroupReplicationMode Sync { get; } = new DistributedAvailabilityGroupReplicationMode(SyncValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DistributedAvailabilityGroupReplicationMode"/> values are the same. </summary>
         public static bool operator ==(DistributedAvailabilityGroupReplicationMode left, DistributedAvailabilityGroupReplicationMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DistributedAvailabilityGroupReplicationMode"/> values are not the same. </summary>

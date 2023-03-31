@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static AdaptiveApplicationControlIssue ExecutableViolationsAudited { get; } = new AdaptiveApplicationControlIssue(ExecutableViolationsAuditedValue);
         /// <summary> RulesViolatedManually. </summary>
         public static AdaptiveApplicationControlIssue RulesViolatedManually { get; } = new AdaptiveApplicationControlIssue(RulesViolatedManuallyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AdaptiveApplicationControlIssue"/> values are the same. </summary>
         public static bool operator ==(AdaptiveApplicationControlIssue left, AdaptiveApplicationControlIssue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AdaptiveApplicationControlIssue"/> values are not the same. </summary>

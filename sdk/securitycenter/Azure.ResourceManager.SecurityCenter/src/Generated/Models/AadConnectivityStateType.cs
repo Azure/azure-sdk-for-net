@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static AadConnectivityStateType NotLicensed { get; } = new AadConnectivityStateType(NotLicensedValue);
         /// <summary> Connected. </summary>
         public static AadConnectivityStateType Connected { get; } = new AadConnectivityStateType(ConnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AadConnectivityStateType"/> values are the same. </summary>
         public static bool operator ==(AadConnectivityStateType left, AadConnectivityStateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AadConnectivityStateType"/> values are not the same. </summary>

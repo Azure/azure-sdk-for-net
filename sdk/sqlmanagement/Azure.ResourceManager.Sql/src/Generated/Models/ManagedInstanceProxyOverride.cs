@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static ManagedInstanceProxyOverride Redirect { get; } = new ManagedInstanceProxyOverride(RedirectValue);
         /// <summary> Default. </summary>
         public static ManagedInstanceProxyOverride Default { get; } = new ManagedInstanceProxyOverride(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedInstanceProxyOverride"/> values are the same. </summary>
         public static bool operator ==(ManagedInstanceProxyOverride left, ManagedInstanceProxyOverride right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedInstanceProxyOverride"/> values are not the same. </summary>

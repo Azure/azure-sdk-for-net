@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         /// <summary> subnets. </summary>
         public static AssociationType Subnets { get; } = new AssociationType(SubnetsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AssociationType"/> values are the same. </summary>
         public static bool operator ==(AssociationType left, AssociationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AssociationType"/> values are not the same. </summary>

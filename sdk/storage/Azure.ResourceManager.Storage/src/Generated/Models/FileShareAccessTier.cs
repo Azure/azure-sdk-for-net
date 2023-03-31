@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static FileShareAccessTier Cool { get; } = new FileShareAccessTier(CoolValue);
         /// <summary> Premium. </summary>
         public static FileShareAccessTier Premium { get; } = new FileShareAccessTier(PremiumValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FileShareAccessTier"/> values are the same. </summary>
         public static bool operator ==(FileShareAccessTier left, FileShareAccessTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FileShareAccessTier"/> values are not the same. </summary>

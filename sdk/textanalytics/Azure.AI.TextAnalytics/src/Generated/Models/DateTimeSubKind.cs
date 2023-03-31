@@ -38,6 +38,9 @@ namespace Azure.AI.TextAnalytics
         public static DateTimeSubKind Duration { get; } = new DateTimeSubKind(DurationValue);
         /// <summary> Set. </summary>
         public static DateTimeSubKind Set { get; } = new DateTimeSubKind(SetValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DateTimeSubKind"/> values are the same. </summary>
         public static bool operator ==(DateTimeSubKind left, DateTimeSubKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DateTimeSubKind"/> values are not the same. </summary>

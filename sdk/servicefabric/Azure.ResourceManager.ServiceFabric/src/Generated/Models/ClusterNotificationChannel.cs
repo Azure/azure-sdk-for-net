@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static ClusterNotificationChannel EmailUser { get; } = new ClusterNotificationChannel(EmailUserValue);
         /// <summary> For subscription receivers. In this case, the parameter receivers should be a list of roles of the subscription for the cluster (eg. Owner, AccountAdmin, etc) that will receive the notifications. </summary>
         public static ClusterNotificationChannel EmailSubscription { get; } = new ClusterNotificationChannel(EmailSubscriptionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ClusterNotificationChannel"/> values are the same. </summary>
         public static bool operator ==(ClusterNotificationChannel left, ClusterNotificationChannel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterNotificationChannel"/> values are not the same. </summary>

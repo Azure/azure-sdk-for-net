@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static CloudTieringLowDiskModeState Enabled { get; } = new CloudTieringLowDiskModeState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static CloudTieringLowDiskModeState Disabled { get; } = new CloudTieringLowDiskModeState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CloudTieringLowDiskModeState"/> values are the same. </summary>
         public static bool operator ==(CloudTieringLowDiskModeState left, CloudTieringLowDiskModeState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CloudTieringLowDiskModeState"/> values are not the same. </summary>

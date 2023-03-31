@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static StorageTargetType Unknown { get; } = new StorageTargetType(UnknownValue);
         /// <summary> blobNfs. </summary>
         public static StorageTargetType BlobNfs { get; } = new StorageTargetType(BlobNfsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageTargetType"/> values are the same. </summary>
         public static bool operator ==(StorageTargetType left, StorageTargetType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageTargetType"/> values are not the same. </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SignalR.Models
             if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
-                writer.WriteStringValue(DefaultAction.Value.ToString());
+                writer.WriteStringValue(DefaultAction.Value.ToSerialString());
             }
             if (Optional.IsDefined(PublicNetwork))
             {

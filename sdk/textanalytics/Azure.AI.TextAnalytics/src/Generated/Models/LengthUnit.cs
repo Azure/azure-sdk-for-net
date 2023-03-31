@@ -74,6 +74,9 @@ namespace Azure.AI.TextAnalytics
         public static LengthUnit LightYear { get; } = new LengthUnit(LightYearValue);
         /// <summary> Pt. </summary>
         public static LengthUnit Pt { get; } = new LengthUnit(PtValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LengthUnit"/> values are the same. </summary>
         public static bool operator ==(LengthUnit left, LengthUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LengthUnit"/> values are not the same. </summary>

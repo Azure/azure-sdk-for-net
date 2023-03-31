@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SyncConflictResolutionPolicy HubWin { get; } = new SyncConflictResolutionPolicy(HubWinValue);
         /// <summary> MemberWin. </summary>
         public static SyncConflictResolutionPolicy MemberWin { get; } = new SyncConflictResolutionPolicy(MemberWinValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SyncConflictResolutionPolicy"/> values are the same. </summary>
         public static bool operator ==(SyncConflictResolutionPolicy left, SyncConflictResolutionPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SyncConflictResolutionPolicy"/> values are not the same. </summary>

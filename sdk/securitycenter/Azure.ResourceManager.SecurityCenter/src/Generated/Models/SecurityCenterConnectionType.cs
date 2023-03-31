@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityCenterConnectionType Internal { get; } = new SecurityCenterConnectionType(InternalValue);
         /// <summary> External. </summary>
         public static SecurityCenterConnectionType External { get; } = new SecurityCenterConnectionType(ExternalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityCenterConnectionType"/> values are the same. </summary>
         public static bool operator ==(SecurityCenterConnectionType left, SecurityCenterConnectionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityCenterConnectionType"/> values are not the same. </summary>

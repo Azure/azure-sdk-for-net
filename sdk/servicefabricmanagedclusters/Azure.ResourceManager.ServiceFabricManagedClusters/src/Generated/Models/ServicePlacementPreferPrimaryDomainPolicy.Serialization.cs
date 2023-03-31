@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WritePropertyName("domainName"u8);
             writer.WriteStringValue(DomainName);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ServicePlacementPolicyType.ToString());
+            writer.WriteStringValue(ServicePlacementPolicyType.ToSerialString());
             writer.WriteEndObject();
         }
 

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static SqlVmGroupImageSku Developer { get; } = new SqlVmGroupImageSku(DeveloperValue);
         /// <summary> Enterprise. </summary>
         public static SqlVmGroupImageSku Enterprise { get; } = new SqlVmGroupImageSku(EnterpriseValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlVmGroupImageSku"/> values are the same. </summary>
         public static bool operator ==(SqlVmGroupImageSku left, SqlVmGroupImageSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlVmGroupImageSku"/> values are not the same. </summary>

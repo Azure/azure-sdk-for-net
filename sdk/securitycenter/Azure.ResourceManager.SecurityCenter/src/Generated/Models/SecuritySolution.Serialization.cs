@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(SecurityFamily))
             {
                 writer.WritePropertyName("securityFamily"u8);
-                writer.WriteStringValue(SecurityFamily.Value.ToString());
+                writer.WriteStringValue(SecurityFamily.Value.ToSerialString());
             }
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             if (Optional.IsDefined(Template))
             {

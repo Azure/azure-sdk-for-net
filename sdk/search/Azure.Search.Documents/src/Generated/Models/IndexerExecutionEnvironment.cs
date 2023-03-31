@@ -29,6 +29,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public static IndexerExecutionEnvironment Standard { get; } = new IndexerExecutionEnvironment(StandardValue);
         /// <summary> Indicates that the indexer should run with the environment provisioned specifically for the search service. This should only be specified as the execution environment if the indexer needs to access resources securely over shared private link resources. </summary>
         public static IndexerExecutionEnvironment Private { get; } = new IndexerExecutionEnvironment(PrivateValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IndexerExecutionEnvironment"/> values are the same. </summary>
         public static bool operator ==(IndexerExecutionEnvironment left, IndexerExecutionEnvironment right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IndexerExecutionEnvironment"/> values are not the same. </summary>

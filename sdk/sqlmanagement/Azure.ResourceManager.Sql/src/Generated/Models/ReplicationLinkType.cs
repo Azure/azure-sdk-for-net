@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static ReplicationLinkType Named { get; } = new ReplicationLinkType(NamedValue);
         /// <summary> STANDBY. </summary>
         public static ReplicationLinkType Standby { get; } = new ReplicationLinkType(StandbyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ReplicationLinkType"/> values are the same. </summary>
         public static bool operator ==(ReplicationLinkType left, ReplicationLinkType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReplicationLinkType"/> values are not the same. </summary>

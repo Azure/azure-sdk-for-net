@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary> Microsoft.Synapse/workspaces/kustoPools/databases/principalAssignments. </summary>
         public static SynapseDatabasePrincipalAssignmentType MicrosoftSynapseWorkspacesKustoPoolsDatabasesPrincipalAssignments { get; } = new SynapseDatabasePrincipalAssignmentType(MicrosoftSynapseWorkspacesKustoPoolsDatabasesPrincipalAssignmentsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseDatabasePrincipalAssignmentType"/> values are the same. </summary>
         public static bool operator ==(SynapseDatabasePrincipalAssignmentType left, SynapseDatabasePrincipalAssignmentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseDatabasePrincipalAssignmentType"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> current. </summary>
         public static DtcName Current { get; } = new DtcName(CurrentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DtcName"/> values are the same. </summary>
         public static bool operator ==(DtcName left, DtcName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DtcName"/> values are not the same. </summary>

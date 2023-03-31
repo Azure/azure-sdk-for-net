@@ -86,6 +86,9 @@ namespace Azure.AI.TextAnalytics
         public static HealthcareEntityRelationType ValueOfCondition { get; } = new HealthcareEntityRelationType(ValueOfConditionValue);
         /// <summary> ValueOfExamination. </summary>
         public static HealthcareEntityRelationType ValueOfExamination { get; } = new HealthcareEntityRelationType(ValueOfExaminationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HealthcareEntityRelationType"/> values are the same. </summary>
         public static bool operator ==(HealthcareEntityRelationType left, HealthcareEntityRelationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HealthcareEntityRelationType"/> values are not the same. </summary>

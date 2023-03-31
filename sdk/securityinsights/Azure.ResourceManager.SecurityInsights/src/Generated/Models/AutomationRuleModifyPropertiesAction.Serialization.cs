@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WritePropertyName("order"u8);
             writer.WriteNumberValue(Order);
             writer.WritePropertyName("actionType"u8);
-            writer.WriteStringValue(ActionType.ToString());
+            writer.WriteStringValue(ActionType.ToSerialString());
             writer.WriteEndObject();
         }
 

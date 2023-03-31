@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("offeringType"u8);
-            writer.WriteStringValue(OfferingType.ToString());
+            writer.WriteStringValue(OfferingType.ToSerialString());
             writer.WriteEndObject();
         }
 

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static LogSizeUnit Petabytes { get; } = new LogSizeUnit(PetabytesValue);
         /// <summary> Percent. </summary>
         public static LogSizeUnit Percent { get; } = new LogSizeUnit(PercentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LogSizeUnit"/> values are the same. </summary>
         public static bool operator ==(LogSizeUnit left, LogSizeUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogSizeUnit"/> values are not the same. </summary>

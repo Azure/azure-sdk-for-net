@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("jobType"u8);
-            writer.WriteStringValue(JobType.ToString());
+            writer.WriteStringValue(JobType.ToSerialString());
             if (Optional.IsDefined(CompatibilityLevel))
             {
                 writer.WritePropertyName("compatibilityLevel"u8);
-                writer.WriteStringValue(CompatibilityLevel.Value.ToString());
+                writer.WriteStringValue(CompatibilityLevel.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

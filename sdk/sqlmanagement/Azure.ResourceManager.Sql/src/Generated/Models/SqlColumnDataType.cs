@@ -125,6 +125,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlColumnDataType Xml { get; } = new SqlColumnDataType(XmlValue);
         /// <summary> sysname. </summary>
         public static SqlColumnDataType Sysname { get; } = new SqlColumnDataType(SysnameValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlColumnDataType"/> values are the same. </summary>
         public static bool operator ==(SqlColumnDataType left, SqlColumnDataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlColumnDataType"/> values are not the same. </summary>

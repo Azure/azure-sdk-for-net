@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static ReadableSecondaryMode All { get; } = new ReadableSecondaryMode(AllValue);
         /// <summary> READ_ONLY. </summary>
         public static ReadableSecondaryMode ReadOnly { get; } = new ReadableSecondaryMode(ReadOnlyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ReadableSecondaryMode"/> values are the same. </summary>
         public static bool operator ==(ReadableSecondaryMode left, ReadableSecondaryMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReadableSecondaryMode"/> values are not the same. </summary>

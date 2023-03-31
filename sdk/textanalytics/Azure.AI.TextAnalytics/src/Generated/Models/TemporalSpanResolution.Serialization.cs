@@ -34,7 +34,7 @@ namespace Azure.AI.TextAnalytics
             if (Optional.IsDefined(Modifier))
             {
                 writer.WritePropertyName("modifier"u8);
-                writer.WriteStringValue(Modifier.Value.ToString());
+                writer.WriteStringValue(Modifier.Value.ToSerialString());
             }
             if (Optional.IsDefined(Timex))
             {
@@ -42,7 +42,7 @@ namespace Azure.AI.TextAnalytics
                 writer.WriteStringValue(Timex);
             }
             writer.WritePropertyName("resolutionKind"u8);
-            writer.WriteStringValue(ResolutionKind.ToString());
+            writer.WriteStringValue(ResolutionKind.ToSerialString());
             writer.WriteEndObject();
         }
 

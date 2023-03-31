@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityThreat MissingCoverage { get; } = new SecurityThreat(MissingCoverageValue);
         /// <summary> denialOfService. </summary>
         public static SecurityThreat DenialOfService { get; } = new SecurityThreat(DenialOfServiceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityThreat"/> values are the same. </summary>
         public static bool operator ==(SecurityThreat left, SecurityThreat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityThreat"/> values are not the same. </summary>

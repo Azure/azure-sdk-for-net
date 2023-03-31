@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseBlobStorageEventType MicrosoftStorageBlobCreated { get; } = new SynapseBlobStorageEventType(MicrosoftStorageBlobCreatedValue);
         /// <summary> Microsoft.Storage.BlobRenamed. </summary>
         public static SynapseBlobStorageEventType MicrosoftStorageBlobRenamed { get; } = new SynapseBlobStorageEventType(MicrosoftStorageBlobRenamedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseBlobStorageEventType"/> values are the same. </summary>
         public static bool operator ==(SynapseBlobStorageEventType left, SynapseBlobStorageEventType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseBlobStorageEventType"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlDatabaseState Live { get; } = new SqlDatabaseState(LiveValue);
         /// <summary> Deleted. </summary>
         public static SqlDatabaseState Deleted { get; } = new SqlDatabaseState(DeletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlDatabaseState"/> values are the same. </summary>
         public static bool operator ==(SqlDatabaseState left, SqlDatabaseState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlDatabaseState"/> values are not the same. </summary>

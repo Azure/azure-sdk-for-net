@@ -29,6 +29,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public static ImageDetail Celebrities { get; } = new ImageDetail(CelebritiesValue);
         /// <summary> Details recognized as landmarks. </summary>
         public static ImageDetail Landmarks { get; } = new ImageDetail(LandmarksValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ImageDetail"/> values are the same. </summary>
         public static bool operator ==(ImageDetail left, ImageDetail right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImageDetail"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static AutoProvisionState On { get; } = new AutoProvisionState(OnValue);
         /// <summary> Do not install security agent on the VMs automatically. </summary>
         public static AutoProvisionState Off { get; } = new AutoProvisionState(OffValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutoProvisionState"/> values are the same. </summary>
         public static bool operator ==(AutoProvisionState left, AutoProvisionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutoProvisionState"/> values are not the same. </summary>

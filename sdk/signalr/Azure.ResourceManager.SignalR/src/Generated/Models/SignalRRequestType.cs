@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.SignalR.Models
         public static SignalRRequestType RestApi { get; } = new SignalRRequestType(RestApiValue);
         /// <summary> Trace. </summary>
         public static SignalRRequestType Trace { get; } = new SignalRRequestType(TraceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SignalRRequestType"/> values are the same. </summary>
         public static bool operator ==(SignalRRequestType left, SignalRRequestType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SignalRRequestType"/> values are not the same. </summary>

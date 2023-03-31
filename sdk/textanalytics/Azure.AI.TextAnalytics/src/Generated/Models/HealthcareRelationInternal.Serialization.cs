@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("relationType"u8);
-            writer.WriteStringValue(RelationType.ToString());
+            writer.WriteStringValue(RelationType.ToSerialString());
             if (Optional.IsDefined(ConfidenceScore))
             {
                 writer.WritePropertyName("confidenceScore"u8);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(SupportedCloud))
             {
                 writer.WritePropertyName("supportedCloud"u8);
-                writer.WriteStringValue(SupportedCloud.Value.ToString());
+                writer.WriteStringValue(SupportedCloud.Value.ToSerialString());
             }
             if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
-                writer.WriteStringValue(Severity.Value.ToString());
+                writer.WriteStringValue(Severity.Value.ToSerialString());
             }
             if (Optional.IsDefined(DisplayName))
             {

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStringValue(WorkloadIdentityProviderId);
             }
             writer.WritePropertyName("organizationMembershipType"u8);
-            writer.WriteStringValue(OrganizationMembershipType.ToString());
+            writer.WriteStringValue(OrganizationMembershipType.ToSerialString());
             writer.WriteEndObject();
         }
 

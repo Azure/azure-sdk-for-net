@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsIncidentStatus Active { get; } = new SecurityInsightsIncidentStatus(ActiveValue);
         /// <summary> A non-active incident. </summary>
         public static SecurityInsightsIncidentStatus Closed { get; } = new SecurityInsightsIncidentStatus(ClosedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentStatus"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsIncidentStatus left, SecurityInsightsIncidentStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentStatus"/> values are not the same. </summary>

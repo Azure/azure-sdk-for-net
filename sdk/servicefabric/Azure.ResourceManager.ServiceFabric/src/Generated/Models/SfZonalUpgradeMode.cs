@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static SfZonalUpgradeMode Parallel { get; } = new SfZonalUpgradeMode(ParallelValue);
         /// <summary> If this value is omitted or set to Hierarchical, VMs are grouped to reflect the zonal distribution in up to 15 UDs. Each of the three zones has five UDs. This ensures that the zones are updated one at a time, moving to next zone only after completing five UDs within the first zone. This update process is safer for the cluster and the user application. </summary>
         public static SfZonalUpgradeMode Hierarchical { get; } = new SfZonalUpgradeMode(HierarchicalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SfZonalUpgradeMode"/> values are the same. </summary>
         public static bool operator ==(SfZonalUpgradeMode left, SfZonalUpgradeMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SfZonalUpgradeMode"/> values are not the same. </summary>

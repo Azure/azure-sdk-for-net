@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static SqlVmAutoBackupDayOfWeek Saturday { get; } = new SqlVmAutoBackupDayOfWeek(SaturdayValue);
         /// <summary> Sunday. </summary>
         public static SqlVmAutoBackupDayOfWeek Sunday { get; } = new SqlVmAutoBackupDayOfWeek(SundayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlVmAutoBackupDayOfWeek"/> values are the same. </summary>
         public static bool operator ==(SqlVmAutoBackupDayOfWeek left, SqlVmAutoBackupDayOfWeek right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlVmAutoBackupDayOfWeek"/> values are not the same. </summary>

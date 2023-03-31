@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static StorageAccountSkuConversionState Succeeded { get; } = new StorageAccountSkuConversionState(SucceededValue);
         /// <summary> Failed. </summary>
         public static StorageAccountSkuConversionState Failed { get; } = new StorageAccountSkuConversionState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageAccountSkuConversionState"/> values are the same. </summary>
         public static bool operator ==(StorageAccountSkuConversionState left, StorageAccountSkuConversionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageAccountSkuConversionState"/> values are not the same. </summary>

@@ -71,6 +71,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public static KeyPhraseExtractionSkillLanguage Es { get; } = new KeyPhraseExtractionSkillLanguage(EsValue);
         /// <summary> Swedish. </summary>
         public static KeyPhraseExtractionSkillLanguage Sv { get; } = new KeyPhraseExtractionSkillLanguage(SvValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KeyPhraseExtractionSkillLanguage"/> values are the same. </summary>
         public static bool operator ==(KeyPhraseExtractionSkillLanguage left, KeyPhraseExtractionSkillLanguage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyPhraseExtractionSkillLanguage"/> values are not the same. </summary>

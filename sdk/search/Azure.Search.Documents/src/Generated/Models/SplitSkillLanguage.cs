@@ -50,6 +50,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public static SplitSkillLanguage Ko { get; } = new SplitSkillLanguage(KoValue);
         /// <summary> Portuguese. </summary>
         public static SplitSkillLanguage Pt { get; } = new SplitSkillLanguage(PtValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SplitSkillLanguage"/> values are the same. </summary>
         public static bool operator ==(SplitSkillLanguage left, SplitSkillLanguage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SplitSkillLanguage"/> values are not the same. </summary>

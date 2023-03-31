@@ -32,6 +32,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static SapHanaPartitionOption PhysicalPartitionsOfTable { get; } = new SapHanaPartitionOption(PhysicalPartitionsOfTableValue);
         /// <summary> SapHanaDynamicRange. </summary>
         public static SapHanaPartitionOption SapHanaDynamicRange { get; } = new SapHanaPartitionOption(SapHanaDynamicRangeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SapHanaPartitionOption"/> values are the same. </summary>
         public static bool operator ==(SapHanaPartitionOption left, SapHanaPartitionOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapHanaPartitionOption"/> values are not the same. </summary>

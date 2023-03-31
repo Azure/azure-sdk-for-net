@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static ClusterVersionsEnvironment Windows { get; } = new ClusterVersionsEnvironment(WindowsValue);
         /// <summary> Linux. </summary>
         public static ClusterVersionsEnvironment Linux { get; } = new ClusterVersionsEnvironment(LinuxValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ClusterVersionsEnvironment"/> values are the same. </summary>
         public static bool operator ==(ClusterVersionsEnvironment left, ClusterVersionsEnvironment right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterVersionsEnvironment"/> values are not the same. </summary>

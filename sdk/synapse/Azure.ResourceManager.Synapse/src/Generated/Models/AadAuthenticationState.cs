@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static AadAuthenticationState InConsistent { get; } = new AadAuthenticationState(InConsistentValue);
         /// <summary> Updating. </summary>
         public static AadAuthenticationState Updating { get; } = new AadAuthenticationState(UpdatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AadAuthenticationState"/> values are the same. </summary>
         public static bool operator ==(AadAuthenticationState left, AadAuthenticationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AadAuthenticationState"/> values are not the same. </summary>

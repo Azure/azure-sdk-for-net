@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static EndOfSupportStatus UpcomingNoLongerSupported { get; } = new EndOfSupportStatus(UpcomingNoLongerSupportedValue);
         /// <summary> upcomingVersionNoLongerSupported. </summary>
         public static EndOfSupportStatus UpcomingVersionNoLongerSupported { get; } = new EndOfSupportStatus(UpcomingVersionNoLongerSupportedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EndOfSupportStatus"/> values are the same. </summary>
         public static bool operator ==(EndOfSupportStatus left, EndOfSupportStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EndOfSupportStatus"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static ManagedLedgerDigestUploadsState Enabled { get; } = new ManagedLedgerDigestUploadsState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static ManagedLedgerDigestUploadsState Disabled { get; } = new ManagedLedgerDigestUploadsState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedLedgerDigestUploadsState"/> values are the same. </summary>
         public static bool operator ==(ManagedLedgerDigestUploadsState left, ManagedLedgerDigestUploadsState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedLedgerDigestUploadsState"/> values are not the same. </summary>

@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static ResourceProvisioningState Moving { get; } = new ResourceProvisioningState(MovingValue);
         /// <summary> Canceled. </summary>
         public static ResourceProvisioningState Canceled { get; } = new ResourceProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResourceProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ResourceProvisioningState left, ResourceProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceProvisioningState"/> values are not the same. </summary>

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public static LinkerAuthType ServicePrincipalCertificate { get; } = new LinkerAuthType(ServicePrincipalCertificateValue);
         /// <summary> secret. </summary>
         public static LinkerAuthType Secret { get; } = new LinkerAuthType(SecretValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LinkerAuthType"/> values are the same. </summary>
         public static bool operator ==(LinkerAuthType left, LinkerAuthType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LinkerAuthType"/> values are not the same. </summary>

@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static KustoPoolState Starting { get; } = new KustoPoolState(StartingValue);
         /// <summary> Updating. </summary>
         public static KustoPoolState Updating { get; } = new KustoPoolState(UpdatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoPoolState"/> values are the same. </summary>
         public static bool operator ==(KustoPoolState left, KustoPoolState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoPoolState"/> values are not the same. </summary>

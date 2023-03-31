@@ -24,6 +24,9 @@ namespace Azure.Data.SchemaRegistry
         private const string AvroValue = "application/json; serialization=Avro";
         private const string JsonValue = "application/json; serialization=json";
         private const string CustomValue = "text/plain; charset=utf-8";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContentType"/> values are the same. </summary>
         public static bool operator ==(ContentType left, ContentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContentType"/> values are not the same. </summary>

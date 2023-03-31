@@ -32,6 +32,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static ScriptActivityParameterDirection Output { get; } = new ScriptActivityParameterDirection(OutputValue);
         /// <summary> InputOutput. </summary>
         public static ScriptActivityParameterDirection InputOutput { get; } = new ScriptActivityParameterDirection(InputOutputValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScriptActivityParameterDirection"/> values are the same. </summary>
         public static bool operator ==(ScriptActivityParameterDirection left, ScriptActivityParameterDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptActivityParameterDirection"/> values are not the same. </summary>

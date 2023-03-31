@@ -29,6 +29,9 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
         public static WarningCodeValue LongWordsInDocument { get; } = new WarningCodeValue(LongWordsInDocumentValue);
         /// <summary> DocumentTruncated. </summary>
         public static WarningCodeValue DocumentTruncated { get; } = new WarningCodeValue(DocumentTruncatedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WarningCodeValue"/> values are the same. </summary>
         public static bool operator ==(WarningCodeValue left, WarningCodeValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WarningCodeValue"/> values are not the same. </summary>

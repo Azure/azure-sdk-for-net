@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
-                writer.WriteStringValue(CreateMode.Value.ToString());
+                writer.WriteStringValue(CreateMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
-                writer.WriteStringValue(StorageAccountType.Value.ToString());
+                writer.WriteStringValue(StorageAccountType.Value.ToSerialString());
             }
             if (Optional.IsDefined(SourceDatabaseDeletionOn))
             {

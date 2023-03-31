@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Synapse
             uri.AppendPath("/sqlPools/", false);
             uri.AppendPath(sqlPoolName, true);
             uri.AppendPath("/connectionPolicies/", false);
-            uri.AppendPath(connectionPolicyName.ToString(), true);
+            uri.AppendPath(connectionPolicyName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

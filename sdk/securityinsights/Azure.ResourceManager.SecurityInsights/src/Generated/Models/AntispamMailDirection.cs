@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static AntispamMailDirection Outbound { get; } = new AntispamMailDirection(OutboundValue);
         /// <summary> Intraorg. </summary>
         public static AntispamMailDirection Intraorg { get; } = new AntispamMailDirection(IntraorgValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AntispamMailDirection"/> values are the same. </summary>
         public static bool operator ==(AntispamMailDirection left, AntispamMailDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AntispamMailDirection"/> values are not the same. </summary>

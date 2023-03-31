@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static ThreatIntelligenceSortingOrder Ascending { get; } = new ThreatIntelligenceSortingOrder(AscendingValue);
         /// <summary> descending. </summary>
         public static ThreatIntelligenceSortingOrder Descending { get; } = new ThreatIntelligenceSortingOrder(DescendingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ThreatIntelligenceSortingOrder"/> values are the same. </summary>
         public static bool operator ==(ThreatIntelligenceSortingOrder left, ThreatIntelligenceSortingOrder right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ThreatIntelligenceSortingOrder"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public static BlobIndexerDataToExtract AllMetadata { get; } = new BlobIndexerDataToExtract(AllMetadataValue);
         /// <summary> Extracts all metadata and textual content from each blob. </summary>
         public static BlobIndexerDataToExtract ContentAndMetadata { get; } = new BlobIndexerDataToExtract(ContentAndMetadataValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BlobIndexerDataToExtract"/> values are the same. </summary>
         public static bool operator ==(BlobIndexerDataToExtract left, BlobIndexerDataToExtract right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobIndexerDataToExtract"/> values are not the same. </summary>

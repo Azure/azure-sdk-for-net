@@ -29,6 +29,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static ODataAadServicePrincipalCredentialType ServicePrincipalKey { get; } = new ODataAadServicePrincipalCredentialType(ServicePrincipalKeyValue);
         /// <summary> ServicePrincipalCert. </summary>
         public static ODataAadServicePrincipalCredentialType ServicePrincipalCert { get; } = new ODataAadServicePrincipalCredentialType(ServicePrincipalCertValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ODataAadServicePrincipalCredentialType"/> values are the same. </summary>
         public static bool operator ==(ODataAadServicePrincipalCredentialType left, ODataAadServicePrincipalCredentialType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ODataAadServicePrincipalCredentialType"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary> default. </summary>
         public static SynapseAadOnlyAuthenticationName Default { get; } = new SynapseAadOnlyAuthenticationName(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseAadOnlyAuthenticationName"/> values are the same. </summary>
         public static bool operator ==(SynapseAadOnlyAuthenticationName left, SynapseAadOnlyAuthenticationName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseAadOnlyAuthenticationName"/> values are not the same. </summary>

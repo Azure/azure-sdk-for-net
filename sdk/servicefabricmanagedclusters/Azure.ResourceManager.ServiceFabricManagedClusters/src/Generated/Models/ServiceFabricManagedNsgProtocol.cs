@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static ServiceFabricManagedNsgProtocol AH { get; } = new ServiceFabricManagedNsgProtocol(AHValue);
         /// <summary> esp. </summary>
         public static ServiceFabricManagedNsgProtocol Esp { get; } = new ServiceFabricManagedNsgProtocol(EspValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedNsgProtocol"/> values are the same. </summary>
         public static bool operator ==(ServiceFabricManagedNsgProtocol left, ServiceFabricManagedNsgProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceFabricManagedNsgProtocol"/> values are not the same. </summary>

@@ -65,6 +65,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsKillChainIntent CommandAndControl { get; } = new SecurityInsightsKillChainIntent(CommandAndControlValue);
         /// <summary> The impact intent primary objective is to directly reduce the availability or integrity of a system, service, or network; including manipulation of data to impact a business or operational process. This would often refer to techniques such as ransom-ware, defacement, data manipulation and others. </summary>
         public static SecurityInsightsKillChainIntent Impact { get; } = new SecurityInsightsKillChainIntent(ImpactValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityInsightsKillChainIntent"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsKillChainIntent left, SecurityInsightsKillChainIntent right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsKillChainIntent"/> values are not the same. </summary>

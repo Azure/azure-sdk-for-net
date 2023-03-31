@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static ApplicationPartitionScheme UniformInt64Range { get; } = new ApplicationPartitionScheme(UniformInt64RangeValue);
         /// <summary> Indicates that the partition is based on string names, and is a NamedPartitionSchemeDescription object. The value is 3. </summary>
         public static ApplicationPartitionScheme Named { get; } = new ApplicationPartitionScheme(NamedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApplicationPartitionScheme"/> values are the same. </summary>
         public static bool operator ==(ApplicationPartitionScheme left, ApplicationPartitionScheme right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationPartitionScheme"/> values are not the same. </summary>

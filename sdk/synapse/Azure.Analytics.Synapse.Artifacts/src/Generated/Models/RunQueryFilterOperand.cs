@@ -59,6 +59,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static RunQueryFilterOperand RunGroupId { get; } = new RunQueryFilterOperand(RunGroupIdValue);
         /// <summary> LatestOnly. </summary>
         public static RunQueryFilterOperand LatestOnly { get; } = new RunQueryFilterOperand(LatestOnlyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RunQueryFilterOperand"/> values are the same. </summary>
         public static bool operator ==(RunQueryFilterOperand left, RunQueryFilterOperand right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RunQueryFilterOperand"/> values are not the same. </summary>

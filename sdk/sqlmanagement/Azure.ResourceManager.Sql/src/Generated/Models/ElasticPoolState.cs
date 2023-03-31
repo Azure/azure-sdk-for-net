@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static ElasticPoolState Ready { get; } = new ElasticPoolState(ReadyValue);
         /// <summary> Disabled. </summary>
         public static ElasticPoolState Disabled { get; } = new ElasticPoolState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ElasticPoolState"/> values are the same. </summary>
         public static bool operator ==(ElasticPoolState left, ElasticPoolState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ElasticPoolState"/> values are not the same. </summary>

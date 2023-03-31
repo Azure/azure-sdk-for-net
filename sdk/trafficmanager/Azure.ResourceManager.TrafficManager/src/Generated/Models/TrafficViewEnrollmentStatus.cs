@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static TrafficViewEnrollmentStatus Enabled { get; } = new TrafficViewEnrollmentStatus(EnabledValue);
         /// <summary> Disabled. </summary>
         public static TrafficViewEnrollmentStatus Disabled { get; } = new TrafficViewEnrollmentStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TrafficViewEnrollmentStatus"/> values are the same. </summary>
         public static bool operator ==(TrafficViewEnrollmentStatus left, TrafficViewEnrollmentStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrafficViewEnrollmentStatus"/> values are not the same. </summary>

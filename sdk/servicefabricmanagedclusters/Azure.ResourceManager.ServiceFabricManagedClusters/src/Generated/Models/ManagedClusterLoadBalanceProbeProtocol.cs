@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static ManagedClusterLoadBalanceProbeProtocol Http { get; } = new ManagedClusterLoadBalanceProbeProtocol(HttpValue);
         /// <summary> https. </summary>
         public static ManagedClusterLoadBalanceProbeProtocol Https { get; } = new ManagedClusterLoadBalanceProbeProtocol(HttpsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedClusterLoadBalanceProbeProtocol"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterLoadBalanceProbeProtocol left, ManagedClusterLoadBalanceProbeProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterLoadBalanceProbeProtocol"/> values are not the same. </summary>

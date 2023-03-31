@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsRegistryValueKind MultiString { get; } = new SecurityInsightsRegistryValueKind(MultiStringValue);
         /// <summary> QWord value type. </summary>
         public static SecurityInsightsRegistryValueKind QWord { get; } = new SecurityInsightsRegistryValueKind(QWordValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityInsightsRegistryValueKind"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsRegistryValueKind left, SecurityInsightsRegistryValueKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsRegistryValueKind"/> values are not the same. </summary>

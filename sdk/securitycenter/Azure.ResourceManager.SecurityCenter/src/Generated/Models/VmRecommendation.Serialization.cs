@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(ConfigurationStatus))
             {
                 writer.WritePropertyName("configurationStatus"u8);
-                writer.WriteStringValue(ConfigurationStatus.Value.ToString());
+                writer.WriteStringValue(ConfigurationStatus.Value.ToSerialString());
             }
             if (Optional.IsDefined(RecommendationAction))
             {
                 writer.WritePropertyName("recommendationAction"u8);
-                writer.WriteStringValue(RecommendationAction.Value.ToString());
+                writer.WriteStringValue(RecommendationAction.Value.ToSerialString());
             }
             if (Optional.IsDefined(ResourceId))
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(EnforcementSupport))
             {
                 writer.WritePropertyName("enforcementSupport"u8);
-                writer.WriteStringValue(EnforcementSupport.Value.ToString());
+                writer.WriteStringValue(EnforcementSupport.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

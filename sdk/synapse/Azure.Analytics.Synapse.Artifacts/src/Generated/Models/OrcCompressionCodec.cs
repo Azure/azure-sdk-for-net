@@ -35,6 +35,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static OrcCompressionCodec Snappy { get; } = new OrcCompressionCodec(SnappyValue);
         /// <summary> lzo. </summary>
         public static OrcCompressionCodec Lzo { get; } = new OrcCompressionCodec(LzoValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OrcCompressionCodec"/> values are the same. </summary>
         public static bool operator ==(OrcCompressionCodec left, OrcCompressionCodec right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OrcCompressionCodec"/> values are not the same. </summary>

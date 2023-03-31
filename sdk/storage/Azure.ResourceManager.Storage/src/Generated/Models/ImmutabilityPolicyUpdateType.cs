@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static ImmutabilityPolicyUpdateType Lock { get; } = new ImmutabilityPolicyUpdateType(LockValue);
         /// <summary> extend. </summary>
         public static ImmutabilityPolicyUpdateType Extend { get; } = new ImmutabilityPolicyUpdateType(ExtendValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ImmutabilityPolicyUpdateType"/> values are the same. </summary>
         public static bool operator ==(ImmutabilityPolicyUpdateType left, ImmutabilityPolicyUpdateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImmutabilityPolicyUpdateType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static ServiceFabricManagedClustersSkuName Basic { get; } = new ServiceFabricManagedClustersSkuName(BasicValue);
         /// <summary> Requires a minimum of 5 nodes and allows 1 or more node type. </summary>
         public static ServiceFabricManagedClustersSkuName Standard { get; } = new ServiceFabricManagedClustersSkuName(StandardValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedClustersSkuName"/> values are the same. </summary>
         public static bool operator ==(ServiceFabricManagedClustersSkuName left, ServiceFabricManagedClustersSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceFabricManagedClustersSkuName"/> values are not the same. </summary>

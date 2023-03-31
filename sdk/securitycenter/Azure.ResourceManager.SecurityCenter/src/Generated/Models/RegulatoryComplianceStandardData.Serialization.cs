@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
+                writer.WriteStringValue(State.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

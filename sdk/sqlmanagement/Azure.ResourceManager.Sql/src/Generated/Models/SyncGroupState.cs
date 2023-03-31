@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SyncGroupState Progressing { get; } = new SyncGroupState(ProgressingValue);
         /// <summary> Good. </summary>
         public static SyncGroupState Good { get; } = new SyncGroupState(GoodValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SyncGroupState"/> values are the same. </summary>
         public static bool operator ==(SyncGroupState left, SyncGroupState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SyncGroupState"/> values are not the same. </summary>

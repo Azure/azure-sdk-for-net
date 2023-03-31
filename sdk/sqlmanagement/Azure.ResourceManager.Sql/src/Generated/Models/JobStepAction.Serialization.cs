@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(ActionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ActionType.Value.ToString());
+                writer.WriteStringValue(ActionType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteStringValue(Source.Value.ToString());
+                writer.WriteStringValue(Source.Value.ToSerialString());
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static DnsRefreshConfigurationPropertiesStatus Failed { get; } = new DnsRefreshConfigurationPropertiesStatus(FailedValue);
         /// <summary> InProgress. </summary>
         public static DnsRefreshConfigurationPropertiesStatus InProgress { get; } = new DnsRefreshConfigurationPropertiesStatus(InProgressValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DnsRefreshConfigurationPropertiesStatus"/> values are the same. </summary>
         public static bool operator ==(DnsRefreshConfigurationPropertiesStatus left, DnsRefreshConfigurationPropertiesStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DnsRefreshConfigurationPropertiesStatus"/> values are not the same. </summary>

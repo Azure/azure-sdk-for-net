@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static ReportedSeverity Medium { get; } = new ReportedSeverity(MediumValue);
         /// <summary> High. </summary>
         public static ReportedSeverity High { get; } = new ReportedSeverity(HighValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ReportedSeverity"/> values are the same. </summary>
         public static bool operator ==(ReportedSeverity left, ReportedSeverity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReportedSeverity"/> values are not the same. </summary>

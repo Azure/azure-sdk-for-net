@@ -125,6 +125,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SqlPoolColumnDataType Xml { get; } = new SqlPoolColumnDataType(XmlValue);
         /// <summary> sysname. </summary>
         public static SqlPoolColumnDataType Sysname { get; } = new SqlPoolColumnDataType(SysnameValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlPoolColumnDataType"/> values are the same. </summary>
         public static bool operator ==(SqlPoolColumnDataType left, SqlPoolColumnDataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlPoolColumnDataType"/> values are not the same. </summary>

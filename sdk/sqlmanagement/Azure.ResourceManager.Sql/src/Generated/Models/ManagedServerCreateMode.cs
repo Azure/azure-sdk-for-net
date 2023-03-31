@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static ManagedServerCreateMode Default { get; } = new ManagedServerCreateMode(DefaultValue);
         /// <summary> PointInTimeRestore. </summary>
         public static ManagedServerCreateMode PointInTimeRestore { get; } = new ManagedServerCreateMode(PointInTimeRestoreValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedServerCreateMode"/> values are the same. </summary>
         public static bool operator ==(ManagedServerCreateMode left, ManagedServerCreateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedServerCreateMode"/> values are not the same. </summary>

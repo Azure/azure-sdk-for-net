@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static BlobRestoreProgressStatus Complete { get; } = new BlobRestoreProgressStatus(CompleteValue);
         /// <summary> Failed. </summary>
         public static BlobRestoreProgressStatus Failed { get; } = new BlobRestoreProgressStatus(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BlobRestoreProgressStatus"/> values are the same. </summary>
         public static bool operator ==(BlobRestoreProgressStatus left, BlobRestoreProgressStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobRestoreProgressStatus"/> values are not the same. </summary>

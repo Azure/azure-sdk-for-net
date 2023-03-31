@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseServerKeyType ServiceManaged { get; } = new SynapseServerKeyType(ServiceManagedValue);
         /// <summary> AzureKeyVault. </summary>
         public static SynapseServerKeyType AzureKeyVault { get; } = new SynapseServerKeyType(AzureKeyVaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseServerKeyType"/> values are the same. </summary>
         public static bool operator ==(SynapseServerKeyType left, SynapseServerKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseServerKeyType"/> values are not the same. </summary>

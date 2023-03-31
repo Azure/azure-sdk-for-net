@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             writer.WritePropertyName("actionType"u8);
-            writer.WriteStringValue(ActionType.ToString());
+            writer.WriteStringValue(ActionType.ToSerialString());
             writer.WriteEndObject();
         }
 

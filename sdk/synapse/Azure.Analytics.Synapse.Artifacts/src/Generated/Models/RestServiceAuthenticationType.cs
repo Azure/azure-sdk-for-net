@@ -38,6 +38,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static RestServiceAuthenticationType ManagedServiceIdentity { get; } = new RestServiceAuthenticationType(ManagedServiceIdentityValue);
         /// <summary> OAuth2ClientCredential. </summary>
         public static RestServiceAuthenticationType OAuth2ClientCredential { get; } = new RestServiceAuthenticationType(OAuth2ClientCredentialValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RestServiceAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(RestServiceAuthenticationType left, RestServiceAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RestServiceAuthenticationType"/> values are not the same. </summary>

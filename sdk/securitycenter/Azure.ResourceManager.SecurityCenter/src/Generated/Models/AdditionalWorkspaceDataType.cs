@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static AdditionalWorkspaceDataType Alerts { get; } = new AdditionalWorkspaceDataType(AlertsValue);
         /// <summary> RawEvents. </summary>
         public static AdditionalWorkspaceDataType RawEvents { get; } = new AdditionalWorkspaceDataType(RawEventsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AdditionalWorkspaceDataType"/> values are the same. </summary>
         public static bool operator ==(AdditionalWorkspaceDataType left, AdditionalWorkspaceDataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AdditionalWorkspaceDataType"/> values are not the same. </summary>

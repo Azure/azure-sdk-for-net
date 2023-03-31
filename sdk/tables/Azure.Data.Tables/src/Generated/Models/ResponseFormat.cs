@@ -29,6 +29,9 @@ namespace Azure.Data.Tables.Models
         public static ResponseFormat ReturnNoContent { get; } = new ResponseFormat(ReturnNoContentValue);
         /// <summary> return-content. </summary>
         public static ResponseFormat ReturnContent { get; } = new ResponseFormat(ReturnContentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResponseFormat"/> values are the same. </summary>
         public static bool operator ==(ResponseFormat left, ResponseFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResponseFormat"/> values are not the same. </summary>

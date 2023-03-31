@@ -44,6 +44,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static AzureFunctionActivityMethod Head { get; } = new AzureFunctionActivityMethod(HeadValue);
         /// <summary> TRACE. </summary>
         public static AzureFunctionActivityMethod Trace { get; } = new AzureFunctionActivityMethod(TraceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AzureFunctionActivityMethod"/> values are the same. </summary>
         public static bool operator ==(AzureFunctionActivityMethod left, AzureFunctionActivityMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureFunctionActivityMethod"/> values are not the same. </summary>

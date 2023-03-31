@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static NfsAccessRuleScope Network { get; } = new NfsAccessRuleScope(NetworkValue);
         /// <summary> host. </summary>
         public static NfsAccessRuleScope Host { get; } = new NfsAccessRuleScope(HostValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NfsAccessRuleScope"/> values are the same. </summary>
         public static bool operator ==(NfsAccessRuleScope left, NfsAccessRuleScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NfsAccessRuleScope"/> values are not the same. </summary>

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(ConflictResolutionPolicy))
             {
                 writer.WritePropertyName("conflictResolutionPolicy"u8);
-                writer.WriteStringValue(ConflictResolutionPolicy.Value.ToString());
+                writer.WriteStringValue(ConflictResolutionPolicy.Value.ToSerialString());
             }
             if (Optional.IsDefined(SyncDatabaseId))
             {

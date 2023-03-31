@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static UpsertManagedServerOperationStepStatus Failed { get; } = new UpsertManagedServerOperationStepStatus(FailedValue);
         /// <summary> Canceled. </summary>
         public static UpsertManagedServerOperationStepStatus Canceled { get; } = new UpsertManagedServerOperationStepStatus(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UpsertManagedServerOperationStepStatus"/> values are the same. </summary>
         public static bool operator ==(UpsertManagedServerOperationStepStatus left, UpsertManagedServerOperationStepStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UpsertManagedServerOperationStepStatus"/> values are not the same. </summary>

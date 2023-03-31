@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static ManagedClusterUpgradeCadence Wave1 { get; } = new ManagedClusterUpgradeCadence(Wave1Value);
         /// <summary> Cluster upgrade starts 14 days after a new version is rolled out. Recommended for Production clusters. </summary>
         public static ManagedClusterUpgradeCadence Wave2 { get; } = new ManagedClusterUpgradeCadence(Wave2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedClusterUpgradeCadence"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterUpgradeCadence left, ManagedClusterUpgradeCadence right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterUpgradeCadence"/> values are not the same. </summary>

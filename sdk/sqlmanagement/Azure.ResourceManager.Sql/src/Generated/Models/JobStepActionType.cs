@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> TSql. </summary>
         public static JobStepActionType TSql { get; } = new JobStepActionType(TSqlValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JobStepActionType"/> values are the same. </summary>
         public static bool operator ==(JobStepActionType left, JobStepActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobStepActionType"/> values are not the same. </summary>

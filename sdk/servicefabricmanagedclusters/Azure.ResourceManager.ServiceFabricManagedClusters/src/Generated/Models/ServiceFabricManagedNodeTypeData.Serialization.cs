@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             if (Optional.IsDefined(DataDiskType))
             {
                 writer.WritePropertyName("dataDiskType"u8);
-                writer.WriteStringValue(DataDiskType.Value.ToString());
+                writer.WriteStringValue(DataDiskType.Value.ToSerialString());
             }
             if (Optional.IsDefined(DataDiskLetter))
             {

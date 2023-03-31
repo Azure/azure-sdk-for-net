@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Command))
             {
                 writer.WritePropertyName("command"u8);
-                writer.WriteStringValue(Command.Value.ToString());
+                writer.WriteStringValue(Command.Value.ToSerialString());
             }
             if (Optional.IsDefined(CommandPayload))
             {

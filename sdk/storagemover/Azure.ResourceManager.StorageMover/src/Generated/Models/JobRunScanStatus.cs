@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static JobRunScanStatus Scanning { get; } = new JobRunScanStatus(ScanningValue);
         /// <summary> Completed. </summary>
         public static JobRunScanStatus Completed { get; } = new JobRunScanStatus(CompletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JobRunScanStatus"/> values are the same. </summary>
         public static bool operator ==(JobRunScanStatus left, JobRunScanStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobRunScanStatus"/> values are not the same. </summary>

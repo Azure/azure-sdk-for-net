@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StoragePool
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("aclMode"u8);
-            writer.WriteStringValue(AclMode.ToString());
+            writer.WriteStringValue(AclMode.ToSerialString());
             if (Optional.IsCollectionDefined(StaticAcls))
             {
                 writer.WritePropertyName("staticAcls"u8);
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.StoragePool
             writer.WritePropertyName("targetIqn"u8);
             writer.WriteStringValue(TargetIqn);
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
+            writer.WriteStringValue(Status.ToSerialString());
             if (Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);

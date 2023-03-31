@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static ServerEndpointSyncActivityState Download { get; } = new ServerEndpointSyncActivityState(DownloadValue);
         /// <summary> UploadAndDownload. </summary>
         public static ServerEndpointSyncActivityState UploadAndDownload { get; } = new ServerEndpointSyncActivityState(UploadAndDownloadValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServerEndpointSyncActivityState"/> values are the same. </summary>
         public static bool operator ==(ServerEndpointSyncActivityState left, ServerEndpointSyncActivityState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServerEndpointSyncActivityState"/> values are not the same. </summary>

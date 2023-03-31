@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/logs", false);
             uri.AppendQuery("startTime", startTime, true);
             uri.AppendQuery("endTime", endTime, true);
-            uri.AppendQuery("type", type.ToString(), true);
+            uri.AppendQuery("type", type.ToSerialString(), true);
             if (continuationToken != null)
             {
                 uri.AppendQuery("continuationToken", continuationToken, true);

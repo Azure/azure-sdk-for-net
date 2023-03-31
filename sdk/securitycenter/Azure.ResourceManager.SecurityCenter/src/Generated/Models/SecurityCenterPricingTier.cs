@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityCenterPricingTier Free { get; } = new SecurityCenterPricingTier(FreeValue);
         /// <summary> Get the standard Microsoft Defender for Cloud experience with advanced security features. </summary>
         public static SecurityCenterPricingTier Standard { get; } = new SecurityCenterPricingTier(StandardValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityCenterPricingTier"/> values are the same. </summary>
         public static bool operator ==(SecurityCenterPricingTier left, SecurityCenterPricingTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityCenterPricingTier"/> values are not the same. </summary>

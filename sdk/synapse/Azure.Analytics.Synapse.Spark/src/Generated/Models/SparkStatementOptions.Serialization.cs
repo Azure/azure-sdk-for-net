@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
-                writer.WriteStringValue(Kind.Value.ToString());
+                writer.WriteStringValue(Kind.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

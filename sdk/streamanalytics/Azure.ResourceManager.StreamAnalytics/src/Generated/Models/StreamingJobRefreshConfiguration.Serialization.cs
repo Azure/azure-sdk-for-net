@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(RefreshType))
             {
                 writer.WritePropertyName("refreshType"u8);
-                writer.WriteStringValue(RefreshType.Value.ToString());
+                writer.WriteStringValue(RefreshType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

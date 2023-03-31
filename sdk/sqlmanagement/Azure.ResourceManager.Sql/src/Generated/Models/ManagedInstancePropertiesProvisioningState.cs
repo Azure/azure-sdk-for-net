@@ -68,6 +68,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static ManagedInstancePropertiesProvisioningState Registering { get; } = new ManagedInstancePropertiesProvisioningState(RegisteringValue);
         /// <summary> TimedOut. </summary>
         public static ManagedInstancePropertiesProvisioningState TimedOut { get; } = new ManagedInstancePropertiesProvisioningState(TimedOutValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedInstancePropertiesProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ManagedInstancePropertiesProvisioningState left, ManagedInstancePropertiesProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedInstancePropertiesProvisioningState"/> values are not the same. </summary>

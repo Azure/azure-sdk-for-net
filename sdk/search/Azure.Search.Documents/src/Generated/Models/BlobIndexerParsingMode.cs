@@ -41,6 +41,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public static BlobIndexerParsingMode JsonArray { get; } = new BlobIndexerParsingMode(JsonArrayValue);
         /// <summary> Set to jsonLines to extract individual JSON entities, separated by a new line, as separate documents in Azure Cognitive Search. </summary>
         public static BlobIndexerParsingMode JsonLines { get; } = new BlobIndexerParsingMode(JsonLinesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BlobIndexerParsingMode"/> values are the same. </summary>
         public static bool operator ==(BlobIndexerParsingMode left, BlobIndexerParsingMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobIndexerParsingMode"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static StorageAccountKeySource Storage { get; } = new StorageAccountKeySource(StorageValue);
         /// <summary> Microsoft.Keyvault. </summary>
         public static StorageAccountKeySource KeyVault { get; } = new StorageAccountKeySource(KeyVaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageAccountKeySource"/> values are the same. </summary>
         public static bool operator ==(StorageAccountKeySource left, StorageAccountKeySource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageAccountKeySource"/> values are not the same. </summary>

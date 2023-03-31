@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SyncMemberDbType AzureSqlDatabase { get; } = new SyncMemberDbType(AzureSqlDatabaseValue);
         /// <summary> SqlServerDatabase. </summary>
         public static SyncMemberDbType SqlServerDatabase { get; } = new SyncMemberDbType(SqlServerDatabaseValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SyncMemberDbType"/> values are the same. </summary>
         public static bool operator ==(SyncMemberDbType left, SyncMemberDbType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SyncMemberDbType"/> values are not the same. </summary>

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static JobExecutionProvisioningState Failed { get; } = new JobExecutionProvisioningState(FailedValue);
         /// <summary> Canceled. </summary>
         public static JobExecutionProvisioningState Canceled { get; } = new JobExecutionProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JobExecutionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(JobExecutionProvisioningState left, JobExecutionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobExecutionProvisioningState"/> values are not the same. </summary>

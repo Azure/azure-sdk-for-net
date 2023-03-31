@@ -59,6 +59,9 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static StorageCacheHealthStateType StartFailed { get; } = new StorageCacheHealthStateType(StartFailedValue);
         /// <summary> UpgradeFailed. </summary>
         public static StorageCacheHealthStateType UpgradeFailed { get; } = new StorageCacheHealthStateType(UpgradeFailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageCacheHealthStateType"/> values are the same. </summary>
         public static bool operator ==(StorageCacheHealthStateType left, StorageCacheHealthStateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageCacheHealthStateType"/> values are not the same. </summary>

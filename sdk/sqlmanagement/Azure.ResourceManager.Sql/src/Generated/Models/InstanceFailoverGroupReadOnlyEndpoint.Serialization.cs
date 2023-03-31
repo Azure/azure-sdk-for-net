@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(FailoverPolicy))
             {
                 writer.WritePropertyName("failoverPolicy"u8);
-                writer.WriteStringValue(FailoverPolicy.Value.ToString());
+                writer.WriteStringValue(FailoverPolicy.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

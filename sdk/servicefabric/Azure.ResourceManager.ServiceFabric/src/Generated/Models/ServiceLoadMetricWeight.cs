@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static ServiceLoadMetricWeight Medium { get; } = new ServiceLoadMetricWeight(MediumValue);
         /// <summary> Specifies the metric weight of the service load as High. The value is 3. </summary>
         public static ServiceLoadMetricWeight High { get; } = new ServiceLoadMetricWeight(HighValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceLoadMetricWeight"/> values are the same. </summary>
         public static bool operator ==(ServiceLoadMetricWeight left, ServiceLoadMetricWeight right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceLoadMetricWeight"/> values are not the same. </summary>

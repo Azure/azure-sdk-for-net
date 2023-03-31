@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.StorageSync
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
             if (Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
-                writer.WriteStringValue(Operation.Value.ToString());
+                writer.WriteStringValue(Operation.Value.ToSerialString());
             }
             if (Optional.IsDefined(Steps))
             {

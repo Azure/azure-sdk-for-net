@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
             if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(RestrictOutboundNetworkAccess))
             {
                 writer.WritePropertyName("restrictOutboundNetworkAccess"u8);
-                writer.WriteStringValue(RestrictOutboundNetworkAccess.Value.ToString());
+                writer.WriteStringValue(RestrictOutboundNetworkAccess.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

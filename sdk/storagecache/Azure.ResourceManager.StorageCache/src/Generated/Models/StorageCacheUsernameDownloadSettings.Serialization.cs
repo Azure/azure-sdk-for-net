@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (Optional.IsDefined(UsernameSource))
             {
                 writer.WritePropertyName("usernameSource"u8);
-                writer.WriteStringValue(UsernameSource.Value.ToString());
+                writer.WriteStringValue(UsernameSource.Value.ToSerialString());
             }
             if (Optional.IsDefined(GroupFileUri))
             {

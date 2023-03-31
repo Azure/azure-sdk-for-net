@@ -95,6 +95,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlDatabaseStatus Stopped { get; } = new SqlDatabaseStatus(StoppedValue);
         /// <summary> Starting. </summary>
         public static SqlDatabaseStatus Starting { get; } = new SqlDatabaseStatus(StartingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlDatabaseStatus"/> values are the same. </summary>
         public static bool operator ==(SqlDatabaseStatus left, SqlDatabaseStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlDatabaseStatus"/> values are not the same. </summary>

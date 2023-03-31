@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(ClassificationType))
             {
                 writer.WritePropertyName("classificationType"u8);
-                writer.WriteStringValue(ClassificationType.Value.ToString());
+                writer.WriteStringValue(ClassificationType.Value.ToSerialString());
             }
             writer.WritePropertyName("categories"u8);
             writer.WriteStartArray();

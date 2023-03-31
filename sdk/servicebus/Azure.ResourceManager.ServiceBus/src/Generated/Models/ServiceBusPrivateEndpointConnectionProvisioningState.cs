@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static ServiceBusPrivateEndpointConnectionProvisioningState Canceled { get; } = new ServiceBusPrivateEndpointConnectionProvisioningState(CanceledValue);
         /// <summary> Failed. </summary>
         public static ServiceBusPrivateEndpointConnectionProvisioningState Failed { get; } = new ServiceBusPrivateEndpointConnectionProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceBusPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ServiceBusPrivateEndpointConnectionProvisioningState left, ServiceBusPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceBusPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>

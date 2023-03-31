@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary> current. </summary>
         public static SynapseDataWarehouseUserActivityName Current { get; } = new SynapseDataWarehouseUserActivityName(CurrentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseDataWarehouseUserActivityName"/> values are the same. </summary>
         public static bool operator ==(SynapseDataWarehouseUserActivityName left, SynapseDataWarehouseUserActivityName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseDataWarehouseUserActivityName"/> values are not the same. </summary>

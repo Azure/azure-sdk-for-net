@@ -62,6 +62,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public static LexicalTokenizerName UaxUrlEmail { get; } = new LexicalTokenizerName(UaxUrlEmailValue);
         /// <summary> Divides text at whitespace. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/WhitespaceTokenizer.html. </summary>
         public static LexicalTokenizerName Whitespace { get; } = new LexicalTokenizerName(WhitespaceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LexicalTokenizerName"/> values are the same. </summary>
         public static bool operator ==(LexicalTokenizerName left, LexicalTokenizerName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LexicalTokenizerName"/> values are not the same. </summary>

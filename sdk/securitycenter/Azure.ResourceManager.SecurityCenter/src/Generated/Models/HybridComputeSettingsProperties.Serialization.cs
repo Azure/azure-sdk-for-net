@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("autoProvision"u8);
-            writer.WriteStringValue(AutoProvision.ToString());
+            writer.WriteStringValue(AutoProvision.ToSerialString());
             if (Optional.IsDefined(ResourceGroupName))
             {
                 writer.WritePropertyName("resourceGroupName"u8);

@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.Storage.Models
         private const string Tls1_0Value = "TLS1_0";
         private const string Tls1_1Value = "TLS1_1";
         private const string Tls1_2Value = "TLS1_2";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageMinimumTlsVersion"/> values are the same. </summary>
         public static bool operator ==(StorageMinimumTlsVersion left, StorageMinimumTlsVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageMinimumTlsVersion"/> values are not the same. </summary>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(ProductFilter))
             {
                 writer.WritePropertyName("productFilter"u8);
-                writer.WriteStringValue(ProductFilter.Value.ToString());
+                writer.WriteStringValue(ProductFilter.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(SeveritiesFilter))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in SeveritiesFilter)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

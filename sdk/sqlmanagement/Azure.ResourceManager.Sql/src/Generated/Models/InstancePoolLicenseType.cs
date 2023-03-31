@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static InstancePoolLicenseType LicenseIncluded { get; } = new InstancePoolLicenseType(LicenseIncludedValue);
         /// <summary> BasePrice. </summary>
         public static InstancePoolLicenseType BasePrice { get; } = new InstancePoolLicenseType(BasePriceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InstancePoolLicenseType"/> values are the same. </summary>
         public static bool operator ==(InstancePoolLicenseType left, InstancePoolLicenseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InstancePoolLicenseType"/> values are not the same. </summary>

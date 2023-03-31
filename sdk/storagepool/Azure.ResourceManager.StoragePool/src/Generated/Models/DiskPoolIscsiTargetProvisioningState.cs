@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.StoragePool.Models
         public static DiskPoolIscsiTargetProvisioningState Updating { get; } = new DiskPoolIscsiTargetProvisioningState(UpdatingValue);
         /// <summary> Deleting. </summary>
         public static DiskPoolIscsiTargetProvisioningState Deleting { get; } = new DiskPoolIscsiTargetProvisioningState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DiskPoolIscsiTargetProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DiskPoolIscsiTargetProvisioningState left, DiskPoolIscsiTargetProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskPoolIscsiTargetProvisioningState"/> values are not the same. </summary>

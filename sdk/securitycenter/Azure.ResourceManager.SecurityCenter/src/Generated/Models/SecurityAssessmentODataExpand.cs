@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityAssessmentODataExpand Links { get; } = new SecurityAssessmentODataExpand(LinksValue);
         /// <summary> Assessment metadata. </summary>
         public static SecurityAssessmentODataExpand Metadata { get; } = new SecurityAssessmentODataExpand(MetadataValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityAssessmentODataExpand"/> values are the same. </summary>
         public static bool operator ==(SecurityAssessmentODataExpand left, SecurityAssessmentODataExpand right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityAssessmentODataExpand"/> values are not the same. </summary>

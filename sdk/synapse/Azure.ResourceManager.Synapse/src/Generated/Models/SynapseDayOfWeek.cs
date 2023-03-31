@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseDayOfWeek Friday { get; } = new SynapseDayOfWeek(FridayValue);
         /// <summary> Saturday. </summary>
         public static SynapseDayOfWeek Saturday { get; } = new SynapseDayOfWeek(SaturdayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseDayOfWeek"/> values are the same. </summary>
         public static bool operator ==(SynapseDayOfWeek left, SynapseDayOfWeek right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseDayOfWeek"/> values are not the same. </summary>

@@ -62,6 +62,9 @@ namespace Azure.AI.TextAnalytics
         public static AreaUnit SquareYard { get; } = new AreaUnit(SquareYardValue);
         /// <summary> Acre. </summary>
         public static AreaUnit Acre { get; } = new AreaUnit(AcreValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AreaUnit"/> values are the same. </summary>
         public static bool operator ==(AreaUnit left, AreaUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AreaUnit"/> values are not the same. </summary>

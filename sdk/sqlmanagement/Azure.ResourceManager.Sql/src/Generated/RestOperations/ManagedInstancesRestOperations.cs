@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/failover", false);
             if (replicaType != null)
             {
-                uri.AppendQuery("replicaType", replicaType.Value.ToString(), true);
+                uri.AppendQuery("replicaType", replicaType.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -914,15 +914,15 @@ namespace Azure.ResourceManager.Sql
             }
             if (interval != null)
             {
-                uri.AppendQuery("interval", interval.Value.ToString(), true);
+                uri.AppendQuery("interval", interval.Value.ToSerialString(), true);
             }
             if (aggregationFunction != null)
             {
-                uri.AppendQuery("aggregationFunction", aggregationFunction.Value.ToString(), true);
+                uri.AppendQuery("aggregationFunction", aggregationFunction.Value.ToSerialString(), true);
             }
             if (observationMetric != null)
             {
-                uri.AppendQuery("observationMetric", observationMetric.Value.ToString(), true);
+                uri.AppendQuery("observationMetric", observationMetric.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

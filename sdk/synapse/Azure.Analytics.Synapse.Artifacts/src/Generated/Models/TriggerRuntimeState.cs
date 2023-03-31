@@ -32,6 +32,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static TriggerRuntimeState Stopped { get; } = new TriggerRuntimeState(StoppedValue);
         /// <summary> Disabled. </summary>
         public static TriggerRuntimeState Disabled { get; } = new TriggerRuntimeState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TriggerRuntimeState"/> values are the same. </summary>
         public static bool operator ==(TriggerRuntimeState left, TriggerRuntimeState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TriggerRuntimeState"/> values are not the same. </summary>

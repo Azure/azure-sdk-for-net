@@ -29,6 +29,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static SapHanaAuthenticationType Basic { get; } = new SapHanaAuthenticationType(BasicValue);
         /// <summary> Windows. </summary>
         public static SapHanaAuthenticationType Windows { get; } = new SapHanaAuthenticationType(WindowsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SapHanaAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(SapHanaAuthenticationType left, SapHanaAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapHanaAuthenticationType"/> values are not the same. </summary>

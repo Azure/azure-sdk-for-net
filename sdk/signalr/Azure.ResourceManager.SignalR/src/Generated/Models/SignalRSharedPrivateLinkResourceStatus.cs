@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.SignalR.Models
         public static SignalRSharedPrivateLinkResourceStatus Disconnected { get; } = new SignalRSharedPrivateLinkResourceStatus(DisconnectedValue);
         /// <summary> Timeout. </summary>
         public static SignalRSharedPrivateLinkResourceStatus Timeout { get; } = new SignalRSharedPrivateLinkResourceStatus(TimeoutValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SignalRSharedPrivateLinkResourceStatus"/> values are the same. </summary>
         public static bool operator ==(SignalRSharedPrivateLinkResourceStatus left, SignalRSharedPrivateLinkResourceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SignalRSharedPrivateLinkResourceStatus"/> values are not the same. </summary>

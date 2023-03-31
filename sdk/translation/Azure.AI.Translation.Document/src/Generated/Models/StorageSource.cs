@@ -26,6 +26,9 @@ namespace Azure.AI.Translation.Document.Models
 
         /// <summary> AzureBlob. </summary>
         public static StorageSource AzureBlob { get; } = new StorageSource(AzureBlobValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageSource"/> values are the same. </summary>
         public static bool operator ==(StorageSource left, StorageSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageSource"/> values are not the same. </summary>

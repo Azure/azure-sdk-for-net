@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static DomainJoinedType No { get; } = new DomainJoinedType(NoValue);
         /// <summary> Error. </summary>
         public static DomainJoinedType Error { get; } = new DomainJoinedType(ErrorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DomainJoinedType"/> values are the same. </summary>
         public static bool operator ==(DomainJoinedType left, DomainJoinedType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DomainJoinedType"/> values are not the same. </summary>

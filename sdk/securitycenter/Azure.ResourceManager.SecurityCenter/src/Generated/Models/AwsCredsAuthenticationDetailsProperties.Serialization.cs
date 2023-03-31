@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WritePropertyName("awsSecretAccessKey"u8);
             writer.WriteStringValue(AwsSecretAccessKey);
             writer.WritePropertyName("authenticationType"u8);
-            writer.WriteStringValue(AuthenticationType.ToString());
+            writer.WriteStringValue(AuthenticationType.ToSerialString());
             writer.WriteEndObject();
         }
 

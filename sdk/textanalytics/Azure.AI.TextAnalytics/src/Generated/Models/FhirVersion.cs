@@ -21,6 +21,9 @@ namespace Azure.AI.TextAnalytics
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FhirVersion"/> values are the same. </summary>
         public static bool operator ==(FhirVersion left, FhirVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FhirVersion"/> values are not the same. </summary>

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(AdministratorType))
             {
                 writer.WritePropertyName("administratorType"u8);
-                writer.WriteStringValue(AdministratorType.Value.ToString());
+                writer.WriteStringValue(AdministratorType.Value.ToSerialString());
             }
             if (Optional.IsDefined(PrincipalType))
             {
                 writer.WritePropertyName("principalType"u8);
-                writer.WriteStringValue(PrincipalType.Value.ToString());
+                writer.WriteStringValue(PrincipalType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Login))
             {

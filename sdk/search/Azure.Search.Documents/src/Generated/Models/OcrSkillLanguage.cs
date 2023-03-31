@@ -533,6 +533,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public static OcrSkillLanguage Zu { get; } = new OcrSkillLanguage(ZuValue);
         /// <summary> Unknown (All). </summary>
         public static OcrSkillLanguage Unk { get; } = new OcrSkillLanguage(UnkValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OcrSkillLanguage"/> values are the same. </summary>
         public static bool operator ==(OcrSkillLanguage left, OcrSkillLanguage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OcrSkillLanguage"/> values are not the same. </summary>

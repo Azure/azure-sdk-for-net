@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlMetricType Duration { get; } = new SqlMetricType(DurationValue);
         /// <summary> dtu. </summary>
         public static SqlMetricType Dtu { get; } = new SqlMetricType(DtuValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlMetricType"/> values are the same. </summary>
         public static bool operator ==(SqlMetricType left, SqlMetricType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlMetricType"/> values are not the same. </summary>

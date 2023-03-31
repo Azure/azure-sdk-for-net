@@ -67,6 +67,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static ServiceFabricClusterState AutoScale { get; } = new ServiceFabricClusterState(AutoScaleValue);
         /// <summary> Ready. </summary>
         public static ServiceFabricClusterState Ready { get; } = new ServiceFabricClusterState(ReadyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceFabricClusterState"/> values are the same. </summary>
         public static bool operator ==(ServiceFabricClusterState left, ServiceFabricClusterState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceFabricClusterState"/> values are not the same. </summary>

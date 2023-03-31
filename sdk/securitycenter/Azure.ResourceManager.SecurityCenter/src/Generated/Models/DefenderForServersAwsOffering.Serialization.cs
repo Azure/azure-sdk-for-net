@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteObjectValue(VmScanners);
             }
             writer.WritePropertyName("offeringType"u8);
-            writer.WriteStringValue(OfferingType.ToString());
+            writer.WriteStringValue(OfferingType.ToSerialString());
             writer.WriteEndObject();
         }
 

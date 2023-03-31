@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static StorageSyncPrivateEndpointServiceConnectionStatus Approved { get; } = new StorageSyncPrivateEndpointServiceConnectionStatus(ApprovedValue);
         /// <summary> Rejected. </summary>
         public static StorageSyncPrivateEndpointServiceConnectionStatus Rejected { get; } = new StorageSyncPrivateEndpointServiceConnectionStatus(RejectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageSyncPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(StorageSyncPrivateEndpointServiceConnectionStatus left, StorageSyncPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageSyncPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>

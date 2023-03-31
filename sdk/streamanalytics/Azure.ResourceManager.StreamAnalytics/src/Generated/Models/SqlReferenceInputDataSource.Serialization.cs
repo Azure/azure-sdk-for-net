@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(RefreshType))
             {
                 writer.WritePropertyName("refreshType"u8);
-                writer.WriteStringValue(RefreshType.Value.ToString());
+                writer.WriteStringValue(RefreshType.Value.ToSerialString());
             }
             if (Optional.IsDefined(RefreshInterval))
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
-                writer.WriteStringValue(AuthenticationMode.Value.ToString());
+                writer.WriteStringValue(AuthenticationMode.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

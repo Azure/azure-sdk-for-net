@@ -65,6 +65,9 @@ namespace Azure.AI.TextAnalytics.Models
         public static InnerErrorCode UnsupportedLanguageCode { get; } = new InnerErrorCode(UnsupportedLanguageCodeValue);
         /// <summary> InvalidCountryHint. </summary>
         public static InnerErrorCode InvalidCountryHint { get; } = new InnerErrorCode(InvalidCountryHintValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InnerErrorCode"/> values are the same. </summary>
         public static bool operator ==(InnerErrorCode left, InnerErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InnerErrorCode"/> values are not the same. </summary>

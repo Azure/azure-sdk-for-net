@@ -29,6 +29,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static ScriptActivityLogDestination ActivityOutput { get; } = new ScriptActivityLogDestination(ActivityOutputValue);
         /// <summary> ExternalStore. </summary>
         public static ScriptActivityLogDestination ExternalStore { get; } = new ScriptActivityLogDestination(ExternalStoreValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScriptActivityLogDestination"/> values are the same. </summary>
         public static bool operator ==(ScriptActivityLogDestination left, ScriptActivityLogDestination right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptActivityLogDestination"/> values are not the same. </summary>

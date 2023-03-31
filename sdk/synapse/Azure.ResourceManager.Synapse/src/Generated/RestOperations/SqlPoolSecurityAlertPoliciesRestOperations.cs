@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Synapse
             uri.AppendPath("/sqlPools/", false);
             uri.AppendPath(sqlPoolName, true);
             uri.AppendPath("/securityAlertPolicies/", false);
-            uri.AppendPath(securityAlertPolicyName.ToString(), true);
+            uri.AppendPath(securityAlertPolicyName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Synapse
             uri.AppendPath("/sqlPools/", false);
             uri.AppendPath(sqlPoolName, true);
             uri.AppendPath("/securityAlertPolicies/", false);
-            uri.AppendPath(securityAlertPolicyName.ToString(), true);
+            uri.AppendPath(securityAlertPolicyName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

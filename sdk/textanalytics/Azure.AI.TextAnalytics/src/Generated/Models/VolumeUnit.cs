@@ -107,6 +107,9 @@ namespace Azure.AI.TextAnalytics
         public static VolumeUnit Bushel { get; } = new VolumeUnit(BushelValue);
         /// <summary> Hogshead. </summary>
         public static VolumeUnit Hogshead { get; } = new VolumeUnit(HogsheadValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VolumeUnit"/> values are the same. </summary>
         public static bool operator ==(VolumeUnit left, VolumeUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VolumeUnit"/> values are not the same. </summary>

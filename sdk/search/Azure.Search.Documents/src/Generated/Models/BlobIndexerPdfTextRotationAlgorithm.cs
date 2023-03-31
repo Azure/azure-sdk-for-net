@@ -29,6 +29,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public static BlobIndexerPdfTextRotationAlgorithm None { get; } = new BlobIndexerPdfTextRotationAlgorithm(NoneValue);
         /// <summary> May produce better and more readable text extraction from PDF files that have rotated text within them.  Note that there may be a small performance speed impact when this parameter is used.  This parameter only applies to PDF files, and only to PDFs with embedded text.  If the rotated text appears within an embedded image in the PDF, this parameter does not apply. </summary>
         public static BlobIndexerPdfTextRotationAlgorithm DetectAngles { get; } = new BlobIndexerPdfTextRotationAlgorithm(DetectAnglesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BlobIndexerPdfTextRotationAlgorithm"/> values are the same. </summary>
         public static bool operator ==(BlobIndexerPdfTextRotationAlgorithm left, BlobIndexerPdfTextRotationAlgorithm right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobIndexerPdfTextRotationAlgorithm"/> values are not the same. </summary>

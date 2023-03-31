@@ -542,6 +542,9 @@ namespace Azure.AI.TextAnalytics
         public static PiiEntityCategory All { get; } = new PiiEntityCategory(AllValue);
         /// <summary> Default. </summary>
         public static PiiEntityCategory Default { get; } = new PiiEntityCategory(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PiiEntityCategory"/> values are the same. </summary>
         public static bool operator ==(PiiEntityCategory left, PiiEntityCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PiiEntityCategory"/> values are not the same. </summary>

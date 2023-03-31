@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static StreamingCompressionType Gzip { get; } = new StreamingCompressionType(GzipValue);
         /// <summary> Deflate. </summary>
         public static StreamingCompressionType Deflate { get; } = new StreamingCompressionType(DeflateValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StreamingCompressionType"/> values are the same. </summary>
         public static bool operator ==(StreamingCompressionType left, StreamingCompressionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamingCompressionType"/> values are not the same. </summary>

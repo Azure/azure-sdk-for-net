@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteNumberValue(ExecutionCount.Value);
             }
             writer.WritePropertyName("output_type"u8);
-            writer.WriteStringValue(OutputType.ToString());
+            writer.WriteStringValue(OutputType.ToSerialString());
             if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);

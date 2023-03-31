@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static StorageSyncWorkflowStatus Aborted { get; } = new StorageSyncWorkflowStatus(AbortedValue);
         /// <summary> failed. </summary>
         public static StorageSyncWorkflowStatus Failed { get; } = new StorageSyncWorkflowStatus(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageSyncWorkflowStatus"/> values are the same. </summary>
         public static bool operator ==(StorageSyncWorkflowStatus left, StorageSyncWorkflowStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageSyncWorkflowStatus"/> values are not the same. </summary>

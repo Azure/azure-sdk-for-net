@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static StreamingJobContentStoragePolicy SystemAccount { get; } = new StreamingJobContentStoragePolicy(SystemAccountValue);
         /// <summary> JobStorageAccount. </summary>
         public static StreamingJobContentStoragePolicy JobStorageAccount { get; } = new StreamingJobContentStoragePolicy(JobStorageAccountValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StreamingJobContentStoragePolicy"/> values are the same. </summary>
         public static bool operator ==(StreamingJobContentStoragePolicy left, StreamingJobContentStoragePolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamingJobContentStoragePolicy"/> values are not the same. </summary>

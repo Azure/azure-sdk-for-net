@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityTransportProtocol Tcp { get; } = new SecurityTransportProtocol(TcpValue);
         /// <summary> UDP. </summary>
         public static SecurityTransportProtocol Udp { get; } = new SecurityTransportProtocol(UdpValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityTransportProtocol"/> values are the same. </summary>
         public static bool operator ==(SecurityTransportProtocol left, SecurityTransportProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityTransportProtocol"/> values are not the same. </summary>

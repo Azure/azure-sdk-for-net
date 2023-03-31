@@ -74,6 +74,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsAttackTactic ImpairProcessControl { get; } = new SecurityInsightsAttackTactic(ImpairProcessControlValue);
         /// <summary> InhibitResponseFunction. </summary>
         public static SecurityInsightsAttackTactic InhibitResponseFunction { get; } = new SecurityInsightsAttackTactic(InhibitResponseFunctionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityInsightsAttackTactic"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsAttackTactic left, SecurityInsightsAttackTactic right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsAttackTactic"/> values are not the same. </summary>

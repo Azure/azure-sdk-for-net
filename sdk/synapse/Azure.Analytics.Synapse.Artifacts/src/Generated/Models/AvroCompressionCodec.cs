@@ -38,6 +38,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static AvroCompressionCodec Xz { get; } = new AvroCompressionCodec(XzValue);
         /// <summary> bzip2. </summary>
         public static AvroCompressionCodec Bzip2 { get; } = new AvroCompressionCodec(Bzip2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AvroCompressionCodec"/> values are the same. </summary>
         public static bool operator ==(AvroCompressionCodec left, AvroCompressionCodec right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvroCompressionCodec"/> values are not the same. </summary>

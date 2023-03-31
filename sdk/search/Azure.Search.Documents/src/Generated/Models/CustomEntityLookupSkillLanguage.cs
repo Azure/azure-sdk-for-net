@@ -50,6 +50,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public static CustomEntityLookupSkillLanguage Ko { get; } = new CustomEntityLookupSkillLanguage(KoValue);
         /// <summary> Portuguese. </summary>
         public static CustomEntityLookupSkillLanguage Pt { get; } = new CustomEntityLookupSkillLanguage(PtValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CustomEntityLookupSkillLanguage"/> values are the same. </summary>
         public static bool operator ==(CustomEntityLookupSkillLanguage left, CustomEntityLookupSkillLanguage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CustomEntityLookupSkillLanguage"/> values are not the same. </summary>

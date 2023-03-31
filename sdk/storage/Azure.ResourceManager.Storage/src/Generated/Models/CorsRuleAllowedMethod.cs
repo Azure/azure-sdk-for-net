@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static CorsRuleAllowedMethod Put { get; } = new CorsRuleAllowedMethod(PutValue);
         /// <summary> PATCH. </summary>
         public static CorsRuleAllowedMethod Patch { get; } = new CorsRuleAllowedMethod(PatchValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CorsRuleAllowedMethod"/> values are the same. </summary>
         public static bool operator ==(CorsRuleAllowedMethod left, CorsRuleAllowedMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CorsRuleAllowedMethod"/> values are not the same. </summary>

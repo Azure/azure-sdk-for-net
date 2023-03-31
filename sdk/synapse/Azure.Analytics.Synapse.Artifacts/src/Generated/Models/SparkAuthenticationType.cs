@@ -35,6 +35,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static SparkAuthenticationType UsernameAndPassword { get; } = new SparkAuthenticationType(UsernameAndPasswordValue);
         /// <summary> WindowsAzureHDInsightService. </summary>
         public static SparkAuthenticationType WindowsAzureHDInsightService { get; } = new SparkAuthenticationType(WindowsAzureHDInsightServiceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SparkAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(SparkAuthenticationType left, SparkAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SparkAuthenticationType"/> values are not the same. </summary>

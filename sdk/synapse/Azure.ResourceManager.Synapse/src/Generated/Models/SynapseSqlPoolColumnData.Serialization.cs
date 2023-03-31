@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(ColumnType))
             {
                 writer.WritePropertyName("columnType"u8);
-                writer.WriteStringValue(ColumnType.Value.ToString());
+                writer.WriteStringValue(ColumnType.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

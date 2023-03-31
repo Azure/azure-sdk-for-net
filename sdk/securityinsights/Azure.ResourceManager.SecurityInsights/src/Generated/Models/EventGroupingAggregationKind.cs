@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static EventGroupingAggregationKind SingleAlert { get; } = new EventGroupingAggregationKind(SingleAlertValue);
         /// <summary> AlertPerResult. </summary>
         public static EventGroupingAggregationKind AlertPerResult { get; } = new EventGroupingAggregationKind(AlertPerResultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventGroupingAggregationKind"/> values are the same. </summary>
         public static bool operator ==(EventGroupingAggregationKind left, EventGroupingAggregationKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventGroupingAggregationKind"/> values are not the same. </summary>

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static ServerEndpointSyncMode SnapshotUpload { get; } = new ServerEndpointSyncMode(SnapshotUploadValue);
         /// <summary> InitialFullDownload. </summary>
         public static ServerEndpointSyncMode InitialFullDownload { get; } = new ServerEndpointSyncMode(InitialFullDownloadValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServerEndpointSyncMode"/> values are the same. </summary>
         public static bool operator ==(ServerEndpointSyncMode left, ServerEndpointSyncMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServerEndpointSyncMode"/> values are not the same. </summary>

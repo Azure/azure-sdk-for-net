@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static TriggersOn Incidents { get; } = new TriggersOn(IncidentsValue);
         /// <summary> Trigger on Alerts. </summary>
         public static TriggersOn Alerts { get; } = new TriggersOn(AlertsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TriggersOn"/> values are the same. </summary>
         public static bool operator ==(TriggersOn left, TriggersOn right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TriggersOn"/> values are not the same. </summary>

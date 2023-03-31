@@ -66,15 +66,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ServerType))
             {
                 writer.WritePropertyName("serverType"u8);
-                writer.WriteStringValue(ServerType.Value.ToString());
+                writer.WriteStringValue(ServerType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ThriftTransportProtocol))
             {
                 writer.WritePropertyName("thriftTransportProtocol"u8);
-                writer.WriteStringValue(ThriftTransportProtocol.Value.ToString());
+                writer.WriteStringValue(ThriftTransportProtocol.Value.ToSerialString());
             }
             writer.WritePropertyName("authenticationType"u8);
-            writer.WriteStringValue(AuthenticationType.ToString());
+            writer.WriteStringValue(AuthenticationType.ToSerialString());
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);

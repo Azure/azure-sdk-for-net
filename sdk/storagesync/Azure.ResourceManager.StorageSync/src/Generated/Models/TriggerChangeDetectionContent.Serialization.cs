@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             if (Optional.IsDefined(ChangeDetectionMode))
             {
                 writer.WritePropertyName("changeDetectionMode"u8);
-                writer.WriteStringValue(ChangeDetectionMode.Value.ToString());
+                writer.WriteStringValue(ChangeDetectionMode.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Paths))
             {

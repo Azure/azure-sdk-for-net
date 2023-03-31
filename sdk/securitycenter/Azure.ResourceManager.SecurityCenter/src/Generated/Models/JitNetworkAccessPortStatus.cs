@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static JitNetworkAccessPortStatus Revoked { get; } = new JitNetworkAccessPortStatus(RevokedValue);
         /// <summary> Initiated. </summary>
         public static JitNetworkAccessPortStatus Initiated { get; } = new JitNetworkAccessPortStatus(InitiatedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JitNetworkAccessPortStatus"/> values are the same. </summary>
         public static bool operator ==(JitNetworkAccessPortStatus left, JitNetworkAccessPortStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JitNetworkAccessPortStatus"/> values are not the same. </summary>

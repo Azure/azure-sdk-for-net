@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static MaxSizeUnit Terabytes { get; } = new MaxSizeUnit(TerabytesValue);
         /// <summary> Petabytes. </summary>
         public static MaxSizeUnit Petabytes { get; } = new MaxSizeUnit(PetabytesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MaxSizeUnit"/> values are the same. </summary>
         public static bool operator ==(MaxSizeUnit left, MaxSizeUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MaxSizeUnit"/> values are not the same. </summary>

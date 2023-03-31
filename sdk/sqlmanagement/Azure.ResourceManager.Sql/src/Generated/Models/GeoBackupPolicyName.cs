@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Default. </summary>
         public static GeoBackupPolicyName Default { get; } = new GeoBackupPolicyName(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GeoBackupPolicyName"/> values are the same. </summary>
         public static bool operator ==(GeoBackupPolicyName left, GeoBackupPolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GeoBackupPolicyName"/> values are not the same. </summary>

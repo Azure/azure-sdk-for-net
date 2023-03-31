@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> Succeeded. </summary>
         public static StorageMoverProvisioningState Succeeded { get; } = new StorageMoverProvisioningState(SucceededValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageMoverProvisioningState"/> values are the same. </summary>
         public static bool operator ==(StorageMoverProvisioningState left, StorageMoverProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageMoverProvisioningState"/> values are not the same. </summary>

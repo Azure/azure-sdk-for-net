@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseLanguageExtensionName Python { get; } = new SynapseLanguageExtensionName(PythonValue);
         /// <summary> R. </summary>
         public static SynapseLanguageExtensionName R { get; } = new SynapseLanguageExtensionName(RValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseLanguageExtensionName"/> values are the same. </summary>
         public static bool operator ==(SynapseLanguageExtensionName left, SynapseLanguageExtensionName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseLanguageExtensionName"/> values are not the same. </summary>

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(PropertyName))
             {
                 writer.WritePropertyName("propertyName"u8);
-                writer.WriteStringValue(PropertyName.Value.ToString());
+                writer.WriteStringValue(PropertyName.Value.ToSerialString());
             }
             if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
-                writer.WriteStringValue(Operator.Value.ToString());
+                writer.WriteStringValue(Operator.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(PropertyValues))
             {

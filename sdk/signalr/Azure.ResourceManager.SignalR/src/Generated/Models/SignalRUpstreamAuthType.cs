@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SignalR.Models
         public static SignalRUpstreamAuthType None { get; } = new SignalRUpstreamAuthType(NoneValue);
         /// <summary> ManagedIdentity. </summary>
         public static SignalRUpstreamAuthType ManagedIdentity { get; } = new SignalRUpstreamAuthType(ManagedIdentityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SignalRUpstreamAuthType"/> values are the same. </summary>
         public static bool operator ==(SignalRUpstreamAuthType left, SignalRUpstreamAuthType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SignalRUpstreamAuthType"/> values are not the same. </summary>

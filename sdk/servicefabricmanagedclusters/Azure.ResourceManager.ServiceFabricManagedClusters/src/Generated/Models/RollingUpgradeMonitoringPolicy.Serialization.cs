@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("failureAction"u8);
-            writer.WriteStringValue(FailureAction.ToString());
+            writer.WriteStringValue(FailureAction.ToSerialString());
             writer.WritePropertyName("healthCheckWaitDuration"u8);
             writer.WriteStringValue(HealthCheckWaitDuration, "c");
             writer.WritePropertyName("healthCheckStableDuration"u8);

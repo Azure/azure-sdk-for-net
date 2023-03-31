@@ -77,6 +77,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SyncMemberState ReprovisionFailed { get; } = new SyncMemberState(ReprovisionFailedValue);
         /// <summary> UnReprovisioned. </summary>
         public static SyncMemberState UnReprovisioned { get; } = new SyncMemberState(UnReprovisionedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SyncMemberState"/> values are the same. </summary>
         public static bool operator ==(SyncMemberState left, SyncMemberState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SyncMemberState"/> values are not the same. </summary>

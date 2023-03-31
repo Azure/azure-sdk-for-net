@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static RecommendationAction Add { get; } = new RecommendationAction(AddValue);
         /// <summary> Remove. </summary>
         public static RecommendationAction Remove { get; } = new RecommendationAction(RemoveValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RecommendationAction"/> values are the same. </summary>
         public static bool operator ==(RecommendationAction left, RecommendationAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecommendationAction"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary> default. </summary>
         public static SqlPoolConnectionPolicyName Default { get; } = new SqlPoolConnectionPolicyName(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlPoolConnectionPolicyName"/> values are the same. </summary>
         public static bool operator ==(SqlPoolConnectionPolicyName left, SqlPoolConnectionPolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlPoolConnectionPolicyName"/> values are not the same. </summary>

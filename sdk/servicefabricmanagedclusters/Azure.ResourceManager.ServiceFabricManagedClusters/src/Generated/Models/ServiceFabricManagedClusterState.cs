@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static ServiceFabricManagedClusterState UpgradeFailed { get; } = new ServiceFabricManagedClusterState(UpgradeFailedValue);
         /// <summary> Indicates that the cluster is in a stable state. </summary>
         public static ServiceFabricManagedClusterState Ready { get; } = new ServiceFabricManagedClusterState(ReadyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedClusterState"/> values are the same. </summary>
         public static bool operator ==(ServiceFabricManagedClusterState left, ServiceFabricManagedClusterState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceFabricManagedClusterState"/> values are not the same. </summary>

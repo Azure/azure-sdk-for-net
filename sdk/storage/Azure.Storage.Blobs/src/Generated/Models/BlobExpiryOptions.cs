@@ -35,6 +35,9 @@ namespace Azure.Storage.Blobs.Models
         public static BlobExpiryOptions RelativeToNow { get; } = new BlobExpiryOptions(RelativeToNowValue);
         /// <summary> Absolute. </summary>
         public static BlobExpiryOptions Absolute { get; } = new BlobExpiryOptions(AbsoluteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BlobExpiryOptions"/> values are the same. </summary>
         public static bool operator ==(BlobExpiryOptions left, BlobExpiryOptions right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobExpiryOptions"/> values are not the same. </summary>

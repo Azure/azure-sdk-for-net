@@ -26,6 +26,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Basic. </summary>
         public static Db2AuthenticationType Basic { get; } = new Db2AuthenticationType(BasicValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="Db2AuthenticationType"/> values are the same. </summary>
         public static bool operator ==(Db2AuthenticationType left, Db2AuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Db2AuthenticationType"/> values are not the same. </summary>

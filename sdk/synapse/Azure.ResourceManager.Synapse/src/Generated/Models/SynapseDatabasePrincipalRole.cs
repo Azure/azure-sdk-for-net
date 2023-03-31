@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseDatabasePrincipalRole UnrestrictedViewer { get; } = new SynapseDatabasePrincipalRole(UnrestrictedViewerValue);
         /// <summary> Viewer. </summary>
         public static SynapseDatabasePrincipalRole Viewer { get; } = new SynapseDatabasePrincipalRole(ViewerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseDatabasePrincipalRole"/> values are the same. </summary>
         public static bool operator ==(SynapseDatabasePrincipalRole left, SynapseDatabasePrincipalRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseDatabasePrincipalRole"/> values are not the same. </summary>

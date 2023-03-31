@@ -56,6 +56,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityEventSource RegulatoryComplianceAssessment { get; } = new SecurityEventSource(RegulatoryComplianceAssessmentValue);
         /// <summary> RegulatoryComplianceAssessmentSnapshot. </summary>
         public static SecurityEventSource RegulatoryComplianceAssessmentSnapshot { get; } = new SecurityEventSource(RegulatoryComplianceAssessmentSnapshotValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityEventSource"/> values are the same. </summary>
         public static bool operator ==(SecurityEventSource left, SecurityEventSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityEventSource"/> values are not the same. </summary>

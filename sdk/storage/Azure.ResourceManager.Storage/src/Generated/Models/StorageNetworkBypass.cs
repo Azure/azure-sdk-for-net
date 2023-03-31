@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static StorageNetworkBypass Metrics { get; } = new StorageNetworkBypass(MetricsValue);
         /// <summary> AzureServices. </summary>
         public static StorageNetworkBypass AzureServices { get; } = new StorageNetworkBypass(AzureServicesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageNetworkBypass"/> values are the same. </summary>
         public static bool operator ==(StorageNetworkBypass left, StorageNetworkBypass right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageNetworkBypass"/> values are not the same. </summary>

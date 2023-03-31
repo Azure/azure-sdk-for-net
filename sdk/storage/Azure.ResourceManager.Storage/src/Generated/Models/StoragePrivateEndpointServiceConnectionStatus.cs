@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static StoragePrivateEndpointServiceConnectionStatus Approved { get; } = new StoragePrivateEndpointServiceConnectionStatus(ApprovedValue);
         /// <summary> Rejected. </summary>
         public static StoragePrivateEndpointServiceConnectionStatus Rejected { get; } = new StoragePrivateEndpointServiceConnectionStatus(RejectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StoragePrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(StoragePrivateEndpointServiceConnectionStatus left, StoragePrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StoragePrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>

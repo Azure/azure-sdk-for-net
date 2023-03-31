@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityCenterCloudName Github { get; } = new SecurityCenterCloudName(GithubValue);
         /// <summary> AzureDevOps. </summary>
         public static SecurityCenterCloudName AzureDevOps { get; } = new SecurityCenterCloudName(AzureDevOpsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityCenterCloudName"/> values are the same. </summary>
         public static bool operator ==(SecurityCenterCloudName left, SecurityCenterCloudName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityCenterCloudName"/> values are not the same. </summary>

@@ -17,13 +17,13 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("defaultToLanguageCode"u8);
-            writer.WriteStringValue(DefaultToLanguageCode.ToString());
+            writer.WriteStringValue(DefaultToLanguageCode.ToSerialString());
             if (Optional.IsDefined(DefaultFromLanguageCode))
             {
                 if (DefaultFromLanguageCode != null)
                 {
                     writer.WritePropertyName("defaultFromLanguageCode"u8);
-                    writer.WriteStringValue(DefaultFromLanguageCode.Value.ToString());
+                    writer.WriteStringValue(DefaultFromLanguageCode.Value.ToSerialString());
                 }
                 else
                 {
@@ -35,7 +35,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (SuggestedFrom != null)
                 {
                     writer.WritePropertyName("suggestedFrom"u8);
-                    writer.WriteStringValue(SuggestedFrom.Value.ToString());
+                    writer.WriteStringValue(SuggestedFrom.Value.ToSerialString());
                 }
                 else
                 {

@@ -26,6 +26,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> SparkJobDefinitionReference. </summary>
         public static SparkJobReferenceType SparkJobDefinitionReference { get; } = new SparkJobReferenceType(SparkJobDefinitionReferenceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SparkJobReferenceType"/> values are the same. </summary>
         public static bool operator ==(SparkJobReferenceType left, SparkJobReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SparkJobReferenceType"/> values are not the same. </summary>

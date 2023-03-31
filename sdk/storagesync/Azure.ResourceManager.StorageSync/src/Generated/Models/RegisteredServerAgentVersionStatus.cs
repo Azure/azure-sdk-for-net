@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static RegisteredServerAgentVersionStatus Expired { get; } = new RegisteredServerAgentVersionStatus(ExpiredValue);
         /// <summary> Blocked. </summary>
         public static RegisteredServerAgentVersionStatus Blocked { get; } = new RegisteredServerAgentVersionStatus(BlockedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RegisteredServerAgentVersionStatus"/> values are the same. </summary>
         public static bool operator ==(RegisteredServerAgentVersionStatus left, RegisteredServerAgentVersionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RegisteredServerAgentVersionStatus"/> values are not the same. </summary>

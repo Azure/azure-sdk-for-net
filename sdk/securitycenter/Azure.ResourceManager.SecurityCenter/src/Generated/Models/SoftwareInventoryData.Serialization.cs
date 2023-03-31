@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(EndOfSupportStatus))
             {
                 writer.WritePropertyName("endOfSupportStatus"u8);
-                writer.WriteStringValue(EndOfSupportStatus.Value.ToString());
+                writer.WriteStringValue(EndOfSupportStatus.Value.ToSerialString());
             }
             if (Optional.IsDefined(EndOfSupportDate))
             {

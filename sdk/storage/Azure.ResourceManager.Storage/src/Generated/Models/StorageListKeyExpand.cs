@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> kerb. </summary>
         public static StorageListKeyExpand Kerb { get; } = new StorageListKeyExpand(KerbValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageListKeyExpand"/> values are the same. </summary>
         public static bool operator ==(StorageListKeyExpand left, StorageListKeyExpand right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageListKeyExpand"/> values are not the same. </summary>

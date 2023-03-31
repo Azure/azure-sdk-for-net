@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> AzureKeyVault. </summary>
         public static SqlDatabaseKeyType AzureKeyVault { get; } = new SqlDatabaseKeyType(AzureKeyVaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlDatabaseKeyType"/> values are the same. </summary>
         public static bool operator ==(SqlDatabaseKeyType left, SqlDatabaseKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlDatabaseKeyType"/> values are not the same. </summary>

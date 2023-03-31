@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static TrafficManagerMonitorProtocol Https { get; } = new TrafficManagerMonitorProtocol(HttpsValue);
         /// <summary> TCP. </summary>
         public static TrafficManagerMonitorProtocol Tcp { get; } = new TrafficManagerMonitorProtocol(TcpValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TrafficManagerMonitorProtocol"/> values are the same. </summary>
         public static bool operator ==(TrafficManagerMonitorProtocol left, TrafficManagerMonitorProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrafficManagerMonitorProtocol"/> values are not the same. </summary>

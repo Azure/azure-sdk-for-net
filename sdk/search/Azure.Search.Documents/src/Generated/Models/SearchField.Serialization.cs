@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(Type.ToSerialString());
             if (Optional.IsDefined(IsKey))
             {
                 writer.WritePropertyName("key"u8);
@@ -55,7 +55,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (AnalyzerName != null)
                 {
                     writer.WritePropertyName("analyzer"u8);
-                    writer.WriteStringValue(AnalyzerName.Value.ToString());
+                    writer.WriteStringValue(AnalyzerName.Value.ToSerialString());
                 }
                 else
                 {
@@ -67,7 +67,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (SearchAnalyzerName != null)
                 {
                     writer.WritePropertyName("searchAnalyzer"u8);
-                    writer.WriteStringValue(SearchAnalyzerName.Value.ToString());
+                    writer.WriteStringValue(SearchAnalyzerName.Value.ToSerialString());
                 }
                 else
                 {
@@ -79,7 +79,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (IndexAnalyzerName != null)
                 {
                     writer.WritePropertyName("indexAnalyzer"u8);
-                    writer.WriteStringValue(IndexAnalyzerName.Value.ToString());
+                    writer.WriteStringValue(IndexAnalyzerName.Value.ToSerialString());
                 }
                 else
                 {
@@ -91,7 +91,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (NormalizerName != null)
                 {
                     writer.WritePropertyName("normalizer"u8);
-                    writer.WriteStringValue(NormalizerName.Value.ToString());
+                    writer.WriteStringValue(NormalizerName.Value.ToSerialString());
                 }
                 else
                 {

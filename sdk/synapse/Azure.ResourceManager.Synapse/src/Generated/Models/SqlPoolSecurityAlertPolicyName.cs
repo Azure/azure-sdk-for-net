@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary> default. </summary>
         public static SqlPoolSecurityAlertPolicyName Default { get; } = new SqlPoolSecurityAlertPolicyName(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlPoolSecurityAlertPolicyName"/> values are the same. </summary>
         public static bool operator ==(SqlPoolSecurityAlertPolicyName left, SqlPoolSecurityAlertPolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlPoolSecurityAlertPolicyName"/> values are not the same. </summary>

@@ -590,7 +590,7 @@ namespace Azure.Storage.Blobs
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", _version);
-            request.Headers.Add("x-ms-expiry-option", expiryOptions.ToString());
+            request.Headers.Add("x-ms-expiry-option", expiryOptions.ToSerialString());
             if (expiresOn != null)
             {
                 request.Headers.Add("x-ms-expiry-time", expiresOn);
@@ -1766,7 +1766,7 @@ namespace Azure.Storage.Blobs
             }
             if (tier != null)
             {
-                request.Headers.Add("x-ms-access-tier", tier.Value.ToString());
+                request.Headers.Add("x-ms-access-tier", tier.Value.ToSerialString());
             }
             if (rehydratePriority != null)
             {
@@ -1947,7 +1947,7 @@ namespace Azure.Storage.Blobs
             }
             if (tier != null)
             {
-                request.Headers.Add("x-ms-access-tier", tier.Value.ToString());
+                request.Headers.Add("x-ms-access-tier", tier.Value.ToSerialString());
             }
             if (sourceIfModifiedSince != null)
             {
@@ -2210,7 +2210,7 @@ namespace Azure.Storage.Blobs
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-access-tier", tier.ToString());
+            request.Headers.Add("x-ms-access-tier", tier.ToSerialString());
             if (rehydratePriority != null)
             {
                 request.Headers.Add("x-ms-rehydrate-priority", rehydratePriority.Value.ToSerialString());

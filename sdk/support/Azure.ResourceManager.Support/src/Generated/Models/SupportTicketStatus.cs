@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Support.Models
         public static SupportTicketStatus Open { get; } = new SupportTicketStatus(OpenValue);
         /// <summary> closed. </summary>
         public static SupportTicketStatus Closed { get; } = new SupportTicketStatus(ClosedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SupportTicketStatus"/> values are the same. </summary>
         public static bool operator ==(SupportTicketStatus left, SupportTicketStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SupportTicketStatus"/> values are not the same. </summary>

@@ -55,7 +55,7 @@ namespace Azure.Storage.Blobs
             request.Headers.Add("x-ms-blob-type", "PageBlob");
             if (tier != null)
             {
-                request.Headers.Add("x-ms-access-tier", tier.Value.ToString());
+                request.Headers.Add("x-ms-access-tier", tier.Value.ToSerialString());
             }
             if (blobContentType != null)
             {

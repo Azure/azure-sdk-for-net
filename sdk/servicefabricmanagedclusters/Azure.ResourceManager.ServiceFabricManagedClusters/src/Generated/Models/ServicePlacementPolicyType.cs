@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static ServicePlacementPolicyType RequiredDomainDistribution { get; } = new ServicePlacementPolicyType(RequiredDomainDistributionValue);
         /// <summary> Indicates that the ServicePlacementPolicyDescription is of type ServicePlacementNonPartiallyPlaceServicePolicyDescription, which indicates that if possible all replicas of a particular partition of the service should be placed atomically. The value is 4. </summary>
         public static ServicePlacementPolicyType NonPartiallyPlaceService { get; } = new ServicePlacementPolicyType(NonPartiallyPlaceServiceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServicePlacementPolicyType"/> values are the same. </summary>
         public static bool operator ==(ServicePlacementPolicyType left, ServicePlacementPolicyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServicePlacementPolicyType"/> values are not the same. </summary>

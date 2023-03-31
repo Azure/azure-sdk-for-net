@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ReadBehavior))
             {
                 writer.WritePropertyName("readBehavior"u8);
-                writer.WriteStringValue(ReadBehavior.Value.ToString());
+                writer.WriteStringValue(ReadBehavior.Value.ToSerialString());
             }
             if (Optional.IsDefined(QueryTimeout))
             {

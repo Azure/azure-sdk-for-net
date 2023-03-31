@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <summary> Domainful. </summary>
         public static SqlVmClusterConfiguration Domainful { get; } = new SqlVmClusterConfiguration(DomainfulValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlVmClusterConfiguration"/> values are the same. </summary>
         public static bool operator ==(SqlVmClusterConfiguration left, SqlVmClusterConfiguration right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlVmClusterConfiguration"/> values are not the same. </summary>

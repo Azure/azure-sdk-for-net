@@ -44,6 +44,9 @@ namespace Azure.AI.Translation.Document.Models
         public static TranslationErrorCode Unauthorized { get; } = new TranslationErrorCode(UnauthorizedValue);
         /// <summary> RequestRateTooHigh. </summary>
         public static TranslationErrorCode RequestRateTooHigh { get; } = new TranslationErrorCode(RequestRateTooHighValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TranslationErrorCode"/> values are the same. </summary>
         public static bool operator ==(TranslationErrorCode left, TranslationErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TranslationErrorCode"/> values are not the same. </summary>

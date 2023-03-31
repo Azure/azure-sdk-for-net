@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(MaskingMode))
             {
                 writer.WritePropertyName("maskingMode"u8);
-                writer.WriteStringValue(MaskingMode.Value.ToString());
+                writer.WriteStringValue(MaskingMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(MaskingCharacter))
             {

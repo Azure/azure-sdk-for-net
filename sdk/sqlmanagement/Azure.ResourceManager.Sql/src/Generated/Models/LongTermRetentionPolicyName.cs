@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> default. </summary>
         public static LongTermRetentionPolicyName Default { get; } = new LongTermRetentionPolicyName(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LongTermRetentionPolicyName"/> values are the same. </summary>
         public static bool operator ==(LongTermRetentionPolicyName left, LongTermRetentionPolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LongTermRetentionPolicyName"/> values are not the same. </summary>

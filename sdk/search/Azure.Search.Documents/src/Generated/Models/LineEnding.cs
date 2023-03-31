@@ -35,6 +35,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public static LineEnding LineFeed { get; } = new LineEnding(LineFeedValue);
         /// <summary> Lines are separated by a carriage return and a line feed (&apos;\r\n&apos;) character. </summary>
         public static LineEnding CarriageReturnLineFeed { get; } = new LineEnding(CarriageReturnLineFeedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LineEnding"/> values are the same. </summary>
         public static bool operator ==(LineEnding left, LineEnding right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LineEnding"/> values are not the same. </summary>

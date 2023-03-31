@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Source OnPremise { get; } = new Source(OnPremiseValue);
         /// <summary> SQL Resource in an on premise machine connected to Azure cloud. </summary>
         public static Source OnPremiseSql { get; } = new Source(OnPremiseSqlValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="Source"/> values are the same. </summary>
         public static bool operator ==(Source left, Source right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Source"/> values are not the same. </summary>

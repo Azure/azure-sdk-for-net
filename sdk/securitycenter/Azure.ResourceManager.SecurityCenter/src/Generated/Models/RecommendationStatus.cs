@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static RecommendationStatus NotAvailable { get; } = new RecommendationStatus(NotAvailableValue);
         /// <summary> NoStatus. </summary>
         public static RecommendationStatus NoStatus { get; } = new RecommendationStatus(NoStatusValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RecommendationStatus"/> values are the same. </summary>
         public static bool operator ==(RecommendationStatus left, RecommendationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecommendationStatus"/> values are not the same. </summary>

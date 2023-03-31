@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static CustomAssessmentAutomationSupportedCloud Aws { get; } = new CustomAssessmentAutomationSupportedCloud(AwsValue);
         /// <summary> GCP. </summary>
         public static CustomAssessmentAutomationSupportedCloud Gcp { get; } = new CustomAssessmentAutomationSupportedCloud(GcpValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CustomAssessmentAutomationSupportedCloud"/> values are the same. </summary>
         public static bool operator ==(CustomAssessmentAutomationSupportedCloud left, CustomAssessmentAutomationSupportedCloud right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CustomAssessmentAutomationSupportedCloud"/> values are not the same. </summary>

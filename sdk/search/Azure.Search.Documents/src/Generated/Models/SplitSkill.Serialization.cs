@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (DefaultLanguageCode != null)
                 {
                     writer.WritePropertyName("defaultLanguageCode"u8);
-                    writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
+                    writer.WriteStringValue(DefaultLanguageCode.Value.ToSerialString());
                 }
                 else
                 {
@@ -31,7 +31,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(TextSplitMode))
             {
                 writer.WritePropertyName("textSplitMode"u8);
-                writer.WriteStringValue(TextSplitMode.Value.ToString());
+                writer.WriteStringValue(TextSplitMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(MaximumPageLength))
             {

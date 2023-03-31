@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.TrafficManager.Models
             if (Optional.IsDefined(ProfileMonitorStatus))
             {
                 writer.WritePropertyName("profileMonitorStatus"u8);
-                writer.WriteStringValue(ProfileMonitorStatus.Value.ToString());
+                writer.WriteStringValue(ProfileMonitorStatus.Value.ToSerialString());
             }
             if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
-                writer.WriteStringValue(Protocol.Value.ToString());
+                writer.WriteStringValue(Protocol.Value.ToSerialString());
             }
             if (Optional.IsDefined(Port))
             {

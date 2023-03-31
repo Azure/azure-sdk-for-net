@@ -41,6 +41,9 @@ namespace Azure.AI.TextAnalytics
         public static NumberKind Percent { get; } = new NumberKind(PercentValue);
         /// <summary> Unspecified. </summary>
         public static NumberKind Unspecified { get; } = new NumberKind(UnspecifiedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NumberKind"/> values are the same. </summary>
         public static bool operator ==(NumberKind left, NumberKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NumberKind"/> values are not the same. </summary>

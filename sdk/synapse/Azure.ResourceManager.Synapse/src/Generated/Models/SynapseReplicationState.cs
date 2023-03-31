@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseReplicationState CatchUp { get; } = new SynapseReplicationState(CatchUpValue);
         /// <summary> SUSPENDED. </summary>
         public static SynapseReplicationState Suspended { get; } = new SynapseReplicationState(SuspendedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseReplicationState"/> values are the same. </summary>
         public static bool operator ==(SynapseReplicationState left, SynapseReplicationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseReplicationState"/> values are not the same. </summary>

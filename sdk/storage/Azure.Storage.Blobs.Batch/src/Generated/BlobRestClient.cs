@@ -68,10 +68,10 @@ namespace Azure.Storage.Blobs.Batch
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-access-tier", tier.ToString());
+            request.Headers.Add("x-ms-access-tier", tier.ToSerialString());
             if (rehydratePriority != null)
             {
-                request.Headers.Add("x-ms-rehydrate-priority", rehydratePriority.Value.ToString());
+                request.Headers.Add("x-ms-rehydrate-priority", rehydratePriority.Value.ToSerialString());
             }
             request.Headers.Add("x-ms-version", _version);
             if (leaseId != null)

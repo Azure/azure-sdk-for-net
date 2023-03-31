@@ -62,6 +62,9 @@ namespace Azure.AI.TextAnalytics
         public static InformationUnit Terabyte { get; } = new InformationUnit(TerabyteValue);
         /// <summary> Petabyte. </summary>
         public static InformationUnit Petabyte { get; } = new InformationUnit(PetabyteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InformationUnit"/> values are the same. </summary>
         public static bool operator ==(InformationUnit left, InformationUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InformationUnit"/> values are not the same. </summary>

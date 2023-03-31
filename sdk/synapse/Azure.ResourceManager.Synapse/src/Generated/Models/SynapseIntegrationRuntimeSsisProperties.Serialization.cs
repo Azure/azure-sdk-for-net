@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
-                writer.WriteStringValue(LicenseType.Value.ToString());
+                writer.WriteStringValue(LicenseType.Value.ToSerialString());
             }
             if (Optional.IsDefined(CustomSetupScriptProperties))
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(Edition))
             {
                 writer.WritePropertyName("edition"u8);
-                writer.WriteStringValue(Edition.Value.ToString());
+                writer.WriteStringValue(Edition.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ExpressCustomSetupProperties))
             {

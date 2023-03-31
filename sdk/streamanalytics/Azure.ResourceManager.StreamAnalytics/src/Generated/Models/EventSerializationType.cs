@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static EventSerializationType CustomClr { get; } = new EventSerializationType(CustomClrValue);
         /// <summary> Parquet. </summary>
         public static EventSerializationType Parquet { get; } = new EventSerializationType(ParquetValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventSerializationType"/> values are the same. </summary>
         public static bool operator ==(EventSerializationType left, EventSerializationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventSerializationType"/> values are not the same. </summary>

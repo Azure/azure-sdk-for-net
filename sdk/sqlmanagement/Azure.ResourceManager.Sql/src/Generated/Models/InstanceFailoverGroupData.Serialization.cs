@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(SecondaryType))
             {
                 writer.WritePropertyName("secondaryType"u8);
-                writer.WriteStringValue(SecondaryType.Value.ToString());
+                writer.WriteStringValue(SecondaryType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ReadWriteEndpoint))
             {

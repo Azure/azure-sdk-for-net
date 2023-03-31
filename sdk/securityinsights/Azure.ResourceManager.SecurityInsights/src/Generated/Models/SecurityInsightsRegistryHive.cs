@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsRegistryHive HkeyA { get; } = new SecurityInsightsRegistryHive(HkeyAValue);
         /// <summary> HKEY_CURRENT_USER. </summary>
         public static SecurityInsightsRegistryHive HkeyCurrentUser { get; } = new SecurityInsightsRegistryHive(HkeyCurrentUserValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityInsightsRegistryHive"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsRegistryHive left, SecurityInsightsRegistryHive right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsRegistryHive"/> values are not the same. </summary>

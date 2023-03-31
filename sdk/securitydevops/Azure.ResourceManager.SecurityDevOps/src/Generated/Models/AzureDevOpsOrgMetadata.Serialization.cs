@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             if (Optional.IsDefined(AutoDiscovery))
             {
                 writer.WritePropertyName("autoDiscovery"u8);
-                writer.WriteStringValue(AutoDiscovery.Value.ToString());
+                writer.WriteStringValue(AutoDiscovery.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Projects))
             {

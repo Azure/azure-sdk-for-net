@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseProvisioningState Failed { get; } = new SynapseProvisioningState(FailedValue);
         /// <summary> DeleteError. </summary>
         public static SynapseProvisioningState DeleteError { get; } = new SynapseProvisioningState(DeleteErrorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseProvisioningState"/> values are the same. </summary>
         public static bool operator ==(SynapseProvisioningState left, SynapseProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseProvisioningState"/> values are not the same. </summary>

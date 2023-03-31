@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Subscription.Models
         public static SubscriptionWorkload Production { get; } = new SubscriptionWorkload(ProductionValue);
         /// <summary> DevTest. </summary>
         public static SubscriptionWorkload DevTest { get; } = new SubscriptionWorkload(DevTestValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SubscriptionWorkload"/> values are the same. </summary>
         public static bool operator ==(SubscriptionWorkload left, SubscriptionWorkload right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SubscriptionWorkload"/> values are not the same. </summary>

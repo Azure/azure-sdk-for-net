@@ -32,6 +32,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static CopyBehaviorType FlattenHierarchy { get; } = new CopyBehaviorType(FlattenHierarchyValue);
         /// <summary> MergeFiles. </summary>
         public static CopyBehaviorType MergeFiles { get; } = new CopyBehaviorType(MergeFilesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CopyBehaviorType"/> values are the same. </summary>
         public static bool operator ==(CopyBehaviorType left, CopyBehaviorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CopyBehaviorType"/> values are not the same. </summary>

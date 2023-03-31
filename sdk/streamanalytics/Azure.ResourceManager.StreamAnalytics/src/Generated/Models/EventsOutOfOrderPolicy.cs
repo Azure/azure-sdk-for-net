@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static EventsOutOfOrderPolicy Adjust { get; } = new EventsOutOfOrderPolicy(AdjustValue);
         /// <summary> Drop. </summary>
         public static EventsOutOfOrderPolicy Drop { get; } = new EventsOutOfOrderPolicy(DropValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventsOutOfOrderPolicy"/> values are the same. </summary>
         public static bool operator ==(EventsOutOfOrderPolicy left, EventsOutOfOrderPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventsOutOfOrderPolicy"/> values are not the same. </summary>

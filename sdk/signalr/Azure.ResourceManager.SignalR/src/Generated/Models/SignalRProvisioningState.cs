@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.SignalR.Models
         public static SignalRProvisioningState Deleting { get; } = new SignalRProvisioningState(DeletingValue);
         /// <summary> Moving. </summary>
         public static SignalRProvisioningState Moving { get; } = new SignalRProvisioningState(MovingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SignalRProvisioningState"/> values are the same. </summary>
         public static bool operator ==(SignalRProvisioningState left, SignalRProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SignalRProvisioningState"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static AdaptiveApplicationControlEnforcementMode Enforce { get; } = new AdaptiveApplicationControlEnforcementMode(EnforceValue);
         /// <summary> None. </summary>
         public static AdaptiveApplicationControlEnforcementMode None { get; } = new AdaptiveApplicationControlEnforcementMode(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AdaptiveApplicationControlEnforcementMode"/> values are the same. </summary>
         public static bool operator ==(AdaptiveApplicationControlEnforcementMode left, AdaptiveApplicationControlEnforcementMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AdaptiveApplicationControlEnforcementMode"/> values are not the same. </summary>

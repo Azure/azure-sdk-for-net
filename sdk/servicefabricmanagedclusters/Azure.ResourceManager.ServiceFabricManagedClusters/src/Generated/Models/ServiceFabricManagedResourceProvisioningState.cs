@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static ServiceFabricManagedResourceProvisioningState Deleted { get; } = new ServiceFabricManagedResourceProvisioningState(DeletedValue);
         /// <summary> Other. </summary>
         public static ServiceFabricManagedResourceProvisioningState Other { get; } = new ServiceFabricManagedResourceProvisioningState(OtherValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedResourceProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ServiceFabricManagedResourceProvisioningState left, ServiceFabricManagedResourceProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceFabricManagedResourceProvisioningState"/> values are not the same. </summary>

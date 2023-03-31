@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static StreamAnalyticsAuthenticationMode UserToken { get; } = new StreamAnalyticsAuthenticationMode(UserTokenValue);
         /// <summary> ConnectionString. </summary>
         public static StreamAnalyticsAuthenticationMode ConnectionString { get; } = new StreamAnalyticsAuthenticationMode(ConnectionStringValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StreamAnalyticsAuthenticationMode"/> values are the same. </summary>
         public static bool operator ==(StreamAnalyticsAuthenticationMode left, StreamAnalyticsAuthenticationMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamAnalyticsAuthenticationMode"/> values are not the same. </summary>

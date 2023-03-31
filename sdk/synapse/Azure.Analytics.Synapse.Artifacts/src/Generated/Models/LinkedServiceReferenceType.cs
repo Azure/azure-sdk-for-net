@@ -26,6 +26,9 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> LinkedServiceReference. </summary>
         public static LinkedServiceReferenceType LinkedServiceReference { get; } = new LinkedServiceReferenceType(LinkedServiceReferenceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LinkedServiceReferenceType"/> values are the same. </summary>
         public static bool operator ==(LinkedServiceReferenceType left, LinkedServiceReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LinkedServiceReferenceType"/> values are not the same. </summary>

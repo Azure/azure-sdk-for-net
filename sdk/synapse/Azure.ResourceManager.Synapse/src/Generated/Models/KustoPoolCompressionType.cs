@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static KustoPoolCompressionType None { get; } = new KustoPoolCompressionType(NoneValue);
         /// <summary> GZip. </summary>
         public static KustoPoolCompressionType GZip { get; } = new KustoPoolCompressionType(GZipValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoPoolCompressionType"/> values are the same. </summary>
         public static bool operator ==(KustoPoolCompressionType left, KustoPoolCompressionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoPoolCompressionType"/> values are not the same. </summary>

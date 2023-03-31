@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> default. </summary>
         public static BlobAuditingPolicyName Default { get; } = new BlobAuditingPolicyName(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BlobAuditingPolicyName"/> values are the same. </summary>
         public static bool operator ==(BlobAuditingPolicyName left, BlobAuditingPolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobAuditingPolicyName"/> values are not the same. </summary>

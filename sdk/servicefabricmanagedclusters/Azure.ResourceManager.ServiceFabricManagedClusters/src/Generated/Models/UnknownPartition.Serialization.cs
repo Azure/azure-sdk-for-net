@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("partitionScheme"u8);
-            writer.WriteStringValue(PartitionScheme.ToString());
+            writer.WriteStringValue(PartitionScheme.ToSerialString());
             writer.WriteEndObject();
         }
 

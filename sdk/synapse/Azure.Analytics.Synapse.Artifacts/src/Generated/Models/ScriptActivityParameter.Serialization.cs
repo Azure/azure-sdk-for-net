@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(Type.Value.ToSerialString());
             }
             if (Optional.IsDefined(Value))
             {
@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
-                writer.WriteStringValue(Direction.Value.ToString());
+                writer.WriteStringValue(Direction.Value.ToSerialString());
             }
             if (Optional.IsDefined(Size))
             {

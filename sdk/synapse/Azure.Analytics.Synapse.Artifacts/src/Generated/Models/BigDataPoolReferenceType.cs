@@ -26,6 +26,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> BigDataPoolReference. </summary>
         public static BigDataPoolReferenceType BigDataPoolReference { get; } = new BigDataPoolReferenceType(BigDataPoolReferenceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BigDataPoolReferenceType"/> values are the same. </summary>
         public static bool operator ==(BigDataPoolReferenceType left, BigDataPoolReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BigDataPoolReferenceType"/> values are not the same. </summary>

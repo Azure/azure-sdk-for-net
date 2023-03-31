@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static TableTemporalType HistoryTable { get; } = new TableTemporalType(HistoryTableValue);
         /// <summary> SystemVersionedTemporalTable. </summary>
         public static TableTemporalType SystemVersionedTemporalTable { get; } = new TableTemporalType(SystemVersionedTemporalTableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TableTemporalType"/> values are the same. </summary>
         public static bool operator ==(TableTemporalType left, TableTemporalType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TableTemporalType"/> values are not the same. </summary>

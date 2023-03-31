@@ -32,6 +32,9 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static SchedulerCurrentState Scheduled { get; } = new SchedulerCurrentState(ScheduledValue);
         /// <summary> Ended. </summary>
         public static SchedulerCurrentState Ended { get; } = new SchedulerCurrentState(EndedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SchedulerCurrentState"/> values are the same. </summary>
         public static bool operator ==(SchedulerCurrentState left, SchedulerCurrentState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SchedulerCurrentState"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static ServiceBusNetworkRuleSetDefaultAction Allow { get; } = new ServiceBusNetworkRuleSetDefaultAction(AllowValue);
         /// <summary> Deny. </summary>
         public static ServiceBusNetworkRuleSetDefaultAction Deny { get; } = new ServiceBusNetworkRuleSetDefaultAction(DenyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceBusNetworkRuleSetDefaultAction"/> values are the same. </summary>
         public static bool operator ==(ServiceBusNetworkRuleSetDefaultAction left, ServiceBusNetworkRuleSetDefaultAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceBusNetworkRuleSetDefaultAction"/> values are not the same. </summary>

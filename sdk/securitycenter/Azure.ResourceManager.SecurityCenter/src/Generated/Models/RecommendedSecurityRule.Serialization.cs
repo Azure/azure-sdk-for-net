@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
-                writer.WriteStringValue(Direction.Value.ToString());
+                writer.WriteStringValue(Direction.Value.ToSerialString());
             }
             if (Optional.IsDefined(DestinationPort))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Protocols)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("authenticationType"u8);
-            writer.WriteStringValue(AuthenticationType.ToString());
+            writer.WriteStringValue(AuthenticationType.ToSerialString());
             writer.WritePropertyName("url"u8);
             writer.WriteObjectValue(Url);
             if (Optional.IsDefined(UserName))

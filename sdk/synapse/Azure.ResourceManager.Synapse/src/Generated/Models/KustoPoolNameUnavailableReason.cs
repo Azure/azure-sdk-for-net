@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static KustoPoolNameUnavailableReason Invalid { get; } = new KustoPoolNameUnavailableReason(InvalidValue);
         /// <summary> AlreadyExists. </summary>
         public static KustoPoolNameUnavailableReason AlreadyExists { get; } = new KustoPoolNameUnavailableReason(AlreadyExistsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoPoolNameUnavailableReason"/> values are the same. </summary>
         public static bool operator ==(KustoPoolNameUnavailableReason left, KustoPoolNameUnavailableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoPoolNameUnavailableReason"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.Data.Tables.Models
         public static TableGeoReplicationStatus Bootstrap { get; } = new TableGeoReplicationStatus(BootstrapValue);
         /// <summary> unavailable. </summary>
         public static TableGeoReplicationStatus Unavailable { get; } = new TableGeoReplicationStatus(UnavailableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TableGeoReplicationStatus"/> values are the same. </summary>
         public static bool operator ==(TableGeoReplicationStatus left, TableGeoReplicationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TableGeoReplicationStatus"/> values are not the same. </summary>

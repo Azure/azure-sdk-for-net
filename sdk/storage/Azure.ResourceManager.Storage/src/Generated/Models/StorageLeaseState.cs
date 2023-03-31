@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static StorageLeaseState Breaking { get; } = new StorageLeaseState(BreakingValue);
         /// <summary> Broken. </summary>
         public static StorageLeaseState Broken { get; } = new StorageLeaseState(BrokenValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageLeaseState"/> values are the same. </summary>
         public static bool operator ==(StorageLeaseState left, StorageLeaseState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageLeaseState"/> values are not the same. </summary>

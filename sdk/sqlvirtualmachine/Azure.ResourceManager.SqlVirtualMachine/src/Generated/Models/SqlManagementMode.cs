@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static SqlManagementMode LightWeight { get; } = new SqlManagementMode(LightWeightValue);
         /// <summary> NoAgent. </summary>
         public static SqlManagementMode NoAgent { get; } = new SqlManagementMode(NoAgentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlManagementMode"/> values are the same. </summary>
         public static bool operator ==(SqlManagementMode left, SqlManagementMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlManagementMode"/> values are not the same. </summary>

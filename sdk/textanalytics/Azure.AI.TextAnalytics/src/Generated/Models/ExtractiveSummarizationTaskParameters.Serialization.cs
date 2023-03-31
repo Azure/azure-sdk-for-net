@@ -24,12 +24,12 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(SortBy))
             {
                 writer.WritePropertyName("sortBy"u8);
-                writer.WriteStringValue(SortBy.Value.ToString());
+                writer.WriteStringValue(SortBy.Value.ToSerialString());
             }
             if (Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType"u8);
-                writer.WriteStringValue(StringIndexType.Value.ToString());
+                writer.WriteStringValue(StringIndexType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ModelVersion))
             {

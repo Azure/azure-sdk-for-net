@@ -45,6 +45,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static CreateMode Recovery { get; } = new CreateMode(RecoveryValue);
         /// <summary> Restore. </summary>
         public static CreateMode Restore { get; } = new CreateMode(RestoreValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CreateMode"/> values are the same. </summary>
         public static bool operator ==(CreateMode left, CreateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CreateMode"/> values are not the same. </summary>

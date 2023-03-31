@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             if (Optional.IsDefined(AssociationType))
             {
                 writer.WritePropertyName("associationType"u8);
-                writer.WriteStringValue(AssociationType.Value.ToString());
+                writer.WriteStringValue(AssociationType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Subnet))
             {

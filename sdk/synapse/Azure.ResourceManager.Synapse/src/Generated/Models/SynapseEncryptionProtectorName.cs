@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary> current. </summary>
         public static SynapseEncryptionProtectorName Current { get; } = new SynapseEncryptionProtectorName(CurrentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseEncryptionProtectorName"/> values are the same. </summary>
         public static bool operator ==(SynapseEncryptionProtectorName left, SynapseEncryptionProtectorName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseEncryptionProtectorName"/> values are not the same. </summary>

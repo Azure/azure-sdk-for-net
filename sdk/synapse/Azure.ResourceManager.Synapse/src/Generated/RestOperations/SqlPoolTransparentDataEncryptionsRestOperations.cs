@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Synapse
             uri.AppendPath("/sqlPools/", false);
             uri.AppendPath(sqlPoolName, true);
             uri.AppendPath("/transparentDataEncryption/", false);
-            uri.AppendPath(transparentDataEncryptionName.ToString(), true);
+            uri.AppendPath(transparentDataEncryptionName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Synapse
             uri.AppendPath("/sqlPools/", false);
             uri.AppendPath(sqlPoolName, true);
             uri.AppendPath("/transparentDataEncryption/", false);
-            uri.AppendPath(transparentDataEncryptionName.ToString(), true);
+            uri.AppendPath(transparentDataEncryptionName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

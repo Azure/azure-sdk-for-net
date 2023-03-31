@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static DatabaseReadScale Enabled { get; } = new DatabaseReadScale(EnabledValue);
         /// <summary> Disabled. </summary>
         public static DatabaseReadScale Disabled { get; } = new DatabaseReadScale(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DatabaseReadScale"/> values are the same. </summary>
         public static bool operator ==(DatabaseReadScale left, DatabaseReadScale right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DatabaseReadScale"/> values are not the same. </summary>

@@ -44,6 +44,9 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static PluginCurrentState Cleanup { get; } = new PluginCurrentState(CleanupValue);
         /// <summary> Ended. </summary>
         public static PluginCurrentState Ended { get; } = new PluginCurrentState(EndedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PluginCurrentState"/> values are the same. </summary>
         public static bool operator ==(PluginCurrentState left, PluginCurrentState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PluginCurrentState"/> values are not the same. </summary>

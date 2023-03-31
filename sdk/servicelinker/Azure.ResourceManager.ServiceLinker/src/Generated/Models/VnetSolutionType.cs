@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public static VnetSolutionType ServiceEndpoint { get; } = new VnetSolutionType(ServiceEndpointValue);
         /// <summary> privateLink. </summary>
         public static VnetSolutionType PrivateLink { get; } = new VnetSolutionType(PrivateLinkValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VnetSolutionType"/> values are the same. </summary>
         public static bool operator ==(VnetSolutionType left, VnetSolutionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VnetSolutionType"/> values are not the same. </summary>

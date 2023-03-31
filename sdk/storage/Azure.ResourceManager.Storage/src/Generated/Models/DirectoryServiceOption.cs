@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static DirectoryServiceOption AD { get; } = new DirectoryServiceOption(ADValue);
         /// <summary> AADKERB. </summary>
         public static DirectoryServiceOption Aadkerb { get; } = new DirectoryServiceOption(AadkerbValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DirectoryServiceOption"/> values are the same. </summary>
         public static bool operator ==(DirectoryServiceOption left, DirectoryServiceOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DirectoryServiceOption"/> values are not the same. </summary>

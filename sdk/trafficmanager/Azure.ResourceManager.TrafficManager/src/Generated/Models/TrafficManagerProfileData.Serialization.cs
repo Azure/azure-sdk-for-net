@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.TrafficManager
             if (Optional.IsDefined(ProfileStatus))
             {
                 writer.WritePropertyName("profileStatus"u8);
-                writer.WriteStringValue(ProfileStatus.Value.ToString());
+                writer.WriteStringValue(ProfileStatus.Value.ToSerialString());
             }
             if (Optional.IsDefined(TrafficRoutingMethod))
             {
                 writer.WritePropertyName("trafficRoutingMethod"u8);
-                writer.WriteStringValue(TrafficRoutingMethod.Value.ToString());
+                writer.WriteStringValue(TrafficRoutingMethod.Value.ToSerialString());
             }
             if (Optional.IsDefined(DnsConfig))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.TrafficManager
             if (Optional.IsDefined(TrafficViewEnrollmentStatus))
             {
                 writer.WritePropertyName("trafficViewEnrollmentStatus"u8);
-                writer.WriteStringValue(TrafficViewEnrollmentStatus.Value.ToString());
+                writer.WriteStringValue(TrafficViewEnrollmentStatus.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(AllowedEndpointRecordTypes))
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.TrafficManager
                 writer.WriteStartArray();
                 foreach (var item in AllowedEndpointRecordTypes)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

@@ -26,6 +26,9 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary> backup. </summary>
         public static ShareTokenIntent Backup { get; } = new ShareTokenIntent(BackupValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ShareTokenIntent"/> values are the same. </summary>
         public static bool operator ==(ShareTokenIntent left, ShareTokenIntent right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ShareTokenIntent"/> values are not the same. </summary>

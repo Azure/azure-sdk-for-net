@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsIncidentClassificationReason IncorrectAlertLogic { get; } = new SecurityInsightsIncidentClassificationReason(IncorrectAlertLogicValue);
         /// <summary> Classification reason was inaccurate data. </summary>
         public static SecurityInsightsIncidentClassificationReason InaccurateData { get; } = new SecurityInsightsIncidentClassificationReason(InaccurateDataValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentClassificationReason"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsIncidentClassificationReason left, SecurityInsightsIncidentClassificationReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentClassificationReason"/> values are not the same. </summary>

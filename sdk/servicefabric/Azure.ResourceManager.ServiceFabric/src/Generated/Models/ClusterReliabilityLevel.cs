@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static ClusterReliabilityLevel Gold { get; } = new ClusterReliabilityLevel(GoldValue);
         /// <summary> Platinum. </summary>
         public static ClusterReliabilityLevel Platinum { get; } = new ClusterReliabilityLevel(PlatinumValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ClusterReliabilityLevel"/> values are the same. </summary>
         public static bool operator ==(ClusterReliabilityLevel left, ClusterReliabilityLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterReliabilityLevel"/> values are not the same. </summary>

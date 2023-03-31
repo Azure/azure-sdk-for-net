@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlMetricPrimaryAggregationType Maximum { get; } = new SqlMetricPrimaryAggregationType(MaximumValue);
         /// <summary> Total. </summary>
         public static SqlMetricPrimaryAggregationType Total { get; } = new SqlMetricPrimaryAggregationType(TotalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlMetricPrimaryAggregationType"/> values are the same. </summary>
         public static bool operator ==(SqlMetricPrimaryAggregationType left, SqlMetricPrimaryAggregationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlMetricPrimaryAggregationType"/> values are not the same. </summary>

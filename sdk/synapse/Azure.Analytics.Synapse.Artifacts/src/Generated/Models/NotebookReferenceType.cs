@@ -26,6 +26,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> NotebookReference. </summary>
         public static NotebookReferenceType NotebookReference { get; } = new NotebookReferenceType(NotebookReferenceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NotebookReferenceType"/> values are the same. </summary>
         public static bool operator ==(NotebookReferenceType left, NotebookReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NotebookReferenceType"/> values are not the same. </summary>

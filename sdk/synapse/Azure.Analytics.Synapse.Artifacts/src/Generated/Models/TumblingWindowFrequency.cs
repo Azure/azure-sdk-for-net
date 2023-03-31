@@ -32,6 +32,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static TumblingWindowFrequency Hour { get; } = new TumblingWindowFrequency(HourValue);
         /// <summary> Month. </summary>
         public static TumblingWindowFrequency Month { get; } = new TumblingWindowFrequency(MonthValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TumblingWindowFrequency"/> values are the same. </summary>
         public static bool operator ==(TumblingWindowFrequency left, TumblingWindowFrequency right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TumblingWindowFrequency"/> values are not the same. </summary>

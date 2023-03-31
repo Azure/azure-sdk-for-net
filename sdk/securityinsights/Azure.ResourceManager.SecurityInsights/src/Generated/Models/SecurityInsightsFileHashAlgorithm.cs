@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsFileHashAlgorithm Sha256 { get; } = new SecurityInsightsFileHashAlgorithm(Sha256Value);
         /// <summary> SHA256 Authenticode hash type. </summary>
         public static SecurityInsightsFileHashAlgorithm Sha256AC { get; } = new SecurityInsightsFileHashAlgorithm(Sha256ACValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityInsightsFileHashAlgorithm"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsFileHashAlgorithm left, SecurityInsightsFileHashAlgorithm right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsFileHashAlgorithm"/> values are not the same. </summary>

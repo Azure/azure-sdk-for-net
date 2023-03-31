@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static GeoSecondaryInstanceType Geo { get; } = new GeoSecondaryInstanceType(GeoValue);
         /// <summary> Standby. </summary>
         public static GeoSecondaryInstanceType Standby { get; } = new GeoSecondaryInstanceType(StandbyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GeoSecondaryInstanceType"/> values are the same. </summary>
         public static bool operator ==(GeoSecondaryInstanceType left, GeoSecondaryInstanceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GeoSecondaryInstanceType"/> values are not the same. </summary>

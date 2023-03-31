@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(JobType))
             {
                 writer.WritePropertyName("jobType"u8);
-                writer.WriteStringValue(JobType.Value.ToString());
+                writer.WriteStringValue(JobType.Value.ToSerialString());
             }
             if (Optional.IsDefined(OutputStartMode))
             {
                 writer.WritePropertyName("outputStartMode"u8);
-                writer.WriteStringValue(OutputStartMode.Value.ToString());
+                writer.WriteStringValue(OutputStartMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(OutputStartOn))
             {
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(EventsOutOfOrderPolicy))
             {
                 writer.WritePropertyName("eventsOutOfOrderPolicy"u8);
-                writer.WriteStringValue(EventsOutOfOrderPolicy.Value.ToString());
+                writer.WriteStringValue(EventsOutOfOrderPolicy.Value.ToSerialString());
             }
             if (Optional.IsDefined(OutputErrorPolicy))
             {
                 writer.WritePropertyName("outputErrorPolicy"u8);
-                writer.WriteStringValue(OutputErrorPolicy.Value.ToString());
+                writer.WriteStringValue(OutputErrorPolicy.Value.ToSerialString());
             }
             if (Optional.IsDefined(EventsOutOfOrderMaxDelayInSeconds))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(CompatibilityLevel))
             {
                 writer.WritePropertyName("compatibilityLevel"u8);
-                writer.WriteStringValue(CompatibilityLevel.Value.ToString());
+                writer.WriteStringValue(CompatibilityLevel.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Inputs))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(ContentStoragePolicy))
             {
                 writer.WritePropertyName("contentStoragePolicy"u8);
-                writer.WriteStringValue(ContentStoragePolicy.Value.ToString());
+                writer.WriteStringValue(ContentStoragePolicy.Value.ToSerialString());
             }
             if (Optional.IsDefined(Externals))
             {

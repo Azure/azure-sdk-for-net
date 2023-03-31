@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static ConditionType PropertyChanged { get; } = new ConditionType(PropertyChangedValue);
         /// <summary> Evaluate an object array property changed value. </summary>
         public static ConditionType PropertyArrayChanged { get; } = new ConditionType(PropertyArrayChangedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConditionType"/> values are the same. </summary>
         public static bool operator ==(ConditionType left, ConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConditionType"/> values are not the same. </summary>

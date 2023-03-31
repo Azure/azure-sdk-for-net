@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static AggregationFunctionType Stdev { get; } = new AggregationFunctionType(StdevValue);
         /// <summary> sum. </summary>
         public static AggregationFunctionType Sum { get; } = new AggregationFunctionType(SumValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AggregationFunctionType"/> values are the same. </summary>
         public static bool operator ==(AggregationFunctionType left, AggregationFunctionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AggregationFunctionType"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SyncDirection OneWayMemberToHub { get; } = new SyncDirection(OneWayMemberToHubValue);
         /// <summary> OneWayHubToMember. </summary>
         public static SyncDirection OneWayHubToMember { get; } = new SyncDirection(OneWayHubToMemberValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SyncDirection"/> values are the same. </summary>
         public static bool operator ==(SyncDirection left, SyncDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SyncDirection"/> values are not the same. </summary>

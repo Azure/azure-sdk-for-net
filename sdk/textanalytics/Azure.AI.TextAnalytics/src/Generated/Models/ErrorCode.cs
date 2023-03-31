@@ -77,6 +77,9 @@ namespace Azure.AI.TextAnalytics.Models
         public static ErrorCode Conflict { get; } = new ErrorCode(ConflictValue);
         /// <summary> Warning. </summary>
         public static ErrorCode Warning { get; } = new ErrorCode(WarningValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ErrorCode"/> values are the same. </summary>
         public static bool operator ==(ErrorCode left, ErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ErrorCode"/> values are not the same. </summary>

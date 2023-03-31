@@ -194,6 +194,9 @@ namespace Azure.Storage.Queues.Models
         public static QueueErrorCode AuthorizationResourceTypeMismatch { get; } = new QueueErrorCode(AuthorizationResourceTypeMismatchValue);
         /// <summary> FeatureVersionMismatch. </summary>
         public static QueueErrorCode FeatureVersionMismatch { get; } = new QueueErrorCode(FeatureVersionMismatchValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="QueueErrorCode"/> values are the same. </summary>
         public static bool operator ==(QueueErrorCode left, QueueErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QueueErrorCode"/> values are not the same. </summary>

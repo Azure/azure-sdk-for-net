@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsDataTypeConnectionState Enabled { get; } = new SecurityInsightsDataTypeConnectionState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static SecurityInsightsDataTypeConnectionState Disabled { get; } = new SecurityInsightsDataTypeConnectionState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityInsightsDataTypeConnectionState"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsDataTypeConnectionState left, SecurityInsightsDataTypeConnectionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsDataTypeConnectionState"/> values are not the same. </summary>

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             if (Optional.IsDefined(SqlImageSku))
             {
                 writer.WritePropertyName("sqlImageSku"u8);
-                writer.WriteStringValue(SqlImageSku.Value.ToString());
+                writer.WriteStringValue(SqlImageSku.Value.ToSerialString());
             }
             if (Optional.IsDefined(WindowsServerFailoverClusterDomainProfile))
             {

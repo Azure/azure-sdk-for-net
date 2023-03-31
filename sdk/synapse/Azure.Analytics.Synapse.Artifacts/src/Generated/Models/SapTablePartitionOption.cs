@@ -41,6 +41,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static SapTablePartitionOption PartitionOnCalendarDate { get; } = new SapTablePartitionOption(PartitionOnCalendarDateValue);
         /// <summary> PartitionOnTime. </summary>
         public static SapTablePartitionOption PartitionOnTime { get; } = new SapTablePartitionOption(PartitionOnTimeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SapTablePartitionOption"/> values are the same. </summary>
         public static bool operator ==(SapTablePartitionOption left, SapTablePartitionOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapTablePartitionOption"/> values are not the same. </summary>

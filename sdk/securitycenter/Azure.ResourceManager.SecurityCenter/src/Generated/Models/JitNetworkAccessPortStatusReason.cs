@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static JitNetworkAccessPortStatusReason UserRequested { get; } = new JitNetworkAccessPortStatusReason(UserRequestedValue);
         /// <summary> NewerRequestInitiated. </summary>
         public static JitNetworkAccessPortStatusReason NewerRequestInitiated { get; } = new JitNetworkAccessPortStatusReason(NewerRequestInitiatedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JitNetworkAccessPortStatusReason"/> values are the same. </summary>
         public static bool operator ==(JitNetworkAccessPortStatusReason left, JitNetworkAccessPortStatusReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JitNetworkAccessPortStatusReason"/> values are not the same. </summary>

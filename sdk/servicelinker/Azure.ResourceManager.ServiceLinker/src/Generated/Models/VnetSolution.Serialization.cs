@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 if (SolutionType != null)
                 {
                     writer.WritePropertyName("type"u8);
-                    writer.WriteStringValue(SolutionType.Value.ToString());
+                    writer.WriteStringValue(SolutionType.Value.ToSerialString());
                 }
                 else
                 {

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static QueryMetricUnitType Microseconds { get; } = new QueryMetricUnitType(MicrosecondsValue);
         /// <summary> count. </summary>
         public static QueryMetricUnitType Count { get; } = new QueryMetricUnitType(CountValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="QueryMetricUnitType"/> values are the same. </summary>
         public static bool operator ==(QueryMetricUnitType left, QueryMetricUnitType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QueryMetricUnitType"/> values are not the same. </summary>

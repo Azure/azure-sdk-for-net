@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Default. </summary>
         public static RestoreDetailsName Default { get; } = new RestoreDetailsName(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RestoreDetailsName"/> values are the same. </summary>
         public static bool operator ==(RestoreDetailsName left, RestoreDetailsName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RestoreDetailsName"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static StorageLeaseDurationType Infinite { get; } = new StorageLeaseDurationType(InfiniteValue);
         /// <summary> Fixed. </summary>
         public static StorageLeaseDurationType Fixed { get; } = new StorageLeaseDurationType(FixedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageLeaseDurationType"/> values are the same. </summary>
         public static bool operator ==(StorageLeaseDurationType left, StorageLeaseDurationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageLeaseDurationType"/> values are not the same. </summary>

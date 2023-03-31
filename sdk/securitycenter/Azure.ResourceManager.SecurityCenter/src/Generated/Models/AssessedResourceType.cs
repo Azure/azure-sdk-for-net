@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static AssessedResourceType ContainerRegistryVulnerability { get; } = new AssessedResourceType(ContainerRegistryVulnerabilityValue);
         /// <summary> ServerVulnerability. </summary>
         public static AssessedResourceType ServerVulnerability { get; } = new AssessedResourceType(ServerVulnerabilityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AssessedResourceType"/> values are the same. </summary>
         public static bool operator ==(AssessedResourceType left, AssessedResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AssessedResourceType"/> values are not the same. </summary>

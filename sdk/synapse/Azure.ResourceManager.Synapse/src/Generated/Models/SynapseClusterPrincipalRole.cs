@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseClusterPrincipalRole AllDatabasesAdmin { get; } = new SynapseClusterPrincipalRole(AllDatabasesAdminValue);
         /// <summary> AllDatabasesViewer. </summary>
         public static SynapseClusterPrincipalRole AllDatabasesViewer { get; } = new SynapseClusterPrincipalRole(AllDatabasesViewerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseClusterPrincipalRole"/> values are the same. </summary>
         public static bool operator ==(SynapseClusterPrincipalRole left, SynapseClusterPrincipalRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseClusterPrincipalRole"/> values are not the same. </summary>

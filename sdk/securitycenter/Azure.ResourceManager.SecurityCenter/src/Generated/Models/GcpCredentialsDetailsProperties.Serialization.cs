@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WritePropertyName("clientX509CertUrl"u8);
             writer.WriteStringValue(ClientX509CertUri.AbsoluteUri);
             writer.WritePropertyName("authenticationType"u8);
-            writer.WriteStringValue(AuthenticationType.ToString());
+            writer.WriteStringValue(AuthenticationType.ToSerialString());
             writer.WriteEndObject();
         }
 

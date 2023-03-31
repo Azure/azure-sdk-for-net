@@ -362,6 +362,9 @@ namespace Azure.Storage.Blobs.Models
         public static BlobErrorCode AuthorizationServiceMismatch { get; } = new BlobErrorCode(AuthorizationServiceMismatchValue);
         /// <summary> AuthorizationResourceTypeMismatch. </summary>
         public static BlobErrorCode AuthorizationResourceTypeMismatch { get; } = new BlobErrorCode(AuthorizationResourceTypeMismatchValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BlobErrorCode"/> values are the same. </summary>
         public static bool operator ==(BlobErrorCode left, BlobErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobErrorCode"/> values are not the same. </summary>

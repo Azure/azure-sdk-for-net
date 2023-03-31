@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(ScanningMode))
             {
                 writer.WritePropertyName("scanningMode"u8);
-                writer.WriteStringValue(ScanningMode.Value.ToString());
+                writer.WriteStringValue(ScanningMode.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ExclusionTags))
             {

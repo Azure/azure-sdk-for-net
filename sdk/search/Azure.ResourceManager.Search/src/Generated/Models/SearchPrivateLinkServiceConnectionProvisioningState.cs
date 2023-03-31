@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Search.Models
         public static SearchPrivateLinkServiceConnectionProvisioningState Incomplete { get; } = new SearchPrivateLinkServiceConnectionProvisioningState(IncompleteValue);
         /// <summary> Provisioning request for the private link service connection resource has been canceled. </summary>
         public static SearchPrivateLinkServiceConnectionProvisioningState Canceled { get; } = new SearchPrivateLinkServiceConnectionProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SearchPrivateLinkServiceConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(SearchPrivateLinkServiceConnectionProvisioningState left, SearchPrivateLinkServiceConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchPrivateLinkServiceConnectionProvisioningState"/> values are not the same. </summary>

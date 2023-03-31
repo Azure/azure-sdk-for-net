@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsAlertRuleTemplateStatus Available { get; } = new SecurityInsightsAlertRuleTemplateStatus(AvailableValue);
         /// <summary> Alert rule template is not available. </summary>
         public static SecurityInsightsAlertRuleTemplateStatus NotAvailable { get; } = new SecurityInsightsAlertRuleTemplateStatus(NotAvailableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityInsightsAlertRuleTemplateStatus"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsAlertRuleTemplateStatus left, SecurityInsightsAlertRuleTemplateStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsAlertRuleTemplateStatus"/> values are not the same. </summary>

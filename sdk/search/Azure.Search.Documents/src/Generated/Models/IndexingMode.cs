@@ -24,6 +24,9 @@ namespace Azure.Search.Documents.Indexes.Models
 
         private const string AllDocumentsValue = "indexingAllDocs";
         private const string ResetDocumentsValue = "indexingResetDocs";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IndexingMode"/> values are the same. </summary>
         public static bool operator ==(IndexingMode left, IndexingMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IndexingMode"/> values are not the same. </summary>

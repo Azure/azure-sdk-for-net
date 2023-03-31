@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityAlertSeverity Medium { get; } = new SecurityAlertSeverity(MediumValue);
         /// <summary> High. </summary>
         public static SecurityAlertSeverity High { get; } = new SecurityAlertSeverity(HighValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityAlertSeverity"/> values are the same. </summary>
         public static bool operator ==(SecurityAlertSeverity left, SecurityAlertSeverity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityAlertSeverity"/> values are not the same. </summary>

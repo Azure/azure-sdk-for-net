@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/encryptionProtector/", false);
-            uri.AppendPath(encryptionProtectorName.ToString(), true);
+            uri.AppendPath(encryptionProtectorName.ToSerialString(), true);
             uri.AppendPath("/revalidate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/encryptionProtector/", false);
-            uri.AppendPath(encryptionProtectorName.ToString(), true);
+            uri.AppendPath(encryptionProtectorName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/encryptionProtector/", false);
-            uri.AppendPath(encryptionProtectorName.ToString(), true);
+            uri.AppendPath(encryptionProtectorName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

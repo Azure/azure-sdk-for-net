@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static BlobOutputWriteMode Append { get; } = new BlobOutputWriteMode(AppendValue);
         /// <summary> Once. </summary>
         public static BlobOutputWriteMode Once { get; } = new BlobOutputWriteMode(OnceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BlobOutputWriteMode"/> values are the same. </summary>
         public static bool operator ==(BlobOutputWriteMode left, BlobOutputWriteMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobOutputWriteMode"/> values are not the same. </summary>

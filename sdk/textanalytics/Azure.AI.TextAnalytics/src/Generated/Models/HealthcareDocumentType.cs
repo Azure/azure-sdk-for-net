@@ -50,6 +50,9 @@ namespace Azure.AI.TextAnalytics
         public static HealthcareDocumentType Pathology { get; } = new HealthcareDocumentType(PathologyValue);
         /// <summary> ProcedureNote. </summary>
         public static HealthcareDocumentType ProcedureNote { get; } = new HealthcareDocumentType(ProcedureNoteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HealthcareDocumentType"/> values are the same. </summary>
         public static bool operator ==(HealthcareDocumentType left, HealthcareDocumentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HealthcareDocumentType"/> values are not the same. </summary>

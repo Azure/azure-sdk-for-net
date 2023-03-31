@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             writer.WritePropertyName("secret"u8);
             writer.WriteStringValue(Secret);
             writer.WritePropertyName("authType"u8);
-            writer.WriteStringValue(AuthType.ToString());
+            writer.WriteStringValue(AuthType.ToSerialString());
             writer.WriteEndObject();
         }
 

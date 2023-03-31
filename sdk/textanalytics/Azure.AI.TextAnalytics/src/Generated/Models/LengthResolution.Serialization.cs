@@ -17,11 +17,11 @@ namespace Azure.AI.TextAnalytics
         {
             writer.WriteStartObject();
             writer.WritePropertyName("unit"u8);
-            writer.WriteStringValue(Unit.ToString());
+            writer.WriteStringValue(Unit.ToSerialString());
             writer.WritePropertyName("value"u8);
             writer.WriteNumberValue(Value);
             writer.WritePropertyName("resolutionKind"u8);
-            writer.WriteStringValue(ResolutionKind.ToString());
+            writer.WriteStringValue(ResolutionKind.ToSerialString());
             writer.WriteEndObject();
         }
 

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Windows. </summary>
         public static ServiceFabricManagedClusterOSType Windows { get; } = new ServiceFabricManagedClusterOSType(WindowsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedClusterOSType"/> values are the same. </summary>
         public static bool operator ==(ServiceFabricManagedClusterOSType left, ServiceFabricManagedClusterOSType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceFabricManagedClusterOSType"/> values are not the same. </summary>

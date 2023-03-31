@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(ParsingMode))
             {
                 writer.WritePropertyName("parsingMode"u8);
-                writer.WriteStringValue(ParsingMode.Value.ToString());
+                writer.WriteStringValue(ParsingMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(ExcludedFileNameExtensions))
             {
@@ -69,12 +69,12 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(DataToExtract))
             {
                 writer.WritePropertyName("dataToExtract"u8);
-                writer.WriteStringValue(DataToExtract.Value.ToString());
+                writer.WriteStringValue(DataToExtract.Value.ToSerialString());
             }
             if (Optional.IsDefined(ImageAction))
             {
                 writer.WritePropertyName("imageAction"u8);
-                writer.WriteStringValue(ImageAction.Value.ToString());
+                writer.WriteStringValue(ImageAction.Value.ToSerialString());
             }
             if (Optional.IsDefined(AllowSkillsetToReadFileData))
             {
@@ -84,12 +84,12 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(PdfTextRotationAlgorithm))
             {
                 writer.WritePropertyName("pdfTextRotationAlgorithm"u8);
-                writer.WriteStringValue(PdfTextRotationAlgorithm.Value.ToString());
+                writer.WriteStringValue(PdfTextRotationAlgorithm.Value.ToSerialString());
             }
             if (Optional.IsDefined(ExecutionEnvironment))
             {
                 writer.WritePropertyName("executionEnvironment"u8);
-                writer.WriteStringValue(ExecutionEnvironment.Value.ToString());
+                writer.WriteStringValue(ExecutionEnvironment.Value.ToSerialString());
             }
             if (Optional.IsDefined(_queryTimeout))
             {

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Entity represents threat intelligence indicator in the system. </summary>
         public static ThreatIntelligenceResourceInnerKind Indicator { get; } = new ThreatIntelligenceResourceInnerKind(IndicatorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ThreatIntelligenceResourceInnerKind"/> values are the same. </summary>
         public static bool operator ==(ThreatIntelligenceResourceInnerKind left, ThreatIntelligenceResourceInnerKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ThreatIntelligenceResourceInnerKind"/> values are not the same. </summary>

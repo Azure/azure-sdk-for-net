@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static CloudEndpointChangeEnumerationTotalCountsState Calculating { get; } = new CloudEndpointChangeEnumerationTotalCountsState(CalculatingValue);
         /// <summary> Final. </summary>
         public static CloudEndpointChangeEnumerationTotalCountsState Final { get; } = new CloudEndpointChangeEnumerationTotalCountsState(FinalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CloudEndpointChangeEnumerationTotalCountsState"/> values are the same. </summary>
         public static bool operator ==(CloudEndpointChangeEnumerationTotalCountsState left, CloudEndpointChangeEnumerationTotalCountsState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CloudEndpointChangeEnumerationTotalCountsState"/> values are not the same. </summary>

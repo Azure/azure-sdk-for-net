@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WritePropertyName("backendPort"u8);
             writer.WriteNumberValue(BackendPort);
             writer.WritePropertyName("protocol"u8);
-            writer.WriteStringValue(Protocol.ToString());
+            writer.WriteStringValue(Protocol.ToSerialString());
             if (Optional.IsDefined(ProbePort))
             {
                 writer.WritePropertyName("probePort"u8);
                 writer.WriteNumberValue(ProbePort.Value);
             }
             writer.WritePropertyName("probeProtocol"u8);
-            writer.WriteStringValue(ProbeProtocol.ToString());
+            writer.WriteStringValue(ProbeProtocol.ToSerialString());
             if (Optional.IsDefined(ProbeRequestPath))
             {
                 writer.WritePropertyName("probeRequestPath"u8);

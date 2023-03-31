@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static InitialDownloadPolicy NamespaceThenModifiedFiles { get; } = new InitialDownloadPolicy(NamespaceThenModifiedFilesValue);
         /// <summary> AvoidTieredFiles. </summary>
         public static InitialDownloadPolicy AvoidTieredFiles { get; } = new InitialDownloadPolicy(AvoidTieredFilesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InitialDownloadPolicy"/> values are the same. </summary>
         public static bool operator ==(InitialDownloadPolicy left, InitialDownloadPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InitialDownloadPolicy"/> values are not the same. </summary>

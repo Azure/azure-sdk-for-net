@@ -32,6 +32,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static TriggerRunStatus Failed { get; } = new TriggerRunStatus(FailedValue);
         /// <summary> Inprogress. </summary>
         public static TriggerRunStatus InProgress { get; } = new TriggerRunStatus(InProgressValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TriggerRunStatus"/> values are the same. </summary>
         public static bool operator ==(TriggerRunStatus left, TriggerRunStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TriggerRunStatus"/> values are not the same. </summary>

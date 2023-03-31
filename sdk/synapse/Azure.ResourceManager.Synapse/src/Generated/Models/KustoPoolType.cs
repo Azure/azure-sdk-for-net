@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary> Microsoft.Synapse/workspaces/kustoPools. </summary>
         public static KustoPoolType MicrosoftSynapseWorkspacesKustoPools { get; } = new KustoPoolType(MicrosoftSynapseWorkspacesKustoPoolsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoPoolType"/> values are the same. </summary>
         public static bool operator ==(KustoPoolType left, KustoPoolType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoPoolType"/> values are not the same. </summary>

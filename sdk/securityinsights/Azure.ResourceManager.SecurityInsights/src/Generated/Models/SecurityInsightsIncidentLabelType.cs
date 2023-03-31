@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsIncidentLabelType User { get; } = new SecurityInsightsIncidentLabelType(UserValue);
         /// <summary> Label automatically created by the system. </summary>
         public static SecurityInsightsIncidentLabelType AutoAssigned { get; } = new SecurityInsightsIncidentLabelType(AutoAssignedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentLabelType"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsIncidentLabelType left, SecurityInsightsIncidentLabelType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentLabelType"/> values are not the same. </summary>

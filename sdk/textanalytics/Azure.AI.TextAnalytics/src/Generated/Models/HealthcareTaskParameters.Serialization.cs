@@ -19,17 +19,17 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(FhirVersion))
             {
                 writer.WritePropertyName("fhirVersion"u8);
-                writer.WriteStringValue(FhirVersion.Value.ToString());
+                writer.WriteStringValue(FhirVersion.Value.ToSerialString());
             }
             if (Optional.IsDefined(DocumentType))
             {
                 writer.WritePropertyName("documentType"u8);
-                writer.WriteStringValue(DocumentType.Value.ToString());
+                writer.WriteStringValue(DocumentType.Value.ToSerialString());
             }
             if (Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType"u8);
-                writer.WriteStringValue(StringIndexType.Value.ToString());
+                writer.WriteStringValue(StringIndexType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ModelVersion))
             {

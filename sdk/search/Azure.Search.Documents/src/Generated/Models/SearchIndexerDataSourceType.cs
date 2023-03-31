@@ -41,6 +41,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public static SearchIndexerDataSourceType MySql { get; } = new SearchIndexerDataSourceType(MySqlValue);
         /// <summary> Indicates an ADLS Gen2 datasource. </summary>
         public static SearchIndexerDataSourceType AdlsGen2 { get; } = new SearchIndexerDataSourceType(AdlsGen2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SearchIndexerDataSourceType"/> values are the same. </summary>
         public static bool operator ==(SearchIndexerDataSourceType left, SearchIndexerDataSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchIndexerDataSourceType"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> ActiveDirectory. </summary>
         public static SqlAdministratorType ActiveDirectory { get; } = new SqlAdministratorType(ActiveDirectoryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlAdministratorType"/> values are the same. </summary>
         public static bool operator ==(SqlAdministratorType left, SqlAdministratorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlAdministratorType"/> values are not the same. </summary>

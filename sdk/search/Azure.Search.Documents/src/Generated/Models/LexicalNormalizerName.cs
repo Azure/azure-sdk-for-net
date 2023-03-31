@@ -38,6 +38,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public static LexicalNormalizerName Standard { get; } = new LexicalNormalizerName(StandardValue);
         /// <summary> Normalizes token text to uppercase. See https://lucene.apache.org/core/6_6_1/analyzers-common/org/apache/lucene/analysis/core/UpperCaseFilter.html. </summary>
         public static LexicalNormalizerName Uppercase { get; } = new LexicalNormalizerName(UppercaseValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LexicalNormalizerName"/> values are the same. </summary>
         public static bool operator ==(LexicalNormalizerName left, LexicalNormalizerName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LexicalNormalizerName"/> values are not the same. </summary>

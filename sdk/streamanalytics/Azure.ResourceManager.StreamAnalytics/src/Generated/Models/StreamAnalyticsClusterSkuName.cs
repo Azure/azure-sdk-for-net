@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         /// <summary> The default SKU. </summary>
         public static StreamAnalyticsClusterSkuName Default { get; } = new StreamAnalyticsClusterSkuName(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StreamAnalyticsClusterSkuName"/> values are the same. </summary>
         public static bool operator ==(StreamAnalyticsClusterSkuName left, StreamAnalyticsClusterSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamAnalyticsClusterSkuName"/> values are not the same. </summary>

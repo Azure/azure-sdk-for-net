@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(DatabaseType))
             {
                 writer.WritePropertyName("databaseType"u8);
-                writer.WriteStringValue(DatabaseType.Value.ToString());
+                writer.WriteStringValue(DatabaseType.Value.ToSerialString());
             }
             if (Optional.IsDefined(SyncAgentId))
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(SyncDirection))
             {
                 writer.WritePropertyName("syncDirection"u8);
-                writer.WriteStringValue(SyncDirection.Value.ToString());
+                writer.WriteStringValue(SyncDirection.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

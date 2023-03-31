@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static GovernanceRuleType Integrated { get; } = new GovernanceRuleType(IntegratedValue);
         /// <summary> The source of the rule type definition is ServiceNow. </summary>
         public static GovernanceRuleType ServiceNow { get; } = new GovernanceRuleType(ServiceNowValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GovernanceRuleType"/> values are the same. </summary>
         public static bool operator ==(GovernanceRuleType left, GovernanceRuleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GovernanceRuleType"/> values are not the same. </summary>

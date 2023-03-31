@@ -53,6 +53,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static CassandraSourceReadConsistencyLevels Serial { get; } = new CassandraSourceReadConsistencyLevels(SerialValue);
         /// <summary> LOCAL_SERIAL. </summary>
         public static CassandraSourceReadConsistencyLevels LocalSerial { get; } = new CassandraSourceReadConsistencyLevels(LocalSerialValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CassandraSourceReadConsistencyLevels"/> values are the same. </summary>
         public static bool operator ==(CassandraSourceReadConsistencyLevels left, CassandraSourceReadConsistencyLevels right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CassandraSourceReadConsistencyLevels"/> values are not the same. </summary>

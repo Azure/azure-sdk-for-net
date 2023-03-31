@@ -29,6 +29,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static JsonWriteFilePattern SetOfObjects { get; } = new JsonWriteFilePattern(SetOfObjectsValue);
         /// <summary> arrayOfObjects. </summary>
         public static JsonWriteFilePattern ArrayOfObjects { get; } = new JsonWriteFilePattern(ArrayOfObjectsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JsonWriteFilePattern"/> values are the same. </summary>
         public static bool operator ==(JsonWriteFilePattern left, JsonWriteFilePattern right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JsonWriteFilePattern"/> values are not the same. </summary>

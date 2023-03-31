@@ -35,6 +35,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static VariableType Boolean { get; } = new VariableType(BooleanValue);
         /// <summary> Array. </summary>
         public static VariableType Array { get; } = new VariableType(ArrayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VariableType"/> values are the same. </summary>
         public static bool operator ==(VariableType left, VariableType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VariableType"/> values are not the same. </summary>

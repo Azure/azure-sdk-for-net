@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static ServerWorkspaceFeature Connected { get; } = new ServerWorkspaceFeature(ConnectedValue);
         /// <summary> Disconnected. </summary>
         public static ServerWorkspaceFeature Disconnected { get; } = new ServerWorkspaceFeature(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServerWorkspaceFeature"/> values are the same. </summary>
         public static bool operator ==(ServerWorkspaceFeature left, ServerWorkspaceFeature right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServerWorkspaceFeature"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityCenterCloudPermission AwsAmazonSsmAutomationRole { get; } = new SecurityCenterCloudPermission(AwsAmazonSsmAutomationRoleValue);
         /// <summary> This permission provides read only access to GCP Security Command Center. </summary>
         public static SecurityCenterCloudPermission GcpSecurityCenterAdminViewer { get; } = new SecurityCenterCloudPermission(GcpSecurityCenterAdminViewerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityCenterCloudPermission"/> values are the same. </summary>
         public static bool operator ==(SecurityCenterCloudPermission left, SecurityCenterCloudPermission right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityCenterCloudPermission"/> values are not the same. </summary>

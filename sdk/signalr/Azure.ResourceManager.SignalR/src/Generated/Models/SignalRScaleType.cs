@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SignalR.Models
         public static SignalRScaleType Manual { get; } = new SignalRScaleType(ManualValue);
         /// <summary> Automatic. </summary>
         public static SignalRScaleType Automatic { get; } = new SignalRScaleType(AutomaticValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SignalRScaleType"/> values are the same. </summary>
         public static bool operator ==(SignalRScaleType left, SignalRScaleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SignalRScaleType"/> values are not the same. </summary>

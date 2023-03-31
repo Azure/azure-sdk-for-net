@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
             uri.AppendPath("/restoreDetails/", false);
-            uri.AppendPath(restoreDetailsName.ToString(), true);
+            uri.AppendPath(restoreDetailsName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

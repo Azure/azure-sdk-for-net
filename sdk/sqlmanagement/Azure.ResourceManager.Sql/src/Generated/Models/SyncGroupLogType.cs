@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SyncGroupLogType Warning { get; } = new SyncGroupLogType(WarningValue);
         /// <summary> Success. </summary>
         public static SyncGroupLogType Success { get; } = new SyncGroupLogType(SuccessValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SyncGroupLogType"/> values are the same. </summary>
         public static bool operator ==(SyncGroupLogType left, SyncGroupLogType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SyncGroupLogType"/> values are not the same. </summary>
