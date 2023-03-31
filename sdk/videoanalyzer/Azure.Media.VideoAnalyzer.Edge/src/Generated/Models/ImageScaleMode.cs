@@ -32,6 +32,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static ImageScaleMode Pad { get; } = new ImageScaleMode(PadValue);
         /// <summary> Stretches the original image so it resized to the specified dimensions. </summary>
         public static ImageScaleMode Stretch { get; } = new ImageScaleMode(StretchValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ImageScaleMode"/> values are the same. </summary>
         public static bool operator ==(ImageScaleMode left, ImageScaleMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImageScaleMode"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static WebPubSubScaleType Manual { get; } = new WebPubSubScaleType(ManualValue);
         /// <summary> Automatic. </summary>
         public static WebPubSubScaleType Automatic { get; } = new WebPubSubScaleType(AutomaticValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WebPubSubScaleType"/> values are the same. </summary>
         public static bool operator ==(WebPubSubScaleType left, WebPubSubScaleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebPubSubScaleType"/> values are not the same. </summary>

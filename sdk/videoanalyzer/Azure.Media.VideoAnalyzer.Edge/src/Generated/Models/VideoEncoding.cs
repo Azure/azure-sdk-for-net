@@ -32,6 +32,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static VideoEncoding H264 { get; } = new VideoEncoding(H264Value);
         /// <summary> The Media Profile uses MPEG4 encoding. </summary>
         public static VideoEncoding Mpeg4 { get; } = new VideoEncoding(Mpeg4Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VideoEncoding"/> values are the same. </summary>
         public static bool operator ==(VideoEncoding left, VideoEncoding right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VideoEncoding"/> values are not the same. </summary>

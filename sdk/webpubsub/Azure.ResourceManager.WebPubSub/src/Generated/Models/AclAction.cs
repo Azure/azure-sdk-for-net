@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static AclAction Allow { get; } = new AclAction(AllowValue);
         /// <summary> Deny. </summary>
         public static AclAction Deny { get; } = new AclAction(DenyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AclAction"/> values are the same. </summary>
         public static bool operator ==(AclAction left, AclAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AclAction"/> values are not the same. </summary>

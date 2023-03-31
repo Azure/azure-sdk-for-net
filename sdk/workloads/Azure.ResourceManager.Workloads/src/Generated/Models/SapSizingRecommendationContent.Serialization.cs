@@ -18,26 +18,26 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WritePropertyName("appLocation"u8);
             writer.WriteStringValue(AppLocation);
             writer.WritePropertyName("environment"u8);
-            writer.WriteStringValue(Environment.ToString());
+            writer.WriteStringValue(Environment.ToSerialString());
             writer.WritePropertyName("sapProduct"u8);
-            writer.WriteStringValue(SapProduct.ToString());
+            writer.WriteStringValue(SapProduct.ToSerialString());
             writer.WritePropertyName("deploymentType"u8);
-            writer.WriteStringValue(DeploymentType.ToString());
+            writer.WriteStringValue(DeploymentType.ToSerialString());
             writer.WritePropertyName("saps"u8);
             writer.WriteNumberValue(Saps);
             writer.WritePropertyName("dbMemory"u8);
             writer.WriteNumberValue(DBMemory);
             writer.WritePropertyName("databaseType"u8);
-            writer.WriteStringValue(DatabaseType.ToString());
+            writer.WriteStringValue(DatabaseType.ToSerialString());
             if (Optional.IsDefined(DBScaleMethod))
             {
                 writer.WritePropertyName("dbScaleMethod"u8);
-                writer.WriteStringValue(DBScaleMethod.Value.ToString());
+                writer.WriteStringValue(DBScaleMethod.Value.ToSerialString());
             }
             if (Optional.IsDefined(HighAvailabilityType))
             {
                 writer.WritePropertyName("highAvailabilityType"u8);
-                writer.WriteStringValue(HighAvailabilityType.Value.ToString());
+                writer.WriteStringValue(HighAvailabilityType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

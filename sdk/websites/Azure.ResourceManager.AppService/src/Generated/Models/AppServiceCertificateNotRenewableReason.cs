@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AppService.Models
         public static AppServiceCertificateNotRenewableReason ExpirationNotInRenewalTimeRange { get; } = new AppServiceCertificateNotRenewableReason(ExpirationNotInRenewalTimeRangeValue);
         /// <summary> SubscriptionNotActive. </summary>
         public static AppServiceCertificateNotRenewableReason SubscriptionNotActive { get; } = new AppServiceCertificateNotRenewableReason(SubscriptionNotActiveValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppServiceCertificateNotRenewableReason"/> values are the same. </summary>
         public static bool operator ==(AppServiceCertificateNotRenewableReason left, AppServiceCertificateNotRenewableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppServiceCertificateNotRenewableReason"/> values are not the same. </summary>

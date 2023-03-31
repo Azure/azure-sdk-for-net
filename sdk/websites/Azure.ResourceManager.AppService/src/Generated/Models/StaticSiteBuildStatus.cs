@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.AppService.Models
         public static StaticSiteBuildStatus Deleting { get; } = new StaticSiteBuildStatus(DeletingValue);
         /// <summary> Detached. </summary>
         public static StaticSiteBuildStatus Detached { get; } = new StaticSiteBuildStatus(DetachedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StaticSiteBuildStatus"/> values are the same. </summary>
         public static bool operator ==(StaticSiteBuildStatus left, StaticSiteBuildStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StaticSiteBuildStatus"/> values are not the same. </summary>

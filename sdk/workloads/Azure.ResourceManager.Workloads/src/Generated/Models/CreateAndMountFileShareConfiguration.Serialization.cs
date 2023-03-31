@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteStringValue(StorageAccountName);
             }
             writer.WritePropertyName("configurationType"u8);
-            writer.WriteStringValue(ConfigurationType.ToString());
+            writer.WriteStringValue(ConfigurationType.ToSerialString());
             writer.WriteEndObject();
         }
 

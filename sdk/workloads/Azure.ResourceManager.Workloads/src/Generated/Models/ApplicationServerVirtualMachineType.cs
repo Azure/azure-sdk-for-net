@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public static ApplicationServerVirtualMachineType Standby { get; } = new ApplicationServerVirtualMachineType(StandbyValue);
         /// <summary> Unknown. </summary>
         public static ApplicationServerVirtualMachineType Unknown { get; } = new ApplicationServerVirtualMachineType(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApplicationServerVirtualMachineType"/> values are the same. </summary>
         public static bool operator ==(ApplicationServerVirtualMachineType left, ApplicationServerVirtualMachineType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationServerVirtualMachineType"/> values are not the same. </summary>

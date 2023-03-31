@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Tag))
             {
                 writer.WritePropertyName("tag"u8);
-                writer.WriteStringValue(Tag.Value.ToString());
+                writer.WriteStringValue(Tag.Value.ToSerialString());
             }
             if (Optional.IsDefined(Priority))
             {

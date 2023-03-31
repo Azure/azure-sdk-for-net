@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AppService.Models
         public static AppServiceFtpsState FtpsOnly { get; } = new AppServiceFtpsState(FtpsOnlyValue);
         /// <summary> Disabled. </summary>
         public static AppServiceFtpsState Disabled { get; } = new AppServiceFtpsState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppServiceFtpsState"/> values are the same. </summary>
         public static bool operator ==(AppServiceFtpsState left, AppServiceFtpsState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppServiceFtpsState"/> values are not the same. </summary>

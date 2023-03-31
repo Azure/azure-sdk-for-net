@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.AppService.Models
                 if (ScmType != null)
                 {
                     writer.WritePropertyName("scmType"u8);
-                    writer.WriteStringValue(ScmType.Value.ToString());
+                    writer.WriteStringValue(ScmType.Value.ToSerialString());
                 }
                 else
                 {
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.AppService.Models
                 if (MinTlsVersion != null)
                 {
                     writer.WritePropertyName("minTlsVersion"u8);
-                    writer.WriteStringValue(MinTlsVersion.Value.ToString());
+                    writer.WriteStringValue(MinTlsVersion.Value.ToSerialString());
                 }
                 else
                 {
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.AppService.Models
                 if (ScmMinTlsVersion != null)
                 {
                     writer.WritePropertyName("scmMinTlsVersion"u8);
-                    writer.WriteStringValue(ScmMinTlsVersion.Value.ToString());
+                    writer.WriteStringValue(ScmMinTlsVersion.Value.ToSerialString());
                 }
                 else
                 {
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.AppService.Models
                 if (FtpsState != null)
                 {
                     writer.WritePropertyName("ftpsState"u8);
-                    writer.WriteStringValue(FtpsState.Value.ToString());
+                    writer.WriteStringValue(FtpsState.Value.ToSerialString());
                 }
                 else
                 {

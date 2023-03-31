@@ -35,6 +35,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static H264Profile Extended { get; } = new H264Profile(ExtendedValue);
         /// <summary> High. </summary>
         public static H264Profile High { get; } = new H264Profile(HighValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="H264Profile"/> values are the same. </summary>
         public static bool operator ==(H264Profile left, H264Profile right) => left.Equals(right);
         /// <summary> Determines if two <see cref="H264Profile"/> values are not the same. </summary>

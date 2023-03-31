@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Workloads.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ManagedServiceIdentityType.ToString());
+            writer.WriteStringValue(ManagedServiceIdentityType.ToSerialString());
             if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);

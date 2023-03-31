@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(SslPreference))
             {
                 writer.WritePropertyName("sslPreference"u8);
-                writer.WriteStringValue(SslPreference.Value.ToString());
+                writer.WriteStringValue(SslPreference.Value.ToSerialString());
             }
             writer.WritePropertyName("providerType"u8);
             writer.WriteStringValue(ProviderType);

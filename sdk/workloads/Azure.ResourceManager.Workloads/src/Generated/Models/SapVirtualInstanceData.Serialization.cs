@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Workloads
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("environment"u8);
-            writer.WriteStringValue(Environment.ToString());
+            writer.WriteStringValue(Environment.ToSerialString());
             writer.WritePropertyName("sapProduct"u8);
-            writer.WriteStringValue(SapProduct.ToString());
+            writer.WriteStringValue(SapProduct.ToSerialString());
             writer.WritePropertyName("configuration"u8);
             writer.WriteObjectValue(Configuration);
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))

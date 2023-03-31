@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public static SapSoftwareInstallationType SapInstallWithoutOSConfig { get; } = new SapSoftwareInstallationType(SapInstallWithoutOSConfigValue);
         /// <summary> External. </summary>
         public static SapSoftwareInstallationType External { get; } = new SapSoftwareInstallationType(ExternalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SapSoftwareInstallationType"/> values are the same. </summary>
         public static bool operator ==(SapSoftwareInstallationType left, SapSoftwareInstallationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapSoftwareInstallationType"/> values are not the same. </summary>

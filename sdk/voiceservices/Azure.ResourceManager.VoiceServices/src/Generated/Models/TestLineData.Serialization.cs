@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.VoiceServices
             if (Optional.IsDefined(Purpose))
             {
                 writer.WritePropertyName("purpose"u8);
-                writer.WriteStringValue(Purpose.Value.ToString());
+                writer.WriteStringValue(Purpose.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

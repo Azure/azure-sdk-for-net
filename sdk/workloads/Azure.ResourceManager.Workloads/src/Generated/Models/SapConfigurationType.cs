@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public static SapConfigurationType Discovery { get; } = new SapConfigurationType(DiscoveryValue);
         /// <summary> DeploymentWithOSConfig. </summary>
         public static SapConfigurationType DeploymentWithOSConfig { get; } = new SapConfigurationType(DeploymentWithOSConfigValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SapConfigurationType"/> values are the same. </summary>
         public static bool operator ==(SapConfigurationType left, SapConfigurationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapConfigurationType"/> values are not the same. </summary>

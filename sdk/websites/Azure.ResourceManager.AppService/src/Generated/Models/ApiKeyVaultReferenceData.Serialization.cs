@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteStringValue(Source.Value.ToString());
+                writer.WriteStringValue(Source.Value.ToSerialString());
             }
             if (Optional.IsDefined(ActiveVersion))
             {

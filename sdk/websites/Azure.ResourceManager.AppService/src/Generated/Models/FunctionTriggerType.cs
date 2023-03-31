@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppService.Models
         public static FunctionTriggerType HttpTrigger { get; } = new FunctionTriggerType(HttpTriggerValue);
         /// <summary> Unknown. </summary>
         public static FunctionTriggerType Unknown { get; } = new FunctionTriggerType(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FunctionTriggerType"/> values are the same. </summary>
         public static bool operator ==(FunctionTriggerType left, FunctionTriggerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FunctionTriggerType"/> values are not the same. </summary>

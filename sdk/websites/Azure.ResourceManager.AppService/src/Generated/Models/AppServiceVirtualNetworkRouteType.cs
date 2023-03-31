@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.AppService.Models
         public static AppServiceVirtualNetworkRouteType Inherited { get; } = new AppServiceVirtualNetworkRouteType(InheritedValue);
         /// <summary> STATIC. </summary>
         public static AppServiceVirtualNetworkRouteType Static { get; } = new AppServiceVirtualNetworkRouteType(StaticValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppServiceVirtualNetworkRouteType"/> values are the same. </summary>
         public static bool operator ==(AppServiceVirtualNetworkRouteType left, AppServiceVirtualNetworkRouteType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppServiceVirtualNetworkRouteType"/> values are not the same. </summary>

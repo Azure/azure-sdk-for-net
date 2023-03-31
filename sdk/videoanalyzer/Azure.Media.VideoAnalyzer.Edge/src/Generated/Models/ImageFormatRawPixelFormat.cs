@@ -56,6 +56,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static ImageFormatRawPixelFormat Abgr { get; } = new ImageFormatRawPixelFormat(AbgrValue);
         /// <summary> Packed BGRA 8:8:8:8, 32bpp, BGRABGRA. </summary>
         public static ImageFormatRawPixelFormat Bgra { get; } = new ImageFormatRawPixelFormat(BgraValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ImageFormatRawPixelFormat"/> values are the same. </summary>
         public static bool operator ==(ImageFormatRawPixelFormat left, ImageFormatRawPixelFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImageFormatRawPixelFormat"/> values are not the same. </summary>

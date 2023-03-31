@@ -18,7 +18,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
-                writer.WriteStringValue(Trigger.Value.ToString());
+                writer.WriteStringValue(Trigger.Value.ToSerialString());
             }
             if (Optional.IsDefined(OutputFrequency))
             {
@@ -33,7 +33,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(Focus))
             {
                 writer.WritePropertyName("focus"u8);
-                writer.WriteStringValue(Focus.Value.ToString());
+                writer.WriteStringValue(Focus.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

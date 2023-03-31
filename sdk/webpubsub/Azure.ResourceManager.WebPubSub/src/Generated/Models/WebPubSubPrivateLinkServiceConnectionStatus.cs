@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static WebPubSubPrivateLinkServiceConnectionStatus Rejected { get; } = new WebPubSubPrivateLinkServiceConnectionStatus(RejectedValue);
         /// <summary> Disconnected. </summary>
         public static WebPubSubPrivateLinkServiceConnectionStatus Disconnected { get; } = new WebPubSubPrivateLinkServiceConnectionStatus(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WebPubSubPrivateLinkServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(WebPubSubPrivateLinkServiceConnectionStatus left, WebPubSubPrivateLinkServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebPubSubPrivateLinkServiceConnectionStatus"/> values are not the same. </summary>

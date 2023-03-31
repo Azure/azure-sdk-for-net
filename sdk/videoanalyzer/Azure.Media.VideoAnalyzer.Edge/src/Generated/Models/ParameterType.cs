@@ -38,6 +38,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static ParameterType Double { get; } = new ParameterType(DoubleValue);
         /// <summary> The parameter&apos;s value is a boolean value that is either true or false. </summary>
         public static ParameterType Bool { get; } = new ParameterType(BoolValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ParameterType"/> values are the same. </summary>
         public static bool operator ==(ParameterType left, ParameterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ParameterType"/> values are not the same. </summary>

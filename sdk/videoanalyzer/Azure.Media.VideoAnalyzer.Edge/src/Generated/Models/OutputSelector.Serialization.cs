@@ -18,12 +18,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(Property))
             {
                 writer.WritePropertyName("property"u8);
-                writer.WriteStringValue(Property.Value.ToString());
+                writer.WriteStringValue(Property.Value.ToSerialString());
             }
             if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
-                writer.WriteStringValue(Operator.Value.ToString());
+                writer.WriteStringValue(Operator.Value.ToSerialString());
             }
             if (Optional.IsDefined(Value))
             {

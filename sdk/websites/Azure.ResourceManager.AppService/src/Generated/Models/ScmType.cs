@@ -65,6 +65,9 @@ namespace Azure.ResourceManager.AppService.Models
         public static ScmType VSO { get; } = new ScmType(VSOValue);
         /// <summary> VSTSRM. </summary>
         public static ScmType Vstsrm { get; } = new ScmType(VstsrmValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScmType"/> values are the same. </summary>
         public static bool operator ==(ScmType left, ScmType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScmType"/> values are not the same. </summary>

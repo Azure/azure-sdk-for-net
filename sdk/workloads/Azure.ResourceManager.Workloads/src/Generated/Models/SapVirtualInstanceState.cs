@@ -59,6 +59,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public static SapVirtualInstanceState DiscoveryFailed { get; } = new SapVirtualInstanceState(DiscoveryFailedValue);
         /// <summary> RegistrationComplete. </summary>
         public static SapVirtualInstanceState RegistrationComplete { get; } = new SapVirtualInstanceState(RegistrationCompleteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SapVirtualInstanceState"/> values are the same. </summary>
         public static bool operator ==(SapVirtualInstanceState left, SapVirtualInstanceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapVirtualInstanceState"/> values are not the same. </summary>

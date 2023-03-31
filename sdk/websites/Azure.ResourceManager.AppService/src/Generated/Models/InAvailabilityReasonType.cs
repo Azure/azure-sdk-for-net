@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppService.Models
         public static InAvailabilityReasonType Invalid { get; } = new InAvailabilityReasonType(InvalidValue);
         /// <summary> AlreadyExists. </summary>
         public static InAvailabilityReasonType AlreadyExists { get; } = new InAvailabilityReasonType(AlreadyExistsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InAvailabilityReasonType"/> values are the same. </summary>
         public static bool operator ==(InAvailabilityReasonType left, InAvailabilityReasonType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InAvailabilityReasonType"/> values are not the same. </summary>

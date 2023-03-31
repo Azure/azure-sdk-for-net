@@ -29,6 +29,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static Mpeg4Profile SP { get; } = new Mpeg4Profile(SPValue);
         /// <summary> Advanced Simple Profile. </summary>
         public static Mpeg4Profile ASP { get; } = new Mpeg4Profile(ASPValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="Mpeg4Profile"/> values are the same. </summary>
         public static bool operator ==(Mpeg4Profile left, Mpeg4Profile right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Mpeg4Profile"/> values are not the same. </summary>

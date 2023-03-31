@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public static EnqueueReplicationServerType EnqueueReplicator1 { get; } = new EnqueueReplicationServerType(EnqueueReplicator1Value);
         /// <summary> EnqueueReplicator2. </summary>
         public static EnqueueReplicationServerType EnqueueReplicator2 { get; } = new EnqueueReplicationServerType(EnqueueReplicator2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EnqueueReplicationServerType"/> values are the same. </summary>
         public static bool operator ==(EnqueueReplicationServerType left, EnqueueReplicationServerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EnqueueReplicationServerType"/> values are not the same. </summary>

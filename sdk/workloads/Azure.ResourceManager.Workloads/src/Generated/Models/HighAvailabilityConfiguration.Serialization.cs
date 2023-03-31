@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Workloads.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("highAvailabilityType"u8);
-            writer.WriteStringValue(HighAvailabilityType.ToString());
+            writer.WriteStringValue(HighAvailabilityType.ToSerialString());
             writer.WriteEndObject();
         }
 

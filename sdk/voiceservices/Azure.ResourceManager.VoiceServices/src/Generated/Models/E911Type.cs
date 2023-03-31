@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.VoiceServices.Models
         public static E911Type Standard { get; } = new E911Type(StandardValue);
         /// <summary> Emergency calls are routed directly to the ESRP. </summary>
         public static E911Type DirectToEsrp { get; } = new E911Type(DirectToEsrpValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="E911Type"/> values are the same. </summary>
         public static bool operator ==(E911Type left, E911Type right) => left.Equals(right);
         /// <summary> Determines if two <see cref="E911Type"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Workloads.Models
 
         /// <summary> FullResourceName. </summary>
         public static NamingPatternType FullResourceName { get; } = new NamingPatternType(FullResourceNameValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NamingPatternType"/> values are the same. </summary>
         public static bool operator ==(NamingPatternType left, NamingPatternType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NamingPatternType"/> values are not the same. </summary>

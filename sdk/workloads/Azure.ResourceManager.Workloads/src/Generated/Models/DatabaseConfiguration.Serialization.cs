@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(DatabaseType))
             {
                 writer.WritePropertyName("databaseType"u8);
-                writer.WriteStringValue(DatabaseType.Value.ToString());
+                writer.WriteStringValue(DatabaseType.Value.ToSerialString());
             }
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);

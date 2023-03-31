@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WritePropertyName("appLocation"u8);
             writer.WriteStringValue(AppLocation);
             writer.WritePropertyName("environment"u8);
-            writer.WriteStringValue(Environment.ToString());
+            writer.WriteStringValue(Environment.ToSerialString());
             writer.WritePropertyName("sapProduct"u8);
-            writer.WriteStringValue(SapProduct.ToString());
+            writer.WriteStringValue(SapProduct.ToSerialString());
             writer.WritePropertyName("databaseType"u8);
-            writer.WriteStringValue(DatabaseType.ToString());
+            writer.WriteStringValue(DatabaseType.ToSerialString());
             writer.WritePropertyName("deploymentType"u8);
-            writer.WriteStringValue(DeploymentType.ToString());
+            writer.WriteStringValue(DeploymentType.ToSerialString());
             writer.WritePropertyName("dbVmSku"u8);
             writer.WriteStringValue(DBVmSku);
             writer.WriteEndObject();

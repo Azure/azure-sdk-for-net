@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WritePropertyName("privateEndpointId"u8);
             writer.WriteStringValue(PrivateEndpointId);
             writer.WritePropertyName("configurationType"u8);
-            writer.WriteStringValue(ConfigurationType.ToString());
+            writer.WriteStringValue(ConfigurationType.ToSerialString());
             writer.WriteEndObject();
         }
 

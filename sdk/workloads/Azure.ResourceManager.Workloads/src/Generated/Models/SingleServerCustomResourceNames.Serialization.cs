@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Workloads.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("namingPatternType"u8);
-            writer.WriteStringValue(NamingPatternType.ToString());
+            writer.WriteStringValue(NamingPatternType.ToSerialString());
             writer.WriteEndObject();
         }
 

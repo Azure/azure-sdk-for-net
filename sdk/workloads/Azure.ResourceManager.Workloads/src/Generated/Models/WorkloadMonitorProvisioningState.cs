@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public static WorkloadMonitorProvisioningState Deleting { get; } = new WorkloadMonitorProvisioningState(DeletingValue);
         /// <summary> Migrating. </summary>
         public static WorkloadMonitorProvisioningState Migrating { get; } = new WorkloadMonitorProvisioningState(MigratingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WorkloadMonitorProvisioningState"/> values are the same. </summary>
         public static bool operator ==(WorkloadMonitorProvisioningState left, WorkloadMonitorProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadMonitorProvisioningState"/> values are not the same. </summary>

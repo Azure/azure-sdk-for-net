@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public static RoutingPreference Default { get; } = new RoutingPreference(DefaultValue);
         /// <summary> RouteAll. </summary>
         public static RoutingPreference RouteAll { get; } = new RoutingPreference(RouteAllValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RoutingPreference"/> values are the same. </summary>
         public static bool operator ==(RoutingPreference left, RoutingPreference right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoutingPreference"/> values are not the same. </summary>

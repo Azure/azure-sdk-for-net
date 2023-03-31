@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public static SslPreference RootCertificate { get; } = new SslPreference(RootCertificateValue);
         /// <summary> ServerCertificate. </summary>
         public static SslPreference ServerCertificate { get; } = new SslPreference(ServerCertificateValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SslPreference"/> values are the same. </summary>
         public static bool operator ==(SslPreference left, SslPreference right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SslPreference"/> values are not the same. </summary>

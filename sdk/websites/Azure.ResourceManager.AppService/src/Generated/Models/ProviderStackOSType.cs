@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AppService.Models
         public static ProviderStackOSType Linux { get; } = new ProviderStackOSType(LinuxValue);
         /// <summary> All. </summary>
         public static ProviderStackOSType All { get; } = new ProviderStackOSType(AllValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProviderStackOSType"/> values are the same. </summary>
         public static bool operator ==(ProviderStackOSType left, ProviderStackOSType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProviderStackOSType"/> values are not the same. </summary>

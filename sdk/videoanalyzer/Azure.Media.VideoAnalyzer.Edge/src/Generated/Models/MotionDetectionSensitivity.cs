@@ -32,6 +32,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static MotionDetectionSensitivity Medium { get; } = new MotionDetectionSensitivity(MediumValue);
         /// <summary> High sensitivity. </summary>
         public static MotionDetectionSensitivity High { get; } = new MotionDetectionSensitivity(HighValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MotionDetectionSensitivity"/> values are the same. </summary>
         public static bool operator ==(MotionDetectionSensitivity left, MotionDetectionSensitivity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MotionDetectionSensitivity"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         /// <summary> The stream&apos;s MIME type or subtype: audio, video or application. </summary>
         public static OutputSelectorProperty MediaType { get; } = new OutputSelectorProperty(MediaTypeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OutputSelectorProperty"/> values are the same. </summary>
         public static bool operator ==(OutputSelectorProperty left, OutputSelectorProperty right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OutputSelectorProperty"/> values are not the same. </summary>

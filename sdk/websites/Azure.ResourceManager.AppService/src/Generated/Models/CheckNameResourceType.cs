@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.AppService.Models
         public static CheckNameResourceType MicrosoftWebHostingEnvironments { get; } = new CheckNameResourceType(MicrosoftWebHostingEnvironmentsValue);
         /// <summary> Microsoft.Web/publishingUsers. </summary>
         public static CheckNameResourceType MicrosoftWebPublishingUsers { get; } = new CheckNameResourceType(MicrosoftWebPublishingUsersValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CheckNameResourceType"/> values are the same. </summary>
         public static bool operator ==(CheckNameResourceType left, CheckNameResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CheckNameResourceType"/> values are not the same. </summary>

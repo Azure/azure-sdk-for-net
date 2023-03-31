@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.VoiceServices.Models
         public static Status ChangePending { get; } = new Status(ChangePendingValue);
         /// <summary> The CommunicationsGateway service is up and running with the parameters specified in the resource. </summary>
         public static Status Complete { get; } = new Status(CompleteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="Status"/> values are the same. </summary>
         public static bool operator ==(Status left, Status right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Status"/> values are not the same. </summary>

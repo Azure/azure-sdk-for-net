@@ -18,7 +18,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(Transport))
             {
                 writer.WritePropertyName("transport"u8);
-                writer.WriteStringValue(Transport.Value.ToString());
+                writer.WriteStringValue(Transport.Value.ToSerialString());
             }
             writer.WritePropertyName("endpoint"u8);
             writer.WriteObjectValue(Endpoint);
